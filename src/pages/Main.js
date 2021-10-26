@@ -7,6 +7,7 @@ import HotGroup from "../componentsMain/HotGroup";
 import Banner from "../componentsMain/Banner";
 import Header from "../componentsMain/Header";
 
+
 const Main = (props) => {
 
 	return (
