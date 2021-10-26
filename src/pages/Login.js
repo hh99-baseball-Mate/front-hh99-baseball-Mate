@@ -5,20 +5,31 @@ import { SiNaver } from "react-icons/si"
 import { history } from "../redux/configStore"
 import { Inputs } from "../elements/Inputs"
 import { Buttons } from "../elements/Buttons"
+import { useDispatch } from "react-redux"
+import { actionCreators as userActions } from "../redux/modules/user"
+import { kakaoUrl } from "../shared/SocialLogin/KaKao"
 
 export const Login = (props) => {
-  const [user_id, setId] = useState("")
+  const [userid, setUserId] = useState("")
   const [password, setPassword] = useState("")
+
+  const dispatch = useDispatch()
 
   return (
     <>
-      {/* // 로고 */}
-      <div style={{ display: "flex" }}>
-        <Image
-          src="https://thumb.mt.co.kr/06/2019/03/2019032112013309513_1.jpg"
-          roundedCircle
-          style={{ maxWidth: "300px", margin: "5% auto" }}
-        />
+      {/* 헤더 */}
+      <div>
+        <div
+          style={{
+            width: "278px",
+            height: "58px",
+            margin: "132px auto",
+            fontSize: "37px",
+            fontWeight: "700",
+          }}
+        >
+          야구메이트
+        </div>
       </div>
 
       {/* 로그인 인풋창 / 버튼 */}
@@ -34,9 +45,9 @@ export const Login = (props) => {
         <Inputs
           type="text"
           placeholder="아이디를 입력해주세요"
-          value={user_id}
+          value={userid}
           _onChange={(e) => {
-            setId(e.target.value)
+            setUserId(e.target.value)
           }}
         />
         <Inputs
@@ -49,7 +60,14 @@ export const Login = (props) => {
         />
         <Buttons
           margin="30px 0"
-          _onClick={() => [console.log(user_id, password)]}
+          _onClick={() =>
+            dispatch(
+              userActions.log_in_md({
+                userid,
+                password,
+              })
+            )
+          }
         >
           로그인
         </Buttons>
@@ -82,14 +100,24 @@ export const Login = (props) => {
 
       {/* 소셜 로그인 */}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <RiKakaoTalkFill
-          size="40px"
+        {/* 카카오 로그인 */}
+        <a
+          href={kakaoUrl}
           style={{
-            borderRadius: "50%",
-            backgroundColor: "yellow",
-            // marginRight: "30px",
+            color: "black"
           }}
-        />
+        >
+          <RiKakaoTalkFill
+            size="40px"
+            style={{
+              borderRadius: "50%",
+              backgroundColor: "#FAE100",
+              // marginRight: "30px",
+            }}
+          />
+        </a>
+
+        {/* 네이버 로그인 */}
         <SiNaver
           size="40px"
           color="green"

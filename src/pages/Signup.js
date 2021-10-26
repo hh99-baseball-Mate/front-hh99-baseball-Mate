@@ -1,13 +1,18 @@
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Buttons } from "../elements/Buttons"
 import { Inputs } from "../elements/Inputs"
+import { actionCreators as userActions } from "../redux/modules/user"
 
 export const Signup = (props) => {
+  const dispatch = useDispatch()
+
+  // 비밀번호 숨기기/보이기
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
-
-  const [user_id, setUserId] = useState("")
-  const [user_name, setUserName] = useState("")
+  // 로그인정보
+  const [userid, setUserId] = useState("")
+  const [username, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const [password2, setPassword2] = useState("")
 
@@ -15,7 +20,7 @@ export const Signup = (props) => {
     <>
       <Inputs
         type="text"
-        value={user_id}
+        value={userid}
         _onChange={(e) => {
           setUserId(e.target.value)
         }}
@@ -23,7 +28,7 @@ export const Signup = (props) => {
       ></Inputs>
       <Inputs
         type="text"
-        value={user_name}
+        value={username}
         _onChange={(e) => {
           setUserName(e.target.value)
         }}
@@ -86,7 +91,7 @@ export const Signup = (props) => {
 
       <Buttons
         _onClick={() => {
-          console.log(user_id, user_name, password, password2)
+          dispatch(userActions.sign_up_md({userid, username, password}))
         }}
       >
         가입하기
