@@ -8,9 +8,18 @@ import { Route } from "react-router-dom"
 import KAKAOhandle from "./SocialLogin/KAKAOhandle"
 import { GlobalStyles } from "./GlobalStyles"
 import Main from "../pages/Main"
+import { useDispatch, useSelector } from "react-redux"
+import { getCookie } from "./Cookie"
+import { actionCreators as userActions } from "../redux/modules/user"
 
 function App() {
-  useEffect(() => {}, [])
+  const dispatch = useDispatch()
+  // const loginCheck = useSelector((state) => state.user.is_login)
+  useEffect(() => {
+    if (getCookie("is_login")) {
+      dispatch(userActions.loginCheck())
+    }
+  }, [])
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
