@@ -1,13 +1,22 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { createBrowserHistory } from "history";
-import { connectRouter } from "connected-react-router";
 import Group from "./modules/group";
-export const history = createBrowserHistory();
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import thunk from "redux-thunk"
+import { createBrowserHistory } from "history"
+import { connectRouter } from "connected-react-router"
+import user from "./modules/user"
+
+import mainPage from "./modules/mainPage"
+
+export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
+  user,
   // 각자 모듈
+
   group: Group,
+
+  mainPage,
+
   router: connectRouter(history),
 });
 

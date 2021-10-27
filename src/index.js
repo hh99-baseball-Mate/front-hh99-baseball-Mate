@@ -1,9 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./shared/App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "./redux/configStore";
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./shared/App"
+import reportWebVitals from "./reportWebVitals"
+import { Provider } from "react-redux"
+import store from "./redux/configStore"
+import axios from "axios"
+
+import "./shared/font.css"
+
+axios.defaults.withCredentials = true
 
 ReactDOM.render(
   <>
