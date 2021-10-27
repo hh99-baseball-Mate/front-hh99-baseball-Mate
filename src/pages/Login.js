@@ -1,6 +1,4 @@
 import React, { useState } from "react"
-import { RiKakaoTalkFill } from "react-icons/ri"
-import { SiNaver } from "react-icons/si"
 import { history } from "../redux/configStore"
 import { Inputs } from "../elements/Inputs"
 import { Buttons } from "../elements/Buttons"
@@ -12,7 +10,6 @@ import { kakaoUrl } from "../shared/SocialLogin/Kakao"
 export const Login = (props) => {
   const [userid, setUserId] = useState("")
   const [password, setPassword] = useState("")
-  const [timeline, setTimeline] = useState("")
 
   const dispatch = useDispatch()
 
@@ -111,35 +108,16 @@ export const Login = (props) => {
             페이스북 로그인
           </Text>
         </Buttons>
-
-        {/* 임시 */}
-        {/* <Inputs
-          type="password"
-          placeholder="타임라인내용 입력해주세요"
-          value={timeline}
-          _onChange={(e) => {
-            setTimeline(e.target.value)
-          }}
-        /> */}
-        {/* <Buttons
-          margin="30px 0"
-          _onClick={() =>
-            dispatch(userActions.timeLine(timeline))
-          }
-        >
-          로그인
-        </Buttons> */}
       </div>
 
-      <button style={{ width: "40px", height: "40px" }} onClick={() => {}}>
+      <button
+        style={{ width: "40px", height: "40px" }}
+        onClick={() => {
+          history.push("/clubchoice")
+        }}
+      >
         구단선택
       </button>
     </>
   )
 }
-
-// const Hr = styled.hr`
-//   display: flex;
-//   margin: 30px auto 30px 10px;
-//   width: 35%;
-// `

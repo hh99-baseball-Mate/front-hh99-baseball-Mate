@@ -45,6 +45,7 @@ const sign_up_md = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password } = user_info
     console.log(userid, username, password)
+
     api
       .post("/user/signup", { userid, username, password })
       .then((res) => {
@@ -58,7 +59,16 @@ const sign_up_md = (user_info) => {
 
 const login_check_md = () => {
   return function (dispatch, getState, { history }) {
-    getCookie("is_login")
+    const token = getCookie("is_login")
+
+    api
+      .post("/api/logincheck", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => [console.log("로그인체크 data", res.data)])
+      .catch((err) => console.log(err, "로그인체크에러"))
   }
 }
 
@@ -69,7 +79,6 @@ const kakaoLogin = (key) => {
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
       .get(`http://52.78.93.38/user/kakao/callback?code=${key}`)
       .then((res) => {
-
         const access_token = res.data.token
         console.log(access_token)
 
@@ -98,6 +107,7 @@ const actionCreators = {
   log_in_md,
   sign_up_md,
   kakaoLogin,
+  login_check_md,
 }
 
 export { actionCreators }

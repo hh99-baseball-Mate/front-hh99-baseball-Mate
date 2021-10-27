@@ -36,52 +36,52 @@ export const ClubChoice = (props) => {
           }}
         >
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/u5t0x01589709824.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/e96s4z1589709054.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/pesj9z1589709516.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/qcj18p1589709259.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/qk8erg1589709962.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/vvii3b1589708608.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/l9quje1589708840.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/6gwcg81589708218.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/5u6k511589709673.png"
             rounded
             style={{ width: "120px" }}
           />
           <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
+            src="https://www.thesportsdb.com/images/media/team/badge/49cfnl1623632712.png"
             rounded
             style={{ width: "120px" }}
           />

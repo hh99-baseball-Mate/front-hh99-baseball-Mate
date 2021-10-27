@@ -17,9 +17,13 @@ function App() {
   // const loginCheck = useSelector((state) => state.user.is_login)
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.loginCheck())
+      dispatch(userActions.login_check_md())
+    } else {
+      window.alert("로그인을 해주세요")
+      history.replace("/login")
     }
   }, [])
+
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
