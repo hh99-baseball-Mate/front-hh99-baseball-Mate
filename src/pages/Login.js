@@ -6,8 +6,8 @@ import { history } from "../redux/configStore"
 import { Inputs } from "../elements/Inputs"
 import { Buttons } from "../elements/Buttons"
 import { useDispatch } from "react-redux"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { kakaoUrl } from "../shared/SocialLogin/KaKao"
+// import { actionCreators as userActions } from "../redux/modules/user"
+// import { kakaoUrl } from "../shared/SocialLogin/KaKao"
 
 export const Login = (props) => {
   const [userid, setUserId] = useState("")
@@ -58,7 +58,7 @@ export const Login = (props) => {
             setPassword(e.target.value)
           }}
         />
-        <Buttons
+        {/* <Buttons
           margin="30px 0"
           _onClick={() =>
             dispatch(
@@ -70,7 +70,7 @@ export const Login = (props) => {
           }
         >
           로그인
-        </Buttons>
+        </Buttons> */}
       </div>
 
       {/* 절취선 */}
@@ -101,7 +101,7 @@ export const Login = (props) => {
       {/* 소셜 로그인 */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         {/* 카카오 로그인 */}
-        <a
+        {/* <a
           href={kakaoUrl}
           style={{
             color: "black"
@@ -115,7 +115,7 @@ export const Login = (props) => {
               // marginRight: "30px",
             }}
           />
-        </a>
+        </a> */}
 
         {/* 네이버 로그인 */}
         <SiNaver

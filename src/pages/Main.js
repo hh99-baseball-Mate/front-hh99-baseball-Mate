@@ -27,7 +27,7 @@ const Main = (props) => {
 export default Main;
 
 const Container = styled.div`
-	width: 425px; 
+	width: 375px; 
 	/* background-size: cover; */
 	/* height: auto; */
 	margin: 0 auto;

@@ -1,8 +1,9 @@
 import axios from 'axios';
-
+// http://52.78.93.38/
+// http://54.180.148.132/ 임시서버
 const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
-  baseURL: 'http://localhost:4000/',
+  baseURL: 'http://52.78.93.38/',
   headers: {
     'content-type': 'application/json;charset=UTF-8',
     accept: 'application/json',
@@ -16,7 +17,7 @@ export const apis = {
   // get과 delete의 경우 두 번째 인자에 데이터를 담아 보낼수 없기 때문에 서버에 데이터를 보낼경우 쿼리를 이용하여 보내주도록 합니다.
 
   // 경기 일정 불러오기
-  getGameTime: () => instance.get('/gameTime'),
+  getGameTime: () => instance.get('/api/kbodata'),
 
   // main
   // 핫한 모임 불러오기

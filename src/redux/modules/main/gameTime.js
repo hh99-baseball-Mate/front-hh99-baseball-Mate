@@ -1,6 +1,6 @@
 import { createAction, handleActions} from "redux-actions";
 import produce from "immer";
-import { apis } from "../../lib/axios";
+import { apis } from "../../../lib/axios";
 
 const LOAD_GAMETIME = "LOAD_GAMETIME";
 

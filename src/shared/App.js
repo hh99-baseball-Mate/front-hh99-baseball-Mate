@@ -5,9 +5,10 @@ import { Login } from "../pages/Login"
 import { Signup } from "../pages/Signup"
 import { history } from "../redux/configStore"
 import { Route } from "react-router-dom"
-import { KaKaoLogin } from "./SocialLogin/KaKaoLogin"
+// import { KaKaoLogin } from "./SocialLogin/KaKaoLogin"
 import { GlobalStyles } from "./GlobalStyles"
 import Main from "../pages/Main"
+import groupDetailPage from "../pages/groupDetailPage"
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/clubchoice" component={ClubChoice} />
-        <Route path="/user/kakao/callback" component={KaKaoLogin} />
+        <Route exact path="/clubchoice" component={ClubChoice} />
+        <Route exact path="/detail" component={groupDetailPage} />
+        {/* <Route path="/user/kakao/callback" component={KaKaoLogin} /> */}
       </ConnectedRouter>
     </React.Fragment>
   )

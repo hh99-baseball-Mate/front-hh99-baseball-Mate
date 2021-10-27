@@ -3,15 +3,13 @@ import thunk from "redux-thunk"
 import { createBrowserHistory } from "history"
 import { connectRouter } from "connected-react-router"
 
-import gameTime from "./reducer/gameTime"
-import main from "./reducer/main"
+import mainPage from "./modules/mainPage"
 
 export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
   // 각자 모듈
-  gameTime,
-  main,
+  mainPage,
   router: connectRouter(history),
 })
 
