@@ -10,6 +10,7 @@ export const Signup = (props) => {
   // 비밀번호 숨기기/보이기
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
+
   // 로그인정보
   const [userid, setUserId] = useState("")
   const [username, setUserName] = useState("")
@@ -91,7 +92,7 @@ export const Signup = (props) => {
 
       <Buttons
         _onClick={() => {
-          dispatch(userActions.sign_up_md({userid, username, password}))
+          dispatch(userActions.sign_up_md({ userid, username, password }))
         }}
       >
         가입하기

@@ -7,11 +7,12 @@ import { Inputs } from "../elements/Inputs"
 import { Buttons } from "../elements/Buttons"
 import { useDispatch } from "react-redux"
 import { actionCreators as userActions } from "../redux/modules/user"
-import { kakaoUrl } from "../shared/SocialLogin/KaKao"
+import { kakaoUrl } from "../shared/SocialLogin/Kakao"
 
 export const Login = (props) => {
   const [userid, setUserId] = useState("")
   const [password, setPassword] = useState("")
+  const [timeline, setTimeline] = useState("")
 
   const dispatch = useDispatch()
 
@@ -26,6 +27,7 @@ export const Login = (props) => {
             margin: "132px auto",
             fontSize: "37px",
             fontWeight: "700",
+            textAlign: "center",
           }}
         >
           야구메이트
@@ -71,6 +73,30 @@ export const Login = (props) => {
         >
           로그인
         </Buttons>
+
+        {/* 임시 */}
+        <Inputs
+          type="password"
+          placeholder="타임라인내용 입력해주세요"
+          value={timeline}
+          _onChange={(e) => {
+            setTimeline(e.target.value)
+          }}
+        />
+        <Buttons
+          margin="30px 0"
+          _onClick={() =>
+            // dispatch(
+            //   userActions.log_in_md({
+            //     userid,
+            //     password,
+            //   })
+            // )
+            dispatch(userActions.timeLine(timeline))
+          }
+        >
+          로그인
+        </Buttons>
       </div>
 
       {/* 절취선 */}
@@ -101,10 +127,14 @@ export const Login = (props) => {
       {/* 소셜 로그인 */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         {/* 카카오 로그인 */}
-        <a
-          href={kakaoUrl}
+        <button
           style={{
-            color: "black"
+            color: "black",
+          }}
+          onClick={() => {
+            console.log("됨?")
+            // history.push(kakaoUrl)
+            window.location.href = kakaoUrl
           }}
         >
           <RiKakaoTalkFill
@@ -115,7 +145,7 @@ export const Login = (props) => {
               // marginRight: "30px",
             }}
           />
-        </a>
+        </button>
 
         {/* 네이버 로그인 */}
         <SiNaver
