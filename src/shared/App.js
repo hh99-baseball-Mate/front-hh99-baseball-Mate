@@ -1,3 +1,6 @@
+import GroupOne from "../pages/GroupOne";
+import GroupTwo from "../pages/GroupTwo";
+import GroupThree from "../pages/GroupThree";
 import React, { useEffect } from "react"
 import { ConnectedRouter } from "connected-react-router"
 import { ClubChoice } from "../pages/ClubChoice"
@@ -25,6 +28,7 @@ function App() {
   }, [])
 
   return (
+     
     <React.Fragment>
       <ConnectedRouter history={history}>
         <GlobalStyles />
@@ -33,9 +37,13 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/clubchoice" component={ClubChoice} />
         <Route path="/user/kakao/callback" component={KAKAOhandle} />
+            <Route path="/groupone" exact component={GroupOne} />
+          <Route path="/grouptwo" exact component={GroupTwo} />
+          <Route path="/groupthree" exact component={GroupThree} />
       </ConnectedRouter>
     </React.Fragment>
   )
+
 }
 
-export default App
+export default App;
