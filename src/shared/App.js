@@ -1,16 +1,25 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { ConnectedRouter } from "connected-react-router"
 import { ClubChoice } from "../pages/ClubChoice"
 import { Login } from "../pages/Login"
 import { Signup } from "../pages/Signup"
 import { history } from "../redux/configStore"
 import { Route } from "react-router-dom"
-// import { KaKaoLogin } from "./SocialLogin/KaKaoLogin"
+import KAKAOhandle from "./SocialLogin/KAKAOhandle"
 import { GlobalStyles } from "./GlobalStyles"
 import Main from "../pages/Main"
-import groupDetailPage from "../pages/groupDetailPage"
+import { useDispatch, useSelector } from "react-redux"
+import { getCookie } from "./Cookie"
+import { actionCreators as userActions } from "../redux/modules/user"
 
 function App() {
+  const dispatch = useDispatch()
+  // const loginCheck = useSelector((state) => state.user.is_login)
+  useEffect(() => {
+    if (getCookie("is_login")) {
+      dispatch(userActions.loginCheck())
+    }
+  }, [])
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
@@ -19,9 +28,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/clubchoice" component={ClubChoice} />
-        <Route exact path="/clubchoice" component={ClubChoice} />
-        <Route exact path="/detail" component={groupDetailPage} />
-        {/* <Route path="/user/kakao/callback" component={KaKaoLogin} /> */}
+        <Route path="/user/kakao/callback" component={KAKAOhandle} />
       </ConnectedRouter>
     </React.Fragment>
   )

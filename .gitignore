@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #  소셜로그인 
-src/shared/SocialLogin
+# src/shared/SocialLogin
+.env
