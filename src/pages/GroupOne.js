@@ -1,4 +1,3 @@
-import Button from "@restart/ui/esm/Button";
 import React, { useEffect, useRef } from "react";
 import { Card, Carousel, Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -7,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
+import Button from "@restart/ui/esm/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 

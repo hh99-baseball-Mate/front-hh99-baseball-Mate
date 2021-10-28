@@ -8,30 +8,27 @@ const Header = (props) => {
 
 	return(
 		<React.Fragment>
-			<DivFlex>
-				<p>추천</p>
-				<p>모임</p>
-				<p>소식</p>
-				<p>굿즈</p>
-			</DivFlex>
+			<Box>
+				<Text weight="bold" color="#000000">추천</Text>
+				<Text color="rgba(0, 0, 0, 0.5)">모임</Text>
+				<Text color="rgba(0, 0, 0, 0.5)">소식</Text>
+				<Text color="rgba(0, 0, 0, 0.5)">굿즈</Text>
+			</Box>
 		</React.Fragment>
 	)
 }
 
 export default Header;
 
-const DivFlex = styled.div`
+const Box = styled.div`
 	display: flex;
-	justify-content: space-between;
-	width: 196px;
-	height: 26px;
-	margin: 14px 14px 14px 26px;
-	p {
-		font-size: 18px;
-	}
+	margin: 13px 20px ;
 `;
 
-// const Box = styled.div`
-// 	font-size: 18px;
-// 	margin: 
-// `;
+const Text = styled.div`
+	font-size: 20px;
+	font-weight: ${(props) => props.weight};
+	color: ${(props) => props.color};
+	letter-spacing: ${(props) => props.spacing};
+	margin-right: 20px;
+`;
