@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import TimelineList from "../componentsTimeline/TimelineList";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
+import { timelineCreators } from "../redux/modules/timeline";
 
 const Timeline = (props) => {
+	const dispatch = useDispatch();
+	const timeline = useSelector((state) => state.timeline.timeline);
+	console.log(timeline)
+	// const [message, setMessage] = useState("");
+
+	useEffect(() => {
+		dispatch(timelineCreators.loadTimelineMW());
+		return () => {
+			// TimelineList;
+		}
+	}, [])
 
 	return (
 		<Container>
-
 
 				<Warp flex="flex" justify="space-between">
 					<Text size="16px" weight="bold">
@@ -18,8 +30,16 @@ const Timeline = (props) => {
 						+ More
 					</Text>
 				</Warp>
+
+				{
+					timeline.map((timeline, idx) => {
+						return (
+							<TimelineList key={idx} {...timeline}>
+							</TimelineList>
+						)
+					})
+				}
 			
-				<TimelineList/>
 				<TimelimeWrite/>
 
 

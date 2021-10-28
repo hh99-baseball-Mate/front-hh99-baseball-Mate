@@ -9,7 +9,7 @@ const LIKE_TIMELINE = "LIKE_TIMELINE";
 
 const load_timeline = createAction(LOAD_TIMELINE, (timeline) => ({ timeline }));
 const add_timeline = createAction(ADD_TIMELINE, (content) => ({ content }));
-const delete_timeline = createAction(DELETE_TIMELINE, (timeLineId) => (timeLineId))
+const delete_timeline = createAction(DELETE_TIMELINE, (id) => (id))
 const like_timeline = createAction(LIKE_TIMELINE, (timeLineId) => (timeLineId))
 
 const initialState = {
@@ -50,14 +50,15 @@ const addTimelineMW = (message) => {
 }
 
 
-const deleteTimelineMW = (timeLineId) => {
+const deleteTimelineMW = (id) => {
 	return (dispatch, getState, { history }) => {
-		console.log("deleteTimeline", timeLineId)
+		console.log("deleteTimeline", id)
+		const timeLineId = id
 		tokenApis
 			.delTimeline(timeLineId)
 			.then((res) => {
 				console.log(res)
-				dispatch(delete_timeline(timeLineId))
+				dispatch(delete_timeline(id))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -93,7 +94,10 @@ export default handleActions(
 			draft.timeline.unshift(action.payload.content)
 		}),
 		[DELETE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			draft.timeline.filter((p) => p.id !== action.payload.timeLineId);
+			const idx = draft.timeline.findIndex((p) => p.id !== action.payload.id);
+			if (idx !== -1) {
+				draft.timeline.splice(idx, 1);
+			}
 		}),
 		[LIKE_TIMELINE]: (state, action) => produce(state, (draft) => {
 			draft.like.unshift(action.payload.timeLineId)
