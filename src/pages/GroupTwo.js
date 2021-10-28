@@ -1,28 +1,66 @@
 import React from "react";
-import styled from "styled-components"
+import styled from "styled-components";
+import { Card } from "react-bootstrap";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { BsCircle } from "react-icons/bs";
 import { Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const GroupTwo = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  function BackGo() {
+    history.push("/groupone");
+  }
   return (
     <>
-      <AiOutlineArrowLeft></AiOutlineArrowLeft>
-
+      <AiOutlineArrowLeft onClick={BackGo}></AiOutlineArrowLeft>
+      {/* <>qwjeqw</> */}
       <Title>일정 선택</Title>
-      <div>
-        <BsCircle style={{ width: "50px", height: "50px" }}></BsCircle>
-        vs
-        <BsCircle style={{ width: "50px", height: "50px" }}></BsCircle>
-      </div>
-      <div style={{ float: "left" }}>2021-10-10 00:00:00</div>
-      <CenterInfo>
-        <div className="d-grid gap-2">
-          <Button variant="primary" style={{ padding: "10px 70px" }}>
-            선택
-          </Button>
-        </div>
-      </CenterInfo>
+      <Dat>날짜와 요일</Dat>
+
+      <CardAll>
+        <Card style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>
+              <strong>00:00</strong> 0강
+            </Card.Title>
+
+            <Card.Text>
+              <BsCircle
+                style={{
+                  width: "37px",
+                  height: "37px",
+                  left: "75px",
+                  top: "219px",
+                  display: "flex",
+                }}
+              ></BsCircle>
+              <div>구단명</div>
+              <BsCircle
+                style={{
+                  position: "flex",
+                  width: "37px",
+                  height: "37px",
+                  left: "75px",
+                  top: "270px",
+                }}
+              ></BsCircle>
+              <div float="left">구단명</div>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+
+        <div style={{ float: "left" }}>2021-10-10 00:00:00</div>
+        <CenterInfo>
+          <div className="d-grid gap-2">
+            <Button variant="primary" style={{ padding: "10px 70px" }}>
+              선택
+            </Button>
+          </div>
+        </CenterInfo>
+      </CardAll>
     </>
   );
 };
@@ -41,5 +79,20 @@ bottom:0;
 width:100%;
 height:32px;
 margin-left:50px;
-  }
+`;
+
+const Dat = styled.div`
+  font-weight: bold;
+  font-size: 20px;
+`;
+
+const CardAll = styled.div`
+  position: absolute;
+  left: 14.67%;
+  right: 12%;
+  top: 17.86%;
+  bottom: 60.34%;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 `;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react"
 import { history } from "../redux/configStore"
 import { Inputs, Buttons, Text } from "../componentsLogin/"
@@ -28,8 +29,25 @@ export const Login = (props) => {
       [name]: value,
     })
   }
+=======
+import React, { useState } from "react";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { SiNaver } from "react-icons/si";
+import { history } from "../redux/configStore";
+import { Inputs } from "../elements/Inputs";
+import { Buttons } from "../elements/Buttons";
+import { Text } from "../elements/Text";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { kakaoUrl } from "../shared/SocialLogin/Kakao";
 
-  const dispatch = useDispatch()
+export const Login = (props) => {
+  const [userid, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [timeline, setTimeline] = useState("");
+>>>>>>> master
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -59,6 +77,7 @@ export const Login = (props) => {
           margin: "0 auto",
         }}
       >
+<<<<<<< HEAD
         <div style={{ margin: "25px 0 0 0" }}>
           <div style={{ position: "relative" }}>
             <Inputs
@@ -88,11 +107,24 @@ export const Login = (props) => {
           )}
         </div>
 
+=======
+        <Text>이메일</Text>
+        <Inputs
+          type="text"
+          placeholder="아이디를 입력해주세요"
+          value={userid}
+          _onChange={(e) => {
+            setUserId(e.target.value);
+          }}
+        />
+        <Text>비밀번호</Text>
+>>>>>>> master
         <Inputs
           name="password"
           check
           type="password"
           value={password}
+<<<<<<< HEAD
           onChange={onChangeValue}
           placeholder="영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
         >
@@ -114,6 +146,12 @@ export const Login = (props) => {
           </Text>
         )}
 
+=======
+          _onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+>>>>>>> master
         <Buttons
           margin="24px 0 7px 0"
           bg="#F25343"
@@ -125,7 +163,7 @@ export const Login = (props) => {
                 userid,
                 password,
               })
-            )
+            );
           }}
         >
           <Text color="#fff" bold>
@@ -142,9 +180,41 @@ export const Login = (props) => {
           </Text>
         </Buttons>
 
+<<<<<<< HEAD
         <div
           onClick={() => {
             setLoginOther(!loginOther)
+=======
+        <Buttons bg="#4DBF39" _onClick={() => history.push("/signup")}>
+          <Text color="#fff" bold>
+            네이버 로그인
+          </Text>
+        </Buttons>
+        <Buttons
+          bg="#FAE100"
+          _onClick={() => {
+            console.log("됨?");
+            window.location.href = kakaoUrl;
+          }}
+        >
+          <Text color="#3C1D1E" bold>
+            카카오 로그인
+          </Text>
+        </Buttons>
+        <Buttons bg="#1877F2" _onClick={() => history.push("/signup")}>
+          <Text color="#fff" bold>
+            페이스북 로그인
+          </Text>
+        </Buttons>
+
+        {/* 임시 */}
+        {/* <Inputs
+          type="password"
+          placeholder="타임라인내용 입력해주세요"
+          value={timeline}
+          _onChange={(e) => {
+            setTimeline(e.target.value)
+>>>>>>> master
           }}
         >
           {loginOther ? (
@@ -204,5 +274,16 @@ export const Login = (props) => {
         구단선택
       </button>
     </>
+<<<<<<< HEAD
   )
 }
+=======
+  );
+};
+
+// const Hr = styled.hr`
+//   display: flex;
+//   margin: 30px auto 30px 10px;
+//   width: 35%;
+// `
+>>>>>>> master

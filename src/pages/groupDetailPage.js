@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+import calendar from "../icon/calendar.svg"
+import location from "../icon/location.svg"
+import colorUsers from "../icon/colorUsers.svg"
+import users from "../icon/users.svg"
+
 const groupDetailPage = (props) => {
 	return (
 		<Container>
@@ -16,29 +21,42 @@ const groupDetailPage = (props) => {
 						D-10
 					</Ellipse>
 				</Warp>
-				<Title>
-					<p>11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~</p>
-				</Title>
+				<Text size="16px" weight="bold" margin="12px 0">
+					11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~
+				</Text>
 				<Warp justify="space-between" align="center" >
 					<Bar/>
-					<Left>3명 남음</Left>
+					<Warp flex="flex">
+						<img src={colorUsers} alt="users"/>
+						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+							&nbsp;3명&nbsp;
+						</Text>
+						<Text size="12px" color="#F25343" spacing="-0.03em;">
+							남음
+						</Text>
+					</Warp>
 				</Warp>
 			</TitleBox>
 
 			{/* 모임 정보 */}
 			<Box height="163px" background="rgba(247, 247, 247, 0.5)" position="relative" margin="20px">
-				<Warp justify="space-around" align="center" position="absolute" padding="0 16px 0 16px" style={{top:"78%"}}>
+				<Warp width="100%" justify="space-around" align="center" position="absolute" padding="0 40px 0 40px" style={{top:"78%"}}>
+					<img src={calendar} alt="calendar" />
 					<Text color="#777777" size="12px">21.11.22</Text>
-					<Text color="#777777" size="12px">|</Text>
+					<Slice> &ensp;|&ensp; </Slice> 
+					<img src={location} alt="location" />
 					<Text color="#777777" size="12px">잠실</Text>
-					<Text color="#777777" size="12px">|</Text>
+					<Slice> &ensp;|&ensp; </Slice> 
+					<img src={users} alt="users" />
 					<Text color="#777777" size="12px">최대 10명</Text>
 				</Warp>
 			</Box>
 
 			{/* 유저정보 */}
-			<Box height="80px" background="#fff" flex="flex" align="center" padding="20px">
-				<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
+			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
+				<Warp width="55px" height="55px">
+					<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
+				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">김진희</Text>
 					<Text size="12px" color="#C4C4C4" margin="1px">서울시 강서구</Text>
@@ -78,9 +96,9 @@ const Container = styled.div`
 `;
 
 const Img = styled.div`
-		width: 100%;
-		height: 375px;
-		background-color: #C4C4C4;
+	width: 100%;
+	height: 375px;
+	background-color: #C4C4C4;
 `;
 
 const TitleBox = styled.div`
@@ -93,13 +111,13 @@ const TitleBox = styled.div`
 	background: #FFFFFF;
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
-	padding: 18px;
+	padding: 16px;
 	z-index: 1;
 `;
 
 const Warp = styled.div`
-	width: 100%;
 	display: flex;
+	width: ${(props) => props.width};
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
@@ -125,27 +143,18 @@ const Ellipse = styled.div`
 	color: ${(props) => props.color};
 `;
 
-const Title = styled.div`
-	width: 100%;
-	margin: 12px 0px;
-	p {
-		font-style: normal;
-		font-weight: bold;
-		font-size: 16px;
-	}
+const Text = styled.div`
+	font-size: ${(props) => props.size};
+	font-weight: ${(props) => props.weight};
+	color: ${(props) => props.color};
+	letter-spacing: ${(props) => props.spacing};
+	margin: ${(props) => props.margin};
 `;
 
 const Bar = styled.div`
 	width: 230px;
-	height: 1px;
+	height: 1.5px;
 	background: #FF4B38;
-`;
-
-const Left = styled.div`
-	font-weight: bold;
-	font-size: 12px;
-	color: #F25343;
-	letter-spacing: -0.03em;
 `;
 
 const Box = styled.div`
@@ -163,25 +172,14 @@ const Box = styled.div`
 const Circle = styled.div`
 	width: ${(props) => props.width};
 	height: ${(props) => props.height};
-	border-radius: ${(props) => props.radius};
-	background: ${(props) => props.background};
-	margin-right: ${(props) => props.marginRight};
-	padding: 23px;
+	border-radius: 50%;
+	background: #C4C4C4;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const Flexdiv = styled.div`
-	display: flex;
-	justify-content: ${(props) => props.justifyContent};
+const Slice = styled.div`
+	color: #D8D8D8;
+	font-size: 12px;
 `;
 
-const Username = styled.div`
 
-`;
-
-const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
-`;

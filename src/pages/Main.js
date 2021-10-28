@@ -18,7 +18,7 @@ const Main = (props) => {
 			<Banner />
 			<HotGroup />
 			<Timeline />
-			<NavigationBar />
+			{/* <NavigationBar /> */}
 
 		</Container>
 	)
@@ -30,7 +30,7 @@ const Container = styled.div`
 	width: 375px; 
 	/* background-size: cover; */
 	/* height: auto; */
-	margin: 0 auto;
+	margin: auto;
 	padding: 0;
 `;
 

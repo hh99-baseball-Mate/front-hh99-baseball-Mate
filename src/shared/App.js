@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getCookie } from "./Cookie"
 import { actionCreators as userActions } from "../redux/modules/user"
 import "bootstrap/dist/css/bootstrap.min.css"
+import groupDetailPage from "../pages/groupDetailPage"
 
 function App() {
   const dispatch = useDispatch()
@@ -41,6 +42,7 @@ function App() {
         <Route path="/groupone" exact component={GroupOne} />
         <Route path="/grouptwo" exact component={GroupTwo} />
         <Route path="/groupthree" exact component={GroupThree} />
+        <Route path="/groupdetail" exact component={groupDetailPage} />
       </ConnectedRouter>
     </React.Fragment>
   )
