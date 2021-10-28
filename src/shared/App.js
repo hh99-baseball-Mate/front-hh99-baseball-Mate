@@ -15,11 +15,11 @@ import { actionCreators as userActions } from "../redux/modules/user"
 function App() {
   const dispatch = useDispatch()
   // const loginCheck = useSelector((state) => state.user.is_login)
-  useEffect(() => {
-    if (getCookie("is_login")) {
-      dispatch(userActions.loginCheck())
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (getCookie("is_login")) {
+  //     dispatch(userActions.loginCheck())
+  //   }
+  // }, [])
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>

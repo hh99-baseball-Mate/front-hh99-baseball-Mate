@@ -22,18 +22,23 @@ const gameTimeMW = () => {
 				// console.log(res)
 				const gamelist = res.data;
 				const today = new Date();  
-				console.log(today.toLocaleDateString('en-KR').split("/").slice(0,2).join("/")) //-> 10/27
-				console.log(gamelist[124].date.split(" ")[0].split(".").join("/")) // -> 10/30
-				let nowDate = today.toLocaleDateString('en-KR').split("/").slice(0,2).join("/")
-				let gameDay = gamelist[124].date.split(" ")[0].split(".").join("/")
+				console.log(today.toLocaleDateString('en-KR').split("/")[1]) //-> 10/27, 27
+				console.log(gamelist[124].date.split(" ")[0].split(".")[1]) // -> 10/30
+				// let nowDate = today.toLocaleDateString('en-KR').split("/").slice(0,2).join("-")
+				// let gameDay = gamelist[124].date.split(" ")[0].split(".").join("-")
+				let nowDate = today.toLocaleDateString('en-KR').split("/")[1]
+				let gameDay = gamelist[124].date.split(" ")[0].split(".")[1]
 
-				for (let i=0; i < gamelist.length; i++) {
-					let date =gamelist[i].date
-						if(nowDate <= date) {
-							console.log("시간비교",date)
-						} 
-					// console.log(date)
-				}
+				// for (let i=0; i < gamelist.length; i++) {
+				// 	// let date =gamelist[i].date
+				// 	let date = gamelist[i].date.split(" ")[0].split(".")[1]
+				// 		// console.log(nowDate)
+				// 		// console.log(date)
+				// 		if(nowDate <= date) {
+				// 			return console.log(date)
+				// 		} 
+				// 	// console.log(date)
+				// }
 				// if(nowDate <= gameDay) {
 				// 	console.log("시간비교",true)
 				// } else {
