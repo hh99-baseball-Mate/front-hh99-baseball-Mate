@@ -13,7 +13,6 @@ export const Inputs = (props) => {
     width,
     name,
     children,
-    check,
     autoComplete,
   } = props
 
@@ -24,26 +23,10 @@ export const Inputs = (props) => {
     margin,
     width,
     name,
-    check,
     onChange,
     autoComplete,
   }
 
-  // if (check) {
-  //   return (
-  //     <>
-  //       <Text>
-  //         {children}
-  //         <AiOutlineCheckCircle
-  //           size="16px"
-  //           style={{ margin: "0px 5px" }}
-  //           color="#F25343"
-  //         />
-  //       </Text>
-  //       <Input {...styles} />
-  //     </>
-  //   )
-  // }
   return (
     <>
       <Text>{children}</Text>
@@ -59,7 +42,6 @@ Inputs.defaultProps = {
   placeholder: "입력",
   value: "",
   margin: "12px 0",
-  check: null,
   autoComplete: "off",
 }
 
