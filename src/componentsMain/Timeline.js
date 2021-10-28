@@ -5,7 +5,7 @@ const Timeline = (props) => {
 
 	return (
 		<React.Fragment>
-			<div style={{padding:"12px", marginBottom:"50px"}}>
+			<div style={{padding:"12px"}}>
 				<p>타임라인</p>
 				<TimeLineCard>
 				누가 이기고있나요?
@@ -24,7 +24,7 @@ const Timeline = (props) => {
 export default Timeline;
 
 const TimeLineCard = styled.div`
-	width: 300px;
+	/* width: 300px; */
 	height: 50px;
 	text-align: center;
 	background-color: #ffdeeb;
