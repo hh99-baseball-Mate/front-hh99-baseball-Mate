@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
+import TimelineList from "../componentsTimeline/TimelineList";
+import TimelimeWrite from "../componentsTimeline/TimelineWrite";
+
 const Timeline = (props) => {
 
 	return (
-		<React.Fragment>
-			<Container>
+		<Container>
 
-				{/* 타임라인 제목 */}
+
 				<Warp flex="flex" justify="space-between">
 					<Text size="16px" weight="bold">
 						생생 타임라인 💬
@@ -16,29 +18,21 @@ const Timeline = (props) => {
 						+ More
 					</Text>
 				</Warp>
+			
+				<TimelineList/>
+				<TimelimeWrite/>
 
-				{/* 타임라인 리스트 */}
-				<TimeLineCard>
-				누가 이기고있나요?
-				</TimeLineCard>
-				<TimeLineCard>
-				누가 이기고있나요?
-				</TimeLineCard>
-				<TimeLineCard>
-				누가 이기고있나요?
-				</TimeLineCard>
 
-			</Container>
-		</React.Fragment>
+		</Container>
 	)
 }
 
 export default Timeline;
 
 const Container = styled.div`
-	width: 335px; 
+	width: 375px; 
 	/* height: 177px; */
-	margin: 20px auto;
+	margin: auto;
 `;
 
 const Warp = styled.div`
@@ -60,14 +54,3 @@ const Text = styled.div`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 `;
-
-const TimeLineCard = styled.div`
-	/* width: 300px; */
-	height: 50px;
-	text-align: center;
-	background-color: #ffdeeb;
-	margin: auto;
-	margin-top: 12px;
-	border-radius: 10px;
-`;
-

@@ -17,6 +17,7 @@ const Main = (props) => {
 			<Header />
 			<Banner />
 			<HotGroup />
+			<Rectangle/>
 			<Timeline />
 			{/* <NavigationBar /> */}
 
@@ -34,5 +35,8 @@ const Container = styled.div`
 	padding: 0;
 `;
 
-
-
+const Rectangle = styled.div`
+	background: #E7E7E7;
+	width: 100%;
+	height: 6px;
+`;
