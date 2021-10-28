@@ -1,20 +1,20 @@
-import React, { useState } from "react"
-import { RiKakaoTalkFill } from "react-icons/ri"
-import { SiNaver } from "react-icons/si"
-import { history } from "../redux/configStore"
-import { Inputs } from "../elements/Inputs"
-import { Buttons } from "../elements/Buttons"
-import { Text } from "../elements/Text"
-import { useDispatch } from "react-redux"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { kakaoUrl } from "../shared/SocialLogin/Kakao"
+import React, { useState } from "react";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { SiNaver } from "react-icons/si";
+import { history } from "../redux/configStore";
+import { Inputs } from "../elements/Inputs";
+import { Buttons } from "../elements/Buttons";
+import { Text } from "../elements/Text";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { kakaoUrl } from "../shared/SocialLogin/Kakao";
 
 export const Login = (props) => {
-  const [userid, setUserId] = useState("")
-  const [password, setPassword] = useState("")
-  const [timeline, setTimeline] = useState("")
+  const [userid, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [timeline, setTimeline] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -50,7 +50,7 @@ export const Login = (props) => {
           placeholder="아이디를 입력해주세요"
           value={userid}
           _onChange={(e) => {
-            setUserId(e.target.value)
+            setUserId(e.target.value);
           }}
         />
         <Text>비밀번호</Text>
@@ -59,7 +59,7 @@ export const Login = (props) => {
           placeholder="비밀번호를 입력해주세요"
           value={password}
           _onChange={(e) => {
-            setPassword(e.target.value)
+            setPassword(e.target.value);
           }}
         />
         <Buttons
@@ -73,7 +73,7 @@ export const Login = (props) => {
                 userid,
                 password,
               })
-            )
+            );
           }}
         >
           <Text color="#fff" bold>
@@ -98,8 +98,8 @@ export const Login = (props) => {
         <Buttons
           bg="#FAE100"
           _onClick={() => {
-            console.log("됨?")
-            window.location.href = kakaoUrl
+            console.log("됨?");
+            window.location.href = kakaoUrl;
           }}
         >
           <Text color="#3C1D1E" bold>
@@ -135,8 +135,8 @@ export const Login = (props) => {
         구단선택
       </button>
     </>
-  )
-}
+  );
+};
 
 // const Hr = styled.hr`
 //   display: flex;
