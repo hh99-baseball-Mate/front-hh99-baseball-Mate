@@ -30,9 +30,9 @@ const log_in_md = (user_info) => {
 
         dispatch(log_in(userid, password))
         setCookie("is_login", `${accessToken}`)
+        console.log(res.data)
 
         api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
-
         window.alert("로그인 완료")
         history.replace("/")
       })
@@ -49,7 +49,6 @@ const sign_up_md = (user_info) => {
     api
       .post("/user/signup", { userid, username, password })
       .then((res) => {
-        console.log(res.data)
         window.alert("회원가입 성공")
         history.replace("/login")
       })

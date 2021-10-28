@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
+import styled from "styled-components"
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { BsCircle } from "react-icons/bs";
 import { Button } from "react-bootstrap";

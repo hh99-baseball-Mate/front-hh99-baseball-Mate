@@ -18,7 +18,7 @@ Text.defaultProps = {
   bold: false,
   color: "#000",
   size: "14px",
-  margin: false,
+  margin: "0",
   center: false,
 }
 

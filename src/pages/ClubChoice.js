@@ -1,11 +1,19 @@
 import React from "react"
 import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
+import { AiOutlineArrowLeft } from "react-icons/ai"
+import { history } from "../redux/configStore"
 
 export const ClubChoice = (props) => {
   return (
     <>
       <div style={{ margin: "16px" }}>
+        <AiOutlineArrowLeft
+          style={{ position: "absolute" }}
+          onClick={() => {
+            history.push("/login")
+          }}
+        />
         <div style={{ margin: "32px 16px" }}>
           <div
             style={{
