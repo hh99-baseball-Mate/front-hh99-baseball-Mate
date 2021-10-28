@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import "bootstrap/dist/css/bootstrap.min.css";
+import styled from "styled-components"
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { useHistory } from "react-router";
