@@ -79,7 +79,6 @@ bottom:0;
 width:100%;
 height:32px;
 margin-left:50px;
-  }
 `;
 
 const Dat = styled.div`
