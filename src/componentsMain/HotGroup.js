@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { mainCreators } from "../redux/modules/mainPage";
-import users from "../icon/user.svg";
+import colorUsers from "../icon/colorUsers.svg"
 
 const HotGroup = (props) => {
 
@@ -49,10 +49,10 @@ const HotGroup = (props) => {
 
 				<Text size="16px" weight="bold"> 11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~</Text>
 
-				<Warp flex="flex" justify="space-between" align="center" margin="16px 0 0 0">
+				<Warp flex="flex" justify="space-between" align="center" margin="10px 0 0 0">
 					<Bar/>
 					<Warp flex="flex">
-						<img src={users} alt="users"/>
+						<img src={colorUsers} alt="users"/>
 						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
 							&nbsp;3명&nbsp;
 						</Text>
@@ -99,7 +99,7 @@ const Text = styled.div`
 const Card = styled.div`
 	width: 335px;
 	height: 177px;
-	padding: 20px;
+	padding: 18px;
 	background: #FFFFFF;
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
