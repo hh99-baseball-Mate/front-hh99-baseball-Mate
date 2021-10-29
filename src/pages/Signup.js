@@ -49,7 +49,7 @@ export const Signup = (props) => {
       passwordChecking &&
       password2Checking
     ) {
-      dispatch(userActions.sign_up_md({ userid, username, password }))
+      dispatch(userActions.signUpMD({ userid, username, password }))
       console.log("가입완료")
     } else {
       window.alert("입력한 내용을 다시 확인하시기 바랍니다.")

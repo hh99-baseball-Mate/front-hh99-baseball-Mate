@@ -3,17 +3,25 @@ import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { history } from "../redux/configStore"
+import { Header } from "../components/Header"
+import { useSelector } from "react-redux"
 
 export const ClubChoice = (props) => {
+
+  const userInfo = useSelector((state) => state.user.user)
+
+  console.log(userInfo)
   return (
     <>
-      <div style={{ margin: "16px" }}>
-        <AiOutlineArrowLeft
-          style={{ position: "absolute" }}
-          onClick={() => {
-            history.push("/login")
-          }}
-        />
+      <div
+        style={{
+          margin: "16px",
+          width: "90%",
+          maxWidth: "375px",
+          margin: "20px auto 0 auto",
+        }}
+      >
+        <Header></Header>
         <div style={{ margin: "32px 16px" }}>
           <div
             style={{
@@ -35,10 +43,10 @@ export const ClubChoice = (props) => {
             신유빈님이 좋아하는 구단을 선택해주세요.
           </div>
         </div>
-
         {/* 구단선택 */}
         <div
           style={{
+            maxWidth: "1024px",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
           }}
@@ -94,7 +102,6 @@ export const ClubChoice = (props) => {
             style={{ width: "120px" }}
           />
         </div>
-
         <div
           style={{
             position: "fixed",

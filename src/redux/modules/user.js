@@ -10,8 +10,7 @@ const LOG_IN = "LOG_IN"
 
 // 액션 함수
 
-const log_in = createAction(LOG_IN, (user_info) => ({ user_info }))
-
+const logIn = createAction(LOG_IN, (user_info) => ({ user_info }))
 
 const initialState = {
   user: [],
@@ -20,19 +19,29 @@ const initialState = {
 
 // 미들웨어
 
-const log_in_md = (user_info) => {
+const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, password } = user_info
     api
       .post("/user/login", { userid, password })
       .then((res) => {
+        console.log("로그인반환", res)
+
+        const _myteam = res.data.myteam
+
         const accessToken = res.data
 
-        dispatch(log_in(userid, password))
         setCookie("is_login", `${accessToken}`)
-        console.log(res.data)
 
         api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+        dispatch(logIn(userid, _myteam))
+
+        if (!_myteam) {
+          console.log("구단선택하세요")
+          history.push("/clubchoice")
+          return
+        }
+
         window.alert("로그인 완료")
         history.replace("/")
       })
@@ -41,13 +50,16 @@ const log_in_md = (user_info) => {
   }
 }
 
-const sign_up_md = (user_info) => {
+const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password } = user_info
-    console.log(userid, username, password)
 
     api
-      .post("/user/signup", { userid, username, password })
+      .post("/user/signup", {
+        userid,
+        username,
+        password,
+      })
       .then((res) => {
         window.alert("회원가입 성공")
         history.replace("/login")
@@ -56,7 +68,7 @@ const sign_up_md = (user_info) => {
   }
 }
 
-const login_check_md = () => {
+const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     const token = getCookie("is_login")
 
@@ -79,7 +91,6 @@ const kakaoLogin = (key) => {
       .get(`http://52.78.93.38/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
-        console.log(access_token)
 
         setCookie("is_login", access_token)
         history.replace("/")
@@ -102,11 +113,11 @@ export default handleActions(
 )
 
 const actionCreators = {
-  log_in,
-  log_in_md,
-  sign_up_md,
+  logIn,
+  logInMD,
+  signUpMD,
   kakaoLogin,
-  login_check_md,
+  logInCheckMD,
 }
 
 export { actionCreators }
