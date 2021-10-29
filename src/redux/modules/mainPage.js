@@ -56,10 +56,10 @@ const gameTimeMW = () => {
 }
 
 
-const hotGroupMW = () => {
+const hotGroupMW = (number) => {
 	return (dispatch) => {
 		apis
-			.getHotGroup()
+			.getHotGroup(number)
 			.then((res) => {
 				console.log(res)
 				const list = res.data;

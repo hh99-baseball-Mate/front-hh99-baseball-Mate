@@ -27,7 +27,7 @@ export const apis = {
   getGameTime: () => instance.get("/api/kbodata"),
 
   // 핫한 모임 불러오기
-  getHotGroup: () => instance.get('/hotGroup'),
+  getHotGroup: (number) => instance.get(`/main/hotGroup/${number}`),
 
   // 타임라인 불러오기
   getTimeline: () => instance.get('/page/timeLine'),

@@ -18,6 +18,7 @@ const TimelineList = React.memo((props) => {
 
 	const addTimeline = () => {
 		dispatch(timelineCreators.addTimelineMW(message));
+		setMessage("");
 	};
 
 	// useEffect(() => {
@@ -50,8 +51,7 @@ const TimelineList = React.memo((props) => {
 			</List>
 
 			{/* 타임라인 작성 */}
-      <Container>
-        {/* <input type="text" cols="40" rows="10" type="content"/> */}
+      {/* <Container>
         <textarea  cols="50" rows="2"
           onChange={(e) => {
             setMessage(e.target.value);
@@ -59,9 +59,9 @@ const TimelineList = React.memo((props) => {
         ></textarea>
         <button onClick={() => {addTimeline()}}
 				>타임라인 작성</button>
-      </Container>
+      </Container> */}
 			
-			{/* <TimelimeWrite/> */}
+			<TimelimeWrite/>
 
 
 		</Container>

@@ -8,6 +8,7 @@ import colorUsers from "../shared/icon/colorUsers.svg"
 const HotGroup = (props) => {
 
 	const dispatch = useDispatch();
+
 	const hotGroup = useSelector((state) => (state.mainPage.hotGroup))
 	console.log("hotGroup",hotGroup)
 
@@ -17,16 +18,7 @@ const HotGroup = (props) => {
 
 	return (
 		<Container>
-
-			<Warp flex="flex" justify="space-between" align="center" margin="0 0 13px 0">
-				<Text size="16px" weight="bold">
-					지금 핫한 모임 🔥
-				</Text>
-				<Text size= "12px" weight= "500px" color="#C4C4C4">
-					+ More
-				</Text>
-			</Warp>
-
+			
 			<Card>
 				<Warp margin="0 0 16px 0">
 					<Warp flex="flex" margin="0 0 12px 0">

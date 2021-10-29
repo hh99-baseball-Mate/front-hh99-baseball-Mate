@@ -17,14 +17,17 @@ const TimelimeWrite = (props) => {
   return (
     <React.Fragment>
       <Container>
-        {/* <input type="text" cols="40" rows="10" type="content"/> */}
-        <textarea  cols="50" rows="2"
+        
+        <Circle>
+          {/* <img src={} alt="user" /> */}
+        </Circle>
+        {/* <textarea  cols="50" rows="2"
           onChange={(e) => {
             setMessage(e.target.value);
           }}
         ></textarea>
         <button onClick={() => {addTimeline()}}
-				>타임라인 작성</button>
+				>타임라인 작성</button> */}
       </Container>
     </React.Fragment>
   );
@@ -66,4 +69,13 @@ const TimeLineCard = styled.div`
   margin: auto;
   margin-top: 12px;
   border-radius: 10px;
+`;
+
+
+const Circle = styled.div`
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: #FFF0EE;
+	/* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 `;
