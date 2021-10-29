@@ -71,9 +71,8 @@ export default HotGroup;
 
 const Container = styled.div`
 	width: 335px; 
-	height: 177px;
-	margin: auto;
-	margin-top: 20px;
+	/* height: 177px; */
+	margin: 20px auto;
 `;
 
 const Warp = styled.div`

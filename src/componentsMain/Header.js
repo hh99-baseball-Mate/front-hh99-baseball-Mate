@@ -10,8 +10,14 @@ const Header = (props) => {
 		<React.Fragment>
 			<Box>
 				<Text weight="bold" color="#000000">추천</Text>
+
 				<Text color="rgba(0, 0, 0, 0.5)">모임</Text>
-				<Text color="rgba(0, 0, 0, 0.5)">소식</Text>
+
+				<Text color="rgba(0, 0, 0, 0.5)" 
+					onClick={()=>{history.push("/timeline")}}
+				>
+					타임라인
+				</Text>
 				<Text color="rgba(0, 0, 0, 0.5)">굿즈</Text>
 			</Box>
 		</React.Fragment>

@@ -8,7 +8,7 @@ const Banner = (props) => {
 	const dispatch = useDispatch();
 	const gameTime = useSelector((state) => state.mainPage.gamelist);
 	
-	console.log("gameTime",gameTime)
+	// console.log("gameTime",gameTime)
 
 	useEffect(() => {
 		dispatch(mainCreators.gameTimeMW());
@@ -24,9 +24,9 @@ const Banner = (props) => {
 							<Container key={idx}>
 								<div>{gameTime[idx].date}</div>
 								<div>{gameTime[idx].time}</div>
-								<div><img src={gameTime[idx].awayImage} width="30px" alt="away"/></div>
-								<div>{gameTime[idx].match}</div>
-								<div><img src={gameTime[idx].homeImage} width="30px" alt="home"/></div>
+								<div><img src={gameTime[idx].homeImage} width="30px" alt="away"/></div>
+								<div>{gameTime[idx].matches}</div>
+								<div><img src={gameTime[idx].awayImage} width="30px" alt="home"/></div>
 								<div>{gameTime[idx].location}</div>
 							</Container>
 						)
