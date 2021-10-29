@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { mainCreators } from "../redux/modules/mainPage";
-import colorUsers from "../icon/colorUsers.svg"
+import colorUsers from "../shared/icon/colorUsers.svg"
 
 const HotGroup = (props) => {
 
@@ -71,9 +71,8 @@ export default HotGroup;
 
 const Container = styled.div`
 	width: 335px; 
-	height: 177px;
-	margin: auto;
-	margin-top: 20px;
+	/* height: 177px; */
+	margin: 20px auto;
 `;
 
 const Warp = styled.div`
