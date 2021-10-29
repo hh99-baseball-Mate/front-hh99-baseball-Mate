@@ -56,4 +56,8 @@ const Input = styled.input`
     color: #c4c4c4;
     font-size: 12px;
   }
+  :focus {
+    outline: none !important;
+    border-bottom: 2px solid #f25343;
+  }
 `

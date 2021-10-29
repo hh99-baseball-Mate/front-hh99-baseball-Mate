@@ -14,7 +14,7 @@ const instance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
 
 export const apis = {
   // baseURL을 미리 지정해줬기 때문에 함수의 첫 번째 인자에 들어가는 url은
@@ -24,7 +24,7 @@ export const apis = {
   
   // main
   // 경기 일정 불러오기
-  getGameTime: () => instance.get('/api/kbodata'),
+  getGameTime: () => instance.get("/api/kbodata"),
 
   // 핫한 모임 불러오기
   getHotGroup: () => instance.get('/hotGroup'),

@@ -6,18 +6,22 @@ import { BsCircle } from "react-icons/bs";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Header } from "../components/Header"
 
 const GroupTwo = (props) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const history = useHistory()
   function BackGo() {
-    history.push("/groupone");
+    history.push("/groupone")
   }
   return (
     <>
-      <AiOutlineArrowLeft onClick={BackGo}></AiOutlineArrowLeft>
+      <div style={{ margin: "30px 0 0 0" }}>
+        <Header>일정 선택</Header>
+        {/* <AiOutlineArrowLeft onClick={BackGo}></AiOutlineArrowLeft>
       {/* <>qwjeqw</> */}
-      <Title>일정 선택</Title>
+        {/* <Title>일정 선택</Title> */}
+      </div>
       <Dat>날짜와 요일</Dat>
 
       <CardAll>
@@ -62,8 +66,8 @@ const GroupTwo = (props) => {
         </CenterInfo>
       </CardAll>
     </>
-  );
-};
+  )
+}
 
 export default GroupTwo;
 

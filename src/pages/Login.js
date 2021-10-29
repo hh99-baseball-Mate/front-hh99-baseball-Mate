@@ -121,7 +121,7 @@ export const Login = (props) => {
           _onClick={() => {
             // history.push("/clubchoice")
             dispatch(
-              userActions.log_in_md({
+              userActions.logInMD({
                 userid,
                 password,
               })
