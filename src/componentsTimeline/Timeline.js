@@ -1,83 +1,76 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { timelineCreators } from "../redux/modules/timeline";
 
-const LoadTimelime = React.memo((props) => {
+const Timeline = React.memo((props) => {
 	const dispatch = useDispatch();
-	// const timeline = useSelector((state) => state.timeline.timeline);
-	// const timeLineId = 174
-	// console.log("타임라인", timeline)
-	// console.log("메세지", props.message)
+	
+	useEffect(() => {
+		dispatch(timelineCreators.loadTimelineMW());
+	}, [])
 
+	useEffect(() => {
+		dispatch(timelineCreators.likeTimelineMW());
+	}, [])
 
-	// useEffect(() => {
-	// 	dispatch(timelineCreators.loadTimelineMW());
-	// 	// return () => {
-	// 	// 	timeline;
-	// 	// }
-	// }, [timeline])
-
+	const [like, setLike] = useState(false)
 
 	const id = props.id;
 	const userName = props.userName;
 	const content = props.content;
 	const dayBefore = props.dayBefore;
 	const likecount = props.likecount;
+	const likeState = props.likeState
 
+	// const love =  😍;
+	console.log("likeState",likeState)
 	console.log(id, userName, content, dayBefore, likecount)
 
 	const delTimeline = () => {
 		// const timeLineId = props.id
-    dispatch(timelineCreators.deleteTimelineMW(props.id));
+		if (window.confirm("정말 삭제하시겠습니까?") === true) {
+			dispatch(timelineCreators.deleteTimelineMW(props.id));
+		}
   };
+
+
+
+	// const likeTimeline = () => {
+
+	// 	dispatch(timelineCreators.likeTimelineMW(id, like))
+	// }
 
 
 	return (
 		<React.Fragment>
 
 			<Container>
-			{/* {
-				timeline.map((timeline, idx) => {
-					return (
-						<Card timeline={timeline} key={idx}>
-						</Card>
-					)
-				})
-			} */}
 				<TimeLineCard>
 					<Text>{props.userName}</Text>
 					<Text>{props.content}</Text>
 					<Text>{props.dayBefore}</Text>
+					
+					<p onClick={()=>{
+						setLike(!like)
+						dispatch(timelineCreators.likeTimelineMW(props.id, like))
+					}}>
+						
+						{like === true ? <p>😍</p> : <p>🤨</p>}
+					</p>
+					
 					<Text>{props.likecount}</Text>
+				
 					<Text onClick={delTimeline}>X삭제</Text>
 				</TimeLineCard>
 			</Container>
-
+			{/* 🤨 */}
 		</React.Fragment>
 	)
 });
 
-// function Card(props) {
-// 	const dispatch = useDispatch();
-// 	console.log("아이디",props.timeline.id)
 
-// 	const delTimeline = () => {
-//     dispatch(timelineCreators.delTimeline(props.timeline.id));
-//   };
-
-// 	return (
-// 		<TimeLineCard>
-// 			<Text>{props.timeline.userName}</Text>
-// 			<Text>{props.timeline.content}</Text>
-// 			<Text>{props.timeline.dayBefore}</Text>
-// 			<Text>{props.timeline.likecount}</Text>
-// 			<Text onClick={delTimeline}>X삭제</Text>
-// 		</TimeLineCard>
-// 	)
-// }
-
-export default LoadTimelime;
+export default React.memo(Timeline);
 
 const Container = styled.div`
 	width: 335px; 

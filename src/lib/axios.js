@@ -30,7 +30,10 @@ export const apis = {
   getHotGroup: () => instance.get('/hotGroup'),
 
   // 타임라인 불러오기
-  getTimelime: () => instance.get('/page/timeLine'),
+  getTimeline: () => instance.get('/page/timeLine'),
+
+  // 메인화면 타임라인 조회
+  getMainTimeline: (number) => instance.get(`/main/nowTimeline/${number}`),
 
 };
 

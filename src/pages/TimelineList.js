@@ -2,52 +2,73 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import TimelineList from "../componentsTimeline/TimelineList";
+import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { timelineCreators } from "../redux/modules/timeline";
 
-const Timeline = (props) => {
+const TimelineList = React.memo((props) => {
 	const dispatch = useDispatch();
 	const timeline = useSelector((state) => state.timeline.timeline);
-	console.log(timeline)
-	// const [message, setMessage] = useState("");
+	const likeState = useSelector((state) => state.timeline.like);
+	const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
-		return () => {
-			// TimelineList;
-		}
 	}, [])
+
+	const addTimeline = () => {
+		dispatch(timelineCreators.addTimelineMW(message));
+	};
+
+	// useEffect(() => {
+	// 	dispatch(timelineCreators.deleteTimelineMW(props.id));
+	// }, [])
+
 
 	return (
 		<Container>
 
-				<Warp flex="flex" justify="space-between">
-					<Text size="16px" weight="bold">
-						생생 타임라인 💬
-					</Text>
-					<Text size= "12px" weight= "500px" color="#C4C4C4">
-						+ More
-					</Text>
-				</Warp>
+			<Warp flex="flex" justify="space-between">
+				<Text size="16px" weight="bold">
+					생생 타임라인 💬
+				</Text>
+				<Text size= "12px" weight= "500px" color="#C4C4C4">
+					+ More
+				</Text>
+			</Warp>
 
+			{/* 타임라인 리스트 */}
+			<List>
 				{
 					timeline.map((timeline, idx) => {
 						return (
-							<TimelineList key={idx} {...timeline}>
-							</TimelineList>
+							<Timeline key={idx} {...timeline} {...likeState}>
+							</Timeline>
 						)
 					})
 				}
+			</List>
+
+			{/* 타임라인 작성 */}
+      <Container>
+        {/* <input type="text" cols="40" rows="10" type="content"/> */}
+        <textarea  cols="50" rows="2"
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+        ></textarea>
+        <button onClick={() => {addTimeline()}}
+				>타임라인 작성</button>
+      </Container>
 			
-				<TimelimeWrite/>
+			{/* <TimelimeWrite/> */}
 
 
 		</Container>
 	)
-}
+});
 
-export default Timeline;
+export default TimelineList;
 
 const Container = styled.div`
 	width: 375px; 
@@ -73,4 +94,9 @@ const Text = styled.div`
 	color: ${(props) => props.color};
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
+`;
+
+const List = styled.div`
+ 	height: 90vh;
+	overflow: auto;
 `;

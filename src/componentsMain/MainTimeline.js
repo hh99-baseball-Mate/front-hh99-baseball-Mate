@@ -1,31 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-const Timeline = (props) => {
+const MainTimeline = (props) => {
 
+	console.log("xxxxx",props.userName, props.content)
 	return (
 		<React.Fragment>
 			<Container>
 
-				{/* 타임라인 제목 */}
-				<Warp flex="flex" justify="space-between">
-					<Text size="16px" weight="bold">
-						생생 타임라인 💬
-					</Text>
-					<Text size= "12px" weight= "500px" color="#C4C4C4">
-						+ More
-					</Text>
-				</Warp>
-
 				{/* 타임라인 리스트 */}
 				<TimeLineCard>
-				누가 이기고있나요?
-				</TimeLineCard>
-				<TimeLineCard>
-				누가 이기고있나요?
-				</TimeLineCard>
-				<TimeLineCard>
-				누가 이기고있나요?
+					{props.userName}
+					{props.content}
+					{props.dayBefore}
+					{props.likecount}
 				</TimeLineCard>
 
 			</Container>
@@ -33,7 +21,7 @@ const Timeline = (props) => {
 	)
 }
 
-export default Timeline;
+export default MainTimeline;
 
 const Container = styled.div`
 	width: 335px; 

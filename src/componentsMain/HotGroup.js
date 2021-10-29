@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { mainCreators } from "../redux/modules/mainPage";
-import colorUsers from "../icon/colorUsers.svg"
+import colorUsers from "../shared/icon/colorUsers.svg"
 
 const HotGroup = (props) => {
 
