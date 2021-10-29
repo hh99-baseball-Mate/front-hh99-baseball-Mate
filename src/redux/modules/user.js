@@ -29,11 +29,11 @@ const logInMD = (user_info) => {
 
         const _myteam = res.data.myteam
 
-        const accessToken = res.data
-
-        setCookie("is_login", `${accessToken}`)
+        const accessToken = res.data.token
 
         api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+        setCookie("is_login", `${accessToken}`)
+
         dispatch(logIn(userid, _myteam))
 
         if (!_myteam) {
@@ -72,11 +72,11 @@ const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     const token = getCookie("is_login")
 
+    console.log(token)
+
     api
-      .post("/api/logincheck", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      .post("/user/logincheck", {
+        token,
       })
       .then((res) => [console.log("로그인체크 data", res.data)])
       .catch((err) => console.log(err, "로그인체크에러"))
