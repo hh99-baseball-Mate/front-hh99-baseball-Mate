@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { mainCreators } from "../redux/modules/mainPage";
 import { useHistory } from "react-router-dom";
 
-import NavigationBar from "../shared/NavigationBar";
 import MainTimeline from "../componentsMain/MainTimeline";
 import HotGroup from "../componentsMain/HotGroup";
 import Banner from "../componentsMain/Banner";
@@ -12,37 +11,80 @@ import Header from "../componentsMain/Header";
 
 const Main = (props) => {
 	const dispatch = useDispatch();
-	const history = useHistory
+	const history = useHistory();
 	const mainTimeline = useSelector((state) => state.mainPage.mainTimeline)
+	const hotGroup = useSelector((state) => state.mainPage.hotGroup)
 	
+	useEffect(() => {
+		dispatch(mainCreators.hotGroupMW(4))
+	}, [])
+
 	useEffect(() => {
 		dispatch(mainCreators.loadMainTimelineMW(10))
 	}, [])
-
 	
-	console.log("mainTimeline",mainTimeline)
+	// console.log("mainTimeline",mainTimeline)
+	console.log("hotGroup",hotGroup)
 
 	return (
 		<Container>
 
 			<p style={{fontSize:"30px"}}>야구 MATE</p>
+
+			{/* 헤더 네비 */}
 			<Header />
+
+			{/* 야구 일정 */}
 			<Banner />
-			<HotGroup />
+
+			{/* 핫한 모임 타이틀 */}
+			<Box>
+				<Warp flex="flex" justify="space-between" align="center" margin="0 0 13px 0">
+					<Text size="16px" weight="bold">
+						지금 핫한 모임 🔥
+					</Text>
+					
+					<Button>
+						<Text size= "12px" weight= "500px" color="#C4C4C4"
+							onClick={()=>{history.push("/groupone")}}
+						>
+							+ More
+						</Text>
+					</Button>
+				</Warp>
+			</Box>
+
+			{/* 핫한 모임 리스트 */}
+			{
+				hotGroup.map((hotGroup, idx) => {
+					return (
+						<HotGroup key={idx} {...hotGroup} />
+					)
+				})
+			}
+			{/* <HotGroup {...hotGroup} /> */}
+
+
 			<Rectangle/>
 
+			{/* 타임라인 타이틀 */}
+			<Box>
+				<Warp flex="flex" justify="space-between">
+					<Text size="16px" weight="bold">
+						생생 타임라인 💬
+					</Text>
 
-			<Warp flex="flex" justify="space-between">
-				<Text size="16px" weight="bold">
-					생생 타임라인 💬
-				</Text>
-				<Text size= "12px" weight= "500px" color="#C4C4C4"
-					onClick={()=>{history.push("/timeline")}}
-				>
-					+ More
-				</Text>
-			</Warp>
-			<div>
+					<Button>
+						<Text size= "12px" weight= "500px" color="#C4C4C4"
+							onClick={()=>{history.push("/timeline")}}
+						>
+							+ More
+						</Text>
+					</Button>
+				</Warp>
+			</Box>
+
+			{/* 타임라인 리스트 */}
 			{
 				mainTimeline.map((mainTimeline, idx) => {
 					return (
@@ -51,9 +93,7 @@ const Main = (props) => {
 					)
 				})
 			}
-			</div>
 			{/* <MainTimeline {...mainTimeline} /> */}
-			{/* <NavigationBar /> */}
 			
 		</Container>
 	)
@@ -110,4 +150,9 @@ const TimeLineCard = styled.div`
 	margin: auto;
 	margin-top: 12px;
 	border-radius: 10px;
+`;
+
+const Button = styled.button`
+	background: none;
+	border: none;
 `;

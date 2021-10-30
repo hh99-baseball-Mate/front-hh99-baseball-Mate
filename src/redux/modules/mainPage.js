@@ -56,12 +56,12 @@ const gameTimeMW = () => {
 }
 
 
-const hotGroupMW = () => {
+const hotGroupMW = (number) => {
 	return (dispatch) => {
 		apis
-			.getHotGroup()
+			.getHotGroup(number)
 			.then((res) => {
-				console.log(res)
+				// console.log("핫그룹",res)
 				const list = res.data;
 				dispatch(load_hotgroup(list));
 			})
@@ -77,7 +77,7 @@ const loadMainTimelineMW = (number) => {
 			.getMainTimeline(number)
 			.then((res) => {
 				const mainTimeline = res.data;
-				console.log("메인타임라인", mainTimeline)
+				// console.log("메인타임라인", mainTimeline)
 				dispatch(load_mainTimeline(mainTimeline))
 			})
 			.catch((err) => {

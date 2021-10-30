@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const MainTimeline = (props) => {
 
-	console.log("xxxxx",props.userName, props.content)
 	return (
 		<React.Fragment>
 			<Container>
