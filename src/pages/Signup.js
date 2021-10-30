@@ -62,7 +62,7 @@ export const Signup = (props) => {
       <Container>
         {/* 헤더 */}
         <Header
-          _onClick={() => {
+          onClick={() => {
             history.push("/login")
           }}
         >

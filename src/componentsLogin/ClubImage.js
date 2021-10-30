@@ -25,7 +25,7 @@ export const ClubImage = (props) => {
 
   const choiceClub = (e) => {
     dispatch(userActions.choiceClubMD(e.target.className))
-    // history.push("/")
+    history.replace("/")
   }
 
   return (

@@ -3,6 +3,7 @@ import { produce } from "immer"
 import { getCookie, setCookie } from "../../shared/Cookie"
 import axios from "axios"
 import { instance, tokenInstance } from "../../lib/axios"
+import { history } from "../configStore"
 
 // 액션타입
 
@@ -55,7 +56,6 @@ const logInMD = (user_info) => {
         window.alert("로그인 완료")
         history.replace("/")
       })
-
       .catch((err) => console.log(err, "로그인에러입니다."))
   }
 }
@@ -80,19 +80,24 @@ const signUpMD = (user_info) => {
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
-    const token = getCookie("is_login")
-
     tokenInstance
-      .post("/user/logincheck", {
-        token,
-      })
+      .post("/user/logincheck")
       .then((res) => {
-        console.log(getState().user.user)
+        const myteam = res.data.myteam
+
         const login_user = {
           username: res.data.username,
-          myteam: res.data.myteam,
+          myteam,
         }
+
         dispatch(loginCheck(login_user))
+
+        if (myteam === null) {
+          history.replace("/clubchoice")
+          return
+        }
+
+        history.replace("/")
       })
       .catch((err) => console.log(err, "로그인체크에러"))
   }
@@ -100,11 +105,8 @@ const logInCheckMD = () => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    const token = getCookie("is_login")
-
-    instance
+    tokenInstance
       .post("/user/myteam", {
-        token: token,
         myteam: club,
       })
       .then((res) => dispatch(choiceClub(res.data.myteam)))
@@ -139,7 +141,8 @@ export default handleActions(
       }),
     [LOGIN_CHECK]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.login_user)
+        draft.user_info = action.payload.login_user
+        draft.is_login = true
       }),
     [Choice_Club]: (state, action) =>
       produce(state, (draft) => {
