@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import calendar from "../icon/calendar.svg";
-import location from "../icon/location.svg";
-import colorUsers from "../icon/colorUsers.svg";
-import users from "../icon/users.svg";
+import calendar from "../shared/icon/calendar.svg";
+import location from "../shared/icon/location.svg";
+import colorUsers from "../shared/icon/colorUsers.svg";
+import users from "../shared/icon/users.svg";
 
 const groupDetailPage = (props) => {
   return (

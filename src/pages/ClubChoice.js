@@ -1,117 +1,60 @@
 import React from "react"
-import Image from "react-bootstrap/Image"
 import Button from "react-bootstrap/Button"
+import { history } from "../redux/configStore"
+import { Header } from "../components/Header"
+import { useSelector } from "react-redux"
+import { ClubImage } from "../componentsLogin/ClubImage"
+import { Text } from "../componentsLogin"
 
 export const ClubChoice = (props) => {
+  const userNmae = useSelector((state) => state.user.user_info.username)
+
+  console.log(userNmae)
+
   return (
     <>
-      <div style={{ margin: "16px" }}>
+      <div
+        style={{
+          width: "90%",
+          maxWidth: "375px",
+          margin: "20px auto 0 auto",
+        }}
+      >
+        <Header
+          onClick={() => {
+            history.push("/login")
+          }}
+        />
         <div style={{ margin: "32px 16px" }}>
           <div
             style={{
               padding: "36px 50px 50px 0 ",
-              fontSize: "30px",
-              fontWeight: "bold",
             }}
           >
-            구단선택
+            <Text size="18px" bold>
+              구단선택
+            </Text>
           </div>
 
-          <div
-            style={{
-              fontSize: "24px",
-              maxWidth: "250px",
-              fontWeight: "bold",
-            }}
-          >
-            신유빈님이 좋아하는 구단을 선택해주세요.
-          </div>
+          {/* 선택 메세지 로그인 사용자 */}
+          <Text size="24px" bold>
+            <span style={{ color: "blue" }}>
+              {userNmae ? userNmae : "관리자"}
+            </span>
+            님이 좋아하는 구단을 선택해주세요.
+          </Text>
         </div>
 
         {/* 구단선택 */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+            gap: "30px",
           }}
         >
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-          <Image
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCeqRqVMx4w8wh3lOdYbf6e4BoA2BRPnZZiHrfJp8hqEH52o6dDCS6pNotpWWZ5hOSU0&usqp=CAU"
-            rounded
-            style={{ width: "120px" }}
-          />
-        </div>
-
-        <div
-          style={{
-            position: "fixed",
-            margin: "0 auto",
-            width: "80%",
-            right: "0px",
-            transform: "translate(-10%, -40%)",
-            bottom: "0px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="primary"
-            style={{
-              maxWidth: "450px",
-              width: "100%",
-              boxSizing: "border-box",
-              height: "50px",
-              borderRadius: "30px",
-              border: "1px solid #00000057",
-            }}
-          >
-            로그인
-          </Button>
+          {/* 클럽 이미지 */}
+          <ClubImage />
         </div>
       </div>
     </>

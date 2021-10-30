@@ -6,6 +6,7 @@ import { connectRouter } from "connected-react-router";
 import user from "./modules/user";
 
 import mainPage from "./modules/mainPage";
+import timeline from "./modules/timeline";
 
 export const history = createBrowserHistory();
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   group: Group,
 
   mainPage,
+  timeline,
 
   router: connectRouter(history),
 });

@@ -1,18 +1,14 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { Buttons } from "../elements/Buttons"
-import { Inputs } from "../elements/Inputs"
+import { Buttons, Inputs, Text } from "../componentsLogin/"
 import { actionCreators as userActions } from "../redux/modules/user"
 import { IoEyeSharp } from "react-icons/io5"
-import {
-  AiOutlineArrowLeft,
-  AiOutlineCheckCircle,
-  AiOutlineCheck,
-} from "react-icons/ai"
-import { Text } from "../elements/Text"
-import Button from "@restart/ui/esm/Button"
+import { AiOutlineCheckCircle, AiOutlineCheck } from "react-icons/ai"
 import styled from "styled-components"
 import { history } from "../redux/configStore"
+import { passwordCheck, emailCheck } from "../shared/LoginCheck"
+import { Header } from "../components/Header"
+import { Container } from "../componentsLogin/Container"
 
 export const Signup = (props) => {
   const dispatch = useDispatch()
@@ -21,45 +17,57 @@ export const Signup = (props) => {
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
 
-  // 로그인정보
-  const [userid, setUserId] = useState("")
-  const [username, setUserName] = useState("")
-  const [password, setPassword] = useState("")
-  const [password2, setPassword2] = useState("")
+  // 인풋 여러개쓰기
+  const [inputsValue, setInputValue] = useState({
+    userid: "",
+    username: "",
+    password: "",
+    password2: "",
+  })
 
-  // 입력 확인
-  const [idCheck, setIdCheck] = useState(false)
-  const [nameCheck, setNameCheck] = useState(false)
-  const [passwordCheck, setIdPasswordCheck] = useState(false)
+  // 비구조화 할당
+  const { userid, username, password, password2 } = inputsValue
 
-  // const userIdCheck = () => {
+  // name 에는 input 네임이 value 에는 그 값들이 들어감
+  const onChangeValue = (e) => {
+    const { name, value } = e.target
+    setInputValue({
+      ...inputsValue,
+      [name]: value,
+    })
+  }
 
-  // }
+  const idCehcking = userid !== "" && emailCheck.test(userid)
+  const userNameChecking = username !== ""
+  const passwordChecking = password !== "" && passwordCheck.test(password)
+  const password2Checking = password2 !== "" && password === password2
+
+  const signUpChecking = () => {
+    if (
+      idCehcking &&
+      userNameChecking &&
+      passwordChecking &&
+      password2Checking
+    ) {
+      dispatch(userActions.signUpMD({ userid, username, password }))
+      console.log("가입완료")
+    } else {
+      window.alert("입력한 내용을 다시 확인하시기 바랍니다.")
+      console.log("가입실패")
+    }
+  }
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "90%",
-          margin: "30px auto",
-          maxWidth: "335px",
-        }}
-      >
+      <Container>
         {/* 헤더 */}
-        <div style={{ position: "relative" }}>
-          <AiOutlineArrowLeft
-            style={{ position: "absolute" }}
-            onClick={() => {
-              history.push("/login")
-            }}
-          />
-          <Text size="16px" center>
-            {" "}
-            이메일로 회원가입
-          </Text>
-        </div>
+        <Header
+          onClick={() => {
+            history.push("/login")
+          }}
+        >
+          이메일로 가입
+        </Header>
 
         {/* 게정생성 */}
         <div style={{ margin: "50px 0 0 0" }}>
@@ -69,18 +77,24 @@ export const Signup = (props) => {
         </div>
 
         <div style={{ margin: "25px 0 0 0" }}>
-          <Text>
-            이메일 <AiOutlineCheckCircle size="16px" />
-          </Text>
           <div style={{ position: "relative" }}>
             <Inputs
+              name="userid"
               type="text"
               value={userid}
-              _onChange={(e) => {
-                setUserId(e.target.value)
-              }}
+              onChange={onChangeValue}
               placeholder="아이디로 사용할 이메일을 입력해주세요"
-            />
+            >
+              이메일
+              {/* 입력체크표시 */}
+              {idCehcking && (
+                <AiOutlineCheckCircle
+                  size="16px"
+                  style={{ margin: "0px 5px" }}
+                  color="#F25343"
+                />
+              )}
+            </Inputs>
             <button
               style={{
                 position: "absolute",
@@ -95,43 +109,61 @@ export const Signup = (props) => {
               <AiOutlineCheck />
             </button>
           </div>
+
+          {/* 입력오류 문구 */}
+          {!idCehcking && (
+            <Text color="#FB1F07" size="9px">
+              이메일 양식을 확인해주세요
+            </Text>
+          )}
         </div>
 
         <InputBox>
-          <Text>
-            닉네임 <AiOutlineCheckCircle size="16px" />
-          </Text>
           <Inputs
+            name="username"
             type="text"
             value={username}
-            _onChange={(e) => {
-              setUserName(e.target.value)
-            }}
+            onChange={onChangeValue}
             placeholder="닉네임을 입력해주세요"
-          ></Inputs>
+          >
+            닉네임
+            {/* 입력체크표시 */}
+            {userNameChecking && (
+              <AiOutlineCheckCircle
+                size="16px"
+                style={{ margin: "0px 5px" }}
+                color="#F25343"
+              />
+            )}
+          </Inputs>
+
+          {/* 입력오류 문구 */}
+          {!userNameChecking && (
+            <Text color="#FB1F07" size="9px">
+              아이디를 확인해주세요
+            </Text>
+          )}
         </InputBox>
 
         <InputBox>
-          <Text>비밀번호</Text>
-          {showPwd ? (
-            <Inputs
-              type="text"
-              value={password}
-              _onChange={(e) => {
-                setPassword(e.target.value)
-              }}
-              placeholder="비밀번호를 입력해주세요"
-            ></Inputs>
-          ) : (
-            <Inputs
-              type="password"
-              value={password}
-              _onChange={(e) => {
-                setPassword(e.target.value)
-              }}
-              placeholder="비밀번호를 입력해주세요"
-            ></Inputs>
-          )}
+          <Inputs
+            name="password"
+            check
+            type={showPwd ? "text" : "password"}
+            value={password}
+            onChange={onChangeValue}
+            placeholder="영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
+          >
+            비밀번호
+            {/* 입력체크표시 */}
+            {passwordChecking && (
+              <AiOutlineCheckCircle
+                size="16px"
+                style={{ margin: "0px 5px" }}
+                color="#F25343"
+              />
+            )}
+          </Inputs>
           <IoEyeSharp
             size="24"
             style={{
@@ -143,33 +175,33 @@ export const Signup = (props) => {
               setShowPwd(!showPwd)
             }}
           ></IoEyeSharp>
+
+          {/* 입력오류 문구 */}
+          {!passwordChecking && (
+            <Text color="#FB1F07" size="9px">
+              영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요.
+            </Text>
+          )}
         </InputBox>
 
-        {/* </div> */}
-
         <InputBox>
-          <Text>
-            비밀번호 확인 <AiOutlineCheckCircle size="16px" />
-          </Text>
-          {showPwd2 ? (
-            <Inputs
-              type="text"
-              value={password2}
-              _onChange={(e) => {
-                setPassword2(e.target.value)
-              }}
-              placeholder="비밀번호를 입력해주세요"
-            ></Inputs>
-          ) : (
-            <Inputs
-              value={password2}
-              _onChange={(e) => {
-                setPassword2(e.target.value)
-              }}
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-            ></Inputs>
-          )}
+          <Inputs
+            name="password2"
+            type={showPwd2 ? "text" : "password"}
+            value={password2}
+            onChange={onChangeValue}
+            placeholder="비밀번호를 입력해주세요"
+          >
+            비밀번호확인
+            {/* 확인체크표시 */}
+            {password2Checking && (
+              <AiOutlineCheckCircle
+                size="16px"
+                style={{ margin: "0px 5px" }}
+                color="#F25343"
+              />
+            )}
+          </Inputs>
           <IoEyeSharp
             size="24"
             style={{
@@ -181,21 +213,26 @@ export const Signup = (props) => {
               setShowPwd2(!showPwd2)
             }}
           ></IoEyeSharp>
+
+          {/* 입력오류 문구 */}
+          {!password2Checking && (
+            <Text color="#FB1F07" size="9px">
+              비밀번호가 일치하지 않습니다.
+            </Text>
+          )}
         </InputBox>
 
         <Buttons
           margin="62px 0 0 0"
           border="1px solid #EC5E4F"
           bg="#FFFFFF"
-          _onClick={() => {
-            dispatch(userActions.sign_up_md({ userid, username, password }))
-          }}
+          _onClick={signUpChecking}
         >
           <Text color="#F25343" bold>
             회원가입
           </Text>
         </Buttons>
-      </div>
+      </Container>
     </>
   )
 }
