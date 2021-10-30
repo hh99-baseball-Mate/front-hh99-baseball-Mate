@@ -22,7 +22,7 @@ const GroupList = (props) => {
   }
 
   function choose() {
-    history.push("/grouptwo");
+    history.push("/groupdate");
   }
 
   useEffect(() => {

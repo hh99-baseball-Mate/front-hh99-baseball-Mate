@@ -62,6 +62,7 @@ const GroupDate = (props) => {
           />
           구단명
         </Col>
+        <Btn>선택완료</Btn>
       </Box>
       {/* </div>
       ))} */}
@@ -99,4 +100,11 @@ const Col = styled.div`
   // flex-direction: column;
   display: flex;
   align-items: center;
+`;
+
+const Btn = styled.button`
+  width: 335px;
+  height: 50px;
+  background: #f25343;
+  border-radius: 80px;
 `;
