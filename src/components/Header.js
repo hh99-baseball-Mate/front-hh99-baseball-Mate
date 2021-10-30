@@ -5,13 +5,15 @@ import { Text } from "../componentsLogin/"
 import styled from "styled-components"
 
 export const Header = (props) => {
-  const { children, _onClick } = props
+  const { children, onClick } = props
+
+  const styles = { onClick }
 
   return (
     <Headers>
       <AiOutlineArrowLeft
         style={{ position: "absolute", left: "0px", top: "5px" }}
-        onClick={_onClick}
+        {...styles}
       />
       <Text size="16px" center>
         {children}
