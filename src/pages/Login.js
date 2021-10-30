@@ -7,6 +7,7 @@ import { kakaoUrl } from "../shared/SocialLogin/Kakao"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import { AiOutlineCheckCircle } from "react-icons/ai"
 import { emailCheck, passwordCheck } from "../shared/LoginCheck"
+import { Container } from "../componentsLogin/Container"
 
 export const Login = (props) => {
   const [loginOther, setLoginOther] = useState(false)

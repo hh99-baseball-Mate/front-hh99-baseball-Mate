@@ -7,9 +7,9 @@ import { ClubImage } from "../componentsLogin/ClubImage"
 import { Text } from "../componentsLogin"
 
 export const ClubChoice = (props) => {
-  const userNmae = useSelector((state) => state.user.user_info)
+  const userNmae = useSelector((state) => state.user.user_info.username)
 
-  // console.log(userNmae)
+  console.log(userNmae)
 
   return (
     <>
@@ -39,7 +39,7 @@ export const ClubChoice = (props) => {
           {/* 선택 메세지 로그인 사용자 */}
           <Text size="24px" bold>
             <span style={{ color: "blue" }}>
-              {/* {userNmae ? userNmae : "관리자"} */}
+              {userNmae ? userNmae : "관리자"}
             </span>
             님이 좋아하는 구단을 선택해주세요.
           </Text>
