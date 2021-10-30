@@ -1,24 +1,24 @@
-import React, { useEffect } from "react"
-import { ConnectedRouter } from "connected-react-router"
-import { ClubChoice } from "../pages/ClubChoice"
-import { Login } from "../pages/Login"
-import { Signup } from "../pages/Signup"
-import { history } from "../redux/configStore"
-import { Route } from "react-router-dom"
-import KAKAOhandle from "./SocialLogin/KAKAOhandle"
-import { GlobalStyles } from "./GlobalStyles"
-import Main from "../pages/Main"
-import { useDispatch, useSelector } from "react-redux"
-import { getCookie } from "./Cookie"
-import { actionCreators as userActions } from "../redux/modules/user"
+import React, { useEffect } from "react";
+import { ConnectedRouter } from "connected-react-router";
+import { ClubChoice } from "../pages/ClubChoice";
+import { Login } from "../pages/Login";
+import { Signup } from "../pages/Signup";
+import { history } from "../redux/configStore";
+import { Route } from "react-router-dom";
+import KAKAOhandle from "./SocialLogin/KAKAOhandle";
+import { GlobalStyles } from "./GlobalStyles";
+import Main from "../pages/Main";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "./Cookie";
+import { actionCreators as userActions } from "../redux/modules/user";
 
-import GroupOne from "../pages/GroupOne";
-import GroupTwo from "../pages/GroupTwo";
+import GroupList from "../pages/GroupList";
+import GroupDate from "../pages/GroupDate";
 import GroupThree from "../pages/GroupThree";
-import groupDetailPage from "../pages/groupDetailPage"
+import groupDetailPage from "../pages/groupDetailPage";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const loginCheck = useSelector((state) => state.user.is_login)
   // useEffect(() => {
   //   if (getCookie("is_login")) {
@@ -26,7 +26,6 @@ function App() {
   //   }
   // }, [])
   return (
-     
     <React.Fragment>
       <ConnectedRouter history={history}>
         <GlobalStyles />
@@ -35,14 +34,13 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/clubchoice" component={ClubChoice} />
         <Route path="/user/kakao/callback" component={KAKAOhandle} />
-        <Route path="/groupone" exact component={GroupOne} />
-        <Route path="/grouptwo" exact component={GroupTwo} />
+        <Route path="/grouplist" exact component={GroupList} />
+        <Route path="/groupdate" exact component={GroupDate} />
         <Route path="/groupthree" exact component={GroupThree} />
         <Route path="/groupdetail" exact component={groupDetailPage} />
       </ConnectedRouter>
     </React.Fragment>
-  )
-
+  );
 }
 
 export default App;
