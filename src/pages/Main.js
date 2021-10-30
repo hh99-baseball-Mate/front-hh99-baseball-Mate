@@ -65,6 +65,7 @@ const Main = (props) => {
 			{/* <HotGroup {...hotGroup} /> */}
 
 
+			{/* 구분선 */}
 			<Rectangle/>
 
 			{/* 타임라인 타이틀 */}

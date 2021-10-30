@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+
+import Participant from "../componentsGroupDetail/Participant";
+import Comment from "../componentsGroupDetail/Comment";
 
 import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
 import users from "../shared/icon/users.svg"
 
-const groupDetailPage = (props) => {
+
+const GroupDetail = (props) => {
+
+	const [selectPage, setSelectPage] = useState(true)
+
 	return (
 		<Container>
 			<Img/>
@@ -64,9 +71,30 @@ const groupDetailPage = (props) => {
 			</Box>
 
 			{/* 모임소개 */}
-			<Box height="121px" background="#FFF0EE" padding="20px">
+			<Box height="121px" background="#F2FAFC" padding="20px">
 				<Text size="16px" weight="bold" margin="0 0 15px 0 ">모임소개</Text>
 				<Text size="14px" color="#333333">11월 22일 롯데 경기 보러가실분 모여랏! 총 10분이랑 함께 했으면 좋겠어요! 티켓 유무 확인시 참가 확정 가능합니다.</Text>
+			</Box>
+
+			<Rectangle/>
+
+			{/* 참여자 & 방명록 */}
+			<Box height="65px">
+
+				<Warp padding="20px 0 0 0">
+					<ParticipantBtn onClick={() => {setSelectPage(true)}} selectPage={selectPage}>
+						참여자
+					</ParticipantBtn>
+
+					<CommentBtn onClick={() => {setSelectPage(false)}} selectPage={selectPage}>
+						방명록
+					</CommentBtn>
+				</Warp>
+
+				<Rectangle2/>
+
+				{selectPage === true ? <Participant/> : <Comment/>} 
+
 			</Box>
 
 
@@ -85,7 +113,7 @@ const groupDetailPage = (props) => {
 // "groupDate" : "모임 날짜".
 // "groupCommentList" : "모임 게시글 내의 댓글 리스트"
 
-export default groupDetailPage;
+export default GroupDetail;
 
 const Container = styled.div`
 	width: 375px; 
@@ -183,3 +211,59 @@ const Slice = styled.div`
 `;
 
 
+const Rectangle = styled.div`
+	background: #E7E7E7;
+	width: 100%;
+	height: 6px;
+`;
+
+const ParticipantBtn = styled.button`
+	width: 187px;
+	height: 45px;
+	background: none;
+	padding-bottom: 20px;
+	border: none;
+	font-size: 16px; 
+	color: #777777;
+	${(props) => props.selectPage ? ` 
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+		:
+		`border: none;`
+	}
+`;
+
+const CommentBtn = styled.button`
+	width: 187px;
+	height: 45px;
+	background: none;
+	padding-bottom: 20px;
+	border: none;
+	font-size: 16px; 
+	color: #777777;
+	/* margin-right: 0; */
+	${(props) => !props.selectPage ? `
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+		:
+		`border: none;`
+	}
+`;
+
+const Button = styled.button`
+	width: 187px;
+	height: 45px;
+	background: none;
+	padding-bottom: 20px;
+	border: none;
+`;
+
+const Rectangle2 = styled.div`
+	background: #C4C4C4;
+	width: 100%;
+	border: 1px solid #E7E7E7;
+`;
