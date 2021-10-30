@@ -1,14 +1,14 @@
 import Group from "./modules/group";
-import { createStore, combineReducers, applyMiddleware, compose } from "redux"
-import thunk from "redux-thunk"
-import { createBrowserHistory } from "history"
-import { connectRouter } from "connected-react-router"
-import user from "./modules/user"
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { createBrowserHistory } from "history";
+import { connectRouter } from "connected-react-router";
+import user from "./modules/user";
 
-import mainPage from "./modules/mainPage"
+import mainPage from "./modules/mainPage";
 import timeline from "./modules/timeline";
 
-export const history = createBrowserHistory()
+export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user,

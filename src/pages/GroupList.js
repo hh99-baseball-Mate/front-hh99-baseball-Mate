@@ -10,12 +10,13 @@ import Button from "@restart/ui/esm/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 
-const GroupOne = (props) => {
+const GroupList = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const group_list = useSelector((state) => state.group.group_list);
   console.log(group_list);
+
   function newPeople() {
     history.push("/groupthree");
   }
@@ -163,7 +164,7 @@ const GroupOne = (props) => {
     </div>
   );
 };
-export default GroupOne;
+export default GroupList;
 
 const Broder = styled.div`
   border: 0.5px solid gray;
