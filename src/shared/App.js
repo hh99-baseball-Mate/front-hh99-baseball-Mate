@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
-import { ConnectedRouter } from "connected-react-router";
-import { ClubChoice } from "../pages/ClubChoice";
-import { Login } from "../pages/Login";
-import { Signup } from "../pages/Signup";
-import { history } from "../redux/configStore";
-import { Route } from "react-router-dom";
-import KAKAOhandle from "./SocialLogin/KAKAOhandle";
-import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
-import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "./Cookie";
-import { actionCreators as userActions } from "../redux/modules/user";
-import TimelineList from "../pages/TimelineList";
-import GroupList from "../pages/GroupList";
-import GroupDate from "../pages/GroupDate";
-import GroupThree from "../pages/GroupThree";
-import groupDetailPage from "../pages/groupDetailPage";
+import React, { useEffect } from "react"
+import { ConnectedRouter } from "connected-react-router"
+import { ClubChoice } from "../pages/ClubChoice"
+import { Login } from "../pages/Login"
+import { Signup } from "../pages/Signup"
+import { history } from "../redux/configStore"
+import { Route } from "react-router-dom"
+import KAKAOhandle from "./SocialLogin/KAKAOhandle"
+import { GlobalStyles } from "./GlobalStyles"
+import Main from "../pages/Main"
+import { useDispatch, useSelector } from "react-redux"
+import { getCookie } from "./Cookie"
+import { actionCreators as userActions } from "../redux/modules/user"
+import TimelineList from "../pages/TimelineList"
+import GroupList from "../pages/GroupList"
+import GroupDate from "../pages/GroupDate"
+import GroupDetail from "../pages/GroupDetail"
+import { GroupAdd } from "../pages/GroupAdd"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   // const loginCheck = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
+      dispatch(userActions.logInCheckMD())
     } else {
-      window.alert("로그인을 해주세요");
-      history.replace("/login");
+      window.alert("로그인을 해주세요")
+      history.replace("/login")
     }
-  }, []);
+  }, [])
 
   return (
     <React.Fragment>
@@ -41,12 +41,12 @@ function App() {
         <Route path="/user/kakao/callback" component={KAKAOhandle} />
         <Route path="/grouplist" exact component={GroupList} />
         <Route path="/groupdate" exact component={GroupDate} />
-        <Route path="/groupthree" exact component={GroupThree} />
-        <Route path="/groupdetail" exact component={groupDetailPage} />
+        <Route path="/groupadd" exact component={GroupAdd} />
+        <Route path="/groupdetail" exact component={GroupDetail} />
         <Route path="/timeline" exact component={TimelineList} />
       </ConnectedRouter>
     </React.Fragment>
-  );
+  )
 }
 
-export default App;
+export default App

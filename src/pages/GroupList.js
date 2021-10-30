@@ -18,7 +18,7 @@ const GroupList = (props) => {
   console.log(group_list);
 
   function newPeople() {
-    history.push("/groupthree");
+    history.push("/groupadd");
   }
 
   function choose() {

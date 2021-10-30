@@ -23,7 +23,6 @@ const Timeline = React.memo((props) => {
 	const likecount = props.likecount;
 	const likeState = props.likeState
 
-	// const love =  😍;
 	console.log("likeState",likeState)
 	console.log(id, userName, content, dayBefore, likecount)
 

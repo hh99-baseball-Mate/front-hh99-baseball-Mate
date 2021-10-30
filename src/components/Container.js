@@ -2,19 +2,21 @@ import React from "react"
 import styled from "styled-components"
 
 export const Container = (props) => {
-  const { children } = props
+  const { children, margin } = props
+  const styles = { margin }
 
-  return <MainContainer>{children}</MainContainer>
+  return <MainContainer {...styles}>{children}</MainContainer>
 }
 
-Container.defaultProp = {
+Container.defaultPorps = {
   children: null,
+  margin: "0px auto",
 }
 
 const MainContainer = styled.div`
+  margin: ${(props) => props.margin};
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 30px auto;
   max-width: 335px;
 `
