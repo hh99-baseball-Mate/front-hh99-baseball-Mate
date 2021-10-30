@@ -194,15 +194,6 @@ export const Login = (props) => {
           </div>
         </>
       ) : null}
-
-      <button
-        style={{ width: "40px", height: "40px" }}
-        onClick={() => {
-          history.push("/clubchoice")
-        }}
-      >
-        구단선택
-      </button>
     </>
   )
 }

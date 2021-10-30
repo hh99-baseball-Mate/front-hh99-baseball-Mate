@@ -1,19 +1,23 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { api } from "../../shared/api"
 import { getCookie, setCookie } from "../../shared/Cookie"
 import axios from "axios"
+import { instance, tokenInstance } from "../../lib/axios"
 
 // 액션타입
 
-const LOG_IN = "LOG_IN"
+const LOGIN = "LOGIN"
+const LOGIN_CHECK = "LOGIN_CHECK"
+const Choice_Club = "Coice_Club"
 
 // 액션 함수
 
-const logIn = createAction(LOG_IN, (user_info) => ({ user_info }))
+const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
+const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
+const choiceClub = createAction(Choice_Club, (myteam) => ({ myteam }))
 
 const initialState = {
-  user: [],
+  user_info: [],
   is_login: false,
 }
 
@@ -22,21 +26,27 @@ const initialState = {
 const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, password } = user_info
-    api
+
+    instance
       .post("/user/login", { userid, password })
       .then((res) => {
         console.log("로그인반환", res)
 
-        const _myteam = res.data.myteam
+        const myteam = res.data.myteam
 
         const accessToken = res.data.token
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
         setCookie("is_login", `${accessToken}`)
 
-        dispatch(logIn(userid, _myteam))
+        const userInfo = {
+          userid,
+          myteam,
+        }
 
-        if (!_myteam) {
+        dispatch(logIn(userInfo))
+
+        if (myteam === null) {
           console.log("구단선택하세요")
           history.push("/clubchoice")
           return
@@ -54,7 +64,7 @@ const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password } = user_info
 
-    api
+    instance
       .post("/user/signup", {
         userid,
         username,
@@ -72,14 +82,33 @@ const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     const token = getCookie("is_login")
 
-    console.log(token)
-
-    api
+    tokenInstance
       .post("/user/logincheck", {
         token,
       })
-      .then((res) => [console.log("로그인체크 data", res.data)])
+      .then((res) => {
+        console.log(getState().user.user)
+        const login_user = {
+          username: res.data.username,
+          myteam: res.data.myteam,
+        }
+        dispatch(loginCheck(login_user))
+      })
       .catch((err) => console.log(err, "로그인체크에러"))
+  }
+}
+
+const choiceClubMD = (club) => {
+  return function (dispatch, getState, { history }) {
+    const token = getCookie("is_login")
+
+    instance
+      .post("/user/myteam", {
+        token: token,
+        myteam: club,
+      })
+      .then((res) => dispatch(choiceClub(res.data.myteam)))
+      .catch((err) => console.log(err, "클럽선택 err입니다."))
   }
 }
 
@@ -103,10 +132,19 @@ const kakaoLogin = (key) => {
 
 export default handleActions(
   {
-    [LOG_IN]: (state, action) =>
+    [LOGIN]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user_info
+        draft.user_info = action.payload.user_info
         draft.is_login = true
+      }),
+    [LOGIN_CHECK]: (state, action) =>
+      produce(state, (draft) => {
+        // console.log(action.payload.login_user)
+      }),
+    [Choice_Club]: (state, action) =>
+      produce(state, (draft) => {
+        const myteam = action.payload.myteam
+        draft.user_info = { ...draft.user_info, myteam }
       }),
   },
   initialState
@@ -118,6 +156,7 @@ const actionCreators = {
   signUpMD,
   kakaoLogin,
   logInCheckMD,
+  choiceClubMD,
 }
 
 export { actionCreators }
