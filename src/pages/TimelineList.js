@@ -16,16 +16,6 @@ const TimelineList = React.memo((props) => {
 		dispatch(timelineCreators.loadTimelineMW());
 	}, [])
 
-	const addTimeline = () => {
-		dispatch(timelineCreators.addTimelineMW(message));
-		setMessage("");
-	};
-
-	// useEffect(() => {
-	// 	dispatch(timelineCreators.deleteTimelineMW(props.id));
-	// }, [])
-
-
 	return (
 		<Container>
 
@@ -50,19 +40,8 @@ const TimelineList = React.memo((props) => {
 				}
 			</List>
 
-			{/* 타임라인 작성 */}
-      {/* <Container>
-        <textarea  cols="50" rows="2"
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        ></textarea>
-        <button onClick={() => {addTimeline()}}
-				>타임라인 작성</button>
-      </Container> */}
-			
+			{/* 타임라인 작성 */}			
 			<TimelimeWrite/>
-
 
 		</Container>
 	)
@@ -97,6 +76,6 @@ const Text = styled.div`
 `;
 
 const List = styled.div`
- 	height: 90vh;
+ 	height: 87vh;
 	overflow: auto;
 `;

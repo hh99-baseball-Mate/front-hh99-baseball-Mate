@@ -75,7 +75,7 @@ export default React.memo(Timeline);
 const Container = styled.div`
 	width: 335px; 
 	/* height: 177px; */
-	margin: 20px auto;
+	margin: 15px auto;
 `;
 
 const Warp = styled.div`

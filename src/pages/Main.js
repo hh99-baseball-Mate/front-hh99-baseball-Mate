@@ -23,7 +23,7 @@ const Main = (props) => {
 		dispatch(mainCreators.loadMainTimelineMW(10))
 	}, [])
 	
-	console.log("mainTimeline",mainTimeline)
+	// console.log("mainTimeline",mainTimeline)
 	console.log("hotGroup",hotGroup)
 
 	return (
@@ -55,7 +55,14 @@ const Main = (props) => {
 			</Box>
 
 			{/* 핫한 모임 리스트 */}
-			<HotGroup />
+			{
+				hotGroup.map((hotGroup, idx) => {
+					return (
+						<HotGroup key={idx} {...hotGroup} />
+					)
+				})
+			}
+			{/* <HotGroup {...hotGroup} /> */}
 
 
 			<Rectangle/>

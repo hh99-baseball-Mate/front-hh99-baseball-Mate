@@ -3,31 +3,43 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { timelineCreators } from "../redux/modules/timeline";
 
+import user from "../shared/icon/user.svg"
+import send from "../shared/icon/send.svg"
+
 const TimelimeWrite = (props) => {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState("");
 
   const addTimeline = () => {
-    dispatch(
-      timelineCreators.addTimelineMW(message)
-    );
+    dispatch(timelineCreators.addTimelineMW(message));
+    setMessage("");
   };
 
   return (
     <React.Fragment>
       <Container>
-        
-        <Circle>
-          {/* <img src={} alt="user" /> */}
-        </Circle>
-        {/* <textarea  cols="50" rows="2"
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        ></textarea>
-        <button onClick={() => {addTimeline()}}
-				>타임라인 작성</button> */}
+
+        <Warp flex="flex">
+          <div>
+            <Circle>
+              <UserImg src={user} alt="user"/>
+            </Circle>
+          </div>
+
+          <Warp position="relative">
+            <Input placeholder="내용을 입력하세요" 
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+            />
+
+            <Button onClick={() => {addTimeline()}}>
+              <SendImg src={send} alt="send"/>
+            </Button>
+          </Warp>
+        </Warp>
+
       </Container>
     </React.Fragment>
   );
@@ -77,5 +89,44 @@ const Circle = styled.div`
 	height: 48px;
 	border-radius: 50%;
 	background: #FFF0EE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-left: 20px; */
+  
 	/* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+`;
+
+const UserImg = styled.img`
+  width: 25px;
+  text-align: center;
+  text-anchor: middle; 
+`;
+
+const Input = styled.input`
+  width: 275px;
+  height: 42px;
+  border: 1px solid #E7E7E7;
+  border-radius: 100px;
+  padding: 12px 40px 12px 16px;
+  margin-left: 12px;
+  /* position: relative; */
+  ::placeholder {
+    font-weight: 500;
+    font-size: 15px;
+    color: #777777;
+  }
+`;
+
+const SendImg = styled.img`
+  position: absolute;
+  /* left: 8.34%; */
+  right: 13px;
+  bottom: -6%;
+  transform: translateY(-100%);
+`;
+
+const Button = styled.button`
+	background: none;
+	border: none;
 `;
