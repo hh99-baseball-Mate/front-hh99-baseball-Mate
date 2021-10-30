@@ -46,7 +46,7 @@ const Main = (props) => {
 					
 					<Button>
 						<Text size= "12px" weight= "500px" color="#C4C4C4"
-							onClick={()=>{history.push("/groupone")}}
+							onClick={()=>{history.push("/grouplist")}}
 						>
 							+ More
 						</Text>

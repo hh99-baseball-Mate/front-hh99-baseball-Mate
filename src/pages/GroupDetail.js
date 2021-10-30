@@ -116,98 +116,98 @@ const GroupDetail = (props) => {
 export default GroupDetail;
 
 const Container = styled.div`
-	width: 375px; 
-	/* background-size: cover; */
-	/* height: auto; */
-	margin: 0 auto;
-	position: relative;
+  width: 375px;
+  /* background-size: cover; */
+  /* height: auto; */
+  margin: 0 auto;
+  position: relative;
 `;
 
 const Img = styled.div`
-	width: 100%;
-	height: 375px;
-	background-color: #C4C4C4;
+  width: 100%;
+  height: 375px;
+  background-color: #c4c4c4;
 `;
 
 const TitleBox = styled.div`
-	position: absolute;
-	left: 50%;
-	top: 345px;
-	transform: translateX(-50%);
-	width: 335px;
-	height: 139px;
-	background: #FFFFFF;
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-	border-radius: 10px;
-	padding: 16px;
-	z-index: 1;
+  position: absolute;
+  left: 50%;
+  top: 345px;
+  transform: translateX(-50%);
+  width: 335px;
+  height: 139px;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  z-index: 1;
 `;
 
 const Warp = styled.div`
-	display: flex;
-	width: ${(props) => props.width};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	margin-left: ${(props) => props.marginLeft};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  display: flex;
+  width: ${(props) => props.width};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  margin-left: ${(props) => props.marginLeft};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Ellipse = styled.div`
-	width: 55px;
-	height: 24px;
-	background: ${(props) => props.background};
-	border: 1px solid ${(props) => props.borderColor};
-	border-radius: 60px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-bottom: 1px;
-	margin-left: ${(props) => props.marginLeft};
-	font-weight: bold;
-	font-size: 12px;
-	color: ${(props) => props.color};
+  width: 55px;
+  height: 24px;
+  background: ${(props) => props.background};
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1px;
+  margin-left: ${(props) => props.marginLeft};
+  font-weight: bold;
+  font-size: 12px;
+  color: ${(props) => props.color};
 `;
 
 const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  letter-spacing: ${(props) => props.spacing};
+  margin: ${(props) => props.margin};
 `;
 
 const Bar = styled.div`
-	width: 230px;
-	height: 1.5px;
-	background: #FF4B38;
+  width: 230px;
+  height: 1.5px;
+  background: #ff4b38;
 `;
 
 const Box = styled.div`
-	width: 100%;
-	height: ${(props) => props.height};
-	background: ${(props) => props.background};
-	padding: ${(props) => props.padding};
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	position: ${(props) => props.position};
+  width: 100%;
+  height: ${(props) => props.height};
+  background: ${(props) => props.background};
+  padding: ${(props) => props.padding};
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  position: ${(props) => props.position};
 `;
 
 const Circle = styled.div`
-	width: ${(props) => props.width};
-	height: ${(props) => props.height};
-	border-radius: 50%;
-	background: #C4C4C4;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 50%;
+  background: #c4c4c4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const Slice = styled.div`
-	color: #D8D8D8;
-	font-size: 12px;
+  color: #d8d8d8;
+  font-size: 12px;
 `;
 
 

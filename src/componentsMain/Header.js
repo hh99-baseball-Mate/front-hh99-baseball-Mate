@@ -19,7 +19,7 @@ const Header = (props) => {
 
 				<Button>
 					<Text color="rgba(0, 0, 0, 0.5)"
-						onClick={()=>{history.push("/groupone")}}
+						onClick={()=>{history.push("/grouplist")}}
 					>
 						모임
 					</Text>
