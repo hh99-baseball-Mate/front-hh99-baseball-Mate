@@ -1,15 +1,13 @@
 import React from "react"
-import Button from "react-bootstrap/Button"
 import { history } from "../redux/configStore"
-import { Header } from "../components/Header"
 import { useSelector } from "react-redux"
 import { ClubImage } from "../componentsLogin/ClubImage"
-import { Text } from "../componentsLogin"
+import { Text, Header } from "../components"
 
 export const ClubChoice = (props) => {
   const userNmae = useSelector((state) => state.user.user_info.username)
 
-  console.log(userNmae)
+  // console.log(userNmae)
 
   return (
     <>
@@ -39,7 +37,7 @@ export const ClubChoice = (props) => {
           {/* 선택 메세지 로그인 사용자 */}
           <Text size="24px" bold>
             <span style={{ color: "blue" }}>
-              {userNmae ? userNmae : "관리자"}
+              {userNmae ? userNmae : "이름없음"}
             </span>
             님이 좋아하는 구단을 선택해주세요.
           </Text>
@@ -59,4 +57,8 @@ export const ClubChoice = (props) => {
       </div>
     </>
   )
+}
+
+ClubChoice.defaultPorps = {
+  userNmae: "이름없음",
 }

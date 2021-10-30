@@ -96,8 +96,6 @@ const logInCheckMD = () => {
           history.replace("/clubchoice")
           return
         }
-
-        history.replace("/")
       })
       .catch((err) => console.log(err, "로그인체크에러"))
   }

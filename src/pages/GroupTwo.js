@@ -6,7 +6,7 @@ import { BsCircle } from "react-icons/bs";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Header } from "../components/Header"
+import { Header } from "../components/"
 
 const GroupTwo = (props) => {
   const dispatch = useDispatch()
