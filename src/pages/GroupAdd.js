@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Inputs,
   Text,
@@ -12,7 +12,7 @@ import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
 import { clubImageSrc } from "../shared/clubImage"
 
-export const GroupThree = (props) => {
+export const GroupAdd = (props) => {
   const [inputValue, setInputValue] = useState({
     contents: "",
     count: 0,

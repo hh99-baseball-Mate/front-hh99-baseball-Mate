@@ -14,8 +14,8 @@ import { actionCreators as userActions } from "../redux/modules/user"
 import TimelineList from "../pages/TimelineList"
 import GroupList from "../pages/GroupList"
 import GroupDate from "../pages/GroupDate"
-import GroupThree from "../pages/GroupThree"
 import GroupDetail from "../pages/GroupDetail"
+import { GroupAdd } from "../pages/GroupAdd"
 
 function App() {
   const dispatch = useDispatch()
@@ -41,7 +41,7 @@ function App() {
         <Route path="/user/kakao/callback" component={KAKAOhandle} />
         <Route path="/grouplist" exact component={GroupList} />
         <Route path="/groupdate" exact component={GroupDate} />
-        <Route path="/groupthree" exact component={GroupThree} />
+        <Route path="/groupadd" exact component={GroupAdd} />
         <Route path="/groupdetail" exact component={GroupDetail} />
         <Route path="/timeline" exact component={TimelineList} />
       </ConnectedRouter>
