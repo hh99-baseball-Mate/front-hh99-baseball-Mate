@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
-=======
-import React, { useState } from "react"
->>>>>>> master
 import {
   Inputs,
   Text,
@@ -10,20 +6,12 @@ import {
   Container,
   Header,
   Buttons,
-<<<<<<< HEAD
 } from "../components";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import { Picture } from "../componentsGroupAdd/Picture";
 import styled from "styled-components";
 import { clubImageSrc } from "../shared/clubImage";
 import { history } from "../redux/configStore";
-=======
-} from "../components"
-import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
-import { Picture } from "../componentsGroupAdd/Picture"
-import styled from "styled-components"
-import { clubImageSrc } from "../shared/clubImage"
->>>>>>> master
 
 export const GroupAdd = (props) => {
   const [inputValue, setInputValue] = useState({
@@ -31,7 +19,6 @@ export const GroupAdd = (props) => {
     count: 0,
     textarea: "",
     choiceClub: "",
-<<<<<<< HEAD
   });
 
   const { contents, count, textarea, choiceClub } = inputValue;
@@ -43,47 +30,24 @@ export const GroupAdd = (props) => {
       [name]: value,
     });
   };
-=======
-  })
-
-  const { contents, count, textarea, choiceClub } = inputValue
-
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    })
-  }
->>>>>>> master
 
   const plusBtn = () => {
     if (count < 8) {
       setInputValue({
         ...inputValue,
         count: count + 1,
-<<<<<<< HEAD
       });
     } else {
       window.alert("8명 이상은 안됩니다");
       return;
     }
   };
-=======
-      })
-    } else {
-      window.alert("8명 이상은 안됩니다")
-      return
-    }
-  }
->>>>>>> master
 
   const minusBtn = () => {
     if (count !== 0) {
       setInputValue({
         ...inputValue,
         count: count - 1,
-<<<<<<< HEAD
       });
     } else {
       window.alert("0이하는 선택불가");
@@ -92,24 +56,7 @@ export const GroupAdd = (props) => {
 
   return (
     <Container margin="0px auto">
-      <Header
-        onClick={() => {
-          history.goBack();
-        }}
-      >
-        모임 생성
-      </Header>
-=======
-      })
-    } else {
-      window.alert("0이하는 선택불가")
-    }
-  }
-
-  return (
-    <Container margin="0px auto">
       <Header>모임 생성</Header>
->>>>>>> master
 
       {/* 입력 창 */}
       <div style={{ marginTop: "15px" }}>
@@ -181,7 +128,6 @@ export const GroupAdd = (props) => {
         </Buttons>
       </div>
     </Container>
-<<<<<<< HEAD
   );
 };
 
@@ -192,37 +138,17 @@ const Grid = styled.div`
 const PeopleCount = styled.div`
   width: 50px;
 `;
-=======
-  )
-}
-
-const Grid = styled.div`
-  margin-top: 20px;
-`
-
-const PeopleCount = styled.div`
-  width: 50px;
-`
->>>>>>> master
 
 const PeopleSelectContainer = styled.div`
   margin: 24px 0;
   display: flex;
   position: relative;
   align-items: center;
-<<<<<<< HEAD
 `;
-=======
-`
->>>>>>> master
 
 const PeopleSelect = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
   right: 0px;
-<<<<<<< HEAD
 `;
-=======
-`
->>>>>>> master

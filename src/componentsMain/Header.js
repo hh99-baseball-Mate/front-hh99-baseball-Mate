@@ -31,7 +31,6 @@ const Header = (props) => {
           </Text>
         </Button>
 
-<<<<<<< HEAD
         <Button>
           <Text
             color="rgba(0, 0, 0, 0.5)"
@@ -42,15 +41,6 @@ const Header = (props) => {
             타임라인
           </Text>
         </Button>
-=======
-				<Button>
-					<Text color="rgba(0, 0, 0, 0.5)"
-						onClick={()=>{history.push("/grouplist")}}
-					>
-						모임
-					</Text>
-				</Button>
->>>>>>> master
 
         <Button>
           <Text color="rgba(0, 0, 0, 0.5)">굿즈</Text>

@@ -1,28 +1,15 @@
-<<<<<<< HEAD
 import React from "react";
 import Image from "react-bootstrap/Image";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { clubImageSrc, baseUrl } from "../shared/clubImage";
+import { clubImageSrc } from "../shared/clubImage";
 
 export const ClubImage = (props) => {
   const dispatch = useDispatch();
-=======
-import React from "react"
-import Image from "react-bootstrap/Image"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
-import { history } from "../redux/configStore"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { clubImageSrc } from "../shared/clubImage"
 
-export const ClubImage = (props) => {
-  const dispatch = useDispatch()
-
-  const baseUrl = "https://www.thesportsdb.com/images/media/team/badge/"
->>>>>>> master
+  const baseUrl = "https://www.thesportsdb.com/images/media/team/badge/";
 
   const choiceClub = (e) => {
     dispatch(userActions.choiceClubMD(e.target.className));
