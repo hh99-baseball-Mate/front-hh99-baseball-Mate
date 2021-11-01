@@ -51,7 +51,7 @@ export const Signup = (props) => {
   const passwordChecking = password !== "" && passwordCheck.test(password)
   const password2Checking = password2 !== "" && password === password2
 
-  const signUpChecking = () => {
+  const signUpChecking = (e) => {
     if (
       idCehcking &&
       userNameChecking &&
@@ -59,6 +59,7 @@ export const Signup = (props) => {
       password2Checking
     ) {
       dispatch(userActions.signUpMD({ userid, username, password }))
+      e.currentTarget.disabled = true
       console.log("가입완료")
     } else {
       window.alert("입력한 내용을 다시 확인하시기 바랍니다.")

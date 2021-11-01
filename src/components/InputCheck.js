@@ -5,7 +5,7 @@ export const InputCheck = () => {
   return (
     <AiOutlineCheckCircle
       size="16px"
-      style={{ margin: "0px 5px" }}
+      style={{ margin: "-3px 5px" }}
       color="#F25343"
     />
   )

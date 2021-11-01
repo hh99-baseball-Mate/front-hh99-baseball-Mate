@@ -49,6 +49,7 @@ export const ClubChoice = (props) => {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
             gap: "30px",
+            placeItems: "center",
           }}
         >
           {/* 클럽 이미지 */}
