@@ -11,16 +11,75 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
 import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
 import { clubImageSrc } from "../shared/clubImage"
+import { Preview } from "../componentsGroupAdd/Preview"
+import { useDispatch } from "react-redux"
+import { actionCreators as groupActions } from "../redux/modules/group"
 
 export const GroupAdd = (props) => {
+  const dispatch = useDispatch()
+
+  // 인풋 값 state
   const [inputValue, setInputValue] = useState({
-    contents: "",
-    count: 0,
-    textarea: "",
+    title: "",
     choiceClub: "",
+    groupDate: "",
+    peopleLimit: 0,
+    content: "",
+    preview: {
+      name: "",
+      size: 0,
+      type: "",
+      base64: "",
+    },
   })
 
-  const { contents, count, textarea, choiceClub } = inputValue
+  const { content, peopleLimit, title, choiceClub, groupDate, preview } =
+    inputValue
+
+  // 이미지 업로드 / 미리보기
+
+  const imgPreview = (e) => {
+    const img = e.target.files[0]
+
+    let reader = new FileReader()
+
+    reader.onloadend = () => {
+      setInputValue({
+        ...inputValue,
+        preview: {
+          name: img.name,
+          size: img.size,
+          type: img.type,
+          base64: reader.result,
+        },
+      })
+    }
+    if (img) {
+      reader.readAsDataURL(img)
+    }
+  }
+
+  // 미리보기 삭제,
+
+  const deletePreview = () => {
+    if (!inputValue.preview.base64) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+
+    setInputValue({
+      ...inputValue,
+      preview: {
+        name: "",
+        size: "",
+        type: "",
+        base64: "",
+      },
+    })
+    console.log("삭제를 해야되는데..")
+  }
+
+  // 인풋 입력 값 추적 e.target.value 대행
 
   const onChange = (e) => {
     const { name, value } = e.target
@@ -30,11 +89,12 @@ export const GroupAdd = (props) => {
     })
   }
 
+  //  인원수 + 버튼
   const plusBtn = () => {
-    if (count < 8) {
+    if (peopleLimit < 8) {
       setInputValue({
         ...inputValue,
-        count: count + 1,
+        peopleLimit: peopleLimit + 1,
       })
     } else {
       window.alert("8명 이상은 안됩니다")
@@ -42,96 +102,166 @@ export const GroupAdd = (props) => {
     }
   }
 
+  // 인원수 - 버튼
   const minusBtn = () => {
-    if (count !== 0) {
+    if (peopleLimit !== 0) {
       setInputValue({
         ...inputValue,
-        count: count - 1,
+        peopleLimit: peopleLimit - 1,
       })
     } else {
       window.alert("0이하는 선택불가")
     }
   }
 
+  const submitBtn = (e) => {
+    const _emptyValue = Object.values(inputValue).map((e) => {
+      if (e === "" || e.base64 === "" || e === 0) {
+        return false
+      }
+    })
+    const emptyValue = _emptyValue.includes(false)
+
+    if (emptyValue) {
+      window.alert("빈란을 채워주세요")
+      console.log("빈값있음")
+      return
+    }
+
+    dispatch(groupActions.addGroupMD(inputValue))
+    e.currentTarget.disabled = true
+    console.log("빈값이 없음")
+  }
+
   return (
     <Container margin="0px auto">
       <Header>모임 생성</Header>
 
-      {/* 입력 창 */}
+      {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
         <Inputs
-          value={contents}
-          name="contents"
+          value={title}
+          name="title"
           onChange={onChange}
           placeholder="모임명을 입력해주세요"
         >
           모임명
-          <InputCheck />
+          {title && <InputCheck />}
         </Inputs>
 
+        {/* 구단선택 */}
         <Grid>
           <Text>
             구단선택
-            <InputCheck />
+            {choiceClub && <InputCheck />}
           </Text>
-          <Inputs value={choiceClub} dropdown>
+          <Inputs
+            name="choiceClub"
+            value={choiceClub}
+            dropdown
+            onChange={onChange}
+          >
+            <Option value="">구단선택</Option>
             {clubImageSrc.map((e) => (
-              <option key={e.id} value={e.name}>
+              <Option key={e.id} value={e.name}>
                 {e.name}
-              </option>
+              </Option>
             ))}
-            <InputCheck />
           </Inputs>
         </Grid>
 
+        {/* 일정 선택 */}
         <Grid>
           <Text>
-            일정선택 <InputCheck />
+            일정선택
+            {groupDate && <InputCheck />}
           </Text>
-          <Inputs dropdown>
-            <option value="롯데">롯데</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <InputCheck />
+          <Inputs
+            dropdown
+            name="groupDate"
+            value={groupDate}
+            onChange={onChange}
+          >
+            <Option value="">경기일정 선택</Option>
+            <Option value="롯데">롯데</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
           </Inputs>
         </Grid>
 
         {/* <div>인원수 선택</div> */}
         <PeopleSelectContainer>
           <Text>인원수 선택</Text>
+          {peopleLimit > 0 ? <InputCheck /> : null}
 
+          {/* 인원수 + - 버튼 */}
           <PeopleSelect>
-            <AiOutlineMinusCircle onClick={minusBtn} />
+            <AiOutlineMinusCircle color="#498C9A" onClick={minusBtn} />
             <PeopleCount>
-              <Text center size="18px" name={count} onChange={onChange}>
-                {count}
+              <Text center size="18px" name="peopleLimit" onChange={onChange}>
+                {peopleLimit}
               </Text>
             </PeopleCount>
-            <AiOutlinePlusCircle onClick={plusBtn} />
+            <AiOutlinePlusCircle color="#498C9A" onClick={plusBtn} />
           </PeopleSelect>
         </PeopleSelectContainer>
 
         {/* 모임소개 글 */}
-        <Inputs textarea name="textarea" value={textarea} onChange={onChange}>
+        <Inputs
+          textarea
+          name="content"
+          value={content}
+          placeholder="모임소개를 해주세요"
+          onChange={onChange}
+        >
           모임소개
-          {/* <InputCheck /> */}
+          {content && <InputCheck />}
         </Inputs>
 
-        {/* 사진 */}
-        <Text margin="20px 0">사진</Text>
-        <Picture basic />
+        {/* 이미지 미리보기 */}
+        <Text margin="20px 0">
+          사진
+          {preview.base64 && <InputCheck />}
+        </Text>
+
+        <ImgSwiper>
+          <Picture basic onChange={imgPreview} name="fileList">
+            {preview.base64 ? 1 : 0} / 1
+          </Picture>
+          <Preview
+            src={preview.base64 ? preview.base64 : props.defaultImg}
+            name="preview"
+            onClick={deletePreview}
+          />
+        </ImgSwiper>
       </div>
-      <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
-        <Buttons complete _onClick={() => console.log(inputValue)}>
+
+      <ButtonBox>
+        <Buttons complete _onClick={submitBtn}>
           모임생성
         </Buttons>
-      </div>
+      </ButtonBox>
     </Container>
   )
 }
 
+GroupAdd.defaultProps = {
+  defaultImg:
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
+}
+
 const Grid = styled.div`
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e7e7e7;
+`
+
+const ButtonBox = styled.div`
+  position: fixed;
+  width: 335px;
+  bottom: 20px;
 `
 
 const PeopleCount = styled.div`
@@ -150,4 +280,13 @@ const PeopleSelect = styled.div`
   align-items: center;
   position: absolute;
   right: 0px;
+`
+
+const Option = styled.option`
+  text-align: center;
+`
+
+const ImgSwiper = styled.div`
+  display: flex;
+  gap: 10px;
 `
