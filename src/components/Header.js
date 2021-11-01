@@ -1,7 +1,6 @@
 import React from "react"
-import { history } from "../redux/configStore"
-import { AiOutlineArrowLeft } from "react-icons/ai"
-import { Text } from "../componentsLogin/"
+import { IoIosArrowBack } from "react-icons/io"
+import { Text } from "./"
 import styled from "styled-components"
 
 export const Header = (props) => {
@@ -11,7 +10,7 @@ export const Header = (props) => {
 
   return (
     <Headers>
-      <AiOutlineArrowLeft
+      <IoIosArrowBack
         style={{ position: "absolute", left: "0px", top: "5px" }}
         {...styles}
       />
@@ -32,4 +31,5 @@ const Headers = styled.div`
   justify-content: center;
   position: relative;
   cursor: pointer;
+  margin: 20px 0;
 `
