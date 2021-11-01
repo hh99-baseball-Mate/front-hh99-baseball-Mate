@@ -18,11 +18,11 @@ const GroupList = (props) => {
   console.log(group_list);
 
   function newPeople() {
-    history.push("/groupadd")
+    history.push("/groupadd");
   }
 
   function choose() {
-    history.push("/groupdate")
+    history.push("/groupdate");
   }
 
   useEffect(() => {
