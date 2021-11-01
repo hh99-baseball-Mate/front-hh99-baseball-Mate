@@ -1,10 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
+import smail from "../shared/icon/smail.svg"
+import unSmail from "../shared/icon/unSmail.svg"
+import more from "../shared/icon/more.svg"
+
 const Comment = (props) => {
 
+	// const smailIcon = smail
+	// const unSmailIcon = unSmail
+
 	return (
-		<>
+		<React.Fragment>
 			<Box padding="13px 20px 13px 20px">
 				<Warp justify="space-between">
 					<Text size="14px" color="#777777">
@@ -33,7 +40,7 @@ const Comment = (props) => {
 			<Box height="69px">
 				<Warp>
 					<div>
-						<Circle/>
+						<Circle marginT="20px"/>
 					</div>
 					<TextArea placeholder="공개글 추가..." />
 				</Warp>
@@ -41,31 +48,40 @@ const Comment = (props) => {
 
 			<Rectangle/>
 			
-			<Box padding="20px">
+			<Box>
 				<Warp>
 					<div>
-						<Circle/>
+						<Circle marginT="26px" />
 					</div>
-					<Box>
-						
-						<Warp>
-							<Text>
+
+					<Box margin="20px 20px 20px 14px">
+						<Warp align="center">
+							<Text size="14px" weight="bold" marginR="10px">
 								김진희
 							</Text>
-							<Text>
+							<Text color="#C4C4C4" size="12px">
 								1분전
 							</Text>
 						</Warp>
-						<Text>
+						<Text size="14px">
 							지금 참여 가능 하신가요?
 						</Text>
-						
+
+						<Warp marginT="18px">
+							<Icon src={smail} alt="smail" marginR="7px" /> 
+							<Text size="12px" marginR="30px">1</Text>
+							<Icon src={unSmail} alt="unSmail" marginR="7px" />
+							<Text size="12px">0</Text>
+						</Warp>
 					</Box>
+					
+					<Icon src={more} alt="more" marginT="-34px" marginR="22px" />
+
 				</Warp>
 			</Box>
 			<Rectangle/>
 
-		</>	
+		</React.Fragment>	
 	)
 }
 
@@ -82,6 +98,7 @@ const Box = styled.div`
 	height: ${(props) => props.height};
 	background: ${(props) => props.background};
 	padding: ${(props) => props.padding};
+	margin: ${(props) => props.margin};
 	display: ${(props) => props.flex};
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
@@ -98,20 +115,22 @@ const Warp = styled.div`
 	align-items: ${(props) => props.align};
 	align-content: ${(props) => props.start};
 	margin-left: ${(props) => props.marginLeft};
+	margin-top: ${(props) => props.marginT};
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
 	
 `;
 
-const Text = styled.div`
+const Text = styled.p`
 	font-size: ${(props) => props.size};
 	font-weight: ${(props) => props.weight};
 	color: ${(props) => props.color};
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
-	margin-right: ${(props) => props.marginR};;
+	margin-right: ${(props) => props.marginR};
 	cursor: ${(props) => props.pointer};
+	line-height: ${(props) => props.height};
 	/* text-align: center; */
 `;
 
@@ -156,4 +175,11 @@ const Circle = styled.div`
 	height: 29px;
 	border-radius: 50%;
 	background: #C4C4C4;
+	margin-top: ${(props) => props.marginT};
+	margin-left: 20px;
+`;
+
+const Icon = styled.img`
+	margin-top: ${(props) => props.marginT};
+	margin-right: ${(props) => props.marginR};
 `;

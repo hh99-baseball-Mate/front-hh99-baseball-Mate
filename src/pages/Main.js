@@ -20,7 +20,7 @@ const Main = (props) => {
 	}, [])
 
 	useEffect(() => {
-		dispatch(mainCreators.loadMainTimelineMW(10))
+		dispatch(mainCreators.loadMainTimelineMW(6))
 	}, [])
 	
 	// console.log("mainTimeline",mainTimeline)
@@ -62,8 +62,6 @@ const Main = (props) => {
 					)
 				})
 			}
-			{/* <HotGroup {...hotGroup} /> */}
-
 
 			{/* 구분선 */}
 			<Rectangle/>
