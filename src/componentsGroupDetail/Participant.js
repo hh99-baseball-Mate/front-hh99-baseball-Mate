@@ -105,6 +105,7 @@ const Circle = styled.div`
 	border: 1px solid #F25343;
 	border-radius: 50%;
 	background: #FFFFFF;
+	margin-bottom: 5px;
 `;
 
 const ConfirmBtn = styled.button`

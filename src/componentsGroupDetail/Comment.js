@@ -5,16 +5,21 @@ const Comment = (props) => {
 
 	return (
 		<>
-			<Box>
-				<Text>
-					방명록 7
-				</Text>
-				<Text>
-					인기순
-				</Text>
-				<Text>
-					최신순
-				</Text>
+			<Box padding="13px 20px 13px 20px">
+				<Warp justify="space-between">
+					<Text size="14px" color="#777777">
+						방명록 7
+					</Text>
+
+					<Warp>
+						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
+							인기순
+						</Text>
+						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
+							최신순
+						</Text>
+					</Warp>
+				</Warp>
 			</Box>
 
 			<Rectangle/>
@@ -27,7 +32,9 @@ const Comment = (props) => {
 
 			<Box height="69px">
 				<Warp>
-					<Circle/>
+					<div>
+						<Circle/>
+					</div>
 					<TextArea placeholder="공개글 추가..." />
 				</Warp>
 			</Box>
@@ -35,12 +42,26 @@ const Comment = (props) => {
 			<Rectangle/>
 			
 			<Box padding="20px">
-				<Circle/>
-				<Box>
-					<Text>
-						김진희
-					</Text>
-				</Box>
+				<Warp>
+					<div>
+						<Circle/>
+					</div>
+					<Box>
+						
+						<Warp>
+							<Text>
+								김진희
+							</Text>
+							<Text>
+								1분전
+							</Text>
+						</Warp>
+						<Text>
+							지금 참여 가능 하신가요?
+						</Text>
+						
+					</Box>
+				</Warp>
 			</Box>
 			<Rectangle/>
 
@@ -89,6 +110,7 @@ const Text = styled.div`
 	color: ${(props) => props.color};
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
+	margin-right: ${(props) => props.marginR};;
 	cursor: ${(props) => props.pointer};
 	/* text-align: center; */
 `;
