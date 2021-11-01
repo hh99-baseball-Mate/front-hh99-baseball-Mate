@@ -35,5 +35,19 @@
       "title": "오늘 두산경기 직관러 모집해요!!",
       "people": "2/6"
     }
+  ],
+  "detailGroup": [
+    {
+      "status" : "success",
+      "createdUserName" : "김진희",
+      "title" : "11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~",
+      "content" : "11월 22일 롯데 경기 보러가실분 모여랏! 총 10분이랑 함께 했으면 좋겠어요! 티켓 유무 확인시 참가 확정 가능합니다.",
+      "peopleLimit" : "10",
+      "nowApplyNum" : "7",
+      "canApplyNum" : "3",
+      "stadium" : "잠실 경기장",
+      "groupDate" : "21.11.22",
+      "groupCommentList" : "모임 게시글 내의 댓글 리스트"
+    }
   ]
 }

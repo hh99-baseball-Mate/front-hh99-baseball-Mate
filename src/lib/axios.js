@@ -3,6 +3,7 @@ import { getCookie } from '../shared/Cookie';
 
 // http://52.78.93.38/
 // http://54.180.148.132/ 임시서버
+// http://localhost:4000/
 
 // 토큰없는 api
 export const instance = axios.create({
