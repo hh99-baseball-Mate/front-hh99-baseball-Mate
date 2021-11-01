@@ -43,14 +43,11 @@ const GroupList = (props) => {
       <>
         <Swipers>
           <SwiperSlide>
-            <div
-              style={{
-                width: "68px",
-                height: "68px",
-                borderRadius: "50px",
-                background: "#FFF0EE",
-              }}
-            ></div>
+            <Image
+              style={{ width: "68px", height: "69px" }}
+              roundedCircle
+              src="https://www.thesportsdb.com/images/media/league/poster/8xu67b1624123161.jpg"
+            ></Image>
             <Text center> 전체</Text>
           </SwiperSlide>
           {clubImageSrc.map((e) => (
@@ -82,15 +79,15 @@ const GroupList = (props) => {
       </div>
       <Broder />
       {group_list.map((e) => {
-        console.log(e);
-        return <HotGroup />;
+        console.log(e)
+        return <HotGroup />
       })}
       <Btn onClick={newPeople}>
         {" "}
         <img src={Pancil} alt="위치" />
       </Btn>
     </div>
-  );
+  )
 };
 export default GroupList;
 
