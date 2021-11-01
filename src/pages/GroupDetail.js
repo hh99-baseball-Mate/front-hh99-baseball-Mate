@@ -4,103 +4,145 @@ import styled from "styled-components";
 import Participant from "../componentsGroupDetail/Participant";
 import Comment from "../componentsGroupDetail/Comment";
 
-import calendar from "../shared/icon/calendar.svg"
-import location from "../shared/icon/location.svg"
-import colorUsers from "../shared/icon/colorUsers.svg"
-import users from "../shared/icon/users.svg"
-
+import calendar from "../shared/icon/calendar.svg";
+import location from "../shared/icon/location.svg";
+import colorUsers from "../shared/icon/colorUsers.svg";
+import users from "../shared/icon/users.svg";
 
 const GroupDetail = (props) => {
+  const [selectPage, setSelectPage] = useState(true);
 
-	const [selectPage, setSelectPage] = useState(true)
+  return (
+    <Container>
+      <Img />
 
-	return (
-		<Container>
-			<Img/>
+      {/* 타이틀 */}
+      <TitleBox>
+        <Warp>
+          <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
+            모집중
+          </Ellipse>
+          <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+            D-10
+          </Ellipse>
+        </Warp>
+        <Text size="16px" weight="bold" margin="12px 0">
+          11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~
+        </Text>
+        <Warp justify="space-between" align="center">
+          <Bar />
+          <Warp flex="flex">
+            <img src={colorUsers} alt="users" />
+            <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+              &nbsp;3명&nbsp;
+            </Text>
+            <Text size="12px" color="#F25343" spacing="-0.03em;">
+              남음
+            </Text>
+          </Warp>
+        </Warp>
+      </TitleBox>
 
-			{/* 타이틀 */}
-			<TitleBox>
-				<Warp>
-					<Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-						모집중
-					</Ellipse>
-					<Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-						D-10
-					</Ellipse>
-				</Warp>
-				<Text size="16px" weight="bold" margin="12px 0">
-					11월 22일 롯데 응원 가실분! 저랑 응원같이 하러가요~
-				</Text>
-				<Warp justify="space-between" align="center" >
-					<Bar/>
-					<Warp flex="flex">
-						<img src={colorUsers} alt="users"/>
-						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-							&nbsp;3명&nbsp;
-						</Text>
-						<Text size="12px" color="#F25343" spacing="-0.03em;">
-							남음
-						</Text>
-					</Warp>
-				</Warp>
-			</TitleBox>
+      {/* 모임 정보 */}
+      <Box
+        height="163px"
+        background="rgba(247, 247, 247, 0.5)"
+        position="relative"
+        margin="20px"
+      >
+        <Warp
+          width="100%"
+          justify="space-around"
+          align="center"
+          position="absolute"
+          padding="0 40px 0 40px"
+          style={{ top: "78%" }}
+        >
+          <img src={calendar} alt="calendar" />
+          <Text color="#777777" size="12px">
+            21.11.22
+          </Text>
+          <Slice> &ensp;|&ensp; </Slice>
+          <img src={location} alt="location" />
+          <Text color="#777777" size="12px">
+            잠실
+          </Text>
+          <Slice> &ensp;|&ensp; </Slice>
+          <img src={users} alt="users" />
+          <Text color="#777777" size="12px">
+            최대 10명
+          </Text>
+        </Warp>
+      </Box>
 
-			{/* 모임 정보 */}
-			<Box height="163px" background="rgba(247, 247, 247, 0.5)" position="relative" margin="20px">
-				<Warp width="100%" justify="space-around" align="center" position="absolute" padding="0 40px 0 40px" style={{top:"78%"}}>
-					<img src={calendar} alt="calendar" />
-					<Text color="#777777" size="12px">21.11.22</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
-					<img src={location} alt="location" />
-					<Text color="#777777" size="12px">잠실</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
-					<img src={users} alt="users" />
-					<Text color="#777777" size="12px">최대 10명</Text>
-				</Warp>
-			</Box>
+      {/* 유저정보 */}
+      <Box
+        height="80px"
+        background="#fff"
+        flex="flex"
+        align="center"
+        padding="18px"
+      >
+        <Warp width="55px" height="55px">
+          <Circle
+            width="48px"
+            height="48px"
+            radius="50px"
+            background="#C4C4C4"
+          />
+        </Warp>
+        <Warp direction="column" marginLeft="12px">
+          <Text size="14px" weight="bold" margin="1px">
+            김진희
+          </Text>
+          <Text size="12px" color="#C4C4C4" margin="1px">
+            서울시 강서구
+          </Text>
+        </Warp>
+      </Box>
 
-			{/* 유저정보 */}
-			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
-				<Warp width="55px" height="55px">
-					<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
-				</Warp>
-				<Warp direction="column" marginLeft="12px">
-					<Text size="14px" weight="bold"  margin="1px">김진희</Text>
-					<Text size="12px" color="#C4C4C4" margin="1px">서울시 강서구</Text>
-				</Warp>
-			</Box>
+      {/* 모임소개 */}
+      <Box height="121px" background="#F2FAFC" padding="20px">
+        <Text size="16px" weight="bold" margin="0 0 15px 0 ">
+          모임소개
+        </Text>
+        <Text size="14px" color="#333333">
+          11월 22일 롯데 경기 보러가실분 모여랏! 총 10분이랑 함께 했으면
+          좋겠어요! 티켓 유무 확인시 참가 확정 가능합니다.
+        </Text>
+      </Box>
 
-			{/* 모임소개 */}
-			<Box height="121px" background="#F2FAFC" padding="20px">
-				<Text size="16px" weight="bold" margin="0 0 15px 0 ">모임소개</Text>
-				<Text size="14px" color="#333333">11월 22일 롯데 경기 보러가실분 모여랏! 총 10분이랑 함께 했으면 좋겠어요! 티켓 유무 확인시 참가 확정 가능합니다.</Text>
-			</Box>
+      <Rectangle />
 
-			<Rectangle/>
+      {/* 참여자 & 방명록 */}
+      <Box height="65px">
+        <Warp padding="20px 0 0 0">
+          <ParticipantBtn
+            onClick={() => {
+              setSelectPage(true);
+            }}
+            selectPage={selectPage}
+          >
+            참여자
+          </ParticipantBtn>
 
-			{/* 참여자 & 방명록 */}
-			<Box height="65px">
+          <CommentBtn
+            onClick={() => {
+              setSelectPage(false);
+            }}
+            selectPage={selectPage}
+          >
+            방명록
+          </CommentBtn>
+        </Warp>
 
-				<Warp padding="20px 0 0 0">
-					<ParticipantBtn onClick={() => {setSelectPage(true)}} selectPage={selectPage}>
-						참여자
-					</ParticipantBtn>
+        <Rectangle2 />
 
-					<CommentBtn onClick={() => {setSelectPage(false)}} selectPage={selectPage}>
-						방명록
-					</CommentBtn>
-				</Warp>
-
-				<Rectangle2/>
-
-				{selectPage === true ? <Participant/> : <Comment/>} 
-
-			</Box>
-
-
-		</Container>
-	)
-}
+        {selectPage === true ? <Participant /> : <Comment />}
+      </Box>
+    </Container>
+  );
+};
 
 // "status" : "success",
 // "madeUser" : "모임 생성한 유저의 닉네임",
@@ -210,60 +252,59 @@ const Slice = styled.div`
   font-size: 12px;
 `;
 
-
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 6px;
+  background: #e7e7e7;
+  width: 100%;
+  height: 6px;
 `;
 
 const ParticipantBtn = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
-	font-size: 16px; 
-	color: #777777;
-	${(props) => props.selectPage ? ` 
+  width: 187px;
+  height: 45px;
+  background: none;
+  padding-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  ${(props) =>
+    props.selectPage
+      ? ` 
 		border-bottom: 3px solid #F25343;
 		font-size: 16px;
 		color: #F25343; 
 		font-weight: bold;`
-		:
-		`border: none;`
-	}
+      : `border: none;`}
 `;
 
 const CommentBtn = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
-	font-size: 16px; 
-	color: #777777;
-	/* margin-right: 0; */
-	${(props) => !props.selectPage ? `
+  width: 187px;
+  height: 45px;
+  background: none;
+  padding-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  /* margin-right: 0; */
+  ${(props) =>
+    !props.selectPage
+      ? `
 		border-bottom: 3px solid #F25343;
 		font-size: 16px;
 		color: #F25343; 
 		font-weight: bold;`
-		:
-		`border: none;`
-	}
+      : `border: none;`}
 `;
 
 const Button = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
+  width: 187px;
+  height: 45px;
+  background: none;
+  padding-bottom: 20px;
+  border: none;
 `;
 
 const Rectangle2 = styled.div`
-	background: #C4C4C4;
-	width: 100%;
-	border: 1px solid #E7E7E7;
+  background: #c4c4c4;
+  width: 100%;
+  border: 1px solid #e7e7e7;
 `;
