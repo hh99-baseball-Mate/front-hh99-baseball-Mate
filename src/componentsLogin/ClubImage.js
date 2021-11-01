@@ -1,27 +1,27 @@
-import React from "react"
-import Image from "react-bootstrap/Image"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
-import { history } from "../redux/configStore"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { clubImageSrc } from "../shared/clubImage"
+import React from "react";
+import Image from "react-bootstrap/Image";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { clubImageSrc } from "../shared/clubImage";
 
 export const ClubImage = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const baseUrl = "https://www.thesportsdb.com/images/media/team/badge/"
+  const baseUrl = "https://www.thesportsdb.com/images/media/team/badge/";
 
   const choiceClub = (e) => {
-    dispatch(userActions.choiceClubMD(e.target.className))
-    history.replace("/")
-  }
+    dispatch(userActions.choiceClubMD(e.target.className));
+    history.replace("/");
+  };
 
   return (
     <>
       {clubImageSrc.map((src) => (
         <Choice key={src.id}>
           <Image
-            src={baseUrl + src.img + ".png"}
+            src={baseUrl + src.img}
             style={{ width: "100%" }}
             className={src.name}
             onClick={choiceClub}
@@ -29,8 +29,8 @@ export const ClubImage = (props) => {
         </Choice>
       ))}
     </>
-  )
-}
+  );
+};
 
 const Choice = styled.button`
   background-color: transparent;
@@ -40,4 +40,4 @@ const Choice = styled.button`
     transform: scale(130%);
     transition: 0.3s ease-in-out;
   }
-`
+`;

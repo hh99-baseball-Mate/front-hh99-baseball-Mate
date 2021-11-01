@@ -86,40 +86,40 @@ const Box = styled.div`
 `;
 
 const ParticipantBtn = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
-	font-size: 16px; 
-	color: #777777;
-	${(props) => props.selectPage ? ` 
+  width: 187px;
+  height: 45px;
+  background: none;
+  padding-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  ${(props) =>
+    props.selectPage
+      ? ` 
 		border-bottom: 3px solid #F25343;
 		font-size: 16px;
 		color: #F25343; 
 		font-weight: bold;`
-		:
-		`border: none;`
-	}
+      : `border: none;`}
 `;
 
 const CommentBtn = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
-	font-size: 16px; 
-	color: #777777;
-	/* margin-right: 0; */
-	${(props) => !props.selectPage ? `
+  width: 187px;
+  height: 45px;
+  background: none;
+  padding-bottom: 20px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  /* margin-right: 0; */
+  ${(props) =>
+    !props.selectPage
+      ? `
 		border-bottom: 3px solid #F25343;
 		font-size: 16px;
 		color: #F25343; 
 		font-weight: bold;`
-		:
-		`border: none;`
-	}
+      : `border: none;`}
 `;
 
 const Rectangle = styled.div`
