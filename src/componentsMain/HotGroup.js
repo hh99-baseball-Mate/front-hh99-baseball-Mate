@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { mainCreators } from "../redux/modules/mainPage";
 import colorUsers from "../shared/icon/colorUsers.svg"
+import Progress from "../components/Progress";
 
 const HotGroup = (props) => {
 
 	const dispatch = useDispatch();
+
+	const leftPeople = (props.peopleLimit-props.canApplyNum);
 
 	// const hotGroup = useSelector((state) => (state.mainPage.hotGroup))
 	// console.log("hotGroup",hotGroup)
@@ -39,14 +42,16 @@ const HotGroup = (props) => {
 				</Warp>
 				<Circle width="48px" height="48px"/>
 
-				<Text size="16px" weight="bold">{props.title}</Text>
+				<Text size="16px" weight="bold" width="295px" height="46px" lineHeight="23px">
+					{props.title}길어진 텍스트 말줄임 스크립트로 처리하기길어진 텍스트 말줄임 스크립트로 처리하기
+				</Text>
 
 				<Warp flex="flex" justify="space-between" align="center" margin="10px 0 0 0">
-					<Bar/>
+					<Progress group={props} />
 					<Warp flex="flex">
 						<img src={colorUsers} alt="users"/>
 						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-							&nbsp;{props.canApplyNum}명&nbsp;
+							&nbsp;{leftPeople}명&nbsp;
 						</Text>
 						<Text size="12px" color="#F25343" spacing="-0.03em;">
 							남음
@@ -80,11 +85,20 @@ const Warp = styled.div`
 `;
 
 const Text = styled.div`
+	width: ${(props) => props.width};
+	height: ${(props) => props.height};
 	font-size: ${(props) => props.size};
 	font-weight: ${(props) => props.weight};
 	color: ${(props) => props.color};
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
+	line-height: ${(props) => props.lineHeight};
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient:vertical;
+	/* white-space: nowrap; */
+	text-overflow: ellipsis;
+	overflow: hidden;
 `;
 
 const Card = styled.div`
@@ -124,12 +138,6 @@ const Circle = styled.div`
 	right: 7.16%;
 	top: 12%;
 	bottom: 61.02%;
-`;
-
-const Bar = styled.div`
-	width: 230px;
-	height: 1.5px;
-	background: #FF4B38;
 `;
 
 const Slice = styled.div`

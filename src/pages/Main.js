@@ -20,7 +20,7 @@ const Main = (props) => {
 	}, [])
 
 	useEffect(() => {
-		dispatch(mainCreators.loadMainTimelineMW(10))
+		dispatch(mainCreators.loadMainTimelineMW(6))
 	}, [])
 	
 	// console.log("mainTimeline",mainTimeline)
@@ -62,8 +62,6 @@ const Main = (props) => {
 					)
 				})
 			}
-			{/* <HotGroup {...hotGroup} /> */}
-
 
 			{/* 구분선 */}
 			<Rectangle/>
@@ -103,57 +101,56 @@ const Main = (props) => {
 export default Main;
 
 const Container = styled.div`
-	width: 375px; 
-	/* background-size: cover; */
-	/* height: auto; */
-	margin: auto;
-	padding: 0;
+  width: 375px;
+  /* background-size: cover; */
+  /* height: auto; */
+  margin: auto;
+  padding: 0;
 `;
 
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 6px;
+  background: #e7e7e7;
+  width: 100%;
+  height: 6px;
 `;
 
-
 const Box = styled.div`
-	width: 335px; 
-	/* height: 177px; */
-	margin: 20px auto;
+  width: 335px;
+  /* height: 177px; */
+  margin: 20px auto;
 `;
 
 const Warp = styled.div`
-	/* width: 100%; */
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	margin-left: ${(props) => props.marginLeft};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  /* width: 100%; */
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  margin-left: ${(props) => props.marginLeft};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  letter-spacing: ${(props) => props.spacing};
+  margin: ${(props) => props.margin};
 `;
 
 const TimeLineCard = styled.div`
-	/* width: 300px; */
-	height: 50px;
-	text-align: center;
-	background-color: #ffdeeb;
-	margin: auto;
-	margin-top: 12px;
-	border-radius: 10px;
+  /* width: 300px; */
+  height: 50px;
+  text-align: center;
+  background-color: #ffdeeb;
+  margin: auto;
+  margin-top: 12px;
+  border-radius: 10px;
 `;
 
 const Button = styled.button`
-	background: none;
-	border: none;
+  background: none;
+  border: none;
 `;

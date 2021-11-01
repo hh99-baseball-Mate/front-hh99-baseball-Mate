@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Inputs,
   Text,
@@ -6,6 +6,7 @@ import {
   Container,
   Header,
   Buttons,
+<<<<<<< HEAD
 } from "../components"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
 import { Picture } from "../componentsGroupAdd/Picture"
@@ -14,6 +15,14 @@ import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
+=======
+} from "../components";
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { Picture } from "../componentsGroupAdd/Picture";
+import styled from "styled-components";
+import { clubImageSrc } from "../shared/clubImage";
+import { history } from "../redux/configStore";
+>>>>>>> master
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
@@ -22,6 +31,7 @@ export const GroupAdd = (props) => {
   const [inputValue, setInputValue] = useState({
     title: "",
     choiceClub: "",
+<<<<<<< HEAD
     groupDate: "",
     peopleLimit: 0,
     content: "",
@@ -80,39 +90,54 @@ export const GroupAdd = (props) => {
   }
 
   // 인풋 입력 값 추적 e.target.value 대행
+=======
+  });
+
+  const { contents, count, textarea, choiceClub } = inputValue;
+>>>>>>> master
 
   const onChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValue({
       ...inputValue,
       [name]: value,
-    })
-  }
+    });
+  };
 
   //  인원수 + 버튼
   const plusBtn = () => {
     if (peopleLimit < 8) {
       setInputValue({
         ...inputValue,
+<<<<<<< HEAD
         peopleLimit: peopleLimit + 1,
       })
+=======
+        count: count + 1,
+      });
+>>>>>>> master
     } else {
-      window.alert("8명 이상은 안됩니다")
-      return
+      window.alert("8명 이상은 안됩니다");
+      return;
     }
-  }
+  };
 
   // 인원수 - 버튼
   const minusBtn = () => {
     if (peopleLimit !== 0) {
       setInputValue({
         ...inputValue,
+<<<<<<< HEAD
         peopleLimit: peopleLimit - 1,
       })
+=======
+        count: count - 1,
+      });
+>>>>>>> master
     } else {
-      window.alert("0이하는 선택불가")
+      window.alert("0이하는 선택불가");
     }
-  }
+  };
 
   const submitBtn = (e) => {
     const _emptyValue = Object.values(inputValue).map((e) => {
@@ -242,8 +267,8 @@ export const GroupAdd = (props) => {
         </Buttons>
       </ButtonBox>
     </Container>
-  )
-}
+  );
+};
 
 GroupAdd.defaultProps = {
   defaultImg:
@@ -252,6 +277,7 @@ GroupAdd.defaultProps = {
 
 const Grid = styled.div`
   margin-top: 20px;
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -263,23 +289,27 @@ const ButtonBox = styled.div`
   width: 335px;
   bottom: 20px;
 `
+=======
+`;
+>>>>>>> master
 
 const PeopleCount = styled.div`
   width: 50px;
-`
+`;
 
 const PeopleSelectContainer = styled.div`
   margin: 24px 0;
   display: flex;
   position: relative;
   align-items: center;
-`
+`;
 
 const PeopleSelect = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
   right: 0px;
+<<<<<<< HEAD
 `
 
 const Option = styled.option`
@@ -290,3 +320,6 @@ const ImgSwiper = styled.div`
   display: flex;
   gap: 10px;
 `
+=======
+`;
+>>>>>>> master

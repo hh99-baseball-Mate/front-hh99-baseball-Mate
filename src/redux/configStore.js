@@ -7,6 +7,7 @@ import user from "./modules/user";
 
 import mainPage from "./modules/mainPage";
 import timeline from "./modules/timeline";
+import groupDetail from "./modules/groupDetail";
 
 export const history = createBrowserHistory();
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 
   mainPage,
   timeline,
+  groupDetail,
 
   router: connectRouter(history),
 });

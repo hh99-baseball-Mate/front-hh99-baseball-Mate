@@ -1,8 +1,6 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance, tokenInstance } from "../../lib/axios"
-import axios from "axios"
-import { getCookie } from "../../shared/Cookie"
 
 // const api = axios.create(
 //   {
@@ -37,26 +35,26 @@ const initialState = {
 const getGroupAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/group`)
+      .get(`/page/group`)
       .then((res) => {
-        console.log(res)
-        console.log(res.data)
-        dispatch(setGroup(res.data))
+        console.log(res);
+        console.log(res.data);
+        dispatch(setGroup(res.data));
       })
       .catch((err) => {
-        console.log(err, "그룹조회err")
-      })
-  }
-}
+        console.log(err, "그룹조회err");
+      });
+  };
+};
 
 const getPlayAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/main/myteamSchedule/롯데`)
       .then((res) => {
-        console.log(res)
+        console.log(res);
 
-        dispatch(getPlay(res.data))
+        dispatch(getPlay(res.data));
       })
       .catch((err) => {
         console.log(err, "경기일정err")
@@ -89,11 +87,11 @@ export default handleActions(
   {
     [SET_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        draft.group_list = action.payload.groupList
+        draft.group_list = action.payload.groupList;
       }),
     [GET_PLAY]: (state, action) =>
       produce(state, (draft) => {
-        draft.play_list = action.payload.playList
+        draft.play_list = action.payload.playList;
       }),
     [ADD_GROUP]: (state, action) =>
       produce(state, (draft) => {
@@ -101,7 +99,7 @@ export default handleActions(
       }),
   },
   initialState
-)
+);
 
 const actionCreators = {
   getGroupAPI,
@@ -110,4 +108,4 @@ const actionCreators = {
   addGroupMD,
 }
 
-export { actionCreators }
+export { actionCreators };
