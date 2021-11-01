@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Inputs,
   Text,
@@ -6,11 +6,12 @@ import {
   Container,
   Header,
   Buttons,
-} from "../components"
-import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
-import { Picture } from "../componentsGroupAdd/Picture"
-import styled from "styled-components"
-import { clubImageSrc } from "../shared/clubImage"
+} from "../components";
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { Picture } from "../componentsGroupAdd/Picture";
+import styled from "styled-components";
+import { clubImageSrc } from "../shared/clubImage";
+import { history } from "../redux/configStore";
 
 export const GroupAdd = (props) => {
   const [inputValue, setInputValue] = useState({
@@ -18,40 +19,40 @@ export const GroupAdd = (props) => {
     count: 0,
     textarea: "",
     choiceClub: "",
-  })
+  });
 
-  const { contents, count, textarea, choiceClub } = inputValue
+  const { contents, count, textarea, choiceClub } = inputValue;
 
   const onChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValue({
       ...inputValue,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const plusBtn = () => {
     if (count < 8) {
       setInputValue({
         ...inputValue,
         count: count + 1,
-      })
+      });
     } else {
-      window.alert("8명 이상은 안됩니다")
-      return
+      window.alert("8명 이상은 안됩니다");
+      return;
     }
-  }
+  };
 
   const minusBtn = () => {
     if (count !== 0) {
       setInputValue({
         ...inputValue,
         count: count - 1,
-      })
+      });
     } else {
-      window.alert("0이하는 선택불가")
+      window.alert("0이하는 선택불가");
     }
-  }
+  };
 
   return (
     <Container margin="0px auto">
@@ -127,27 +128,27 @@ export const GroupAdd = (props) => {
         </Buttons>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 const Grid = styled.div`
   margin-top: 20px;
-`
+`;
 
 const PeopleCount = styled.div`
   width: 50px;
-`
+`;
 
 const PeopleSelectContainer = styled.div`
   margin: 24px 0;
   display: flex;
   position: relative;
   align-items: center;
-`
+`;
 
 const PeopleSelect = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
   right: 0px;
-`
+`;
