@@ -1,0 +1,122 @@
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import {
+  Container,
+  Header,
+  MoreContainer,
+  PancilBtn,
+  Text,
+} from "../components"
+import { Card } from "../componentsGoods/Card"
+import goodBanner from "../shared/icon/goodBanner.png"
+import { useDispatch, useSelector } from "react-redux"
+import { actionCreators as goodsActions } from "../redux/modules/goods"
+import { history } from "../redux/configStore"
+
+export const Goods = () => {
+  const dispatch = useDispatch()
+
+  const [sortDate, setSortDate] = useState(false)
+  const [sortItem, setSortItem] = useState(false)
+
+  // 최신순
+  const DateList = () => {
+    setSortDate(!sortDate)
+  }
+
+  // 인기순
+  const HotList = () => {
+    setSortItem(!sortItem)
+  }
+  // const goodsList = useSelector(stats => console.log(state))
+
+  useEffect(() => {
+    dispatch(goodsActions.getGoodsMD())
+  }, [])
+
+  return (
+    <>
+      <Header />
+      <GoodsBaanerContainer>
+        <GoodsBannerBox>
+          <Logo src={goodBanner} />
+          <TextBox>
+            <Text color="#fff" bold size="16px">
+              나의 굿즈를 뽐내봐
+            </Text>
+            <Text color="#FFAFA7" margin="6px 0">
+              싸인볼은 물론! 모자 싸인까지!
+            </Text>
+          </TextBox>
+        </GoodsBannerBox>
+      </GoodsBaanerContainer>
+
+      <Container>
+        <Position>
+          <MoreContainer>
+            <Text size="16px" bold>
+              굿즈 목록
+            </Text>
+            <BtnGroup>
+              <MoreBtn onClick={HotList}>
+                <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
+              </MoreBtn>
+              <MoreBtn onClick={DateList}>
+                <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
+              </MoreBtn>
+            </BtnGroup>
+          </MoreContainer>
+
+          <CardContainer>
+            <Card></Card>
+          </CardContainer>
+          <PancilBtn
+            onClick={() => {
+              history.push("/addgoods")
+            }}
+          />
+        </Position>
+      </Container>
+    </>
+  )
+}
+
+const GoodsBaanerContainer = styled.div`
+  margin: 0 auto;
+  max-width: 375px;
+  height: 106px;
+  background-color: #f25343;
+  box-sizing: border-box;
+`
+
+const TextBox = styled.div``
+
+const GoodsBannerBox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const Logo = styled.img`
+  margin: 20px 10px 20px 20px;
+  width: 64px;
+  height: 64px;
+`
+const BtnGroup = styled.div``
+
+const MoreBtn = styled.button`
+  margin-left: 10px;
+  cursor: pointer;
+  color: #498c9a;
+  border: none;
+  background-color: transparent;
+`
+
+const CardContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+`
+
+const Position = styled.div`
+  position: relative;
+`

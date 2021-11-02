@@ -39,7 +39,7 @@ export const Login = (props) => {
   return (
     <>
       {/* 헤더 */}
-      <Container margin="0px auto">
+      <Container>
         <div
           style={{
             width: "278px",
