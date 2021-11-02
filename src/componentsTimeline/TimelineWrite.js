@@ -28,9 +28,16 @@ const TimelimeWrite = (props) => {
           </div>
 
           <Warp position="relative">
-            <Input placeholder="내용을 입력하세요" 
+            <Input type="text" maxLength="20"
+              placeholder="내용을 입력하세요(최대 20자)" 
+              value={message}
               onChange={(e) => {
                 setMessage(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  addTimeline(e);
+                }
               }}
             />
 

@@ -16,6 +16,17 @@ const TimelineList = React.memo((props) => {
 		dispatch(timelineCreators.loadTimelineMW());
 	}, [])
 
+	// 배열 길이 구하기
+	const length = timeline.length
+	// input = 
+	// length = length
+
+	// for (let i=0; timeline.length > i; i++) {
+	// 	let 0 = (timeline[i].id)
+	// }
+	// a=0;
+	// b=1;
+
 	return (
 		<Container>
 
@@ -33,7 +44,7 @@ const TimelineList = React.memo((props) => {
 				{
 					timeline.map((timeline, idx) => {
 						return (
-							<Timeline key={idx} {...timeline} {...likeState}>
+							<Timeline key={idx} {...timeline} {...likeState} idx={idx}>
 							</Timeline>
 						)
 					})
