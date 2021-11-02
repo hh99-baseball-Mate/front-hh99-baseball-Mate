@@ -16,6 +16,8 @@ import GroupList from "../pages/GroupList"
 import GroupDate from "../pages/GroupDate"
 import GroupDetail from "../pages/GroupDetail"
 import { GroupAdd } from "../pages/GroupAdd"
+import { Goods } from "../pages/Goods"
+import { GoodsAdd } from "../pages/GoodsAdd"
 
 function App() {
   const dispatch = useDispatch()
@@ -44,6 +46,8 @@ function App() {
         <Route path="/groupadd" exact component={GroupAdd} />
         <Route path="/groupdetail" exact component={GroupDetail} />
         <Route path="/timeline" exact component={TimelineList} />
+        <Route path="/goods" exact component={Goods} />
+        <Route path="/addgoods" exact component={GoodsAdd} />
       </ConnectedRouter>
     </React.Fragment>
   )
