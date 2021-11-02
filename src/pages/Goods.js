@@ -69,6 +69,15 @@ export const Goods = () => {
 
           <CardContainer>
             <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
           </CardContainer>
           <PancilBtn
             onClick={() => {
