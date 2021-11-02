@@ -12,6 +12,7 @@ export const Buttons = (props) => {
     width,
     disable,
     complete,
+    ref,
   } = props
 
   const styles = {
@@ -23,12 +24,15 @@ export const Buttons = (props) => {
     width,
     disable,
     complete,
+    ref,
   }
 
   return (
-    <Button onClick={_onClick} {...styles}>
-      {children}
-    </Button>
+    <div>
+      <Button onClick={_onClick} {...styles}>
+        {children}
+      </Button>
+    </div>
   )
 }
 

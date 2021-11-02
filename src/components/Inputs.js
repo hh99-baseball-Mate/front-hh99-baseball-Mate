@@ -31,11 +31,7 @@ export const Inputs = (props) => {
   }
 
   if (dropdown) {
-    return (
-      <div>
-        <Select {...styles}>{children}</Select>
-      </div>
-    )
+    return <Select {...styles}>{children}</Select>
   }
   if (textarea) {
     return (
@@ -87,13 +83,11 @@ const Input = styled.input`
   }
 `
 const Select = styled.select`
-  width: 100%;
-  margin: 10px 0;
   box-sizing: border-box;
   border: none;
-  border-bottom: 1px solid #e7e7e7;
   height: 30px;
   margin: ${(props) => props.margin};
+  text-align: center;
   :focus {
     outline: none !important;
     border-bottom: 2px solid #f25343;
@@ -107,8 +101,8 @@ const TextArea = styled.textarea`
   resize: none;
   height: 150px;
   padding: 10px;
-`
-
-const Option = styled.option`
-  border: none;
+  :focus {
+    outline: none !important;
+    border: 2px solid #f25343;
+  }
 `

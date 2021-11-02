@@ -5,7 +5,7 @@ const Participant = (props) => {
 	// const {shape, src, size, pointer} = props;
 //  flex="felx" justify="space-around"
 	return (
-		<>
+		<React.Fragment>
 			<Box padding="28px 20px 40px 20px">
 				<Warp wrap="wrap" justify="space-between" align="center" start="space-around">
 					<div style={{marginBottom:"20px"}}>
@@ -55,7 +55,7 @@ const Participant = (props) => {
 					참여 신청 하기
 				</ConfirmBtn>
 			</Box>
-		</>
+		</React.Fragment>
 	)
 }
 
@@ -105,6 +105,7 @@ const Circle = styled.div`
 	border: 1px solid #F25343;
 	border-radius: 50%;
 	background: #FFFFFF;
+	margin-bottom: 5px;
 `;
 
 const ConfirmBtn = styled.button`

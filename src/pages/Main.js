@@ -10,98 +10,93 @@ import Banner from "../componentsMain/Banner";
 import Header from "../componentsMain/Header";
 
 const Main = (props) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const mainTimeline = useSelector((state) => state.mainPage.mainTimeline);
-  const hotGroup = useSelector((state) => state.mainPage.hotGroup);
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const mainTimeline = useSelector((state) => state.mainPage.mainTimeline)
+	const hotGroup = useSelector((state) => state.mainPage.hotGroup)
+	
+	useEffect(() => {
+		dispatch(mainCreators.hotGroupMW(4))
+	}, [])
 
-  useEffect(() => {
-    dispatch(mainCreators.hotGroupMW(4));
-  }, []);
+	useEffect(() => {
+		dispatch(mainCreators.loadMainTimelineMW(6))
+	}, [])
+	
+	// console.log("mainTimeline",mainTimeline)
+	console.log("hotGroup",hotGroup)
 
-  useEffect(() => {
-    dispatch(mainCreators.loadMainTimelineMW(10));
-  }, []);
+	return (
+		<Container>
 
-  // console.log("mainTimeline",mainTimeline)
-  console.log("hotGroup", hotGroup);
+			<p style={{fontSize:"30px"}}>야구 MATE</p>
 
-  return (
-    <Container>
-      <p style={{ fontSize: "30px" }}>야구 MATE</p>
+			{/* 헤더 네비 */}
+			<Header />
 
-      {/* 헤더 네비 */}
-      <Header />
+			{/* 야구 일정 */}
+			<Banner />
 
-      {/* 야구 일정 */}
-      <Banner />
+			{/* 핫한 모임 타이틀 */}
+			<Box>
+				<Warp flex="flex" justify="space-between" align="center" margin="0 0 13px 0">
+					<Text size="16px" weight="bold">
+						지금 핫한 모임 🔥
+					</Text>
+					
+					<Button>
+						<Text size= "12px" weight= "500px" color="#C4C4C4"
+							onClick={()=>{history.push("/grouplist")}}
+						>
+							+ More
+						</Text>
+					</Button>
+				</Warp>
+			</Box>
 
-      {/* 핫한 모임 타이틀 */}
-      <Box>
-        <Warp
-          flex="flex"
-          justify="space-between"
-          align="center"
-          margin="0 0 13px 0"
-        >
-          <Text size="16px" weight="bold">
-            지금 핫한 모임 🔥
-          </Text>
+			{/* 핫한 모임 리스트 */}
+			{
+				hotGroup.map((hotGroup, idx) => {
+					return (
+						<HotGroup key={idx} {...hotGroup} />
+					)
+				})
+			}
 
-          <Button>
-            <Text
-              size="12px"
-              weight="500px"
-              color="#C4C4C4"
-              onClick={() => {
-                history.push("/grouplist");
-              }}
-            >
-              + More
-            </Text>
-          </Button>
-        </Warp>
-      </Box>
+			{/* 구분선 */}
+			<Rectangle/>
 
-      {/* 핫한 모임 리스트 */}
-      {hotGroup.map((hotGroup, idx) => {
-        return <HotGroup key={idx} {...hotGroup} />;
-      })}
-      {/* <HotGroup {...hotGroup} /> */}
+			{/* 타임라인 타이틀 */}
+			<Box>
+				<Warp flex="flex" justify="space-between">
+					<Text size="16px" weight="bold">
+						생생 타임라인 💬
+					</Text>
 
-      {/* 구분선 */}
-      <Rectangle />
+					<Button>
+						<Text size= "12px" weight= "500px" color="#C4C4C4"
+							onClick={()=>{history.push("/timeline")}}
+						>
+							+ More
+						</Text>
+					</Button>
+				</Warp>
+			</Box>
 
-      {/* 타임라인 타이틀 */}
-      <Box>
-        <Warp flex="flex" justify="space-between">
-          <Text size="16px" weight="bold">
-            생생 타임라인 💬
-          </Text>
-
-          <Button>
-            <Text
-              size="12px"
-              weight="500px"
-              color="#C4C4C4"
-              onClick={() => {
-                history.push("/timeline");
-              }}
-            >
-              + More
-            </Text>
-          </Button>
-        </Warp>
-      </Box>
-
-      {/* 타임라인 리스트 */}
-      {mainTimeline.map((mainTimeline, idx) => {
-        return <MainTimeline key={idx} {...mainTimeline}></MainTimeline>;
-      })}
-      {/* <MainTimeline {...mainTimeline} /> */}
-    </Container>
-  );
-};
+			{/* 타임라인 리스트 */}
+			{
+				mainTimeline.map((mainTimeline, idx) => {
+					return (
+						<MainTimeline key={idx} {...mainTimeline}>
+						</MainTimeline>
+					)
+				})
+			}
+			{/* <MainTimeline {...mainTimeline} /> */}
+			
+		</Container>
+	)
+}
 
 export default Main;
 
