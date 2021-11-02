@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Container, MoreContainer, Text } from "../components"
+import {
+  Container,
+  Header,
+  MoreContainer,
+  PancilBtn,
+  Text,
+} from "../components"
 import { Card } from "../componentsGoods/Card"
 import goodBanner from "../shared/icon/goodBanner.png"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
+import { history } from "../redux/configStore"
 
 export const Goods = () => {
   const dispatch = useDispatch()
@@ -29,6 +36,7 @@ export const Goods = () => {
 
   return (
     <>
+      <Header />
       <GoodsBaanerContainer>
         <GoodsBannerBox>
           <Logo src={goodBanner} />
@@ -44,23 +52,30 @@ export const Goods = () => {
       </GoodsBaanerContainer>
 
       <Container>
-        <MoreContainer>
-          <Text size="16px" bold>
-            굿즈 목록
-          </Text>
-          <BtnGroup>
-            <MoreBtn onClick={HotList}>
-              <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
-            </MoreBtn>
-            <MoreBtn onClick={DateList}>
-              <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
-            </MoreBtn>
-          </BtnGroup>
-        </MoreContainer>
+        <Position>
+          <MoreContainer>
+            <Text size="16px" bold>
+              굿즈 목록
+            </Text>
+            <BtnGroup>
+              <MoreBtn onClick={HotList}>
+                <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
+              </MoreBtn>
+              <MoreBtn onClick={DateList}>
+                <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
+              </MoreBtn>
+            </BtnGroup>
+          </MoreContainer>
 
-        <CardContainer>
-          <Card></Card>
-        </CardContainer>
+          <CardContainer>
+            <Card></Card>
+          </CardContainer>
+          <PancilBtn
+            onClick={() => {
+              history.push("/addgoods")
+            }}
+          />
+        </Position>
       </Container>
     </>
   )
@@ -100,4 +115,8 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+`
+
+const Position = styled.div`
+  position: relative;
 `

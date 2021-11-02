@@ -4,7 +4,7 @@ import {
   Text,
   InputCheck,
   Container,
-  Header,
+  ArrowBack,
   Buttons,
 } from "../components"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
@@ -136,14 +136,10 @@ export const GroupAdd = (props) => {
   }
 
   return (
-    <Container>
-      <Header
-        onClick={() => {
-          history.goBack()
-        }}
-      >
-        모임 생성
-      </Header>
+    <Container margin="0px auto">
+      <ArrowBack onClick={() => {
+        history.goBack()
+      }}>모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>

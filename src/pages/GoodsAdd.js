@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import {
+  ArrowBack,
   Buttons,
   Container,
   Header,
@@ -99,13 +100,13 @@ export const GoodsAdd = (props) => {
 
   return (
     <Container>
-      <Header
+      <ArrowBack
         onClick={() => {
           history.goBack()
         }}
       >
         굿즈 등록
-      </Header>
+      </ArrowBack>
       <Text margin="30px 0 7px 0">
         대표 이미지
         {goodsImg.base64 && <InputCheck />}
