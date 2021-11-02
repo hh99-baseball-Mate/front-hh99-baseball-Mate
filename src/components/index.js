@@ -4,5 +4,6 @@ import { Text } from "./Text"
 import { Container } from "./Container"
 import { Header } from "./Header"
 import { InputCheck } from "./InputCheck"
+import { MoreContainer } from "./MoreContainer"
 
-export { Inputs, Buttons, Text, Container, Header, InputCheck }
+export { Inputs, Buttons, Text, Container, Header, InputCheck, MoreContainer }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"
 import {
   Inputs,
   Text,
@@ -14,6 +14,7 @@ import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
+import { history } from "../redux/configStore"
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
@@ -71,7 +72,7 @@ export const GroupAdd = (props) => {
       ...inputValue,
       preview: {
         name: "",
-        size: "",
+        size: 0,
         type: "",
         base64: "",
       },
@@ -82,12 +83,12 @@ export const GroupAdd = (props) => {
   // 인풋 입력 값 추적 e.target.value 대행
 
   const onChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setInputValue({
       ...inputValue,
       [name]: value,
-    });
-  };
+    })
+  }
 
   //  인원수 + 버튼
   const plusBtn = () => {
@@ -97,10 +98,10 @@ export const GroupAdd = (props) => {
         peopleLimit: peopleLimit + 1,
       })
     } else {
-      window.alert("8명 이상은 안됩니다");
-      return;
+      window.alert("8명 이상은 안됩니다")
+      return
     }
-  };
+  }
 
   // 인원수 - 버튼
   const minusBtn = () => {
@@ -110,15 +111,16 @@ export const GroupAdd = (props) => {
         peopleLimit: peopleLimit - 1,
       })
     } else {
-      window.alert("0이하는 선택불가");
+      window.alert("0이하는 선택불가")
     }
-  };
+  }
 
+  // 입력체크
   const submitBtn = (e) => {
     const _emptyValue = Object.values(inputValue).map((e) => {
-      if (e === "" || e.base64 === "" || e === 0) {
-        return false
-      }
+        if (!e || e.base64 === "") {
+          return false
+        }
     })
     const emptyValue = _emptyValue.includes(false)
 
@@ -129,13 +131,19 @@ export const GroupAdd = (props) => {
     }
 
     dispatch(groupActions.addGroupMD(inputValue))
-    e.currentTarget.disabled = true
+    e.target.disabled = true
     console.log("빈값이 없음")
   }
 
   return (
-    <Container margin="0px auto">
-      <Header>모임 생성</Header>
+    <Container>
+      <Header
+        onClick={() => {
+          history.goBack()
+        }}
+      >
+        모임 생성
+      </Header>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
@@ -224,7 +232,7 @@ export const GroupAdd = (props) => {
           {preview.base64 && <InputCheck />}
         </Text>
 
-        <ImgSwiper>
+        <ImgBox>
           <Picture basic onChange={imgPreview} name="fileList">
             {preview.base64 ? 1 : 0} / 1
           </Picture>
@@ -233,7 +241,7 @@ export const GroupAdd = (props) => {
             name="preview"
             onClick={deletePreview}
           />
-        </ImgSwiper>
+        </ImgBox>
       </div>
 
       <ButtonBox>
@@ -242,8 +250,8 @@ export const GroupAdd = (props) => {
         </Buttons>
       </ButtonBox>
     </Container>
-  );
-};
+  )
+}
 
 GroupAdd.defaultProps = {
   defaultImg:
@@ -266,14 +274,14 @@ const ButtonBox = styled.div`
 
 const PeopleCount = styled.div`
   width: 50px;
-`;
+`
 
 const PeopleSelectContainer = styled.div`
   margin: 24px 0;
   display: flex;
   position: relative;
   align-items: center;
-`;
+`
 
 const PeopleSelect = styled.div`
   display: flex;
@@ -286,7 +294,7 @@ const Option = styled.option`
   text-align: center;
 `
 
-const ImgSwiper = styled.div`
+const ImgBox = styled.div`
   display: flex;
   gap: 10px;
 `

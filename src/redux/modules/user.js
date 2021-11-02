@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { getCookie, setCookie } from "../../shared/Cookie"
+import { setCookie } from "../../shared/Cookie"
 import axios from "axios"
 import { instance, tokenInstance } from "../../lib/axios"
 import { history } from "../configStore"
@@ -9,13 +9,13 @@ import { history } from "../configStore"
 
 const LOGIN = "LOGIN"
 const LOGIN_CHECK = "LOGIN_CHECK"
-const Choice_Club = "Coice_Club"
+const CHOICE_CLUB = "/main/nowGoods/{number}"
 
 // 액션 함수
 
 const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
 const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
-const choiceClub = createAction(Choice_Club, (myteam) => ({ myteam }))
+const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }))
 
 const initialState = {
   user_info: [],
@@ -142,7 +142,7 @@ export default handleActions(
         draft.user_info = action.payload.login_user
         draft.is_login = true
       }),
-    [Choice_Club]: (state, action) =>
+    [CHOICE_CLUB]: (state, action) =>
       produce(state, (draft) => {
         const myteam = action.payload.myteam
         draft.user_info = { ...draft.user_info, myteam }
