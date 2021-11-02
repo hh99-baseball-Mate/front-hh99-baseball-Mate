@@ -2,18 +2,34 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { timelineCreators } from "../redux/modules/timeline";
+import { useHistory } from "react-router";
+import { getCookie } from '../shared/Cookie';
 
 import user from "../shared/icon/user.svg"
 import send from "../shared/icon/send.svg"
 
 const TimelimeWrite = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState("");
+  const cookie = getCookie("is_login");
 
   const addTimeline = () => {
-    dispatch(timelineCreators.addTimelineMW(message));
-    setMessage("");
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      history.push("/login")
+      return;
+    }
+    else if (message !== "") {
+      dispatch(timelineCreators.addTimelineMW(message));
+      setMessage("");
+      return;
+    } 
+    else {
+      window.alert("내용을 입력하세요")
+      return;
+    }
   };
 
   return (
@@ -28,8 +44,8 @@ const TimelimeWrite = (props) => {
           </div>
 
           <Warp position="relative">
-            <Input type="text" maxLength="20"
-              placeholder="내용을 입력하세요(최대 20자)" 
+            <Input type="text" maxLength="100"
+              placeholder="내용을 입력하세요(최대 100자)" 
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value);
@@ -71,25 +87,6 @@ const Warp = styled.div`
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
 `;
-
-const Text = styled.div`
-  font-size: ${(props) => props.size};
-  font-weight: ${(props) => props.weight};
-  color: ${(props) => props.color};
-  letter-spacing: ${(props) => props.spacing};
-  margin: ${(props) => props.margin};
-`;
-
-const TimeLineCard = styled.div`
-  /* width: 300px; */
-  height: 50px;
-  text-align: center;
-  background-color: #ffdeeb;
-  margin: auto;
-  margin-top: 12px;
-  border-radius: 10px;
-`;
-
 
 const Circle = styled.div`
 	width: 48px;

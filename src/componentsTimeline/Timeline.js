@@ -15,19 +15,10 @@ const Timeline = React.memo((props) => {
 	}, [])
 
 	const [like, setLike] = useState(false)
+	const idx = props.idx
+	// console.log("username", props.user.username)
 
-
-	// console.log("idx", props.idx)
-	const idx = props.idx;
-	const id = props.id;
-	const userName = props.userName;
-	const content = props.content;
-	const dayBefore = props.dayBefore;
-	const likecount = props.likecount;
-	const likeState = props.likeState
-
-	console.log("likeState",likeState)
-	console.log(id, userName, content, dayBefore, likecount)
+	const Me = props.user.username 
 
 	const delTimeline = () => {
 		// const timeLineId = props.id
@@ -35,12 +26,6 @@ const Timeline = React.memo((props) => {
 			dispatch(timelineCreators.deleteTimelineMW(props.id));
 		}
   };
-
-	// const likeTimeline = () => {
-
-	// 	dispatch(timelineCreators.likeTimelineMW(id, like))
-	// }
-
 
 	return (
 		<React.Fragment>
@@ -61,6 +46,15 @@ const Timeline = React.memo((props) => {
 									{props.dayBefore}
 								</Text>
 							</Warp>
+							
+							{/* <p onClick={()=>{
+								setLike(!like)
+								dispatch(timelineCreators.likeTimelineMW(props.id, like))
+							}}>
+								{like === true ? <p>😍</p> : <p>🤨</p>}
+							</p>
+							<Text>{props.likecount}</Text> */}
+
 								<Text size="14px">
 									{props.content}
 								</Text>
@@ -68,17 +62,12 @@ const Timeline = React.memo((props) => {
 
 					</Warp>
 					
-					{/* <p onClick={()=>{
-						setLike(!like)
-						dispatch(timelineCreators.likeTimelineMW(props.id, like))
-					}}>
-						
-						{like === true ? <p>😍</p> : <p>🤨</p>}
-					</p>
 					
-					<Text>{props.likecount}</Text> */}
-				
-					{/* <Text onClick={delTimeline}>X삭제</Text> */}
+				{ 
+					Me === props.userName ?
+					(<Text onClick={delTimeline}>X삭제</Text>) : ""
+				}
+					
 				</TimeLineCard>
 			</Container>
 
@@ -91,7 +80,7 @@ export default React.memo(Timeline);
 
 const Container = styled.div`
 	width: 335px; 
-	height: 57px;
+	/* height: 57px; */
 	/* margin-bottom: 5px; */
 	margin: auto;
 `;
