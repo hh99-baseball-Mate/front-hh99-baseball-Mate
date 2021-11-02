@@ -4,7 +4,7 @@ import {
   Text,
   InputCheck,
   Container,
-  Header,
+  ArrowBack,
   Buttons,
 } from "../components"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
@@ -135,7 +135,7 @@ export const GroupAdd = (props) => {
 
   return (
     <Container margin="0px auto">
-      <Header>모임 생성</Header>
+      <ArrowBack>모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>

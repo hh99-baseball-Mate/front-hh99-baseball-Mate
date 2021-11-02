@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Buttons, Container, Header } from "../components";
+import { Buttons, Container, ArrowBack } from "../components";
 
 import { useDispatch, useSelector } from "react-redux";
 import group from "../redux/modules/group";
-import Position from "../icon/Vector.png";
+import Position from "../shared/icon/Vector.png";
 import { history } from "../redux/configStore";
 import { Image } from "react-bootstrap";
 
@@ -22,13 +22,13 @@ const GroupDate = (props) => {
   // }, []);
   return (
     <Container margin="0px auto">
-      <Header
+      <ArrowBack
         onClick={() => {
           history.push("/grouplist");
         }}
       >
         일정선택
-      </Header>
+      </ArrowBack>
       {/* {play_list.map((e, i) => (
         <div key={i}> */}
       <Box>

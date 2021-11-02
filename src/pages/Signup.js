@@ -1,30 +1,30 @@
-import React, { useState } from "react"
-import styled from "styled-components"
+import React, { useState } from "react";
+import styled from "styled-components";
 
-import { useDispatch } from "react-redux"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { passwordCheck, emailCheck } from "../shared/LoginCheck"
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { passwordCheck, emailCheck } from "../shared/LoginCheck";
 
 import {
   Buttons,
   Inputs,
   Text,
   Container,
-  Header,
+  ArrowBack,
   InputCheck,
-} from "../components"
+} from "../components";
 
-import { IoEyeSharp } from "react-icons/io5"
-import { AiOutlineCheck } from "react-icons/ai"
+import { IoEyeSharp } from "react-icons/io5";
+import { AiOutlineCheck } from "react-icons/ai";
 
 export const Signup = (props) => {
-  const { history } = props
+  const { history } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // 비밀번호 숨기기/보이기
-  const [showPwd, setShowPwd] = useState(false)
-  const [showPwd2, setShowPwd2] = useState(false)
+  const [showPwd, setShowPwd] = useState(false);
+  const [showPwd2, setShowPwd2] = useState(false);
 
   // 인풋 여러개쓰기
   const [inputsValue, setInputValue] = useState({
@@ -32,24 +32,24 @@ export const Signup = (props) => {
     username: "",
     password: "",
     password2: "",
-  })
+  });
 
   // 비구조화 할당
-  const { userid, username, password, password2 } = inputsValue
+  const { userid, username, password, password2 } = inputsValue;
 
   // name 에는 input 네임이 value 에는 그 값들이 들어감
   const onChangeValue = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValue({
       ...inputsValue,
       [name]: value,
-    })
-  }
+    });
+  };
 
-  const idCehcking = userid !== "" && emailCheck.test(userid)
-  const userNameChecking = username !== ""
-  const passwordChecking = password !== "" && passwordCheck.test(password)
-  const password2Checking = password2 !== "" && password === password2
+  const idCehcking = userid !== "" && emailCheck.test(userid);
+  const userNameChecking = username !== "";
+  const passwordChecking = password !== "" && passwordCheck.test(password);
+  const password2Checking = password2 !== "" && password === password2;
 
   const signUpChecking = (e) => {
     if (
@@ -58,26 +58,26 @@ export const Signup = (props) => {
       passwordChecking &&
       password2Checking
     ) {
-      dispatch(userActions.signUpMD({ userid, username, password }))
-      e.currentTarget.disabled = true
-      console.log("가입완료")
+      dispatch(userActions.signUpMD({ userid, username, password }));
+      e.currentTarget.disabled = true;
+      console.log("가입완료");
     } else {
-      window.alert("입력한 내용을 다시 확인하시기 바랍니다.")
-      console.log("가입실패")
+      window.alert("입력한 내용을 다시 확인하시기 바랍니다.");
+      console.log("가입실패");
     }
-  }
+  };
 
   return (
     <>
       <Container margin="0px auto">
         {/* 헤더 */}
-        <Header
+        <ArrowBack
           onClick={() => {
-            history.push("/login")
+            history.push("/login");
           }}
         >
           이메일로 가입
-        </Header>
+        </ArrowBack>
 
         {/* 게정생성 */}
         <div style={{ margin: "50px 0 0 0" }}>
@@ -161,7 +161,7 @@ export const Signup = (props) => {
               top: "50px",
             }}
             onClick={() => {
-              setShowPwd(!showPwd)
+              setShowPwd(!showPwd);
             }}
           ></IoEyeSharp>
         </InputPosition>
@@ -193,7 +193,7 @@ export const Signup = (props) => {
               top: "50px",
             }}
             onClick={() => {
-              setShowPwd2(!showPwd2)
+              setShowPwd2(!showPwd2);
             }}
           ></IoEyeSharp>
         </InputPosition>
@@ -217,9 +217,9 @@ export const Signup = (props) => {
         </Buttons>
       </Container>
     </>
-  )
-}
+  );
+};
 
 const InputPosition = styled.div`
   position: relative;
-`
+`;

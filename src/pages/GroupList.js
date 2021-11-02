@@ -4,13 +4,14 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 //swiper
 import Swipers from "../components/Swipers";
-import HotGroup from "../componentsMain/HotGroup";
+import GroupCard from "../componentsGroupList/GroupCard";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 import { baseUrl, clubImageSrc } from "../shared/clubImage";
 import { SwiperSlide } from "swiper/react";
 import { Text } from "../components";
-import Pancil from "../icon/Pancil.png";
+// import Pancil from "../shared/icon/Pancil.png";
+import PancilBtn from "../components/PancilBtn";
 
 const GroupList = (props) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const GroupList = (props) => {
   useEffect(() => {
     dispatch(groupCr.getGroupAPI());
   }, []);
+
   return (
     <div>
       <Header>
@@ -78,16 +80,14 @@ const GroupList = (props) => {
         일정선택
       </div>
       <Broder />
-      {group_list.map((e) => {
-        console.log(e)
-        return <HotGroup />
+      {group_list.map((e, idx) => {
+        console.log(e);
+        return <GroupCard key={idx} {...e} />;
       })}
-      <Btn onClick={newPeople}>
-        {" "}
-        <img src={Pancil} alt="위치" />
-      </Btn>
+
+      <PancilBtn onClick={newPeople} />
     </div>
-  )
+  );
 };
 export default GroupList;
 
