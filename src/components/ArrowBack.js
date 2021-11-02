@@ -1,12 +1,12 @@
-import React from "react"
-import { IoIosArrowBack } from "react-icons/io"
-import { Text } from "./"
-import styled from "styled-components"
+import React from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { Text } from ".";
+import styled from "styled-components";
 
-export const Header = (props) => {
-  const { children, onClick } = props
+export const ArrowBack = (props) => {
+  const { children, onClick } = props;
 
-  const styles = { onClick }
+  const styles = { onClick };
 
   return (
     <Headers>
@@ -18,13 +18,13 @@ export const Header = (props) => {
         {children}
       </Text>
     </Headers>
-  )
-}
+  );
+};
 
-Header.defaultProps = {
+ArrowBack.defaultProps = {
   children: null,
   _onClick: () => {},
-}
+};
 
 const Headers = styled.div`
   display: flex;
@@ -32,4 +32,4 @@ const Headers = styled.div`
   position: relative;
   cursor: pointer;
   margin: 20px 0;
-`
+`;

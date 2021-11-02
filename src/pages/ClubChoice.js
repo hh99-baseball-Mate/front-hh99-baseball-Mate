@@ -1,11 +1,11 @@
-import React from "react"
-import { history } from "../redux/configStore"
-import { useSelector } from "react-redux"
-import { ClubImage } from "../componentsLogin/ClubImage"
-import { Text, Header } from "../components"
+import React from "react";
+import { history } from "../redux/configStore";
+import { useSelector } from "react-redux";
+import { ClubImage } from "../componentsLogin/ClubImage";
+import { Text, ArrowBack } from "../components";
 
 export const ClubChoice = (props) => {
-  const userNmae = useSelector((state) => state.user.user_info.username)
+  const userNmae = useSelector((state) => state.user.user_info.username);
 
   // console.log(userNmae)
 
@@ -18,9 +18,9 @@ export const ClubChoice = (props) => {
           margin: "20px auto 0 auto",
         }}
       >
-        <Header
+        <ArrowBack
           onClick={() => {
-            history.push("/login")
+            history.push("/login");
           }}
         />
         <div style={{ margin: "32px 16px" }}>
@@ -56,9 +56,9 @@ export const ClubChoice = (props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 ClubChoice.defaultPorps = {
   userNmae: "이름없음",
-}
+};
