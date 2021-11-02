@@ -36,7 +36,7 @@ export const Goods = () => {
 
   return (
     <>
-      <Header />
+      <Header nowBtn4="nowBtn4"/>
       <GoodsBaanerContainer>
         <GoodsBannerBox>
           <Logo src={goodBanner} />
