@@ -26,7 +26,7 @@ const loadTimelineMW = () => {
 		apis
 			.getTimeline()
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				const timeline = res.data;
 				dispatch(load_timeline(timeline));
 			})

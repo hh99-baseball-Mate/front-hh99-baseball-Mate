@@ -11,6 +11,7 @@ const TimelineList = React.memo((props) => {
 	const dispatch = useDispatch();
 	const timeline = useSelector((state) => state.timeline.timeline);
 	const likeState = useSelector((state) => state.timeline.like);
+	const user = useSelector((state) => state.user.user_info)
 	const [message, setMessage] = useState("");
 
 	useEffect(() => {
@@ -39,7 +40,7 @@ const TimelineList = React.memo((props) => {
 				{
 					timeline.map((timeline, idx) => {
 						return (
-							<Timeline key={idx} {...timeline} {...likeState} idx={idx}>
+							<Timeline key={idx} {...timeline} {...likeState} user={user} idx={idx}>
 							</Timeline>
 						)
 					})
@@ -47,7 +48,7 @@ const TimelineList = React.memo((props) => {
 			</List>
 
 			{/* 타임라인 작성 */}			
-			<TimelimeWrite/>
+			<TimelimeWrite />
 
 		</Container>
 	)
@@ -95,6 +96,6 @@ const Text = styled.div`
 `;
 
 const List = styled.div`
- 	height: 87vh;
+ 	height: 75vh;
 	overflow: auto;
 `;
