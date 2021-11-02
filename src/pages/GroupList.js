@@ -18,7 +18,10 @@ const GroupList = (props) => {
   const history = useHistory();
 
   const group_list = useSelector((state) => state.group.group_list);
-  console.log(group_list);
+  // console.log(group_list);
+  //팀별
+  const team_list = useSelector((state) => state.group.team_list);
+  console.log(team_list);
 
   function newPeople() {
     history.push("/groupadd");
@@ -31,6 +34,11 @@ const GroupList = (props) => {
   useEffect(() => {
     dispatch(groupCr.getGroupAPI());
   }, []);
+  //팀별
+  useEffect(() => {
+    dispatch(groupCr.getTeamAPI());
+  }, []);
+  console.log(team_list);
 
   return (
     <div>
@@ -42,32 +50,39 @@ const GroupList = (props) => {
       </Header>
       <Broder />
       {/*swiper */}
-      <>
+      {/* {team_list.map((e) => ( */}
+      <div>
         <Swipers>
           <SwiperSlide>
-            <Image
-              style={{ width: "68px", height: "69px" }}
-              roundedCircle
-              src="https://www.thesportsdb.com/images/media/league/poster/8xu67b1624123161.jpg"
-            ></Image>
-            <Text center> 전체</Text>
+            <div>
+              <Image
+                style={{ width: "68px", height: "69px" }}
+                roundedCircle
+                src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
+              ></Image>
+              <Text center> 전체</Text>
+            </div>
           </SwiperSlide>
           {clubImageSrc.map((e) => (
             <SwiperSlide>
-              <Image
-                src={baseUrl + e.img}
-                style={{ width: "68px" }}
-                roundedCircle
-              />
-              <Text center>{e.name}</Text>
+              <div>
+                <Image
+                  src={baseUrl + e.img}
+                  style={{ width: "68px" }}
+                  roundedCircle
+                />
+                <Text center>{e.name}</Text>
+              </div>
             </SwiperSlide>
           ))}
         </Swipers>
-      </>
+      </div>
+      {/* ))} */}
       {/* dfd */}
       <div style={{ display: "block" }}>
         <strong>모임 목록</strong>
       </div>
+
       <div
         onClick={choose}
         style={{
