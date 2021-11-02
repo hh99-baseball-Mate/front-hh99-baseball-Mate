@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import MainTimeline from "../componentsMain/MainTimeline";
 import HotGroup from "../componentsMain/HotGroup";
 import Banner from "../componentsMain/Banner";
-import Header from "../componentsMain/Header";
+import { Header } from "../components";
 
 const Main = (props) => {
 	const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Main = (props) => {
 			<p style={{fontSize:"30px"}}>야구 MATE</p>
 
 			{/* 헤더 네비 */}
-			<Header />
+			<Header nowBtn1="nowBtn1"/>
 
 			{/* 야구 일정 */}
 			<Banner />
