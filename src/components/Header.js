@@ -8,7 +8,7 @@ const Header = (props) => {
   const {nowBtn1, nowBtn2, nowBtn3, nowBtn4} = props;
 
   return (
-    <React.Fragment>
+    <Container>
       <Box>
         
         <Button1
@@ -40,11 +40,14 @@ const Header = (props) => {
 
         <Button4
           nowBtn4={nowBtn4}
+          onClick={() => {
+            history.push("/goods");
+          }}
         >
           굿즈
         </Button4>
       </Box>
-    </React.Fragment>
+    </Container>
   );
 };
 
@@ -56,6 +59,12 @@ Header.defaultProps = {
 };
 
 export default Header;
+
+const Container = styled.div`
+  width: 375px;
+  margin: auto;
+  padding: 0;
+`;
 
 const Box = styled.div`
   display: flex;

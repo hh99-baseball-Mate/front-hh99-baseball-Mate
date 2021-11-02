@@ -47,6 +47,13 @@ const Timeline = React.memo((props) => {
 								</Text>
 							</Warp>
 							
+							<Warp>
+								{ 
+									Me === props.userName ?
+									(<Text onClick={delTimeline}>❌</Text>) : ""
+								}
+							</Warp>
+
 							{/* <p onClick={()=>{
 								setLike(!like)
 								dispatch(timelineCreators.likeTimelineMW(props.id, like))
@@ -63,10 +70,7 @@ const Timeline = React.memo((props) => {
 					</Warp>
 					
 					
-				{ 
-					Me === props.userName ?
-					(<Text onClick={delTimeline}>X삭제</Text>) : ""
-				}
+
 					
 				</TimeLineCard>
 			</Container>
