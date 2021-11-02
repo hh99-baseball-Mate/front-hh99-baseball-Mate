@@ -14,7 +14,7 @@ Container.defaultPorps = {
 }
 
 const MainContainer = styled.div`
-  margin: ${(props) => props.margin};
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   width: 90%;

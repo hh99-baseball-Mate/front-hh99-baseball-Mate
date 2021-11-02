@@ -69,7 +69,7 @@ export const Signup = (props) => {
 
   return (
     <>
-      <Container margin="0px auto">
+      <Container>
         {/* 헤더 */}
         <ArrowBack
           onClick={() => {
