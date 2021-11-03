@@ -68,7 +68,7 @@ const getPlayAPI = () => {
 const getTeamAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/page/group/{teamName}`)
+      .get(`/page/group`)
       .then((res) => {
         console.log(res);
         dispatch(getTeam(res));

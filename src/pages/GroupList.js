@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 import { baseUrl, clubImageSrc } from "../shared/clubImage";
 import { SwiperSlide } from "swiper/react";
-import { Text } from "../components";
+import { Container, Header, MoreContainer, Text } from "../components";
 // import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
 
@@ -41,18 +41,13 @@ const GroupList = (props) => {
   console.log(team_list);
 
   return (
-    <div>
-      <Header>
-        <List>추천</List>
-        <List>모임</List>
-        <List>소식</List>
-        <List>굿즈</List>
-      </Header>
+    <Container>
+      <Header />
       <Broder />
       {/*swiper */}
       {/* {team_list.map((e) => ( */}
       <div>
-        <Swipers>
+        <Swipers slidesPerView={5}>
           <SwiperSlide>
             <div>
               <Image
@@ -64,44 +59,47 @@ const GroupList = (props) => {
             </div>
           </SwiperSlide>
           {clubImageSrc.map((e) => (
-            <SwiperSlide>
-              <div>
-                <Image
-                  src={baseUrl + e.img}
-                  style={{ width: "68px" }}
-                  roundedCircle
-                />
-                <Text center>{e.name}</Text>
-              </div>
+            <SwiperSlide
+              style={{ width: "68px", marginRight: "10px" }}
+              onClick={() => {
+                console.log("나는 뭐지?");
+                // history.push(`/${e.name}`);
+              }}
+            >
+              <Image
+                src={baseUrl + e.img}
+                style={{ width: "100%" }}
+                roundedCircle
+              />
+              <Text center>{e.name}</Text>
             </SwiperSlide>
           ))}
         </Swipers>
       </div>
       {/* ))} */}
       {/* dfd */}
-      <div style={{ display: "block" }}>
-        <strong>모임 목록</strong>
-      </div>
-
-      <div
-        onClick={choose}
-        style={{
-          cursor: "pointer",
-          fontSize: "13px",
-          color: "#C4C4C4",
-          textAlign: "right",
-        }}
-      >
-        일정선택
-      </div>
+      <MoreContainer>
+        <div style={{ display: "block" }}>
+          <strong>모임 목록</strong>
+        </div>
+        <div
+          onClick={choose}
+          style={{
+            cursor: "pointer",
+            fontSize: "13px",
+            color: "#C4C4C4",
+          }}
+        >
+          일정선택
+        </div>
+      </MoreContainer>
       <Broder />
       {group_list.map((e, idx) => {
         console.log(e);
         return <GroupCard key={idx} {...e} />;
       })}
-
       <PancilBtn onClick={newPeople} />
-    </div>
+    </Container>
   );
 };
 export default GroupList;
@@ -120,29 +118,4 @@ const List = styled.span`
   height: 20px;
   left: 57px;
   line-height: 29px;
-`;
-
-const Circle = styled.div`
-  background: yellow;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  float: left;
-  margin-left: 10px;
-`;
-const Btn = styled.button`
-  border-radius: 50%;
-  height: 61px;
-  width: 61px;
-  position: fixed;
-  right: 10px;
-  bottom: 0px;
-  background: #f25343;
-  border: 0;
-  outline: 0;
-`;
-
-const Header = styled.header`
-  width: 100%;
-  margin-top: 30px;
 `;

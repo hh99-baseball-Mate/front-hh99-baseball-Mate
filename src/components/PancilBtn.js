@@ -24,10 +24,10 @@ const Btn = styled.button`
   border-radius: 50%;
   height: 61px;
   width: 61px;
-  position: absolute;
+  position: fixed;
   right: 10px;
   bottom: 0px;
   background: #f25343;
   border: 0;
   outline: 0;
-`
+`;
