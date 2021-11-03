@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { mainCreators } from "../redux/modules/mainPage";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const HotGroup = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // const hotGroup = useSelector((state) => (state.mainPage.hotGroup))
   // console.log("hotGroup",hotGroup)
@@ -16,7 +18,7 @@ const HotGroup = (props) => {
   // }, [])
 
   return (
-    <Container>
+    <Container onClick={()=>{ history.push("/groupdetail/" + props.groupId)}}>
       <Card>
         <Warp margin="0 0 16px 0">
           <Warp flex="flex" margin="0 0 12px 0">

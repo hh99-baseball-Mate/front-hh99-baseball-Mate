@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import Info from "../componentsGroupDetail/Info";
@@ -10,13 +11,16 @@ import Comment from "../componentsGroupDetail/Comment";
 
 const GroupDetail = (props) => {
 	const dispatch = useDispatch();
+  const params = useParams();
+  const groupId = params.groupId
+  // console.log("params", params)
 	const [selectPage, setSelectPage] = useState(true)
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
 	// console.log("loadDetail", loadDetail)
 
 	useEffect(()=>{
-		dispatch(groupDetailCreators.loadGroupPageMW())
+		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
 	},[])
 
 

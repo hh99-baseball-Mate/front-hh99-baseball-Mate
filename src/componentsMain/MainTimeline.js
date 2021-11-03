@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import Timeline from "../componentsTimeline/Timeline";
+
 const MainTimeline = (props) => {
 
 	return (
@@ -9,10 +11,11 @@ const MainTimeline = (props) => {
 
 				{/* 타임라인 리스트 */}
 				<TimeLineCard>
-					{props.userName}
+					{/* {props.userName}
 					{props.content}
 					{props.dayBefore}
-					{props.likecount}
+					{props.likecount} */}
+
 				</TimeLineCard>
 
 			</Container>
