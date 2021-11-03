@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { Header } from "../components";
+import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
+import NaviBar from "../components/NaviBar";
 import { timelineCreators } from "../redux/modules/timeline";
 
 const TimelineList = React.memo((props) => {
@@ -12,45 +14,50 @@ const TimelineList = React.memo((props) => {
 	const timeline = useSelector((state) => state.timeline.timeline);
 	const likeState = useSelector((state) => state.timeline.like);
 	const user = useSelector((state) => state.user.user_info)
-	const [message, setMessage] = useState("");
+	// const [message, setMessage] = useState("");
 
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
 	}, [])
 
+	const reloadBtn = () => {
+		dispatch(timelineCreators.loadTimelineMW())
+	}
+
 	return (
-		<Container>
+		<React.Fragment>
+			<Container>
 
-			<Header nowBtn3="nowBtn3" />
-			<Box height="62px" background="#777777">
-				상영중인 경기 정보
-			</Box>
+				{/* 헤더 */}
+				<Header nowBtn3="nowBtn3" />
 
-			{/* <Warp flex="flex" justify="space-between">
-				<Text size="16px" weight="bold">
-					생생 타임라인 💬
-				</Text>
-				<Text size= "12px" weight= "500px" color="#C4C4C4">
-					+ More
-				</Text>
-			</Warp> */}
+				{/* 배너 */}
+				<TimelineBanner />
 
-			{/* 타임라인 리스트 */}
-			<List>
-				{
-					timeline.map((timeline, idx) => {
-						return (
-							<Timeline key={idx} {...timeline} {...likeState} user={user} idx={idx}>
-							</Timeline>
-						)
-					})
-				}
-			</List>
+				<Warp padding="0 20px" >
 
-			{/* 타임라인 작성 */}			
-			<TimelimeWrite />
+					{/* 타임라인 작성 & 응원갯수 */}			
+					<TimelimeWrite  />
 
-		</Container>
+					{/* 타임라인 리스트 */}
+					<List>
+						{
+							timeline.map((timeline, idx) => {
+								return (
+									<Timeline key={idx} {...timeline} {...likeState} user={user} idx={idx}>
+									</Timeline>
+								)
+							})
+						}
+					</List>
+				</Warp>
+					
+			
+			</Container>
+
+			{/* 하단 네비바 */}
+			<NaviBar/>
+		</React.Fragment>
 	)
 });
 
@@ -68,6 +75,7 @@ const Box = styled.div`
 	background: ${(props) => props.background};
 	padding: ${(props) => props.padding};
 	margin: ${(props) => props.margin};
+	margin-bottom: ${(props) => props.bottom};
 	display: ${(props) => props.flex};
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
@@ -82,6 +90,7 @@ const Warp = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	margin-left: ${(props) => props.marginLeft};
+	margin-bottom: ${(props) => props.bottom};
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
@@ -93,9 +102,24 @@ const Text = styled.div`
 	color: ${(props) => props.color};
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
+	margin-bottom: ${(props) => props.bottom};
+`;
+
+const Circle = styled.div`
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	margin-left: 8px;
 `;
 
 const List = styled.div`
- 	height: 75vh;
+ 	height: 62vh;
 	overflow: auto;
+	/* NaviBar안겹치게 */
+	margin-bottom: 94px;
 `;

@@ -1,6 +1,6 @@
-import { createAction, handleActions } from "redux-actions"
-import { produce } from "immer"
-import { instance, tokenInstance } from "../../lib/axios"
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import { instance, tokenInstance } from "../../lib/axios";
 
 // const api = axios.create(
 //   {
@@ -14,22 +14,25 @@ import { instance, tokenInstance } from "../../lib/axios"
 // );
 
 //액션
-const SET_GROUP = "SET_GROUP"
-const GET_PLAY = "GET_PLAY"
-const ADD_GROUP = "ADD_GROUP"
+const SET_GROUP = "SET_GROUP";
+const GET_PLAY = "GET_PLAY";
+const ADD_GROUP = "ADD_GROUP";
+const GET_TEAM = "GET_TEAM";
 
 //액션함수
-const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }))
-const getPlay = createAction(GET_PLAY, (playList) => ({ playList }))
-const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }))
+const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }));
+const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
+const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }));
+const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
 //초기값
 const initialState = {
   group_list: [],
   play_list: [],
+  team_list: [],
 
   // addlist 시험
   ex_list: [],
-}
+};
 
 //미들웨어
 const getGroupAPI = (date = null) => {
@@ -57,30 +60,45 @@ const getPlayAPI = () => {
         dispatch(getPlay(res.data));
       })
       .catch((err) => {
-        console.log(err, "경기일정err")
+        console.log(err, "경기일정err");
+      });
+  };
+};
+
+const getTeamAPI = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/page/group`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getTeam(res));
+        console.log(res, "team확인");
       })
-  }
-}
+      .catch((err) => {
+        console.log("팀별조회에러", err);
+      });
+  };
+};
 
 const addGroupMD = (addGroup_info) => {
   return function (dispatch, getState, { history }) {
-    console.log(addGroup_info, "redux")
+    console.log(addGroup_info, "redux");
 
     const data = {
       ...addGroup_info,
       id: Math.floor(Math.random() * 100),
-    }
+    };
 
     tokenInstance
       .post("/page/group", data)
       .then((res) => {
-        console.log(res.data)
-        dispatch(addGroup(data))
-        history.push("/groupList")
+        console.log(res.data);
+        dispatch(addGroup(data));
+        history.push("/groupList");
       })
-      .catch((err) => console.log(err, "모임생성 err입니다."))
-  }
-}
+      .catch((err) => console.log(err, "모임생성 err입니다."));
+  };
+};
 
 //리듀서
 export default handleActions(
@@ -93,9 +111,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.play_list = action.payload.playList;
       }),
+    [GET_TEAM]: (state, action) => produce(state, (draft) => {}),
     [ADD_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        draft.ex_list.push(action.payload.addList)
+        draft.ex_list.push(action.payload.addList);
       }),
   },
   initialState
@@ -106,6 +125,7 @@ const actionCreators = {
   getPlayAPI,
   addGroup,
   addGroupMD,
-}
+  getTeamAPI,
+};
 
 export { actionCreators };

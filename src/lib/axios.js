@@ -35,6 +35,9 @@ export const apis = {
 
   // 메인화면 타임라인 조회
   getMainTimeline: (number) => instance.get(`/main/nowTimeline/${number}`),
+
+  // 상세페이지 조회
+  getGroupDetail: (groupId) => instance.get(`/page/group/detail/${groupId}`),
 }
 
 // 토큰인증 api
