@@ -21,12 +21,12 @@ export const Goods = () => {
 
   // 최신순
   const DateList = () => {
-    setSortDate(!sortDate)
+    sortItem ? setSortDate(sortDate) : setSortDate(!sortDate)
   }
 
   // 인기순
   const HotList = () => {
-    setSortItem(!sortItem)
+    sortDate ? setSortItem(sortItem) : setSortItem(!sortItem)
   }
   // const goodsList = useSelector(stats => console.log(state))
 
@@ -68,6 +68,15 @@ export const Goods = () => {
           </MoreContainer>
 
           <CardContainer>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
             <Card></Card>
           </CardContainer>
           <PancilBtn

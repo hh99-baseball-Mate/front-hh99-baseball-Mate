@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance } from "../../lib/axios"
+import { apis } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
 
@@ -12,10 +13,10 @@ const initialState = {
 
 
 // http://localhost:4000/page/group/detail/${groupId}`
-const loadGroupPageMW = () => {
+const loadGroupPageMW = (groupId) => {
 	return (dispatch, getState, {history}) => {
-		instance
-			.get("/detailGroup")
+		apis
+			.getGroupDetail(groupId)
 			.then((res) => {
 				// console.log("loadGroupPageMW", res)
 				const groupPage = res.data

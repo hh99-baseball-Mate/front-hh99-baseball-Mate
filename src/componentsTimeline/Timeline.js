@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { timelineCreators } from "../redux/modules/timeline";
+import { mainCreators } from "../redux/modules/mainPage";
 
 const Timeline = React.memo((props) => {
 	const dispatch = useDispatch();
+
+	const user = useSelector((state) => state.user.user_info)
 	
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
+	}, [])
+
+	useEffect(() => {
+		dispatch(mainCreators.loadMainTimelineMW(5))
 	}, [])
 
 	useEffect(() => {
@@ -16,9 +23,10 @@ const Timeline = React.memo((props) => {
 
 	const [like, setLike] = useState(false)
 	const idx = props.idx
-	// console.log("username", props.user.username)
 
-	const Me = props.user.username 
+	// 본인 아이디 확인
+	// const Me = props.user.username 
+	const Me = user.username 
 
 	const delTimeline = () => {
 		// const timeLineId = props.id
@@ -27,50 +35,59 @@ const Timeline = React.memo((props) => {
 		}
   };
 
+	// let like = false;
+	const likeToggle = () => {
+		setLike(!like)
+		dispatch(timelineCreators.likeTimelineMW(props.id, like))
+	}
+
 	return (
 		<React.Fragment>
 
 			<Container>
 				<TimeLineCard idx={idx}>
-					<Warp align="center">
-						<div>
+					{/* <Warp align="center"> */}
+						{/* <div>
 							<Circle />
-						</div>
+						</div> */}
 						
 						<Box>
-							<Warp align="flex-end">
-								<Text size="14px" weight="bold" marginR="10px" >
-									{props.userName}
-								</Text>
-								<Text color="#C4C4C4" size="12px">
-									{props.dayBefore}
-								</Text>
-							</Warp>
-							
-							<Warp>
-								{ 
-									Me === props.userName ?
-									(<Text onClick={delTimeline}>❌</Text>) : ""
-								}
+							<Warp justify="space-between" align="center" bottom="7px">
+								<Warp align="flex-end">
+									<Text size="14px" weight="bold" marginR="10px" >
+										{Me}
+									</Text>
+									<Text color="#C4C4C4" size="12px">
+										{props.dayBefore}
+									</Text>
+								</Warp>
+								
+								<Warp>
+									{ 
+										Me === props.userName ?
+										(<Text size="10px" onClick={delTimeline}>❌</Text>) : ""
+									}
+								</Warp>
 							</Warp>
 
-							{/* <p onClick={()=>{
-								setLike(!like)
-								dispatch(timelineCreators.likeTimelineMW(props.id, like))
-							}}>
-								{like === true ? <p>😍</p> : <p>🤨</p>}
-							</p>
-							<Text>{props.likecount}</Text> */}
+							<Text size="14px" style={{overflowWrap:"break-word"}}>
+								{props.content}
+							</Text>
 
-								<Text size="14px">
-									{props.content}
+							<Warp justify="flex-end">
+								<Text size="12px" 
+								onClick={
+									likeToggle
+								}>
+									{ like ? `😍` : `😶` }
 								</Text>
+								<Text size="12px" marginL="5px">
+									{props.likecount}
+								</Text>
+							</Warp>
 						</Box>
 
-					</Warp>
-					
-					
-
+					{/* </Warp> */}
 					
 				</TimeLineCard>
 			</Container>
@@ -83,10 +100,18 @@ const Timeline = React.memo((props) => {
 export default React.memo(Timeline);
 
 const Container = styled.div`
-	width: 335px; 
+	/* width: 335px;  */
 	/* height: 57px; */
 	/* margin-bottom: 5px; */
-	margin: auto;
+	/* margin: auto; */
+`;
+
+const TimeLineCard = styled.div`
+	${(props) => props.idx % 2 === 0 ? `background: #FFF0EE;`: `background: #F2FAFC;`}
+	border: 1px solid #E7E7E7;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	padding: 12px 14px;
 `;
 
 const Warp = styled.div`
@@ -97,6 +122,7 @@ const Warp = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	margin-left: ${(props) => props.marginLeft};
+	margin-bottom: ${(props) => props.bottom};
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
@@ -122,18 +148,10 @@ const Text = styled.p`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-right: ${(props) => props.marginR};
+	margin-left: ${(props) => props.marginL};
 	cursor: ${(props) => props.pointer};
 	line-height: ${(props) => props.height};
 	/* text-align: center; */
-`;
-
-const TimeLineCard = styled.div`
-	${(props) => props.idx % 2 === 0 ? `background: #FFF0EE;`: `background: #F2FAFC;`}
-	border: 1px solid #E7E7E7;
-
-	margin-top: 5px;
-	border-radius: 10px;
-	padding: 10px;
 `;
 
 const Circle = styled.div`

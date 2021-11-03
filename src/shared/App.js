@@ -45,7 +45,7 @@ function App() {
         <Route path="/grouplist" exact component={GroupList} />
         <Route path="/groupdate" exact component={GroupDate} />
         <Route path="/groupadd" exact component={GroupAdd} />
-        <Route path="/groupdetail" exact component={GroupDetail} />
+        <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
         <Route path="/timeline" exact component={TimelineList} />
         <Route path="/goods" exact component={Goods} />
         <Route path="/addgoods" exact component={GoodsAdd} />

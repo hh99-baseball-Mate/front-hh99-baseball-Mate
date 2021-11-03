@@ -2,64 +2,60 @@ import React from "react";
 import { history } from "../redux/configStore";
 import { useSelector } from "react-redux";
 import { ClubImage } from "../componentsLogin/ClubImage";
-import { Text, ArrowBack } from "../components";
+import { Text, ArrowBack, Container } from "../components"
+import styled from "styled-components"
 
 export const ClubChoice = (props) => {
-  const userNmae = useSelector((state) => state.user.user_info.username);
+  const userNmae = useSelector((state) => state.user.user_info.username)
 
   // console.log(userNmae)
 
   return (
     <>
-      <div
-        style={{
-          width: "90%",
-          maxWidth: "375px",
-          margin: "20px auto 0 auto",
-        }}
-      >
+      <Container>
         <ArrowBack
           onClick={() => {
-            history.push("/login");
-          }}
-        />
-        <div style={{ margin: "32px 16px" }}>
-          <div
-            style={{
-              padding: "36px 50px 50px 0 ",
-            }}
-          >
-            <Text size="18px" bold>
-              구단선택
-            </Text>
-          </div>
-
-          {/* 선택 메세지 로그인 사용자 */}
-          <Text size="24px" bold>
-            <span style={{ color: "blue" }}>
-              {userNmae ? userNmae : "이름없음"}
-            </span>
-            님이 좋아하는 구단을 선택해주세요.
-          </Text>
-        </div>
-
-        {/* 구단선택 */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-            gap: "30px",
-            placeItems: "center",
+            history.push("/login")
           }}
         >
+          구단선택
+        </ArrowBack>
+
+        {/* 선택 메세지 로그인 사용자 */}
+        <TextBox>
+          <Text size="20px" bold>
+            {/* <span style={{ color: "blue" }}>
+              {userNmae ? userNmae : "이름없음"}
+            </span>
+            님이 좋아하는 구단을 선택해주세요. */}
+            내가 응원하는 <br />
+            구단을 선택해주세요.
+          </Text>
+        </TextBox>
+        {/* </div> */}
+
+        {/* 구단선택 */}
+        <Grid>
           {/* 클럽 이미지 */}
           <ClubImage />
-        </div>
-      </div>
+        </Grid>
+      </Container>
     </>
-  );
-};
+  )
+}
 
 ClubChoice.defaultPorps = {
   userNmae: "이름없음",
-};
+}
+
+const TextBox = styled.div`
+  margin: 49px 0px 38px;
+  width: 178px;
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  place-items: center;
+  gap: 10px;
+`
