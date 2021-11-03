@@ -35,20 +35,20 @@ const initialState = {
 };
 
 //미들웨어
-const getGroupAPI = () => {
+const getGroupAPI = (date = null) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/page/group`)
+      .get(`/page/group/${date}`)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        dispatch(setGroup(res.data));
+        console.log(res)
+        console.log(res.data)
+        dispatch(setGroup(res.data))
       })
       .catch((err) => {
-        console.log(err, "그룹조회err");
-      });
-  };
-};
+        console.log(err, "그룹조회err")
+      })
+  }
+}
 
 const getPlayAPI = () => {
   return function (dispatch, getState, { history }) {
