@@ -10,8 +10,8 @@ const LIKE_TIMELINE = "LIKE_TIMELINE";
 
 const load_timeline = createAction(LOAD_TIMELINE, (timeline) => ({ timeline }));
 const add_timeline = createAction(ADD_TIMELINE, (content) => ({ content }));
-const delete_timeline = createAction(DELETE_TIMELINE, (id) => (id));
-const like_timeline = createAction(LIKE_TIMELINE, (id) => (id));
+const delete_timeline = createAction(DELETE_TIMELINE, (id) => ({ id }));
+const like_timeline = createAction(LIKE_TIMELINE, (id, like) => ({ id, like }));
 // const load_mainTimeline = createAction(LOAD_MAIN_TIMELINE, (mainTimeline) => (mainTimeline));
 
 const initialState = {
@@ -55,7 +55,7 @@ const addTimelineMW = (message) => {
 
 const deleteTimelineMW = (id) => {
 	return (dispatch, getState, { history }) => {
-		console.log("deleteTimeline", id)
+		console.log("deleteTimeline", id, typeof(id))
 		const timeLineId = id
 		tokenApis
 			.delTimeline(timeLineId)
@@ -78,7 +78,7 @@ const likeTimelineMW = (id, like) => {
 			.likeTimeline(timeLineId, isLiked)
 			.then((res) => {
 				console.log(res)
-				dispatch(like_timeline(timeLineId))
+				dispatch(like_timeline(timeLineId, isLiked))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -114,15 +114,19 @@ export default handleActions(
 			draft.timeline.unshift(action.payload.content)
 		}),
 		[DELETE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			const idx = draft.timeline.findIndex((p) => p.id !== action.payload.id);
+			const idx = draft.timeline.findIndex((p) => p.id === action.payload.id);
 			if (idx !== -1) {
 				draft.timeline.splice(idx, 1);
 			}
 		}),
 		[LIKE_TIMELINE]: (state, action) => produce(state, (draft) => {
 			const idx = draft.timeline.findIndex((p) => p.id === action.payload.id);
-			draft.timeline[idx].likecount = action.payload.likecount;
-			// draft.like.unshift(action.payload.timeLineId)
+			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+			if (action.payload.like.isLiked) {
+				draft.timeline[idx].likecount -= 1;
+			} else {
+				draft.timeline[idx].likecount += 1;
+			}
 		}),
 		// [LOAD_MAIN_TIMELINE]: (state, action) => produce(state, (draft) => {
 		// 	draft.mainTimeline = action.payload.mainTimeline;
