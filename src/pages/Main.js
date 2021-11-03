@@ -146,14 +146,16 @@ const Main = memo((props) => {
 
 				{/* 굿즈 리스트 */}
 				<Box padding="28px 20px 40px 20px">
-					<Warp wrap="wrap" justify="space-between" align="center" start="space-around">
+					<CardContainer>
 						<Card />
 						<Card />
 						<Card />
 						<Card />
 						<Card />
-					</Warp>
+					</CardContainer>
 				</Box>
+
+				{/* 푸터 */}
 				<Footer/>
 
 				{/* 하단 네비바 */}
@@ -236,3 +238,9 @@ const Button = styled.button`
   background: none;
   border: none;
 `;
+
+const CardContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+`
