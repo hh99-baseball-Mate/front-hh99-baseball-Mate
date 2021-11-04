@@ -15,6 +15,8 @@ export const Inputs = (props) => {
     autoComplete,
     dropdown,
     textarea,
+    label,
+    onClick,
   } = props
 
   const styles = {
@@ -28,6 +30,8 @@ export const Inputs = (props) => {
     autoComplete,
     dropdown,
     textarea,
+    label,
+    onClick,
   }
 
   if (dropdown) {
@@ -55,15 +59,16 @@ Inputs.defaultProps = {
   name: "",
   width: "100%",
   placeholder: "입력",
-  value: "",
+  // value: "",
   margin: "10px 0",
   autoComplete: "off",
   dropdown: false,
   textarea: false,
+  label: "",
 }
 
 const InputBox = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
 `
 
 const Input = styled.input`
