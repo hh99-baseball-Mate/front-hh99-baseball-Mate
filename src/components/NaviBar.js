@@ -4,12 +4,12 @@ import { useHistory } from "react-router";
 
 import home from "../shared/icon/home.svg"
 import home_col from "../shared/icon/home_col.svg"
-import sch from "../shared/icon/sch.svg"
-import sch_col from "../shared/icon/sch_col.svg"
-import rec from "../shared/icon/rec.svg"
-import rec_col from "../shared/icon/rec_col.svg"
-import my from "../shared/icon/my.svg"
-import my_col from "../shared/icon/my_col.svg"
+import schedule from "../shared/icon/schedule.svg"
+import schedule_col from "../shared/icon/schedule_col.svg"
+import record from "../shared/icon/record.svg"
+import record_col from "../shared/icon/record_col.svg"
+import mypage from "../shared/icon/mypage.svg"
+import mypage_col from "../shared/icon/mypage_col.svg"
 
 const NaviBar = (props) => {
 
@@ -30,24 +30,24 @@ const NaviBar = (props) => {
 				<Icon onClick={()=>{history.push("/")}} >
 					{
 						props.sch ? 
-						<img src={sch_col} alt="sch_col" /> 
-						: <img src={sch} alt="sch" />
+						<img src={schedule_col} alt="sch_col" /> 
+						: <img src={schedule} alt="sch" />
 					}
 				</Icon>
 
 				<Icon onClick={()=>{history.push("/")}} >
 					{
 						props.rec ?
-						<img src={rec_col} alt="rec_col" />
-						: <img src={rec} alt="rec" />
+						<img src={record_col} alt="rec_col" />
+						: <img src={record} alt="rec" />
 					}	
 				</Icon>
 
 				<Icon onClick={()=>{history.push("/mypage")}} >
 					{
 						props.my ?
-						<img src={my_col} alt="my_col" />
-						: <img src={my} alt="my" />
+						<img src={mypage_col} alt="my_col" />
+						: <img src={mypage} alt="my" />
 					}
 				</Icon>
 

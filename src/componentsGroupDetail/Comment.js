@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { getCookie } from '../shared/Cookie';
+import { groupDetailCreators } from "../redux/modules/groupDetail";
 
 import smail from "../shared/icon/smail.svg"
 import unSmail from "../shared/icon/unSmail.svg"
 import more from "../shared/icon/more.svg"
+import send from "../shared/icon/send.svg"
+
 
 const Comment = (props) => {
+	
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const cookie = getCookie("is_login");
 
-	// const smailIcon = smail
-	// const unSmailIcon = unSmail
+	const [message, setMessage] = useState("");
+
+  const addComment = () => {
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      history.push("/login")
+      return;
+    }
+    else if (message !== "") {
+      dispatch(groupDetailCreators.addCommentMW(message));
+      setMessage("");
+      return;
+    } 
+    else {
+      window.alert("내용을 입력하세요")
+      return;
+    }
+  };
 
 	return (
 		<React.Fragment>
@@ -37,13 +64,21 @@ const Comment = (props) => {
 				</Text>
 			</Box>
 
-			<Box height="69px">
+			<Box height="69px" position="relative">
 				<Warp>
 					<div>
 						<Circle marginT="20px"/>
 					</div>
-					<TextArea placeholder="공개글 추가..." />
+					<TextArea placeholder="공개글 추가..." 
+						value={message}
+						onChange={(e) => {
+							setMessage(e.target.value);
+						}}
+					/>
 				</Warp>
+					<SendImg src={send} alt="send"
+							onClick={() => {addComment()}}
+						/>
 			</Box>
 
 			<Rectangle/>
@@ -182,4 +217,13 @@ const Circle = styled.div`
 const Icon = styled.img`
 	margin-top: ${(props) => props.marginT};
 	margin-right: ${(props) => props.marginR};
+`;
+
+const SendImg = styled.img`
+  position: absolute;
+  /* left: 8.34%; */
+  right: 8px;
+  bottom: 50%;
+  transform: translateY(50%);
+  cursor: pointer;
 `;
