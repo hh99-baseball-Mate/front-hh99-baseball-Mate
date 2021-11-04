@@ -63,6 +63,10 @@ export const tokenApis = {
   // 타임라인 좋아요
   likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/page/timeLine/${timeLineId}/like`, isLiked),
 
+  // 모임게시글
+  // 모임 참여하기
+  postApply: (groupId) => tokenInstance.post(`/page/group/detail/apply/${groupId}`),
+
   // 모임 게시글 댓글 등록
   postComment: (groupId, comment) => tokenInstance.post(`/page/group/detail/${groupId}/comment`, comment),
 

@@ -24,6 +24,15 @@ const Timeline = React.memo((props) => {
 	const [like, setLike] = useState(false)
 	const idx = props.idx
 
+	// 좋아요 누른 상태
+	// console.log("props.likelist", props.likelist)
+	// const id = props.id
+	// const likelist = props.likelist
+	// const likesx = props.likelist.indexOf(props.id)
+	
+	// console.log("likeId",likesx)
+	// if (props.id === 
+
 	// 본인 아이디 확인
 	// const Me = props.user.username 
 	const Me = user.username 

@@ -3,10 +3,12 @@ import { produce } from "immer"
 import { instance, apis, tokenApis } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
+const GROUP_APPLY = "GROUP_APPLY"
 const ADD_COMMENT = "ADD_COMMENT"
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
-const add_comment = createAction(ADD_COMMENT, (comment) => ({ comment }));
+const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
+const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 
 const initialState = {
 	groupPage : []
@@ -29,6 +31,19 @@ const loadGroupPageMW = (groupId) => {
 	}
 }
 
+const groupApplyMW = (groupId) => {
+	return (dispatch, getState, {history}) => {
+		tokenApis
+			.postApply(groupId)
+			.then((res) => {
+				console.log(res)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
+}
+
 const addCommentMW = (groupId, message) => {
 	return (dispatch, getState, {history}) => {
 		const comment = {comment:message}
@@ -36,6 +51,7 @@ const addCommentMW = (groupId, message) => {
 			.postComment(groupId, comment)
 			.then((res) => {
 				console.log(res);
+				dispatch(add_comment(groupId, comment))
 			})
 			.catch((err) => {
 				console.log(err);
@@ -66,7 +82,9 @@ export default handleActions(
 		[LOAD_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
 			draft.groupPage = action.payload.groupPage;
 		}),
-		// [ADD_COMMENT]
+		// [ADD_COMMENT]: (state, action) => produce(state, (draft) => {
+		// 	draft.groupPage[action.payload.groupId].unshift(action.payload.comment);
+		// }),
 	},
 	initialState
 )
@@ -74,6 +92,7 @@ export default handleActions(
 
 const groupDetailCreators = {
 	loadGroupPageMW,
+	groupApplyMW,
 	addCommentMW
 }
 
