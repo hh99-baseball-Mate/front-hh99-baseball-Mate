@@ -63,7 +63,7 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "30px" }}
                 onClick={() => {
-                  console.log("나는 뭐지?")
+                  console.log("나는 뭐지?");
                   // history.push(`/${e.name}`);
                 }}
               >
@@ -96,13 +96,13 @@ const GroupList = (props) => {
         </MoreContainer>
         <Broder />
         {group_list.map((e, idx) => {
-          console.log(e)
-          return <GroupCard key={idx} {...e} />
+          console.log(e);
+          return <GroupCard key={idx} {...e} />;
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
     </>
-  )
+  );
 };
 export default GroupList;
 
