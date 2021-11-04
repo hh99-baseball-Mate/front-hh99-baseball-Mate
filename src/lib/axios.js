@@ -52,6 +52,18 @@ export const tokenInstance = axios.create({
   },
 })
 
+export const img = axios.create({
+  // 기본적으로 우리가 바라볼 서버의 주소
+  baseURL: "http://54.180.148.132/",
+  headers: {
+    "Content-Type": "multipart/form-data",
+    // accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "X-AUTH-TOKEN": getCookie("is_login"),
+  },
+})
+
+
 export const tokenApis = {
   // 타임라인 페이지
   // 타임라인 작성하기

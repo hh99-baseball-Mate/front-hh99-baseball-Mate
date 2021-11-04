@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { Text } from "."
 
 export const Buttons = (props) => {
   const {
@@ -11,8 +12,9 @@ export const Buttons = (props) => {
     border,
     width,
     disable,
-    complete,
+    submit,
     ref,
+    social,
   } = props
 
   const styles = {
@@ -23,16 +25,37 @@ export const Buttons = (props) => {
     border,
     width,
     disable,
-    complete,
+    submit,
     ref,
+    social,
+  }
+
+  if (submit) {
+    return (
+      <SubmitButton onClick={_onClick} {...styles}>
+        <Text color="#fff" bold>
+          {children}
+        </Text>
+      </SubmitButton>
+    )
+  }
+
+  if (social) {
+    return (
+      <SocialButton onClick={_onClick} {...styles}>
+        <Text color="#F25343" bold>
+          {children}
+        </Text>
+      </SocialButton>
+    )
   }
 
   return (
-    <div>
-      <Button onClick={_onClick} {...styles}>
+    <DefaultButton onClick={_onClick} {...styles}>
+      <Text color="#F25343" bold>
         {children}
-      </Button>
-    </div>
+      </Text>
+    </DefaultButton>
   )
 }
 
@@ -41,21 +64,40 @@ Buttons.defaultProps = {
   margin: "7px 0",
   _onClick: () => {},
   bg: false,
-  text: false,
   border: "none",
   disable: false,
-  complete: false,
+  submit: false,
   width: "100%",
+  social: false,
 }
 
-const Button = styled.button`
+const DefaultButton = styled.button`
   box-sizing: border-box;
   width: ${(props) => props.width};
   height: 50px;
   border-radius: 80px;
-  border: ${(props) => props.border};
+  border: 1px solid #ec5e4f;
   margin: ${(props) => props.margin};
-  background-color: ${(props) => props.bg};
-  ${(props) => (props.complete ? "background:#F25343; color:#fff" : "")}
+  background-color: ${(props) => (props.bg ? props.bg : "#fff")};
+  cursor: pointer;
+`
+const SubmitButton = styled.button`
+  box-sizing: border-box;
+  width: ${(props) => props.width};
+  height: 50px;
+  border-radius: 80px;
+  border: 1px solid #ec5e4f;
+  margin: ${(props) => props.margin};
+  background-color: #f25343;
+  cursor: pointer;
+`
+const SocialButton = styled.button`
+  box-sizing: border-box;
+  width: ${(props) => props.width};
+  height: 50px;
+  border-radius: 80px;
+  border: none;
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => (props.bg ? props.bg : "#fff")};
   cursor: pointer;
 `

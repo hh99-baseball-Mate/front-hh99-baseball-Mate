@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
+import styled from "styled-components"
 
 import { Inputs, Buttons, Text } from "../components"
-import { actionCreators as userActions } from "../redux/modules/user"
+import { Container } from "../components/Container"
+import { InputCheck } from "../components/InputCheck"
 
 import { kakaoUrl } from "../shared/SocialLogin/Kakao"
 import { emailCheck, passwordCheck } from "../shared/LoginCheck"
 
+import { actionCreators as userActions } from "../redux/modules/user"
 import { MdKeyboardArrowDown } from "react-icons/md"
-import { Container } from "../components/Container"
-import { InputCheck } from "../components/InputCheck"
 
 export const Login = (props) => {
   const { history } = props
@@ -40,20 +41,10 @@ export const Login = (props) => {
     <>
       {/* 헤더 */}
       <Container>
-        <div
-          style={{
-            width: "278px",
-            height: "58px",
-            margin: "132px auto",
-            fontSize: "37px",
-            fontWeight: "700",
-            textAlign: "center",
-          }}
-        >
-          야구메이트
-        </div>
+        <Logo>야구메이트</Logo>
 
         {/* 로그인 인풋창 / 버튼 */}
+
         <Inputs
           name="userid"
           type="text"
@@ -144,7 +135,6 @@ export const Login = (props) => {
             <Buttons
               bg="#FAE100"
               _onClick={() => {
-                console.log("됨?")
                 window.location.href = kakaoUrl
               }}
             >
@@ -152,7 +142,11 @@ export const Login = (props) => {
                 카카오톡으로 로그인
               </Text>
             </Buttons>
-            <Buttons bg="#1877F2" _onClick={() => history.push("/signup")}>
+            <Buttons
+              bg="#1877F2"
+              border
+              _onClick={() => history.push("/signup")}
+            >
               <Text color="#fff" bold>
                 페이스북으로 로그인
               </Text>
@@ -163,3 +157,12 @@ export const Login = (props) => {
     </>
   )
 }
+
+const Logo = styled.div`
+  width: 278px;
+  height: 58px;
+  margin: 132px auto;
+  font-size: 37px;
+  font-weight: 700px;
+  text-align: center;
+`

@@ -99,55 +99,57 @@ export const GoodsAdd = (props) => {
   }
 
   return (
-    <Container>
-      <ArrowBack
-        onClick={() => {
-          history.goBack()
-        }}
-      >
-        굿즈 등록
-      </ArrowBack>
-      <Text margin="30px 0 7px 0">
-        대표 이미지
-        {goodsImg.base64 && <InputCheck />}
-      </Text>
-      <ImgBox>
-        <Picture basic onChange={imgPreview}>
-          {goodsImg.base64 ? 1 : 0} / 1
-        </Picture>
-        <Preview
-          name="goodsImg"
-          src={goodsImg.base64 ? goodsImg.base64 : defaultImg}
-          onClick={deleteImg}
-        ></Preview>
-      </ImgBox>
+    <>
+      <Container>
+        <ArrowBack>
+          <Text size="16px" center>
+            굿즈 등록
+          </Text>
+        </ArrowBack>
+        <Text margin="30px 0 7px 0">
+          대표 이미지
+          {goodsImg.base64 && <InputCheck />}
+        </Text>
+        <ImgBox>
+          <Picture basic onChange={imgPreview}>
+            {goodsImg.base64 ? 1 : 0} / 1
+          </Picture>
+          <Preview
+            name="goodsImg"
+            src={goodsImg.base64 ? goodsImg.base64 : defaultImg}
+            onClick={deleteImg}
+          ></Preview>
+        </ImgBox>
 
-      <Inputs
-        name="goodsName"
-        placeholder="내 굿즈의 이름을 적어주세요!"
-        value={goodsName}
-        onChange={onChange}
-      >
-        굿즈 이름
-        {goodsName && <InputCheck />}
-      </Inputs>
-      <Inputs
-        name="goodsContent"
-        textarea
-        placeholder="내 굿즈를 마음껏 소개해 주세요(최대500자)"
-        value={goodsContent}
-        onChange={onChange}
-      >
-        굿즈 내용
-        {goodsContent && <InputCheck />}
-      </Inputs>
+        <Inputs
+          name="goodsName"
+          placeholder="내 굿즈의 이름을 적어주세요!"
+          value={goodsName}
+          onChange={onChange}
+        >
+          굿즈 이름
+          {goodsName && <InputCheck />}
+        </Inputs>
+        <Inputs
+          name="goodsContent"
+          textarea
+          placeholder="내 굿즈를 마음껏 소개해 주세요(최대500자)"
+          value={goodsContent}
+          onChange={onChange}
+        >
+          굿즈 내용
+          {goodsContent && <InputCheck />}
+        </Inputs>
 
-      <ButtonBox>
-        <Buttons complete _onClick={submitBtn}>
-          굿즈 등록
-        </Buttons>
-      </ButtonBox>
-    </Container>
+        <ButtonBox>
+          <Buttons complete _onClick={submitBtn}>
+            <Text color="white" size="16px">
+              굿즈 등록
+            </Text>
+          </Buttons>
+        </ButtonBox>
+      </Container>
+    </>
   )
 }
 
