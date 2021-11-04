@@ -57,4 +57,5 @@ const Button = styled.button`
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bg};
   ${(props) => (props.complete ? "background:#F25343; color:#fff" : "")}
+  cursor: pointer;
 `

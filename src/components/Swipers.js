@@ -17,5 +17,5 @@ export default Swipers;
 
 Swipers.defaultProps = {
   children: null,
-  slidesPerView: 5,
+  slidesPerView: 7,
 };
