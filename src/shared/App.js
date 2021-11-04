@@ -24,6 +24,7 @@ function App() {
   const dispatch = useDispatch()
   // const loginCheck = useSelector((state) => state.user.is_login)
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   if (getCookie("is_login")) {
   //     dispatch(userActions.logInCheckMD())
@@ -32,6 +33,16 @@ function App() {
   //     history.replace("/login")
   //   }
   // }, [])
+=======
+  useEffect(() => {
+    if (getCookie("is_login")) {
+      dispatch(userActions.logInCheckMD());
+    } else {
+      window.alert("로그인을 해주세요");
+      history.replace("/login");
+    }
+  }, []);
+>>>>>>> master
 
   return (
     <React.Fragment>

@@ -3,9 +3,13 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 
 import home from "../shared/icon/home.svg"
+import home_col from "../shared/icon/home_col.svg"
 import schedule from "../shared/icon/schedule.svg"
+import schedule_col from "../shared/icon/schedule_col.svg"
 import record from "../shared/icon/record.svg"
+import record_col from "../shared/icon/record_col.svg"
 import mypage from "../shared/icon/mypage.svg"
+import mypage_col from "../shared/icon/mypage_col.svg"
 
 const NaviBar = (props) => {
 
@@ -14,22 +18,39 @@ const NaviBar = (props) => {
 	return (
 		<Container>
 			<Warp justify="space-between">
+
 				<Icon onClick={()=>{history.push("/")}} >
-					<img src={home} alt="" />
-					<Text>Home</Text>
+					{
+						props.home ? 
+						<img src={home_col} alt="home_col" /> 
+						: <img src={home} alt="home" /> 
+					}
 				</Icon>
+
 				<Icon onClick={()=>{history.push("/")}} >
-					<img src={schedule} alt="" />
-					<Text>Schedule</Text>
+					{
+						props.sch ? 
+						<img src={schedule_col} alt="sch_col" /> 
+						: <img src={schedule} alt="sch" />
+					}
 				</Icon>
+
 				<Icon onClick={()=>{history.push("/")}} >
-					<img src={record} alt="" />
-					<Text>Record</Text>
+					{
+						props.rec ?
+						<img src={record_col} alt="rec_col" />
+						: <img src={record} alt="rec" />
+					}	
 				</Icon>
+
 				<Icon onClick={()=>{history.push("/mypage")}} >
-					<img src={mypage} alt="" />
-					<Text>My Page</Text>
+					{
+						props.my ?
+						<img src={mypage_col} alt="my_col" />
+						: <img src={mypage} alt="my" />
+					}
 				</Icon>
+
 			</Warp>
 		</Container>
 	)
@@ -42,7 +63,7 @@ const Container = styled.div`
   width: 376px;
   height: 94px;
 	border-top: 1px solid #E7E7E7;
-  padding: 15px 35px 38px 35px;
+  padding: 15px 28px 38px 35px;
 	position: fixed;
 	bottom: 0px;
 	left: 50%;
@@ -64,11 +85,13 @@ const Warp = styled.div`
 	position: ${(props) => props.position};
 `;
 
-const Icon = styled.div`
+const Icon = styled.button`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	background: none;
+	border: none;
 `;
 
 const Box = styled.div`

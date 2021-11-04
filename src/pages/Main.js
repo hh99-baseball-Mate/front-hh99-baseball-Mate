@@ -159,7 +159,7 @@ const Main = memo((props) => {
 				<Footer/>
 
 				{/* 하단 네비바 */}
-				<NaviBar/>
+				<NaviBar home="home"/>
 
 			</Container>
 		</React.Fragment>

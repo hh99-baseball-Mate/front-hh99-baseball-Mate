@@ -1,22 +1,25 @@
 import { createAction, handleActions} from "redux-actions";
 import produce from "immer";
-import { apis, tokenApis } from "../../lib/axios";
+import { tokenInstance, apis, tokenApis } from "../../lib/axios";
 
 const LOAD_TIMELINE = "LOAD_TIMELINE";
 const ADD_TIMELINE = "ADD_TIMELINE";
 const DELETE_TIMELINE = "DELETE_TIMELINE";
 const LIKE_TIMELINE = "LIKE_TIMELINE";
+const LOAD_LIKELIST = "LOAD_LIKELIST";
 // const LOAD_MAIN_TIMELINE = "LOAD_MAIN_TIMELINE";
 
 const load_timeline = createAction(LOAD_TIMELINE, (timeline) => ({ timeline }));
 const add_timeline = createAction(ADD_TIMELINE, (content) => ({ content }));
 const delete_timeline = createAction(DELETE_TIMELINE, (id) => ({ id }));
 const like_timeline = createAction(LIKE_TIMELINE, (id, like) => ({ id, like }));
+const load_likelist = createAction(LOAD_LIKELIST, (likelist) => ({ likelist }));
 // const load_mainTimeline = createAction(LOAD_MAIN_TIMELINE, (mainTimeline) => (mainTimeline));
 
 const initialState = {
 	timeline: [],
-	like: [],
+	// like: [],
+	likelist: [],
 	// mainTimeline: []
 };
 
@@ -71,7 +74,7 @@ const deleteTimelineMW = (id) => {
 
 const likeTimelineMW = (id, like) => {
 	return (dispatch, getState, { history }) => {
-		console.log("likeTimeline", id, like)
+		// console.log("likeTimeline", id, like)
 		const timeLineId = id;
 		const isLiked = {isLiked: like};
 		tokenApis
@@ -86,6 +89,21 @@ const likeTimelineMW = (id, like) => {
 	}
 }
 
+
+const likeListMW = () => {
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .post("/user/logincheck")
+      .then((res) => {
+        const likelist = res.data.myTimeLineLikesList
+				console.log("likelist", likelist)
+				dispatch(load_likelist(likelist))
+      })
+      .catch((err) => {
+				console.log(err)
+			})
+  }
+}
 
 // const loadMainTimelineMW = (number) => {
 // 	return (dispatch, getState, { history }) => {
@@ -128,6 +146,9 @@ export default handleActions(
 				draft.timeline[idx].likecount += 1;
 			}
 		}),
+		[LOAD_LIKELIST]: (state, action) => produce(state, (draft) => {
+			draft.likelist = action.payload.likelist;
+		}),
 		// [LOAD_MAIN_TIMELINE]: (state, action) => produce(state, (draft) => {
 		// 	draft.mainTimeline = action.payload.mainTimeline;
 		// }),
@@ -141,6 +162,7 @@ const timelineCreators = {
 	addTimelineMW,
 	deleteTimelineMW,
 	likeTimelineMW,
+	likeListMW
 	// loadMainTimelineMW
 }
 
