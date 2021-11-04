@@ -28,6 +28,7 @@ const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, password } = user_info
 
+    console.log(user_info)
     instance
       .post("/user/login", { userid, password })
       .then((res) => {
@@ -117,7 +118,7 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
-      .get(`http://52.78.93.38/user/kakao/callback?code=${key}`)
+      .get(`http://54.180.148.132/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 

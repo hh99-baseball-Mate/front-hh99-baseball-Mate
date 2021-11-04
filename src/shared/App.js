@@ -1,37 +1,37 @@
 import React, { useEffect } from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { ClubChoice } from "../pages/ClubChoice";
-import { Login } from "../pages/Login";
-import { Signup } from "../pages/Signup";
-import { history } from "../redux/configStore";
-import { Route } from "react-router-dom";
-import KAKAOhandle from "./SocialLogin/KAKAOhandle";
-import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
-import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "./Cookie";
-import { actionCreators as userActions } from "../redux/modules/user";
-import TimelineList from "../pages/TimelineList";
-import GroupList from "../pages/GroupList";
-import GroupDate from "../pages/GroupDate";
-import GroupDetail from "../pages/GroupDetail";
-import { GroupAdd } from "../pages/GroupAdd";
-import { Goods } from "../pages/Goods";
-import { GoodsAdd } from "../pages/GoodsAdd";
-import MyGroup from "../pages/MyGroup";
+import { Signup } from "../pages/Signup"
+import { history } from "../redux/configStore"
+import { Route } from "react-router-dom"
+import KAKAOhandle from "./SocialLogin/KAKAOhandle"
+import { GlobalStyles } from "./GlobalStyles"
+import Main from "../pages/Main"
+import { useDispatch, useSelector } from "react-redux"
+import { getCookie } from "./Cookie"
+import { actionCreators as userActions } from "../redux/modules/user"
+import TimelineList from "../pages/TimelineList"
+import GroupList from "../pages/GroupList"
+import GroupDate from "../pages/GroupDate"
+import GroupDetail from "../pages/GroupDetail"
+import { GroupAdd } from "../pages/GroupAdd"
+import { Goods } from "../pages/Goods"
+import { GoodsAdd } from "../pages/GoodsAdd"
+import MyGroup from "../pages/MyGroup"
+import { Login } from "../pages/Login"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   // const loginCheck = useSelector((state) => state.user.is_login)
 
-  useEffect(() => {
-    if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
-    } else {
-      window.alert("로그인을 해주세요");
-      history.replace("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (getCookie("is_login")) {
+  //     dispatch(userActions.logInCheckMD())
+  //   } else {
+  //     window.alert("로그인을 해주세요")
+  //     history.replace("/login")
+  //   }
+  // }, [])
 
   return (
     <React.Fragment>
@@ -52,7 +52,7 @@ function App() {
         <Route path="/mygroup" exact component={MyGroup} />
       </ConnectedRouter>
     </React.Fragment>
-  );
+  )
 }
 
 export default App;
