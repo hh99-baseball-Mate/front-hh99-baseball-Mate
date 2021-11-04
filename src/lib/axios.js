@@ -52,6 +52,18 @@ export const tokenInstance = axios.create({
   },
 })
 
+export const img = axios.create({
+  // 기본적으로 우리가 바라볼 서버의 주소
+  baseURL: "http://54.180.148.132/",
+  headers: {
+    "Content-Type": "multipart/form-data",
+    // accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "X-AUTH-TOKEN": getCookie("is_login"),
+  },
+})
+
+
 export const tokenApis = {
   // 타임라인 페이지
   // 타임라인 작성하기
@@ -63,9 +75,14 @@ export const tokenApis = {
   // 타임라인 좋아요
   likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/page/timeLine/${timeLineId}/like`, isLiked),
 
+  // 모임게시글
+  // 모임 참여하기
+  postApply: (groupId) => tokenInstance.post(`/page/group/detail/apply/${groupId}`),
 
-  // 게시물 수정하기
-  editPost: (id, content) => tokenInstance.put(`/posts/${id}`, content),
+  // 모임 게시글 댓글 등록
+  postComment: (groupId, comment) => tokenInstance.post(`/page/group/detail/${groupId}/comment`, comment),
+
+  //
 };
 
 

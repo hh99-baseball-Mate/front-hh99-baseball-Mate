@@ -25,13 +25,7 @@ const GroupDate = (props) => {
   // }, []);
   return (
     <Container margin="0px auto">
-      <ArrowBack
-        onClick={() => {
-          history.push("/grouplist");
-        }}
-      >
-        일정선택
-      </ArrowBack>
+      <ArrowBack>일정선택</ArrowBack>
       {/* 여기서부터 카드 */}
       {/* {play_list.map((e, i) => (
         <div key={i}> */}
@@ -250,7 +244,7 @@ const GroupDate = (props) => {
       {/* </div>
       ))} */}
     </Container>
-  );
+  )
 };
 
 export default GroupDate;

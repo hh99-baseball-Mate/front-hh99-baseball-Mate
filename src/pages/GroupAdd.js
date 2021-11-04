@@ -12,71 +12,46 @@ import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
 import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
 import { history } from "../redux/configStore"
+import axios from "axios"
+import { img } from "../lib/axios"
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
 
+  const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
+
+  console.log(selectTeam_list)
   // 인풋 값 state
   const [inputValue, setInputValue] = useState({
     title: "",
-    choiceClub: "",
+    selectTeam: "",
     groupDate: "",
     peopleLimit: 0,
     content: "",
-    preview: {
-      name: "",
-      size: 0,
-      type: "",
-      base64: "",
-    },
   })
 
-  const { content, peopleLimit, title, choiceClub, groupDate, preview } =
-    inputValue
+  const [preview, setPreview] = useState("")
+
+  const { content, peopleLimit, title, selectTeam, groupDate } = inputValue
 
   // 이미지 업로드 / 미리보기
 
-  const imgPreview = (e) => {
-    const img = e.target.files[0]
-
-    let reader = new FileReader()
-
-    reader.onloadend = () => {
-      setInputValue({
-        ...inputValue,
-        preview: {
-          name: img.name,
-          size: img.size,
-          type: img.type,
-          base64: reader.result,
-        },
-      })
-    }
-    if (img) {
-      reader.readAsDataURL(img)
-    }
+  const imgPreview = async (e) => {
+    setPreview(e.target.files[0])
   }
 
   // 미리보기 삭제,
 
   const deletePreview = () => {
-    if (!inputValue.preview.base64) {
+    if (!preview.base64) {
       window.alert("삭제 할 사진이 없어요")
       return
     }
 
-    setInputValue({
-      ...inputValue,
-      preview: {
-        name: "",
-        size: 0,
-        type: "",
-        base64: "",
-      },
-    })
+    setPreview("")
     console.log("삭제를 해야되는데..")
   }
 
@@ -89,6 +64,13 @@ export const GroupAdd = (props) => {
       [name]: value,
     })
   }
+
+  useEffect(() => {
+    if (selectTeam) {
+      console.log(selectTeam, "asdasd")
+      dispatch(groupActions.selectTeamMD(selectTeam))
+    }
+  }, [selectTeam])
 
   //  인원수 + 버튼
   const plusBtn = () => {
@@ -117,29 +99,37 @@ export const GroupAdd = (props) => {
 
   // 입력체크
   const submitBtn = (e) => {
-    const _emptyValue = Object.values(inputValue).map((e) => {
-        if (!e || e.base64 === "") {
-          return false
-        }
-    })
-    const emptyValue = _emptyValue.includes(false)
+    // const _emptyValue = Object.values(inputValue).map((e) => {
+    //   if (!e) {
+    //     return false
+    //   }
+    // })
 
-    if (emptyValue) {
-      window.alert("빈란을 채워주세요")
-      console.log("빈값있음")
-      return
-    }
+    // const emptyValue = _emptyValue.includes(false)
 
-    dispatch(groupActions.addGroupMD(inputValue))
+    // if (emptyValue) {
+    //   window.alert("빈란을 채워주세요")
+    //   console.log("빈값있음")
+    //   return
+    // }
+
+    const formData = new FormData()
+
+    formData.append("title", inputValue.title)
+    formData.append("groupDate", inputValue.groupDate)
+    formData.append("content", inputValue.content)
+    formData.append("peopleLimit", inputValue.peopleLimit)
+    formData.append("selectTeam", inputValue.selectTeam)
+    formData.append("file", preview)
+
+    dispatch(groupActions.addGroupMD(formData))
     e.target.disabled = true
-    console.log("빈값이 없음")
+    // for (const keyValue of formData) console.log(keyValue)
   }
 
   return (
     <Container margin="0px auto">
-      <ArrowBack onClick={() => {
-        history.goBack()
-      }}>모임 생성</ArrowBack>
+      <ArrowBack>모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
@@ -157,11 +147,11 @@ export const GroupAdd = (props) => {
         <Grid>
           <Text>
             구단선택
-            {choiceClub && <InputCheck />}
+            {selectTeam && <InputCheck />}
           </Text>
           <Inputs
-            name="choiceClub"
-            value={choiceClub}
+            name="selectTeam"
+            value={selectTeam}
             dropdown
             onChange={onChange}
           >
@@ -186,10 +176,15 @@ export const GroupAdd = (props) => {
             value={groupDate}
             onChange={onChange}
           >
-            <Option value="">경기일정 선택</Option>
+            {/* <Option value="">경기일정 선택</Option>
             <Option value="롯데">롯데</Option>
             <Option value="2">2</Option>
-            <Option value="3">3</Option>
+            <Option value="3">3</Option> */}
+            {selectTeam_list.map((e) => (
+              <Option>
+                {e.awayteam}vs {e.hometeam}
+              </Option>
+            ))}
           </Inputs>
         </Grid>
 
@@ -229,11 +224,11 @@ export const GroupAdd = (props) => {
         </Text>
 
         <ImgBox>
-          <Picture basic onChange={imgPreview} name="fileList">
+          <Picture basic onChange={imgPreview} name="file">
             {preview.base64 ? 1 : 0} / 1
           </Picture>
           <Preview
-            src={preview.base64 ? preview.base64 : props.defaultImg}
+            src={preview ? URL.createObjectURL(preview) : props.defaultImg}
             name="preview"
             onClick={deletePreview}
           />

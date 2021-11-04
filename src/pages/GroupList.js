@@ -61,7 +61,7 @@ const GroupList = (props) => {
             </SwiperSlide>
             {clubImageSrc.map((e) => (
               <SwiperSlide
-                style={{ width: "68px", marginRight: "10px" }}
+                style={{ width: "68px", marginRight: "30px" }}
                 onClick={() => {
                   console.log("나는 뭐지?");
                   // history.push(`/${e.name}`);

@@ -45,7 +45,7 @@ const GroupDetail = (props) => {
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant/> : <Comment/>} 
+				{selectPage === true ? <Participant id={groupId}/> : <Comment id={groupId}/>} 
 
 			</Box>
 
