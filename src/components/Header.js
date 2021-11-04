@@ -5,12 +5,11 @@ import { useHistory } from "react-router-dom";
 const Header = (props) => {
   const history = useHistory();
 
-  const {nowBtn1, nowBtn2, nowBtn3, nowBtn4} = props;
+  const { nowBtn1, nowBtn2, nowBtn3, nowBtn4 } = props;
 
   return (
-    <Container>
+    <Container minWidth="370px">
       <Box>
-        
         <Button1
           nowBtn1={nowBtn1}
           onClick={() => {
@@ -20,7 +19,7 @@ const Header = (props) => {
           추천
         </Button1>
 
-        <Button2 
+        <Button2
           nowBtn2={nowBtn2}
           onClick={() => {
             history.push("/grouplist");
@@ -86,7 +85,9 @@ const Button1 = styled.button`
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
-  ${(props) => props.nowBtn1 && `
+  ${(props) =>
+    props.nowBtn1 &&
+    `
     border-bottom: 2px solid;
     font-weight: bold;
     color: #000000;
@@ -103,7 +104,9 @@ const Button2 = styled.button`
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
-  ${(props) => props.nowBtn2 && `
+  ${(props) =>
+    props.nowBtn2 &&
+    `
     border-bottom: 2px solid;
     font-weight: bold;
     color: #000000;
@@ -120,7 +123,9 @@ const Button3 = styled.button`
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
-  ${(props) => props.nowBtn3 && `
+  ${(props) =>
+    props.nowBtn3 &&
+    `
     border-bottom: 2px solid;
     font-weight: bold;
     color: #000000;
@@ -137,7 +142,9 @@ const Button4 = styled.button`
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
-  ${(props) => props.nowBtn4 && `
+  ${(props) =>
+    props.nowBtn4 &&
+    `
     border-bottom: 2px solid;
     font-weight: bold;
     color: #000000;

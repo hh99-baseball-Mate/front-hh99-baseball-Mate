@@ -41,65 +41,67 @@ const GroupList = (props) => {
   console.log(team_list);
 
   return (
-    <Container>
+    <>
       <Header />
-      <Broder />
-      {/*swiper */}
-      {/* {team_list.map((e) => ( */}
-      <div>
-        <Swipers slidesPerView={5}>
-          <SwiperSlide>
-            <div>
-              <Image
-                style={{ width: "68px", height: "69px" }}
-                roundedCircle
-                src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
-              ></Image>
-              <Text center> 전체</Text>
-            </div>
-          </SwiperSlide>
-          {clubImageSrc.map((e) => (
-            <SwiperSlide
-              style={{ width: "68px", marginRight: "10px" }}
-              onClick={() => {
-                console.log("나는 뭐지?");
-                // history.push(`/${e.name}`);
-              }}
-            >
-              <Image
-                src={baseUrl + e.img}
-                style={{ width: "100%" }}
-                roundedCircle
-              />
-              <Text center>{e.name}</Text>
+      <Container>
+        <Broder />
+        {/*swiper */}
+        {/* {team_list.map((e) => ( */}
+        <div>
+          <Swipers slidesPerView={5}>
+            <SwiperSlide>
+              <div>
+                <Image
+                  style={{ width: "68px", height: "69px" }}
+                  roundedCircle
+                  src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
+                ></Image>
+                <Text center> 전체</Text>
+              </div>
             </SwiperSlide>
-          ))}
-        </Swipers>
-      </div>
-      {/* ))} */}
-      {/* dfd */}
-      <MoreContainer>
-        <div style={{ display: "block" }}>
-          <strong>모임 목록</strong>
+            {clubImageSrc.map((e) => (
+              <SwiperSlide
+                style={{ width: "68px", marginRight: "10px" }}
+                onClick={() => {
+                  console.log("나는 뭐지?");
+                  // history.push(`/${e.name}`);
+                }}
+              >
+                <Image
+                  src={baseUrl + e.img}
+                  style={{ width: "100%" }}
+                  roundedCircle
+                />
+                <Text center>{e.name}</Text>
+              </SwiperSlide>
+            ))}
+          </Swipers>
         </div>
-        <div
-          onClick={choose}
-          style={{
-            cursor: "pointer",
-            fontSize: "13px",
-            color: "#C4C4C4",
-          }}
-        >
-          일정선택
-        </div>
-      </MoreContainer>
-      <Broder />
-      {group_list.map((e, idx) => {
-        console.log(e);
-        return <GroupCard key={idx} {...e} />;
-      })}
-      <PancilBtn onClick={newPeople} />
-    </Container>
+        {/* ))} */}
+        {/* dfd */}
+        <MoreContainer>
+          <div style={{ display: "block" }}>
+            <strong>모임 목록</strong>
+          </div>
+          <div
+            onClick={choose}
+            style={{
+              cursor: "pointer",
+              fontSize: "13px",
+              color: "#C4C4C4",
+            }}
+          >
+            일정선택
+          </div>
+        </MoreContainer>
+        <Broder />
+        {group_list.map((e, idx) => {
+          console.log(e);
+          return <GroupCard key={idx} {...e} />;
+        })}
+        <PancilBtn onClick={newPeople} />
+      </Container>
+    </>
   );
 };
 export default GroupList;
