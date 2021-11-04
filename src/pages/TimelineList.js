@@ -9,20 +9,27 @@ import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import NaviBar from "../components/NaviBar";
 import { timelineCreators } from "../redux/modules/timeline";
 
+
 const TimelineList = React.memo((props) => {
+
 	const dispatch = useDispatch();
 	const timeline = useSelector((state) => state.timeline.timeline);
-	const likeState = useSelector((state) => state.timeline.like);
-	const user = useSelector((state) => state.user.user_info)
-	// const [message, setMessage] = useState("");
+	// const likeState = useSelector((state) => state.timeline.like);
+	const user = useSelector((state) => state.user.user_info);
+	const likelist = useSelector((state) => state.timeline.likelist);
 
+	// console.log("likelist",likelist)
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
 	}, [])
 
-	const reloadBtn = () => {
-		dispatch(timelineCreators.loadTimelineMW())
-	}
+	useEffect(() => {
+		dispatch(timelineCreators.likeListMW());
+	}, [])
+
+	// const reloadBtn = () => {
+	// 	dispatch(timelineCreators.loadTimelineMW())
+	// }
 
 	return (
 		<React.Fragment>
@@ -44,7 +51,7 @@ const TimelineList = React.memo((props) => {
 						{
 							timeline.map((timeline, idx) => {
 								return (
-									<Timeline key={idx} {...timeline} {...likeState} user={user} idx={idx}>
+									<Timeline key={idx} {...timeline} user={user} likelist={likelist} idx={idx}>
 									</Timeline>
 								)
 							})

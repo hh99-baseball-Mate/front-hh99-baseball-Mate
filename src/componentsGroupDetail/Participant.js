@@ -1,9 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { groupDetailCreators } from "../redux/modules/groupDetail";
+
 
 const Participant = (props) => {
 	// const {shape, src, size, pointer} = props;
 //  flex="felx" justify="space-around"
+	const dispatch = useDispatch();
+
+	const id = props.id;
+
+	const apply = () => {
+		dispatch(groupDetailCreators.groupApplyMW(id))
+	}
+
 	return (
 		<React.Fragment>
 			<Box padding="28px 20px 40px 20px">
@@ -51,7 +62,7 @@ const Participant = (props) => {
 				
 				</Warp>
 
-				<ConfirmBtn>
+				<ConfirmBtn onClick = {()=>{apply()}} >
 					참여 신청 하기
 				</ConfirmBtn>
 			</Box>

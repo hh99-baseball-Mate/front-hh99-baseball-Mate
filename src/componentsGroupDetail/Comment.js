@@ -1,14 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { getCookie } from '../shared/Cookie';
+import { groupDetailCreators } from "../redux/modules/groupDetail";
 
 import smail from "../shared/icon/smail.svg"
 import unSmail from "../shared/icon/unSmail.svg"
 import more from "../shared/icon/more.svg"
+import send from "../shared/icon/send.svg"
+
 
 const Comment = (props) => {
+	
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const cookie = getCookie("is_login");
 
-	// const smailIcon = smail
-	// const unSmailIcon = unSmail
+	const id = props.id
+//  console.log("페이지아이디",id)
+	const [message, setMessage] = useState("");
+
+  const addComment = () => {
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      history.push("/login")
+      return;
+    }
+    else if (message !== "") {
+      dispatch(groupDetailCreators.addCommentMW(id, message));
+      setMessage("");
+      return;
+    } 
+    else {
+      window.alert("내용을 입력하세요")
+      return;
+    }
+  };
+
+	// const placeholder = <br/>`공개글 추가...`
 
 	return (
 		<React.Fragment>
@@ -36,14 +67,22 @@ const Comment = (props) => {
 					방명록을 사용할 때는 욕설과 ~~ 삼가해주시기 바랍니다.
 				</Text>
 			</Box>
-
-			<Box height="69px">
+{/* height="69px" */}
+			<Box height="69px" position="relative" flex="flex" align="center">
 				<Warp>
 					<div>
-						<Circle marginT="20px"/>
+						<Circle marginT="17px"/>
 					</div>
-					<TextArea placeholder="공개글 추가..." />
+					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
+						value={message}
+						onChange={(e) => {
+							setMessage(e.target.value);
+						}}
+					/>
 				</Warp>
+					<SendImg src={send} alt="send"
+						onClick={() => {addComment()}}
+					/>
 			</Box>
 
 			<Rectangle/>
@@ -67,7 +106,7 @@ const Comment = (props) => {
 							지금 참여 가능 하신가요?
 						</Text>
 
-						<Warp marginT="18px">
+						<Warp marginT="20px">
 							<Icon src={smail} alt="smail" marginR="7px" /> 
 							<Text size="12px" marginR="30px">1</Text>
 							<Icon src={unSmail} alt="unSmail" marginR="7px" />
@@ -153,12 +192,12 @@ const Button = styled.button`
 `;
 
 const TextArea = styled.textarea`
-  width: 350px;
+  width: 285px;
   height: 70px;
 	border: none;
   /* border: 1px solid #E7E7E7; */
   /* border-radius: 100px; */
-  padding: 12px 40px 12px 16px;
+  padding: 5px 5px 5px 5px;
   margin-left: 12px;
 	resize: none;
 	:required
@@ -168,6 +207,16 @@ const TextArea = styled.textarea`
     font-size: 14px;
     color: #C4C4C4;
   }
+`;
+
+const SendImg = styled.img`
+  position: absolute;
+  /* left: 8.34%; */
+  right: 5px;
+  bottom: 0%;
+  transform: translateY(-50%);
+  /* transform: translateY(-50%); */
+  cursor: pointer;
 `;
 
 const Circle = styled.div`
@@ -183,3 +232,4 @@ const Icon = styled.img`
 	margin-top: ${(props) => props.marginT};
 	margin-right: ${(props) => props.marginR};
 `;
+
