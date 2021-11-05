@@ -100,27 +100,19 @@ const addGroupMD = (formData) => {
 
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-<<<<<<< HEAD
     const teamname = myteam.split(" ")
-=======
-    console.log(myteam);
-
-    const my = myteam.split(" ");
-
-    console.log(my);
->>>>>>> master
 
     instance
       .get(`/groups?team=${teamname[0]}`)
       .then((res) => {
-        const _team = res.data;
+        const _team = res.data
 
-        const team = _team.slice(-5);
+        const team = _team.slice(-5)
 
-        dispatch(selectTeam(team));
+        dispatch(selectTeam(team))
       })
-      .catch((err) => console.log(err, "팀선택 err입니다."));
-  };
+      .catch((err) => console.log(err, "팀선택 err입니다."))
+  }
 };
 
 //리듀서
