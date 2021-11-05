@@ -1,41 +1,41 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
-import { Inputs, Buttons, Text } from "../components"
-import { Container } from "../components/Container"
-import { InputCheck } from "../components/InputCheck"
+import { Inputs, Buttons, Text } from "../components";
+import { Container } from "../components/Container";
+import { InputCheck } from "../components/InputCheck";
 
-import { kakaoUrl } from "../shared/SocialLogin/Kakao"
-import { emailCheck, passwordCheck } from "../shared/LoginCheck"
+import { kakaoUrl } from "../shared/SocialLogin/Kakao";
+import { emailCheck, passwordCheck } from "../shared/LoginCheck";
 
-import { actionCreators as userActions } from "../redux/modules/user"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import { actionCreators as userActions } from "../redux/modules/user";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export const Login = (props) => {
-  const { history } = props
+  const { history } = props;
 
-  const [loginOther, setLoginOther] = useState(false)
+  const [loginOther, setLoginOther] = useState(false);
 
   const [inputValue, setInputValue] = useState({
     userid: "",
     password: "",
-  })
+  });
 
-  const { userid, password } = inputValue
+  const { userid, password } = inputValue;
 
-  const idCehcking = userid !== "" && emailCheck.test(userid)
-  const passwordChecking = password !== "" && passwordCheck.test(password)
+  const idCehcking = userid !== "" && emailCheck.test(userid);
+  const passwordChecking = password !== "" && passwordCheck.test(password);
 
   const onChangeValue = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValue({
       ...inputValue,
       [name]: value,
-    })
-  }
+    });
+  };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -92,7 +92,7 @@ export const Login = (props) => {
                 userid,
                 password,
               })
-            )
+            );
           }}
         >
           <Text color="#fff" bold>
@@ -110,7 +110,7 @@ export const Login = (props) => {
         </Buttons>
         <div
           onClick={() => {
-            setLoginOther(!loginOther)
+            setLoginOther(!loginOther);
           }}
         >
           {loginOther ? (
@@ -135,7 +135,7 @@ export const Login = (props) => {
             <Buttons
               bg="#FAE100"
               _onClick={() => {
-                window.location.href = kakaoUrl
+                window.location.href = kakaoUrl;
               }}
             >
               <Text color="#3C1D1E" bold>
@@ -155,8 +155,8 @@ export const Login = (props) => {
         </>
       ) : null}
     </>
-  )
-}
+  );
+};
 
 const Logo = styled.div`
   width: 278px;
@@ -165,4 +165,4 @@ const Logo = styled.div`
   font-size: 37px;
   font-weight: 700px;
   text-align: center;
-`
+`;

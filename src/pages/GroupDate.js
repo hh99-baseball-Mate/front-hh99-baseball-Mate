@@ -1,250 +1,111 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Buttons, Container, ArrowBack, Text } from "../components";
-
+import { actionCreators as playCr } from "../redux/modules/group";
 import { useDispatch, useSelector } from "react-redux";
 import group from "../redux/modules/group";
 import Position from "../shared/icon/Vector.png";
 import { history } from "../redux/configStore";
 import { Image } from "react-bootstrap";
 // 스와이퍼
-// import Swipers from "../components/Swipers";
+
 import { SwiperSlide, Swiper } from "swiper/react";
 
 const GroupDate = (props) => {
   const dispatch = useDispatch();
-
-  function BackGo() {
-    history.push("/GroupList");
-  }
-
   const play_list = useSelector((state) => state.group.play_list);
   console.log(play_list);
-  // useEffect(() => {
-  //   dispatch(playCr.getPlayAPI());
-  // }, []);
+
+  useEffect(() => {
+    dispatch(playCr.getPlayAPI());
+  }, []);
+  play_list.filter((e) => console.log(e.date));
   return (
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
       {/* 여기서부터 카드 */}
-      {/* {play_list.map((e, i) => (
-        <div key={i}> */}
-      <Time>날짜와 요일</Time>
 
-      {/* <Swiper>
+      {play_list.map((e, i) => (
+        <div key={i}>
+          <Time>{e.date}</Time>
+
+          {/* <Swiper>
         <SwiperSlide> */}
-      <div style={{ overflowX: "auto", display: "flex" }}>
-        <Box>
-          <Local>
-            <Text bold margin="0 0 7px">
-              시간 강
-            </Text>
-            <img
-              src={Position}
-              alt="위치"
-              style={{
-                marginRight: "6px",
-              }}
-            />
-            위치
-          </Local>
+          <div
+            style={{
+              overflowX: "auto",
+              display: "flex",
+              height: "200px",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              <Local>
+                <Text bold margin="0 0 7px">
+                  {e.time} {e.matchId}강
+                </Text>
+                <img
+                  src={Position}
+                  alt="위치"
+                  style={{
+                    marginRight: "6px",
+                  }}
+                />
+                {e.location}
+              </Local>
 
-          <Card>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-          </Card>
-        </Box>
-        <Box>
-          <Local>
-            <Text bold margin="0 0 7px">
-              시간 강
-            </Text>
-            <img
-              src={Position}
-              alt="위치"
-              style={{
-                marginRight: "6px",
-              }}
-            />
-            위치
-          </Local>
+              <Card>
+                <Col>
+                  <div>
+                    <Image
+                      src={e.awayImage}
+                      roundedCircle
+                      style={{
+                        width: "37px",
+                        height: "37px",
+                        background: "#FFFFFF",
+                        border: "1px solid #E7E7E7",
+                        boxSizing: "border-box",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
 
-          <Card>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-          </Card>
-        </Box>
-        <Box>
-          <Local>
-            <Text bold margin="0 0 7px">
-              시간 강
-            </Text>
-            <img
-              src={Position}
-              alt="위치"
-              style={{
-                marginRight: "6px",
-              }}
-            />
-            위치
-          </Local>
+                  <div>{e.awayteam}</div>
+                </Col>
+                <Col>
+                  <div>
+                    {" "}
+                    <Image
+                      src={e.homeImage}
+                      roundedCircle
+                      style={{
+                        width: "37px",
+                        height: "37px",
+                        background: "#FFFFFF",
+                        border: "1px solid #E7E7E7",
+                        boxSizing: "border-box",
+                        borderRadius: "50%",
+                        marginRight: "4px",
+                      }}
+                    />
+                  </div>
 
-          <Card>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-          </Card>
-        </Box>
-        <Box>
-          <Local>
-            <Text bold margin="0 0 7px">
-              시간 강
-            </Text>
-            <img
-              src={Position}
-              alt="위치"
-              style={{
-                marginRight: "6px",
-              }}
-            />
-            위치
-          </Local>
-
-          <Card>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-            <Col>
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHouNAtA1H98cZK9ZdkNoxzGmNhDCF4pzMQ&usqp=CAU"
-                roundedCircle
-                style={{
-                  width: "37px",
-                  height: "37px",
-                  background: "#FFFFFF",
-                  border: "1px solid #E7E7E7",
-                  boxSizing: "border-box",
-                  borderRadius: "50%",
-                  marginRight: "4px",
-                }}
-              />
-              <div>구단명</div>
-            </Col>
-          </Card>
-        </Box>
-      </div>
-      {/* </SwiperSlide>
+                  <div>{e.hometeam}</div>
+                </Col>
+              </Card>
+            </Box>
+          </div>
+          {/* </SwiperSlide>
       </Swiper> */}
 
-      <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
-        <Buttons complete>선택완료</Buttons>
-      </div>
-      {/* </div>
-      ))} */}
+          <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
+            <Buttons complete>선택완료</Buttons>
+          </div>
+        </div>
+      ))}
     </Container>
-  )
+  );
 };
 
 export default GroupDate;
@@ -267,6 +128,7 @@ const Col = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  min-width: 200px;
 `;
 
 const Card = styled.div`

@@ -3,12 +3,19 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
 const Swipers = (props) => {
-  const { children, slidesPerView } = props;
+  const { children } = props;
   return (
     <>
-      <Swiper watchSlidesProgress={true} slidesPerView={slidesPerView}>
+      <div
+        style={{
+          overflowX: "auto",
+          display: "flex",
+          height: "200px",
+          alignItems: "center",
+        }}
+      >
         {children}
-      </Swiper>
+      </div>
     </>
   );
 };
@@ -17,5 +24,4 @@ export default Swipers;
 
 Swipers.defaultProps = {
   children: null,
-  slidesPerView: 5,
-}
+};
