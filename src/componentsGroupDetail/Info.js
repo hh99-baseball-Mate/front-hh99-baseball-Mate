@@ -9,14 +9,18 @@ import users from "../shared/icon/users.svg"
 
 const Info = (props) => {
 
-	const info = props.info[0]
-	console.log("props.info",info)
+	const ip = "http://54.180.148.132/groups/";
+	const img = props.filePath;
+	// console.log("img", img)
+	const imageUrl = ip + img
+	// const info = props.info[0]
+	// console.log("props.info",info)
 
-	const leftPeople = info?.peopleLimit - info?.nowApplyNum
+	const leftPeople = props.peopleLimit - props.nowAppliedNum
 
 	return (
 		<Container>
-			<Img/>
+			<Img src={imageUrl} alt="" />
 
 			{/* 타이틀 */}
 			<TitleBox>
@@ -29,7 +33,7 @@ const Info = (props) => {
 					</Ellipse>
 				</Warp>
 				<Text size="16px" weight="bold" margin="12px 0">
-					{info?.title}
+					{props.title}
 				</Text>
 				<Warp justify="space-between" align="center" >
 					<Bar/>
@@ -49,13 +53,13 @@ const Info = (props) => {
 			<Box height="163px" background="rgba(247, 247, 247, 0.5)" position="relative" margin="20px">
 				<Warp width="100%" justify="space-around" align="center" position="absolute" padding="0 40px 0 40px" style={{top:"78%"}}>
 					<img src={calendar} alt="calendar" />
-					<Text color="#777777" size="12px">{info?.groupDate}</Text>
+					<Text color="#777777" size="12px">{props.groupDate}</Text>
 					<Slice> &ensp;|&ensp; </Slice> 
 					<img src={location} alt="location" />
-					<Text color="#777777" size="12px">{info?.stadium}</Text>
+					<Text color="#777777" size="12px">{props.stadium}</Text>
 					<Slice> &ensp;|&ensp; </Slice> 
 					<img src={users} alt="users" />
-					<Text color="#777777" size="12px">최대 {info?.peopleLimit}명</Text>
+					<Text color="#777777" size="12px">최대 {props.peopleLimit}명</Text>
 				</Warp>
 			</Box>
 
@@ -65,7 +69,7 @@ const Info = (props) => {
 					<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
-					<Text size="14px" weight="bold"  margin="1px">{info?.createdUserName}</Text>
+					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
 					<Text size="12px" color="#C4C4C4" margin="1px">서울시 강서구</Text>
 				</Warp>
 			</Box>
@@ -73,7 +77,7 @@ const Info = (props) => {
 			{/* 모임소개 */}
 			<Box height="121px" background="#F2FAFC" padding="20px">
 				<Text size="16px" weight="bold" margin="0 0 15px 0 ">모임소개</Text>
-				<Text size="14px" color="#333333" height="146%">{info?.content}</Text>
+				<Text size="14px" color="#333333" height="146%">{props.content}</Text>
 			</Box>
 
 			<Rectangle/>
@@ -91,7 +95,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Img = styled.div`
+const Img = styled.img`
   width: 100%;
   height: 375px;
   background-color: #c4c4c4;

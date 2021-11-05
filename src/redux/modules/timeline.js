@@ -29,7 +29,7 @@ const loadTimelineMW = () => {
 		apis
 			.getTimeline()
 			.then((res) => {
-				// console.log(res)
+				console.log("timeline", res)
 				const timeline = res.data;
 				dispatch(load_timeline(timeline));
 			})
@@ -76,6 +76,7 @@ const likeTimelineMW = (id, like) => {
 	return (dispatch, getState, { history }) => {
 		// console.log("likeTimeline", id, like)
 		const timeLineId = id;
+		console.log("timeLineId", timeLineId)
 		const isLiked = {isLiked: like};
 		tokenApis
 			.likeTimeline(timeLineId, isLiked)
@@ -96,7 +97,7 @@ const likeListMW = () => {
       .post("/user/logincheck")
       .then((res) => {
         const likelist = res.data.myTimeLineLikesList
-				console.log("likelist", likelist)
+				console.log("likelist체크", likelist)
 				dispatch(load_likelist(likelist))
       })
       .catch((err) => {
