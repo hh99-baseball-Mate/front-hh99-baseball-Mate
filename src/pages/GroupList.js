@@ -48,22 +48,21 @@ const GroupList = (props) => {
         {/*swiper */}
         {/* {team_list.map((e) => ( */}
         <div>
-          <Swipers slidesPerView={5}>
-            <SwiperSlide>
-              <div>
-                <Image
-                  style={{ width: "68px", height: "69px" }}
-                  roundedCircle
-                  src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
-                ></Image>
-                <Text center> 전체</Text>
-              </div>
-            </SwiperSlide>
+          <Swipers>
+            <div>
+              <Image
+                style={{ width: "68px", height: "69px" }}
+                roundedCircle
+                src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
+              ></Image>
+              <Text center> 전체</Text>
+            </div>
+
             {clubImageSrc.map((e) => (
               <SwiperSlide
                 style={{ width: "68px", marginRight: "30px" }}
                 onClick={() => {
-                  console.log("나는 뭐지?")
+                  console.log("나는 뭐지?");
                   // history.push(`/${e.name}`);
                 }}
               >
@@ -96,13 +95,13 @@ const GroupList = (props) => {
         </MoreContainer>
         <Broder />
         {group_list.map((e, idx) => {
-          console.log(e)
-          return <GroupCard key={idx} {...e} />
+          console.log(e);
+          return <GroupCard key={idx} {...e} />;
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
     </>
-  )
+  );
 };
 export default GroupList;
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import { emailCheck, passwordCheck } from "../shared/LoginCheck"
 
@@ -21,7 +21,7 @@ export const Login = (props) => {
   const [loginOther, setLoginOther] = useState(false)
   const [showPwd, setShowPwd] = useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const validate = Yup.object({
     email: Yup.string().email("이메일 형식으로 입력해주세요.").required(""),
@@ -119,4 +119,4 @@ const Logo = styled.div`
   font-size: 37px;
   font-weight: 700px;
   text-align: center;
-`
+`;
