@@ -8,7 +8,7 @@ export const Preview = (props) => {
     <>
       <PreviewBox>
         <Image
-          style={{ width: "82px", height: "88px", borderRadius: "8px" }}
+          style={{ width: "82px", height: "82px", borderRadius: "8px" }}
           src={props.src}
         />
         <TiDelete

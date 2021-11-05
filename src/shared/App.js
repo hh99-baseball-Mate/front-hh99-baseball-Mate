@@ -19,6 +19,10 @@ import { Goods } from "../pages/Goods"
 import { GoodsAdd } from "../pages/GoodsAdd"
 import MyGroup from "../pages/MyGroup"
 import { Login } from "../pages/Login"
+import { MyPage } from "../pages/MyPage"
+import { PhoneAuth } from "../pages/PhoneAuth"
+import { NotFound } from "../pages/NotFound"
+import { Switch } from "react-router"
 
 function App() {
   const dispatch = useDispatch()
@@ -37,19 +41,26 @@ function App() {
     <React.Fragment>
       <ConnectedRouter history={history}>
         <GlobalStyles />
-        <Route path="/" exact component={Main} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/clubchoice" component={ClubChoice} />
-        <Route path="/user/kakao/callback" component={KAKAOhandle} />
-        <Route path="/grouplist" exact component={GroupList} />
-        <Route path="/groupdate" exact component={GroupDate} />
-        <Route path="/groupadd" exact component={GroupAdd} />
-        <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
-        <Route path="/timeline" exact component={TimelineList} />
-        <Route path="/goods" exact component={Goods} />
-        <Route path="/addgoods" exact component={GoodsAdd} />
-        <Route path="/mygroup" exact component={MyGroup} />
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/clubchoice" component={ClubChoice} />
+          <Route exact path="/phoneAuth" component={PhoneAuth} />
+          <Route path="/user/kakao/callback" component={KAKAOhandle} />
+          <Route path="/grouplist" exact component={GroupList} />
+          <Route path="/groupdate" exact component={GroupDate} />
+          <Route path="/groupadd" exact component={GroupAdd} />
+          <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
+          <Route path="/timeline" exact component={TimelineList} />
+          <Route path="/goods" exact component={Goods} />
+          <Route path="/addgoods" exact component={GoodsAdd} />
+          <Route path="/mygroup" exact component={MyGroup} />
+          <Route path="/mypage" exact component={MyPage} />
+
+          {/* 임시 */}
+          <Route component={NotFound} />
+        </Switch>
       </ConnectedRouter>
     </React.Fragment>
   )

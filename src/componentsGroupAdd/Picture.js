@@ -45,7 +45,7 @@ Picture.defaultProps = {
 
 const LabelBox = styled.label`
   width: 82px;
-  height: 88px;
+  height: 82px;
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 8px;

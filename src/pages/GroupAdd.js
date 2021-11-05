@@ -14,16 +14,14 @@ import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
-import { history } from "../redux/configStore"
-import axios from "axios"
-import { img } from "../lib/axios"
+
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
 
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
 
-  console.log(selectTeam_list)
+  // console.log(selectTeam_list)
   // 인풋 값 state
   const [inputValue, setInputValue] = useState({
     title: "",
@@ -39,14 +37,14 @@ export const GroupAdd = (props) => {
 
   // 이미지 업로드 / 미리보기
 
-  const imgPreview = async (e) => {
+  const imgPreview = (e) => {
     setPreview(e.target.files[0])
   }
 
   // 미리보기 삭제,
 
   const deletePreview = () => {
-    if (!preview.base64) {
+    if (!preview) {
       window.alert("삭제 할 사진이 없어요")
       return
     }
@@ -124,11 +122,11 @@ export const GroupAdd = (props) => {
 
     dispatch(groupActions.addGroupMD(formData))
     e.target.disabled = true
-    // for (const keyValue of formData) console.log(keyValue)
+    for (const keyValue of formData) console.log(keyValue)
   }
 
   return (
-    <Container margin="0px auto">
+    <Container>
       <ArrowBack>모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
@@ -176,13 +174,10 @@ export const GroupAdd = (props) => {
             value={groupDate}
             onChange={onChange}
           >
-            {/* <Option value="">경기일정 선택</Option>
-            <Option value="롯데">롯데</Option>
-            <Option value="2">2</Option>
-            <Option value="3">3</Option> */}
+            <Option>일정을 선택해주세요</Option>
             {selectTeam_list.map((e) => (
-              <Option>
-                {e.awayteam}vs {e.hometeam}
+              <Option key={e.matchId}>
+                {e.awayteam} vs {e.hometeam}
               </Option>
             ))}
           </Inputs>
