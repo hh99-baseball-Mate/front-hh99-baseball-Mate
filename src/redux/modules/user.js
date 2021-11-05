@@ -64,6 +64,7 @@ const logInMD = (user_info) => {
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password } = user_info
+    console.log(user_info)
 
     instance
       .post("/user/signup", {

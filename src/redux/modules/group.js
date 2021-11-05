@@ -88,7 +88,7 @@ const getTeamAPI = (team = "") => {
 const addGroupMD = (formData) => {
   return function (dispatch, getState, { history }) {
     img
-      .post("/page/group", formData)
+      .post("/groups", formData)
       .then((res) => {
         console.log(res.data)
         dispatch(addGroup(formData))
@@ -100,14 +100,10 @@ const addGroupMD = (formData) => {
 
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-    console.log(myteam)
-
-    const my = myteam.split(" ")
-
-    console.log(my)
+    const teamname = myteam.split(" ")
 
     instance
-      .get(`/main/myteamSchedule/${my[0]}`)
+      .get(`/groups?team=${teamname[0]}`)
       .then((res) => {
         const _team = res.data
 

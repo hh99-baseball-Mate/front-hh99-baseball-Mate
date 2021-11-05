@@ -57,7 +57,7 @@ export const img = axios.create({
   baseURL: "http://54.180.148.132/",
   headers: {
     "Content-Type": "multipart/form-data",
-    // accept: "application/json",
+    accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },

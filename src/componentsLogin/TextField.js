@@ -1,17 +1,26 @@
 import React from "react"
-import { Inputs } from "../components"
+import { InputCheck, Text } from "../components"
 import { ErrorMessage, useField } from "formik"
 import styled from "styled-components"
 
 export const TextField = ({ label, ...props }) => {
   const [field, meta] = useField(props)
 
+  // console.log("meta", meta)
+
   return (
     <InputBox>
-      <label htmlFor={field.name}>{label}</label>
+      <label htmlFor={field.name}>
+        {label}
+        {!meta.error && meta.touched && meta.value !== "" ? (
+          <InputCheck />
+        ) : null}
+      </label>
       <Input type={props.type} {...field} {...props} />
 
-      <ErrorMessage name={field.name} />
+      <Text color="#FB1F07" size="9px" margin="6px 0">
+        <ErrorMessage name={field.name} />
+      </Text>
     </InputBox>
   )
 }
