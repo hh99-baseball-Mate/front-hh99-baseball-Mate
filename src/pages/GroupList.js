@@ -48,17 +48,16 @@ const GroupList = (props) => {
         {/*swiper */}
         {/* {team_list.map((e) => ( */}
         <div>
-          <Swipers slidesPerView={5}>
-            <SwiperSlide>
-              <div>
-                <Image
-                  style={{ width: "68px", height: "69px" }}
-                  roundedCircle
-                  src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
-                ></Image>
-                <Text center> 전체</Text>
-              </div>
-            </SwiperSlide>
+          <Swipers>
+            <div>
+              <Image
+                style={{ width: "68px", height: "69px" }}
+                roundedCircle
+                src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
+              ></Image>
+              <Text center> 전체</Text>
+            </div>
+
             {clubImageSrc.map((e) => (
               <SwiperSlide
                 style={{ width: "68px", marginRight: "30px" }}
