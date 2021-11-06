@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { Header } from "../components";
 import Banner from "../componentsMain/Banner";
 import HotGroup from "../componentsMain/HotGroup";
+import GroupCard from "../componentsGroupList/GroupCard";
 // import MainTimeline from "../componentsMain/MainTimeline";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
@@ -74,7 +75,7 @@ const Main = memo((props) => {
 				{
 					hotGroup.map((hotGroup, idx) => {
 						return (
-							<HotGroup key={idx} {...hotGroup} />
+							<GroupCard key={idx} {...hotGroup} />
 						)
 					})
 				}

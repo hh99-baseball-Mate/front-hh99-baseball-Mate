@@ -18,7 +18,7 @@ const Comment = (props) => {
 	const history = useHistory();
 	const cookie = getCookie("is_login");
 
-	const id = props.id
+	const id = props.groupId
 //  console.log("페이지아이디",id)
 	const [message, setMessage] = useState("");
 
@@ -39,7 +39,6 @@ const Comment = (props) => {
     }
   };
 
-	// const placeholder = <br/>`공개글 추가...`
 
 	return (
 		<React.Fragment>
@@ -67,7 +66,8 @@ const Comment = (props) => {
 					방명록을 사용할 때는 욕설과 ~~ 삼가해주시기 바랍니다.
 				</Text>
 			</Box>
-{/* height="69px" */}
+
+			{/* 댓글작성 */}
 			<Box height="69px" position="relative" flex="flex" align="center">
 				<Warp>
 					<div>
@@ -87,6 +87,25 @@ const Comment = (props) => {
 
 			<Rectangle/>
 			
+
+			{/* 댓글 */}
+			{
+				props.groupCommentList.map((comment, idx) => {
+					return (
+						<CommentList key={idx} {...comment} idx={idx} />
+					)
+				})
+			}
+
+		</React.Fragment>	
+	)
+}
+
+
+// 댓글 컴포넌트
+function CommentList(props) {
+	return (
+		<React.Fragment>	
 			<Box>
 				<Warp>
 					<div>
@@ -96,17 +115,17 @@ const Comment = (props) => {
 					<Box margin="20px 20px 20px 14px">
 						<Warp align="center">
 							<Text size="14px" weight="bold" marginR="10px">
-								{props.groupCommentList[0].commentUsername}
+								{props.commentUsername}
 							</Text>
 							<Text color="#C4C4C4" size="12px">
 								1분전
 							</Text>
 						</Warp>
-						<Text size="14px">
-							{props.groupCommentList[0].comment}
+						<Text size="14px" marginT="5px">
+							{props.comment}
 						</Text>
 
-						<Warp marginT="20px">
+						<Warp marginT="11px">
 							<Icon src={smail} alt="smail" marginR="7px" /> 
 							<Text size="12px" marginR="30px">1</Text>
 							<Icon src={unSmail} alt="unSmail" marginR="7px" />
@@ -119,12 +138,12 @@ const Comment = (props) => {
 				</Warp>
 			</Box>
 			<Rectangle/>
-
 		</React.Fragment>	
 	)
 }
 
 export default Comment;
+
 
 const Rectangle = styled.div`
 	background: #C4C4C4;
@@ -168,6 +187,7 @@ const Text = styled.p`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-right: ${(props) => props.marginR};
+	margin-top: ${(props) => props.marginT};
 	cursor: ${(props) => props.pointer};
 	line-height: ${(props) => props.height};
 	/* text-align: center; */

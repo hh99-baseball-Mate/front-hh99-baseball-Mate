@@ -11,13 +11,6 @@ const HotGroup = (props) => {
 
   const leftPeople = props.peopleLimit - props.canApplyNum;
 
-  // const hotGroup = useSelector((state) => (state.mainPage.hotGroup))
-  // console.log("hotGroup",hotGroup)
-
-  // useEffect(() => {
-  // 	dispatch(mainCreators.hotGroupMW());
-  // }, [])
-
   return (
     <Container>
       <Card>
