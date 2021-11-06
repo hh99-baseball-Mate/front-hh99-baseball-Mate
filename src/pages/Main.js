@@ -78,7 +78,7 @@ const Main = memo((props) => {
 
         {/* 핫한 모임 리스트 */}
         {hotGroup.map((hotGroup, idx) => {
-          return <HotGroup key={idx} {...hotGroup} />;
+          return <GroupCard key={idx} {...hotGroup} />;
         })}
 
         {/* 구분선 */}
@@ -117,7 +117,7 @@ const Main = memo((props) => {
           <TimelimeWrite />
 
           {/* 타임라인 리스트 */}
-          {mainTimeline.map((mainTimeline, idx) => {
+          {/* {mainTimeline.map((mainTimeline, idx) => {
             return (
               <Timeline
                 key={idx}
@@ -127,7 +127,7 @@ const Main = memo((props) => {
                 idx={idx}
               ></Timeline>
             );
-          })}
+          })} */}
           {/* <TimelineList/> */}
         </Box>
 
