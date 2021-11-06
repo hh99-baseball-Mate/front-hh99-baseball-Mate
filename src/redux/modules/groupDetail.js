@@ -21,7 +21,7 @@ const loadGroupPageMW = (groupId) => {
 		tokenApis
 			.getGroupDetail(groupId)
 			.then((res) => {
-				// console.log("loadGroupPageMW", res.data)
+				console.log("loadGroupPageMW", res.data)
 				const groupPage = res.data
 				dispatch(load_groupPage(groupPage))
 			})
@@ -50,7 +50,7 @@ const addCommentMW = (groupId, message) => {
 		tokenApis
 			.postComment(groupId, comment)
 			.then((res) => {
-				console.log(res);
+				console.log("댓글추가",res);
 				dispatch(add_comment(groupId, comment))
 			})
 			.catch((err) => {
@@ -82,9 +82,9 @@ export default handleActions(
 		[LOAD_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
 			draft.groupPage = action.payload.groupPage;
 		}),
-		// [ADD_COMMENT]: (state, action) => produce(state, (draft) => {
-		// 	draft.groupPage[action.payload.groupId].unshift(action.payload.comment);
-		// }),
+		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
+			draft.groupPage.groupCommentList.unshift(action.payload.comment)
+		}),
 	},
 	initialState
 )

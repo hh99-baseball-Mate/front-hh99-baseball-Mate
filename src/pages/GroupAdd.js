@@ -177,7 +177,7 @@ export const GroupAdd = (props) => {
             <Option>일정을 선택해주세요</Option>
             {selectTeam_list.map((e) => (
               <Option key={e.matchId}>
-                {e.awayteam} vs {e.hometeam}
+                {e.date} {e.time} {e.location} {e.awayteam} vs {e.hometeam}
               </Option>
             ))}
           </Inputs>

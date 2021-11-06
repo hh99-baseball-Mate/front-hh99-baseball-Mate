@@ -8,7 +8,8 @@ import { useHistory } from "react-router-dom";
 import { Header } from "../components";
 import Banner from "../componentsMain/Banner";
 import HotGroup from "../componentsMain/HotGroup";
-import MainTimeline from "../componentsMain/MainTimeline";
+import GroupCard from "../componentsGroupList/GroupCard";
+// import MainTimeline from "../componentsMain/MainTimeline";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
@@ -18,6 +19,7 @@ import NaviBar from "../components/NaviBar";
 import TimelineList from "./TimelineList";
 
 const Main = memo((props) => {
+
   const dispatch = useDispatch();
   const history = useHistory();
 

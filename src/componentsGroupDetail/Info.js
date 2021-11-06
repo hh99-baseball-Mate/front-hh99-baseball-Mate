@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import Progress from "../components/Progress";
+
 import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
@@ -9,12 +11,10 @@ import users from "../shared/icon/users.svg"
 
 const Info = (props) => {
 
-	const ip = "http://54.180.148.132/groups/";
+	// 사진 ip주소 + 사진이름 조합
+	const ip = "http://54.180.148.132/images/";
 	const img = props.filePath;
-	// console.log("img", img)
 	const imageUrl = ip + img
-	// const info = props.info[0]
-	// console.log("props.info",info)
 
 	const leftPeople = props.peopleLimit - props.nowAppliedNum
 
@@ -24,7 +24,7 @@ const Info = (props) => {
 
 			{/* 타이틀 */}
 			<TitleBox>
-				<Warp>
+				<Warp margin="0 0 11px 0">
 					<Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
 						모집중
 					</Ellipse>
@@ -32,11 +32,19 @@ const Info = (props) => {
 						D-10
 					</Ellipse>
 				</Warp>
-				<Text size="16px" weight="bold" margin="12px 0">
+				
+				<Text
+          size="16px"
+          weight="bold"
+          width="295px"
+          height="46px"
+          lineHeight="23px"
+        >
 					{props.title}
 				</Text>
-				<Warp justify="space-between" align="center" >
-					<Bar/>
+
+				<Warp justify="space-between" align="center" marginT="11px" >
+					<Progress group={props}/>
 					<Warp flex="flex">
 						<img src={colorUsers} alt="users"/>
 						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
@@ -77,7 +85,7 @@ const Info = (props) => {
 			{/* 모임소개 */}
 			<Box height="121px" background="#F2FAFC" padding="20px">
 				<Text size="16px" weight="bold" margin="0 0 15px 0 ">모임소개</Text>
-				<Text size="14px" color="#333333" height="146%">{props.content}</Text>
+				<Text size="14px" color="#333333">{props.content}</Text>
 			</Box>
 
 			<Rectangle/>
@@ -122,6 +130,7 @@ const Warp = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   margin-left: ${(props) => props.marginLeft};
+  margin-top: ${(props) => props.marginT};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
@@ -144,18 +153,20 @@ const Ellipse = styled.div`
 `;
 
 const Text = styled.div`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.weight};
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
-	line-height: ${(props) => props.height};
-`;
-
-const Bar = styled.div`
-  width: 230px;
-  height: 1.5px;
-  background: #ff4b38;
+  line-height: ${(props) => props.lineHeight};
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const Box = styled.div`

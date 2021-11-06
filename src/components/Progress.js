@@ -2,14 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const Progress = (props) => {
+	
 	const peopleLimit = props.group.peopleLimit;
 	const canApplyNum = props.group.canApplyNum;
 
-	console.log((canApplyNum/peopleLimit)*100 + "%")
+	// console.log("프로그레스바",peopleLimit, canApplyNum)
+
+	// console.log(((peopleLimit-canApplyNum)/canApplyNum)*100 + "%")
 
 	return (
 		<ProgresBar>
-			<HighLight width={(canApplyNum/peopleLimit)*100 + "%"}/>
+			<HighLight width={((peopleLimit-canApplyNum)/canApplyNum)*100 + "%"}/>
 		</ProgresBar>
 	)
 }

@@ -9,7 +9,7 @@ import { history } from "../configStore"
 
 const LOGIN = "LOGIN"
 const LOGIN_CHECK = "LOGIN_CHECK"
-const CHOICE_CLUB = "/main/nowGoods/{number}"
+const CHOICE_CLUB = "CHOICE_CLUB"
 
 // 액션 함수
 
@@ -64,7 +64,6 @@ const logInMD = (user_info) => {
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password } = user_info
-    console.log(user_info)
 
     instance
       .post("/user/signup", {
@@ -75,8 +74,12 @@ const signUpMD = (user_info) => {
       .then((res) => {
         window.alert("회원가입 성공")
         history.replace("/login")
+        console.log(res)
       })
-      .catch((err) => console.log(err, "회원가입 에러"))
+      .catch((err) => {
+        window.alert(err)
+        console.log(err, "회원가입 에러")
+      })
   }
 }
 
@@ -105,6 +108,8 @@ const logInCheckMD = () => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
+    console.log(club, "club")
+
     tokenInstance
       .post("/user/myteam", {
         myteam: club,
@@ -148,6 +153,7 @@ export default handleActions(
       produce(state, (draft) => {
         const myteam = action.payload.myteam
         draft.user_info = { ...draft.user_info, myteam }
+        draft.is_login = true
       }),
   },
   initialState

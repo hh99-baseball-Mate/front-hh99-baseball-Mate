@@ -23,13 +23,29 @@ const initialState = {
 	// mainTimeline: []
 };
 
-
+// 전체 불러오기
 const loadTimelineMW = () => {
 	return (dispatch) => {
 		apis
 			.getTimeline()
 			.then((res) => {
-				console.log("timeline", res)
+				// console.log("timeline", res)
+				const timeline = res.data;
+				dispatch(load_timeline(timeline));
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
+// 일정 갯수만 불러오기
+const loadTimelineNumMW = (number) => {
+	return (dispatch) => {
+		apis
+			.getTimelineNum(number)
+			.then((res) => {
+				// console.log("timeline", res)
 				const timeline = res.data;
 				dispatch(load_timeline(timeline));
 			})
@@ -46,7 +62,7 @@ const addTimelineMW = (message) => {
 		tokenApis
 			.postTimeline(content)
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				dispatch(add_timeline(content))
 			})
 			.catch((err) => {
@@ -63,7 +79,7 @@ const deleteTimelineMW = (id) => {
 		tokenApis
 			.delTimeline(timeLineId)
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				dispatch(delete_timeline(id))
 			})
 			.catch((err) => {
@@ -133,13 +149,13 @@ export default handleActions(
 			draft.timeline.unshift(action.payload.content)
 		}),
 		[DELETE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			const idx = draft.timeline.findIndex((p) => p.id === action.payload.id);
+			const idx = draft.timeline.findIndex((p) => p.timelineId === action.payload.id);
 			if (idx !== -1) {
 				draft.timeline.splice(idx, 1);
 			}
 		}),
 		[LIKE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			const idx = draft.timeline.findIndex((p) => p.id === action.payload.id);
+			const idx = draft.timeline.findIndex((p) => p.timelineId === action.payload.id);
 			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
 			if (action.payload.like.isLiked) {
 				draft.timeline[idx].likecount -= 1;
@@ -160,6 +176,7 @@ export default handleActions(
 
 const timelineCreators = {
 	loadTimelineMW,
+	loadTimelineNumMW,
 	addTimelineMW,
 	deleteTimelineMW,
 	likeTimelineMW,

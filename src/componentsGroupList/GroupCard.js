@@ -1,24 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Progress from "../components/Progress";
 
-import { mainCreators } from "../redux/modules/mainPage";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
-const HotGroup = (props) => {
-  const dispatch = useDispatch();
+const GroupCard = (props) => {
+
   const history = useHistory();
 
-  // const hotGroup = useSelector((state) => (state.mainPage.hotGroup))
-  // console.log("hotGroup",hotGroup)
-
-  // useEffect(() => {
-  // 	dispatch(mainCreators.hotGroupMW());
-  // }, [])
-
   return (
-    <Container onClick={()=>{ history.push("/groupdetail/" + props.groupId)}}>
+    <Container onClick={()=>{ history.push("/groupdetail/" + props.groupId)}} >
       <Card>
         <Warp margin="0 0 16px 0">
           <Warp flex="flex" margin="0 0 12px 0">
@@ -45,7 +37,13 @@ const HotGroup = (props) => {
         </Warp>
         <Circle width="48px" height="48px" />
 
-        <Text size="16px" weight="bold">
+        <Text
+          size="16px"
+          weight="bold"
+          width="295px"
+          height="46px"
+          lineHeight="23px"
+        >
           {props.title}
         </Text>
 
@@ -55,7 +53,7 @@ const HotGroup = (props) => {
           align="center"
           margin="10px 0 0 0"
         >
-          <Bar />
+          <Progress group={props} />
           <Warp flex="flex">
             <img src={colorUsers} alt="users" />
             <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
@@ -71,7 +69,8 @@ const HotGroup = (props) => {
   );
 };
 
-export default HotGroup;
+export default GroupCard;
+
 
 const Container = styled.div`
   width: 335px;
@@ -92,11 +91,20 @@ const Warp = styled.div`
 `;
 
 const Text = styled.div`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.weight};
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
+  line-height: ${(props) => props.lineHeight};
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const Card = styled.div`
@@ -136,12 +144,6 @@ const Circle = styled.div`
   right: 7.16%;
   top: 12%;
   bottom: 61.02%;
-`;
-
-const Bar = styled.div`
-  width: 230px;
-  height: 1.5px;
-  background: #ff4b38;
 `;
 
 const Slice = styled.div`

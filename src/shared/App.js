@@ -26,17 +26,19 @@ import { Switch } from "react-router";
 
 function App() {
   const dispatch = useDispatch();
-  // const loginCheck = useSelector((state) => state.user.is_login)
+
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD());
-    } else {
-      window.alert("로그인을 해주세요");
-      history.replace("/login");
+      // } else {
+      //   window.alert("로그인을 해주세요")
+      //   history.replace("/login")
     }
   }, []);
 
+  console.log(is_login, "is_login");
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
@@ -56,7 +58,8 @@ function App() {
           <Route path="/goods" exact component={Goods} />
           <Route path="/addgoods" exact component={GoodsAdd} />
           <Route path="/mygroup" exact component={MyGroup} />
-          <Route path="/mypage" exact component={MyPage} />
+          {/* <Route path="/mypage" exact component={MyPage} is_login={is_login}/> */}
+          <Route path="/mypage" render={() => <MyPage is_login={is_login} />} />
 
           {/* 임시 */}
           <Route component={NotFound} />
