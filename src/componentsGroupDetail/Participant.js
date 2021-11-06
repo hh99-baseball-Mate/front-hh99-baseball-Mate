@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
@@ -6,67 +6,47 @@ import { groupDetailCreators } from "../redux/modules/groupDetail";
 
 const Participant = (props) => {
 	// const {shape, src, size, pointer} = props;
-//  flex="felx" justify="space-around"
+	// flex="felx" justify="space-around"
 	const dispatch = useDispatch();
 
-	const id = props.id;
+	const id = props.groupId;
 
 	const apply = () => {
 		dispatch(groupDetailCreators.groupApplyMW(id))
 	}
 
+
+
 	return (
 		<React.Fragment>
 			<Box padding="28px 20px 40px 20px">
 				<Warp wrap="wrap" justify="space-between" align="center" start="space-around">
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>김진희</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text margin="auto">이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
-					<div style={{marginBottom:"20px"}}>
-						<Circle/>
-						<Text>이름칸</Text>
-					</div>
+					{/* {
+						props.peopleLimit.map((name,idx) => {
+							return(
+								<PartyList key={idx} name={name} />
+							)
+						})
+					} */}
+					<PartyList name={props.createdUserName}/>
 				
 				</Warp>
 
 				<ConfirmBtn onClick = {()=>{apply()}} >
-					참여 신청 하기
+					참여신청하기 
 				</ConfirmBtn>
 			</Box>
 		</React.Fragment>
+	)
+}
+
+// 참여인원 컴포넌트
+function PartyList(props) {
+	return (
+		<CircleBox>
+			<Circle/>
+			<Text>{props.name}</Text>
+		</CircleBox>
 	)
 }
 
@@ -108,6 +88,10 @@ const Text = styled.div`
 	margin: ${(props) => props.margin};
 	cursor: ${(props) => props.pointer};
 	text-align: center;
+`;
+
+const CircleBox = styled.div`
+	margin-bottom: 20px;
 `;
 
 const Circle = styled.div`

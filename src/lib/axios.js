@@ -33,6 +33,9 @@ export const apis = {
   // 타임라인 불러오기
   getTimeline: () => instance.get("/timelines"),
 
+  // 타임라인 일정갯수 불러오기
+  getTimelineNum: (number) => instance.get(`/timelines?count=${number}`),
+
   // 메인화면 타임라인 조회
   getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
 
@@ -71,7 +74,7 @@ export const tokenApis = {
   delTimeline: (timeLineId) => tokenInstance.delete(`/timelines/${timeLineId}`),
 
   // 타임라인 좋아요
-  likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/timeLine/${timeLineId}/like`, isLiked),
+  likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/timelines/${timeLineId}/like`, isLiked),
 
   // 모임게시글
   // 상세페이지 조회

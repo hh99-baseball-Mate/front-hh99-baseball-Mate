@@ -21,15 +21,8 @@ const TimelineList = React.memo((props) => {
 	console.log("likelist",likelist)
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
-	}, [])
-
-	useEffect(() => {
 		dispatch(timelineCreators.likeListMW());
 	}, [])
-
-	// const reloadBtn = () => {
-	// 	dispatch(timelineCreators.loadTimelineMW())
-	// }
 
 	return (
 		<React.Fragment>

@@ -8,47 +8,43 @@ const Timeline = React.memo((props) => {
 	const dispatch = useDispatch();
 
 	const user = useSelector((state) => state.user.user_info)
+
+	const likelist = props.likelist
+	const [like, setLike] = useState(false)
+	const idx = props.idx
 	
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
-		dispatch(timelineCreators.likeTimelineMW());
 	}, [])
 
-	// useEffect(() => {
-	// 	dispatch(mainCreators.loadMainTimelineMW(5))
-	// }, [])
+	useEffect(() => {
+		const likeIdx = likelist.indexOf(props.timelineId)
+			if (likeIdx >= 0) {
+				setLike(true)
+			}
+	}, [likelist]) 
 
 
-	const [like, setLike] = useState(false)
-	const idx = props.idx
-
-	// 좋아요 누른 상태
-	// console.log("props.likelist", props.likelist)
-	const num = props.id
-	const likelist = props.likelist
-
-	// const 좋아요확인 = likelist.indexOf(props.id)
-	// console.log("아이디", typeof(id), num)
-	// console.log("likeId",typeof(좋아요확인) ,좋아요확인)
-
-	// if (props.id === 
 
 	// 본인 아이디 확인
-	// const Me = props.user.username 
 	const Me = user.username 
 
 	const delTimeline = () => {
 		// const timeLineId = props.id
 		if (window.confirm("정말 삭제하시겠습니까?") === true) {
-			dispatch(timelineCreators.deleteTimelineMW(props.id));
+			dispatch(timelineCreators.deleteTimelineMW(props.timelineId));
 		}
   };
 
-	// let like = false;
+
 	const likeToggle = () => {
 		setLike(!like)
-		dispatch(timelineCreators.likeTimelineMW(props.id, like))
+		// likeO = !likeO
+		// console.log("라이크확인",likeO)
+		dispatch(timelineCreators.likeTimelineMW(props.timelineId, like))
 	}
+
+
 
 	return (
 		<React.Fragment>
@@ -74,7 +70,7 @@ const Timeline = React.memo((props) => {
 								<Warp>
 									{ 
 										Me === props.userName ?
-										(<Text size="10px" onClick={delTimeline}>❌</Text>) : ""
+										(<Text size="10px" onClick={()=>{delTimeline()}}>❌</Text>) : ""
 									}
 								</Warp>
 							</Warp>
@@ -85,9 +81,8 @@ const Timeline = React.memo((props) => {
 
 							<Warp justify="flex-end">
 								<Text size="12px" 
-								onClick={
-									likeToggle
-								}>
+									onClick={()=>{likeToggle()}}
+								>
 									{ like ? `😍` : `😶` }
 								</Text>
 								<Text size="12px" marginL="5px">
