@@ -8,7 +8,8 @@ import { useHistory } from "react-router-dom";
 import { Header } from "../components";
 import Banner from "../componentsMain/Banner";
 import HotGroup from "../componentsMain/HotGroup";
-import MainTimeline from "../componentsMain/MainTimeline";
+import GroupCard from "../componentsGroupList/GroupCard";
+// import MainTimeline from "../componentsMain/MainTimeline";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
@@ -18,155 +19,167 @@ import NaviBar from "../components/NaviBar";
 import TimelineList from "./TimelineList";
 
 const Main = memo((props) => {
-	const dispatch = useDispatch();
-	const history = useHistory();
 
-	const hotGroup = useSelector((state) => state.mainPage.hotGroup)
-	const mainTimeline = useSelector((state) => state.mainPage.mainTimeline)
-	const likeState = useSelector((state) => state.timeline.like);
-	const user = useSelector((state) => state.user.user_info)
-	
-	useEffect(() => {
-		dispatch(mainCreators.hotGroupMW(4))
-	}, [])
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-	// useEffect(() => {
-	// 	dispatch(timelineCreators.loadTimelineMW());
-	// }, [])
+  const hotGroup = useSelector((state) => state.mainPage.hotGroup);
+  const mainTimeline = useSelector((state) => state.mainPage.mainTimeline);
+  const likeState = useSelector((state) => state.timeline.like);
+  const user = useSelector((state) => state.user.user_info);
 
-	useEffect(() => {
-		dispatch(mainCreators.loadMainTimelineMW(5))
-	}, [])
-	
-	// console.log("mainTimeline",mainTimeline)
-	console.log("hotGroup",hotGroup)
+  useEffect(() => {
+    dispatch(mainCreators.hotGroupMW(4));
+  }, []);
 
-	return (
-		<React.Fragment>
-			<Container>
+  // useEffect(() => {
+  // 	dispatch(timelineCreators.loadTimelineMW());
+  // }, [])
 
-				<p style={{fontSize:"30px"}}>야구 MATE</p>
+  useEffect(() => {
+    dispatch(mainCreators.loadMainTimelineMW(5));
+  }, []);
 
-				{/* 헤더 네비 */}
-				<Header nowBtn1="nowBtn1"/>
+  // console.log("mainTimeline",mainTimeline)
+  console.log("hotGroup", hotGroup);
 
-				{/* 야구 일정 */}
-				<Banner />
+  return (
+    <React.Fragment>
+      <Container>
+        <p style={{ fontSize: "30px" }}>야구 MATE</p>
 
-				{/* 핫한 모임 타이틀 */}
-				<Box>
-					<Warp justify="space-between" align="center" margin="0 0 13px 0">
-						<Text size="16px" weight="bold">
-							지금 핫한 모임 🔥
-						</Text>
-						
-						<Button>
-							<Text size= "12px" weight= "500px" color="#C4C4C4"
-								onClick={()=>{history.push("/grouplist")}}
-							>
-								+ More
-							</Text>
-						</Button>
-					</Warp>
-				</Box>
+        {/* 헤더 네비 */}
+        <Header nowBtn1="nowBtn1" />
 
-				{/* 핫한 모임 리스트 */}
-				{
-					hotGroup.map((hotGroup, idx) => {
-						return (
-							<HotGroup key={idx} {...hotGroup} />
-						)
-					})
-				}
+        {/* 야구 일정 */}
+        <Banner />
 
-				{/* 구분선 */}
-				<Rectangle/>
+        {/* 핫한 모임 타이틀 */}
+        <Box>
+          <Warp justify="space-between" align="center" margin="0 0 13px 0">
+            <Text size="16px" weight="bold">
+              지금 핫한 모임 🔥
+            </Text>
 
-				{/* 타임라인 타이틀 */}
-				<Box>
-					<Warp bottom="7px" justify="space-between">
-						<Text size="16px" weight="bold">
-							생생 타임라인 💬
-						</Text>
+            <Button>
+              <Text
+                size="12px"
+                weight="500px"
+                color="#C4C4C4"
+                onClick={() => {
+                  history.push("/grouplist");
+                }}
+              >
+                + More
+              </Text>
+            </Button>
+          </Warp>
+        </Box>
 
-						<Button>
-							<Text size= "12px" weight= "500px" color="#C4C4C4"
-								onClick={()=>{history.push("/timeline")}}
-							>
-								+ More
-							</Text>
-						</Button>
-					</Warp>
+        {/* 핫한 모임 리스트 */}
+        {hotGroup.map((hotGroup, idx) => {
+          return <HotGroup key={idx} {...hotGroup} />;
+        })}
 
-					<Text size="14px" color="#777777">
-						실시간으로 응원해보세요
-					</Text>
-				</Box>
+        {/* 구분선 */}
+        <Rectangle />
 
-				{/* 타임라인 배너 */}
-				<TimelineBanner />
-				<Box>
+        {/* 타임라인 타이틀 */}
+        <Box>
+          <Warp bottom="7px" justify="space-between">
+            <Text size="16px" weight="bold">
+              생생 타임라인 💬
+            </Text>
 
-					{/* 타임라인 작성 & 갯수 */}
-					<TimelimeWrite />
+            <Button>
+              <Text
+                size="12px"
+                weight="500px"
+                color="#C4C4C4"
+                onClick={() => {
+                  history.push("/timeline");
+                }}
+              >
+                + More
+              </Text>
+            </Button>
+          </Warp>
 
-					{/* 타임라인 리스트 */}
-					{
-						mainTimeline.map((mainTimeline, idx) => {
-							return (
-								<Timeline key={idx} {...mainTimeline} {...likeState} user={user} idx={idx}>
-								</Timeline>
-							)
-						})
-					}
-					{/* <TimelineList/> */}
-				</Box>
+          <Text size="14px" color="#777777">
+            실시간으로 응원해보세요
+          </Text>
+        </Box>
 
-				{/* 구분선 */}
-				<Rectangle/>
+        {/* 타임라인 배너 */}
+        <TimelineBanner />
+        <Box>
+          {/* 타임라인 작성 & 갯수 */}
+          <TimelimeWrite />
 
-				{/* 굿즈 타이틀 */}
-				<Box>
-					<Warp bottom="7px" justify="space-between">
-						<Text size="16px" weight="bold">
-							굿즈 자랑하기 👀
-						</Text>
+          {/* 타임라인 리스트 */}
+          {mainTimeline.map((mainTimeline, idx) => {
+            return (
+              <Timeline
+                key={idx}
+                {...mainTimeline}
+                {...likeState}
+                user={user}
+                idx={idx}
+              ></Timeline>
+            );
+          })}
+          {/* <TimelineList/> */}
+        </Box>
 
-						<Button>
-							<Text size= "12px" weight= "500px" color="#C4C4C4"
-								onClick={()=>{history.push("/goods")}}
-							>
-								+ More
-							</Text>
-						</Button>
-					</Warp>
+        {/* 구분선 */}
+        <Rectangle />
 
-					<Text size="14px" color="#777777">
-						소장중인 굿즈 보고가세요!
-					</Text>
-				</Box>
+        {/* 굿즈 타이틀 */}
+        <Box>
+          <Warp bottom="7px" justify="space-between">
+            <Text size="16px" weight="bold">
+              굿즈 자랑하기 👀
+            </Text>
 
-				{/* 굿즈 리스트 */}
-				<Box padding="28px 20px 40px 20px">
-					<CardContainer>
-						<Card />
-						<Card />
-						<Card />
-						<Card />
-						<Card />
-					</CardContainer>
-				</Box>
+            <Button>
+              <Text
+                size="12px"
+                weight="500px"
+                color="#C4C4C4"
+                onClick={() => {
+                  history.push("/goods");
+                }}
+              >
+                + More
+              </Text>
+            </Button>
+          </Warp>
 
-				{/* 푸터 */}
-				<Footer/>
+          <Text size="14px" color="#777777">
+            소장중인 굿즈 보고가세요!
+          </Text>
+        </Box>
 
-				{/* 하단 네비바 */}
-				<NaviBar home="home"/>
+        {/* 굿즈 리스트 */}
+        <Box padding="28px 20px 40px 20px">
+          <CardContainer>
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </CardContainer>
+        </Box>
 
-			</Container>
-		</React.Fragment>
-	)
-})
+        {/* 푸터 */}
+        <Footer />
+
+        {/* 하단 네비바 */}
+        <NaviBar home="home" />
+      </Container>
+    </React.Fragment>
+  );
+});
 
 export default Main;
 
@@ -176,7 +189,7 @@ const Container = styled.div`
   /* height: auto; */
   margin: auto;
   padding: 0;
-	position: relative;
+  position: relative;
 `;
 
 const Rectangle = styled.div`
@@ -204,18 +217,18 @@ const Box = styled.div`
 // `;
 
 const Warp = styled.div`
-	display: flex;
-	width: ${(props) => props.width};
-	flex-direction: ${(props) => props.direction};
-	flex-wrap: ${(props) => props.wrap};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	align-content: ${(props) => props.start};
-	margin-left: ${(props) => props.marginLeft};
-	margin-bottom: ${(props) => props.bottom};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  display: flex;
+  width: ${(props) => props.width};
+  flex-direction: ${(props) => props.direction};
+  flex-wrap: ${(props) => props.wrap};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  align-content: ${(props) => props.start};
+  margin-left: ${(props) => props.marginLeft};
+  margin-bottom: ${(props) => props.bottom};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Text = styled.div`
@@ -245,4 +258,4 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
-`
+`;

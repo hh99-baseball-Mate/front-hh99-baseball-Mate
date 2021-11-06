@@ -11,6 +11,7 @@ const Swipers = (props) => {
           overflowX: "auto",
           display: "flex",
           alignItems: "center",
+          overflowY: "hidden",
         }}
       >
         {children}

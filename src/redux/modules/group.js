@@ -1,7 +1,7 @@
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import { apis, img, instance, tokenInstance } from "../../lib/axios";
-import axios from "axios";
+import { createAction, handleActions } from "redux-actions"
+import { produce } from "immer"
+import { apis, img, instance, tokenInstance } from "../../lib/axios"
+import axios from "axios"
 
 // const api = axios.create(
 //   {
@@ -15,19 +15,19 @@ import axios from "axios";
 // );
 
 //액션
-const SET_GROUP = "SET_GROUP";
-const GET_PLAY = "GET_PLAY";
-const ADD_GROUP = "ADD_GROUP";
-const GET_TEAM = "GET_TEAM";
-const SELECT_TEAM = "SELECT_TEAM";
+const SET_GROUP = "SET_GROUP"
+const GET_PLAY = "GET_PLAY"
+const ADD_GROUP = "ADD_GROUP"
+const GET_TEAM = "GET_TEAM"
+const SELECT_TEAM = "SELECT_TEAM"
 
 //액션함수
-const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }));
-const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
-const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }));
-const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
+const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }))
+const getPlay = createAction(GET_PLAY, (playList) => ({ playList }))
+const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }))
+const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }))
 
-const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
+const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }))
 //초기값
 const initialState = {
   group_list: [],
@@ -37,23 +37,23 @@ const initialState = {
 
   // addlist 시험
   ex_list: [],
-};
+}
 
 //미들웨어
-const getGroupAPI = (date = "") => {
+const getGroupAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/page/group/${date}`)
+      .get(`/groups`)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        dispatch(setGroup(res.data));
+        console.log(res)
+        console.log(res.data)
+        dispatch(setGroup(res.data))
       })
       .catch((err) => {
-        console.log(err, "그룹조회err");
-      });
-  };
-};
+        console.log(err, "그룹조회err")
+      })
+  }
+}
 
 const getPlayAPI = (team) => {
   return function (dispatch, getState, { history }) {
@@ -71,18 +71,18 @@ const getPlayAPI = (team) => {
   }
 }
 
-const getTeamAPI = (team = "") => {
+const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/page/group/${team}`)
+      .get(`/groups?team=${teamname}`)
       .then((res) => {
-        console.log(res)
-        dispatch(getTeam(res))
-        console.log(res, "team확인")
+        console.log(res.data, "구단 선택")
+        dispatch(getTeam(res.data))
       })
       .catch((err) => {
         console.log("팀별조회에러", err)
       })
+    // }
   }
 }
 
@@ -102,7 +102,7 @@ const addGroupMD = (formData) => {
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
     const teamname = myteam.split(" ")
-    // 서버에는 롯데자이언츠가 아닌 롯데 로 저장되어 있기 때문에 split 을 통해 롯데만 Get 요청
+
     instance
       .get(`/kbodatas?team=${teamname[0]}`)
       .then((res) => {
@@ -121,24 +121,24 @@ export default handleActions(
   {
     [SET_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        draft.group_list = action.payload.groupList;
+        draft.group_list = action.payload.groupList
       }),
     [GET_PLAY]: (state, action) =>
       produce(state, (draft) => {
-        draft.play_list = action.payload.playList;
+        draft.play_list = action.payload.playList
       }),
     [GET_TEAM]: (state, action) => produce(state, (draft) => {}),
     [ADD_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        draft.ex_list.push(action.payload.addList);
+        draft.ex_list.push(action.payload.teamList)
       }),
     [SELECT_TEAM]: (state, action) =>
       produce(state, (draft) => {
-        draft.selectTeam_list = action.payload.team;
+        draft.selectTeam_list = action.payload.team
       }),
   },
   initialState
-);
+)
 
 const actionCreators = {
   getGroupAPI,
@@ -148,6 +148,6 @@ const actionCreators = {
   getTeamAPI,
   selectTeam,
   selectTeamMD,
-};
+}
 
-export { actionCreators };
+export { actionCreators }

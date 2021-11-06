@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { ConnectedRouter } from "connected-react-router";
-import { ClubChoice } from "../pages/ClubChoice";
+import React, { useEffect } from "react"
+import { ConnectedRouter } from "connected-react-router"
+import { ClubChoice } from "../pages/ClubChoice"
 import { Signup } from "../pages/Signup"
 import { history } from "../redux/configStore"
 import { Route } from "react-router-dom"
@@ -59,7 +59,7 @@ function App() {
           <Route path="/addgoods" exact component={GoodsAdd} />
           <Route path="/mygroup" exact component={MyGroup} />
           {/* <Route path="/mypage" exact component={MyPage} is_login={is_login}/> */}
-          <Route path="/mypage" render={() => <MyPage is_login={is_login} />}/>
+          <Route path="/mypage" render={() => <MyPage is_login={is_login} />} />
 
           {/* 임시 */}
           <Route component={NotFound} />
@@ -69,4 +69,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

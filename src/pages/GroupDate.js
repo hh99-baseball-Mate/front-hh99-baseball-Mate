@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { Buttons, Container, ArrowBack, Text } from "../components";
-import { actionCreators as playCr } from "../redux/modules/group";
-import { useDispatch, useSelector } from "react-redux";
-import group from "../redux/modules/group";
-import Position from "../shared/icon/Vector.png";
-import { history } from "../redux/configStore";
-import { Image } from "react-bootstrap";
+import React, { useEffect } from "react"
+import styled from "styled-components"
+import { Buttons, Container, ArrowBack, Text } from "../components"
+import { actionCreators as playCr } from "../redux/modules/group"
+import { useDispatch, useSelector } from "react-redux"
+import group from "../redux/modules/group"
+import Position from "../shared/icon/Vector.png"
+import { history } from "../redux/configStore"
+import { Image } from "react-bootstrap"
 // 스와이퍼
 
-import { SwiperSlide, Swiper } from "swiper/react";
+import { SwiperSlide, Swiper } from "swiper/react"
 
 const GroupDate = (props) => {
   const dispatch = useDispatch()

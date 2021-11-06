@@ -13,11 +13,10 @@ const GroupDetail = (props) => {
 	const dispatch = useDispatch();
   const params = useParams();
   const groupId = params.groupId
-  // console.log("params", params)
 	const [selectPage, setSelectPage] = useState(true)
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-	console.log("loadDetail", loadDetail)
+	// console.log("loadDetail", loadDetail)
 
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
@@ -45,7 +44,7 @@ const GroupDetail = (props) => {
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant id={groupId}/> : <Comment {...loadDetail} id={groupId}/>} 
+				{selectPage === true ? <Participant {...loadDetail} /> : <Comment {...loadDetail} />} 
 
 			</Box>
 
