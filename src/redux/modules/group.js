@@ -40,10 +40,10 @@ const initialState = {
 };
 
 //미들웨어
-const getGroupAPI = (date = "") => {
+const getGroupAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/page/group/${date}`)
+      .get(`/groups`)
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -58,7 +58,7 @@ const getGroupAPI = (date = "") => {
 const getPlayAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/kbodata`)
+      .get(`/kbodatas`)
       .then((res) => {
         console.log(res);
 
@@ -70,13 +70,14 @@ const getPlayAPI = () => {
   };
 };
 
-const getTeamAPI = (team = "") => {
+const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
+    console.log(teamname);
     instance
-      .get(`/page/group/${team}`)
+      .get(`/groups?team=${teamname}`)
       .then((res) => {
         console.log(res);
-        dispatch(getTeam(res));
+        dispatch(getTeam(res.data));
         console.log(res, "team확인");
       })
       .catch((err) => {
@@ -129,7 +130,7 @@ export default handleActions(
     [GET_TEAM]: (state, action) => produce(state, (draft) => {}),
     [ADD_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        draft.ex_list.push(action.payload.addList);
+        draft.ex_list.push(action.payload.teamList);
       }),
     [SELECT_TEAM]: (state, action) =>
       produce(state, (draft) => {

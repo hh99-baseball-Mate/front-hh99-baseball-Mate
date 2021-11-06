@@ -45,13 +45,17 @@ const GroupList = (props) => {
       <Header />
       <Container>
         <Broder />
-        {/*swiper */}
-        {/* {team_list.map((e) => ( */}
-        <div>
+        {/* 
+        {team_list.map((e) => ( */}
+        <div
+        // onClick={(e) => {
+        //   console.log(e);
+        // }}
+        >
           <Swipers>
-            <div>
+            <div style={{ marginRight: "15px" }}>
               <Image
-                style={{ width: "68px", height: "69px" }}
+                style={{ width: "68px", height: "68px" }}
                 roundedCircle
                 src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
               ></Image>
@@ -63,7 +67,8 @@ const GroupList = (props) => {
                 style={{ width: "68px", marginRight: "30px" }}
                 onClick={() => {
                   console.log("나는 뭐지?");
-                  // history.push(`/${e.name}`);
+                  console.log(e.name.split("%"));
+                  history.push(`/${e.name}`);
                 }}
               >
                 <Image
@@ -76,8 +81,7 @@ const GroupList = (props) => {
             ))}
           </Swipers>
         </div>
-        {/* ))} */}
-        {/* dfd */}
+        // ))}
         <MoreContainer>
           <div style={{ display: "block" }}>
             <strong>모임 목록</strong>

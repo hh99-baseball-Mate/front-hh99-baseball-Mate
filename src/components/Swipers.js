@@ -10,7 +10,6 @@ const Swipers = (props) => {
         style={{
           overflowX: "auto",
           display: "flex",
-          height: "200px",
           alignItems: "center",
         }}
       >
