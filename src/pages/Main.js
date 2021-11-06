@@ -67,7 +67,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/grouplist");
+                  history.push("/grouplist")
                 }}
               >
                 + More
@@ -78,7 +78,7 @@ const Main = memo((props) => {
 
         {/* 핫한 모임 리스트 */}
         {hotGroup.map((hotGroup, idx) => {
-          return <HotGroup key={idx} {...hotGroup} />;
+          return <HotGroup key={idx} {...hotGroup} />
         })}
 
         {/* 구분선 */}
@@ -97,7 +97,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/timeline");
+                  history.push("/timeline")
                 }}
               >
                 + More
@@ -117,7 +117,7 @@ const Main = memo((props) => {
           <TimelimeWrite />
 
           {/* 타임라인 리스트 */}
-          {mainTimeline.map((mainTimeline, idx) => {
+          {/* {mainTimeline.map((mainTimeline, idx) => {
             return (
               <Timeline
                 key={idx}
@@ -127,7 +127,7 @@ const Main = memo((props) => {
                 idx={idx}
               ></Timeline>
             );
-          })}
+          })} */}
           {/* <TimelineList/> */}
         </Box>
 
@@ -147,7 +147,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/goods");
+                  history.push("/goods")
                 }}
               >
                 + More
@@ -178,7 +178,7 @@ const Main = memo((props) => {
         <NaviBar home="home" />
       </Container>
     </React.Fragment>
-  );
+  )
 });
 
 export default Main;

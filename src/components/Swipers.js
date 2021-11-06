@@ -1,9 +1,8 @@
-import { Swiper } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
+import "swiper/swiper-bundle.min.css"
+import "swiper/swiper.min.css"
 
 const Swipers = (props) => {
-  const { children } = props;
+  const { children } = props
   return (
     <>
       <div
@@ -18,10 +17,10 @@ const Swipers = (props) => {
       </div>
     </>
   )
-};
+}
 
-export default Swipers;
+export default Swipers
 
 Swipers.defaultProps = {
   children: null,
-};
+}

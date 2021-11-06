@@ -114,7 +114,10 @@ const choiceClubMD = (club) => {
       .post("/user/myteam", {
         myteam: club,
       })
-      .then((res) => dispatch(choiceClub(res.data.myteam)))
+      .then((res) => {
+        dispatch(choiceClub(res.data.myteam))
+        history.replace("/")
+      })
       .catch((err) => console.log(err, "클럽선택 err입니다."))
   }
 }

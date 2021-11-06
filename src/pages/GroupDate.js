@@ -55,7 +55,7 @@ const GroupDate = (props) => {
 
             <div
               style={{
-                overflowX: "auto",
+                overflow: "auto hidden",
                 display: "flex",
                 height: "210px",
                 alignItems: "center",
