@@ -13,13 +13,7 @@ export const ClubChoice = (props) => {
   return (
     <>
       <Container>
-        <ArrowBack
-          onClick={() => {
-            history.push("/login")
-          }}
-        >
-          구단선택
-        </ArrowBack>
+        <ArrowBack>구단선택</ArrowBack>
 
         {/* 선택 메세지 로그인 사용자 */}
         <TextBox>
@@ -57,5 +51,5 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   place-items: center;
-  gap: 10px;
+  gap: 15px;
 `

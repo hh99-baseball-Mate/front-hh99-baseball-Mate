@@ -18,10 +18,10 @@ const initialState = {
 // http://localhost:4000/page/group/detail/${groupId}`
 const loadGroupPageMW = (groupId) => {
 	return (dispatch, getState, {history}) => {
-		apis
+		tokenApis
 			.getGroupDetail(groupId)
 			.then((res) => {
-				// console.log("loadGroupPageMW", res)
+				// console.log("loadGroupPageMW", res.data)
 				const groupPage = res.data
 				dispatch(load_groupPage(groupPage))
 			})

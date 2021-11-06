@@ -41,7 +41,7 @@ export const Inputs = (props) => {
     return (
       <InputBox>
         <Text margin="10px 0">{children}</Text>
-        <TextArea {...styles}></TextArea>
+        <TextArea maxLength="500" {...styles}></TextArea>
       </InputBox>
     )
   }

@@ -15,6 +15,7 @@ import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { Card } from "../componentsGoods/Card";
 import Footer from "../components/Footer";
 import NaviBar from "../components/NaviBar";
+import TimelineList from "./TimelineList";
 
 const Main = memo((props) => {
 	const dispatch = useDispatch();
@@ -118,6 +119,7 @@ const Main = memo((props) => {
 							)
 						})
 					}
+					{/* <TimelineList/> */}
 				</Box>
 
 				{/* 구분선 */}

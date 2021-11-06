@@ -46,7 +46,7 @@ const Comment = (props) => {
 			<Box padding="13px 20px 13px 20px">
 				<Warp justify="space-between">
 					<Text size="14px" color="#777777">
-						방명록 7
+						방명록 {props.groupCommentList.length}
 					</Text>
 
 					<Warp>
@@ -96,14 +96,14 @@ const Comment = (props) => {
 					<Box margin="20px 20px 20px 14px">
 						<Warp align="center">
 							<Text size="14px" weight="bold" marginR="10px">
-								김진희
+								{props.groupCommentList[0].commentUsername}
 							</Text>
 							<Text color="#C4C4C4" size="12px">
 								1분전
 							</Text>
 						</Warp>
 						<Text size="14px">
-							지금 참여 가능 하신가요?
+							{props.groupCommentList[0].comment}
 						</Text>
 
 						<Warp marginT="20px">

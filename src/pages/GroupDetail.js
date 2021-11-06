@@ -17,7 +17,7 @@ const GroupDetail = (props) => {
 	const [selectPage, setSelectPage] = useState(true)
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-	// console.log("loadDetail", loadDetail)
+	console.log("loadDetail", loadDetail)
 
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
@@ -28,7 +28,7 @@ const GroupDetail = (props) => {
 		<Container>
 
 			{/* 글 정보 */}
-			<Info info={loadDetail}/>
+			<Info {...loadDetail}/>
 
 			{/* 참여자 & 방명록 */}
 			<Box height="65px">
@@ -45,7 +45,7 @@ const GroupDetail = (props) => {
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant id={groupId}/> : <Comment id={groupId}/>} 
+				{selectPage === true ? <Participant id={groupId}/> : <Comment {...loadDetail} id={groupId}/>} 
 
 			</Box>
 

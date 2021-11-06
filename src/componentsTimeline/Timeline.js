@@ -11,26 +11,26 @@ const Timeline = React.memo((props) => {
 	
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
-	}, [])
-
-	useEffect(() => {
-		dispatch(mainCreators.loadMainTimelineMW(5))
-	}, [])
-
-	useEffect(() => {
 		dispatch(timelineCreators.likeTimelineMW());
 	}, [])
+
+	// useEffect(() => {
+	// 	dispatch(mainCreators.loadMainTimelineMW(5))
+	// }, [])
+
 
 	const [like, setLike] = useState(false)
 	const idx = props.idx
 
 	// 좋아요 누른 상태
 	// console.log("props.likelist", props.likelist)
-	// const id = props.id
-	// const likelist = props.likelist
-	// const likesx = props.likelist.indexOf(props.id)
-	
-	// console.log("likeId",likesx)
+	const num = props.id
+	const likelist = props.likelist
+
+	// const 좋아요확인 = likelist.indexOf(props.id)
+	// console.log("아이디", typeof(id), num)
+	// console.log("likeId",typeof(좋아요확인) ,좋아요확인)
+
 	// if (props.id === 
 
 	// 본인 아이디 확인

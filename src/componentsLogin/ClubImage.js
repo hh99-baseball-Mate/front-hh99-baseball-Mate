@@ -39,8 +39,8 @@ const Choice = styled.button`
   border: none;
   :hover {
     /* padding: 10px; */
-    transform: scale(130%);
-    transition: 0.3s ease-in-out;
+    transform: scale(120%);
+    transition: 0.4s ease-in-out;
   }
 `
 
@@ -48,4 +48,5 @@ const Bg = styled.div`
   border-radius: 50%;
   border: 1px solid #e7e7e7;
   background-color: transparent;
+  margin-bottom: 5px;
 `
