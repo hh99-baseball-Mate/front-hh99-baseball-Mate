@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { Header } from "../components";
 import Banner from "../componentsMain/Banner";
 import HotGroup from "../componentsMain/HotGroup";
-import MainTimeline from "../componentsMain/MainTimeline";
+// import MainTimeline from "../componentsMain/MainTimeline";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
@@ -35,7 +35,7 @@ const Main = memo((props) => {
 	// }, [])
 
 	useEffect(() => {
-		dispatch(mainCreators.loadMainTimelineMW(5))
+		dispatch(timelineCreators.loadTimelineNumMW(5))
 	}, [])
 	
 	// console.log("mainTimeline",mainTimeline)
