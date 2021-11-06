@@ -5,7 +5,7 @@ import { Image } from "react-bootstrap";
 const GroupCard = (props) => {
   return (
     <Box>
-      <Image src="holder.js/171x180" rounded />
+      <ImgBall src="holder.js/171x180" rounded />
     </Box>
   );
 };
@@ -21,3 +21,5 @@ const Box = styled.div`
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 `;
+
+const ImgBall = styled.image``;

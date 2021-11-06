@@ -1,46 +1,46 @@
-import React, { useEffect, useRef } from "react"
-import { Card, Carousel, Image } from "react-bootstrap"
-import styled from "styled-components"
-import { useHistory } from "react-router-dom"
+import React, { useEffect, useRef } from "react";
+import { Card, Carousel, Image } from "react-bootstrap";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 //swiper
-import Swipers from "../components/Swipers"
-import GroupCard from "../componentsGroupList/GroupCard"
-import { useDispatch, useSelector } from "react-redux"
-import { actionCreators as groupCr } from "../redux/modules/group"
-import { baseUrl, clubImageSrc } from "../shared/clubImage"
-import { SwiperSlide } from "swiper/react"
-import { Container, Header, MoreContainer, Text } from "../components"
+import Swipers from "../components/Swipers";
+import GroupCard from "../componentsGroupList/GroupCard";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as groupCr } from "../redux/modules/group";
+import { baseUrl, clubImageSrc } from "../shared/clubImage";
+import { SwiperSlide } from "swiper/react";
+import { Container, Header, MoreContainer, Text } from "../components";
 // import Pancil from "../shared/icon/Pancil.png";
-import PancilBtn from "../components/PancilBtn"
+import PancilBtn from "../components/PancilBtn";
 
 const GroupList = (props) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const group_list = useSelector((state) => state.group.group_list)
+  const group_list = useSelector((state) => state.group.group_list);
   // console.log(group_list);
   //팀별
-  const team_list = useSelector((state) => state.group.team_list)
-  console.log(team_list)
-  let team = ""
+  const team_list = useSelector((state) => state.group.team_list);
+  console.log(team_list);
+  let team = "";
   function newPeople() {
-    history.push("/groupadd")
+    history.push("/groupadd");
   }
 
   function choose() {
-    history.push("/groupdate")
+    history.push("/groupdate");
   }
 
   useEffect(() => {
-    dispatch(groupCr.getGroupAPI())
-  }, [])
+    dispatch(groupCr.getGroupAPI());
+  }, []);
 
   //팀별
   useEffect(() => {
-    console.log(team, "즐")
-    dispatch(groupCr.getTeamAPI(team))
-  }, [team])
-  console.log(team_list)
+    console.log(team, "즐");
+    dispatch(groupCr.getTeamAPI(team));
+  }, [team]);
+  console.log(team_list);
 
   return (
     <>
@@ -51,7 +51,7 @@ const GroupList = (props) => {
         {team_list.map((e) => ( */}
         <div>
           <Swipers>
-            <div onCl style={{ marginRight: "15px" }}>
+            <div style={{ marginRight: "15px" }}>
               <Image
                 style={{ width: "68px", height: "68px" }}
                 roundedCircle
@@ -66,9 +66,9 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "15px" }}
                 onClick={() => {
-                  console.log(e.short_name)
+                  console.log(e.short_name);
                   // dispatch(groupCr.getTeamAPI(e.short_name));
-                  team = e.short_name
+                  team = e.short_name;
 
                   // history.push(`/${e.name}`);
                 }}
@@ -103,21 +103,21 @@ const GroupList = (props) => {
         </MoreContainer>
         <Broder />
         {group_list.map((e, idx) => {
-          console.log(e)
-          return <GroupCard key={idx} {...e} />
+          console.log(e);
+          return <GroupCard key={idx} {...e} />;
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
     </>
-  )
-}
-export default GroupList
+  );
+};
+export default GroupList;
 
 const Broder = styled.div`
   border: 1px solid #e7e7e7;
   margin-top: 9px;
   margin-bottom: 20px;
-`
+`;
 
 const List = styled.span`
   padding: 10px;
@@ -127,4 +127,4 @@ const List = styled.span`
   height: 20px;
   left: 57px;
   line-height: 29px;
-`
+`;
