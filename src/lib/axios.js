@@ -28,14 +28,16 @@ export const apis = {
   getGameTime: () => instance.get("/api/kbodata"),
 
   // 핫한 모임 불러오기
-  getHotGroup: (number) => instance.get("/groups/hotgroup"),
+  getHotGroup: (number) => instance.get(`/main/hotGroup/${number}`),
 
   // 타임라인 불러오기
-  getTimeline: () => instance.get("/timelines"),
+  getTimeline: () => instance.get("/page/timeLine"),
 
   // 메인화면 타임라인 조회
-  getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
+  getMainTimeline: (number) => instance.get(`/main/nowTimeline/${number}`),
 
+  // 상세페이지 조회
+  getGroupDetail: (groupId) => instance.get(`/page/group/detail/${groupId}`),
 }
 
 // 토큰인증 api
@@ -55,42 +57,36 @@ export const img = axios.create({
   baseURL: "http://54.180.148.132/",
   headers: {
     "Content-Type": "multipart/form-data",
-    accept: "application/json",
+    // accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
 })
 
-
 export const tokenApis = {
   // 타임라인 페이지
   // 타임라인 작성하기
-  postTimeline: (content) => tokenInstance.post('/timelines', content),
+  postTimeline: (content) => tokenInstance.post("/page/timeLine", content),
 
   // 타임라인 삭제하기
-  delTimeline: (timeLineId) => tokenInstance.delete(`/timelines/${timeLineId}`),
+  delTimeline: (timeLineId) =>
+    tokenInstance.delete(`/page/timeLine/${timeLineId}`),
 
   // 타임라인 좋아요
-  likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/timeLine/${timeLineId}/like`, isLiked),
+  likeTimeline: (timeLineId, isLiked) =>
+    tokenInstance.post(`/page/timeLine/${timeLineId}/like`, isLiked),
 
   // 모임게시글
-  // 상세페이지 조회
-  getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
-
   // 모임 참여하기
-  postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
+  postApply: (groupId) =>
+    tokenInstance.post(`/page/group/detail/apply/${groupId}`),
 
   // 모임 게시글 댓글 등록
-  postComment: (groupId, comment) => tokenInstance.post(`/groups/${groupId}/comment`, comment),
-
-  // 모임 게시글 댓글 수정
-  putComment: (groupId, commentId, comment) => tokenInstance.put(`/groups/${groupId}/comment/${commentId}`, comment),
-
-  // 모임 게시글에 댓글 삭제
-  delComment: (groupId, commentId) => tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
+  postComment: (groupId, comment) =>
+    tokenInstance.post(`/page/group/detail/${groupId}/comment`, comment),
 
   //
-};
+}
 
 
 // createPost: (contents) => instance.post('/posts', contents),

@@ -55,55 +55,56 @@ const getGroupAPI = (date = "") => {
   };
 };
 
-const getPlayAPI = () => {
+const getPlayAPI = (team) => {
   return function (dispatch, getState, { history }) {
-    instance
-      .get(`/api/kbodata`)
-      .then((res) => {
-        console.log(res);
+    // const team = 103
 
-        dispatch(getPlay(res.data));
+    instance
+      .get(`/kbodatas`)
+      .then((res) => {
+        console.log(res.data)
+        dispatch(getPlay(res.data))
       })
       .catch((err) => {
-        console.log(err, "경기일정err");
-      });
-  };
-};
+        console.log(err, "경기일정err")
+      })
+  }
+}
 
 const getTeamAPI = (team = "") => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/page/group/${team}`)
       .then((res) => {
-        console.log(res);
-        dispatch(getTeam(res));
-        console.log(res, "team확인");
+        console.log(res)
+        dispatch(getTeam(res))
+        console.log(res, "team확인")
       })
       .catch((err) => {
-        console.log("팀별조회에러", err);
-      });
-  };
-};
+        console.log("팀별조회에러", err)
+      })
+  }
+}
 
 const addGroupMD = (formData) => {
   return function (dispatch, getState, { history }) {
     img
       .post("/groups", formData)
       .then((res) => {
-        console.log(res.data);
-        dispatch(addGroup(formData));
-        history.replace("/groupList");
+        console.log(res.data)
+        dispatch(addGroup(formData))
+        history.replace("/groupList")
       })
-      .catch((err) => console.log(err, "모임생성 err입니다."));
-  };
-};
+      .catch((err) => console.log(err, "모임생성 err입니다."))
+  }
+}
 
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
     const teamname = myteam.split(" ")
-
+    // 서버에는 롯데자이언츠가 아닌 롯데 로 저장되어 있기 때문에 split 을 통해 롯데만 Get 요청
     instance
-      .get(`/groups?team=${teamname[0]}`)
+      .get(`/kbodatas?team=${teamname[0]}`)
       .then((res) => {
         const _team = res.data
 
@@ -113,7 +114,7 @@ const selectTeamMD = (myteam) => {
       })
       .catch((err) => console.log(err, "팀선택 err입니다."))
   }
-};
+}
 
 //리듀서
 export default handleActions(
