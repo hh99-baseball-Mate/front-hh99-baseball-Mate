@@ -67,7 +67,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/grouplist");
+                  history.push("/grouplist")
                 }}
               >
                 + More
@@ -97,7 +97,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/timeline");
+                  history.push("/timeline")
                 }}
               >
                 + More
@@ -147,7 +147,7 @@ const Main = memo((props) => {
                 weight="500px"
                 color="#C4C4C4"
                 onClick={() => {
-                  history.push("/goods");
+                  history.push("/goods")
                 }}
               >
                 + More
@@ -178,7 +178,7 @@ const Main = memo((props) => {
         <NaviBar home="home" />
       </Container>
     </React.Fragment>
-  );
+  )
 });
 
 export default Main;

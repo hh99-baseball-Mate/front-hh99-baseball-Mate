@@ -62,7 +62,7 @@ const addTimelineMW = (message) => {
 		tokenApis
 			.postTimeline(content)
 			.then((res) => {
-				// console.log(res)
+				console.log(res)
 				dispatch(add_timeline(content))
 			})
 			.catch((err) => {

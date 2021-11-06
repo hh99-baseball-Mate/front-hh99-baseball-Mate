@@ -4,7 +4,6 @@ import { getCookie } from "../shared/Cookie";
 // http://52.78.93.38/
 // http://54.180.148.132/ 임시서버
 // http://localhost:4000/
-
 // 토큰없는 api
 export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -22,10 +21,9 @@ export const apis = {
   // http://localhost:4000/ + 내가 작성한 url 즉 예시로
   // getPost함수에서는 instance.get('http://localhost:4000/posts')로 요청을 보내게 됩니다.
   // get과 delete의 경우 두 번째 인자에 데이터를 담아 보낼수 없기 때문에 서버에 데이터를 보낼경우 쿼리를 이용하여 보내주도록 합니다.
-
   // main
   // 경기 일정 불러오기
-  getGameTime: () => instance.get("/api/kbodata"),
+  getGameTime: () => instance.get("/kbodata"),
 
   // 핫한 모임 불러오기
   getHotGroup: (number) => instance.get("/groups/hotgroup"),
