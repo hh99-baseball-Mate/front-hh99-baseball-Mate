@@ -1,5 +1,5 @@
 {
-  "group": [
+  "101": [
     {
       "awayImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_LT.png",
       "awayteam": "롯데",
@@ -26,6 +26,41 @@
       "awayImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_LT.png",
       "awayteam": "롯데",
       "date": "10.1 (금)",
+      "homeImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_KT.png",
+      "hometeam": "KT",
+      "location": "사직",
+      "matchId": 1,
+      "matches": "KT 3:4 롯데",
+      "time": "15:00"
+    }
+  ],
+  "102": [
+    {
+      "awayImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_LT.png",
+      "awayteam": "롯데",
+      "date": "10.2 (금)",
+      "homeImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_KT.png",
+      "hometeam": "KT",
+      "location": "사직",
+      "matchId": 1,
+      "matches": "KT 3:4 롯데",
+      "time": "15:00"
+    },
+    {
+      "awayImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_LT.png",
+      "awayteam": "롯데",
+      "date": "10.2 (금)",
+      "homeImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_KT.png",
+      "hometeam": "KT",
+      "location": "사직",
+      "matchId": 1,
+      "matches": "KT 3:4 롯데",
+      "time": "15:00"
+    },
+    {
+      "awayImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_LT.png",
+      "awayteam": "롯데",
+      "date": "10.2 (금)",
       "homeImage": "https://lgcxydabfbch3774324.cdn.ntruss.com/KBO_IMAGE/emblem/regular/2021/emblem_KT.png",
       "hometeam": "KT",
       "location": "사직",

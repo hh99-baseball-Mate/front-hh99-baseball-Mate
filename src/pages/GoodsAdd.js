@@ -142,11 +142,7 @@ export const GoodsAdd = (props) => {
         </Inputs>
 
         <ButtonBox>
-          <Buttons complete _onClick={submitBtn}>
-            <Text color="white" size="16px">
-              굿즈 등록
-            </Text>
-          </Buttons>
+          <Buttons _onClick={submitBtn}>굿즈 등록</Buttons>
         </ButtonBox>
       </Container>
     </>

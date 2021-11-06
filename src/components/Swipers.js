@@ -17,7 +17,7 @@ const Swipers = (props) => {
         {children}
       </div>
     </>
-  );
+  )
 };
 
 export default Swipers;

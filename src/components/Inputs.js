@@ -68,7 +68,7 @@ Inputs.defaultProps = {
 }
 
 const InputBox = styled.div`
-  /* margin-top: 20px; */
+  margin-top: 20px;
 `
 
 const Input = styled.input`
@@ -93,6 +93,7 @@ const Select = styled.select`
   height: 30px;
   margin: ${(props) => props.margin};
   text-align: center;
+  background-color: #fff;
   :focus {
     outline: none !important;
     border-bottom: 2px solid #f25343;
