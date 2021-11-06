@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { getCookie } from '../shared/Cookie';
+import axios from "axios";
+import { getCookie } from "../shared/Cookie";
 
 // http://52.78.93.38/
 // http://54.180.148.132/ 임시서버
@@ -15,7 +15,7 @@ export const instance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const apis = {
   // baseURL을 미리 지정해줬기 때문에 함수의 첫 번째 인자에 들어가는 url은
@@ -28,20 +28,14 @@ export const apis = {
   getGameTime: () => instance.get("/api/kbodata"),
 
   // 핫한 모임 불러오기
-  getHotGroup: (number) => instance.get(`/main/hotGroup/${number}`),
+  getHotGroup: (number) => instance.get("/groups/hotgroup"),
 
   // 타임라인 불러오기
-  getTimeline: () => instance.get("/page/timeLine"),
-
-  // 타임라인 일정갯수 불러오기
-  getTimelineNum: (number) => instance.get(`/timelines?count=${number}`),
+  getTimeline: () => instance.get("/timelines"),
 
   // 메인화면 타임라인 조회
-  getMainTimeline: (number) => instance.get(`/main/nowTimeline/${number}`),
-
-  // 상세페이지 조회
-  getGroupDetail: (groupId) => instance.get(`/page/group/detail/${groupId}`),
-}
+  getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
+};
 
 // 토큰인증 api
 export const tokenInstance = axios.create({
@@ -53,43 +47,52 @@ export const tokenInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const img = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
   baseURL: "http://54.180.148.132/",
   headers: {
     "Content-Type": "multipart/form-data",
-    // accept: "application/json",
+    accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const tokenApis = {
   // 타임라인 페이지
   // 타임라인 작성하기
-  postTimeline: (content) => tokenInstance.post("/page/timeLine", content),
+  postTimeline: (content) => tokenInstance.post("/timelines", content),
 
   // 타임라인 삭제하기
-  delTimeline: (timeLineId) =>
-    tokenInstance.delete(`/page/timeLine/${timeLineId}`),
+  delTimeline: (timeLineId) => tokenInstance.delete(`/timelines/${timeLineId}`),
 
   // 타임라인 좋아요
-  likeTimeline: (timeLineId, isLiked) => tokenInstance.post(`/timelines/${timeLineId}/like`, isLiked),
+  likeTimeline: (timeLineId, isLiked) =>
+    tokenInstance.post(`/timeLine/${timeLineId}/like`, isLiked),
 
   // 모임게시글
+  // 상세페이지 조회
+  getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
+
   // 모임 참여하기
-  postApply: (groupId) =>
-    tokenInstance.post(`/page/group/detail/apply/${groupId}`),
+  postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
 
   // 모임 게시글 댓글 등록
   postComment: (groupId, comment) =>
-    tokenInstance.post(`/page/group/detail/${groupId}/comment`, comment),
+    tokenInstance.post(`/groups/${groupId}/comment`, comment),
+
+  // 모임 게시글 댓글 수정
+  putComment: (groupId, commentId, comment) =>
+    tokenInstance.put(`/groups/${groupId}/comment/${commentId}`, comment),
+
+  // 모임 게시글에 댓글 삭제
+  delComment: (groupId, commentId) =>
+    tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
 
   //
-}
-
+};
 
 // createPost: (contents) => instance.post('/posts', contents),
 // // 게시물 수정하기
