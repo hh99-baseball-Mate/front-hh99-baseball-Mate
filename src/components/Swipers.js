@@ -1,21 +1,14 @@
-import { Swiper } from "swiper/react";
+import React from "react";
+import styled from "styled-components";
+
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
 const Swipers = (props) => {
-  const { children } = props;
+  const { children, height } = props;
   return (
     <>
-      <div
-        style={{
-          overflowX: "auto",
-          display: "flex",
-          alignItems: "center",
-          overflowY: "hidden",
-        }}
-      >
-        {children}
-      </div>
+      <Sw>{children}</Sw>
     </>
   );
 };
@@ -24,4 +17,12 @@ export default Swipers;
 
 Swipers.defaultProps = {
   children: null,
+  // height: ${(props) => props.height};
 };
+
+const Sw = styled.div`
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  overflow-y: hidden;
+`;
