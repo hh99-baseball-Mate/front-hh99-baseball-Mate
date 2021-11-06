@@ -78,7 +78,7 @@ const Main = memo((props) => {
 
         {/* 핫한 모임 리스트 */}
         {hotGroup.map((hotGroup, idx) => {
-          return <HotGroup key={idx} {...hotGroup} />
+          return <GroupCard key={idx} {...hotGroup} />;
         })}
 
         {/* 구분선 */}
