@@ -142,4 +142,3 @@ const SendImg = styled.img`
   transform: translateY(50%);
   cursor: pointer;
 `;
-
