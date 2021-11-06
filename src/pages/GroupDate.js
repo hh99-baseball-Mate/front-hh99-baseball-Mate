@@ -19,13 +19,27 @@ const GroupDate = (props) => {
   useEffect(() => {
     dispatch(playCr.getPlayAPI());
   }, []);
-  play_list.filter((e) => console.log(e.date));
+
+  const month = new Date().getMonth() + 1;
+
+  const day = new Date().getDay() + 1;
+
+  const date = month + "." + day;
+
+  const list = play_list.filter((e) => {
+    const da = e.date.split(" ")[0];
+
+    // console.log(da, date);
+    return da === date;
+  });
+
+  console.log(list);
   return (
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
       {/* 여기서부터 카드 */}
 
-      {play_list.map((e, i) => (
+      {list.map((e, i) => (
         <div key={i}>
           <Time>{e.date}</Time>
 
@@ -39,7 +53,12 @@ const GroupDate = (props) => {
               alignItems: "center",
             }}
           >
-            <Box>
+            <Box
+              className="ddd"
+              value="ddd"
+              name="ddd"
+              onClick={(e) => console.log(e.target.value)}
+            >
               <Local>
                 <Text bold margin="0 0 7px">
                   {e.time} {e.matchId}강
