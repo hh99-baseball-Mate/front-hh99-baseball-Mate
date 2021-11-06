@@ -72,17 +72,16 @@ const getPlayAPI = () => {
 
 const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
-    console.log(teamname);
     instance
       .get(`/groups?team=${teamname}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data, "구단 선택");
         dispatch(getTeam(res.data));
-        console.log(res, "team확인");
       })
       .catch((err) => {
         console.log("팀별조회에러", err);
       });
+    // }
   };
 };
 
@@ -101,19 +100,19 @@ const addGroupMD = (formData) => {
 
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-    const teamname = myteam.split(" ")
+    const teamname = myteam.split(" ");
 
     instance
       .get(`/groups?team=${teamname[0]}`)
       .then((res) => {
-        const _team = res.data
+        const _team = res.data;
 
-        const team = _team.slice(-5)
+        const team = _team.slice(-5);
 
-        dispatch(selectTeam(team))
+        dispatch(selectTeam(team));
       })
-      .catch((err) => console.log(err, "팀선택 err입니다."))
-  }
+      .catch((err) => console.log(err, "팀선택 err입니다."));
+  };
 };
 
 //리듀서

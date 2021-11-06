@@ -22,7 +22,7 @@ const GroupList = (props) => {
   //팀별
   const team_list = useSelector((state) => state.group.team_list);
   console.log(team_list);
-
+  let team = "";
   function newPeople() {
     history.push("/groupadd");
   }
@@ -34,10 +34,12 @@ const GroupList = (props) => {
   useEffect(() => {
     dispatch(groupCr.getGroupAPI());
   }, []);
+
   //팀별
   useEffect(() => {
-    dispatch(groupCr.getTeamAPI());
-  }, []);
+    console.log(team, "즐");
+    dispatch(groupCr.getTeamAPI(team));
+  }, [team]);
   console.log(team_list);
 
   return (
@@ -47,13 +49,9 @@ const GroupList = (props) => {
         <Broder />
         {/* 
         {team_list.map((e) => ( */}
-        <div
-        // onClick={(e) => {
-        //   console.log(e);
-        // }}
-        >
+        <div>
           <Swipers>
-            <div style={{ marginRight: "15px" }}>
+            <div onCl style={{ marginRight: "15px" }}>
               <Image
                 style={{ width: "68px", height: "68px" }}
                 roundedCircle
@@ -66,9 +64,11 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "30px" }}
                 onClick={() => {
-                  console.log("나는 뭐지?");
-                  console.log(e.name.split("%"));
-                  history.push(`/${e.name}`);
+                  console.log(e.short_name);
+                  // dispatch(groupCr.getTeamAPI(e.short_name));
+                  team = e.short_name;
+
+                  // history.push(`/${e.name}`);
                 }}
               >
                 <Image
@@ -81,7 +81,7 @@ const GroupList = (props) => {
             ))}
           </Swipers>
         </div>
-        // ))}
+        {/* ))} */}
         <MoreContainer>
           <div style={{ display: "block" }}>
             <strong>모임 목록</strong>
