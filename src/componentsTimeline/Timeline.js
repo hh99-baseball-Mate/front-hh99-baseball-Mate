@@ -18,11 +18,11 @@ const Timeline = React.memo((props) => {
 	}, [])
 
 	useEffect(() => {
-		const likeIdx = likelist.indexOf(props.timelineId)
-			if (likeIdx >= 0) {
-				setLike(true)
-			}
-	}, [likelist]) 
+    const likeIdx = likelist.indexOf(props.timelineId)
+    if (likeIdx >= 0) {
+      setLike(true)
+    }
+  }, [likelist]) 
 
 
 

@@ -16,7 +16,7 @@ export const TextField = ({ label, ...props }) => {
           <InputCheck />
         ) : null}
       </label>
-      <Input type={props.type} {...field} {...props} />
+      <Input type={props.type} {...field} {...props} autoComplete="off" />
 
       <Text color="#FB1F07" size="9px" margin="6px 0">
         <ErrorMessage name={field.name} />
