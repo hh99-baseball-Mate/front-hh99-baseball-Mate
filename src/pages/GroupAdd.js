@@ -7,14 +7,18 @@ import {
   ArrowBack,
   Buttons,
 } from "../components"
-import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
+import {
+  AiOutlinePlusCircle,
+  AiOutlineMinusCircle,
+  AiOutlineDown,
+} from "react-icons/ai"
 import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
 import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
-
+import { Modal } from "../componentsGroupAdd/Modal"
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
@@ -26,14 +30,19 @@ export const GroupAdd = (props) => {
   const [inputValue, setInputValue] = useState({
     title: "",
     selectTeam: "",
-    groupDate: "",
     peopleLimit: 0,
     content: "",
   })
 
+  // 이미지 미리보기 state
   const [preview, setPreview] = useState("")
 
-  const { content, peopleLimit, title, selectTeam, groupDate } = inputValue
+  // 모달 보기 state
+  const [showModal, setShowModal] = useState(false)
+
+  const [groupDate, setGroupDate] = useState("")
+
+  const { content, peopleLimit, title, selectTeam } = inputValue
 
   // 이미지 업로드 / 미리보기
 
@@ -51,6 +60,11 @@ export const GroupAdd = (props) => {
 
     setPreview("")
     console.log("삭제를 해야되는데..")
+  }
+
+  const showModalBtn = () => {
+    if (selectTeam) setShowModal(!showModal)
+    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
   }
 
   // 인풋 입력 값 추적 e.target.value 대행
@@ -114,7 +128,7 @@ export const GroupAdd = (props) => {
     const formData = new FormData()
 
     formData.append("title", inputValue.title)
-    formData.append("groupDate", inputValue.groupDate)
+    formData.append("groupDate", groupDate)
     formData.append("content", inputValue.content)
     formData.append("peopleLimit", inputValue.peopleLimit)
     formData.append("selectTeam", inputValue.selectTeam)
@@ -164,23 +178,26 @@ export const GroupAdd = (props) => {
 
         {/* 일정 선택 */}
         <Grid>
-          <Text>
-            일정선택
-            {groupDate && <InputCheck />}
-          </Text>
-          <Inputs
-            dropdown
-            name="groupDate"
-            value={groupDate}
-            onChange={onChange}
-          >
-            <Option>일정을 선택해주세요</Option>
-            {selectTeam_list.map((e) => (
-              <Option key={e.matchId}>
-                {e.date} {e.time} {e.location} {e.awayteam} vs {e.hometeam}
-              </Option>
-            ))}
-          </Inputs>
+          <TextBox>
+            <Text>일정선택</Text>
+
+            {/* 일정 정보 */}
+            <GameDate>
+              {groupDate && <Text margin="0 10px">{groupDate}</Text>}
+              <AiOutlineDown color="777777" onClick={showModalBtn} />
+            </GameDate>
+          </TextBox>
+
+          {/* 일정선택 모달창 props 전달 */}
+          {showModal ? (
+            <Modal
+              selectTeam_list={selectTeam_list}
+              setGroupDate={setGroupDate}
+              setShowModal={setShowModal}
+            ></Modal>
+          ) : (
+            ""
+          )}
         </Grid>
 
         {/* <div>인원수 선택</div> */}
@@ -215,12 +232,12 @@ export const GroupAdd = (props) => {
         {/* 이미지 미리보기 */}
         <Text margin="20px 0">
           사진
-          {preview.base64 && <InputCheck />}
+          {preview && <InputCheck />}
         </Text>
 
         <ImgBox>
           <Picture basic onChange={imgPreview} name="file">
-            {preview.base64 ? 1 : 0} / 1
+            {preview ? 1 : 0} / 1
           </Picture>
           <Preview
             src={preview ? URL.createObjectURL(preview) : props.defaultImg}
@@ -283,4 +300,15 @@ const Option = styled.option`
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
+`
+const TextBox = styled.div`
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+`
+
+const GameDate = styled.div`
+  display: flex;
 `
