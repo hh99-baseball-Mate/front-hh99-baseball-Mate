@@ -77,8 +77,6 @@ export const tokenApis = {
 
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
-  postApply: (groupId) =>
-    tokenInstance.post(`/page/group/detail/apply/${groupId}`),
 
   // 모임 게시글 댓글 등록
   postComment: (groupId, comment) =>
