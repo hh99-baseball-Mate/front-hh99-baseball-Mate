@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { getCookie } from "../shared/Cookie"
+import axios from "axios";
+import { getCookie } from "../shared/Cookie";
+
 // http://52.78.93.38/
 // http://54.180.148.132/ 임시서버
 // http://localhost:4000/
@@ -13,7 +14,8 @@ export const instance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
+
 export const apis = {
   // baseURL을 미리 지정해줬기 때문에 함수의 첫 번째 인자에 들어가는 url은
   // http://localhost:4000/ + 내가 작성한 url 즉 예시로
@@ -31,9 +33,7 @@ export const apis = {
 
   // 메인화면 타임라인 조회
   getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
-
-  // 상세페이지 조회
-}
+};
 
 // 토큰인증 api
 export const tokenInstance = axios.create({
@@ -45,7 +45,7 @@ export const tokenInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const img = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -53,11 +53,10 @@ export const img = axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
     accept: "application/json",
-    // accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const tokenApis = {
   // 타임라인 페이지
@@ -77,8 +76,6 @@ export const tokenApis = {
 
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
-  postApply: (groupId) =>
-    tokenInstance.post(`/page/group/detail/apply/${groupId}`),
 
   // 모임 게시글 댓글 등록
   postComment: (groupId, comment) =>
@@ -93,8 +90,7 @@ export const tokenApis = {
     tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
 
   //
-}
-
+};
 
 // createPost: (contents) => instance.post('/posts', contents),
 // // 게시물 수정하기
