@@ -51,13 +51,13 @@ const GroupList = (props) => {
         {team_list.map((e) => ( */}
         <div>
           <Swipers>
-            <div style={{ marginRight: "15px" }}>
+            <div style={{ marginRight: "10px" }}>
               <Image
                 style={{ width: "68px", height: "68px" }}
                 roundedCircle
                 src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
               ></Image>
-              <Text size="12px" center bold>
+              <Text size="11px" center bold>
                 전체
               </Text>
             </div>
@@ -117,14 +117,4 @@ const Broder = styled.div`
   border: 1px solid #e7e7e7;
   margin-top: 9px;
   margin-bottom: 20px;
-`;
-
-const List = styled.span`
-  padding: 10px;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 20px;
-  width: 35px;
-  height: 20px;
-  left: 57px;
-  line-height: 29px;
 `;

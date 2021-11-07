@@ -24,5 +24,5 @@ const Sw = styled.div`
   overflow: auto hidden;
   display: flex;
   align-items: center;
-  height: 100px;
+  min-height: 120px;
 `;

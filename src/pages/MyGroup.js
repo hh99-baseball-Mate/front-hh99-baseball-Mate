@@ -1,13 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import GroupCard from "../commponentAdd/groupCard";
+import GroupCard from "../commponentAdd/GroupCard";
 import { ArrowBack, Container } from "../components";
 import { history } from "../redux/configStore";
 
 const MyGroup = (props) => {
   return (
     <div>
-      <div style={{ background: "#EC5E4F", color: "#FFFFFF" }}>
+      <div
+        style={{
+          background: "#EC5E4F",
+          color: "#FFFFFF",
+          maxWidth: "375px",
+          margin: " 0 auto",
+        }}
+      >
         <Container>
           <ArrowBack>내모임</ArrowBack>
           <Group>
