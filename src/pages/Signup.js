@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { passwordCheck } from "../shared/LoginCheck"
+import { useDispatch, useSelector } from "react-redux"
+import { actionCreators as userActions } from "../redux/modules/user"
+import { regPassword } from "../shared/Reg"
 
 import { Buttons, Text, Container, ArrowBack } from "../components"
 
@@ -14,6 +14,9 @@ import * as Yup from "yup"
 import { TextField } from "../componentsLogin/TextField"
 
 export const Signup = (props) => {
+  const user_info = useSelector((state) => state.user.user_info)
+
+  console.log(user_info)
   const dispatch = useDispatch()
 
   const validate = Yup.object({
@@ -21,7 +24,7 @@ export const Signup = (props) => {
     userName: Yup.string().required(""),
     password: Yup.string()
       .matches(
-        passwordCheck,
+        regPassword,
         "영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
       )
       .required(""),
@@ -58,13 +61,12 @@ export const Signup = (props) => {
         {(formik) => (
           <Form>
             {/* {console.log(formik.values, "signup")} */}
-              <TextField
-                label="이메일"
-                name="email"
-                type="email"
-                placeholder="이메일을 입력해주세요"
-              ></TextField>
-          
+            <TextField
+              label="이메일"
+              name="email"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+            ></TextField>
 
             <TextField
               label="닉네임"
@@ -123,6 +125,7 @@ export const Signup = (props) => {
                     userid: formik.values.email,
                     username: formik.values.userName,
                     password: formik.values.password,
+                    phonenumber: user_info.phoneNumber,
                   })
                 )
               }}

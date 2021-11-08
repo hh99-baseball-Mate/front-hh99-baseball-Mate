@@ -17,5 +17,6 @@ const MainContainer = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  max-width: 335px;
+  width: 90%;
+  max-width: 337.5px;
 `

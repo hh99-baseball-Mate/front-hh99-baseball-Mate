@@ -18,7 +18,7 @@ import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
-import { Modal } from "../componentsGroupAdd/Modal"
+import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
@@ -190,11 +190,11 @@ export const GroupAdd = (props) => {
 
           {/* 일정선택 모달창 props 전달 */}
           {showModal ? (
-            <Modal
+            <GroupAddModal
               selectTeam_list={selectTeam_list}
               setGroupDate={setGroupDate}
               setShowModal={setShowModal}
-            ></Modal>
+            ></GroupAddModal>
           ) : (
             ""
           )}
@@ -222,8 +222,10 @@ export const GroupAdd = (props) => {
           textarea
           name="content"
           value={content}
-          placeholder="모임소개를 해주세요"
+          placeholder="모임소개를 해주세요 (최대길이 500자)"
           onChange={onChange}
+          maxLength="500"
+          height="147px"
         >
           모임소개
           {content && <InputCheck />}
@@ -236,9 +238,12 @@ export const GroupAdd = (props) => {
         </Text>
 
         <ImgBox>
+          {/* 기본이미지 */}
           <Picture basic onChange={imgPreview} name="file">
             {preview ? 1 : 0} / 1
           </Picture>
+
+          {/* 업로드 이미지 미리보기 */}
           <Preview
             src={preview ? URL.createObjectURL(preview) : props.defaultImg}
             name="preview"

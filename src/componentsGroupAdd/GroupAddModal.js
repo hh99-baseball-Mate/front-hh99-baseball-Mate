@@ -1,17 +1,22 @@
 import React from "react"
-import styled, { keyframes } from "styled-components"
-import { Container, Text } from "../components"
+import styled from "styled-components"
+import { Buttons, Container, Text } from "../components"
+import { Modal } from "../components/Modal"
 import { GrLocation } from "react-icons/gr"
 
-export const Modal = ({ setGroupDate, selectTeam_list, setShowModal }) => {
+export const GroupAddModal = ({
+  setGroupDate,
+  selectTeam_list,
+  setShowModal,
+}) => {
   // if (!close) {
-
+  console.log(selectTeam_list.length)
   return (
-    <ModalContainer>
-      <Modals>
-        {/* 내부 영역 지정 */}
-        <Container>
-          {selectTeam_list.map((list) => (
+    <Modal bottom height="480px">
+      {/* 내부 영역 지정 */}
+      <Container>
+        {selectTeam_list && selectTeam_list.length > 0 ? (
+          selectTeam_list.map((list) => (
             <Card
               key={list.matchId}
               onClick={() => {
@@ -20,8 +25,10 @@ export const Modal = ({ setGroupDate, selectTeam_list, setShowModal }) => {
                     " " +
                     list.time +
                     " " +
+                    list.location +
+                    " " +
                     list.hometeam +
-                    " VS " +
+                    " vs " +
                     list.awayteam
                 )
                 setShowModal(false)
@@ -72,45 +79,24 @@ export const Modal = ({ setGroupDate, selectTeam_list, setShowModal }) => {
                 </ImgBox>
               </GameInfo>
             </Card>
-          ))}
-        </Container>
-      </Modals>
-    </ModalContainer>
+          ))
+        ) : (
+          <NotGame>
+            경기가 없습니다
+            <Buttons margin="50px" _onClick={() => setShowModal(false)}>
+              돌아가기
+            </Buttons>
+          </NotGame>
+        )}
+      </Container>
+    </Modal>
   )
   // }
 }
 
-Modal.defaultProps = {
+GroupAddModal.defaultProps = {
   children: null,
 }
-
-const showModal = keyframes`
-  0%{
-    transform: translateY(80%);
-  }50%{
-    transform: translateY(0%);
-  }
-`
-
-const ModalContainer = styled.div`
-  width: 375px;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-  position: fixed;
-  bottom: 0;
-  margin: 0 -20px;
-`
-const Modals = styled.div`
-  width: 375px;
-  height: 490px;
-  background-color: #ffffff;
-  position: absolute;
-  bottom: 0px;
-  border-radius: 10px 10px 0px 0px;
-  animation: ${showModal} 1.5s ease-out;
-  overflow-y: auto;
-`
 
 const GameInfo = styled.div`
   border: 1px solid #e7e7e7;
@@ -126,14 +112,17 @@ const Card = styled.div`
     margin: 30px 0 30px;
   }
 `
+
 const DateBox = styled.div`
   margin: 9px 12px;
 `
+
 const TextBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `
+
 const Bg = styled.div`
   display: flex;
   justify-content: center;
@@ -148,4 +137,13 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+const NotGame = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vw;
+  flex-direction: column;
+  font-size: 30px;
 `

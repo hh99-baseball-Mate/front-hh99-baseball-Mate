@@ -23,22 +23,21 @@ import { MyPage } from "../pages/MyPage";
 import { PhoneAuth } from "../pages/PhoneAuth";
 import { NotFound } from "../pages/NotFound";
 import { Switch } from "react-router";
+import { MyInfo } from "../pages/MyInfo"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login)
+  const user_info = useSelector((state) => state.user.user_info)
 
+  // console.log(user_info)
   useEffect(() => {
-    if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
-      // } else {
-      //   window.alert("로그인을 해주세요")
-      //   history.replace("/login")
-    }
-  }, []);
+    if(is_login) dispatch(userActions.logInCheckMD())
 
-  console.log(is_login, "is_login");
+  }, [is_login])
+
+  console.log(is_login, "is_login")
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
@@ -58,15 +57,21 @@ function App() {
           <Route path="/goods" exact component={Goods} />
           <Route path="/addgoods" exact component={GoodsAdd} />
           <Route path="/mygroup" exact component={MyGroup} />
+
           {/* <Route path="/mypage" exact component={MyPage} is_login={is_login}/> */}
-          <Route path="/mypage" render={() => <MyPage is_login={is_login} />} />
+          <Route
+            path="/mypage/:useridx"
+            exact
+            render={() => <MyPage is_login={is_login} />}
+          />
+          <Route path="/mypage/:useridx/update" exact component={MyInfo} />
 
           {/* 임시 */}
           <Route component={NotFound} />
         </Switch>
       </ConnectedRouter>
     </React.Fragment>
-  );
+  )
 }
 
 export default App;

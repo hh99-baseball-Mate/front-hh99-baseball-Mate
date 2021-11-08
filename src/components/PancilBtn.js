@@ -27,7 +27,8 @@ const Btn = styled.button`
   position: fixed;
   right: 10px;
   bottom: 0px;
+  transform: translate(-50%, -50%);
   background: #f25343;
   border: 0;
   outline: 0;
-`;
+`

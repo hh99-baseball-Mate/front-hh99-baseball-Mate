@@ -21,8 +21,8 @@ Swipers.defaultProps = {
 };
 
 const Sw = styled.div`
-  overflow: auto hidden;
+  overflow: scroll hidden;
   display: flex;
   align-items: center;
   min-height: 120px;
-`;
+`
