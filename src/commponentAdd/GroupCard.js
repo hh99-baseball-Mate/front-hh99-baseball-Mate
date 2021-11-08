@@ -3,70 +3,80 @@ import styled from "styled-components";
 import { Image } from "react-bootstrap";
 import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
+
 const GroupCard = (props) => {
   const leftPeople = props.peopleLimit - props.canApplyNum;
   return (
     <div>
       <Box>
-        <Image
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxDZ4WmsvL0lvEzv8UrFD3zGtNw6FLWLNr9Q&usqp=CAU"
-          rounded
-          style={{ width: "76px", height: "76px", borderRadius: "6px" }}
-        />
+        <Warp flex="flex">
+          <Image
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxDZ4WmsvL0lvEzv8UrFD3zGtNw6FLWLNr9Q&usqp=CAU"
+            rounded
+            style={{
+              width: "76px",
+              height: "76px",
+              borderRadius: "6px",
+              margin: "16px",
+            }}
+          />
+          <Warp style={{ marginTop: "16px" }}>
+            <Warp>
+              <Text size="12px" color="#777777">
+                {props.groupDate}
+              </Text>
+            </Warp>
+            <Warp>
+              <Text
+                size="14px"
+                weight="bold"
+                width="191px"
+                height="40px"
+                lineHeight="14px"
+                display="relative"
+                marginLeft="12px"
+              >
+                {props.title}안에 내용이다
+              </Text>
+            </Warp>
+            <Warp flex="flex">
+              <Text size="12px" color="#777777">
+                {props.groupDate}
+              </Text>
+              <Slice> &ensp;|&ensp; </Slice>
+              <Text size="12px" color="#777777">
+                {props.stadium}
+              </Text>
+              <Slice> &ensp;|&ensp; </Slice>
+              <Text
+                size="12px"
+                color="#777777"
+                style={{ marginBottom: "8px " }}
+              >
+                최대 {props.peopleLimit}명
+              </Text>
+            </Warp>
+          </Warp>
+        </Warp>
+        <Warp
+          flex="flex"
+          justify="space-between"
+          align="center"
+          margin="0 0 0 16px"
+        >
+          <Progress group={props} />
+          <Warp flex="flex">
+            <img src={colorUsers} alt="users" />
+            <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+              &nbsp;{leftPeople}명&nbsp;
+            </Text>
+
+            <Text size="12px" color="#F25343" spacing="-0.03em;">
+              남음
+            </Text>
+          </Warp>
+        </Warp>
       </Box>
-      <Warp margin="0 0 16px 0">
-        <Warp flex="flex" margin="0 0 12px 0">
-          <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-            모집중
-          </Ellipse>
-          <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-            D-10
-          </Ellipse>
-        </Warp>
-        <Warp flex="flex">
-          <Text size="12px" color="#777777">
-            {props.groupDate}
-          </Text>
-          <Slice> &ensp;|&ensp; </Slice>
-          <Text size="12px" color="#777777">
-            {props.stadium}
-          </Text>
-          <Slice> &ensp;|&ensp; </Slice>
-          <Text size="12px" color="#777777">
-            최대 {props.peopleLimit}명
-          </Text>
-        </Warp>
-      </Warp>
-      <Circle width="48px" height="48px" />
-
-      <Text
-        size="16px"
-        weight="bold"
-        width="295px"
-        height="46px"
-        lineHeight="23px"
-      >
-        {props.title}길어진 텍스트 말줄임 스크립트로 처리하기길어진 텍스트
-        말줄임 스크립트로 처리하기
-      </Text>
-
-      <Warp
-        flex="flex"
-        justify="space-between"
-        align="center"
-        margin="10px 0 0 0"
-      >
-        <Progress group={props} />
-        <Warp flex="flex">
-          <img src={colorUsers} alt="users" />
-          <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-            &nbsp;{leftPeople}명&nbsp;
-          </Text>
-          <Text size="12px" color="#F25343" spacing="-0.03em;">
-            남음
-          </Text>
-        </Warp>
-      </Warp>
     </div>
   );
 };
@@ -77,20 +87,11 @@ const Box = styled.div`
   width: 335px;
   height: 134px;
   margin: 0 auto;
+  margin-bottom: 14px;
 
   background: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-`;
-
-const ImgBall = styled.image`
-  width: 76px;
-  height: 76px;
-  background-color: yellowgreen;
-  /* right: 243px;
-  bottom: 42px; */
-  border-radius: 6px;
-  /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxDZ4WmsvL0lvEzv8UrFD3zGtNw6FLWLNr9Q&usqp=CAU"); */
 `;
 
 const Warp = styled.div`
@@ -122,49 +123,20 @@ const Text = styled.div`
   overflow: hidden;
 `;
 
-const Card = styled.div`
-  width: 335px;
-  height: 177px;
-  padding: 18px;
-  background: #ffffff;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  position: relative;
-`;
-
-const Ellipse = styled.div`
-  width: 55px;
-  height: 24px;
-  background: ${(props) => props.background};
-  border: 1px solid ${(props) => props.borderColor};
-  border-radius: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 1px;
-  margin-left: ${(props) => props.marginLeft};
+const Up = styled.p`
+  size: 14px;
   font-weight: bold;
-  font-size: 12px;
-  color: ${(props) => props.color};
+  margin-bottom: 20px;
 `;
 
-const Circle = styled.div`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  border-radius: 50%;
-  background: #c4c4c4;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  left: 78.51%;
-  right: 7.16%;
-  top: 12%;
-  bottom: 61.02%;
-`;
-
-const Bar = styled.div`
-  width: 230px;
-  height: 1.5px;
-  background: #ff4b38;
+const Btn = styled.button`
+  width: 75px;
+  height: 25px;
+  border-radius: 35%;
+  background: none;
+  border-color: #c4c4c4;
+  font-size: 14px;
+  display: flex;
 `;
 
 const Slice = styled.div`
