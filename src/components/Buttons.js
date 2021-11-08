@@ -43,9 +43,7 @@ export const Buttons = (props) => {
   if (social) {
     return (
       <SocialButton onClick={_onClick} {...styles}>
-        <Text color="#F25343" bold>
-          {children}
-        </Text>
+        {children}
       </SocialButton>
     )
   }

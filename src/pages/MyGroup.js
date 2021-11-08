@@ -3,24 +3,24 @@ import styled from "styled-components";
 import GroupCard from "../commponentAdd/GroupCard";
 import { ArrowBack, Container } from "../components";
 import { history } from "../redux/configStore";
-import { Modal } from "../componentsGroupAdd/Modal";
-import Etc from "../shared/icon/Etc.png";
-import { useSelector } from "react-redux";
+import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
+import Etc from "../shared/icon/Etc.png"
+import { useSelector } from "react-redux"
 
 const MyGroup = (props) => {
   //모달
-  const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
+  const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
   const [inputValue, setInputValue] = useState({
     title: "",
     selectTeam: "",
     peopleLimit: 0,
     content: "",
-  });
-  const [showModal, setShowModal] = useState(false);
+  })
+  const [showModal, setShowModal] = useState(false)
 
-  const [groupDate, setGroupDate] = useState("");
+  const [groupDate, setGroupDate] = useState("")
 
-  const { content, peopleLimit, title, selectTeam } = inputValue;
+  const { content, peopleLimit, title, selectTeam } = inputValue
 
   return (
     <All>
@@ -56,7 +56,7 @@ const MyGroup = (props) => {
             src={Etc}
             alt="등등"
             onClick={() => {
-              setShowModal(true);
+              setShowModal(true)
             }}
           />
         </Btn>
@@ -71,19 +71,19 @@ const MyGroup = (props) => {
       </div>
 
       {showModal ? (
-        <Modal
+        <GroupAddModal
           bottom
           height="180px"
           selectTeam_list={selectTeam_list}
           setGroupDate={setGroupDate}
           setShowModal={setShowModal}
-        ></Modal>
+        ></GroupAddModal>
       ) : (
         ""
       )}
     </All>
-  );
-};
+  )
+}
 
 export default MyGroup;
 

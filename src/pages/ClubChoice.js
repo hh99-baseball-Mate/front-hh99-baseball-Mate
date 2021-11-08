@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { ClubImage } from "../componentsLogin/ClubImage"
 import { Text, ArrowBack, Container } from "../components"
 import styled from "styled-components"

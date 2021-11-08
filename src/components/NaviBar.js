@@ -10,50 +10,68 @@ import record from "../shared/icon/record.svg"
 import record_col from "../shared/icon/record_col.svg"
 import mypage from "../shared/icon/mypage.svg"
 import mypage_col from "../shared/icon/mypage_col.svg"
+import { useSelector } from "react-redux"
 
 const NaviBar = (props) => {
+  const user_info = useSelector((state) => state.user.user_info)
 
-	const history = useHistory();
+  const { useridx } = user_info
 
-	return (
-		<Container>
-			<Warp justify="space-between">
+  const history = useHistory()
 
-				<Icon onClick={()=>{history.push("/")}} >
-					{
-						props.home ? 
-						<img src={home_col} alt="home_col" /> 
-						: <img src={home} alt="home" /> 
-					}
-				</Icon>
+  return (
+    <Container>
+      <Warp justify="space-between">
+        <Icon
+          onClick={() => {
+            history.push("/")
+          }}
+        >
+          {props.home ? (
+            <img src={home_col} alt="home_col" />
+          ) : (
+            <img src={home} alt="home" />
+          )}
+        </Icon>
 
-				<Icon onClick={()=>{history.push("/")}} >
-					{
-						props.sch ? 
-						<img src={schedule_col} alt="sch_col" /> 
-						: <img src={schedule} alt="sch" />
-					}
-				</Icon>
+        <Icon
+          onClick={() => {
+            history.push("/")
+          }}
+        >
+          {props.sch ? (
+            <img src={schedule_col} alt="sch_col" />
+          ) : (
+            <img src={schedule} alt="sch" />
+          )}
+        </Icon>
 
-				<Icon onClick={()=>{history.push("/")}} >
-					{
-						props.rec ?
-						<img src={record_col} alt="rec_col" />
-						: <img src={record} alt="rec" />
-					}	
-				</Icon>
+        <Icon
+          onClick={() => {
+            history.push("/")
+          }}
+        >
+          {props.rec ? (
+            <img src={record_col} alt="rec_col" />
+          ) : (
+            <img src={record} alt="rec" />
+          )}
+        </Icon>
 
-				<Icon onClick={()=>{history.push("/mypage")}} >
-					{
-						props.my ?
-						<img src={mypage_col} alt="my_col" />
-						: <img src={mypage} alt="my" />
-					}
-				</Icon>
-
-			</Warp>
-		</Container>
-	)
+        <Icon
+          onClick={() => {
+            history.push(`/mypage/${useridx}`)
+          }}
+        >
+          {props.my ? (
+            <img src={mypage_col} alt="my_col" />
+          ) : (
+            <img src={mypage} alt="my" />
+          )}
+        </Icon>
+      </Warp>
+    </Container>
+  )
 }
 
 export default NaviBar;

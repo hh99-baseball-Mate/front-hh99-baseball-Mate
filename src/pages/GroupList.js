@@ -57,7 +57,7 @@ const GroupList = (props) => {
                 roundedCircle
                 src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
               ></Image>
-              <Text size="11px" center bold>
+              <Text size="11px" center>
                 전체
               </Text>
             </div>
@@ -66,9 +66,9 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "15px" }}
                 onClick={() => {
-                  console.log(e.short_name);
+                  console.log(e.short_name)
                   // dispatch(groupCr.getTeamAPI(e.short_name));
-                  team = e.short_name;
+                  team = e.short_name
 
                   // history.push(`/${e.name}`);
                 }}
@@ -78,7 +78,7 @@ const GroupList = (props) => {
                   style={{ width: "100%" }}
                   roundedCircle
                 />
-                <Text size="11px" center bold>
+                <Text size="11px" center>
                   {e.name}
                 </Text>
               </SwiperSlide>
@@ -103,13 +103,13 @@ const GroupList = (props) => {
         </MoreContainer>
         <Broder />
         {group_list.map((e, idx) => {
-          console.log(e);
-          return <GroupCard key={idx} {...e} />;
+          console.log(e)
+          return <GroupCard key={idx} {...e} />
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
     </>
-  );
+  )
 };
 export default GroupList;
 
