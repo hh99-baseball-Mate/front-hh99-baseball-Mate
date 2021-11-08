@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { emailCheck, passwordCheck } from "../shared/LoginCheck"
+import { regPassword } from "../shared/Reg"
 
 import { Buttons, Text } from "../components"
 import { Container } from "../components/Container"
@@ -21,13 +21,13 @@ export const Login = (props) => {
   const [loginOther, setLoginOther] = useState(false)
   const [showPwd, setShowPwd] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const validate = Yup.object({
     email: Yup.string().email("이메일 형식으로 입력해주세요.").required(""),
     password: Yup.string()
       .matches(
-        emailCheck,
+        regPassword,
         "영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
       )
       .required(""),

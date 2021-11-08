@@ -1,21 +1,22 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { setCookie } from "../../shared/Cookie"
+import { getCookie, setCookie } from "../../shared/Cookie"
 import axios from "axios"
 import { instance, tokenInstance } from "../../lib/axios"
-import { history } from "../configStore"
 
 // 액션타입
 
 const LOGIN = "LOGIN"
 const LOGIN_CHECK = "LOGIN_CHECK"
 const CHOICE_CLUB = "CHOICE_CLUB"
+const PHONE_AUTH = "PHONE_AUTH"
 
 // 액션 함수
 
 const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
 const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
 const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }))
+const phone_auth = createAction(PHONE_AUTH, (phoneNumber) => ({ phoneNumber }))
 
 const initialState = {
   user_info: [],
@@ -55,7 +56,7 @@ const logInMD = (user_info) => {
         }
 
         window.alert("로그인 완료")
-        history.replace("/")
+        history.push("/")
       })
       .catch((err) => console.log(err, "로그인에러입니다."))
   }
@@ -63,13 +64,14 @@ const logInMD = (user_info) => {
 
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
-    const { userid, username, password } = user_info
+    const { userid, username, password, phonenumber } = user_info
 
     instance
       .post("/user/signup", {
         userid,
         username,
         password,
+        phonenumber,
       })
       .then((res) => {
         window.alert("회원가입 성공")
@@ -85,15 +87,25 @@ const signUpMD = (user_info) => {
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
-    tokenInstance
-      .post("/user/logincheck")
+    getCookie("is_login")
+
+    axios
+      .post(
+        "http://54.180.148.132/user/logincheck",
+        {},
+        {
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-AUTH-TOKEN": getCookie("is_login"),
+          },
+        }
+      )
       .then((res) => {
         const myteam = res.data.myteam
 
-        const login_user = {
-          username: res.data.username,
-          myteam,
-        }
+        const login_user = { ...res.data }
 
         dispatch(loginCheck(login_user))
 
@@ -110,10 +122,19 @@ const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
     console.log(club, "club")
 
-    tokenInstance
-      .post("/user/myteam", {
-        myteam: club,
-      })
+    axios
+      .post(
+        "http://54.180.148.132/user/myteam",
+        { myteam: club },
+        {
+          headers: {
+            "content-type": "application/json;charset=UTF-8",
+            accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-AUTH-TOKEN": getCookie("is_login"),
+          },
+        }
+      )
       .then((res) => {
         dispatch(choiceClub(res.data.myteam))
         history.replace("/")
@@ -138,6 +159,41 @@ const kakaoLogin = (key) => {
   }
 }
 
+// 인증번호 보내기
+
+const PhoneAuthSubmitMD = (phoneNumber) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post("/checkPhone", { phoneNumber })
+      .then((res) => {
+        console.log(res, "번호인증")
+      })
+      .catch((err) => {
+        window.alert("입력하신 번호가 올바르지 않습니다.")
+        console.log(err, "핸드폰 번호인증 에러")
+      })
+  }
+}
+
+// 인증번호 인증하기
+
+const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
+  return function (dispatch, getState, { history }) {
+    console.log(phoneNumber, phoneAuth)
+    instance
+      .post("/confirmNumChk", { phoneNumber, ranNum: phoneAuth })
+      .then((res) => {
+        window.alert("번호인증 완료")
+        history.push("/signup")
+        dispatch(phone_auth(phoneNumber))
+      })
+      .catch((err) => {
+        window.alert("인증번호가 일치하지 않습니다.")
+        console.log(err, "핸드폰 인증번호 에러")
+      })
+  }
+}
+
 //  리듀서
 
 export default handleActions(
@@ -158,6 +214,11 @@ export default handleActions(
         draft.user_info = { ...draft.user_info, myteam }
         draft.is_login = true
       }),
+    [PHONE_AUTH]: (state, action) =>
+      produce(state, (draft) => {
+        const phoneNumber = action.payload.phoneNumber
+        draft.user_info = { ...draft.user_info, phoneNumber }
+      }),
   },
   initialState
 )
@@ -169,6 +230,8 @@ const actionCreators = {
   kakaoLogin,
   logInCheckMD,
   choiceClubMD,
+  PhoneAuthSubmitMD,
+  PhoneAuthConfirmMD,
 }
 
 export { actionCreators }

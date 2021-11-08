@@ -1,103 +1,159 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-import { ArrowBack, Container, Text } from "../components"
+import { ArrowBack, Inputs, Text } from "../components"
 import { IoIosArrowForward } from "react-icons/io"
+import { BsGear } from "react-icons/bs"
 import { history } from "../redux/configStore"
 import { useSelector } from "react-redux"
+import { Modal } from "../components/Modal"
 
 export const MyPage = ({ is_login }) => {
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+
   const user_info = useSelector((state) => state.user.user_info)
 
-  console.log(user_info)
+  // 모달 뜨기/ 숨기기
+  const [showModal, setShowModal] = useState(false)
+
+  // 모달 값 변경
+  const [ModalContent, setModalContent] = useState({
+    title: "나가지마이자식아",
+    descriptionOne: "ㅇㅇ",
+    descriptionTwo: "ㄹㄹ",
+    btnClose: "ㄹㄹ",
+    btnConfirm: "ㅁㅁ",
+  })
+
+  const { myteam, picture, userid, username, useridx } = user_info
 
   return (
-    <Container>
-      <ArrowBack bg="true"> 마이페이지 </ArrowBack>
+    <>
+      <Container>
+        <ArrowBack bg="true"> 마이페이지 </ArrowBack>
+        {is_login ? (
+          <>
+            <UserInfo>
+              <ProfileImg src={`${IMAGES_BASE_URL}/${picture}`} />
+              <UserId>
+                <Text size="14px" margin="2px 0">
+                  {username}
+                </Text>
+                <Text color="#777777" size="12px">
+                  {userid}
+                </Text>
+              </UserId>
+              <BsGear
+                size="20px"
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  cursor: "pointer",
+                }}
+                onClick={() => history.push(`/mypage/${useridx}/update`)}
+              />
+            </UserInfo>
 
-      {is_login ? (
-        <>
-          <UserInfo>
-            <ProfileImg />
-            <Text margin="10px 0 0">{user_info.username}</Text>
-            <Text color="#777777" margin="5px 0 25px 0" size="10px">
-              {user_info.userid}
-            </Text>
-          </UserInfo>
+            <div style={{ margin: "0 20px 20px" }}>
+              <Inputs
+                textarea
+                margin="20px"
+                height="60px"
+                disabled
+                placeholder="자기소개다"
+              ></Inputs>
+            </div>
+          </>
+        ) : (
+          <NotLogin>로그인 후 이용해주세요</NotLogin>
+        )}
 
-          <TextBox onClick={() => history.push("/clubchoice")}>
-            <Text margin="0px 20px 0">구단변경</Text>
-            <IoIosArrowForward
-              color="777777"
-              style={{ position: "absolute", right: "20px" }}
-            />
-          </TextBox>
-        </>
-      ) : (
-        <NotLogin>로그인 후 이용해주세요</NotLogin>
-      )}
+        <Line />
 
-      <Line />
+        <TextBox
+          onClick={() =>
+            is_login
+              ? window.alert("이미 로그인 하셨습니다.")
+              : history.push("/login")
+          }
+        >
+          <Text margin="0px 20px 0">로그인 및 회원가입</Text>
+          <IoIosArrowForward
+            color="777777"
+            style={{ position: "absolute", right: "20px" }}
+          />
+        </TextBox>
 
-      <TextBox
-        onClick={() =>
-          is_login
-            ? window.alert("이미 로그인 하셨습니다.")
-            : history.push("/login")
-        }
-      >
-        <Text margin="0px 20px 0">로그인 및 회원가입</Text>
-        <IoIosArrowForward
-          color="777777"
-          style={{ position: "absolute", right: "20px" }}
-        />
-      </TextBox>
+        <TextBox onClick={() => setShowModal(!showModal)}>
+          <Text margin="0px 20px 0"> 내 모임 </Text>
+          <IoIosArrowForward
+            color="777777"
+            style={{ position: "absolute", right: "20px" }}
+          />
+        </TextBox>
 
-      <TextBox onClick={() => history.push("/")}>
-        <Text margin="0px 20px 0"> 내 모임 </Text>
-        <IoIosArrowForward
-          color="777777"
-          style={{ position: "absolute", right: "20px" }}
-        />
-      </TextBox>
+        {/* 모달창 */}
+        {showModal && (
+          <Modal
+            center
+            title={ModalContent.title}
+            descriptionOne={ModalContent.descriptionOne}
+            descriptionTwo={ModalContent.descriptionTwo}
+            btnClose={ModalContent.btnClose}
+            btnConfirm={ModalContent.btnConfirm}
+            setShowModal={setShowModal}
+          ></Modal>
+        )}
 
-      <TextBox onClick={() => history.push("/")}>
-        <Text margin="0px 20px 0">공지사항</Text>
-        <IoIosArrowForward
-          color="777777"
-          style={{ position: "absolute", right: "20px" }}
-        />
-      </TextBox>
-    </Container>
+        <TextBox onClick={() => history.push("/")}>
+          <Text margin="0px 20px 0">공지사항</Text>
+          <IoIosArrowForward
+            color="777777"
+            style={{ position: "absolute", right: "20px" }}
+          />
+        </TextBox>
+      </Container>
+    </>
   )
 }
-const UserInfo = styled.div`
+
+const Container = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-  box-sizing: border-box;
-  height: 130px;
+  max-width: 375px;
 `
-const ProfileImg = styled.div`
-  width: 68px;
-  height: 68px;
+
+const UserInfo = styled.div`
+  position: relative;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  box-sizing: border-box;
+  height: 90px;
+`
+const ProfileImg = styled.img`
+  width: 48px;
+  height: 48px;
   background-color: #e7e7e7;
-  margin: 0 -20px;
+  margin: 20px;
   border-radius: 50%;
+  :hover {
+    cursor: pointer;
+  }
 `
 const TextBox = styled.div`
   position: relative;
   padding: 20px 0;
   display: flex;
   border-bottom: 1px solid #e7e7e7;
-  margin: 0px -20px;
   cursor: pointer;
 `
 const Line = styled.div`
   background-color: #e7e7e7;
   height: 6px;
-  margin: 0px -20px;
 `
+
+const UserId = styled.div``
 
 const NotLogin = styled.div`
   height: 187px;

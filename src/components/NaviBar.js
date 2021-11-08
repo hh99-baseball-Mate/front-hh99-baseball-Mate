@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 
+
 import home from "../shared/icon/navbar/home.png"
 import home_select from "../shared/icon/navbar/home_select.png"
 import sch from "../shared/icon/navbar/sch.png"
@@ -10,16 +11,20 @@ import rec from "../shared/icon/navbar/rec.png"
 import rec_select from "../shared/icon/navbar/rec_select.png"
 import my from "../shared/icon/navbar/my.png"
 import my_select from "../shared/icon/navbar/my_select.png"
+import { useSelector } from "react-redux"
+
 
 const NaviBar = (props) => {
+  const user_info = useSelector((state) => state.user.user_info)
 
-	const history = useHistory();
+  const { useridx } = user_info
 
-	return (
-		<Container>
-			<Warp justify="space-between">
+  const history = useHistory()
 
-				<Icon onClick={()=>{history.push("/")}} >
+  return (
+    <Container>
+      <Warp justify="space-between">
+        <Icon onClick={()=>{history.push("/")}} >
 					{
 						props.home ? 
 						<img src={home_select} alt="home_col" /> 
@@ -43,7 +48,7 @@ const NaviBar = (props) => {
 					}	
 				</Icon>
 
-				<Icon onClick={()=>{history.push("/mypage")}} >
+				<Icon onClick={()=>{history.push(`/mypage/${useridx}`)}} >
 					{
 						props.my ?
 						<img src={my_select} alt="my_col" />

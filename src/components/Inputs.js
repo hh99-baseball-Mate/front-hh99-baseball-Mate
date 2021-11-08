@@ -17,6 +17,10 @@ export const Inputs = (props) => {
     textarea,
     label,
     onClick,
+    maxLength,
+    height,
+    disabled,
+    padding,
   } = props
 
   const styles = {
@@ -32,6 +36,10 @@ export const Inputs = (props) => {
     textarea,
     label,
     onClick,
+    maxLength,
+    height,
+    disabled,
+    padding,
   }
 
   if (dropdown) {
@@ -41,7 +49,7 @@ export const Inputs = (props) => {
     return (
       <InputBox>
         <Text margin="10px 0">{children}</Text>
-        <TextArea maxLength="500" {...styles}></TextArea>
+        <TextArea {...styles}></TextArea>
       </InputBox>
     )
   }
@@ -58,6 +66,7 @@ Inputs.defaultProps = {
   children: null,
   name: "",
   width: "100%",
+  height: "",
   placeholder: "입력",
   // value: "",
   margin: "10px 0",
@@ -65,6 +74,9 @@ Inputs.defaultProps = {
   dropdown: false,
   textarea: false,
   label: "",
+  maxLength: "30",
+  disabled: false,
+  padding: false,
 }
 
 const InputBox = styled.div`
@@ -78,6 +90,7 @@ const Input = styled.input`
   border-bottom: 1px solid #e7e7e7;
   height: 30px;
   margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
   ::placeholder {
     color: #c4c4c4;
     font-size: 12px;
@@ -105,7 +118,7 @@ const TextArea = styled.textarea`
   box-sizing: border-box;
   border-radius: 10px;
   resize: none;
-  height: 150px;
+  height: ${(props) => props.height};
   padding: 10px;
   :focus {
     outline: none !important;

@@ -11,7 +11,7 @@ export const ArrowBack = (props) => {
   return (
     <Headers bg={bg}>
       <IoIosArrowBack
-        style={{ position: "absolute", left: "0px" }}
+        style={{ position: "absolute", left: "0px", marginLeft: "20px" }}
         {...styles}
         onClick={() => history.goBack()}
       />
@@ -27,12 +27,15 @@ ArrowBack.defaultProps = {
 }
 
 const Headers = styled.div`
-  width: 335px;
+  /* width: 335px; */
   display: flex;
   justify-content: center;
   position: relative;
   cursor: pointer;
   padding: 20px 0;
-  margin: 0 auto;
-  ${(props) => (props.bg ? "background-color:#EC5E4F; color:white;" : null)}
+  margin: 0 -20px;
+  ${(props) =>
+    props.bg
+      ? "background-color:#EC5E4F; color:white; width:375px;  margin: 0 auto;"
+      : null}
 `
