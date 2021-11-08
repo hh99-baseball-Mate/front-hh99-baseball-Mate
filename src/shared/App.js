@@ -23,6 +23,7 @@ import { MyPage } from "../pages/MyPage";
 import { PhoneAuth } from "../pages/PhoneAuth";
 import { NotFound } from "../pages/NotFound";
 import { Switch } from "react-router";
+import Alarm from "../pages/Alarm"
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/mygroup" exact component={MyGroup} />
           {/* <Route path="/mypage" exact component={MyPage} is_login={is_login}/> */}
           <Route path="/mypage" render={() => <MyPage is_login={is_login} />} />
+          <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
 
           {/* 임시 */}
           <Route component={NotFound} />

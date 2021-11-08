@@ -68,11 +68,14 @@ export const tokenApis = {
 
   // 타임라인 좋아요
   likeTimeline: (timeLineId, isLiked) =>
-    tokenInstance.post(`/timeLine/${timeLineId}/like`, isLiked),
+    tokenInstance.post(`/timelines/${timeLineId}/like`, isLiked),
 
   // 모임게시글
   // 상세페이지 조회
   getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
+
+  // 모임 좋아(찜) 하기/취소하기
+  postGroupsLike: (groupId, isLiked) => tokenInstance.post(`/groups/${groupId}/like`, isLiked),
 
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
@@ -89,7 +92,9 @@ export const tokenApis = {
   delComment: (groupId, commentId) =>
     tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
 
-  //
+  // 모임게시글 댓글 좋아요
+  postLikeComment: (groupId, commentId, isLiked) =>
+    tokenInstance.post(`/groups/${groupId}/comment/${commentId}/like`, isLiked),
 };
 
 // createPost: (contents) => instance.post('/posts', contents),

@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 
-import home from "../shared/icon/home.svg"
-import home_col from "../shared/icon/home_col.svg"
-import schedule from "../shared/icon/schedule.svg"
-import schedule_col from "../shared/icon/schedule_col.svg"
-import record from "../shared/icon/record.svg"
-import record_col from "../shared/icon/record_col.svg"
-import mypage from "../shared/icon/mypage.svg"
-import mypage_col from "../shared/icon/mypage_col.svg"
+import home from "../shared/icon/navbar/home.png"
+import home_select from "../shared/icon/navbar/home_select.png"
+import sch from "../shared/icon/navbar/sch.png"
+import sch_select from "../shared/icon/navbar/sch_select.png"
+import rec from "../shared/icon/navbar/rec.png"
+import rec_select from "../shared/icon/navbar/rec_select.png"
+import my from "../shared/icon/navbar/my.png"
+import my_select from "../shared/icon/navbar/my_select.png"
 
 const NaviBar = (props) => {
 
@@ -22,7 +22,7 @@ const NaviBar = (props) => {
 				<Icon onClick={()=>{history.push("/")}} >
 					{
 						props.home ? 
-						<img src={home_col} alt="home_col" /> 
+						<img src={home_select} alt="home_col" /> 
 						: <img src={home} alt="home" /> 
 					}
 				</Icon>
@@ -30,24 +30,24 @@ const NaviBar = (props) => {
 				<Icon onClick={()=>{history.push("/")}} >
 					{
 						props.sch ? 
-						<img src={schedule_col} alt="sch_col" /> 
-						: <img src={schedule} alt="sch" />
+						<img src={sch_select} alt="sch_col" /> 
+						: <img src={sch} alt="sch" />
 					}
 				</Icon>
 
-				<Icon onClick={()=>{history.push("/")}} >
+				<Icon onClick={()=>{history.push("/alarm")}} >
 					{
 						props.rec ?
-						<img src={record_col} alt="rec_col" />
-						: <img src={record} alt="rec" />
+						<img src={rec_select} alt="rec_col" />
+						: <img src={rec} alt="rec" />
 					}	
 				</Icon>
 
 				<Icon onClick={()=>{history.push("/mypage")}} >
 					{
 						props.my ?
-						<img src={mypage_col} alt="my_col" />
-						: <img src={mypage} alt="my" />
+						<img src={my_select} alt="my_col" />
+						: <img src={my} alt="my" />
 					}
 				</Icon>
 

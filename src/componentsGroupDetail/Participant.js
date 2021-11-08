@@ -1,21 +1,36 @@
-import React, { useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
 
-const Participant = (props) => {
+const Participant = memo((props) => {
+
 	// const {shape, src, size, pointer} = props;
 	// flex="felx" justify="space-around"
 	const dispatch = useDispatch();
 
 	const id = props.groupId;
 
+	const [join, setJoin] = useState(false);
+
 	const apply = () => {
-		dispatch(groupDetailCreators.groupApplyMW(id))
+		if (!join) {
+			dispatch(groupDetailCreators.groupApplyMW(id))
+			setJoin(true)
+			window.alert("참여가 완료되었습니다.")
+		} else {
+			setJoin(false)
+			window.alert("참여가 취소됩니다.")
+		}
 	}
 
-
+  // useEffect(() => {
+  //   const groupLike = props.myGroupLikesList.indexOf(id)
+  //   if (groupLike >= 0) {
+  //     setHeartJoin(true)
+  //   }
+  // },[myGroupLikesList]) 
 
 	return (
 		<React.Fragment>
@@ -32,13 +47,15 @@ const Participant = (props) => {
 				
 				</Warp>
 
-				<ConfirmBtn onClick = {()=>{apply()}} >
-					참여신청하기 
+				<ConfirmBtn onClick = {()=>{apply()}} join={join} >
+					{
+						join ? `참여 완료` : `참여신청하기` 
+					}
 				</ConfirmBtn>
 			</Box>
 		</React.Fragment>
 	)
-}
+})
 
 // 참여인원 컴포넌트
 function PartyList(props) {
@@ -111,4 +128,10 @@ const ConfirmBtn = styled.button`
 	border-radius: 80px;
 	border: none;
 	color: #fff;
+
+	${(props) =>
+    props.join ?
+    `background: #ced4da;`
+		: `background: #F25343;`
+	}
 `;

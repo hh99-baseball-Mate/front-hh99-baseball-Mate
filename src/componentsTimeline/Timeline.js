@@ -12,6 +12,7 @@ const Timeline = React.memo((props) => {
 	const likelist = props.likelist
 	const [like, setLike] = useState(false)
 	const idx = props.idx
+
 	
 	useEffect(() => {
 		dispatch(timelineCreators.loadTimelineMW());
@@ -39,8 +40,6 @@ const Timeline = React.memo((props) => {
 
 	const likeToggle = () => {
 		setLike(!like)
-		// likeO = !likeO
-		// console.log("라이크확인",likeO)
 		dispatch(timelineCreators.likeTimelineMW(props.timelineId, like))
 	}
 
@@ -49,66 +48,53 @@ const Timeline = React.memo((props) => {
 	return (
 		<React.Fragment>
 
-			<Container>
-				<TimeLineCard idx={idx}>
-					{/* <Warp align="center"> */}
-						{/* <div>
-							<Circle />
-						</div> */}
-						
-						<Box>
-							<Warp justify="space-between" align="center" bottom="7px">
-								<Warp align="flex-end">
-									<Text size="14px" weight="bold" marginR="10px" >
-										{Me}
-									</Text>
-									<Text color="#C4C4C4" size="12px">
-										{props.dayBefore}
-									</Text>
-								</Warp>
-								
-								<Warp>
-									{ 
-										Me === props.userName ?
-										(<Text size="10px" onClick={()=>{delTimeline()}}>❌</Text>) : ""
-									}
-								</Warp>
-							</Warp>
-
-							<Text size="14px" style={{overflowWrap:"break-word"}}>
-								{props.content}
-							</Text>
-
-							<Warp justify="flex-end">
-								<Text size="12px" 
-									onClick={()=>{likeToggle()}}
-								>
-									{ like ? `😍` : `😶` }
-								</Text>
-								<Text size="12px" marginL="5px">
-									{props.likecount}
-								</Text>
-							</Warp>
-						</Box>
-
-					{/* </Warp> */}
+			<TimeLineCard idx={idx}>
 					
-				</TimeLineCard>
-			</Container>
+				<Box>
+					<Warp justify="space-between" align="center" bottom="7px">
+						<Warp align="flex-end">
+							<Text size="14px" weight="bold" marginR="10px" >
+								{props.userName}
+							</Text>
+							<Text color="#C4C4C4" size="12px">
+								{props.dayBefore}
+							</Text>
+						</Warp>
+						
+						<Warp>
+							{ 
+								Me === props.userName ?
+								(<Text size="10px" onClick={()=>{delTimeline()}}>❌</Text>) : ""
+							}
+						</Warp>
+					</Warp>
+
+					<Text size="14px" style={{overflowWrap:"break-word"}}>
+						{props.content}
+					</Text>
+
+					<Warp justify="flex-end">
+						<Text size="12px" 
+							onClick={()=>{likeToggle()}}
+						>
+							{ like ? `😍` : `😶` }
+						</Text>
+						<Text size="12px" marginL="5px">
+							{props.likecount}
+						</Text>
+					</Warp>
+				</Box>
+				
+			</TimeLineCard>
 
 		</React.Fragment>
 	)
 });
 
 
-export default React.memo(Timeline);
+export default Timeline;
 
-const Container = styled.div`
-	/* width: 335px;  */
-	/* height: 57px; */
-	/* margin-bottom: 5px; */
-	/* margin: auto; */
-`;
+
 
 const TimeLineCard = styled.div`
 	${(props) => props.idx % 2 === 0 ? `background: #FFF0EE;`: `background: #F2FAFC;`}
