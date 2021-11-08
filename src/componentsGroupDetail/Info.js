@@ -1,15 +1,24 @@
-import React from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
+import { groupDetailCreators } from "../redux/modules/groupDetail";
 import Progress from "../components/Progress";
 
+import heart_join from "../shared/icon/groupDetail/heart_join.svg"
+import heart_null from "../shared/icon/groupDetail/heart_null.svg"
 import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
 import users from "../shared/icon/users.svg"
 
 
-const Info = (props) => {
+
+
+const Info = memo((props) => {
+
+
+  const dispatch = useDispatch();
 
 	// 사진 ip주소 + 사진이름 조합
 	const ip = "http://54.180.148.132/images/";
@@ -18,10 +27,44 @@ const Info = (props) => {
 
 	const leftPeople = props.peopleLimit - props.nowAppliedNum
 
+  const [heartJoin, setHeartJoin] = useState(false);
+
+  const myGroupLikesList= props.myGroupLikesList;
+  const id = props.groupId;
+
+  const joinHeartBtn = () => {
+    setHeartJoin(!heartJoin)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
+  }
+
+  useEffect(() => {
+    const groupLike = props.myGroupLikesList.indexOf(id)
+    if (groupLike >= 0) {
+      setHeartJoin(true)
+    }
+  },[myGroupLikesList]) 
+  
+
+  console.log("받아오기", props)
+
+  // if props.myGroupLikesList
+
 	return (
 		<Container>
-			<Img src={imageUrl} alt="" />
-
+      <Box position="relative"> 
+			  <Img src={imageUrl} alt="" />
+        <JoinCircle
+          onClick = {() => {
+            joinHeartBtn()
+          }}
+        >
+          {
+            heartJoin ? <img src={heart_join} alt="joinHeart" /> : <img src={heart_null} alt="joinHeart" />
+          }
+        </JoinCircle>
+      </Box>
+      
+      
 			{/* 타이틀 */}
 			<TitleBox>
 				<Warp margin="0 0 11px 0">
@@ -91,6 +134,10 @@ const Info = (props) => {
 			<Rectangle/>
 		</Container>
 	)
+})
+
+Info.defaultProps = {
+  myGroupLikesList: [],
 }
 
 export default Info;
@@ -103,10 +150,35 @@ const Container = styled.div`
   position: relative;
 `;
 
+const Box = styled.div`
+  width: 100%;
+  height: ${(props) => props.height};
+  background: ${(props) => props.background};
+  padding: ${(props) => props.padding};
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  position: ${(props) => props.position};
+`;
+
 const Img = styled.img`
   width: 100%;
   height: 375px;
   background-color: #c4c4c4;
+`;
+
+const JoinCircle = styled.div`
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  left: 327px;
+  top: 298px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TitleBox = styled.div`
@@ -167,18 +239,6 @@ const Text = styled.div`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   overflow: hidden;
-`;
-
-const Box = styled.div`
-  width: 100%;
-  height: ${(props) => props.height};
-  background: ${(props) => props.background};
-  padding: ${(props) => props.padding};
-  display: ${(props) => props.flex};
-  flex-direction: ${(props) => props.direction};
-  justify-content: ${(props) => props.justify};
-  align-items: ${(props) => props.align};
-  position: ${(props) => props.position};
 `;
 
 const Circle = styled.div`

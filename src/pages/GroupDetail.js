@@ -16,24 +16,29 @@ const GroupDetail = (props) => {
 	const [selectPage, setSelectPage] = useState(true)
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-	// console.log("loadDetail", loadDetail)
+  const myliist = useSelector((state) => state.groupDetail.mylist)
+
 
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+		dispatch(groupDetailCreators.mylistMW())
 	},[])
 
+  console.log("내꺼야", myliist)
 
 	return (
 		<Container>
 
 			{/* 글 정보 */}
-			<Info {...loadDetail}/>
+			<Info {...loadDetail} {...myliist} />
 
 			{/* 참여자 & 방명록 */}
 			<Box height="65px">
 
 				<Warp padding="20px 0 0 0">
-					<ParticipantBtn onClick={() => {setSelectPage(true)}} selectPage={selectPage}>
+					<ParticipantBtn {...myliist} 
+            onClick={() => {setSelectPage(true)}} selectPage={selectPage}
+          >
 						참여자
 					</ParticipantBtn>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -12,11 +12,19 @@ import more from "../shared/icon/more.svg"
 import send from "../shared/icon/send.svg"
 
 
-const Comment = (props) => {
+const Comment = memo((props) => {
 	
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const cookie = getCookie("is_login");
+
+	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
+	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
+
+	// console.log("groupPage야야", groupPage)
+	// console.log("groupPage야야2", props)
+
+
 
 	const id = props.groupId
 //  console.log("페이지아이디",id)
@@ -39,6 +47,10 @@ const Comment = (props) => {
     }
   };
 
+	useEffect(()=>{
+		dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
+		dispatch(groupDetailCreators.mylistMW())
+	},[])
 
 	return (
 		<React.Fragment>
@@ -92,57 +104,129 @@ const Comment = (props) => {
 			{
 				props.groupCommentList.map((comment, idx) => {
 					return (
-						<CommentList key={idx} {...comment} idx={idx} />
+						<CommentList key={idx} {...comment} id={id} idx={idx} />
 					)
 				})
 			}
 
 		</React.Fragment>	
 	)
-}
+})
+
 
 
 // 댓글 컴포넌트
-function CommentList(props) {
+const CommentList = memo((props) => {
+
+	const dispatch = useDispatch();
+
+	const user = useSelector((state) => state.user.user_info)
+	const Me = user.username 
+	const [modal, setModal] = useState(false);
+	const [like, setLike] = useState(false);
+
+	useEffect(() => {
+		dispatch(groupDetailCreators.loadGroupPageMW(props.id));
+	}, [])
+
+
+	const likeBtn = () => {
+		setLike(!like)
+		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
+	}
+
+	console.log("댓글 컴포넌트", props)
+
 	return (
 		<React.Fragment>	
-			<Box>
+			<Box position="relative" onClick = {()=>{ setModal(false)}} >
 				<Warp>
 					<div>
 						<Circle marginT="26px" />
 					</div>
 
 					<Box margin="20px 20px 20px 14px">
+
 						<Warp align="center">
 							<Text size="14px" weight="bold" marginR="10px">
 								{props.commentUsername}
 							</Text>
 							<Text color="#C4C4C4" size="12px">
-								1분전
+								{/* 시간표시 */}
 							</Text>
 						</Warp>
-						<Text size="14px" marginT="5px">
+
+						<Text size="14px" marginT="5px" width>
 							{props.comment}
 						</Text>
 
+						{/* 좋아요 싫어요 */}
 						<Warp marginT="11px">
-							<Icon src={smail} alt="smail" marginR="7px" /> 
-							<Text size="12px" marginR="30px">1</Text>
-							<Icon src={unSmail} alt="unSmail" marginR="7px" />
-							<Text size="12px">0</Text>
+							<Icon src={smail} alt="smail" marginR="7px" 
+								onClick={() => { likeBtn() }}
+							/> 
+							<Text size="12px" marginR="30px">
+								{props.groupcommentlikeCount}
+							</Text>
+							{/* <Icon src={unSmail} alt="unSmail" marginR="7px" />
+							<Text size="12px">0</Text> */}
 						</Warp>
+
 					</Box>
 					
-					<Icon src={more} alt="more" marginT="-34px" marginR="22px" />
+					{/* 더보기 버튼 */}
+					{
+						Me === props.commentUsername ?
+						<MoreBtn src={more} alt="more" marginT="-34px" marginR="22px" 
+							onClick = {(e)=>{ 
+								e.preventDefault();
+                e.stopPropagation();
+								setModal(!modal)
+							}}
+						> 
+							<img src={more} alt="more"/>
+						</MoreBtn>
+						: null
+					}
+
+					{/* 수정 삭제 모달 */}
+					{modal === true ?  <Modal {...props} /> : null}
 
 				</Warp>
 			</Box>
 			<Rectangle/>
 		</React.Fragment>	
 	)
+})
+
+
+// 모달 컴포넌트
+const Modal = (props) => {
+
+	const dispatch = useDispatch();
+
+	const delComment = () => {
+		if (window.confirm("정말 삭제하시겠습니까?") === true) {
+			dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId));
+		}
+  };
+
+	return (
+		<React.Fragment>
+			<MWarp direction="column" border="1px solid" radius="10px" >	
+				<ModalButton>
+					수정
+				</ModalButton>
+				<ModalButton onClick={()=>{ delComment() }} >
+					삭제
+				</ModalButton>
+			</MWarp>	
+		</React.Fragment>	
+	)
 }
 
 export default Comment;
+
 
 
 const Rectangle = styled.div`
@@ -167,6 +251,7 @@ const Box = styled.div`
 const Warp = styled.div`
 	display: flex;
 	width: ${(props) => props.width};
+	height: ${(props) => props.height};
 	flex-direction: ${(props) => props.direction};
 	flex-wrap: ${(props) => props.wrap};
 	justify-content: ${(props) => props.justify};
@@ -177,7 +262,6 @@ const Warp = styled.div`
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
-	
 `;
 
 const Text = styled.p`
@@ -190,38 +274,18 @@ const Text = styled.p`
 	margin-top: ${(props) => props.marginT};
 	cursor: ${(props) => props.pointer};
 	line-height: ${(props) => props.height};
+	word-break: break-all;
 	/* text-align: center; */
-`;
-
-const NowBtn = styled.button`
-	width: 187px;
-	height: 45px;
-	margin-right: 0;
-	padding-bottom: 20px;
-	border: none;
-	border-bottom: 3px solid #F25343;
-	background: none;
-`;
-
-const Button = styled.button`
-	width: 187px;
-	height: 45px;
-	background: none;
-	padding-bottom: 20px;
-	border: none;
 `;
 
 const TextArea = styled.textarea`
   width: 285px;
   height: 70px;
 	border: none;
-  /* border: 1px solid #E7E7E7; */
-  /* border-radius: 100px; */
   padding: 5px 5px 5px 5px;
   margin-left: 12px;
 	resize: none;
 	:required
-  /* position: relative; */
   ::placeholder {
     font-weight: 500;
     font-size: 14px;
@@ -231,11 +295,9 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  /* left: 8.34%; */
   right: 5px;
   bottom: 0%;
   transform: translateY(-50%);
-  /* transform: translateY(-50%); */
   cursor: pointer;
 `;
 
@@ -251,5 +313,37 @@ const Circle = styled.div`
 const Icon = styled.img`
 	margin-top: ${(props) => props.marginT};
 	margin-right: ${(props) => props.marginR};
+	cursor: pointer;
 `;
 
+const MoreBtn = styled.button`
+	margin: 5px 10px 0 0 ;
+	padding : 5px;
+	height: 30px;
+	background: none;
+	border: none;
+	cursor: pointer;
+`;
+
+
+// 모달 컴포넌트 스타일
+const ModalButton = styled.button`
+	width: 50px;
+	height: auto;
+	display: block;
+	background: #FFF;
+	border: none;
+	font-size: 13px;
+	padding: 5px;
+	&:hover {
+		background: lightgrey;
+	}
+`;
+
+const MWarp = styled.div`
+	box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
+	height: 50px;
+	position: absolute;
+	right: 10px; 
+	top: 30px
+`;

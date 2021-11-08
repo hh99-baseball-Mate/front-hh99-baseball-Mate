@@ -18,9 +18,9 @@ const TimelimeWrite = (props) => {
   const [message, setMessage] = useState("");
   const cookie = getCookie("is_login");
 
-  useEffect(() => {
-		dispatch(timelineCreators.loadTimelineMW());
-	}, [])
+  // useEffect(() => {
+	// 	dispatch(timelineCreators.loadTimelineMW());
+	// }, [])
 
   const reloadBtn = () => {
 		dispatch(timelineCreators.loadTimelineMW())
