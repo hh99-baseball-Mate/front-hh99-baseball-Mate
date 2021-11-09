@@ -122,6 +122,8 @@ const CommentList = memo((props) => {
 
 	const user = useSelector((state) => state.user.user_info)
 	const Me = user.username 
+
+	const [edit, setEdit] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [like, setLike] = useState(false);
 
@@ -157,8 +159,14 @@ const CommentList = memo((props) => {
 						</Warp>
 
 						<Text size="14px" marginT="5px" width>
-							{props.comment}
+							{/* 댓글수정 기능 */}
+							{
+								edit ?
+									<EditComment {...props} setEdit={setEdit} />
+									: <p>{props.comment}</p>
+							}
 						</Text>
+						
 
 						{/* 좋아요 싫어요 */}
 						<Warp marginT="11px">
@@ -190,7 +198,7 @@ const CommentList = memo((props) => {
 					}
 
 					{/* 수정 삭제 모달 */}
-					{modal === true ?  <Modal {...props} /> : null}
+					{ modal === true ?  <Modal {...props}  edit={edit} setEdit={setEdit} /> : null }
 
 				</Warp>
 			</Box>
@@ -210,11 +218,11 @@ const Modal = (props) => {
 			dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId));
 		}
   };
-
+	// edit={edit}
 	return (
 		<React.Fragment>
 			<MWarp direction="column" border="1px solid" radius="10px" >	
-				<ModalButton>
+				<ModalButton onClick={()=>{ props.setEdit(true) }}>
 					수정
 				</ModalButton>
 				<ModalButton onClick={()=>{ delComment() }} >
@@ -224,6 +232,50 @@ const Modal = (props) => {
 		</React.Fragment>	
 	)
 }
+
+
+// 수정 컴포넌트
+const EditComment = (props) => {
+
+	const dispatch = useDispatch();
+
+	const [message, setMessage] = useState(props.comment);
+	console.log(message, props.id, props.groupCommentId,)
+
+	const editComment = () => {
+		if (message === "") {
+		 	return window.alert("댓글을 입력해주세요.")
+		}
+		dispatch(groupDetailCreators.editCommentMW(props.id, props.groupCommentId, message))
+		props.setEdit(false)
+	}
+
+	return (
+		<React.Fragment>
+			<EditText 
+				value={message}
+				onChange={(e) => {
+					setMessage(e.target.value);
+				}}
+			/>
+			<button onClick={()=>{ editComment() }}>
+				수정완료
+			</button>
+			<button onClick={()=>{ props.setEdit(false) }} >
+				취소
+			</button>
+		</React.Fragment>
+	)
+}
+
+const EditText = styled.textarea`
+  width: 285px;
+  height: 70px;
+	/* border: none; */
+  padding: 5px 5px 5px 5px;
+  /* margin-left: 12px; */
+	resize: none;
+`;
 
 export default Comment;
 
@@ -317,9 +369,12 @@ const Icon = styled.img`
 `;
 
 const MoreBtn = styled.button`
-	margin: 5px 10px 0 0 ;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	/* margin: 5px 10px 0 0 ; */
+	/* height: 30px; */
 	padding : 5px;
-	height: 30px;
 	background: none;
 	border: none;
 	cursor: pointer;

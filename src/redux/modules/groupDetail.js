@@ -3,28 +3,29 @@ import { produce } from "immer"
 import { tokenInstance, apis, tokenApis } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
-
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
-
 const GROUP_APPLY = "GROUP_APPLY"
 
+// 댓글기능
 const ADD_COMMENT = "ADD_COMMENT"
+const EDIT_COMMENT = "EDIT_COMMENT"
 const DELETE_COMMENT = "DELETE_COMMENT"
 const LIKE_COMMENT = "LIKE_TIMELINE";
+
 const LOAD_MYLIST = "LOAD_MYLIS";
 
 
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
-
 const like_post = createAction(LIKE_POST, (groupId) => ({ groupId }));
-
 const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
+const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
 const del_comment = createAction(DELETE_COMMENT, (groupId, commentId) => ({ groupId, commentId }));
 const like_comment = createAction(LIKE_COMMENT, (id, like) => ({ id, like }));
+
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }));
 
 const initialState = {
@@ -95,6 +96,22 @@ const addCommentMW = (groupId, message) => {
 	}
 }
 
+// 댓글 수정
+const editCommentMW = (groupId, commentId, message) => {
+	return (dispatch, getState, {history}) => {
+		const comment = {comment:message}
+		tokenApis
+			.putComment(groupId, commentId, comment)
+			.then((res) => {
+				console.log("댓글수정", res)
+				dispatch(edit_comment(groupId, commentId, comment))
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
 // 댓글삭제
 const delCommentMW = (groupId, commentId) => {
 	return (dispatch, getState, {history}) => {
@@ -155,6 +172,10 @@ export default handleActions(
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)
 		}),
+		[EDIT_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
+      draft.groupPage.groupCommentList[idx] = {...draft.groupPage.groupCommentList[idx], ...action.payload.comment};	
+		}),
 		[DELETE_COMMENT]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
 			if (idx !== -1) {
@@ -174,6 +195,7 @@ const groupDetailCreators = {
 	likePostMW,
 	groupApplyMW,
 	addCommentMW,
+	editCommentMW,
 	delCommentMW,
 	likeCommentMW,
 	mylistMW
