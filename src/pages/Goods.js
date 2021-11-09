@@ -40,13 +40,8 @@ export const Goods = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      <Header nowBtn4="nowBtn4"/>
+      <Header nowBtn4="nowBtn4" />
       <Banner>
-=======
-      <Header nowBtn4 />
-      <GoodsBaanerContainer>
->>>>>>> fddc7a3e4ff55f85d0541d540e886147dd025cf1
         <GoodsBannerBox>
           <Logo src={goodBanner} />
           <TextBox>
