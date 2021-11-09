@@ -9,7 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 import { baseUrl, clubImageSrc } from "../shared/clubImage";
 import { SwiperSlide } from "swiper/react";
-import { Container, Header, MoreContainer, Text, MarginBottom, NaviBar } from "../components";
+import {
+  Container,
+  Header,
+  MoreContainer,
+  Text,
+  MarginBottom,
+  NaviBar,
+} from "../components";
 // import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
 
@@ -44,7 +51,7 @@ const GroupList = (props) => {
 
   return (
     <>
-      <Header nowBtn2/>
+      <Header nowBtn2 />
       <Container>
         <Broder />
         {/* 
@@ -66,9 +73,9 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "15px" }}
                 onClick={() => {
-                  console.log(e.short_name)
+                  console.log(e.short_name);
                   // dispatch(groupCr.getTeamAPI(e.short_name));
-                  team = e.short_name
+                  team = e.short_name;
 
                   // history.push(`/${e.name}`);
                 }}
@@ -103,16 +110,16 @@ const GroupList = (props) => {
         </MoreContainer>
         <Broder />
         {group_list.map((e, idx) => {
-          console.log(e)
-          return <GroupCard key={idx} {...e} />
+          console.log(e);
+          return <GroupCard key={idx} {...e} />;
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
-      
+
       <MarginBottom />
       <NaviBar />
     </>
-  )
+  );
 };
 export default GroupList;
 

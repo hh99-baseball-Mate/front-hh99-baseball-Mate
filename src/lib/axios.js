@@ -6,7 +6,7 @@ import { getCookie } from "../shared/Cookie";
 // http://localhost:4000/
 // 토큰없는 api
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -17,7 +17,7 @@ export const instance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const apis = {
   // baseURL을 미리 지정해줬기 때문에 함수의 첫 번째 인자에 들어가는 url은
@@ -36,7 +36,7 @@ export const apis = {
 
   // 메인화면 타임라인 조회
   getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
-}
+};
 
 // 토큰인증 api
 export const tokenInstance = axios.create({
@@ -48,7 +48,7 @@ export const tokenInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const img = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -59,7 +59,7 @@ export const img = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
 export const tokenApis = {
   // 타임라인 페이지
@@ -78,7 +78,8 @@ export const tokenApis = {
   getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
 
   // 모임 좋아(찜) 하기/취소하기
-  postGroupsLike: (groupId, isLiked) => tokenInstance.post(`/groups/${groupId}/like`, isLiked),
+  postGroupsLike: (groupId, isLiked) =>
+    tokenInstance.post(`/groups/${groupId}/like`, isLiked),
 
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),

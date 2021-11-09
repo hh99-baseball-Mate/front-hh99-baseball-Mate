@@ -6,11 +6,14 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-
   const history = useHistory();
 
   return (
-    <Container onClick={()=>{ history.push("/groupdetail/" + props.groupId)}} >
+    <Container
+      onClick={() => {
+        history.push("/groupdetail/" + props.groupId);
+      }}
+    >
       <Card>
         <Warp margin="0 0 16px 0">
           <Warp flex="flex" margin="0 0 12px 0">
@@ -70,7 +73,6 @@ const GroupCard = (props) => {
 };
 
 export default GroupCard;
-
 
 const Container = styled.div`
   width: 335px;
