@@ -32,4 +32,5 @@ const Btn = styled.button`
   opacity: 0.8;
   border: 0;
   outline: 0;
+  cursor: pointer;
 `

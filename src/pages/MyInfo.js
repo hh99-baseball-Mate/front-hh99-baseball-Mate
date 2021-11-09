@@ -4,24 +4,16 @@ import { ArrowBack, Inputs, Text } from "../components"
 import { IoIosArrowForward } from "react-icons/io"
 import { history } from "../redux/configStore"
 import { useSelector } from "react-redux"
-import { Modal } from "../components/Modal"
 
 export const MyInfo = (props) => {
   const user_info = useSelector((state) => state.user.user_info)
   const is_login = useSelector((state) => state.user.is_login)
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
-  // 모달 뜨기/ 숨기기
-  const [showModal, setShowModal] = useState(false)
+  const defaultUserProfile =
+    "http://kmvkf2hvhfn2vj9tl8e6ps7v-wpengine.netdna-ssl.com/wp-content/uploads/2017/10/default-img.png"
 
-  // 모달 값 변경
-  const [ModalContent, setModalContent] = useState({
-    title: "나가지마이자식아",
-    descriptionOne: "ㅇㅇ",
-    descriptionTwo: "ㄹㄹ",
-    btnClose: "ㄹㄹ",
-    btnConfirm: "ㅁㅁ",
-  })
+  const { picture, userid, username, usertype } = user_info
 
   return (
     <>
@@ -30,10 +22,16 @@ export const MyInfo = (props) => {
         {is_login ? (
           <>
             <UserInfo>
-              <ProfileImg src={`${IMAGES_BASE_URL}/${user_info.picture}`} />
-              <Text margin="10px 0 5px">{user_info.username}</Text>
+              <ProfileImg
+                src={
+                  usertype === "normal"
+                    ? `${IMAGES_BASE_URL}/${picture}`
+                    : picture
+                }
+              />
+              <Text margin="10px 0 5px">{username}</Text>
               <Text color="#777777" size="10px">
-                {user_info.userid ? user_info.userid : "뭐라도적히냐?"}
+                {userid ? userid : "나는유저아이디?"}
               </Text>
             </UserInfo>
 

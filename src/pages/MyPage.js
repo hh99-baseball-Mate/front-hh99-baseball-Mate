@@ -10,6 +10,9 @@ import { Modal } from "../components/Modal"
 export const MyPage = ({ is_login }) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
+  // const defaultUserProfile =
+  //   "http://kmvkf2hvhfn2vj9tl8e6ps7v-wpengine.netdna-ssl.com/wp-content/uploads/2017/10/default-img.png"
+
   const user_info = useSelector((state) => state.user.user_info)
 
   // 모달 뜨기/ 숨기기
@@ -24,7 +27,7 @@ export const MyPage = ({ is_login }) => {
     btnConfirm: "ㅁㅁ",
   })
 
-  const { myteam, picture, userid, username, useridx } = user_info
+  const { picture, userid, username, useridx, usertype } = user_info
 
   return (
     <>
@@ -33,7 +36,13 @@ export const MyPage = ({ is_login }) => {
         {is_login ? (
           <>
             <UserInfo>
-              <ProfileImg src={`${IMAGES_BASE_URL}/${picture}`} />
+              <ProfileImg
+                src={
+                  usertype === "normal"
+                    ? `${IMAGES_BASE_URL}/${picture}`
+                    : picture
+                }
+              />
               <UserId>
                 <Text size="14px" margin="2px 0">
                   {username}
@@ -114,7 +123,7 @@ export const MyPage = ({ is_login }) => {
       </Container>
 
       {/* 하단네비바 */}
-      <MarginBottom/>
+      <MarginBottom />
       <NaviBar my />
     </>
   )

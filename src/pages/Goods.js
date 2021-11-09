@@ -14,8 +14,10 @@ import goodBanner from "../shared/icon/goodBanner.png"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 import { history } from "../redux/configStore"
+import { Banner } from "../components/Banner"
 
 export const Goods = () => {
+
   const dispatch = useDispatch()
 
   const [sortDate, setSortDate] = useState(false)
@@ -38,8 +40,8 @@ export const Goods = () => {
 
   return (
     <>
-      <Header nowBtn4 />
-      <GoodsBaanerContainer>
+      <Header nowBtn4="nowBtn4" />
+      <Banner>
         <GoodsBannerBox>
           <Logo src={goodBanner} />
           <TextBox>
@@ -51,7 +53,7 @@ export const Goods = () => {
             </Text>
           </TextBox>
         </GoodsBannerBox>
-      </GoodsBaanerContainer>
+      </Banner>
 
       <Container>
         <Position>
@@ -83,7 +85,7 @@ export const Goods = () => {
           </CardContainer>
           <PancilBtn
             onClick={() => {
-              history.push("/addgoods")
+              history.push("/goodsadd")
             }}
           />
         </Position>
@@ -94,14 +96,6 @@ export const Goods = () => {
     </>
   )
 }
-
-const GoodsBaanerContainer = styled.div`
-  margin: 0 auto;
-  max-width: 375px;
-  height: 106px;
-  background-color: #f25343;
-  box-sizing: border-box;
-`
 
 const TextBox = styled.div``
 
