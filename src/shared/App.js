@@ -34,13 +34,22 @@ function App() {
   const user_info = useSelector((state) => state.user.user_info)
 
   // console.log(user_info)
+<<<<<<< HEAD
   useEffect(() => {
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD())
     } else {
       getCookie("is_login")
     }
+=======
+  useEffect(() => { 
+    if (getCookie("is_login")) { 
+      dispatch(userActions.logInCheckMD()) 
+    } 
+>>>>>>> fddc7a3e4ff55f85d0541d540e886147dd025cf1
   }, [is_login])
+
+
 
   console.log(is_login, "is_login")
   return (

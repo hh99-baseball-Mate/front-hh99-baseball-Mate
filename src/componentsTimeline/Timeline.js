@@ -29,6 +29,8 @@ const Timeline = React.memo((props) => {
 
 	// 본인 아이디 확인
 	const Me = user.username 
+	console.log("내아이디", Me)
+	console.log("내정보", user)
 
 	const delTimeline = () => {
 		// const timeLineId = props.id

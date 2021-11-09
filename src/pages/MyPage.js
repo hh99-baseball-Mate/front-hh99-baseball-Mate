@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { ArrowBack, Inputs, Text } from "../components"
+import { ArrowBack, Inputs, Text, MarginBottom, NaviBar } from "../components"
 import { IoIosArrowForward } from "react-icons/io"
 import { BsGear } from "react-icons/bs"
 import { history } from "../redux/configStore"
@@ -120,6 +120,10 @@ export const MyPage = ({ is_login }) => {
           />
         </TextBox>
       </Container>
+
+      {/* 하단네비바 */}
+      <MarginBottom/>
+      <NaviBar my />
     </>
   )
 }

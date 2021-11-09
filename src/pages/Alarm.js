@@ -2,22 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 import { ArrowBack } from "../components";
-import NaviBar from "../components/NaviBar";
+import { MarginBottom, NaviBar } from "../components";
 
 
 const Alarm = (props) => {
 	return (
-		<Container>
-			<ArrowBack>알림</ArrowBack>
+		<React.Fragment>
+			<Container>
+				<ArrowBack>알림</ArrowBack>
 
-			{props.is_login ? (
-        <p>내 알림</p>
-				) : (
-					<p>로그인 후 이용해주세요</p>
-				)
-			}
+				{props.is_login ? (
+					<p>내 알림</p>
+					) : (
+						<p>로그인 후 이용해주세요</p>
+					)
+				}
+				
+			</Container>
+			<MarginBottom/>
 			<NaviBar rec/>
-		</Container>
+		</React.Fragment>
 	)
 }
 
@@ -81,6 +85,4 @@ const Circle = styled.div`
 const List = styled.div`
  	height: 62vh;
 	overflow: auto;
-	/* NaviBar안겹치게 */
-	margin-bottom: 94px;
 `;

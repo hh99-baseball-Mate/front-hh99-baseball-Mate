@@ -8,6 +8,9 @@ import { MoreContainer} from "./MoreContainer"
 import  PancilBtn  from "./PancilBtn"
 import Progress  from "./Progress"
 import  Swipers from "./Swipers"
+import Footer from "./Footer";
+import NaviBar from "./NaviBar";
+import MarginBottom from "./MarginBottom";
 
 import Header from "./Header";
 
@@ -23,4 +26,7 @@ export {
   PancilBtn,
   Progress,
   Swipers,
+  Footer,
+  NaviBar,
+  MarginBottom
 }

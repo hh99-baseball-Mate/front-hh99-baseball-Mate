@@ -14,8 +14,7 @@ import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { Card } from "../componentsGoods/Card";
-import Footer from "../components/Footer";
-import NaviBar from "../components/NaviBar";
+import { Footer, MarginBottom, NaviBar } from "../components";
 import TimelineList from "./TimelineList";
 
 const Main = memo((props) => {
@@ -49,7 +48,7 @@ const Main = memo((props) => {
         <p style={{ fontSize: "30px" }}>야구 MATE</p>
 
         {/* 헤더 네비 */}
-        <Header nowBtn1="nowBtn1" />
+        <Header nowBtn1 />
 
         {/* 야구 일정 */}
         <Banner />
@@ -175,6 +174,7 @@ const Main = memo((props) => {
         <Footer />
 
         {/* 하단 네비바 */}
+        <MarginBottom/>
         <NaviBar home="home" />
       </Container>
     </React.Fragment>
