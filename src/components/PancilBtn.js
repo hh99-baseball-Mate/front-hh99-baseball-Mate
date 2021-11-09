@@ -31,4 +31,5 @@ const Btn = styled.button`
   background: #f25343;
   border: 0;
   outline: 0;
+  cursor: pointer;
 `

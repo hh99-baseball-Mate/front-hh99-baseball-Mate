@@ -19,13 +19,12 @@ import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
 import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
+import { history } from "../redux/configStore"
+import { KaKaoMap } from "../componentsScreen/KaKaoMap"
+import { Modal } from "../components/Modal"
 
-export const GroupAdd = (props) => {
-  const dispatch = useDispatch()
-
-  const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
-
-  // console.log(selectTeam_list)
+export const ScreenAdd = (props) => {
+  // const dispatch = useDispatch()
   // 인풋 값 state
   const [inputValue, setInputValue] = useState({
     title: "",
@@ -40,9 +39,7 @@ export const GroupAdd = (props) => {
   // 모달 보기 state
   const [showModal, setShowModal] = useState(false)
 
-  const [groupDate, setGroupDate] = useState("")
-
-  const { content, peopleLimit, title, selectTeam } = inputValue
+  const { content, peopleLimit, title } = inputValue
 
   // 이미지 업로드 / 미리보기
 
@@ -62,11 +59,6 @@ export const GroupAdd = (props) => {
     console.log("삭제를 해야되는데..")
   }
 
-  const showModalBtn = () => {
-    if (selectTeam) setShowModal(!showModal)
-    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
-  }
-
   // 인풋 입력 값 추적 e.target.value 대행
 
   const onChange = (e) => {
@@ -76,13 +68,6 @@ export const GroupAdd = (props) => {
       [name]: value,
     })
   }
-
-  useEffect(() => {
-    if (selectTeam) {
-      console.log(selectTeam, "asdasd")
-      dispatch(groupActions.selectTeamMD(selectTeam))
-    }
-  }, [selectTeam])
 
   //  인원수 + 버튼
   const plusBtn = () => {
@@ -128,13 +113,13 @@ export const GroupAdd = (props) => {
     const formData = new FormData()
 
     formData.append("title", inputValue.title)
-    formData.append("groupDate", groupDate)
+    // formData.append("groupDate", groupDate)
     formData.append("content", inputValue.content)
     formData.append("peopleLimit", inputValue.peopleLimit)
-    formData.append("selectTeam", inputValue.selectTeam)
+    // formData.append("selectTeam", inputValue.selectTeam)
     formData.append("file", preview)
 
-    dispatch(groupActions.addGroupMD(formData))
+    // dispatch(groupActions.addGroupMD(formData))
     e.target.disabled = true
     for (const keyValue of formData) console.log(keyValue)
   }
@@ -157,24 +142,27 @@ export const GroupAdd = (props) => {
 
         {/* 구단선택 */}
         <Grid>
-          <Text>
-            구단선택
-            {selectTeam && <InputCheck />}
-          </Text>
-          <Inputs
-            name="selectTeam"
-            value={selectTeam}
-            dropdown
-            onChange={onChange}
-          >
-            <Option value="">구단선택</Option>
-            {clubImageSrc.map((e) => (
-              <Option key={e.id} value={e.name}>
-                {e.name}
-              </Option>
-            ))}
-          </Inputs>
+          <TextBox onClick={() => setShowModal(true)}>
+            <Text>장소선택</Text>
+
+            {/* 일정 정보 */}
+            <GameDate>
+              {/* {groupDate && <Text margin="0 10px">{groupDate}</Text>} */}
+              <AiOutlineDown
+                color="777777"
+                onClick={() => {
+                  // history.push("/screenadd/map")
+                }}
+              />
+            </GameDate>
+          </TextBox>
         </Grid>
+        {showModal ? (
+          <Modal bottom height="500px">
+            <KaKaoMap />
+          </Modal>
+        ) : null}
+        {/* 일정선택 모달창 props 전달 */}
 
         {/* 일정 선택 */}
         <Grid>
@@ -183,21 +171,12 @@ export const GroupAdd = (props) => {
 
             {/* 일정 정보 */}
             <GameDate>
-              {groupDate && <Text margin="0 10px">{groupDate}</Text>}
-              <AiOutlineDown color="777777" onClick={showModalBtn} />
+              {/* {groupDate && <Text margin="0 10px">{groupDate}</Text>} */}
+              <AiOutlineDown color="777777" onClick={() => {}} />
             </GameDate>
           </TextBox>
 
           {/* 일정선택 모달창 props 전달 */}
-          {showModal ? (
-            <GroupAddModal
-              selectTeam_list={selectTeam_list}
-              setGroupDate={setGroupDate}
-              setShowModal={setShowModal}
-            ></GroupAddModal>
-          ) : (
-            ""
-          )}
         </Grid>
 
         {/* <div>인원수 선택</div> */}
@@ -261,7 +240,7 @@ export const GroupAdd = (props) => {
   )
 }
 
-GroupAdd.defaultProps = {
+ScreenAdd.defaultProps = {
   defaultImg:
     "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
 }
