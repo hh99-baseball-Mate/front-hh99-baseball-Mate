@@ -11,7 +11,7 @@ const GROUP_APPLY = "GROUP_APPLY"
 const ADD_COMMENT = "ADD_COMMENT"
 const EDIT_COMMENT = "EDIT_COMMENT"
 const DELETE_COMMENT = "DELETE_COMMENT"
-const LIKE_COMMENT = "LIKE_TIMELINE";
+const LIKE_COMMENT = "LIKE_COMMENT";
 
 const LOAD_MYLIST = "LOAD_MYLIS";
 
@@ -24,13 +24,39 @@ const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
 const del_comment = createAction(DELETE_COMMENT, (groupId, commentId) => ({ groupId, commentId }));
-const like_comment = createAction(LIKE_COMMENT, (id, like) => ({ id, like }));
+const like_comment = createAction(LIKE_COMMENT, (groupId, commentId, like) => ({ groupId, commentId, like }));
 
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }));
 
 const initialState = {
-	groupPage : [],
-	mylist: []
+	groupPage : {
+		appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
+		canApplyNum: "",
+		content: "",
+		createdUserName: "",
+		dday: "",
+		filePath: "",
+		groupCommentList: [{}],
+		groupDate: "",
+		groupId: "",
+		hotPercent: "",
+		nowAppliedNum: "",
+		peopleLimit: "",
+		stadium: null,
+		title: "",
+	},
+	mylist: {
+		myGoodsLikesList: [],
+		myGroupCommentLikesList: [],
+		myGroupLikesList: [],
+		myTimeLineLikesList: [],
+		myteam: "",
+		picture: null,
+		userid: "",
+		useridx: "",
+		username: "",
+		usertype: "",
+	}
 }
 
 
@@ -131,11 +157,12 @@ const delCommentMW = (groupId, commentId) => {
 const likeCommentMW = (groupId, commentId, like) => {
 	return (dispatch, getState, { history }) => {
 		const isLiked = {isLiked: like};
+		console.log(groupId, commentId,isLiked)
 		tokenApis
 			.postLikeComment(groupId, commentId, isLiked)
 			.then((res) => {
 				console.log(res)
-				// dispatch(like_comment(timeLineId, isLiked))
+				dispatch(like_comment(groupId, commentId, isLiked))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -182,9 +209,19 @@ export default handleActions(
 				draft.groupPage.groupCommentList.splice(idx, 1);
 			}
 		}),
+		[LIKE_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
+			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+			console.log("액션좋아요",action.payload.like.isLiked)
+			if (action.payload.like.isLiked) {
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
+			} else {
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
+			}
+		}),
 		[LOAD_MYLIST]: (state, action) => produce(state, (draft) => {
 			draft.mylist = action.payload.mylist;
-		})
+		}),
 	},
 	initialState
 )

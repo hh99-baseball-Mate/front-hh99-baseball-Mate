@@ -24,7 +24,13 @@ const Info = memo((props) => {
 	const ip = "http://54.180.148.132/images/";
 	const img = props.filePath;
 	const imageUrl = ip + img
-
+  let profileUrl =  "http://54.180.148.132/images/sample.png"
+  // if (props.appliedUserInfo[0].UserImage === null) {
+  //   profileUrl = "http://54.180.148.132/images/sample.png"
+  // } else {
+  //   profileUrl =  ip + props.appliedUserInfo[0].UserImage
+  // }
+    
 	const leftPeople = props.peopleLimit - props.nowAppliedNum
 
   const [heartJoin, setHeartJoin] = useState(false);
@@ -37,18 +43,26 @@ const Info = memo((props) => {
     dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
   }
 
+  // 게시글 좋아요 누른것 표시
   useEffect(() => {
     const groupLike = props.myGroupLikesList.indexOf(id)
     if (groupLike >= 0) {
       setHeartJoin(true)
     }
   },[myGroupLikesList]) 
+
+
+  useEffect(() => {
+    if (props.dday < 0 || leftPeople === 0) {
+      props.setClose(true)
+    }
+  }, [])
   
 
   console.log("받아오기", props)
 
   // if props.myGroupLikesList
-
+  // {ip + props.appliedUserInfo[0].UserImage}
 	return (
 		<Container>
       <Box position="relative"> 
@@ -68,11 +82,19 @@ const Info = memo((props) => {
 			{/* 타이틀 */}
 			<TitleBox>
 				<Warp margin="0 0 11px 0">
-					<Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-						모집중
-					</Ellipse>
+          {
+            props.close ? 
+            <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
+              마감
+            </Ellipse>
+              :
+            <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
+              모집중
+            </Ellipse>
+          }
+
 					<Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-						D-10
+						D-{props.dday}
 					</Ellipse>
 				</Warp>
 				
@@ -106,9 +128,9 @@ const Info = memo((props) => {
 					<img src={calendar} alt="calendar" />
 					<Text color="#777777" size="12px">{props.groupDate}</Text>
 					<Slice> &ensp;|&ensp; </Slice> 
-					<img src={location} alt="location" />
+					{/* <img src={location} alt="location" />
 					<Text color="#777777" size="12px">{props.stadium}</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
+					<Slice> &ensp;|&ensp; </Slice>  */}
 					<img src={users} alt="users" />
 					<Text color="#777777" size="12px">최대 {props.peopleLimit}명</Text>
 				</Warp>
@@ -117,11 +139,12 @@ const Info = memo((props) => {
 			{/* 유저정보 */}
 			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
 				<Warp width="55px" height="55px">
-					<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
+					<Circle url={profileUrl} />
+            {/* <img src={ip + props.appliedUserInfo[0].UserImage} alt="" /> */}
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
-					<Text size="12px" color="#C4C4C4" margin="1px">서울시 강서구</Text>
+					<Text size="12px" color="#C4C4C4" margin="1px">{props.appliedUserInfo[0].UserId}</Text>
 				</Warp>
 			</Box>
 
@@ -138,6 +161,8 @@ const Info = memo((props) => {
 
 Info.defaultProps = {
   myGroupLikesList: [],
+  // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
+  UserImage: "sample.png"
 }
 
 export default Info;
@@ -242,10 +267,13 @@ const Text = styled.div`
 `;
 
 const Circle = styled.div`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #c4c4c4;
+  background-image: url(${(props) => props.url});
+  /* background-size: contain; */
+  background-size: cover;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 

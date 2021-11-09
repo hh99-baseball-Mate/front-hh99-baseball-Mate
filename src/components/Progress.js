@@ -6,8 +6,8 @@ const Progress = (props) => {
   const peopleLimit = props.group.peopleLimit;
   const canApplyNum = props.group.canApplyNum;
 
-  console.log("프로그레스바",peopleLimit, canApplyNum)
-  console.log(((peopleLimit-canApplyNum)/peopleLimit)*100 + "%")
+  // console.log("프로그레스바",peopleLimit, canApplyNum)
+  // console.log(((peopleLimit-canApplyNum)/peopleLimit)*100 + "%")
 
   let width = ((peopleLimit-canApplyNum)/peopleLimit)*100
   if (width > 100) {

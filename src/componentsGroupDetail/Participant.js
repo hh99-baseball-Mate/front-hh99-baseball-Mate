@@ -3,12 +3,17 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
+import host from "../shared/icon/groupDetail/host.svg"
+
 
 const Participant = memo((props) => {
-
+console.log("참여자컴포", props)
 	// const {shape, src, size, pointer} = props;
 	// flex="felx" justify="space-around"
 	const dispatch = useDispatch();
+
+	const ip = "http://54.180.148.132/images/";
+  const profileUrl = ip + props.appliedUserInfo[0].UserImage
 
 	const id = props.groupId;
 
@@ -36,22 +41,39 @@ const Participant = memo((props) => {
 		<React.Fragment>
 			<Box padding="28px 20px 40px 20px">
 				<Warp wrap="wrap" justify="space-between" align="center" start="space-around">
-					{/* {
-						props.peopleLimit.map((name,idx) => {
+
+					{/* 방장 */}
+					<CircleBox>
+						<HostCircle url={profileUrl} name={props.createdUserName}/>
+						<Text>
+							<img src={host} alt="host"/> {props.createdUserName}
+						</Text>
+					</CircleBox>
+
+					{
+						props.appliedUserInfo.slice(1).map((list,idx) => {
 							return(
-								<PartyList key={idx} name={name} />
+								<PartyList key={idx} {...list} />
 							)
 						})
-					} */}
-					<PartyList name={props.createdUserName}/>
+					}
+					
 				
 				</Warp>
 
-				<ConfirmBtn onClick = {()=>{apply()}} join={join} >
+					{/* 버튼 - 모집완료되면 모집마감 */}
+					{/* 참여 신청, 취소 버튼 */}
 					{
-						join ? `참여 완료` : `참여신청하기` 
-					}
-				</ConfirmBtn>
+						props.close ?
+						<DisableBtn disabled > 모집 마감 </DisableBtn> 
+						:
+						<ConfirmBtn onClick = {()=>{apply()}} join={join} >
+						{
+							join ? `참여 취소하기` : `참여 신청하기` 
+						}
+						</ConfirmBtn>
+					}	
+					
 			</Box>
 		</React.Fragment>
 	)
@@ -59,14 +81,20 @@ const Participant = memo((props) => {
 
 // 참여인원 컴포넌트
 function PartyList(props) {
+	const ip = "http://54.180.148.132/images/";
 	return (
 		<CircleBox>
-			<Circle/>
-			<Text>{props.name}</Text>
+			<Circle url={ip + props.UserImage}/>
+			<Text>{props.Username}</Text>
 		</CircleBox>
 	)
 }
 
+Participant.defaultProps = {
+	appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
+	UserImage: "sample.png"
+	
+}
 
 export default Participant;
 
@@ -111,13 +139,28 @@ const CircleBox = styled.div`
 	margin-bottom: 20px;
 `;
 
-const Circle = styled.div`
+const HostCircle = styled.div`
 	width: 98px;
 	height: 98px;
-	border: 1px solid #F25343;
+	border: 2px solid #F25343;
 	border-radius: 50%;
 	background: #FFFFFF;
 	margin-bottom: 5px;
+	background-image: url(${(props) => props.url});
+  /* background-size: contain; */
+  background-size: cover;
+`;
+
+const Circle = styled.div`
+	width: 98px;
+	height: 98px;
+	border: 1px solid #E7E7E7;
+	border-radius: 50%;
+	background: #FFFFFF;
+	margin-bottom: 5px;
+	background-image: url(${(props) => props.url});
+  /* background-size: contain; */
+  background-size: cover;
 `;
 
 const ConfirmBtn = styled.button`
@@ -131,7 +174,17 @@ const ConfirmBtn = styled.button`
 
 	${(props) =>
     props.join ?
-    `background: #ced4da;`
+    `background: #ff8787;`
 		: `background: #F25343;`
 	}
+`;
+
+const DisableBtn = styled.button`
+	margin-top: 10px;
+	width: 335px;
+	height: 50px;
+	background: #ced4da;
+	border-radius: 80px;
+	border: none;
+	color: #fff;
 `;
