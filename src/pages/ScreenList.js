@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Container, Header, PancilBtn, Text } from "../components"
+import { Container, Header, PancilBtn, Text, NaviBar, MarginBottom } from "../components"
 import { Banner } from "../components/Banner"
 import { Modal } from "../components/Modal"
 import GroupCard from "../componentsGroupList/GroupCard"
@@ -13,7 +13,7 @@ export const ScreenList = () => {
 
   return (
     <>
-      <Header />
+      <Header nowBtnSB />
       <Banner bg="#e7e7e7">배너</Banner>
       <Container>
         {/* 리스트 바 */}
@@ -42,6 +42,8 @@ export const ScreenList = () => {
           }}
         />
       </Container>
+      <MarginBottom/>
+      <NaviBar/>
     </>
   )
 }
