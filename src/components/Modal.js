@@ -77,6 +77,16 @@ const ModalBottom = styled.div`
   bottom: 0;
   margin: 0 -20px;
 `
+const ModalCenter = styled.div`
+  width: 375px;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 
 const showModal = keyframes`
   0%{
@@ -97,16 +107,7 @@ const ModalBottomContent = styled.div`
   overflow-y: auto;
 `
 
-const ModalCenter = styled.div`
-  width: 375px;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
+
 const ModalContent = styled.div`
   width: 275px;
   height: 165px;

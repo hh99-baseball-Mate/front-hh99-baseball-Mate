@@ -17,6 +17,7 @@ const MyGroup = (props) => {
     content: "",
   })
   const [showModal, setShowModal] = useState(false)
+  console.log(showModal)
 
   const [groupDate, setGroupDate] = useState("")
 
@@ -50,15 +51,13 @@ const MyGroup = (props) => {
         }}
       >
         <Up>내가 참여한 모임</Up>
-        <Btn>
-          상세보기{" "}
-          <img
-            src={Etc}
-            alt="등등"
-            onClick={() => {
-              setShowModal(true)
-            }}
-          />
+        <Btn
+          onClick={() => {
+            console.log("되냐")
+            setShowModal(true)
+          }}
+        >
+          상세보기 <img src={Etc} alt="등등" />
         </Btn>
       </div>
       <div style={{ margin: "20px" }}>
