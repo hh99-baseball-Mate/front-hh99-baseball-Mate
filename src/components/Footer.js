@@ -20,7 +20,7 @@ const Container = styled.div`
   height: 178px;
   padding: 0;
 	/* NaviBar안겹치게 */
-	margin-bottom: 94px;
+	/* margin-bottom: 94px; */
 `;
 
 const Warp = styled.div`

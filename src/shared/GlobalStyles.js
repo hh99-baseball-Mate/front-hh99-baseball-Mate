@@ -32,6 +32,4 @@ export const GlobalStyles = createGlobalStyle`
 			background-color: white;
 		}
 	}
-
-
 `

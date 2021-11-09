@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as groupCr } from "../redux/modules/group";
 import { baseUrl, clubImageSrc } from "../shared/clubImage";
 import { SwiperSlide } from "swiper/react";
-import { Container, Header, MoreContainer, Text } from "../components";
+import { Container, Header, MoreContainer, Text, MarginBottom, NaviBar } from "../components";
 // import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
 
@@ -44,7 +44,7 @@ const GroupList = (props) => {
 
   return (
     <>
-      <Header />
+      <Header nowBtn2/>
       <Container>
         <Broder />
         {/* 
@@ -108,6 +108,9 @@ const GroupList = (props) => {
         })}
         <PancilBtn onClick={newPeople} />
       </Container>
+      
+      <MarginBottom />
+      <NaviBar />
     </>
   )
 };

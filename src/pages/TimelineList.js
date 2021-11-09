@@ -6,7 +6,7 @@ import { Header } from "../components";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
-import NaviBar from "../components/NaviBar";
+import { MarginBottom, NaviBar } from "../components";
 import { timelineCreators } from "../redux/modules/timeline";
 
 
@@ -29,7 +29,7 @@ const TimelineList = React.memo((props) => {
 			<Container>
 
 				{/* 헤더 */}
-				<Header nowBtn3="nowBtn3" />
+				<Header nowBtn3 />
 
 				{/* 배너 */}
 				<TimelineBanner />
@@ -56,6 +56,7 @@ const TimelineList = React.memo((props) => {
 			</Container>
 
 			{/* 하단 네비바 */}
+			<MarginBottom/>
 			<NaviBar/>
 		</React.Fragment>
 	)
@@ -121,5 +122,5 @@ const List = styled.div`
  	height: 62vh;
 	overflow: auto;
 	/* NaviBar안겹치게 */
-	margin-bottom: 94px;
+	/* margin-bottom: 94px; */
 `;
