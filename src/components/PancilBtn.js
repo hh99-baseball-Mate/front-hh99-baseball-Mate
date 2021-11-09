@@ -26,9 +26,11 @@ const Btn = styled.button`
   width: 61px;
   position: fixed;
   right: 10px;
-  bottom: 0px;
+  bottom: 80px;
   transform: translate(-50%, -50%);
   background: #f25343;
+  opacity: 0.8;
   border: 0;
   outline: 0;
+  cursor: pointer;
 `

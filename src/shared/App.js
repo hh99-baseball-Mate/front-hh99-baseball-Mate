@@ -25,6 +25,9 @@ import { NotFound } from "../pages/NotFound";
 import { Switch } from "react-router";
 import Alarm from "../pages/Alarm"
 import { MyInfo } from "../pages/MyInfo"
+import { ScreenList } from "../pages/ScreenList"
+import { ScreenAdd } from "../pages/ScreenAdd"
+import { KaKaoMap } from "../componentsScreen/KaKaoMap"
 
 function App() {
   const dispatch = useDispatch()
@@ -33,13 +36,13 @@ function App() {
   const user_info = useSelector((state) => state.user.user_info)
 
   // console.log(user_info)
-  useEffect(() => { 
-    if (getCookie("is_login")) { 
-      dispatch(userActions.logInCheckMD()) 
-    } 
+  useEffect(() => {
+    if (getCookie("is_login")) {
+      dispatch(userActions.logInCheckMD())
+    } else {
+      getCookie("is_login")
+    }
   }, [is_login])
-
-
 
   console.log(is_login, "is_login")
   return (
@@ -59,7 +62,7 @@ function App() {
           <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
           <Route path="/timeline" exact component={TimelineList} />
           <Route path="/goods" exact component={Goods} />
-          <Route path="/addgoods" exact component={GoodsAdd} />
+          <Route path="/goodsadd" exact component={GoodsAdd} />
           <Route path="/mygroup" exact component={MyGroup} />
           <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
           <Route
@@ -68,7 +71,9 @@ function App() {
             render={() => <MyPage is_login={is_login} />}
           />
           <Route path="/mypage/:useridx/update" exact component={MyInfo} />
-
+          <Route path="/screen" exact component={ScreenList} />
+          <Route path="/screenadd" exact component={ScreenAdd} />
+          <Route path="/screenadd/map" exact component={KaKaoMap} />
 
           {/* 임시 */}
           <Route component={NotFound} />

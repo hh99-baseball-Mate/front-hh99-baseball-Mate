@@ -22,6 +22,7 @@ const NaviBar = (props) => {
   return (
     <Container>
       <Warp justify="space-between">
+        {/* 메인 */}
         <Icon
           onClick={() => {
             history.push("/");
@@ -34,9 +35,10 @@ const NaviBar = (props) => {
           )}
         </Icon>
 
+        {/* 내 모임 */}
         <Icon
           onClick={() => {
-            history.push("/mygroup");
+            history.push("/");
           }}
         >
           {props.sch ? (
@@ -46,6 +48,7 @@ const NaviBar = (props) => {
           )}
         </Icon>
 
+        {/* 활동 */}
         <Icon
           onClick={() => {
             history.push("/alarm");
@@ -58,6 +61,7 @@ const NaviBar = (props) => {
           )}
         </Icon>
 
+        {/* 마이페이지 */}
         <Icon
           onClick={() => {
             history.push(`/mypage/${useridx}`);

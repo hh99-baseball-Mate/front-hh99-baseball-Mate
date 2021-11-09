@@ -14,9 +14,10 @@ const GroupDetail = (props) => {
   const params = useParams();
   const groupId = params.groupId
 	const [selectPage, setSelectPage] = useState(true)
+  const [close, setClose] = useState(false)
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  const myliist = useSelector((state) => state.groupDetail.mylist)
+  const mylist = useSelector((state) => state.groupDetail.mylist)
 
 
 	useEffect(()=>{
@@ -24,19 +25,20 @@ const GroupDetail = (props) => {
 		dispatch(groupDetailCreators.mylistMW())
 	},[])
 
-  console.log("내꺼야", myliist)
+  console.log("상세페이지", loadDetail)
+  console.log("내꺼야", mylist)
 
 	return (
 		<Container>
 
 			{/* 글 정보 */}
-			<Info {...loadDetail} {...myliist} />
+			<Info {...loadDetail} {...mylist} close={close} setClose={setClose} />
 
 			{/* 참여자 & 방명록 */}
 			<Box height="65px">
 
 				<Warp padding="20px 0 0 0">
-					<ParticipantBtn {...myliist} 
+					<ParticipantBtn {...loadDetail} 
             onClick={() => {setSelectPage(true)}} selectPage={selectPage}
           >
 						참여자
@@ -49,7 +51,7 @@ const GroupDetail = (props) => {
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant {...loadDetail} /> : <Comment {...loadDetail} />} 
+				{selectPage === true ? <Participant {...loadDetail} close={close} /> : <Comment {...loadDetail} />} 
 
 			</Box>
 

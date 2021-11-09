@@ -143,7 +143,7 @@ const NotGame = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vw;
+  height: 300px;
   flex-direction: column;
   font-size: 30px;
 `
