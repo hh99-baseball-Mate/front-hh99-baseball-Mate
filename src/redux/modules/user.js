@@ -120,11 +120,11 @@ const logInCheckMD = () => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    console.log(club, "club")
+    const id = getState().user.user_info.useridx
 
     axios
-      .post(
-        "http://54.180.148.132/user/myteam",
+      .patch(
+        `http://54.180.148.132/users/${id}`,
         { myteam: club },
         {
           headers: {
@@ -152,8 +152,11 @@ const kakaoLogin = (key) => {
       .then((res) => {
         const access_token = res.data.token
 
+        console.log(res.data)
         setCookie("is_login", access_token)
-        history.replace("/")
+
+        window.alert("로그인 완료")
+        history.push("/")
       })
       .catch((err) => console.log(err, "카카오 로그인 실패"))
   }

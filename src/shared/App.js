@@ -25,6 +25,7 @@ import { NotFound } from "../pages/NotFound";
 import { Switch } from "react-router";
 import Alarm from "../pages/Alarm"
 import { MyInfo } from "../pages/MyInfo"
+import { ScreenMain } from "../pages/ScreenMain"
 
 function App() {
   const dispatch = useDispatch()
@@ -34,8 +35,11 @@ function App() {
 
   // console.log(user_info)
   useEffect(() => {
-    if(is_login) dispatch(userActions.logInCheckMD())
-
+    if (getCookie("is_login")) {
+      dispatch(userActions.logInCheckMD())
+    } else {
+      getCookie("is_login")
+    }
   }, [is_login])
 
   console.log(is_login, "is_login")
@@ -65,7 +69,7 @@ function App() {
             render={() => <MyPage is_login={is_login} />}
           />
           <Route path="/mypage/:useridx/update" exact component={MyInfo} />
-
+          <Route path="/screen" exact component={ScreenMain} />
 
           {/* 임시 */}
           <Route component={NotFound} />
