@@ -4,7 +4,7 @@ import { Image } from "react-bootstrap";
 import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
-const GroupCard = (props) => {
+const NewCard = (props) => {
   const leftPeople = props.peopleLimit - props.canApplyNum;
   return (
     <div>
@@ -81,7 +81,7 @@ const GroupCard = (props) => {
   );
 };
 
-export default GroupCard;
+export default NewCard;
 
 const Box = styled.div`
   width: 335px;

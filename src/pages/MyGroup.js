@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import GroupCard from "../commponentAdd/GroupCard";
 import { ArrowBack, Container } from "../components";
 import { history } from "../redux/configStore";
 import { Modal } from "../componentsGroupAdd/Modal";
 import Etc from "../shared/icon/Etc.png";
 import { useSelector } from "react-redux";
-
+import { Participation } from "../componentsGroupList/Participation";
+import { Wish } from "../componentsGroupList/Wish";
+import { Write } from "../componentsGroupList/Write";
 const MyGroup = (props) => {
   //모달
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
@@ -19,9 +20,15 @@ const MyGroup = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const [groupDate, setGroupDate] = useState("");
+  //구분
+  const [participation, setParticipation] = useState(false);
+  const [write, setWrite] = useState(false);
+  const [wish, setWish] = useState(false);
 
   const { content, peopleLimit, title, selectTeam } = inputValue;
-
+  console.log(participation, "확");
+  console.log(write, "인");
+  console.log(wish, "용");
   return (
     <All>
       <div
@@ -32,15 +39,42 @@ const MyGroup = (props) => {
           margin: " 0 auto",
         }}
       >
-        <Container>
-          <ArrowBack>내모임</ArrowBack>
-          <Group>
-            <Button1 onClick={() => {}}>참여모임</Button1>
-            <Button1>작성모임</Button1>
-            <Button1>찜한모임</Button1>
-          </Group>
-        </Container>
+        <ArrowBack>내모임</ArrowBack>
       </div>
+      <Container>
+        <Group>
+          <Button1
+            onClick={() => {
+              if (write === true || participation === false) {
+                setWrite(false);
+                setParticipation(true);
+              }
+            }}
+          >
+            참여모임
+          </Button1>
+
+          <Button1
+            onClick={() => {
+              if (participation === true) {
+                setParticipation(false);
+                setWrite(true);
+              }
+              setWrite(true);
+            }}
+          >
+            작성모임
+          </Button1>
+          <Button1
+            onClick={() => {
+              setWish(true);
+            }}
+          >
+            찜한모임
+          </Button1>
+        </Group>
+      </Container>
+
       <div
         style={{
           display: "flex",
@@ -50,24 +84,18 @@ const MyGroup = (props) => {
         }}
       >
         <Up>내가 참여한 모임</Up>
-        <Btn>
-          상세보기{" "}
-          <img
-            src={Etc}
-            alt="등등"
-            onClick={() => {
-              setShowModal(true);
-            }}
-          />
+        <Btn
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          상세보기 <img src={Etc} alt="등등" />
         </Btn>
       </div>
+
       <div style={{ margin: "20px" }}>
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
+        {participation ? <Participation /> : ""}
+        {write ? <Write /> : ""}
       </div>
 
       {showModal ? (
@@ -110,7 +138,6 @@ const Group = styled.div`
   justify-content: space-between;
   width: 250px;
   text-align: center;
-
   margin-left: 26px;
   margin-top: 30px;
   width: 375;
