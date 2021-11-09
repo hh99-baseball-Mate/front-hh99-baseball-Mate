@@ -5,9 +5,12 @@ import { getCookie } from "../shared/Cookie";
 // http://54.180.148.132/ 임시서버
 // http://localhost:4000/
 // 토큰없는 api
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
-  baseURL: "http://54.180.148.132/",
+  baseURL: BASE_URL,
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -38,7 +41,7 @@ export const apis = {
 // 토큰인증 api
 export const tokenInstance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
-  baseURL: "http://54.180.148.132/",
+  baseURL: BASE_URL,
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -49,7 +52,7 @@ export const tokenInstance = axios.create({
 
 export const img = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
-  baseURL: "http://54.180.148.132/",
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "multipart/form-data",
     accept: "application/json",
@@ -68,11 +71,15 @@ export const tokenApis = {
 
   // 타임라인 좋아요
   likeTimeline: (timeLineId, isLiked) =>
-    tokenInstance.post(`/timeLine/${timeLineId}/like`, isLiked),
+    tokenInstance.post(`/timelines/${timeLineId}/like`, isLiked),
 
   // 모임게시글
   // 상세페이지 조회
   getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
+
+  // 모임 좋아(찜) 하기/취소하기
+  postGroupsLike: (groupId, isLiked) =>
+    tokenInstance.post(`/groups/${groupId}/like`, isLiked),
 
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
@@ -89,7 +96,9 @@ export const tokenApis = {
   delComment: (groupId, commentId) =>
     tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
 
-  //
+  // 모임게시글 댓글 좋아요
+  postLikeComment: (groupId, commentId, isLiked) =>
+    tokenInstance.post(`/groups/${groupId}/comment/${commentId}/like`, isLiked),
 };
 
 // createPost: (contents) => instance.post('/posts', contents),

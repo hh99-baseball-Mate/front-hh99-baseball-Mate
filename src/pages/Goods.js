@@ -6,6 +6,8 @@ import {
   MoreContainer,
   PancilBtn,
   Text,
+  MarginBottom,
+  NaviBar
 } from "../components"
 import { Card } from "../componentsGoods/Card"
 import goodBanner from "../shared/icon/goodBanner.png"
@@ -36,7 +38,7 @@ export const Goods = () => {
 
   return (
     <>
-      <Header nowBtn4="nowBtn4"/>
+      <Header nowBtn4 />
       <GoodsBaanerContainer>
         <GoodsBannerBox>
           <Logo src={goodBanner} />
@@ -86,6 +88,9 @@ export const Goods = () => {
           />
         </Position>
       </Container>
+
+      <MarginBottom />
+      <NaviBar />
     </>
   )
 }

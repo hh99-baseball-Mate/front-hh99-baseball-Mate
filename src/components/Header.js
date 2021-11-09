@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 const Header = (props) => {
   const history = useHistory();
 
-  const { nowBtn1, nowBtn2, nowBtn3, nowBtn4 } = props;
+  const { nowBtn1, nowBtn2, nowBtnSB, nowBtn3, nowBtn4 } = props;
 
   return (
     <Container minWidth="370px">
@@ -27,6 +27,15 @@ const Header = (props) => {
         >
           모임
         </Button2>
+
+        <ButtonSB
+          nowBtnSB={nowBtnSB}
+          onClick={() => {
+            history.push("/screen");
+          }}
+        >
+          스야
+        </ButtonSB>
 
         <Button3
           nowBtn3={nowBtn3}
@@ -53,6 +62,7 @@ const Header = (props) => {
 Header.defaultProps = {
   nowBtn1: false,
   nowBtn2: false,
+  nowBtnSB: false,
   nowBtn3: false,
   nowBtn4: false,
 };
@@ -69,7 +79,7 @@ const Box = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 250px;
+  width: 280px;
   /* margin-bottom: 11px; */
   margin-left: 26px;
   margin-top: 30px;
@@ -112,6 +122,27 @@ const Button2 = styled.button`
     color: #000000;
   `}
 `;
+
+const ButtonSB = styled.button`
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 0;
+  padding-bottom: 10px;
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+
+  ${(props) =>
+    props.nowBtnSB &&
+    `
+    border-bottom: 2px solid;
+    font-weight: bold;
+    color: #000000;
+  `}
+`;
+
+
 
 const Button3 = styled.button`
   background: none;

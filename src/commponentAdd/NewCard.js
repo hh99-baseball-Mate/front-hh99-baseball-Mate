@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Image } from "react-bootstrap";
 import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
+import More from "../shared/icon/more.svg";
 
 const NewCard = (props) => {
   const leftPeople = props.peopleLimit - props.canApplyNum;
@@ -20,6 +21,8 @@ const NewCard = (props) => {
               margin: "16px",
             }}
           />
+          <img src={More} alt="위치" />
+
           <Warp style={{ marginTop: "16px" }}>
             <Warp>
               <Text size="12px" color="#777777">

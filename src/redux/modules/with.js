@@ -1,4 +1,3 @@
-import React from "react";
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { apis, img, instance, tokenInstance } from "../../lib/axios";
@@ -16,5 +15,28 @@ const initialState = {
 
 //미들웨어
 const getWithAPI = () => {
-  return function (getState, dispatch, { history }) {};
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .get(`/my/groups/applications`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getWith(res.data));
+      })
+      .catch((err) => {
+        console.log(err, "참여에러");
+      });
+  };
 };
+//리듀서
+export default handleActions(
+  {
+    [GET_WITH]: (state, action) => produce(state, (draft) => {}),
+  },
+  initialState
+);
+
+const actionCreators = {
+  getWithAPI,
+};
+
+export { actionCreators };

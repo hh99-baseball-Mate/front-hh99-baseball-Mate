@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ArrowBack, Container } from "../components";
 import { history } from "../redux/configStore";
-import { Modal } from "../componentsGroupAdd/Modal";
+import { Modal } from "../components/Modal";
 import Etc from "../shared/icon/Etc.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Participation } from "../componentsGroupList/Participation";
 import { Wish } from "../componentsGroupList/Wish";
 import { Write } from "../componentsGroupList/Write";
+import { actionCreators as withCr } from "../redux/modules/With";
+
 const MyGroup = (props) => {
+  const dispatch = useDispatch();
+  const with_list = useSelector((state) => state.with.with_list);
+  console.log(with_list, "테스트용");
   //모달
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
   const [inputValue, setInputValue] = useState({
@@ -29,6 +34,12 @@ const MyGroup = (props) => {
   console.log(participation, "확");
   console.log(write, "인");
   console.log(wish, "용");
+
+  //카드
+  useEffect(() => {
+    dispatch(withCr.getWithAPI());
+  }, []);
+  console.log(with_list, "확인좀해보자");
   return (
     <All>
       <div
@@ -92,11 +103,13 @@ const MyGroup = (props) => {
           상세보기 <img src={Etc} alt="등등" />
         </Btn>
       </div>
-
-      <div style={{ margin: "20px" }}>
-        {participation ? <Participation /> : ""}
-        {write ? <Write /> : ""}
-      </div>
+      {/* 카드 */}
+      {with_list.map((e) => (
+        <div style={{ margin: "20px" }}>
+          {participation ? <Participation /> : ""}
+          {write ? <Write /> : ""}
+        </div>
+      ))}
 
       {showModal ? (
         <Modal

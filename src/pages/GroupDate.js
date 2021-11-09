@@ -23,11 +23,12 @@ const GroupDate = (props) => {
   const _day = new Date()
 
   const year = _day.getFullYear()
-  // const month = new Date().getMonth() + 1
-  // const day = new Date().getDay()
+  const month = new Date().getMonth() + 1
+  const day = new Date().getDay()
 
-  const month = 10
-  const day = 15
+  // 예시 날짜
+  // const month = 10
+  // const day = 15
 
   let date = []
 
@@ -62,6 +63,7 @@ const GroupDate = (props) => {
               }}
             >
               {list.map((e, i) => {
+                console.log(e)
                 if (e && e.date === d.date) {
                   return (
                     <Box
@@ -134,9 +136,9 @@ const GroupDate = (props) => {
         )
       })}
 
-      <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
+      {/* <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
         <Buttons submit>선택완료</Buttons>
-      </div>
+      </div> */}
     </Container>
   )
 }
