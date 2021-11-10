@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
 import { groupDetailCreators } from "../redux/modules/groupDetail";
+import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
@@ -12,8 +13,6 @@ import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
 import users from "../shared/icon/users.svg"
-
-
 
 
 
@@ -32,23 +31,29 @@ const Info = memo((props) => {
   // 방장 프로필이미지
   const profileUrl =  ip + props.createdUserProfileImg
     
+	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
+  // const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  const [heartJoin, setHeartJoin] = useState(false);
+  // const [heartJoin, setHeartJoin] = useState(false);
 
   const myGroupLikesList= props.myGroupLikesList;
   const id = props.groupId;
 
-
+	// useEffect(() => {
+	// 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+	// 	dispatch(groupDetailCreators.mylistMW())
+  // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
   useEffect(() => {
     const groupLike = myGroupLikesList.indexOf(id)
+    console.log("표시",groupLike)
     if (groupLike >= 0) {
-      setHeartJoin(true)
+      return props.setHeartJoin(true)
     } else {
-      setHeartJoin(false)
+      return props.setHeartJoin(false)
     }
-  },[myGroupLikesList, heartJoin]) 
+  },[props.heartJoin]) 
 
 
 
@@ -63,8 +68,8 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const joinHeartBtn = () => {
-    setHeartJoin(!heartJoin)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
+    props.setHeartJoin(!props.heartJoin)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heartJoin))
   }
 
   // 수정버튼 
@@ -75,7 +80,7 @@ const Info = memo((props) => {
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupDetailCreators.delGroupPageMW(props.groupId))
+      dispatch(groupListCreators.delGroupPageMW(props.groupId))
       history.push("/grouplist");
     }
   }
@@ -95,7 +100,7 @@ const Info = memo((props) => {
           }}
         >
           {
-            heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
+            props.heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
           }
         </JoinCircle>
       </Box>
@@ -172,7 +177,7 @@ const Info = memo((props) => {
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
-					<Text size="12px" color="#C4C4C4" margin="1px">{props.userid}</Text>
+					<Text size="12px" color="#C4C4C4" margin="1px">{props.createdUserId}</Text>
 				</Warp>
 			</Box>
 

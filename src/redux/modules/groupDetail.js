@@ -20,7 +20,7 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
 const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
-const like_post = createAction(LIKE_POST, (groupId) => ({ groupId }));
+const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
 const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
@@ -102,6 +102,7 @@ const likePostMW = (groupId,like) => {
 			.postGroupsLike(groupId, isLiked)
 			.then((res) => {
 				console.log("모임찜",res)
+				dispatch(like_post(groupId, isLiked))
 			})
 			.catch((err) => {
 				console.log(err);
@@ -213,6 +214,17 @@ export default handleActions(
 		[LOAD_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
 			draft.groupPage = action.payload.groupPage;
 		}),
+		[LIKE_POST]: (state, action) => produce(state, (draft) => {
+			// console.log("찜받기",action.payload.like.isLiked)
+			if(action.payload.like.isLiked) {
+				draft.mylist.myGroupLikesList.push(action.payload.groupId);
+			} else {
+				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.commentId);
+				if (idx !== -1) {
+					draft.mylist.myGroupLikesList.splice(idx, 1);
+				}
+			}
+		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)
 		}),
@@ -231,9 +243,9 @@ export default handleActions(
 			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
 			console.log("액션좋아요",action.payload.like.isLiked)
 			if (action.payload.like.isLiked) {
-				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
+				return draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
 			} else {
-				draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
+				return draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
 			}
 		}),
 		[LOAD_MYLIST]: (state, action) => produce(state, (draft) => {
