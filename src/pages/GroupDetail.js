@@ -19,14 +19,25 @@ const GroupDetail = (props) => {
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
-
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
 		dispatch(groupDetailCreators.mylistMW())
-	},[])
+	},[groupId])
 
   console.log("상세페이지", loadDetail)
   console.log("내꺼야", mylist)
+
+  const commentBtn = () => {
+    const myJoin = loadDetail.appliedUserInfo.findIndex(list => list.UserId === mylist.userid)
+		// console.log("myJoin",myJoin)
+    if(loadDetail.createdUserName === mylist.username) {
+      return setSelectPage(false)
+    } else if(myJoin >= 0) {
+      return setSelectPage(false)
+		} else {
+      window.alert("모임 참여자만 이용 가능합니다.")
+    }
+  }
 
 	return (
 		<Container>
@@ -44,14 +55,14 @@ const GroupDetail = (props) => {
 						참여자
 					</ParticipantBtn>
 
-					<CommentBtn onClick={() => {setSelectPage(false)}} selectPage={selectPage}>
+					<CommentBtn onClick={() => {commentBtn()}} selectPage={selectPage}>
 						방명록
 					</CommentBtn>
 				</Warp>
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant {...loadDetail} close={close} /> : <Comment {...loadDetail} />} 
+				{selectPage === true ? <Participant {...loadDetail} {...mylist} close={close} /> : <Comment {...loadDetail} {...mylist} />} 
 
 			</Box>
 

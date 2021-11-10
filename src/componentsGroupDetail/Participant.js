@@ -7,17 +7,27 @@ import host from "../shared/icon/groupDetail/host.svg"
 
 
 const Participant = memo((props) => {
-console.log("참여자컴포", props)
+
+	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+	console.log("참여자컴포", props)
 	// const {shape, src, size, pointer} = props;
 	// flex="felx" justify="space-around"
 	const dispatch = useDispatch();
 
-	const ip = "http://54.180.148.132/images/";
-  const profileUrl = ip + props.appliedUserInfo[0].UserImage
+	const ip = IMAGES_BASE_URL;
+  const profileUrl = ip + props.createdUserProfileImg
 
 	const id = props.groupId;
 
 	const [join, setJoin] = useState(false);
+
+	useEffect(() => {
+		const myJoin = props.appliedUserInfo.findIndex(list => list.UserId === props.userid)
+		console.log("myJoin",myJoin)
+		if(myJoin >= 0) {
+			setJoin(true)
+		}
+	}, [props.appliedUserInfo])
 
 	const apply = () => {
 		if (!join) {
@@ -39,8 +49,8 @@ console.log("참여자컴포", props)
 
 	return (
 		<React.Fragment>
-			<Box padding="28px 20px 40px 20px">
-				<Warp wrap="wrap" justify="space-between" align="center" start="space-around">
+			<Box padding="28px 10px 40px 10px" background="#fff">
+				<Warp wrap="wrap" align="center" start="space-around">
 
 					{/* 방장 */}
 					<CircleBox>
@@ -51,14 +61,13 @@ console.log("참여자컴포", props)
 					</CircleBox>
 
 					{
-						props.appliedUserInfo.slice(1).map((list,idx) => {
+						props.appliedUserInfo.map((list,idx) => {
 							return(
 								<PartyList key={idx} {...list} />
 							)
 						})
 					}
 					
-				
 				</Warp>
 
 					{/* 버튼 - 모집완료되면 모집마감 */}
@@ -72,7 +81,7 @@ console.log("참여자컴포", props)
 							join ? `참여 취소하기` : `참여 신청하기` 
 						}
 						</ConfirmBtn>
-					}	
+					}
 					
 			</Box>
 		</React.Fragment>
@@ -81,19 +90,16 @@ console.log("참여자컴포", props)
 
 // 참여인원 컴포넌트
 function PartyList(props) {
-	const ip = "http://54.180.148.132/images/";
+
+	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+	const ip = IMAGES_BASE_URL;
+
 	return (
 		<CircleBox>
 			<Circle url={ip + props.UserImage}/>
 			<Text>{props.Username}</Text>
 		</CircleBox>
 	)
-}
-
-Participant.defaultProps = {
-	appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
-	UserImage: "sample.png"
-	
 }
 
 export default Participant;
@@ -108,6 +114,7 @@ const Box = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	position: ${(props) => props.position};
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const Warp = styled.div`
@@ -136,7 +143,7 @@ const Text = styled.div`
 `;
 
 const CircleBox = styled.div`
-	margin-bottom: 20px;
+	margin: 0 10px 20px 10px;
 `;
 
 const HostCircle = styled.div`
@@ -164,9 +171,10 @@ const Circle = styled.div`
 `;
 
 const ConfirmBtn = styled.button`
-	margin-top: 10px;
 	width: 335px;
 	height: 50px;
+	margin: 10px 10px;
+	/* margin-top: 10px; */
 	background: #F25343;
 	border-radius: 80px;
 	border: none;
@@ -180,7 +188,7 @@ const ConfirmBtn = styled.button`
 `;
 
 const DisableBtn = styled.button`
-	margin-top: 10px;
+	margin: 10px 10px;
 	width: 335px;
 	height: 50px;
 	background: #ced4da;

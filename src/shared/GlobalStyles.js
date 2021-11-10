@@ -4,6 +4,14 @@ import reset from "styled-reset";
 
 export const GlobalStyles = createGlobalStyle`
 	${normalize}
+	body {
+		/* height: 100%; */
+		background-color: #f8f9fa85;
+		/* background-color: #fafafa; */
+	}
+	/* #root {
+		background-color: #fff;
+	} */
 	*{
 		padding: 0;
 		margin:0;
