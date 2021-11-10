@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { apis, img, instance, tokenInstance } from "../../lib/axios";
+import { apis, img, instance, tokenInstance, tokenApis } from "../../lib/axios";
 import axios from "axios";
 
 // const api = axios.create(
@@ -20,12 +20,14 @@ const GET_PLAY = "GET_PLAY";
 const ADD_GROUP = "ADD_GROUP";
 const GET_TEAM = "GET_TEAM";
 const SELECT_TEAM = "SELECT_TEAM";
+const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE"
 
 //액션함수
 const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }));
 const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
 const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }));
 const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
+const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
 
 const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
 //초기값
@@ -116,6 +118,21 @@ const selectTeamMD = (myteam) => {
   };
 };
 
+// 모임삭제
+const delGroupPageMW = (groupId) => {
+	return (dispatch, getState, {history}) => {
+		tokenApis
+			.delGroupDetail(groupId)
+			.then((res) => {
+				console.log(res)
+				dispatch(del_groupPage(groupId))
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}	
+}
+
 //리듀서
 export default handleActions(
   {
@@ -136,6 +153,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.selectTeam_list = action.payload.team;
       }),
+    [DELETE_GROUP_PAGE]: (state, action) => 
+      produce(state, (draft) => {
+        const idx = draft.group_list.findIndex((p) => p.groupId=== action.payload.groupId);
+        if (idx !== -1) {
+          draft.group_list.splice(idx, 1);
+        }
+      })  
   },
   initialState
 );
@@ -148,6 +172,7 @@ const actionCreators = {
   getTeamAPI,
   selectTeam,
   selectTeamMD,
+  delGroupPageMW
 };
 
 export { actionCreators };

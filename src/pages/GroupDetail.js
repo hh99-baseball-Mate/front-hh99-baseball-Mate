@@ -15,6 +15,7 @@ const GroupDetail = (props) => {
   const groupId = params.groupId
 	const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
+  const [heartJoin, setHeartJoin] = useState(false);
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -22,7 +23,7 @@ const GroupDetail = (props) => {
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
 		dispatch(groupDetailCreators.mylistMW())
-	},[groupId])
+	},[groupId, heartJoin])
 
   console.log("상세페이지", loadDetail)
   console.log("내꺼야", mylist)
@@ -43,7 +44,10 @@ const GroupDetail = (props) => {
 		<Container>
 
 			{/* 글 정보 */}
-			<Info {...loadDetail} {...mylist} close={close} setClose={setClose} />
+			<Info {...loadDetail} {...mylist} 
+        close={close} setClose={setClose} 
+        heartJoin={heartJoin} setHeartJoin={setHeartJoin}
+      />
 
 			{/* 참여자 & 방명록 */}
 			<Box height="65px">
