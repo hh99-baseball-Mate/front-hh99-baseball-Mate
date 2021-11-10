@@ -15,7 +15,7 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   user,
   // 각자 모듈
-  With,
+  with: With,
   group,
   goods,
   mainPage,
