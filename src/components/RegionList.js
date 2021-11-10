@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
-export const RegionList = () => {
+export const RegionList = ({ setRegoin, setShowModal }) => {
   const regionList = [
-    { id: "1", region: "전체" },
+    { id: "1", region: "전국" },
     { id: "2", region: "서울" },
     { id: "3", region: "경기" },
     { id: "4", region: "인천" },
@@ -25,7 +25,15 @@ export const RegionList = () => {
   return (
     <ListBox>
       {regionList.map((e) => (
-        <List key={e.id}>{e.region}</List>
+        <List
+          key={e.id}
+          onClick={() => {
+            setRegoin(e.region)
+            setShowModal(false)
+          }}
+        >
+          {e.region}
+        </List>
       ))}
     </ListBox>
   )
@@ -37,7 +45,7 @@ const ListBox = styled.div`
   gap: 8px;
 `
 
-const List = styled.div`
+const List = styled.button`
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 100px;

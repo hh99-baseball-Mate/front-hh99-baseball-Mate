@@ -1,19 +1,27 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { Container, Header, PancilBtn, Text } from "../components"
+import { Container, Header, NaviBar, PancilBtn, Text } from "../components"
 import { Banner } from "../components/Banner"
 import { Modal } from "../components/Modal"
 import GroupCard from "../componentsGroupList/GroupCard"
 import { Region } from "../componentsScreen/Region"
 import { history } from "../redux/configStore"
+import { actionCreators as groupActions } from "../redux/modules/group"
 import ETC from "../shared/icon/Etc.png"
 
 export const ScreenList = () => {
+  const dispatch = useDispatch()
+
   const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    dispatch(groupActions.screenGetMD())
+  }, [])
 
   return (
     <>
-      <Header />
+      <Header nowBtnSB />
       <Banner bg="#e7e7e7">배너</Banner>
       <Container>
         {/* 리스트 바 */}
@@ -38,10 +46,11 @@ export const ScreenList = () => {
 
         <PancilBtn
           onClick={() => {
-            history.push("/screenadd")
+            history.push("/screen/screenadd")
           }}
         />
       </Container>
+      <NaviBar />
     </>
   )
 }

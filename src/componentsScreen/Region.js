@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai"
 import { Text } from "../components"
 import { RegionList } from "../components/RegionList"
 
-export const Region = ({ setShowModal }) => {
+export const Region = ({ setShowModal, setRegoin }) => {
   return (
     <Container>
       {/* 닫기버튼 */}
@@ -13,7 +13,10 @@ export const Region = ({ setShowModal }) => {
       </CloseBtn>
 
       <Text margin="12px 5px 12px">지역</Text>
-      <RegionList></RegionList>
+      <RegionList
+        setRegoin={setRegoin}
+        setShowModal={setShowModal}
+      ></RegionList>
     </Container>
   )
 }
