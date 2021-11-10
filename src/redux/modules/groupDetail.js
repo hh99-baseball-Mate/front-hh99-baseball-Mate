@@ -3,6 +3,7 @@ import { produce } from "immer"
 import { tokenInstance, apis, tokenApis } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
+const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE"
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
 const GROUP_APPLY = "GROUP_APPLY"
@@ -18,6 +19,7 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
+const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
 const like_post = createAction(LIKE_POST, (groupId) => ({ groupId }));
 const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
 
@@ -66,7 +68,7 @@ const loadGroupPageMW = (groupId) => {
 		tokenApis
 			.getGroupDetail(groupId)
 			.then((res) => {
-				console.log("loadGroupPageMW", res.data)
+				// console.log("loadGroupPageMW", res.data)
 				const groupPage = res.data
 				dispatch(load_groupPage(groupPage))
 			})
@@ -74,6 +76,21 @@ const loadGroupPageMW = (groupId) => {
 				console.log(err);
 			})
 	}
+}
+
+// 모임삭제
+const delGroupPageMW = (groupId) => {
+	return (dispatch, getState, {history}) => {
+		tokenApis
+			.delGroupDetail(groupId)
+			.then((res) => {
+				console.log(res)
+				dispatch(del_groupPage(groupId))
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}	
 }
 
 // 모임 좋아(찜) 하기/취소하기
@@ -229,6 +246,7 @@ export default handleActions(
 
 const groupDetailCreators = {
 	loadGroupPageMW,
+	delGroupPageMW,
 	likePostMW,
 	groupApplyMW,
 	addCommentMW,

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { mainCreators } from "../redux/modules/mainPage";
@@ -26,6 +26,8 @@ const Main = memo((props) => {
   const mainTimeline = useSelector((state) => state.mainPage.mainTimeline);
   const likeState = useSelector((state) => state.timeline.like);
   const user = useSelector((state) => state.user.user_info);
+
+  const [close, setClose] = useState(false)
 
   useEffect(() => {
     dispatch(mainCreators.hotGroupMW(4));
@@ -77,7 +79,7 @@ const Main = memo((props) => {
 
         {/* 핫한 모임 리스트 */}
         {hotGroup.map((hotGroup, idx) => {
-          return <GroupCard key={idx} {...hotGroup} />;
+          return <GroupCard key={idx} {...hotGroup} close={close} setClose={setClose} />;
         })}
 
         {/* 구분선 */}

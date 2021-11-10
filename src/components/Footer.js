@@ -19,6 +19,7 @@ const Container = styled.div`
   background: #777777;
   height: 178px;
   padding: 0;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 	/* NaviBar안겹치게 */
 	/* margin-bottom: 94px; */
 `;
