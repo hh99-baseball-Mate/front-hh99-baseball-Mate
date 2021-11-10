@@ -82,7 +82,7 @@ const Box = styled.div`
   width: 280px;
   /* margin-bottom: 11px; */
   margin-left: 26px;
-  margin-top: 30px;
+  padding-top: 30px;
 `;
 
 const Button1 = styled.button`

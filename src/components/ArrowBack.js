@@ -1,12 +1,12 @@
 import React from "react";
-import { IoIosArrowBack } from "react-icons/io"
-import styled from "styled-components"
-import { history } from "../redux/configStore"
+import { IoIosArrowBack } from "react-icons/io";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
 
 export const ArrowBack = (props) => {
-  const { children, onClick, bg } = props
+  const { children, onClick, bg } = props;
 
-  const styles = { onClick, bg }
+  const styles = { onClick, bg };
 
   return (
     <Headers bg={bg}>
@@ -17,14 +17,14 @@ export const ArrowBack = (props) => {
       />
       {children}
     </Headers>
-  )
-}
+  );
+};
 
 ArrowBack.defaultProps = {
   children: null,
   _onClick: () => {},
   bg: null,
-}
+};
 
 const Headers = styled.div`
   /* width: 335px; */
@@ -33,9 +33,9 @@ const Headers = styled.div`
   position: relative;
   cursor: pointer;
   padding: 20px 0;
-  margin: 0 -20px;
+
   ${(props) =>
     props.bg
       ? "background-color:#EC5E4F; color:white; width:375px;  margin: 0 auto;"
       : null}
-`
+`;

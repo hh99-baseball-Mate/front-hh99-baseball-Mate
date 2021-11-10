@@ -1,8 +1,10 @@
 import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 
 import { groupDetailCreators } from "../redux/modules/groupDetail";
+import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
@@ -14,41 +16,80 @@ import users from "../shared/icon/users.svg"
 
 
 
-
 const Info = memo((props) => {
 
-
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
   const dispatch = useDispatch();
+  const history = useHistory();
+  const params = useParams();
+  const groupId = params.groupId
 
 	// 사진 ip주소 + 사진이름 조합
-	const ip = "http://54.180.148.132/images/";
+	const ip = IMAGES_BASE_URL;
 	const img = props.filePath;
 	const imageUrl = ip + img
+  // 방장 프로필이미지
+  const profileUrl =  ip + props.createdUserProfileImg
+    
+	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
+  // const mylist = useSelector((state) => state.groupDetail.mylist)
 
-	const leftPeople = props.peopleLimit - props.nowAppliedNum
-
-  const [heartJoin, setHeartJoin] = useState(false);
+  // const [heartJoin, setHeartJoin] = useState(false);
 
   const myGroupLikesList= props.myGroupLikesList;
   const id = props.groupId;
 
+	// useEffect(() => {
+	// 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+	// 	dispatch(groupDetailCreators.mylistMW())
+  // }, [heartJoin])
+
+  // 게시글 좋아요 누른것 표시
+  useEffect(() => {
+    const groupLike = myGroupLikesList.indexOf(id)
+    console.log("표시",groupLike)
+    if (groupLike >= 0) {
+      return props.setHeartJoin(true)
+    } else {
+      return props.setHeartJoin(false)
+    }
+  },[props.heartJoin]) 
+
+
+
+  // 모집마감 표시
+  useEffect(() => {
+    if (props.dday < 0 || props.canApplyNum === 0) {
+      props.setClose(true)
+    } else {
+      props.setClose(false)
+    }
+  }, [])
+
+  // 찜(하트) 버튼
   const joinHeartBtn = () => {
-    setHeartJoin(!heartJoin)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
+    props.setHeartJoin(!props.heartJoin)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heartJoin))
   }
 
-  useEffect(() => {
-    const groupLike = props.myGroupLikesList.indexOf(id)
-    if (groupLike >= 0) {
-      setHeartJoin(true)
+  // 수정버튼 
+  const editBtn = () => {
+    history.push(`/groupdedit/${groupId}`)
+  } 
+
+  // 삭제버튼
+  const delBtn = () => {
+    if (window.confirm("정말 삭제하시겠습니까?") === true) {
+      dispatch(groupListCreators.delGroupPageMW(props.groupId))
+      history.push("/grouplist");
     }
-  },[myGroupLikesList]) 
-  
+  }
+
 
   console.log("받아오기", props)
 
   // if props.myGroupLikesList
-
+  // {ip + props.appliedUserInfo[0].UserImage}
 	return (
 		<Container>
       <Box position="relative"> 
@@ -59,7 +100,7 @@ const Info = memo((props) => {
           }}
         >
           {
-            heartJoin ? <img src={heart_join} alt="joinHeart" /> : <img src={heart_null} alt="joinHeart" />
+            props.heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
           }
         </JoinCircle>
       </Box>
@@ -68,14 +109,29 @@ const Info = memo((props) => {
 			{/* 타이틀 */}
 			<TitleBox>
 				<Warp margin="0 0 11px 0">
-					<Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-						모집중
-					</Ellipse>
+          {
+            props.close ? 
+            <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
+              마감
+            </Ellipse>
+              :
+            <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
+              모집중
+            </Ellipse>
+          }
+
 					<Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-						D-10
+						D-{props.dday}
 					</Ellipse>
+
+          {/* 수정버튼 */}
+          <p onClick={()=>{editBtn()}}>📝</p>
+
+          {/* 삭제버튼 */}
+          <p onClick={()=>{delBtn()}}>❌</p>
 				</Warp>
-				
+			
+
 				<Text
           size="16px"
           weight="bold"
@@ -87,11 +143,11 @@ const Info = memo((props) => {
 				</Text>
 
 				<Warp justify="space-between" align="center" marginT="11px" >
-					<Progress group={props}/>
+					<Progress {...props}/>
 					<Warp flex="flex">
 						<img src={colorUsers} alt="users"/>
 						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-							&nbsp;{leftPeople}명&nbsp;
+							&nbsp;{props.canApplyNum}명&nbsp;
 						</Text>
 						<Text size="12px" color="#F25343" spacing="-0.03em;">
 							남음
@@ -106,9 +162,9 @@ const Info = memo((props) => {
 					<img src={calendar} alt="calendar" />
 					<Text color="#777777" size="12px">{props.groupDate}</Text>
 					<Slice> &ensp;|&ensp; </Slice> 
-					<img src={location} alt="location" />
+					{/* <img src={location} alt="location" />
 					<Text color="#777777" size="12px">{props.stadium}</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
+					<Slice> &ensp;|&ensp; </Slice>  */}
 					<img src={users} alt="users" />
 					<Text color="#777777" size="12px">최대 {props.peopleLimit}명</Text>
 				</Warp>
@@ -117,11 +173,11 @@ const Info = memo((props) => {
 			{/* 유저정보 */}
 			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
 				<Warp width="55px" height="55px">
-					<Circle width="48px" height="48px" radius="50px" background="#C4C4C4"/>
+					<Circle url={profileUrl} />
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
-					<Text size="12px" color="#C4C4C4" margin="1px">서울시 강서구</Text>
+					<Text size="12px" color="#C4C4C4" margin="1px">{props.createdUserId}</Text>
 				</Warp>
 			</Box>
 
@@ -138,6 +194,8 @@ const Info = memo((props) => {
 
 Info.defaultProps = {
   myGroupLikesList: [],
+  // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
+  UserImage: "sample.png"
 }
 
 export default Info;
@@ -242,11 +300,15 @@ const Text = styled.div`
 `;
 
 const Circle = styled.div`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #c4c4c4;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid #E7E7E7;
+  background-image: url(${(props) => props.url});
+  /* background-size: contain; */
+  background-size: cover;
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 `;
 
 const Slice = styled.div`

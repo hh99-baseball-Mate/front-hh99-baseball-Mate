@@ -14,16 +14,19 @@ import send from "../shared/icon/send.svg"
 
 const Comment = memo((props) => {
 	
+	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+	const ip = IMAGES_BASE_URL;
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const cookie = getCookie("is_login");
 
+	const profileImg = ip + props.picture
 	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
 	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
 	// console.log("groupPage야야", groupPage)
-	// console.log("groupPage야야2", props)
-
+	console.log("코멘트컴포넌트", props)
 
 
 	const id = props.groupId
@@ -83,7 +86,7 @@ const Comment = memo((props) => {
 			<Box height="69px" position="relative" flex="flex" align="center">
 				<Warp>
 					<div>
-						<Circle marginT="17px"/>
+						<Circle marginT="17px" url={profileImg}/>
 					</div>
 					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
 						value={message}
@@ -104,7 +107,10 @@ const Comment = memo((props) => {
 			{
 				props.groupCommentList.map((comment, idx) => {
 					return (
-						<CommentList key={idx} {...comment} id={id} idx={idx} />
+						<CommentList key={idx} {...comment} id={id} 
+							myGroupCommentLikesList={props.myGroupCommentLikesList} 
+							idx={idx} 
+						/>
 					)
 				})
 			}
@@ -117,11 +123,15 @@ const Comment = memo((props) => {
 
 // 댓글 컴포넌트
 const CommentList = memo((props) => {
-
+	console.log("댓글 컴포넌트", props)
 	const dispatch = useDispatch();
+
+	const mylist = useSelector((state) => state.groupDetail.mylist)
 
 	const user = useSelector((state) => state.user.user_info)
 	const Me = user.username 
+	const likeList = mylist.myGroupCommentLikesList
+	const commentId = props.groupCommentId
 
 	const [edit, setEdit] = useState(false);
 	const [modal, setModal] = useState(false);
@@ -131,9 +141,19 @@ const CommentList = memo((props) => {
 		dispatch(groupDetailCreators.loadGroupPageMW(props.id));
 	}, [])
 
+	// 댓글 좋아요 누른거 아이콘 표시하기
+	useEffect(() => {
+    const likeIdx = likeList.indexOf(commentId)
+		console.log("likeIdx", likeIdx)
+    if (likeIdx >= 0) {
+      setLike(true)
+    }
+  }, [likeList]) 
+
 
 	const likeBtn = () => {
 		setLike(!like)
+		console.log(like)
 		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
 	}
 
@@ -170,10 +190,15 @@ const CommentList = memo((props) => {
 
 						{/* 좋아요 싫어요 */}
 						<Warp marginT="11px">
-							<Icon src={smail} alt="smail" marginR="7px" 
-								onClick={() => { likeBtn() }}
-							/> 
-							<Text size="12px" marginR="30px">
+							{
+								like ? 
+								<p onClick={() => { likeBtn() }} >🥰</p> 
+								: 
+								<p onClick={() => { likeBtn() }} >😶</p> 
+								// <Icon src={smail} alt="smail" marginR="7px" /> 
+								// : <Icon src={unSmail} alt="smail" marginR="7px" />
+							}
+							<Text size="14px" marginL="7px">
 								{props.groupcommentlikeCount}
 							</Text>
 							{/* <Icon src={unSmail} alt="unSmail" marginR="7px" />
@@ -277,6 +302,9 @@ const EditText = styled.textarea`
 	resize: none;
 `;
 
+Comment.defaultProps = {
+	myGroupCommentLikesList: []
+} 
 export default Comment;
 
 
@@ -323,6 +351,7 @@ const Text = styled.p`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-right: ${(props) => props.marginR};
+	margin-left: ${(props) => props.marginL};
 	margin-top: ${(props) => props.marginT};
 	cursor: ${(props) => props.pointer};
 	line-height: ${(props) => props.height};
@@ -358,8 +387,11 @@ const Circle = styled.div`
 	height: 29px;
 	border-radius: 50%;
 	background: #C4C4C4;
+	border: 1px solid #E7E7E7;
 	margin-top: ${(props) => props.marginT};
 	margin-left: 20px;
+	background-image: url(${(props) => props.url});
+  background-size: cover;
 `;
 
 const Icon = styled.img`

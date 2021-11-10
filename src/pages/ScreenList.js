@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { Container, Header, NaviBar, PancilBtn, Text } from "../components"
+import { Container, Header, PancilBtn, Text, NaviBar, MarginBottom } from "../components"
 import { Banner } from "../components/Banner"
 import { Modal } from "../components/Modal"
 import GroupCard from "../componentsGroupList/GroupCard"
@@ -50,7 +50,8 @@ export const ScreenList = () => {
           }}
         />
       </Container>
-      <NaviBar />
+      <MarginBottom/>
+      <NaviBar/>
     </>
   )
 }

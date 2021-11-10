@@ -14,42 +14,59 @@ const GroupDetail = (props) => {
   const params = useParams();
   const groupId = params.groupId
 	const [selectPage, setSelectPage] = useState(true)
+  const [close, setClose] = useState(false)
+  const [heartJoin, setHeartJoin] = useState(false);
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  const myliist = useSelector((state) => state.groupDetail.mylist)
-
+  const mylist = useSelector((state) => state.groupDetail.mylist)
 
 	useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
 		dispatch(groupDetailCreators.mylistMW())
-	},[])
+	},[groupId, heartJoin])
 
-  console.log("내꺼야", myliist)
+  console.log("상세페이지", loadDetail)
+  console.log("내꺼야", mylist)
+
+  const commentBtn = () => {
+    const myJoin = loadDetail.appliedUserInfo.findIndex(list => list.UserId === mylist.userid)
+		// console.log("myJoin",myJoin)
+    if(loadDetail.createdUserName === mylist.username) {
+      return setSelectPage(false)
+    } else if(myJoin >= 0) {
+      return setSelectPage(false)
+		} else {
+      window.alert("모임 참여자만 이용 가능합니다.")
+    }
+  }
 
 	return (
 		<Container>
 
 			{/* 글 정보 */}
-			<Info {...loadDetail} {...myliist} />
+			<Info {...loadDetail} {...mylist} 
+        close={close} setClose={setClose} 
+        heartJoin={heartJoin} setHeartJoin={setHeartJoin}
+      />
 
 			{/* 참여자 & 방명록 */}
 			<Box height="65px">
 
 				<Warp padding="20px 0 0 0">
-					<ParticipantBtn {...myliist} 
+					<ParticipantBtn {...loadDetail} 
             onClick={() => {setSelectPage(true)}} selectPage={selectPage}
           >
 						참여자
 					</ParticipantBtn>
 
-					<CommentBtn onClick={() => {setSelectPage(false)}} selectPage={selectPage}>
+					<CommentBtn onClick={() => {commentBtn()}} selectPage={selectPage}>
 						방명록
 					</CommentBtn>
 				</Warp>
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant {...loadDetail} /> : <Comment {...loadDetail} />} 
+				{selectPage === true ? <Participant {...loadDetail} {...mylist} close={close} /> : <Comment {...loadDetail} {...mylist} />} 
 
 			</Box>
 

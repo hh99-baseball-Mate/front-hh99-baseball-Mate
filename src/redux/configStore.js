@@ -7,15 +7,15 @@ import user from "./modules/user";
 import mainPage from "./modules/mainPage";
 import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
-import goods from "./modules/goods"
-import group from "./modules/group"
+import goods from "./modules/goods";
+import group from "./modules/group";
+import _with from "./modules/with"
 
 export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
   user,
-  // 각자 모듈
-
+  with: _with,
   group,
   goods,
   mainPage,

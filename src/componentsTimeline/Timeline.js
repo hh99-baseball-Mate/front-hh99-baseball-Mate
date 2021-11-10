@@ -18,6 +18,7 @@ const Timeline = React.memo((props) => {
 		dispatch(timelineCreators.loadTimelineMW());
 	}, [])
 
+	// 좋아요 누른거 가져와서 표시
 	useEffect(() => {
     const likeIdx = likelist.indexOf(props.timelineId)
     if (likeIdx >= 0) {
