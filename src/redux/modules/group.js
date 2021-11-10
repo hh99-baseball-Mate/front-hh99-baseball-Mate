@@ -44,7 +44,7 @@ const initialState = {
 //미들웨어
 const getGroupAPI = () => {
   return function (dispatch, getState, { history }) {
-    instance
+    tokenInstance
       .get(`/groups`)
       .then((res) => {
         console.log(res);
