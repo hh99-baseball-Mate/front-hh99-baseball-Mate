@@ -9,28 +9,25 @@ import { Participation } from "../componentsGroupList/Participation";
 import { Wish } from "../componentsGroupList/Wish";
 import { Write } from "../componentsGroupList/Write";
 import { actionCreators as withCr } from "../redux/modules/With";
+import Reciangle from "../shared/icon/Rectangle.png";
 
 const MyGroup = (props) => {
   const dispatch = useDispatch();
+  //참석
   const with_list = useSelector((state) => state.with.with_list);
+  //작성
+  const write_list = useSelector((state) => state.with.write_list);
   console.log(with_list, "테스트용");
+  console.log(write_list, "작성에 대해");
   //모달
-  const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
-  const [inputValue, setInputValue] = useState({
-    title: "",
-    selectTeam: "",
-    peopleLimit: 0,
-    content: "",
-  });
+
   const [showModal, setShowModal] = useState(false);
 
-  const [groupDate, setGroupDate] = useState("");
   //구분
-  const [participation, setParticipation] = useState(false);
+  const [participation, setParticipation] = useState(true);
   const [write, setWrite] = useState(false);
   const [wish, setWish] = useState(false);
 
-  const { content, peopleLimit, title, selectTeam } = inputValue;
   console.log(participation, "확");
   console.log(write, "인");
   console.log(wish, "용");
@@ -40,6 +37,13 @@ const MyGroup = (props) => {
     dispatch(withCr.getWithAPI());
   }, []);
   console.log(with_list, "확인좀해보자");
+
+  //작성
+  useEffect(() => {
+    dispatch(withCr.getWriteAPI());
+  }, []);
+  console.log(write_list, "피곤해");
+
   return (
     <All>
       <div
@@ -90,8 +94,9 @@ const MyGroup = (props) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
           maxWidth: "375px",
+          width: "100%",
+          margin: "0 auto",
         }}
       >
         <Up>내가 참여한 모임</Up>
@@ -104,21 +109,36 @@ const MyGroup = (props) => {
         </Btn>
       </div>
       {/* 카드 */}
-      {with_list.map((e) => (
-        <div style={{ margin: "20px" }}>
-          {participation ? <Participation /> : ""}
-          {write ? <Write /> : ""}
-        </div>
-      ))}
+      {with_list.map((e, idx) => {
+        console.log(e);
+
+        return (
+          <div style={{ margin: "20px" }}>
+            {participation ? <Participation key={idx} {...e} /> : ""}
+          </div>
+        );
+      })}
+
+      {write_list.map((e, idx) => {
+        console.log(e, "아직");
+
+        return (
+          <div style={{ margin: "20px" }}>
+            {write && !participation ? <Write key={idx} {...e} /> : ""}
+          </div>
+        );
+      })}
 
       {showModal ? (
-        <Modal
-          bottom
-          height="180px"
-          selectTeam_list={selectTeam_list}
-          setGroupDate={setGroupDate}
-          setShowModal={setShowModal}
-        ></Modal>
+        <Modal bottom btnConfirm height="180px" setShowModal={setShowModal}>
+          <Cen>
+            <img src={Reciangle} alt="등등" />
+            <p>전체보기</p>
+            <But>경기모임만</But>
+            <br />
+            <But>경기모임만</But>
+          </Cen>
+        </Modal>
       ) : (
         ""
       )}
@@ -152,9 +172,10 @@ const Group = styled.div`
   width: 250px;
   text-align: center;
   margin-left: 26px;
-  margin-top: 30px;
-  width: 375;
+  margin-top: 20px;
+
   background-color: none;
+  vertical-align: "middle";
 `;
 
 const Up = styled.p`
@@ -164,15 +185,32 @@ const Up = styled.p`
 `;
 
 const Btn = styled.button`
-  width: 75px;
-  height: 25px;
-  border-radius: 35%;
+  width: 90px;
+  height: 30px;
+  border-radius: 30px;
   background: none;
-  border-color: #c4c4c4;
+  border: 1px solid #e7e7e7;
   font-size: 14px;
   display: flex;
+  font-weight: 500;
+  color: #c4c4c4;
+  text-align: center;
 `;
-
 const All = styled.div`
   align-items: center;
+`;
+const But = styled.button`
+  font-weight: bold;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #777777;
+`;
+
+const Cen = styled.div`
+  text-align: left;
+  width: 100px;
+  margin: 0 auto;
+  color: #777777;
+  font-size: "14px";
 `;
