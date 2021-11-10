@@ -6,9 +6,9 @@ import { Modal } from "../components/Modal";
 import Etc from "../shared/icon/Etc.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Participation } from "../componentsGroupList/Participation";
-import { Wish } from "../componentsGroupList/Wish";
+// import { Wish } from "../componentsGroupList/Wish";
 import { Write } from "../componentsGroupList/Write";
-import { actionCreators as withCr } from "../redux/modules/With";
+import { actionCreators as withCr } from "../redux/modules/with"
 import Reciangle from "../shared/icon/Rectangle.png";
 
 const MyGroup = (props) => {

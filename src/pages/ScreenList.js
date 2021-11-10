@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { Container, Header, PancilBtn, Text, NaviBar, MarginBottom } from "../components"
 import { Banner } from "../components/Banner"
@@ -6,10 +7,17 @@ import { Modal } from "../components/Modal"
 import GroupCard from "../componentsGroupList/GroupCard"
 import { Region } from "../componentsScreen/Region"
 import { history } from "../redux/configStore"
+import { actionCreators as groupActions } from "../redux/modules/group"
 import ETC from "../shared/icon/Etc.png"
 
 export const ScreenList = () => {
+  const dispatch = useDispatch()
+
   const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    dispatch(groupActions.screenGetMD())
+  }, [])
 
   return (
     <>
@@ -38,7 +46,7 @@ export const ScreenList = () => {
 
         <PancilBtn
           onClick={() => {
-            history.push("/screenadd")
+            history.push("/screen/screenadd")
           }}
         />
       </Container>

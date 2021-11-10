@@ -77,13 +77,6 @@ export const GroupAdd = (props) => {
     })
   }
 
-  useEffect(() => {
-    if (selectTeam) {
-      console.log(selectTeam, "asdasd")
-      dispatch(groupActions.selectTeamMD(selectTeam))
-    }
-  }, [selectTeam])
-
   //  인원수 + 버튼
   const plusBtn = () => {
     if (peopleLimit < 8) {
@@ -111,15 +104,11 @@ export const GroupAdd = (props) => {
 
   // 입력체크
   const submitBtn = (e) => {
-    // const _emptyValue = Object.values(inputValue).map((e) => {
-    //   if (!e) {
-    //     return false
-    //   }
+    // const emptyValue = Object.values(inputValue).map((e) => {
+    //   return !e ? false : true
     // })
 
-    // const emptyValue = _emptyValue.includes(false)
-
-    // if (emptyValue) {
+    // if (emptyValue.includes(false) || !groupDate) {
     //   window.alert("빈란을 채워주세요")
     //   console.log("빈값있음")
     //   return
@@ -139,9 +128,15 @@ export const GroupAdd = (props) => {
     for (const keyValue of formData) console.log(keyValue)
   }
 
+  useEffect(() => {
+    if (selectTeam) {
+      dispatch(groupActions.selectTeamMD(selectTeam))
+    }
+  }, [selectTeam])
+
   return (
     <Container>
-      <ArrowBack>모임 생성</ArrowBack>
+      <ArrowBack>직관 모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
