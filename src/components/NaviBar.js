@@ -38,7 +38,7 @@ const NaviBar = (props) => {
         {/* 내 모임 */}
         <Icon
           onClick={() => {
-            history.push("/");
+            history.push("/mygroup");
           }}
         >
           {props.sch ? (

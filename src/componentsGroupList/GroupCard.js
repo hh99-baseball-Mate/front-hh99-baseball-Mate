@@ -7,7 +7,8 @@ import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
   const history = useHistory();
-
+  let team = props.name;
+  console.log(team);
   return (
     <Container
       onClick={() => {
