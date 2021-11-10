@@ -34,7 +34,7 @@ const Info = memo((props) => {
 	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   // const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  // const [heartJoin, setHeartJoin] = useState(false);
+  const [heartJoin, setHeartJoin] = useState(false);
 
   const myGroupLikesList= props.myGroupLikesList;
   const id = props.groupId;
@@ -49,11 +49,11 @@ const Info = memo((props) => {
     const groupLike = myGroupLikesList.indexOf(id)
     console.log("표시",groupLike)
     if (groupLike >= 0) {
-      return props.setHeartJoin(true)
+      setHeartJoin(true)
     } else {
-      return props.setHeartJoin(false)
+      setHeartJoin(false)
     }
-  },[props.heartJoin]) 
+  },[heartJoin]) 
 
 
 
@@ -68,8 +68,8 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const joinHeartBtn = () => {
-    props.setHeartJoin(!props.heartJoin)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heartJoin))
+    setHeartJoin(!heartJoin)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
   }
 
   // 수정버튼 
@@ -100,7 +100,7 @@ const Info = memo((props) => {
           }}
         >
           {
-            props.heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
+            heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
           }
         </JoinCircle>
       </Box>

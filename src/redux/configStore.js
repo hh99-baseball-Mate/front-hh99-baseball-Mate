@@ -9,13 +9,13 @@ import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-import With from "./modules/With";
+import With from "./modules/with";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user,
   // 각자 모듈
-  With,
+  with:With,
   group,
   goods,
   mainPage,
