@@ -49,92 +49,99 @@ const GroupDate = (props) => {
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
       {/* 여기서부터 카드 */}
-      {list.map((d, i) => {
-        return (
-          <div key={i}>
-            <Time>{d.date}</Time>
+      {list && list.length > 0 ? (
+        list.map((d, i) => {
+          return (
+            <div key={i}>
+              <Time>{d.date}</Time>
 
-            <div
-              style={{
-                overflow: "auto hidden",
-                display: "flex",
-                height: "210px",
-                alignItems: "center",
-              }}
-            >
-              {list.map((e, i) => {
-                console.log(e)
-                if (e && e.date === d.date) {
-                  return (
-                    <Box
-                      key={e.matchId}
-                      // name={e.matches}
-                      onClick={() => {
-                        console.log(e.matches)
-                      }}
-                    >
-                      <Local>
-                        <Text bold margin="0 0 7px">
-                          {e.time}
-                        </Text>
-                        <img
-                          src={Position}
-                          alt="위치"
-                          style={{
-                            marginRight: "6px",
-                          }}
-                        />
-                        {e.location}
-                      </Local>
+              <div
+                style={{
+                  overflow: "auto hidden",
+                  display: "flex",
+                  height: "210px",
+                  alignItems: "center",
+                }}
+              >
+                {list.map((e, i) => {
+                  console.log(e)
+                  if (e && e.date === d.date) {
+                    return (
+                      <Box
+                        key={e.matchId}
+                        // name={e.matches}
+                        onClick={() => {
+                          console.log(e.matches)
+                        }}
+                      >
+                        <Local>
+                          <Text bold margin="0 0 7px">
+                            {e.time}
+                          </Text>
+                          <img
+                            src={Position}
+                            alt="위치"
+                            style={{
+                              marginRight: "6px",
+                            }}
+                          />
+                          {e.location}
+                        </Local>
 
-                      <Card>
-                        <Col>
-                          <div>
-                            <Image
-                              src={e.awayImage}
-                              roundedCircle
-                              style={{
-                                width: "37px",
-                                height: "37px",
-                                background: "#FFFFFF",
-                                border: "1px solid #E7E7E7",
-                                boxSizing: "border-box",
-                                borderRadius: "50%",
-                              }}
-                            ></Image>
-                          </div>
+                        <Card>
+                          <Col>
+                            <div>
+                              <Image
+                                src={e.awayImage}
+                                roundedCircle
+                                style={{
+                                  width: "37px",
+                                  height: "37px",
+                                  background: "#FFFFFF",
+                                  border: "1px solid #E7E7E7",
+                                  boxSizing: "border-box",
+                                  borderRadius: "50%",
+                                }}
+                              ></Image>
+                            </div>
 
-                          <div>{e.awayteam}</div>
-                        </Col>
-                        <Col>
-                          <div>
-                            {" "}
-                            <Image
-                              src={e.homeImage}
-                              roundedCircle
-                              style={{
-                                width: "37px",
-                                height: "37px",
-                                background: "#FFFFFF",
-                                border: "1px solid #E7E7E7",
-                                boxSizing: "border-box",
-                                borderRadius: "50%",
-                                marginRight: "4px",
-                              }}
-                            />
-                          </div>
+                            <div>{e.awayteam}</div>
+                          </Col>
+                          <Col>
+                            <div>
+                              {" "}
+                              <Image
+                                src={e.homeImage}
+                                roundedCircle
+                                style={{
+                                  width: "37px",
+                                  height: "37px",
+                                  background: "#FFFFFF",
+                                  border: "1px solid #E7E7E7",
+                                  boxSizing: "border-box",
+                                  borderRadius: "50%",
+                                  marginRight: "4px",
+                                }}
+                              />
+                            </div>
 
-                          <div>{e.hometeam}</div>
-                        </Col>
-                      </Card>
-                    </Box>
-                  )
-                }
-              })}
+                            <div>{e.hometeam}</div>
+                          </Col>
+                        </Card>
+                      </Box>
+                    )
+                  }
+                })}
+              </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })
+      ) : (
+        <NotGameList>
+          경기가 없습니다
+          <Buttons margin="30px 0">돌아가기</Buttons>
+        </NotGameList>
+      )}
 
       {/* <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
         <Buttons submit>선택완료</Buttons>
@@ -181,3 +188,12 @@ const Time = styled.div`
   margin-top: 25px;
   /* margin-bottom: 11px; */
 `
+
+const NotGameList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+`
+;

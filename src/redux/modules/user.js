@@ -2,7 +2,9 @@ import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { getCookie, setCookie } from "../../shared/Cookie"
 import axios from "axios"
-import { instance, tokenInstance } from "../../lib/axios"
+import { img, instance, tokenInstance } from "../../lib/axios"
+
+const serverUrl = process.env.REACT_APP_BASE_URL
 
 // 액션타입
 
@@ -10,6 +12,7 @@ const LOGIN = "LOGIN"
 const LOGIN_CHECK = "LOGIN_CHECK"
 const CHOICE_CLUB = "CHOICE_CLUB"
 const PHONE_AUTH = "PHONE_AUTH"
+const USER_UPDATE = "USER_UPDATE"
 
 // 액션 함수
 
@@ -17,6 +20,7 @@ const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
 const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
 const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }))
 const phone_auth = createAction(PHONE_AUTH, (phoneNumber) => ({ phoneNumber }))
+// const userUpdate = createAction(USER_UPDATE, (user_info) => ({ user_info }))
 
 const initialState = {
   user_info: [],
@@ -51,7 +55,7 @@ const logInMD = (user_info) => {
 
         if (myteam === null) {
           console.log("구단선택하세요")
-          history.push("/clubchoice")
+          history.push("/login/clubchoice")
           return
         }
 
@@ -110,11 +114,25 @@ const logInCheckMD = () => {
         dispatch(loginCheck(login_user))
 
         if (myteam === null) {
-          history.replace("/clubchoice")
+          history.replace("/login/clubchoice")
           return
         }
       })
       .catch((err) => console.log(err, "로그인체크에러"))
+  }
+}
+
+const userUpdateMD = (formdata, id) => {
+  return function (dispatch, getState, { history }) {
+    // const user_info = getState().user.user_info
+
+    img
+      .patch(`http://54.180.148.132/users/${id}`, formdata)
+      .then((res) => {
+        console.log(res.data)
+        dispatch(logInCheckMD())
+      })
+      .catch((err) => console.log(err, "유저업데이트 오류"))
   }
 }
 
@@ -232,9 +250,11 @@ const actionCreators = {
   signUpMD,
   kakaoLogin,
   logInCheckMD,
+  userUpdateMD,
   choiceClubMD,
   PhoneAuthSubmitMD,
   PhoneAuthConfirmMD,
+  // userUpdate,
 }
 
 export { actionCreators }

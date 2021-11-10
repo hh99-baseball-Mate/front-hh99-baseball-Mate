@@ -14,24 +14,32 @@ import {
 } from "react-icons/ai"
 import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
-import { clubImageSrc } from "../shared/clubImage"
 import { Preview } from "../componentsGroupAdd/Preview"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
-import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
-import { history } from "../redux/configStore"
 import { KaKaoMap } from "../componentsScreen/KaKaoMap"
 import { Modal } from "../components/Modal"
+import DatePicker, { registerLocale } from "react-datepicker"
+import { ko } from "date-fns/esm/locale"
+import "react-datepicker/dist/react-datepicker.css"
 
 export const ScreenAdd = (props) => {
-  // const dispatch = useDispatch()
-  // 인풋 값 state
+  const dispatch = useDispatch()
+
+  // 날짜 datePicker 라이브러리
+
+  const [startDate, setStartDate] = useState("")
+
+  // datePicker 한글버전
+  registerLocale("ko", ko)
+
   const [inputValue, setInputValue] = useState({
     title: "",
-    selectTeam: "",
     peopleLimit: 0,
     content: "",
   })
+
+  const [location, setLocation] = useState("")
 
   // 이미지 미리보기 state
   const [preview, setPreview] = useState("")
@@ -54,9 +62,7 @@ export const ScreenAdd = (props) => {
       window.alert("삭제 할 사진이 없어요")
       return
     }
-
     setPreview("")
-    console.log("삭제를 해야되는데..")
   }
 
   // 인풋 입력 값 추적 e.target.value 대행
@@ -68,7 +74,6 @@ export const ScreenAdd = (props) => {
       [name]: value,
     })
   }
-
   //  인원수 + 버튼
   const plusBtn = () => {
     if (peopleLimit < 8) {
@@ -96,37 +101,40 @@ export const ScreenAdd = (props) => {
 
   // 입력체크
   const submitBtn = (e) => {
-    // const _emptyValue = Object.values(inputValue).map((e) => {
-    //   if (!e) {
-    //     return false
-    //   }
-    // })
+    // 입력 state 중에 빈값이 있으면 fasle 없으면 true
+    const emptyValue = Object.values(inputValue).map((e) => {
+      return !e ? false : true
+    })
 
-    // const emptyValue = _emptyValue.includes(false)
+    // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
-    // if (emptyValue) {
-    //   window.alert("빈란을 채워주세요")
-    //   console.log("빈값있음")
-    //   return
-    // }
+    if (emptyValue.includes(false) || !location || !startDate) {
+      window.alert("빈란이 있습니다")
+      return
+    } else {
+      // 아니면 폼데이터 post 디스패치
+      const groupDateForm = new Date(startDate).toLocaleString()
 
-    const formData = new FormData()
+      const formData = new FormData()
 
-    formData.append("title", inputValue.title)
-    // formData.append("groupDate", groupDate)
-    formData.append("content", inputValue.content)
-    formData.append("peopleLimit", inputValue.peopleLimit)
-    // formData.append("selectTeam", inputValue.selectTeam)
-    formData.append("file", preview)
+      formData.append("title", inputValue.title)
+      formData.append("groupDate", groupDateForm)
+      formData.append("content", inputValue.content)
+      formData.append("peopleLimit", inputValue.peopleLimit)
+      formData.append("selectPlace", location)
+      formData.append("filePath", preview)
 
-    // dispatch(groupActions.addGroupMD(formData))
-    e.target.disabled = true
-    for (const keyValue of formData) console.log(keyValue)
+      dispatch(groupActions.screenAddMD(formData))
+      e.target.disabled = true
+
+      // 폼데이터 console
+      for (const keyValue of formData) console.log(keyValue)
+    }
   }
 
   return (
     <Container>
-      <ArrowBack>모임 생성</ArrowBack>
+      <ArrowBack>스크린야구 모임 생성</ArrowBack>
 
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
@@ -143,40 +151,51 @@ export const ScreenAdd = (props) => {
         {/* 구단선택 */}
         <Grid>
           <TextBox onClick={() => setShowModal(true)}>
-            <Text>장소선택</Text>
-
+            <TextIcons>
+              <Text>장소선택</Text>
+              {location && <InputCheck />}
+            </TextIcons>
             {/* 일정 정보 */}
             <GameDate>
-              {/* {groupDate && <Text margin="0 10px">{groupDate}</Text>} */}
-              <AiOutlineDown
-                color="777777"
-                onClick={() => {
-                  // history.push("/screenadd/map")
-                }}
-              />
+              <Text margin="0 10px">{location}</Text>
+              <AiOutlineDown color="777777" />
             </GameDate>
           </TextBox>
         </Grid>
+
+        {/* 카카오지도 모달 */}
         {showModal ? (
-          <Modal bottom height="500px">
-            <KaKaoMap />
+          <Modal bottom height="650px">
+            <CloseBtn onClick={() => setShowModal(false)}>
+              <Buttons>닫기</Buttons>
+            </CloseBtn>
+            <KaKaoMap setLocation={setLocation} setShowModal={setShowModal} />
           </Modal>
         ) : null}
-        {/* 일정선택 모달창 props 전달 */}
 
         {/* 일정 선택 */}
         <Grid>
           <TextBox>
-            <Text>일정선택</Text>
+            <TextIcons>
+              <Text>일정선택</Text>
+              {startDate && <InputCheck />}
+            </TextIcons>
 
-            {/* 일정 정보 */}
-            <GameDate>
-              {/* {groupDate && <Text margin="0 10px">{groupDate}</Text>} */}
-              <AiOutlineDown color="777777" onClick={() => {}} />
-            </GameDate>
+            {/* DatePicker 영역 설정 */}
+            <div style={{ width: "188px" }}>
+              <SDatePicker
+                locale="ko"
+                minDate={new Date()}
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                showTimeSelect
+                isClearable
+                popperPlacement="bottom"
+                dateFormat="MMM dd일 aa hh시mm분 "
+                placeholderText="약속 시간을 잡아주세요"
+              />
+            </div>
           </TextBox>
-
-          {/* 일정선택 모달창 props 전달 */}
         </Grid>
 
         {/* <div>인원수 선택</div> */}
@@ -253,6 +272,11 @@ const Grid = styled.div`
   border-bottom: 1px solid #e7e7e7;
 `
 
+const TextIcons = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const ButtonBox = styled.div`
   position: fixed;
   width: 335px;
@@ -277,10 +301,6 @@ const PeopleSelect = styled.div`
   right: 0px;
 `
 
-const Option = styled.option`
-  text-align: center;
-`
-
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
@@ -295,4 +315,27 @@ const TextBox = styled.div`
 
 const GameDate = styled.div`
   display: flex;
+`
+const CloseBtn = styled.div`
+  position: absolute;
+  z-index: 99;
+  top: 5px;
+  width: 50px;
+  background-color: transparent;
+  border: none;
+  opacity: 0.8;
+  right: 5px;
+`
+
+const SDatePicker = styled(DatePicker)`
+  width: 180px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 0 5px;
+  border: none;
+  :focus {
+    outline: none !important;
+    /* border: 1px solid #f25343; */
+  }
 `

@@ -31,7 +31,7 @@ const GroupList = (props) => {
   console.log(team_list);
   let team = "";
   function newPeople() {
-    history.push("/groupadd");
+    history.push("/grouplist/groupadd")
   }
 
   function choose() {
@@ -73,9 +73,9 @@ const GroupList = (props) => {
               <SwiperSlide
                 style={{ width: "68px", marginRight: "15px" }}
                 onClick={() => {
-                  console.log(e.short_name);
+                  console.log(e.name);
                   // dispatch(groupCr.getTeamAPI(e.short_name));
-                  team = e.short_name;
+                  team = e.name;
 
                   // history.push(`/${e.name}`);
                 }}
@@ -86,7 +86,7 @@ const GroupList = (props) => {
                   roundedCircle
                 />
                 <Text size="11px" center>
-                  {e.name}
+                  {team}
                 </Text>
               </SwiperSlide>
             ))}
@@ -111,6 +111,7 @@ const GroupList = (props) => {
         <Broder />
         {group_list.map((e, idx) => {
           console.log(e);
+          team = e.name;
           return <GroupCard key={idx} {...e} />;
         })}
         <PancilBtn onClick={newPeople} />

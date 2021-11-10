@@ -6,30 +6,29 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 
   const history = useHistory();
 
-  const [close, setClose] = useState(false)
+  const [close, setClose] = useState(false);
 
   const ip = IMAGES_BASE_URL;
-	const img = props.filePath;
-	const imageUrl = ip + img
+  const img = props.filePath;
+  const imageUrl = ip + img;
 
-  console.log("imageUrl",imageUrl)
+  console.log("imageUrl", imageUrl);
 
-  console.log("그룹카드", props)
-  console.log("그룹카드2", props.dday, props.canApplyNum)
+  console.log("그룹카드", props);
+  console.log("그룹카드2", props.dday, props.canApplyNum);
 
   // 모집중, 마감중 표시
   useEffect(() => {
-    if (props.dday < 0 || props.canApplyNum === 0 ) {
-      setClose(true)
+    if (props.dday < 0 || props.canApplyNum === 0) {
+      setClose(true);
     } else {
-      setClose(false)
+      setClose(false);
     }
-  }, [])
+  }, []);
   // console.log("props.close", close)
 
   return (
@@ -41,16 +40,23 @@ const GroupCard = (props) => {
       <Card>
         <Warp margin="0 0 16px 0">
           <Warp flex="flex" margin="0 0 12px 0">
-          {
-            close ? 
-            <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
-              마감
-            </Ellipse>
-              :
-            <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-              모집중
-            </Ellipse>
-          }
+            {close ? (
+              <Ellipse
+                borderColor="#C4C4C4"
+                background="#C4C4C4"
+                color="#FFFFFF"
+              >
+                마감
+              </Ellipse>
+            ) : (
+              <Ellipse
+                borderColor="#F25343"
+                background="#F25343"
+                color="#FFFFFF"
+              >
+                모집중
+              </Ellipse>
+            )}
             {/* <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
               모집중
             </Ellipse> */}
@@ -174,7 +180,7 @@ const Circle = styled.div`
   height: 48px;
   border-radius: 50%;
   background: #c4c4c4;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
   position: absolute;
   left: 78.51%;
