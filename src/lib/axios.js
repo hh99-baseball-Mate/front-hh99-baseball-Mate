@@ -77,6 +77,12 @@ export const tokenApis = {
   // 상세페이지 조회
   getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
 
+  // 상세페이지 수정
+  putGroupDetail: (groupId, title, content) => tokenInstance.put(`/groups/${groupId}`, title, content,),
+
+  // 상세페이지 삭제
+  delGroupDetail: (groupId) => tokenInstance.delete(`/groups/${groupId}`),
+
   // 모임 좋아(찜) 하기/취소하기
   postGroupsLike: (groupId, isLiked) =>
     tokenInstance.post(`/groups/${groupId}/like`, isLiked),

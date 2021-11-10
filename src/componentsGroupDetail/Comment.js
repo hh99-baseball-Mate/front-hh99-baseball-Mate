@@ -14,10 +14,14 @@ import send from "../shared/icon/send.svg"
 
 const Comment = memo((props) => {
 	
+	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+	const ip = IMAGES_BASE_URL;
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const cookie = getCookie("is_login");
 
+	const profileImg = ip + props.picture
 	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
 	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
@@ -82,7 +86,7 @@ const Comment = memo((props) => {
 			<Box height="69px" position="relative" flex="flex" align="center">
 				<Warp>
 					<div>
-						<Circle marginT="17px"/>
+						<Circle marginT="17px" url={profileImg}/>
 					</div>
 					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
 						value={message}
@@ -383,8 +387,11 @@ const Circle = styled.div`
 	height: 29px;
 	border-radius: 50%;
 	background: #C4C4C4;
+	border: 1px solid #E7E7E7;
 	margin-top: ${(props) => props.marginT};
 	margin-left: 20px;
+	background-image: url(${(props) => props.url});
+  background-size: cover;
 `;
 
 const Icon = styled.img`
