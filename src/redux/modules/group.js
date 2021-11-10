@@ -21,6 +21,8 @@ const ADD_GROUP = "ADD_GROUP";
 const GET_TEAM = "GET_TEAM";
 const SELECT_TEAM = "SELECT_TEAM";
 const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE"
+const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
+const SCREEN_GET_GROUP = "SCREEN_GET_GROUP"
 
 //액션함수
 const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }));
@@ -29,7 +31,15 @@ const addGroup = createAction(ADD_GROUP, (addList) => ({ addList }));
 const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
 const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
 
-const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
+const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }))
+
+const screenAddGroup = createAction(SCREEN_ADD_GROUP, (screenAddList) => ({
+  screenAddList,
+}))
+const screenGetGroup = createAction(SCREEN_GET_GROUP, (screenGetList) => ({
+  screenGetList,
+}))
+
 //초기값
 const initialState = {
   group_list: [],
@@ -88,6 +98,7 @@ const getTeamAPI = (teamname) => {
   };
 };
 
+// 직관 모임만들기
 const addGroupMD = (formData) => {
   return function (dispatch, getState, { history }) {
     img
@@ -101,6 +112,21 @@ const addGroupMD = (formData) => {
   };
 };
 
+// 스야 모임만들기
+const screenAddMD = (formData) => {
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .post("/screen", formData)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err, "스야 모임생성오류")
+      })
+  }
+}
+
+// 팀선택
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
     const teamname = myteam.split(" ");
@@ -131,6 +157,17 @@ const delGroupPageMW = (groupId) => {
 				console.log(err)
 			})
 	}	
+}
+
+const screenGetMD = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get("/screen")
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => console.log(err, "스야 모임불러오기 오류"))
+  }
 }
 
 //리듀서
@@ -172,7 +209,11 @@ const actionCreators = {
   getTeamAPI,
   selectTeam,
   selectTeamMD,
-  delGroupPageMW
+  delGroupPageMW,
+  screenAddGroup,
+  screenAddMD,
+  screenGetGroup,
+  screenGetMD,
 };
 
 export { actionCreators };

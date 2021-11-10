@@ -33,4 +33,25 @@ const Btn = styled.button`
   border: 0;
   outline: 0;
   cursor: pointer;
+
+  /* 연필 숨김 방지 */
+  @media only screen and (max-width: 1024px) {
+    position: fixed;
+    right: 10px;
+    bottom: 80px;
+    transform: translate(-50%, -50%);
+  }
+
+  @media only screen and (max-width: 768px) {
+    position: fixed;
+    right: 10px;
+    bottom: 80px;
+    transform: translate(-50%, -50%);
+  }
+  @media only screen and (max-width: 375px) {
+    position: fixed;
+    right: 10px;
+    bottom: 80px;
+    transform: translate(-50%, -50%);
+  }
 `

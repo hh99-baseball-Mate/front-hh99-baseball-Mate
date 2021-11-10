@@ -6,6 +6,7 @@ import { BsGear } from "react-icons/bs"
 import { history } from "../redux/configStore"
 import { useSelector } from "react-redux"
 import { Modal } from "../components/Modal"
+import { TextLine } from "../components/TextLine"
 
 export const MyPage = ({ is_login }) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
@@ -14,6 +15,16 @@ export const MyPage = ({ is_login }) => {
   //   "http://kmvkf2hvhfn2vj9tl8e6ps7v-wpengine.netdna-ssl.com/wp-content/uploads/2017/10/default-img.png"
 
   const user_info = useSelector((state) => state.user.user_info)
+  const {
+    picture,
+    userid,
+    username,
+    usertype,
+    useridx,
+    address,
+    selfIntroduce,
+  } = user_info
+  // console.log(user_info)
 
   // 모달 뜨기/ 숨기기
   const [showModal, setShowModal] = useState(false)
@@ -23,11 +34,19 @@ export const MyPage = ({ is_login }) => {
     title: "나가지마이자식아",
     descriptionOne: "ㅇㅇ",
     descriptionTwo: "ㄹㄹ",
-    btnClose: "ㄹㄹ",
-    btnConfirm: "ㅁㅁ",
+    btnClose: "취소",
+    btnConfirm: "나가기",
   })
 
-  const { picture, userid, username, useridx, usertype } = user_info
+  const srcChange = () => {
+    if (usertype === "normal") {
+      return IMAGES_BASE_URL + "/" + picture
+    } else if (usertype === "kakao") {
+      return picture
+    } else {
+      return picture
+    }
+  }
 
   return (
     <>
@@ -36,19 +55,14 @@ export const MyPage = ({ is_login }) => {
         {is_login ? (
           <>
             <UserInfo>
-              <ProfileImg
-                src={
-                  usertype === "normal"
-                    ? `${IMAGES_BASE_URL}/${picture}`
-                    : picture
-                }
-              />
+              <ProfileImg src={srcChange()} />
               <UserId>
-                <Text size="14px" margin="2px 0">
-                  {username}
-                </Text>
-                <Text color="#777777" size="12px">
+                <Text size="14px">{username}</Text>
+                <Text color="#777777" size="12px" margin="5px 0">
                   {userid}
+                </Text>
+                <Text color="#000" size="12px">
+                  {address}
                 </Text>
               </UserId>
               <BsGear
@@ -68,7 +82,7 @@ export const MyPage = ({ is_login }) => {
                 margin="20px"
                 height="60px"
                 disabled
-                placeholder="자기소개다"
+                placeholder={selfIntroduce}
               ></Inputs>
             </div>
           </>
@@ -92,13 +106,7 @@ export const MyPage = ({ is_login }) => {
           />
         </TextBox>
 
-        <TextBox onClick={() => setShowModal(!showModal)}>
-          <Text margin="0px 20px 0"> 내 모임 </Text>
-          <IoIosArrowForward
-            color="777777"
-            style={{ position: "absolute", right: "20px" }}
-          />
-        </TextBox>
+        <TextLine>내모임</TextLine>
 
         {/* 모달창 */}
         {showModal && (
@@ -113,13 +121,7 @@ export const MyPage = ({ is_login }) => {
           ></Modal>
         )}
 
-        <TextBox onClick={() => history.push("/")}>
-          <Text margin="0px 20px 0">공지사항</Text>
-          <IoIosArrowForward
-            color="777777"
-            style={{ position: "absolute", right: "20px" }}
-          />
-        </TextBox>
+        <TextLine>공지사항</TextLine>
       </Container>
 
       {/* 하단네비바 */}
@@ -147,7 +149,7 @@ const UserInfo = styled.div`
 const ProfileImg = styled.img`
   width: 48px;
   height: 48px;
-  background-color: #e7e7e7;
+  /* background-color: #e7e7e7; */
   margin: 20px;
   border-radius: 50%;
   :hover {

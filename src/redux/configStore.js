@@ -9,13 +9,13 @@ import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-import With from "./modules/with";
-export const history = createBrowserHistory();
+import _with from "./modules/with"
+
+export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
   user,
-  // 각자 모듈
-  with:With,
+  with: _with,
   group,
   goods,
   mainPage,
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   groupDetail,
 
   router: connectRouter(history),
-});
+})
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

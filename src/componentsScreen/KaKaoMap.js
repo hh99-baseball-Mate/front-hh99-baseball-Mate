@@ -1,8 +1,9 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Container } from "../components"
 
-export const KaKaoMap = () => {
+export const KaKaoMap = ({ setLocation, setShowModal }) => {
   const { kakao } = window
+
   useEffect(() => {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 })
@@ -74,7 +75,9 @@ export const KaKaoMap = () => {
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
             place.place_name +
-            "</div>"
+            "</div>",
+          setLocation(place.place_name),
+          setShowModal(false)
         )
         infowindow.open(map, marker)
       })
@@ -83,10 +86,12 @@ export const KaKaoMap = () => {
     var zoomControl = new kakao.maps.ZoomControl()
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
   }, [])
-
   return (
     <Container>
-      <div style={{ width: "500px", height: "500px" }} id="map"></div>
+      <div
+        style={{ width: "375px", height: "650px", margin: "0px -20px 0" }}
+        id="map"
+      ></div>
     </Container>
   )
 }

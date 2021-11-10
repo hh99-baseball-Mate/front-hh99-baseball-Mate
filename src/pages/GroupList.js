@@ -31,7 +31,7 @@ const GroupList = (props) => {
   console.log(team_list);
   let team = "";
   function newPeople() {
-    history.push("/groupadd");
+    history.push("/grouplist/groupadd")
   }
 
   function choose() {
