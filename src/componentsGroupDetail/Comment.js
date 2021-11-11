@@ -63,14 +63,14 @@ const Comment = memo((props) => {
 						방명록 {props.groupCommentList.length}
 					</Text>
 
-					<Warp>
+					{/* <Warp>
 						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
 							인기순
 						</Text>
 						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
 							최신순
 						</Text>
-					</Warp>
+					</Warp> */}
 				</Warp>
 			</Box>
 

@@ -60,7 +60,6 @@ function App() {
             <Route path="/user/kakao/callback" component={KAKAOhandle} />
             <Route path="/grouplist" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
-            <Route path="/groupadd" exact component={GroupAdd} />
             <Route path="/grouplist/groupadd" exact component={GroupAdd} />
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
@@ -76,7 +75,6 @@ function App() {
             />
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
-            <Route path="/screenadd" exact component={ScreenAdd} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
 
             {/* 임시 */}

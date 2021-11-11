@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ArrowBack, Container } from "../components";
+import { ArrowBack, Container, NaviBar, MarginBottom } from "../components";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
 import Etc from "../shared/icon/Etc.png";
@@ -142,6 +142,9 @@ const MyGroup = (props) => {
       ) : (
         ""
       )}
+
+      <MarginBottom/>
+      <NaviBar sch/>
     </All>
   );
 };
