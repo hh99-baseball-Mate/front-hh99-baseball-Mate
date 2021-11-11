@@ -40,7 +40,7 @@ export const MyPage = ({ is_login }) => {
 
   const srcChange = () => {
     if (usertype === "normal") {
-      return IMAGES_BASE_URL + "/" + picture
+      return IMAGES_BASE_URL + picture
     } else if (usertype === "kakao") {
       return picture
     } else {

@@ -19,8 +19,13 @@ import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
 import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
+import { groupDetailCreators } from "../redux/modules/groupDetail"
+import { useParams } from "react-router"
 
 export const GroupEdit = (props) => {
+
+  const params = useParams();
+  const groupId = params.groupId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
   const ip = IMAGES_BASE_URL;
@@ -33,26 +38,36 @@ export const GroupEdit = (props) => {
 
   const img = ip + loadDetail.filePath
 
+  // loadDetail ? ip + loadDetail.filePath : props.defaultImg
   console.log("모임수정",loadDetail)
+  
+  // 구단선택
+  const team = loadDetail.groupDate.split("vs")[1];
+  // console.log("팀",team);
 
   // console.log(selectTeam_list)
   // 인풋 값 state
   const [inputValue, setInputValue] = useState({
-    title: loadDetail.title,
-    selectTeam: "",
-    peopleLimit: loadDetail.peopleLimit,
-    content: loadDetail.content,
+    title: loadDetail?.title,
+    // selectTeam: team,
+    peopleLimit: loadDetail?.peopleLimit,
+    content: loadDetail?.content,
+    src: loadDetail ? ip + loadDetail.filePath : props.defaultImg,
   })
 
   // 이미지 미리보기 state
-  const [preview, setPreview] = useState("")
+  const [preview, setPreview] = useState(img)
 
   // 모달 보기 state
   const [showModal, setShowModal] = useState(false)
 
   const [groupDate, setGroupDate] = useState(loadDetail.groupDate)
 
-  const { content, peopleLimit, title, selectTeam } = inputValue
+  const { content, peopleLimit, title, selectTeam, src } = inputValue
+
+  useEffect(() => {
+    dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+  }, [inputValue])
 
   // 이미지 업로드 / 미리보기
 
@@ -141,10 +156,10 @@ export const GroupEdit = (props) => {
     formData.append("groupDate", groupDate)
     formData.append("content", inputValue.content)
     formData.append("peopleLimit", inputValue.peopleLimit)
-    formData.append("selectTeam", inputValue.selectTeam)
+    // formData.append("selectTeam", inputValue.selectTeam)
     formData.append("file", preview)
 
-    dispatch(groupActions.addGroupMD(formData))
+    dispatch(groupDetailCreators.editGroupPageMW(groupId, formData))
     e.target.disabled = true
     for (const keyValue of formData) console.log(keyValue)
   }
@@ -156,7 +171,7 @@ export const GroupEdit = (props) => {
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
         <Inputs
-          value={title}
+          value={ title }
           name="title"
           onChange={onChange}
           placeholder="모임명을 입력해주세요"
@@ -194,7 +209,7 @@ export const GroupEdit = (props) => {
 
             {/* 일정 정보 */}
             <GameDate>
-              {groupDate && <Text margin="0 10px">{groupDate}</Text>}
+              {loadDetail ? <Text margin="0 10px">{loadDetail.groupDate}</Text> : "" }
               <AiOutlineDown color="777777" onClick={showModalBtn} />
             </GameDate>
           </TextBox>
@@ -202,7 +217,7 @@ export const GroupEdit = (props) => {
           {/* 일정선택 모달창 props 전달 */}
           {showModal ? (
             <GroupAddModal
-              selectTeam_list={selectTeam_list}
+              selectTeam_list={ selectTeam_list }
               setGroupDate={setGroupDate}
               setShowModal={setShowModal}
             ></GroupAddModal>
@@ -232,7 +247,7 @@ export const GroupEdit = (props) => {
         <Inputs
           textarea
           name="content"
-          value={content}
+          value={ content }
           placeholder="모임소개를 해주세요 (최대길이 500자)"
           onChange={onChange}
           maxLength="500"
@@ -256,7 +271,12 @@ export const GroupEdit = (props) => {
 
           {/* 업로드 이미지 미리보기 */}
           <Preview
-            src={preview ? URL.createObjectURL(preview) : props.defaultImg }
+            src={ preview ? preview 
+              : 
+              preview === "" ?
+              props.defaultImg :
+              URL.createObjectURL(preview) 
+            }
             name="preview"
             onClick={deletePreview}
           />
