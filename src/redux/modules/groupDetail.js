@@ -228,6 +228,7 @@ export default handleActions(
 			}
 		}),
 		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
+			console.log("페이로드", action.payload.my)
 			draft.groupPage.appliedUserInfo.push(action.payload.my)
 		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
