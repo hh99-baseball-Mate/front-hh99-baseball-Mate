@@ -6,7 +6,7 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
   const history = useHistory()
 
@@ -16,25 +16,25 @@ const GroupCard = (props) => {
   const img = props.filePath
   const imageUrl = ip + img
 
-  console.log("imageUrl", imageUrl)
+  // console.log("imageUrl", imageUrl)
 
-  console.log("그룹카드", props)
-  console.log("그룹카드2", props.dday, props.canApplyNum);
+  // console.log("그룹카드", props)
+  // console.log("그룹카드2", props.dday, props.canApplyNum);
 
   // 모집중, 마감중 표시
   useEffect(() => {
     if (props.dday < 0 || props.canApplyNum === 0) {
-      setClose(true);
+      setClose(true)
     } else {
-      setClose(false);
+      setClose(false)
     }
-  }, []);
+  }, [])
   // console.log("props.close", close)
 
   return (
     <Container
       onClick={() => {
-        history.push("/groupdetail/" + props.groupId);
+        history.push("/groupdetail/" + props.groupId)
       }}
     >
       <Card>
@@ -109,7 +109,7 @@ const GroupCard = (props) => {
         </Warp>
       </Card>
     </Container>
-  );
+  )
 };
 
 export default GroupCard;

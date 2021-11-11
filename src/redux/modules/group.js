@@ -62,7 +62,13 @@ const getPlayAPI = (team) => {
     instance
       .get(`/kbodatas`)
       .then((res) => {
-        console.log(res.data)
+        //  const screenLength = res.data.length
+
+        //  const infinityView = res.data.slice(start, next)
+
+        //  dispatch(screenGetGroup(infinityView, screenLength))
+
+        // console.log(res.data)
         dispatch(getPlay(res.data))
       })
       .catch((err) => {

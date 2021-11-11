@@ -91,11 +91,8 @@ export default App
 
 const Container = styled.div`
   width: 375px;
-  /* min-height: 100vh; */
-  /* max-height: auto; */
-  /* height: 100vmax; */
+  min-height: 100vh;
   margin: auto;
   background: #fff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-  /* flex:1; */
 `

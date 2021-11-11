@@ -17,23 +17,41 @@ import { history } from "../redux/configStore"
 import { actionCreators as screenAction } from "../redux/modules/screen"
 import ETC from "../shared/icon/Etc.png"
 
+import { GiBaseballGlove } from "react-icons/gi"
+import { InfinityScroll } from "../components/InfinityScroll"
+
 export const ScreenList = () => {
   const dispatch = useDispatch()
 
+  const [infinity, setinfinity] = useState({
+    start: 0,
+    next: 4,
+  })
   const [showModal, setShowModal] = useState(false)
   const [regoin, setRegoin] = useState("")
 
-  console.log(regoin)
   const screen_list = useSelector((state) => state.screen.screen_list)
+  const is_loading = useSelector((state) => state.screen.is_loading)
+  const list_length = useSelector((state) => state.screen.list_length)
 
   useEffect(() => {
-    dispatch(screenAction.screenGetMD(regoin))
+    // 필터 값을 넘겨서 겟 요청
+    dispatch(screenAction.screenGetMD(regoin, infinity))
 
     console.log("디스패치횟수")
-  }, [regoin])
+  }, [regoin, infinity])
 
   return (
-    <>
+    <InfinityScroll
+      callNext={() => {
+        setinfinity({
+          start: infinity.start,
+          next: (infinity.next += 3),
+        })
+      }}
+      is_next={list_length > infinity.next}
+      loading={is_loading}
+    >
       <Header nowBtnSB />
       <Banner bg="#e7e7e7">배너</Banner>
       <Container>
@@ -56,11 +74,15 @@ export const ScreenList = () => {
           ) : null}
         </ListBar>
 
-        {screen_list && screen_list.length > 0
-          ? screen_list.map((e) => (
-              <GroupCard key={e.screenId} screen_list={e} />
-            ))
-          : ""}
+        {screen_list && screen_list.length > 0 ? (
+          screen_list.map((e) => <GroupCard key={e.screenId} screen_list={e} />)
+        ) : (
+          <NotGame>
+            <GiBaseballGlove size="32px" color="#3c1010" />
+            생성된 모임이 없습니다.
+            <br /> 모임을 만들어주세요!
+          </NotGame>
+        )}
 
         <PancilBtn
           onClick={() => {
@@ -70,7 +92,7 @@ export const ScreenList = () => {
       </Container>
       <MarginBottom />
       <NaviBar />
-    </>
+    </InfinityScroll>
   )
 }
 
@@ -93,4 +115,17 @@ const IconText = styled.p`
 const Icons = styled.img`
   width: 13px;
   height: 13px;
+`
+
+const NotGame = styled.div`
+  margin: 0 auto;
+  width: 300px;
+  height: 500px;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  line-height: 2;
+  text-align: center;
 `

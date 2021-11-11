@@ -20,11 +20,6 @@ const GroupDetail = (props) => {
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
-	useEffect(()=>{
-		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-		dispatch(groupDetailCreators.mylistMW())
-	},[groupId, heartJoin])
-
   console.log("상세페이지", loadDetail)
   console.log("내꺼야", mylist)
 
@@ -39,6 +34,12 @@ const GroupDetail = (props) => {
       window.alert("모임 참여자만 이용 가능합니다.")
     }
   }
+
+
+  useEffect(()=>{
+		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+		dispatch(groupDetailCreators.mylistMW())
+	},[groupId, heartJoin, ParticipantBtn])
 
 	return (
 		<Container>
