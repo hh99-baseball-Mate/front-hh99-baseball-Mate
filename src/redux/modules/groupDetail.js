@@ -21,7 +21,7 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
 const edit_groupPage = createAction(LOAD_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
 const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
-const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
+const group_apply = createAction(GROUP_APPLY, (my) => ({ my }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
@@ -78,6 +78,7 @@ const loadGroupPageMW = (groupId) => {
 	}
 }
 
+// 수정하기
 const editGroupPageMW = (groupId, formData) => {
 	return (dispatch, getState, {history}) => {
 		// const title = {title:titles}
@@ -111,12 +112,13 @@ const likePostMW = (groupId,like) => {
 }
 
 // 참석하기
-const groupApplyMW = (groupId) => {
+const groupApplyMW = (groupId, my) => {
 	return (dispatch, getState, {history}) => {
 		tokenApis
 			.postApply(groupId)
 			.then((res) => {
 				console.log(res)
+				dispatch(group_apply(my))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -224,6 +226,9 @@ export default handleActions(
 					draft.mylist.myGroupLikesList.splice(idx, 1);
 				}
 			}
+		}),
+		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
+			draft.groupPage.appliedUserInfo.push(action.payload.my)
 		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)

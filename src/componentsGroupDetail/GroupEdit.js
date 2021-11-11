@@ -72,6 +72,7 @@ export const GroupEdit = (props) => {
   // 이미지 업로드 / 미리보기
 
   const imgPreview = (e) => {
+    console.log("이미지업로드",e.target.files[0])
     setPreview(e.target.files[0])
   }
 
@@ -271,11 +272,14 @@ export const GroupEdit = (props) => {
 
           {/* 업로드 이미지 미리보기 */}
           <Preview
-            src={ preview ? preview 
+            src={ 
+              // 이미지가 받아온 이미지와 같으면 받아온 이미지
+              preview === img ? 
+              preview 
               : 
+              // 프리뷰가 빈값이면 빈이미지, 아니면 새로운 이미지
               preview === "" ?
-              props.defaultImg :
-              URL.createObjectURL(preview) 
+              props.defaultImg : URL.createObjectURL(preview)
             }
             name="preview"
             onClick={deletePreview}

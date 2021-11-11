@@ -156,8 +156,7 @@ const CommentList = memo((props) => {
 		console.log(like)
 		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
 	}
-
-	console.log("댓글 컴포넌트", props)
+	
 
 	return (
 		<React.Fragment>	

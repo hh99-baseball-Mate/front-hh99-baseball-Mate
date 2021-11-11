@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
@@ -19,28 +19,35 @@ const Participant = memo((props) => {
 
 	const id = props.groupId;
 
+	const mylist = useSelector((state) => state.groupDetail.mylist);
 	const [join, setJoin] = useState(false);
+	
+	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
+	// console.log("나는",my)
 
-	// 참석한사람 표시
+	// 참석버튼
+	const apply = () => {
+		if (!join) {
+			dispatch(groupDetailCreators.groupApplyMW(id, my))
+			setJoin(true)
+			window.alert("참여가 완료되었습니다.")
+			return
+		} else {
+			setJoin(false)
+			window.alert("참여가 취소됩니다.")
+			return
+		}
+	}
+
+	// 참석버튼 표시
 	useEffect(() => {
-		const myJoin = props.appliedUserInfo.findIndex(list => list.UserId === props.userid)
+		const myJoin = props.appliedUserInfo?.findIndex(list => list.UserId === props.userid)
 		console.log("myJoin",myJoin)
 		if(myJoin >= 0) {
 			setJoin(true)
 		}
 	}, [props])
 
-	// 참석버튼
-	const apply = () => {
-		if (!join) {
-			dispatch(groupDetailCreators.groupApplyMW(id))
-			setJoin(true)
-			window.alert("참여가 완료되었습니다.")
-		} else {
-			setJoin(false)
-			window.alert("참여가 취소됩니다.")
-		}
-	}
 
 	return (
 		<React.Fragment>
@@ -56,7 +63,7 @@ const Participant = memo((props) => {
 					</CircleBox>
 
 					{
-						props.appliedUserInfo.map((list,idx) => {
+						props.appliedUserInfo?.map((list,idx) => {
 							return(
 								<PartyList key={idx} {...list} />
 							)
@@ -106,6 +113,10 @@ function PartyList(props) {
 
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
+
+	// useEffect(() => {
+		
+	// },[props])
 
 	return (
 		<CircleBox>
