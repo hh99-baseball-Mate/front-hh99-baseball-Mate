@@ -22,7 +22,7 @@ export const MyInfo = (props) => {
   const [introduce, setIntroduce] = useState("")
   const [preview, setPreview] = useState("")
 
-  const onClicks = () => {
+  const updateProfile = () => {
     const formdata = new FormData()
 
     formdata.append("selfIntroduction", introduce)
@@ -37,7 +37,7 @@ export const MyInfo = (props) => {
     if (preview) {
       return URL.createObjectURL(preview)
     } else if (usertype === "normal") {
-      return IMAGES_BASE_URL + "/" + picture
+      return IMAGES_BASE_URL + picture
     } else if (usertype === "kakao") {
       return picture
     } else {
@@ -58,7 +58,7 @@ export const MyInfo = (props) => {
                 type="file"
                 onChange={(e) => setPreview(e.target.files[0])}
                 style={{ display: "none" }}
-                accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg image/jpg"
               />
               <ProfileSrc src={srcChange()} alt="dd" />
               <Text margin="10px 0 0">{username}</Text>
@@ -74,6 +74,7 @@ export const MyInfo = (props) => {
                 textarea
                 margin="20px"
                 height="100px"
+                placeholder="자기소개를 해주세요"
                 onChange={(e) => setIntroduce(e.target.value)}
               >
                 자기소개
@@ -98,7 +99,7 @@ export const MyInfo = (props) => {
         ) : (
           <Text>로그인 후 이용해주세요</Text>
         )}
-        <button onClick={onClicks}>제출</button>
+        <UpdateBtn onClick={updateProfile}>수정하기</UpdateBtn>
       </Container>
       <NaviBar my />
     </>
@@ -142,4 +143,20 @@ const ProfileSrc = styled.img`
 
 const ModalGrid = styled.div`
   margin: 0 20px;
+`
+const UpdateBtn = styled.button`
+  width: 50%;
+  border-radius: 30px;
+  border: none;
+  height: 30px;
+  margin: 30px auto;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #3b5bdb;
+  font-size: 14px;
+  cursor: pointer;
+  :hover {
+    background-color: #3b5bdb;
+    color: #fff;
+  }
 `

@@ -3,7 +3,7 @@ import { produce } from "immer"
 import { tokenInstance, apis, tokenApis } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
-const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE"
+const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
 const GROUP_APPLY = "GROUP_APPLY"
@@ -19,9 +19,9 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
-const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
+const edit_groupPage = createAction(LOAD_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
 const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
-const group_apply = createAction(GROUP_APPLY, (groupId) => ({ groupId }));
+const group_apply = createAction(GROUP_APPLY, (my) => ({ my }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
@@ -78,19 +78,20 @@ const loadGroupPageMW = (groupId) => {
 	}
 }
 
-// 모임삭제
-const delGroupPageMW = (groupId) => {
+// 수정하기
+const editGroupPageMW = (groupId, formData) => {
 	return (dispatch, getState, {history}) => {
+		// const title = {title:titles}
+		// const content = {content:contents}
 		tokenApis
-			.delGroupDetail(groupId)
+			.putGroupDetail(groupId, formData)
 			.then((res) => {
 				console.log(res)
-				dispatch(del_groupPage(groupId))
 			})
 			.catch((err) => {
-				console.log(err)
+				console.log(err);
 			})
-	}	
+	}
 }
 
 // 모임 좋아(찜) 하기/취소하기
@@ -111,12 +112,13 @@ const likePostMW = (groupId,like) => {
 }
 
 // 참석하기
-const groupApplyMW = (groupId) => {
+const groupApplyMW = (groupId, my) => {
 	return (dispatch, getState, {history}) => {
 		tokenApis
 			.postApply(groupId)
 			.then((res) => {
 				console.log(res)
+				dispatch(group_apply(my))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -225,6 +227,10 @@ export default handleActions(
 				}
 			}
 		}),
+		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
+			console.log("페이로드", action.payload.my)
+			draft.groupPage.appliedUserInfo.push(action.payload.my)
+		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)
 		}),
@@ -258,7 +264,7 @@ export default handleActions(
 
 const groupDetailCreators = {
 	loadGroupPageMW,
-	delGroupPageMW,
+	editGroupPageMW,
 	likePostMW,
 	groupApplyMW,
 	addCommentMW,

@@ -129,8 +129,9 @@ const userUpdateMD = (formdata, id) => {
     img
       .patch(`http://54.180.148.132/users/${id}`, formdata)
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         dispatch(logInCheckMD())
+        history.replace(`/mypage/${id}`)
       })
       .catch((err) => console.log(err, "유저업데이트 오류"))
   }

@@ -10,6 +10,7 @@ import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
 import _with from "./modules/with";
+import screen from "./modules/screen";
 
 export const history = createBrowserHistory();
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   mainPage,
   timeline,
   groupDetail,
+  screen,
 
   router: connectRouter(history),
 });

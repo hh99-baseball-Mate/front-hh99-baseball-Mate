@@ -57,20 +57,20 @@ const Comment = memo((props) => {
 
 	return (
 		<React.Fragment>
-			<Box padding="13px 20px 13px 20px">
+			<Box padding="13px 20px 13px 20px" background="#fff">
 				<Warp justify="space-between">
 					<Text size="14px" color="#777777">
 						방명록 {props.groupCommentList.length}
 					</Text>
 
-					<Warp>
+					{/* <Warp>
 						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
 							인기순
 						</Text>
 						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
 							최신순
 						</Text>
-					</Warp>
+					</Warp> */}
 				</Warp>
 			</Box>
 
@@ -83,7 +83,7 @@ const Comment = memo((props) => {
 			</Box>
 
 			{/* 댓글작성 */}
-			<Box height="69px" position="relative" flex="flex" align="center">
+			<Box height="69px" position="relative" flex="flex" align="center" background="#fff">
 				<Warp>
 					<div>
 						<Circle marginT="17px" url={profileImg}/>
@@ -156,12 +156,11 @@ const CommentList = memo((props) => {
 		console.log(like)
 		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
 	}
-
-	console.log("댓글 컴포넌트", props)
+	
 
 	return (
 		<React.Fragment>	
-			<Box position="relative" onClick = {()=>{ setModal(false)}} >
+			<Box position="relative" background="#fff" onClick = {()=>{ setModal(false)}} >
 				<Warp>
 					<div>
 						<Circle marginT="26px" />
@@ -246,14 +245,16 @@ const Modal = (props) => {
 	// edit={edit}
 	return (
 		<React.Fragment>
-			<MWarp direction="column" border="1px solid" radius="10px" >	
-				<ModalButton onClick={()=>{ props.setEdit(true) }}>
-					수정
-				</ModalButton>
-				<ModalButton onClick={()=>{ delComment() }} >
-					삭제
-				</ModalButton>
-			</MWarp>	
+			{/* <Box background="#fff"> */}
+				<MWarp direction="column" border="1px solid" radius="10px" >	
+					<ModalButton onClick={()=>{ props.setEdit(true) }}>
+						수정
+					</ModalButton>
+					<ModalButton onClick={()=>{ delComment() }} >
+						삭제
+					</ModalButton>
+				</MWarp>	
+			{/* </Box> */}
 		</React.Fragment>	
 	)
 }
@@ -326,6 +327,7 @@ const Box = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	position: ${(props) => props.position};
+	
 `;
 
 const Warp = styled.div`
