@@ -16,6 +16,7 @@ const GroupDetail = (props) => {
 	const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
   const [heartJoin, setHeartJoin] = useState(false);
+  const [join, setJoin] = useState(false);
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -39,7 +40,7 @@ const GroupDetail = (props) => {
   useEffect(()=>{
 		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
 		dispatch(groupDetailCreators.mylistMW())
-	},[groupId, heartJoin, ParticipantBtn])
+	},[selectPage, groupId, heartJoin, join])
 
 	return (
 		<Container>
@@ -67,7 +68,11 @@ const GroupDetail = (props) => {
 
 				<Rectangle/>
 
-				{selectPage === true ? <Participant {...loadDetail} {...mylist} close={close} /> : <Comment {...loadDetail} {...mylist} />} 
+				{
+        selectPage === true ? 
+          <Participant {...loadDetail} {...mylist} close={close} join={join} setJoin={setJoin} /> 
+          : <Comment {...loadDetail} {...mylist} />
+        } 
 
 			</Box>
 
