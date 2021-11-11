@@ -15,7 +15,7 @@ const GroupCard = (props) => {
   const ip = IMAGES_BASE_URL;
   const img = props.filePath;
   const imageUrl = ip + img;
-
+  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
   console.log("imageUrl", imageUrl);
 
   console.log("그룹카드", props);
@@ -78,7 +78,7 @@ const GroupCard = (props) => {
             </Text>
           </Warp>
         </Warp>
-        <Circle url={imageUrl} />
+        <Circle url={`${baseurl}/${props.filePath}`} />
 
         <Text
           size="16px"

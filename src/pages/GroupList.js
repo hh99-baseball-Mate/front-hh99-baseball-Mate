@@ -17,7 +17,7 @@ import {
   MarginBottom,
   NaviBar,
 } from "../components";
-// import Pancil from "../shared/icon/Pancil.png";
+
 import PancilBtn from "../components/PancilBtn";
 
 const GroupList = (props) => {
@@ -31,12 +31,16 @@ const GroupList = (props) => {
   console.log(team_list);
   let team = "";
   function newPeople() {
-    history.push("/grouplist/groupadd")
+    history.push("/grouplist/groupadd");
   }
 
   function choose() {
     history.push("/groupdate");
   }
+
+  const onlyTeam = () => {
+    dispatch(groupCr.getTeamAPI(team));
+  };
 
   useEffect(() => {
     dispatch(groupCr.getGroupAPI());
@@ -74,6 +78,8 @@ const GroupList = (props) => {
                 style={{ width: "68px", marginRight: "15px" }}
                 onClick={() => {
                   console.log(e.name);
+
+                  console.log(onlyTeam);
                   // dispatch(groupCr.getTeamAPI(e.short_name));
                   team = e.name;
 

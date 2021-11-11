@@ -15,6 +15,8 @@ export const Modal = (props) => {
     setShowModal,
     height,
     getOut,
+    three,
+    btnUpdate,
   } = props;
 
   if (bottom) {
@@ -55,17 +57,53 @@ export const Modal = (props) => {
       </ModalCenter>
     );
   }
+
+  if (three) {
+    return (
+      <ModalCenter>
+        <ModalContent>
+          {/* 제목 */}
+          <Title>
+            <Text size="16px">{title}</Text>
+          </Title>
+
+          {/* 내용 */}
+          <Discription>
+            <DiscriptionText>
+              {descriptionOne} <br />
+              {descriptionTwo}
+            </DiscriptionText>
+          </Discription>
+
+          {/* 버튼 */}
+          <BtnBox>
+            <ModalCloseeBtn onClick={() => setShowModal(false)}>
+              <P>{btnClose}</P>
+            </ModalCloseeBtn>
+            <ModalConfirmBtn onClick={getOut}>
+              <P>{btnConfirm}</P>
+            </ModalConfirmBtn>
+            <ModalConfirmBtn>
+              <P>{btnUpdate}</P>
+            </ModalConfirmBtn>
+          </BtnBox>
+        </ModalContent>
+      </ModalCenter>
+    );
+  }
 };
 
 Modal.defaultProps = {
   children: null,
   bottom: false,
   center: false,
+  three: false,
   title: "모임나가기",
   descriptionOne: "내용작성",
   descriptionTwo: "줄바뀐 내용작성",
   btnClose: "취소",
   btnConfirm: "나가기",
+  btnUpdate: "수정",
   height: "",
 };
 
@@ -76,7 +114,6 @@ const ModalBottom = styled.div`
   z-index: 99;
   position: fixed;
   bottom: 0;
-  margin: 0 -20px;
 `;
 const ModalCenter = styled.div`
   width: 375px;
