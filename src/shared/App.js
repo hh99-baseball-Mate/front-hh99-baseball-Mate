@@ -55,7 +55,7 @@ function App() {
             <Route path="/" exact component={Main} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/clubchoice" component={ClubChoice} />
+            <Route exact path="/login/clubchoice" component={ClubChoice} />
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route path="/user/kakao/callback" component={KAKAOhandle} />
             <Route path="/grouplist" exact component={GroupList} />
@@ -65,7 +65,7 @@ function App() {
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
             <Route path="/goods" exact component={Goods} />
-            <Route path="/goodsadd" exact component={GoodsAdd} />
+            <Route path="/goods/goodsadd" exact component={GoodsAdd} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
             <Route
@@ -95,4 +95,4 @@ const Container = styled.div`
   margin: auto;
   background: #fff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-`;
+`

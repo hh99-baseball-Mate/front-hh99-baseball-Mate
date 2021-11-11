@@ -15,7 +15,7 @@ export const Participation = (props) => {
       <Box>
         <Warp flex="flex">
           <Image
-            src={`${baseurl}/${props.filePath}`}
+            src={`${baseurl}${props.filePath}`}
             rounded
             style={{
               width: "76px",
@@ -79,7 +79,7 @@ export const Participation = (props) => {
         </Warp>
       </Box>
     </div>
-  );
+  )
 };
 
 const Box = styled.div`

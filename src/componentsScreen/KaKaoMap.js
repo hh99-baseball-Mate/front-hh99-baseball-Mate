@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Container } from "../components"
 
-export const KaKaoMap = ({ setLocation, setShowModal }) => {
+export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
   const { kakao } = window
 
   useEffect(() => {
@@ -16,6 +16,7 @@ export const KaKaoMap = ({ setLocation, setShowModal }) => {
 
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption)
+    infowindow = new kakao.maps.InfoWindow({ zindex: 1 })
 
     // 장소 검색 객체를 생성합니다
     var ps = new kakao.maps.services.Places()
@@ -27,17 +28,7 @@ export const KaKaoMap = ({ setLocation, setShowModal }) => {
 
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
-      console.log("검색완료")
-
       if (status === kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        // navigator.geolocation.getCurrentPosition((position) => {
-        //   var lat = position.coords.latitude
-        //   var lon = position.coords.longitude
-
-        // var bounds = new kakao.maps.LatLngBounds(lat, lon)
-
         for (var i = 0; i < data.length; i++) {
           displayMarker(data[i])
           // bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x))
@@ -46,6 +37,7 @@ export const KaKaoMap = ({ setLocation, setShowModal }) => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         // map.setBounds(bounds)
         // })
+        console.log(data, "ㅇㅇ")
       }
     }
 
@@ -70,13 +62,14 @@ export const KaKaoMap = ({ setLocation, setShowModal }) => {
       })
 
       // 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(marker, "click", function () {
+      kakao.maps.event.addListener(marker, "click", function (mouseEvent) {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
             place.place_name +
             "</div>",
           setLocation(place.place_name),
+          setRoadAddress(place.road_address_name),
           setShowModal(false)
         )
         infowindow.open(map, marker)
@@ -86,6 +79,7 @@ export const KaKaoMap = ({ setLocation, setShowModal }) => {
     var zoomControl = new kakao.maps.ZoomControl()
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
   }, [])
+
   return (
     <Container>
       <div
