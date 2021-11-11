@@ -55,17 +55,17 @@ function App() {
             <Route path="/" exact component={Main} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/clubchoice" component={ClubChoice} />
+            <Route exact path="/login/clubchoice" component={ClubChoice} />
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route path="/user/kakao/callback" component={KAKAOhandle} />
             <Route path="/grouplist" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
-            <Route path="/groupadd" exact component={GroupAdd} />
+            <Route path="/grouplist/groupadd" exact component={GroupAdd} />
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
             <Route path="/goods" exact component={Goods} />
-            <Route path="/goodsadd" exact component={GoodsAdd} />
+            <Route path="/goods/goodsadd" exact component={GoodsAdd} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
             <Route
@@ -75,7 +75,7 @@ function App() {
             />
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
-            <Route path="/screenadd" exact component={ScreenAdd} />
+            <Route path="/screen/screenadd" exact component={ScreenAdd} />
 
             {/* 임시 */}
             <Route component={NotFound} />

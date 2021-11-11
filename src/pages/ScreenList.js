@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { Container, Header, PancilBtn, Text, NaviBar, MarginBottom } from "../components"
+import {
+  Container,
+  Header,
+  PancilBtn,
+  Text,
+  NaviBar,
+  MarginBottom,
+} from "../components"
 import { Banner } from "../components/Banner"
 import { Modal } from "../components/Modal"
-import GroupCard from "../componentsGroupList/GroupCard"
+import GroupCard from "../componentsScreen/GroupCard"
 import { Region } from "../componentsScreen/Region"
 import { history } from "../redux/configStore"
-import { actionCreators as groupActions } from "../redux/modules/group"
+import { actionCreators as screenAction } from "../redux/modules/screen"
 import ETC from "../shared/icon/Etc.png"
 
 export const ScreenList = () => {
   const dispatch = useDispatch()
 
   const [showModal, setShowModal] = useState(false)
+  const [regoin, setRegoin] = useState("")
+
+  console.log(regoin)
+  const screen_list = useSelector((state) => state.screen.screen_list)
 
   useEffect(() => {
-    dispatch(groupActions.screenGetMD())
-  }, [])
+    dispatch(screenAction.screenGetMD(regoin))
+
+    console.log("디스패치횟수")
+  }, [regoin])
 
   return (
     <>
@@ -35,14 +48,19 @@ export const ScreenList = () => {
           </IconBox>
           {showModal ? (
             <Modal bottom height="335px">
-              <Region setShowModal={setShowModal}></Region>
+              <Region
+                setShowModal={setShowModal}
+                setRegoin={setRegoin}
+              ></Region>
             </Modal>
           ) : null}
         </ListBar>
 
-        <GroupCard />
-        <GroupCard />
-        <GroupCard />
+        {screen_list && screen_list.length > 0
+          ? screen_list.map((e) => (
+              <GroupCard key={e.screenId} screen_list={e} />
+            ))
+          : ""}
 
         <PancilBtn
           onClick={() => {
@@ -50,8 +68,8 @@ export const ScreenList = () => {
           }}
         />
       </Container>
-      <MarginBottom/>
-      <NaviBar/>
+      <MarginBottom />
+      <NaviBar />
     </>
   )
 }

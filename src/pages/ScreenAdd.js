@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import {
   Inputs,
   Text,
@@ -16,9 +16,12 @@ import { Picture } from "../componentsGroupAdd/Picture"
 import styled from "styled-components"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch } from "react-redux"
-import { actionCreators as groupActions } from "../redux/modules/group"
+import { actionCreators as screenAction } from "../redux/modules/screen"
 import { KaKaoMap } from "../componentsScreen/KaKaoMap"
 import { Modal } from "../components/Modal"
+
+import dayjs from "dayjs"
+
 import DatePicker, { registerLocale } from "react-datepicker"
 import { ko } from "date-fns/esm/locale"
 import "react-datepicker/dist/react-datepicker.css"
@@ -39,7 +42,12 @@ export const ScreenAdd = (props) => {
     content: "",
   })
 
+  // 장소 설정 state
+
   const [location, setLocation] = useState("")
+  const [roadAddress, setRoadAddress] = useState("")
+  // console.log(roadAddress, "주소")
+  // console.log(location)
 
   // 이미지 미리보기 state
   const [preview, setPreview] = useState("")
@@ -106,6 +114,9 @@ export const ScreenAdd = (props) => {
       return !e ? false : true
     })
 
+    const groupDate = dayjs(startDate).format("MM.DD ")
+    // console.log()
+
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
     if (emptyValue.includes(false) || !location || !startDate) {
@@ -113,18 +124,25 @@ export const ScreenAdd = (props) => {
       return
     } else {
       // 아니면 폼데이터 post 디스패치
-      const groupDateForm = new Date(startDate).toLocaleString()
 
       const formData = new FormData()
 
+      const placeInfomation = roadAddress.substring(0, 2)
+
+      console.log(placeInfomation)
+
       formData.append("title", inputValue.title)
-      formData.append("groupDate", groupDateForm)
+      formData.append("groupDate", groupDate)
       formData.append("content", inputValue.content)
       formData.append("peopleLimit", inputValue.peopleLimit)
-      formData.append("selectPlace", location)
-      formData.append("filePath", preview)
 
-      dispatch(groupActions.screenAddMD(formData))
+      // 스야 지점 지점명
+      formData.append("selectPlace", location)
+      // 스야지점 지번주소
+      formData.append("placeInfomation", placeInfomation)
+      formData.append("file", preview)
+
+      dispatch(screenAction.screenAddMD(formData))
       e.target.disabled = true
 
       // 폼데이터 console
@@ -169,7 +187,11 @@ export const ScreenAdd = (props) => {
             <CloseBtn onClick={() => setShowModal(false)}>
               <Buttons>닫기</Buttons>
             </CloseBtn>
-            <KaKaoMap setLocation={setLocation} setShowModal={setShowModal} />
+            <KaKaoMap
+              setLocation={setLocation}
+              setShowModal={setShowModal}
+              setRoadAddress={setRoadAddress}
+            />
           </Modal>
         ) : null}
 
@@ -182,17 +204,17 @@ export const ScreenAdd = (props) => {
             </TextIcons>
 
             {/* DatePicker 영역 설정 */}
-            <div style={{ width: "188px" }}>
+            <div style={{ width: "100px" }}>
               <SDatePicker
                 locale="ko"
                 minDate={new Date()}
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
-                showTimeSelect
-                isClearable
+                // showTimeSelect
+                // isClearable
                 popperPlacement="bottom"
-                dateFormat="MMM dd일 aa hh시mm분 "
-                placeholderText="약속 시간을 잡아주세요"
+                placeholderText="시간 선택"
+                dateFormat="MM월 dd일 (eee)"
               />
             </div>
           </TextBox>
@@ -328,7 +350,7 @@ const CloseBtn = styled.div`
 `
 
 const SDatePicker = styled(DatePicker)`
-  width: 180px;
+  width: 100px;
   font-size: 14px;
   box-sizing: border-box;
   border-radius: 8px;

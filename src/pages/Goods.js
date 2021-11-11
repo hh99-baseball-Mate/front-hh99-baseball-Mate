@@ -85,7 +85,7 @@ export const Goods = () => {
           </CardContainer>
           <PancilBtn
             onClick={() => {
-              history.push("/goodsadd")
+              history.push("/goods/goodsadd")
             }}
           />
         </Position>
