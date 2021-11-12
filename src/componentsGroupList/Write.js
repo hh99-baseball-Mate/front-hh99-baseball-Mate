@@ -6,25 +6,36 @@ import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
 import More from "../shared/icon/more.svg";
 import { Modal } from "../components/Modal";
+import { actionCreators as acionCr } from "../redux/modules/with";
+
 export const Write = (props) => {
+  const dispatch = useDispatch();
   const leftPeople = props.peopleLimit - props.canApplyNum;
   //이미지
   const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
 
   //모달
   const [inputValue, setInputValue] = useState({
-    title: "모임나가기",
-    descriptionOne: "모임을 나가시겠습니까?",
-    descriptionTwo: "나가신 모임은 다시 참여불가능합니다.",
+    title: "수정 혹은 삭제하기",
+    descriptionOne: "해당 게시물을 삭제하시겠습니까?",
+    descriptionTwo: "해당 게시글을 수정하시겠습니까?",
     btnClose: "취소",
-    btnConfirm: "나가기",
+    btnConfirm: "삭제",
+    btnUpdate: "수정",
   });
   const [showModal, setShowModal] = useState(false);
   const getOut = () => {
-    console.log("나가");
+    dispatch(acionCr.deleyeGroupAPI(props.groupId));
+    console.log(props, "제바류");
   };
-  const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =
-    inputValue;
+  const {
+    title,
+    descriptionOne,
+    descriptionTwo,
+    btnClose,
+    btnConfirm,
+    btnUpdate,
+  } = inputValue;
   return (
     <div>
       <Box>
@@ -102,7 +113,7 @@ export const Write = (props) => {
 
       {showModal ? (
         <Modal
-          center
+          three
           height="180px"
           setShowModal={setShowModal}
           title={title}
@@ -110,6 +121,7 @@ export const Write = (props) => {
           descriptionTwo={descriptionTwo}
           btnClose={btnClose}
           btnConfirm={btnConfirm}
+          btnUpdate={btnUpdate}
           getOut={getOut}
         ></Modal>
       ) : (

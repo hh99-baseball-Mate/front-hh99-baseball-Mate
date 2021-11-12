@@ -14,52 +14,33 @@ import { apis, img, instance, tokenInstance, tokenApis } from "../../lib/axios";
 // );
 
 //액션
-const SET_GROUP = "SET_GROUP";
+
 const GET_PLAY = "GET_PLAY";
 const GET_TEAM = "GET_TEAM";
 const SELECT_TEAM = "SELECT_TEAM";
-const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE"
-
-//액션함수
-const setGroup = createAction(SET_GROUP, (groupList) => ({ groupList }));
-const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
-const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
-const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
+const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE";
 
 // 팀선택
-const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }))
+const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
 
+//액션함수
+
+const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
+const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
+const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({
+  groupId,
+}));
 
 //초기값
 const initialState = {
-  group_list: [],
   play_list: [],
   team_list: [],
   selectTeam_list: [],
-
-}
+};
 
 //미들웨어
-const getGroupAPI = () => {
-  return function (dispatch, getState, { history }) {
-    tokenInstance
-      .get(`/groups`)
-      .then((res) => {
-        //  const screenLength = res.data.length
 
-        //  const infinityView = res.data.slice(start, next)
-
-        //  dispatch(screenGetGroup(infinityView, screenLength))
-
-        // console.log(res.data)
-        dispatch(setGroup(res.data))
-      })
-      .catch((err) => {
-        console.log(err, "그룹조회err")
-      })
-  }
-}
-
+//경기일정
 const getPlayAPI = (team) => {
   return function (dispatch, getState, { history }) {
     // const team = 103
@@ -67,28 +48,59 @@ const getPlayAPI = (team) => {
     instance
       .get(`/kbodatas`)
       .then((res) => {
-        dispatch(getPlay(res.data))
+        dispatch(getPlay(res.data));
       })
       .catch((err) => {
-        console.log(err, "경기일정err")
-      })
-  }
-}
-
+        console.log(err, "경기일정err");
+      });
+  };
+};
+//구단별&전체조회
 const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
+    if (!teamname || teamname === "전체") {
+      instance
+        .get("/groups")
+        .then((res) => {
+          dispatch(getTeam(res.data));
+          console.log(res);
+        })
+        .catch((err) => {
+          console(err, "전체 모임 불러오기");
+        });
+      return;
+    }
+
     instance
       .get(`/groups?team=${teamname}`)
       .then((res) => {
-        console.log(res.data, "구단 선택")
-        dispatch(getTeam(res.data))
+        console.log(res.data, "구단 선택");
+        dispatch(getTeam(res.data));
       })
       .catch((err) => {
-        console.log("팀별조회에러", err)
-      })
+        console.log("팀별조회에러", err);
+      });
     // }
-  }
-}
+  };
+};
+
+// 팀선택
+const selectTeamMD = (myteam) => {
+  return function (dispatch, getState, { history }) {
+    const teamname = myteam.split(" ");
+
+    instance
+      .get(`/kbodatas?team=${teamname[0]}`)
+      .then((res) => {
+        const _team = res.data;
+
+        const team = _team.slice(-5);
+
+        dispatch(selectTeam(team));
+      })
+      .catch((err) => console.log(err, "팀선택 err입니다."));
+  };
+};
 
 // 직관 모임만들기
 const addGroupMD = (formData) => {
@@ -96,31 +108,12 @@ const addGroupMD = (formData) => {
     img
       .post("/groups", formData)
       .then((res) => {
-        console.log(res.data)
-        history.replace("/groupList")
+        console.log(res.data);
+        history.replace("/groupList");
       })
-      .catch((err) => console.log(err, "모임생성 err입니다."))
-  }
-}
-
-
-// 팀선택
-const selectTeamMD = (myteam) => {
-  return function (dispatch, getState, { history }) {
-    const teamname = myteam.split(" ")
-
-    instance
-      .get(`/kbodatas?team=${teamname[0]}`)
-      .then((res) => {
-        const _team = res.data
-
-        const team = _team.slice(-5)
-
-        dispatch(selectTeam(team))
-      })
-      .catch((err) => console.log(err, "팀선택 err입니다."))
-  }
-}
+      .catch((err) => console.log(err, "모임생성 err입니다."));
+  };
+};
 
 // 모임삭제
 const delGroupPageMW = (groupId) => {
@@ -128,51 +121,48 @@ const delGroupPageMW = (groupId) => {
     tokenApis
       .delGroupDetail(groupId)
       .then((res) => {
-        console.log(res)
-        dispatch(del_groupPage(groupId))
+        console.log(res);
+        dispatch(del_groupPage(groupId));
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
-}
-
+        console.log(err);
+      });
+  };
+};
 
 //리듀서
 export default handleActions(
   {
-    [SET_GROUP]: (state, action) =>
-      produce(state, (draft) => {
-        draft.group_list = action.payload.groupList
-      }),
     [GET_PLAY]: (state, action) =>
       produce(state, (draft) => {
-        draft.play_list = action.payload.playList
+        draft.play_list = action.payload.playList;
       }),
-    [GET_TEAM]: (state, action) => produce(state, (draft) => {}),
+    [GET_TEAM]: (state, action) =>
+      produce(state, (draft) => {
+        draft.team_list = action.payload.teamList;
+      }),
     [SELECT_TEAM]: (state, action) =>
       produce(state, (draft) => {
-        draft.selectTeam_list = action.payload.team
+        draft.selectTeam_list = action.payload.team;
       }),
+
     [DELETE_GROUP_PAGE]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.group_list.findIndex(
           (p) => p.groupId === action.payload.groupId
-        )
+        );
         if (idx !== -1) {
-          draft.group_list.splice(idx, 1)
+          draft.group_list.splice(idx, 1);
         }
       }),
   },
   initialState
-)
+);
 
 const actionCreators = {
-  getGroupAPI,
   getPlayAPI,
   addGroupMD,
   getTeamAPI,
-  selectTeam,
   selectTeamMD,
   delGroupPageMW,
 };
