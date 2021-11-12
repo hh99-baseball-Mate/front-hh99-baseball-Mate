@@ -21,6 +21,7 @@ import { KaKaoMap } from "../componentsScreen/KaKaoMap"
 import { Modal } from "../components/Modal"
 
 import dayjs from "dayjs"
+import "dayjs/locale/ko"
 
 import DatePicker, { registerLocale } from "react-datepicker"
 import { ko } from "date-fns/esm/locale"
@@ -35,6 +36,7 @@ export const ScreenAdd = (props) => {
 
   // datePicker 한글버전
   registerLocale("ko", ko)
+  dayjs.locale("ko")
 
   const [inputValue, setInputValue] = useState({
     title: "",
@@ -114,8 +116,8 @@ export const ScreenAdd = (props) => {
       return !e ? false : true
     })
 
-    const groupDate = dayjs(startDate).format("MM.DD ")
-    // console.log()
+    const groupDate = dayjs(startDate).format("MM.DD (dd)")
+    console.log(groupDate)
 
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
