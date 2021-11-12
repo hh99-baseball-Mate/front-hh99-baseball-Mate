@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
-import { groupDetailCreators } from "../redux/modules/groupDetail";
+import { screenDetailCreators } from "../redux/modules/screenDetail";
 
 import host from "../shared/icon/groupDetail/host.svg"
 
@@ -22,9 +22,9 @@ const Participant = memo((props) => {
 	const ip = IMAGES_BASE_URL;
   const profileUrl = ip + props.createdUserProfileImg
 
-	const id = props.groupId;
+	const id = props.id;
 
-	const mylist = useSelector((state) => state.groupDetail.mylist);
+	const mylist = useSelector((state) => state.screenDetail.mylist);
 	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
 	// const [join, setJoin] = useState(false);
 	
@@ -34,25 +34,15 @@ const Participant = memo((props) => {
 	// 참석버튼
 	const apply = () => {
 		props.setJoin(true)
-		dispatch(groupDetailCreators.groupApplyMW(id, my))
+		dispatch(screenDetailCreators.screenApplyMW(id, my))
 		window.alert("참여가 완료되었습니다.")
-		// if (!props.join) {
-		// 	dispatch(groupDetailCreators.groupApplyMW(id, my))
-		// 	props.setJoin(true)
-		// 	window.alert("참여가 완료되었습니다.")
-		// 	return
-		// } else {
-		// 	props.setJoin(false)
-		// 	window.alert("참여가 취소됩니다.")
-		// 	return
-		// }
 	}
 
 	// 참석취소버튼
 	const delapply = () => {
 		if (window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
 			props.setJoin(false)
-			dispatch(groupDetailCreators.delApplyMW(groupId, props.useridx));
+			dispatch(screenDetailCreators.delApplyMW(groupId, props.useridx));
 		}
 	}
 

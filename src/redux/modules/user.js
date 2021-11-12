@@ -95,7 +95,7 @@ const logInCheckMD = () => {
 
     axios
       .post(
-        "http://54.180.148.132/user/logincheck",
+        "http://52.78.93.38/user/logincheck",
         {},
         {
           headers: {
@@ -127,7 +127,7 @@ const userUpdateMD = (formdata, id) => {
     // const user_info = getState().user.user_info
 
     img
-      .patch(`http://54.180.148.132/users/${id}`, formdata)
+      .patch(`http://52.78.93.38/users/${id}`, formdata)
       .then((res) => {
         // console.log(res.data)
         dispatch(logInCheckMD())
@@ -140,10 +140,9 @@ const userUpdateMD = (formdata, id) => {
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
     const id = getState().user.user_info.useridx
-
     axios
       .patch(
-        `http://54.180.148.132/users/${id}`,
+        `http://52.78.93.38/users/${id}`,
         { myteam: club },
         {
           headers: {
@@ -155,7 +154,7 @@ const choiceClubMD = (club) => {
         }
       )
       .then((res) => {
-        dispatch(choiceClub(res.data.myteam))
+        dispatch(choiceClub(club))
         history.replace("/")
       })
       .catch((err) => console.log(err, "클럽선택 err입니다."))
@@ -167,7 +166,7 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
-      .get(`http://54.180.148.132/user/kakao/callback?code=${key}`)
+      .get(`http://52.78.93.38/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 

@@ -29,7 +29,7 @@ const GroupCard = ({ screen_list }) => {
   return (
     <Container
       onClick={() => {
-        history.push("/groupdetail/" + screen_list.screenId)
+        history.push("/screendetail/" + screen_list.screenId)
       }}
     >
       <Card>

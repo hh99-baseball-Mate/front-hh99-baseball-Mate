@@ -29,6 +29,7 @@ import { MyInfo } from "../pages/MyInfo"
 import { ScreenList } from "../pages/ScreenList"
 import { ScreenAdd } from "../pages/ScreenAdd"
 import styled from "styled-components"
+import ScreenDetail from "../pages/ScreenDetail"
 
 function App() {
   const dispatch = useDispatch()
@@ -76,6 +77,7 @@ function App() {
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
+            <Route path="/screendetail/:groupId" exact component={ScreenDetail} />
 
             {/* 임시 */}
             <Route component={NotFound} />

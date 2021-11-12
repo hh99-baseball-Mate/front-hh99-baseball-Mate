@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { getCookie } from '../shared/Cookie';
-import { groupDetailCreators } from "../redux/modules/groupDetail";
+import { screenDetailCreators } from "../redux/modules/screenDetail";
 
 import smail from "../shared/icon/smail.svg"
 import unSmail from "../shared/icon/unSmail.svg"
@@ -29,7 +29,7 @@ const Comment = memo((props) => {
 	console.log("코멘트컴포넌트", props)
 
 
-	const id = props.groupId
+	const id = props.id
 //  console.log("페이지아이디",id)
 	const [message, setMessage] = useState("");
 
@@ -40,7 +40,7 @@ const Comment = memo((props) => {
       return;
     }
     else if (message !== "") {
-      dispatch(groupDetailCreators.addCommentMW(id, message));
+      dispatch(screenDetailCreators.addCommentMW(id, message));
       setMessage("");
       return;
     } 
@@ -50,17 +50,17 @@ const Comment = memo((props) => {
     }
   };
 
-	useEffect(()=>{
-		dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
-		dispatch(groupDetailCreators.mylistMW())
-	},[])
+	// useEffect(()=>{
+	// 	dispatch(screenDetailCreators.loadScreenPageMW(props.id))
+	// 	dispatch(screenDetailCreators.mylistMW())
+	// },[])
 
 	return (
 		<React.Fragment>
 			<Box padding="13px 20px 13px 20px" background="#fff">
 				<Warp justify="space-between">
 					<Text size="14px" color="#777777">
-						방명록 {props.groupCommentList.length}
+						{/* 방명록 {props.groupCommentList.length} */}
 					</Text>
 
 					{/* <Warp>
@@ -143,7 +143,7 @@ const CommentList = memo((props) => {
 	const [like, setLike] = useState(false);
 
 	useEffect(() => {
-		dispatch(groupDetailCreators.loadGroupPageMW(props.id));
+		dispatch(screenDetailCreators.loadScreenPageMW(props.id));
 	}, [])
 
 	// 댓글 좋아요 누른거 아이콘 표시하기
@@ -159,7 +159,7 @@ const CommentList = memo((props) => {
 	const likeBtn = () => {
 		setLike(!like)
 		console.log(like)
-		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
+		dispatch(screenDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
 	}
 	
 
@@ -244,7 +244,7 @@ const Modal = (props) => {
 
 	const delComment = () => {
 		if (window.confirm("정말 삭제하시겠습니까?") === true) {
-			dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId));
+			dispatch(screenDetailCreators.delCommentMW(props.id, props.groupCommentId));
 		}
   };
 	// edit={edit}
@@ -277,7 +277,7 @@ const EditComment = (props) => {
 		if (message === "") {
 		 	return window.alert("댓글을 입력해주세요.")
 		}
-		dispatch(groupDetailCreators.editCommentMW(props.id, props.groupCommentId, message))
+		dispatch(screenDetailCreators.editCommentMW(props.id, props.groupCommentId, message))
 		props.setEdit(false)
 	}
 
