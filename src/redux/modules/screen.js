@@ -1,7 +1,10 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { img, instance } from "../../lib/axios"
+import axios from "axios"
+import { getCookie } from "../../shared/Cookie"
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
 // const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP"
 const LOADING = "LOADING"
@@ -29,8 +32,21 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (formData) => {
   return function (dispatch, getState, { history }) {
-    img
-      .post("/screen", formData)
+    axios
+      .post(
+        // `${BASE_URL}/users/${id}`,
+        `${BASE_URL}/user/myteam`,
+        formData,
+        {
+          headers: {
+            // "Content-type": "application/json;charset=UTF-8",
+            "Content-Type": "multipart/form-data",
+            // accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-AUTH-TOKEN": getCookie("is_login"),
+          },
+        }
+      )
       .then((res) => {
         console.log(res)
         history.replace("/screen")
