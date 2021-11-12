@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Image } from "react-bootstrap";
 import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
 import More from "../shared/icon/more.svg";
+import { useDispatch } from "react-redux";
 
 const NewCard = (props) => {
+  const history = useDispatch();
   const leftPeople = props.peopleLimit - props.canApplyNum;
+
   return (
     <div>
-      <Box>
+      <Box
+        onClick={() => {
+          history.push(`/groupdetail/${props.groupId}`);
+        }}
+      >
         <Warp flex="flex">
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxDZ4WmsvL0lvEzv8UrFD3zGtNw6FLWLNr9Q&usqp=CAU"

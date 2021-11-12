@@ -6,17 +6,17 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 
-  const history = useHistory()
+  const history = useHistory();
 
-  const [close, setClose] = useState(false)
+  const [close, setClose] = useState(false);
 
-  const ip = IMAGES_BASE_URL
-  const img = props.filePath
-  const imageUrl = ip + img
-
-  // console.log("imageUrl", imageUrl)
+  const ip = IMAGES_BASE_URL;
+  const img = props.filePath;
+  const imageUrl = ip + img;
+  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
+  console.log("imageUrl", imageUrl);
 
   // console.log("그룹카드", props)
   // console.log("그룹카드2", props.dday, props.canApplyNum);
@@ -24,17 +24,17 @@ const GroupCard = (props) => {
   // 모집중, 마감중 표시
   useEffect(() => {
     if (props.dday < 0 || props.canApplyNum === 0) {
-      setClose(true)
+      setClose(true);
     } else {
-      setClose(false)
+      setClose(false);
     }
-  }, [])
+  }, []);
   // console.log("props.close", close)
 
   return (
     <Container
       onClick={() => {
-        history.push("/groupdetail/" + props.groupId)
+        history.push("/groupdetail/" + props.groupId);
       }}
     >
       <Card>
@@ -60,9 +60,13 @@ const GroupCard = (props) => {
             {/* <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
               모집중
             </Ellipse> */}
-            <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-              D-{props.dday}
-            </Ellipse>
+            {props && props.dday > 0 ? (
+              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+                D-{props.dday}
+              </Ellipse>
+            ) : (
+              ""
+            )}
           </Warp>
           <Warp flex="flex">
             <Text size="12px" color="#777777">
@@ -78,7 +82,7 @@ const GroupCard = (props) => {
             </Text>
           </Warp>
         </Warp>
-        <Circle url={imageUrl} />
+        <Circle url={`${baseurl}${props.filePath}`} />
 
         <Text
           size="16px"
@@ -109,7 +113,7 @@ const GroupCard = (props) => {
         </Warp>
       </Card>
     </Container>
-  )
+  );
 };
 
 export default GroupCard;

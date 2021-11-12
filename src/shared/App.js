@@ -29,7 +29,11 @@ import { MyInfo } from "../pages/MyInfo"
 import { ScreenList } from "../pages/ScreenList"
 import { ScreenAdd } from "../pages/ScreenAdd"
 import styled from "styled-components"
+<<<<<<< HEAD
 import ScreenDetail from "../pages/ScreenDetail"
+=======
+import { Loading } from "../components/Loading"
+>>>>>>> master
 
 function App() {
   const dispatch = useDispatch()
@@ -46,7 +50,53 @@ function App() {
     }
   }, [is_login])
 
-  console.log(is_login, "is_login")
+  // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
+  if (!is_login) {
+    return (
+      <React.Fragment>
+        <Container>
+          <ConnectedRouter history={history}>
+            <GlobalStyles />
+            <Switch>
+              <Route path="/" exact component={Main} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/phoneAuth" component={PhoneAuth} />
+              <Route path="/user/kakao/callback" component={KAKAOhandle} />
+              <Route exact path="/login/clubchoice" component={ClubChoice} />
+              <Route path="/grouplist" exact component={GroupList} />
+              <Route path="/groupdate" exact component={GroupDate} />
+              <Route
+                path="/groupdetail/:groupId"
+                exact
+                component={GroupDetail}
+              />
+              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/timeline" exact component={TimelineList} />
+              <Route path="/goods" exact component={Goods} />
+              <Route path="/mygroup" exact component={MyGroup} />
+              <Route
+                path="/alarm"
+                render={() => <Alarm is_login={is_login} />}
+              />
+              <Route
+                path="/mypage/:useridx"
+                exact
+                render={() => <MyPage is_login={is_login} />}
+              />
+              <Route path="/screen" exact component={ScreenList} />
+
+              {/* 임시 */}
+              <Route component={NotFound} />
+            </Switch>
+          </ConnectedRouter>
+          {/* </div> */}
+        </Container>
+      </React.Fragment>
+    )
+  }
+
+  // 로그인을 한 경우 보여지는 페이지들
   return (
     <React.Fragment>
       <Container>
@@ -54,11 +104,11 @@ function App() {
           <GlobalStyles />
           <Switch>
             <Route path="/" exact component={Main} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
+            {/* <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} /> */}
             <Route exact path="/login/clubchoice" component={ClubChoice} />
-            <Route exact path="/phoneAuth" component={PhoneAuth} />
-            <Route path="/user/kakao/callback" component={KAKAOhandle} />
+            {/* <Route exact path="/phoneAuth" component={PhoneAuth} /> */}
+            {/* <Route path="/user/kakao/callback" component={KAKAOhandle} /> */}
             <Route path="/grouplist" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
             <Route path="/grouplist/groupadd" exact component={GroupAdd} />
@@ -77,7 +127,11 @@ function App() {
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
+<<<<<<< HEAD
             <Route path="/screendetail/:groupId" exact component={ScreenDetail} />
+=======
+            <Route path="/loading" exact component={Loading} />
+>>>>>>> master
 
             {/* 임시 */}
             <Route component={NotFound} />

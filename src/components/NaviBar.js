@@ -14,68 +14,75 @@ import { useSelector } from "react-redux";
 
 const NaviBar = (props) => {
   const user_info = useSelector((state) => state.user.user_info);
+const is_login = useSelector((state) => state.user.is_login)
 
-  const { useridx } = user_info;
+const { useridx } = user_info
 
-  const history = useHistory();
+const history = useHistory()
 
-  return (
-    <Container>
-      <Warp justify="space-between">
-        {/* 메인 */}
-        <Icon
-          onClick={() => {
-            history.push("/");
-          }}
-        >
-          {props.home ? (
-            <img src={home_select} alt="home_col" />
-          ) : (
-            <img src={home} alt="home" />
-          )}
-        </Icon>
+return (
+  <Container>
+    <Warp justify="space-between">
+      {/* 메인 */}
+      <Icon
+        onClick={() => {
+          history.push("/")
+        }}
+      >
+        {props.home ? (
+          <img src={home_select} alt="home_col" />
+        ) : (
+          <img src={home} alt="home" />
+        )}
+      </Icon>
 
-        {/* 내 모임 */}
-        <Icon
-          onClick={() => {
-            history.push("/mygroup");
-          }}
-        >
-          {props.sch ? (
-            <img src={sch_select} alt="sch_col" />
-          ) : (
-            <img src={sch} alt="sch" />
-          )}
-        </Icon>
+      {/* 내 모임 */}
+      <Icon
+        onClick={(e) => {
+          is_login
+            ? history.push("/mygroup")
+            : window.alert("로그인 후 이용해주세요")
+          e.target.disabled =true
+        }}
+      >
+        {props.sch ? (
+          <img src={sch_select} alt="sch_col" />
+        ) : (
+          <img src={sch} alt="sch" />
+        )}
+      </Icon>
 
-        {/* 활동 */}
-        <Icon
-          onClick={() => {
-            history.push("/alarm");
-          }}
-        >
-          {props.rec ? (
-            <img src={rec_select} alt="rec_col" />
-          ) : (
-            <img src={rec} alt="rec" />
-          )}
-        </Icon>
+      {/* 활동 */}
+      <Icon
+        onClick={(e) => {
+          is_login
+            ? history.push("/alarm")
+            : window.alert("로그인 후 이용해주세요")
+          e.target.disabled = true
+        }}
+      >
+        {props.rec ? (
+          <img src={rec_select} alt="rec_col" />
+        ) : (
+          <img src={rec} alt="rec" />
+        )}
+      </Icon>
 
-        {/* 마이페이지 */}
-        <Icon
-          onClick={() => {
-            history.push(`/mypage/${useridx}`);
-          }}
-        >
-          {props.my ? (
-            <img src={my_select} alt="my_col" />
-          ) : (
-            <img src={my} alt="my" />
-          )}
-        </Icon>
-      </Warp>
-    </Container>
-  );
+      {/* 마이페이지 */}
+      <Icon
+        onClick={() => {
+          history.push(`/mypage/${useridx}`)
+        }}
+      >
+        {props.my ? (
+          <img src={my_select} alt="my_col" />
+        ) : (
+          <img src={my} alt="my" />
+        )}
+      </Icon>
+    </Warp>
+  </Container>
+)
 };
 
 export default NaviBar;

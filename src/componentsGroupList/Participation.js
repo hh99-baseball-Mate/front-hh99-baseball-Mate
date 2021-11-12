@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Image } from "react-bootstrap";
 import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
 import More from "../shared/icon/more.svg";
+import { Modal } from "../components/Modal";
+import { useSelector } from "react-redux";
 
 export const Participation = (props) => {
   console.log(props);
   const leftPeople = props.peopleLimit - props.canApplyNum;
+  //삭제
 
   const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
+  //모달
+  const [inputValue, setInputValue] = useState({
+    title: "모임나가기",
+    descriptionOne: "모임을 나가시겠습니까?",
+    descriptionTwo: "나가신 모임은 다시 참여불가능합니다.",
+    btnClose: "취소",
+    btnConfirm: "나가기",
+  });
+  const [showModal, setShowModal] = useState(false);
+  //나가기 함수
+  const getOut = () => {
+    console.log("나가는게 어때");
+  };
+  const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =
+    inputValue;
+
   return (
     <div>
       <Box>
@@ -24,7 +43,13 @@ export const Participation = (props) => {
               margin: "16px",
             }}
           />
-          <img src={More} alt="위치" />
+          <img
+            src={More}
+            alt="위치"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          />
 
           <Warp style={{ marginTop: "16px" }}>
             <Warp>
@@ -78,6 +103,22 @@ export const Participation = (props) => {
           </Warp>
         </Warp>
       </Box>
+
+      {showModal ? (
+        <Modal
+          center
+          height="180px"
+          setShowModal={setShowModal}
+          title={title}
+          descriptionOne={descriptionOne}
+          descriptionTwo={descriptionTwo}
+          btnClose={btnClose}
+          btnConfirm={btnConfirm}
+          getOut={getOut}
+        ></Modal>
+      ) : (
+        ""
+      )}
     </div>
   )
 };
