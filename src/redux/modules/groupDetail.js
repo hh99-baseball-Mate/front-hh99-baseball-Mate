@@ -1,12 +1,15 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { tokenInstance, apis, tokenApis } from "../../lib/axios"
+import { tokenInstance, apis, tokenApis, img } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
 const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
+
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
+// 모임참여, 취소
 const GROUP_APPLY = "GROUP_APPLY"
+const DELETE_APPLY = "DELETE_APPLY"
 
 // 댓글기능
 const ADD_COMMENT = "ADD_COMMENT"
@@ -19,9 +22,10 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
-const edit_groupPage = createAction(LOAD_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
+const edit_groupPage = createAction(EDIT_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
 const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
 const group_apply = createAction(GROUP_APPLY, (my) => ({ my }));
+const del_apply = createAction(DELETE_APPLY, (groupId, useridx) => ({ groupId, useridx }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
@@ -81,12 +85,11 @@ const loadGroupPageMW = (groupId) => {
 // 수정하기
 const editGroupPageMW = (groupId, formData) => {
 	return (dispatch, getState, {history}) => {
-		// const title = {title:titles}
-		// const content = {content:contents}
-		tokenApis
-			.putGroupDetail(groupId, formData)
+		img
+			.patch(`/groups/${groupId}`, formData)
 			.then((res) => {
 				console.log(res)
+				history.replace(`/groupdetail/${groupId}`)
 			})
 			.catch((err) => {
 				console.log(err);
@@ -124,6 +127,21 @@ const groupApplyMW = (groupId, my) => {
 				console.log(err)
 			})
 	}
+}
+
+// 참석취소
+const delApplyMW = (groupId, useridx) => {
+	return (dispatch, getState, {history}) => {
+		tokenApis
+			.delApply(groupId)
+			.then((res) => {
+				console.log(res)
+				dispatch(del_apply(groupId, useridx))
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}		
 }
 
 // 댓글작성
@@ -182,7 +200,7 @@ const likeCommentMW = (groupId, commentId, like) => {
 			.postLikeComment(groupId, commentId, isLiked)
 			.then((res) => {
 				console.log(res)
-				dispatch(like_comment(groupId, commentId, isLiked))
+				dispatch(like_comment(groupId, commentId, like))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -228,8 +246,14 @@ export default handleActions(
 			}
 		}),
 		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
-			console.log("페이로드", action.payload.my)
+			// console.log("페이로드", action.payload.my)
 			draft.groupPage.appliedUserInfo.push(action.payload.my)
+		}),
+		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserInx === action.payload.useridx);
+			if (idx !== -1) {
+				draft.groupPage.appliedUserInfo.splice(idx, 1);
+			}
 		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)
@@ -247,11 +271,12 @@ export default handleActions(
 		[LIKE_COMMENT]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
 			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-			console.log("액션좋아요",action.payload.like.isLiked)
-			if (action.payload.like.isLiked) {
-				return draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
+			console.log("액션좋아요",action.payload.like)
+			if (action.payload.like) {
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
+				return
 			} else {
-				return draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
 			}
 		}),
 		[LOAD_MYLIST]: (state, action) => produce(state, (draft) => {
@@ -267,6 +292,7 @@ const groupDetailCreators = {
 	editGroupPageMW,
 	likePostMW,
 	groupApplyMW,
+	delApplyMW,
 	addCommentMW,
 	editCommentMW,
 	delCommentMW,

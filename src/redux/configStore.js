@@ -9,8 +9,9 @@ import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-import _with from "./modules/with";
-import screen from "./modules/screen";
+import _with from "./modules/with"
+import screen from "./modules/screen"
+import screenDetail from "./modules/screenDetail";
 
 export const history = createBrowserHistory();
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   timeline,
   groupDetail,
   screen,
+  screenDetail,
 
   router: connectRouter(history),
 });

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { number } from "yup/lib/locale";
 import { getCookie } from "../shared/Cookie";
 
 // http://52.78.93.38/
@@ -27,15 +28,15 @@ export const apis = {
   // main
   // 경기 일정 불러오기
   getGameTime: () => instance.get("/kbodata"),
-
   // 핫한 모임 불러오기
   getHotGroup: (number) => instance.get("/groups/hotgroup"),
-
   // 타임라인 불러오기
   getTimeline: () => instance.get("/timelines"),
-
   // 메인화면 타임라인 조회
   getMainTimeline: (number) => instance.get(`/timelines?count=${number}`),
+
+  // 스크인야구 상세조회
+  getScreenDetail: (screenId) => instance.get(`/screen/${screenId}`),
 };
 
 // 토큰인증 api
@@ -63,48 +64,45 @@ export const img = axios.create({
 
 export const tokenApis = {
   // 타임라인 페이지
+
   // 타임라인 작성하기
   postTimeline: (content) => tokenInstance.post("/timelines", content),
-
   // 타임라인 삭제하기
   delTimeline: (timeLineId) => tokenInstance.delete(`/timelines/${timeLineId}`),
-
   // 타임라인 좋아요
   likeTimeline: (timeLineId, isLiked) =>
     tokenInstance.post(`/timelines/${timeLineId}/like`, isLiked),
 
   // 모임게시글
+
   // 상세페이지 조회
   getGroupDetail: (groupId) => tokenInstance.get(`/groups/${groupId}`),
-
   // 상세페이지 수정
   putGroupDetail: (groupId, title, content) => tokenInstance.put(`/groups/${groupId}`, title, content,),
-
   // 상세페이지 삭제
   delGroupDetail: (groupId) => tokenInstance.delete(`/groups/${groupId}`),
-
   // 모임 좋아(찜) 하기/취소하기
   postGroupsLike: (groupId, isLiked) =>
     tokenInstance.post(`/groups/${groupId}/like`, isLiked),
-
   // 모임 참여하기
   postApply: (groupId) => tokenInstance.post(`/groups/${groupId}/applications`),
-
+  // 모임 취소하기
+  delApply: (groupId) => tokenInstance.delete(`/groups/${groupId}/applications`),
   // 모임 게시글 댓글 등록
   postComment: (groupId, comment) =>
     tokenInstance.post(`/groups/${groupId}/comment`, comment),
-
   // 모임 게시글 댓글 수정
   putComment: (groupId, commentId, comment) =>
     tokenInstance.put(`/groups/${groupId}/comment/${commentId}`, comment),
-
   // 모임 게시글에 댓글 삭제
   delComment: (groupId, commentId) =>
     tokenInstance.delete(`/groups/${groupId}/comment/${commentId}`),
-
   // 모임게시글 댓글 좋아요
   postLikeComment: (groupId, commentId, isLiked) =>
     tokenInstance.post(`/groups/${groupId}/comment/${commentId}/like`, isLiked),
+
+  // 스크린야구모임 
+
 };
 
 // createPost: (contents) => instance.post('/posts', contents),
