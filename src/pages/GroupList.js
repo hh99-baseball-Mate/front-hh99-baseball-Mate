@@ -134,7 +134,10 @@ const GroupList = (props) => {
               return <GroupCard key={e.groupId} {...e} />
             })
           ) : (
-            <NotGame />
+            <NotGame>
+              생성된 모임이 없습니다 <br />
+              모임을 생성해주세요!
+            </NotGame>
           )}
           <PancilBtn onClick={newPeople} />
         </Container>

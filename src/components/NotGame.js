@@ -2,14 +2,17 @@ import React from "react"
 import styled from "styled-components"
 import { GiBaseballGlove } from "react-icons/gi"
 
-export const NotGame = () => {
+export const NotGame = (props) => {
   return (
     <NotGames>
       <GiBaseballGlove size="32px" color="#3c1010" />
-      생성된 모임이 없습니다.
-      <br /> 모임을 만들어주세요!
+      {props.children}
     </NotGames>
   )
+}
+
+NotGame.defaultProps = {
+  children: null,
 }
 
 const NotGames = styled.div`

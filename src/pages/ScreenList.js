@@ -90,7 +90,10 @@ export const ScreenList = () => {
         {screen_list && screen_list.length > 0 ? (
           screen_list.map((e) => <GroupCard key={e.screenId} screen_list={e} />)
         ) : (
-          <NotGame />
+          <NotGame>
+            생성된 모임이 없습니다 <br />
+            모임을 생성해주세요!
+          </NotGame>
         )}
 
         <PancilBtn onClick={onSubmitBtn} />
