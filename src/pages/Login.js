@@ -77,12 +77,16 @@ export const Login = (props) => {
               submit
               margin="24px 0 7px 0"
               _onClick={(e) => {
-                dispatch(
-                  userActions.logInMD({
-                    userid: formik.values.email,
-                    password: formik.values.password,
-                  })
-                )
+                if (!formik.values.email || !formik.values.password) {
+                  window.alert("입력을 확인해주세요")
+                } else {
+                  dispatch(
+                    userActions.logInMD({
+                      userid: formik.values.email,
+                      password: formik.values.password,
+                    })
+                  )
+                }
                 e.target.disabled = true
               }}
             >

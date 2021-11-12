@@ -28,6 +28,7 @@ export const ScreenList = () => {
     start: 0,
     next: 4,
   })
+
   const [showModal, setShowModal] = useState(false)
   const [regoin, setRegoin] = useState("")
 
@@ -75,8 +76,9 @@ export const ScreenList = () => {
             <IconText>필터</IconText>
             <Icons src={ETC} alt="필터 이미지" />
           </IconBox>
+
           {showModal ? (
-            <Modal bottom height="335px">
+            <Modal bottom height="335px" margin="0 -20px">
               <Region
                 setShowModal={setShowModal}
                 setRegoin={setRegoin}
@@ -88,7 +90,10 @@ export const ScreenList = () => {
         {screen_list && screen_list.length > 0 ? (
           screen_list.map((e) => <GroupCard key={e.screenId} screen_list={e} />)
         ) : (
-          <NotGame />
+          <NotGame>
+            생성된 모임이 없습니다 <br />
+            모임을 생성해주세요!
+          </NotGame>
         )}
 
         <PancilBtn onClick={onSubmitBtn} />
@@ -118,4 +123,7 @@ const IconText = styled.p`
 const Icons = styled.img`
   width: 13px;
   height: 13px;
+`
+const ModalGrid = styled.div`
+  /* margin:0 20px */
 `

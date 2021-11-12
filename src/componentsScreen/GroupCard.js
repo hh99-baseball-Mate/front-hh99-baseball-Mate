@@ -52,11 +52,13 @@ const GroupCard = ({ screen_list }) => {
                 모집중
               </Ellipse>
             )}
-            {screen_list && screen_list.dday >= 0 && (
-              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-                D-{screen_list.dday}
-              </Ellipse>
-            )}
+            {screen_list &&
+              screen_list.dday >= 0 &&
+              screen_list.canApplyNum !== 0 && (
+                <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+                  D-{screen_list.dday}
+                </Ellipse>
+              )}
           </Warp>
           <Warp flex="flex">
             <Text size="12px" color="#777777">

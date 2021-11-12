@@ -79,8 +79,10 @@ const GroupDate = (props) => {
                         key={e.matchId}
                         // name={e.matches}
                         onClick={() => {
+
                           dispatch(playCr.datePage(e.date));
                           history.goBack();
+
                         }}
                       >
                         <Local>

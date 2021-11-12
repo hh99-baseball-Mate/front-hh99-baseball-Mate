@@ -11,6 +11,11 @@ export const ClubImage = (props) => {
   const dispatch = useDispatch()
 
   const choiceClub = (e) => {
+    // const formdata = new FormData()
+
+    // formdata.append("myteam", e.target.className)
+
+    // for (const keyValue of formdata) console.log(keyValue)
     dispatch(userActions.choiceClubMD(e.target.className))
     console.log(e.target.className)
     // history.replace("/")

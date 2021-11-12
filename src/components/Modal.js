@@ -15,14 +15,17 @@ export const Modal = (props) => {
     setShowModal,
     height,
     getOut,
-  } = props;
+    margin,
+  } = props
+
+  // const styles = { margin }
 
   if (bottom) {
     return (
-      <ModalBottom>
+      <ModalBottom margin={margin}>
         <ModalBottomContent height={height}>{children}</ModalBottomContent>
       </ModalBottom>
-    );
+    )
   }
 
   if (center) {
@@ -53,9 +56,9 @@ export const Modal = (props) => {
           </BtnBox>
         </ModalContent>
       </ModalCenter>
-    );
+    )
   }
-};
+
 
 Modal.defaultProps = {
   children: null,
@@ -69,7 +72,8 @@ Modal.defaultProps = {
   btnConfirm: "나가기",
   btnUpdate: "수정",
   height: "",
-};
+  margin: "",
+}
 
 const ModalBottom = styled.div`
   width: 375px;
@@ -78,7 +82,8 @@ const ModalBottom = styled.div`
   z-index: 99;
   position: fixed;
   bottom: 0;
-`;
+  margin: ${(props) => props.margin};
+`
 const ModalCenter = styled.div`
   width: 375px;
   height: 100vh;

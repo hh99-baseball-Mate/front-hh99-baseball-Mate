@@ -10,16 +10,18 @@ import { Participation } from "../componentsGroupList/Participation";
 import { Write } from "../componentsGroupList/Write";
 import { actionCreators as withCr } from "../redux/modules/with";
 import Reciangle from "../shared/icon/Rectangle.png";
+import { NotGame } from "../components/NotGame"
 
 const MyGroup = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   //참석
-  const with_list = useSelector((state) => state.with.with_list);
+  const with_list = useSelector((state) => state.with.with_list)
   //작성
-  const write_list = useSelector((state) => state.with.write_list);
-  console.log(with_list, "테스트용");
-  console.log(write_list, "작성에 대해");
+  const write_list = useSelector((state) => state.with.write_list)
+  console.log(with_list, "테스트용")
+  console.log(write_list, "작성에 대해")
   //모달
+
 
   const [showModal, setShowModal] = useState(false);
   //스크린
@@ -28,12 +30,14 @@ const MyGroup = (props) => {
   const [screen, setScreen] = useState(false);
   const [games, setGames] = useState(false);
 
+
   console.log(allList);
   //구분
-  const [participation, setParticipation] = useState(true);
-  const [write, setWrite] = useState(false);
-  const [wish, setWish] = useState(false);
+  const [participation, setParticipation] = useState(true)
+  const [write, setWrite] = useState(false)
+  const [wish, setWish] = useState(false)
   //버튼
+
   const { nowBtn1, nowBtn2, nowBtn3 } = props;
 
   console.log(games, screen);
@@ -70,6 +74,7 @@ const MyGroup = (props) => {
     dispatch(withCr.getWriteAPI());
   }, []);
 
+
   return (
     <All>
       <div
@@ -88,8 +93,8 @@ const MyGroup = (props) => {
             nowBtn1={nowBtn1}
             onClick={() => {
               if (write === true || participation === false) {
-                setWrite(false);
-                setParticipation(true);
+                setWrite(false)
+                setParticipation(true)
               }
             }}
           >
@@ -100,10 +105,10 @@ const MyGroup = (props) => {
             nowBtn2={nowBtn2}
             onClick={() => {
               if (participation === true) {
-                setParticipation(false);
-                setWrite(true);
+                setParticipation(false)
+                setWrite(true)
               }
-              setWrite(true);
+              setWrite(true)
             }}
           >
             작성모임
@@ -111,7 +116,8 @@ const MyGroup = (props) => {
           <Button3
             nowBtn3={nowBtn3}
             onClick={() => {
-              setWish(true);
+              window.alert("준비 중 입니다.")
+              // setWish(true)
             }}
           >
             찜한모임
@@ -130,13 +136,14 @@ const MyGroup = (props) => {
         <Up>내가 참여한 모임</Up>
         <Btn
           onClick={() => {
-            setShowModal(true);
+            setShowModal(true)
           }}
         >
           상세보기 <img src={Etc} alt="등등" />
         </Btn>
       </div>
       {/* 카드 */}
+
       {allList
         ? all_list.map((e) => {
             return (
@@ -168,6 +175,8 @@ const MyGroup = (props) => {
           </div>
         );
       })}
+
+     
 
       {showModal ? (
         <Modal bottom btnConfirm height="244px" setShowModal={setShowModal}>
@@ -210,8 +219,8 @@ const MyGroup = (props) => {
       <MarginBottom />
       <NaviBar sch />
     </All>
-  );
-};
+  )
+}
 
 MyGroup.defaultProps = {
   nowBtn1: false,

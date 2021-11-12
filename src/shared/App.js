@@ -1,42 +1,49 @@
-import React, { useEffect } from "react";
-import { ConnectedRouter } from "connected-react-router";
-import { ClubChoice } from "../pages/ClubChoice";
-import { Signup } from "../pages/Signup";
-import { history } from "../redux/configStore";
-import { Route } from "react-router-dom";
-import KAKAOhandle from "./SocialLogin/KAKAOhandle";
-import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
-import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "./Cookie";
-import { actionCreators as userActions } from "../redux/modules/user";
-import TimelineList from "../pages/TimelineList";
-import GroupList from "../pages/GroupList";
-import GroupDate from "../pages/GroupDate";
-import GroupDetail from "../pages/GroupDetail";
-import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
-import { GroupAdd } from "../pages/GroupAdd";
-import { Goods } from "../pages/Goods";
-import { GoodsAdd } from "../pages/GoodsAdd";
-import MyGroup from "../pages/MyGroup";
-import { Login } from "../pages/Login";
-import { MyPage } from "../pages/MyPage";
-import { PhoneAuth } from "../pages/PhoneAuth";
-import { NotFound } from "../pages/NotFound";
-import { Switch } from "react-router";
-import Alarm from "../pages/Alarm";
-import { MyInfo } from "../pages/MyInfo";
-import { ScreenList } from "../pages/ScreenList";
-import { ScreenAdd } from "../pages/ScreenAdd";
-import styled from "styled-components";
-import ScreenDetail from "../pages/ScreenDetail";
-import { Loading } from "../components/Loading";
+
+import React, { useEffect } from "react"
+import { ConnectedRouter } from "connected-react-router"
+import { ClubChoice } from "../pages/ClubChoice"
+import { Signup } from "../pages/Signup"
+import { history } from "../redux/configStore"
+import { Route } from "react-router-dom"
+import KAKAOhandle from "./SocialLogin/KAKAOhandle"
+import { GlobalStyles } from "./GlobalStyles"
+import Main from "../pages/Main"
+import { useDispatch, useSelector } from "react-redux"
+import { getCookie } from "./Cookie"
+import { actionCreators as userActions } from "../redux/modules/user"
+import TimelineList from "../pages/TimelineList"
+import GroupList from "../pages/GroupList"
+import GroupDate from "../pages/GroupDate"
+import GroupDetail from "../pages/GroupDetail"
+import { GroupEdit } from "../componentsGroupDetail/GroupEdit"
+import { GroupAdd } from "../pages/GroupAdd"
+import { Goods } from "../pages/Goods"
+import { GoodsAdd } from "../pages/GoodsAdd"
+import MyGroup from "../pages/MyGroup"
+import { Login } from "../pages/Login"
+import { MyPage } from "../pages/MyPage"
+import { PhoneAuth } from "../pages/PhoneAuth"
+import { NotFound } from "../pages/NotFound"
+import { Switch } from "react-router"
+import Alarm from "../pages/Alarm"
+import { MyInfo } from "../pages/MyInfo"
+import { ScreenList } from "../pages/ScreenList"
+import { ScreenAdd } from "../pages/ScreenAdd"
+import styled from "styled-components"
+import ScreenDetail from "../pages/ScreenDetail"
+import { Loading } from "../components/Loading"
+import { Helmet } from "react-helmet"
+import favicon from "../shared/icon/favicon.ico"
+import img from "../shared/icon/image.jpg"
+
 
 function App() {
   const dispatch = useDispatch();
 
-  const is_login = useSelector((state) => state.user.is_login);
-  const user_info = useSelector((state) => state.user.user_info);
+
+  const is_login = useSelector((state) => state.user.is_login)
+  // const user_info = useSelector((state) => state.user.user_info)
+
 
   // console.log(user_info)
   useEffect(() => {
@@ -48,57 +55,51 @@ function App() {
   }, [is_login]);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
-  if (!is_login) {
-    return (
-      <React.Fragment>
-        <Container>
-          <ConnectedRouter history={history}>
-            <GlobalStyles />
-            <Switch>
-              <Route path="/" exact component={Main} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/phoneAuth" component={PhoneAuth} />
-              <Route path="/user/kakao/callback" component={KAKAOhandle} />
-              <Route exact path="/login/clubchoice" component={ClubChoice} />
-              <Route path="/grouplist" exact component={GroupList} />
-              <Route path="/groupdate" exact component={GroupDate} />
-              <Route
-                path="/groupdetail/:groupId"
-                exact
-                component={GroupDetail}
-              />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
-              <Route path="/timeline" exact component={TimelineList} />
-              <Route path="/goods" exact component={Goods} />
-              <Route path="/mygroup" exact component={MyGroup} />
-              <Route
-                path="/alarm"
-                render={() => <Alarm is_login={is_login} />}
-              />
-              <Route
-                path="/mypage/:useridx"
-                exact
-                render={() => <MyPage is_login={is_login} />}
-              />
-              <Route path="/screen" exact component={ScreenList} />
 
-              {/* 임시 */}
-              <Route component={NotFound} />
-            </Switch>
-          </ConnectedRouter>
-          {/* </div> */}
-        </Container>
-      </React.Fragment>
-    );
-  }
 
-  // 로그인을 한 경우 보여지는 페이지들
+
   return (
-    <React.Fragment>
-      <Container>
-        <ConnectedRouter history={history}>
-          <GlobalStyles />
+    <Container>
+      <ConnectedRouter history={history}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>미트 볼</title>
+          <link rel="icon" href={favicon} />
+
+          <meta property="og:type" content="mobile" />
+          <meta property="og:title" content="미트 볼" />
+          <meta property="og:image" content={img} />
+          <meta property="og:locale" content="ko_KR" />
+          <meta property="og:description" content="우리 같이 직관가자!" />
+        </Helmet>
+        <GlobalStyles />
+        {!is_login ? (
+          <Switch>
+            <Route path="/" exact component={Main} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/phoneAuth" component={PhoneAuth} />
+            <Route path="/user/kakao/callback" component={KAKAOhandle} />
+            <Route exact path="/login/clubchoice" component={ClubChoice} />
+            <Route path="/grouplist" exact component={GroupList} />
+            <Route path="/groupdate" exact component={GroupDate} />
+            <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
+            <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+            <Route path="/timeline" exact component={TimelineList} />
+            <Route path="/goods" exact component={Goods} />
+            <Route path="/mygroup" exact component={MyGroup} />
+            <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
+            <Route
+              path="/mypage/:useridx"
+              exact
+              render={() => <MyPage is_login={is_login} />}
+            />
+            <Route path="/screen" exact component={ScreenList} />
+
+            {/* 임시 */}
+            <Route component={NotFound} />
+          </Switch>
+        ) : (
           <Switch>
             <Route path="/" exact component={Main} />
             {/* <Route exact path="/login" component={Login} />
@@ -134,14 +135,18 @@ function App() {
             {/* 임시 */}
             <Route component={NotFound} />
           </Switch>
-        </ConnectedRouter>
-        {/* </div> */}
-      </Container>
-    </React.Fragment>
-  );
+
+
+        )}
+      </ConnectedRouter>
+      {/* </div> */}
+    </Container>
+  )
 }
 
-export default App;
+
+export default App
+
 
 const Container = styled.div`
   width: 375px;

@@ -89,11 +89,9 @@ export const MyInfo = (props) => {
 
             {/* 주소변경 모달 */}
             {showModal && (
-              <ModalGrid>
-                <Modal bottom height="250px">
-                  <Region setShowModal={setShowModal} setRegoin={setRegion} />
-                </Modal>
-              </ModalGrid>
+              <Modal bottom height="250px">
+                <Region setShowModal={setShowModal} setRegoin={setRegion} />
+              </Modal>
             )}
           </>
         ) : (
@@ -139,10 +137,6 @@ const ProfileSrc = styled.img`
   :hover {
     cursor: pointer;
   }
-`
-
-const ModalGrid = styled.div`
-  margin: 0 20px;
 `
 const UpdateBtn = styled.button`
   width: 50%;
