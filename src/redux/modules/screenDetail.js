@@ -1,8 +1,9 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { tokenInstance, apis, tokenApis, instance } from "../../lib/axios"
+import { tokenInstance, apis, tokenApis, instance, img } from "../../lib/axios"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
+// const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";
 
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
@@ -20,6 +21,8 @@ const LIKE_COMMENT = "LIKE_COMMENT";
 const LOAD_MYLIST = "LOAD_MYLIS";
 
 const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({ screenPage }));
+// const del_screenPage = createAction(DELETE_SCREEN_PAGE, (groupId) => ({ groupId }));
+
 const like_post = createAction(LIKE_POST, (screenId, like) => ({ screenId, like }));
 const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }));
 const del_apply = createAction(DELETE_APPLY, (screenId, useridx) => ({ screenId, useridx }));
@@ -91,6 +94,40 @@ const loadScreenPageMW = (screenId) => {
 	}
 }
 
+
+// 수정하기
+const editGroupPageMW = (screenId, formData) => {
+	return (dispatch, getState, {history}) => {
+		img
+			.patch(`/screen/${screenId}`, formData)
+			.then((res) => {
+				console.log(res)
+				history.replace(`/screendetail/${screenId}`)
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
+
+// 모임삭제
+const delScreenPageMW = (screenId) => {
+  return (dispatch, getState, { history }) => {
+    tokenInstance
+      .delete(`/screen/${screenId}`)
+      .then((res) => {
+        console.log(res);
+        // dispatch(del_groupPage(groupId));
+				history.replace("/screen")
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+
 // 모임 좋아(찜) 하기/취소하기
 const likePostMW = (screenId,like) => {
 	return (dispatch, getState, {history}) => {
@@ -117,12 +154,15 @@ const screenApplyMW = (screenId, my) => {
 			.then((res) => {
 				console.log(res)
 				dispatch(screen_apply(my))
+				window.alert("참여가 완료되었습니다.")
 			})
 			.catch((err) => {
 				console.log(err)
+				window.alert("재참가 할 수 없습니다.")
 			})
 	}
 }
+
 
 // 참석취소
 const delApplyMW = (screenId, useridx) => {
@@ -130,8 +170,9 @@ const delApplyMW = (screenId, useridx) => {
 		tokenInstance
 			.delete(`/screen/${screenId}/applications`)
 			.then((res) => {
-				console.log(res)
+				console.log("참석취소",res)
 				dispatch(del_apply(screenId, useridx))
+				window.alert("모임참여가 취소되었습니다.")
 			})
 			.catch((err) => {
 				console.log(err);
@@ -152,6 +193,57 @@ const addCommentMW = (screenId, message) => {
 			})
 			.catch((err) => {
 				console.log(err);
+			})
+	}
+}
+
+
+// 댓글 수정
+const editCommentMW = (screenId, commentId, message) => {
+	return (dispatch, getState, {history}) => {
+		const comment = {comment:message}
+		tokenInstance
+			.put(`/screen/${screenId}/comment/${commentId}`, comment)
+			.then((res) => {
+				console.log("댓글수정", res)
+				dispatch(edit_comment(screenId, commentId, comment))
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
+
+// 댓글삭제
+const delCommentMW = (screenId, commentId) => {
+	return (dispatch, getState, {history}) => {
+		tokenInstance
+			.delete(`/screen/${screenId}/comment/${commentId}`)
+			.then((res) => {
+				console.log("댓글삭제",res);
+				dispatch(del_comment(screenId, commentId))
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+}
+
+
+// 댓글 좋아요
+const likeCommentMW = (screenId, commentId, like) => {
+	return (dispatch, getState, { history }) => {
+		const isLiked = {isLiked: like};
+		console.log(screenId, commentId,isLiked)
+		tokenInstance
+			.post(`/screen/${screenId}/comment/${commentId}/like`, isLiked)
+			.then((res) => {
+				console.log(res)
+				dispatch(like_comment(screenId, commentId, like))
+			})
+			.catch((err) => {
+				console.log(err)
 			})
 	}
 }
@@ -193,10 +285,41 @@ export default handleActions(
 				}
 			}
 		}),
+		[SCREEN_APPLY]: (state, action) => produce(state, (draft) => {
+			// console.log("페이로드", action.payload.my)
+			draft.groupPage.appliedUserInfo.push(action.payload.my)
+		}),
+		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserInx === action.payload.useridx);
+			console.log("리덕스모임삭제", idx)
+			if (idx !== -1) {
+				draft.groupPage.appliedUserInfo.splice(idx, 1);
+			}
+		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.screenPage.screenCommentList.push(action.payload.comment)
 		}),
-
+		[EDIT_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.screenPage.screenCommentList.findIndex((p) => p.screenCommentId === action.payload.commentId);
+      draft.screenPage.screenCommentList[idx] = {...draft.screenPage.screenCommentList[idx], ...action.payload.comment};	
+		}),
+		[DELETE_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.screenPage.screenCommentList.findIndex((p) => p.screenCommentId === action.payload.commentId);
+			if (idx !== -1) {
+				draft.screenPage.screenCommentList.splice(idx, 1);
+			}
+		}),
+		[LIKE_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.screenPage.screenCommentList.findIndex((p) => p.screenCommentId === action.payload.commentId);
+			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+			console.log("액션좋아요",action.payload.like)
+			if (action.payload.like) {
+				draft.screenPage.screenCommentList[idx].screencommentlikeCount -= 1;
+				return
+			} else {
+				draft.screenPage.screenCommentList[idx].screencommentlikeCount += 1;
+			}
+		}),
 		[LOAD_MYLIST]: (state, action) => produce(state, (draft) => {
 			draft.mylist = action.payload.mylist;
 		}),
@@ -207,10 +330,15 @@ export default handleActions(
 
 const screenDetailCreators = {
 	loadScreenPageMW,
+	editGroupPageMW,
+	delScreenPageMW,
 	likePostMW,
 	screenApplyMW,
 	delApplyMW,
 	addCommentMW,
+	editCommentMW,
+	delCommentMW,
+	likeCommentMW,
 	mylistMW
 }
 

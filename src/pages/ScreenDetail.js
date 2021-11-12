@@ -12,7 +12,7 @@ import Comment from "../componentsScreenDetail/Comment";
 const ScreenDetail = (props) => {
 	const dispatch = useDispatch();
   const params = useParams();
-  const groupId = params.groupId
+  const screenId = params.screenId
 	const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
   const [heartJoin, setHeartJoin] = useState(false);
@@ -40,9 +40,9 @@ const ScreenDetail = (props) => {
 
 
   useEffect(()=>{
-		dispatch(screenDetailCreators.loadScreenPageMW(groupId))
+		dispatch(screenDetailCreators.loadScreenPageMW(screenId))
 		dispatch(screenDetailCreators.mylistMW())
-	},[selectPage, groupId, heartJoin, join])
+	},[selectPage, screenId, heartJoin, join])
 
 	return (
 		<Container>

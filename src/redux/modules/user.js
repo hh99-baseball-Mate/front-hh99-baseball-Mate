@@ -140,28 +140,32 @@ const userUpdateMD = (formdata, id) => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    const id = getState().user.user_info.useridx;
+    const id = getState().user.user_info.useridx
 
-    const myteam = club;
-    console.log(id);
-    console.log(myteam);
+    console.log(club, "리덕스")
     axios
-      .patch(`${BASE_URL}/users/${id}`, myteam, {
-        headers: {
-          "content-type": "application/json;charset=UTF-8",
-          accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "X-AUTH-TOKEN": getCookie("is_login"),
-        },
-      })
+      .post(
+        // `${BASE_URL}/users/${id}`,
+        `${BASE_URL}/user/myteam`,
+        { myteam: club },
+        {
+          headers: {
+            "Content-type": "application/json;charset=UTF-8",
+            // "Content-Type": "multipart/form-data",
+            // accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-AUTH-TOKEN": getCookie("is_login"),
+          },
+        }
+      )
       .then((res) => {
-        console.log(res);
-        dispatch(choiceClub(myteam));
-        history.replace("/");
+        console.log(res)
+        dispatch(choiceClub(club))
+        history.replace("/")
       })
-      .catch((err) => console.log(err, "클럽선택 err입니다."));
-  };
-};
+      .catch((err) => console.log(err, "클럽선택 err입니다."))
+  }
+}
 
 // 카카오 로그인
 const kakaoLogin = (key) => {

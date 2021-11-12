@@ -15,7 +15,7 @@ const DELETE_APPLY = "DELETE_APPLY"
 const ADD_COMMENT = "ADD_COMMENT"
 const EDIT_COMMENT = "EDIT_COMMENT"
 const DELETE_COMMENT = "DELETE_COMMENT"
-const LIKE_COMMENT = "LIKE_COMMENT";
+const LIKE_GROUP_COMMENT = "LIKE_COMMENT";
 
 const LOAD_MYLIST = "LOAD_MYLIS";
 
@@ -30,7 +30,7 @@ const del_apply = createAction(DELETE_APPLY, (groupId, useridx) => ({ groupId, u
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
 const del_comment = createAction(DELETE_COMMENT, (groupId, commentId) => ({ groupId, commentId }));
-const like_comment = createAction(LIKE_COMMENT, (groupId, commentId, like) => ({ groupId, commentId, like }));
+const like_comment = createAction(LIKE_GROUP_COMMENT, (groupId, commentId, like) => ({ groupId, commentId, like }));
 
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }));
 
@@ -39,10 +39,12 @@ const initialState = {
 		appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
 		canApplyNum: "",
 		content: "",
+		createdUserId: "",
 		createdUserName: "",
+		createdUserProfileImg: "",
 		dday: "",
 		filePath: "",
-		groupCommentList: [{}],
+		groupCommentList: [{commentUserPicture:""}],
 		groupDate: "",
 		groupId: "",
 		hotPercent: "",
@@ -122,9 +124,11 @@ const groupApplyMW = (groupId, my) => {
 			.then((res) => {
 				console.log(res)
 				dispatch(group_apply(my))
+				window.alert("참여가 완료되었습니다.")
 			})
 			.catch((err) => {
 				console.log(err)
+				window.alert("재참가 할 수 없습니다.")
 			})
 	}
 }
@@ -135,8 +139,9 @@ const delApplyMW = (groupId, useridx) => {
 		tokenApis
 			.delApply(groupId)
 			.then((res) => {
-				console.log(res)
+				console.log("참석취소",res)
 				dispatch(del_apply(groupId, useridx))
+				window.alert("모임참여가 취소되었습니다.")
 			})
 			.catch((err) => {
 				console.log(err);
@@ -192,15 +197,15 @@ const delCommentMW = (groupId, commentId) => {
 }
 
 // 댓글 좋아요
-const likeCommentMW = (groupId, commentId, like) => {
+const likegroupCommentMW = (groupId, commentId, like) => {
 	return (dispatch, getState, { history }) => {
 		const isLiked = {isLiked: like};
 		console.log(groupId, commentId,isLiked)
-		tokenApis
-			.postLikeComment(groupId, commentId, isLiked)
+		tokenInstance
+			.post(`/groups/${groupId}/comment/${commentId}/like`, isLiked)
 			.then((res) => {
 				console.log(res)
-				dispatch(like_comment(groupId, commentId, like))
+				dispatch(like_comment(groupId, commentId, isLiked))
 			})
 			.catch((err) => {
 				console.log(err)
@@ -251,6 +256,7 @@ export default handleActions(
 		}),
 		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserInx === action.payload.useridx);
+			console.log("리덕스모임삭제", idx)
 			if (idx !== -1) {
 				draft.groupPage.appliedUserInfo.splice(idx, 1);
 			}
@@ -268,11 +274,11 @@ export default handleActions(
 				draft.groupPage.groupCommentList.splice(idx, 1);
 			}
 		}),
-		[LIKE_COMMENT]: (state, action) => produce(state, (draft) => {
+		[LIKE_GROUP_COMMENT]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
 			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-			console.log("액션좋아요",action.payload.like)
-			if (action.payload.like) {
+			console.log("액션좋아요",action.payload.like.isLiked, idx)
+			if (action.payload.like.isLiked) {
 				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
 				return
 			} else {
@@ -296,7 +302,7 @@ const groupDetailCreators = {
 	addCommentMW,
 	editCommentMW,
 	delCommentMW,
-	likeCommentMW,
+	likegroupCommentMW,
 	mylistMW
 }
 

@@ -17,11 +17,17 @@ const Comment = memo((props) => {
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
 
+		// 기본 로그인일 때 프로필 사진
+		const profileImg = ip + props.picture
+
+		// kakaocdn (카카오 프사인지 확인)
+		const kakaoCheck = props.picture?.split(".")[1]
+		const kakaoImg = props.picture
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const cookie = getCookie("is_login");
 
-	const profileImg = ip + props.picture
 	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
 	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
@@ -60,7 +66,7 @@ const Comment = memo((props) => {
 			<Box padding="13px 20px 13px 20px" background="#fff">
 				<Warp justify="space-between">
 					<Text size="14px" color="#777777">
-						{/* 방명록 {props.groupCommentList.length} */}
+						방명록 {props.screenCommentList.length}
 					</Text>
 
 					{/* <Warp>
@@ -86,7 +92,12 @@ const Comment = memo((props) => {
 			<Box height="69px" position="relative" flex="flex" align="center" background="#fff">
 				<Warp>
 					<div>
-						<Circle marginT="17px" url={profileImg}/>
+						<Circle marginT="17px" 
+							url={
+								kakaoCheck === "kakaocdn" ?
+								kakaoImg : profileImg
+							}
+						/>
 					</div>
 					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
 						value={message}
@@ -105,10 +116,10 @@ const Comment = memo((props) => {
 
 			{/* 댓글 */}
 			{
-				props.groupCommentList.map((comment, idx) => {
+				props.screenCommentList.map((comment, idx) => {
 					return (
 						<CommentList key={idx} {...comment} id={id} 
-							myGroupCommentLikesList={props.myGroupCommentLikesList} 
+							myScreenCommentLikesList={props.myScreenCommentLikesList} 
 							idx={idx} 
 						/>
 					)
@@ -126,17 +137,23 @@ const CommentList = memo((props) => {
 	console.log("댓글 컴포넌트", props)
 	const dispatch = useDispatch();
 
-	const mylist = useSelector((state) => state.groupDetail.mylist)
+	const mylist = useSelector((state) => state.screenDetail.mylist)
 
-	const user = useSelector((state) => state.user.user_info)
-	const Me = user.username 
-	const likeList = mylist.myGroupCommentLikesList
-	const commentId = props.groupCommentId
+	// const user = useSelector((state) => state.user.user_info)
+	const Me = mylist.userid
+	const likeList = mylist.myScreenCommentLikesList
+	const commentId = props.screenCommentId
 
 	// 사진 받아오기
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
+
+	// 기본 로그인일 때 프로필 사진
 	const profileImg = ip + props.commentUserPicture
+
+	// kakaocdn (카카오 프사인지 확인)
+	const kakaoCheck = props.commentUserPicture?.split(".")[1]
+	const kakaoImg = props.commentUserPicture
 
 	const [edit, setEdit] = useState(false);
 	const [modal, setModal] = useState(false);
@@ -159,7 +176,7 @@ const CommentList = memo((props) => {
 	const likeBtn = () => {
 		setLike(!like)
 		console.log(like)
-		dispatch(screenDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
+		dispatch(screenDetailCreators.likeCommentMW(props.id, props.screenCommentId, like));
 	}
 	
 
@@ -168,7 +185,12 @@ const CommentList = memo((props) => {
 			<Box position="relative" background="#fff" onClick = {()=>{ setModal(false)}} >
 				<Warp>
 					<div>
-						<Circle marginT="26px" url={profileImg} />
+						<Circle marginT="26px" 
+							url={
+								kakaoCheck === "kakaocdn" ?
+								kakaoImg : profileImg
+							} 
+						/>
 					</div>
 
 					<Box margin="20px 20px 20px 14px">
@@ -198,22 +220,18 @@ const CommentList = memo((props) => {
 							{
 								like ? 
 								`🥰` : `😶`
-								// <Icon src={smail} alt="smail" marginR="7px" /> 
-								// : <Icon src={unSmail} alt="smail" marginR="7px" />
 							}
 							</p>
 							<Text size="14px" marginL="7px">
-								{props.groupcommentlikeCount}
-							</Text>
-							{/* <Icon src={unSmail} alt="unSmail" marginR="7px" />
-							<Text size="12px">0</Text> */}
+								{props.screencommentlikeCount}
+							</Text> 
 						</Warp>
 
 					</Box>
 					
 					{/* 더보기 버튼 */}
 					{
-						Me === props.commentUsername ?
+						Me === props.commentUserId ?
 						<MoreBtn src={more} alt="more" marginT="-34px" marginR="22px" 
 							onClick = {(e)=>{ 
 								e.preventDefault();
@@ -244,7 +262,7 @@ const Modal = (props) => {
 
 	const delComment = () => {
 		if (window.confirm("정말 삭제하시겠습니까?") === true) {
-			dispatch(screenDetailCreators.delCommentMW(props.id, props.groupCommentId));
+			dispatch(screenDetailCreators.delCommentMW(props.id, props.screenCommentId));
 		}
   };
 	// edit={edit}
@@ -271,13 +289,13 @@ const EditComment = (props) => {
 	const dispatch = useDispatch();
 
 	const [message, setMessage] = useState(props.comment);
-	console.log(message, props.id, props.groupCommentId,)
+	console.log(message, props.id, props.screenCommentId,)
 
 	const editComment = () => {
 		if (message === "") {
 		 	return window.alert("댓글을 입력해주세요.")
 		}
-		dispatch(screenDetailCreators.editCommentMW(props.id, props.groupCommentId, message))
+		dispatch(screenDetailCreators.editCommentMW(props.id, props.screenCommentId, message))
 		props.setEdit(false)
 	}
 
@@ -308,9 +326,9 @@ const EditText = styled.textarea`
 	resize: none;
 `;
 
-Comment.defaultProps = {
-	myGroupCommentLikesList: []
-} 
+// Comment.defaultProps = {
+// 	myScreenCommentLikesList: []
+// } 
 export default Comment;
 
 
