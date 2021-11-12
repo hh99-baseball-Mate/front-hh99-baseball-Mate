@@ -12,7 +12,7 @@ export const GroupAddModal = ({
   // if (!close) {
   console.log(selectTeam_list.length)
   return (
-    <Modal bottom height="480px">
+    <Modal bottom height="480px" margin="0 -20px">
       {/* 내부 영역 지정 */}
       <Container>
         {selectTeam_list && selectTeam_list.length > 0 ? (

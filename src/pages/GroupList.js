@@ -20,34 +20,35 @@ import {
 // import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
 import { InfinityScroll } from "../components/InfinityScroll";
+import { NotGame } from "../components/NotGame"
 
 const GroupList = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [team, setTeam] = useState("");
-  console.log(team);
-  const group_list = useSelector((state) => state.group.group_list);
-  const is_login = useSelector((state) => state.user.is_login);
+  const [team, setTeam] = useState("")
+  console.log(team)
+  const group_list = useSelector((state) => state.group.group_list)
+  const is_login = useSelector((state) => state.user.is_login)
   // console.log(group_list);
   //팀별
-  const team_list = useSelector((state) => state.group.team_list);
+  const team_list = useSelector((state) => state.group.team_list)
 
   const [infinity, setInfinity] = useState({
     start: 0,
     next: 3,
-  });
+  })
 
-  console.log(team_list);
+  console.log(team_list)
 
   function newPeople(e) {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/grouplist/groupadd");
-    e.target.disabled = true;
+      : history.push("/grouplist/groupadd")
+    e.target.disabled = true
   }
 
   function choose() {
-    history.push("/groupdate");
+    history.push("/groupdate")
   }
 
   // const onlyTeam = () => {
@@ -55,8 +56,8 @@ const GroupList = (props) => {
   // };
   //팀별
   useEffect(() => {
-    dispatch(groupCr.getTeamAPI(team));
-  }, [team]);
+    dispatch(groupCr.getTeamAPI(team))
+  }, [team])
 
   return (
     <>
@@ -65,7 +66,7 @@ const GroupList = (props) => {
           setInfinity({
             start: infinity.start,
             next: (infinity.next += 3),
-          });
+          })
         }}
         // is_next={group_list > infinity.next}
         // loading={is_loading}
@@ -79,7 +80,7 @@ const GroupList = (props) => {
               <div style={{ marginRight: "10px" }}>
                 <Image
                   onClick={() => {
-                    setTeam("전체");
+                    setTeam("전체")
                   }}
                   style={{ width: "68px", height: "68px" }}
                   roundedCircle
@@ -95,8 +96,8 @@ const GroupList = (props) => {
                   key={e.id}
                   style={{ width: "68px", marginRight: "15px" }}
                   onClick={() => {
-                    setTeam(e.name);
-                    console.log(e.name);
+                    setTeam(e.name)
+                    console.log(e.name)
                   }}
                 >
                   <Image
@@ -128,11 +129,13 @@ const GroupList = (props) => {
             </div>
           </MoreContainer>
           <Broder />
-          {team_list.map((e) => {
-            // console.log(e)
-
-            return <GroupCard key={e.groupId} {...e} />;
-          })}
+          {team_list && team_list.length > 0 ? (
+            team_list.map((e) => {
+              return <GroupCard key={e.groupId} {...e} />
+            })
+          ) : (
+            <NotGame />
+          )}
           <PancilBtn onClick={newPeople} />
         </Container>
 
@@ -140,8 +143,8 @@ const GroupList = (props) => {
         <NaviBar />
       </InfinityScroll>
     </>
-  );
-};
+  )
+}
 export default GroupList;
 
 const Broder = styled.div`
