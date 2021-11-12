@@ -34,7 +34,7 @@ const Info = memo((props) => {
 	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   // const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  // const [heartJoin, setHeartJoin] = useState(false);
+  const [heartJoin, setHeartJoin] = useState(false);
 
   const myGroupLikesList= props.myGroupLikesList;
   const id = props.groupId;
@@ -49,11 +49,11 @@ const Info = memo((props) => {
     const groupLike = myGroupLikesList.indexOf(id)
     console.log("표시",groupLike)
     if (groupLike >= 0) {
-      return props.setHeartJoin(true)
+      setHeartJoin(true)
     } else {
-      return props.setHeartJoin(false)
+      setHeartJoin(false)
     }
-  },[props.heartJoin]) 
+  },[props]) 
 
 
 
@@ -64,12 +64,12 @@ const Info = memo((props) => {
     } else {
       props.setClose(false)
     }
-  }, [])
+  }, [props])
 
   // 찜(하트) 버튼
   const joinHeartBtn = () => {
-    props.setHeartJoin(!props.heartJoin)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heartJoin))
+    setHeartJoin(!heartJoin)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
   }
 
   // 수정버튼 
@@ -100,7 +100,7 @@ const Info = memo((props) => {
           }}
         >
           {
-            props.heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
+            heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
           }
         </JoinCircle>
       </Box>
@@ -108,27 +108,34 @@ const Info = memo((props) => {
       
 			{/* 타이틀 */}
 			<TitleBox>
-				<Warp margin="0 0 11px 0">
+				<Warp margin="0 0 11px 0" justify="space-between">
+          <Warp>
+            {
+              props.close ? 
+              <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
+                마감
+              </Ellipse>
+                :
+              <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
+                모집중
+              </Ellipse>
+            }
+
+            <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+              D-{props.dday}
+            </Ellipse>
+          </Warp>
+
+          {/* 수정버튼 & 삭제버튼 */}
           {
-            props.close ? 
-            <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
-              마감
-            </Ellipse>
-              :
-            <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-              모집중
-            </Ellipse>
+            props.createdUserId===props.userid ? 
+            <Warp>
+              <p onClick={()=>{editBtn()}}>📝</p> 
+              <p onClick={()=>{delBtn()}} style={{marginLeft:"5px"}}>❌</p>
+            </Warp>  
+            : null
           }
 
-					<Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-						D-{props.dday}
-					</Ellipse>
-
-          {/* 수정버튼 */}
-          <p onClick={()=>{editBtn()}}>📝</p>
-
-          {/* 삭제버튼 */}
-          <p onClick={()=>{delBtn()}}>❌</p>
 				</Warp>
 			
 
@@ -143,6 +150,7 @@ const Info = memo((props) => {
 				</Text>
 
 				<Warp justify="space-between" align="center" marginT="11px" >
+          {/* 인원 상태바 */}
 					<Progress {...props}/>
 					<Warp flex="flex">
 						<img src={colorUsers} alt="users"/>

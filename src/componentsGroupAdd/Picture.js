@@ -22,7 +22,7 @@ export const Picture = (props) => {
         <Inputs
           id="picture"
           type="file"
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/jpg"
           multiple
           {...styles}
         />

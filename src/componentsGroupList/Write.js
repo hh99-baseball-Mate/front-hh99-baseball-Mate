@@ -41,7 +41,7 @@ export const Write = (props) => {
       <Box>
         <Warp flex="flex">
           <Image
-            src={`${baseurl}/${props.filePath}`}
+            src={`${baseurl}${props.filePath}`}
             rounded
             style={{
               width: "76px",
@@ -54,7 +54,7 @@ export const Write = (props) => {
             src={More}
             alt="위치"
             onClick={() => {
-              setShowModal(true);
+              setShowModal(true)
             }}
           />
 
@@ -128,7 +128,7 @@ export const Write = (props) => {
         ""
       )}
     </div>
-  );
+  )
 };
 
 const Box = styled.div`

@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
@@ -8,8 +9,12 @@ import host from "../shared/icon/groupDetail/host.svg"
 
 const Participant = memo((props) => {
 
+	const params = useParams();
+	const history = useHistory()
+  const groupId = params.groupId
+
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-	console.log("참여자컴포", props)
+	// console.log("참여자컴포", props)
 	// const {shape, src, size, pointer} = props;
 	// flex="felx" justify="space-around"
 	const dispatch = useDispatch();
@@ -19,33 +24,39 @@ const Participant = memo((props) => {
 
 	const id = props.groupId;
 
-	const [join, setJoin] = useState(false);
+	const mylist = useSelector((state) => state.groupDetail.mylist);
+	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
+	// const [join, setJoin] = useState(false);
+	
+	
+	// console.log("나는",my)
 
-	useEffect(() => {
-		const myJoin = props.appliedUserInfo.findIndex(list => list.UserId === props.userid)
-		console.log("myJoin",myJoin)
-		if(myJoin >= 0) {
-			setJoin(true)
-		}
-	}, [props.appliedUserInfo])
-
+	// 참석버튼
 	const apply = () => {
-		if (!join) {
-			dispatch(groupDetailCreators.groupApplyMW(id))
-			setJoin(true)
+		props.setJoin(!props.join)
+		if (!props.join) {
+			dispatch(groupDetailCreators.groupApplyMW(id, my))
+			props.setJoin(true)
 			window.alert("참여가 완료되었습니다.")
+			return
 		} else {
-			setJoin(false)
+			props.setJoin(false)
 			window.alert("참여가 취소됩니다.")
+			return
 		}
 	}
 
-  // useEffect(() => {
-  //   const groupLike = props.myGroupLikesList.indexOf(id)
-  //   if (groupLike >= 0) {
-  //     setHeartJoin(true)
-  //   }
-  // },[myGroupLikesList]) 
+	const myJoin = props.appliedUserInfo?.findIndex(list => list.UserId === props.userid)
+	console.log("myJoin",myJoin)
+	// 참석버튼 표시
+	useEffect(() => {
+		if(myJoin >= 0) {
+			return props.setJoin(true)
+		} else {
+			return props.setJoin(false)
+		}
+	}, [props, props.join, myJoin])
+
 
 	return (
 		<React.Fragment>
@@ -61,7 +72,7 @@ const Participant = memo((props) => {
 					</CircleBox>
 
 					{
-						props.appliedUserInfo.map((list,idx) => {
+						props.appliedUserInfo?.map((list,idx) => {
 							return(
 								<PartyList key={idx} {...list} />
 							)
@@ -69,19 +80,23 @@ const Participant = memo((props) => {
 					}
 					
 				</Warp>
-
-					{/* 버튼 - 모집완료되면 모집마감 */}
-					{/* 참여 신청, 취소 버튼 */}
+				{
+					// 글작성자랑 내아이디랑 같으면 버튼 안보임
+					props.createdUserId===props.userid ? 
+					null
+					:
+					// 모집완료되면 모집마감
+					props.close ?
+					<DisableBtn disabled > 모집 마감 </DisableBtn> 
+					:
+					<ConfirmBtn onClick = {()=>{apply()}} join={props.join} >
 					{
-						props.close ?
-						<DisableBtn disabled > 모집 마감 </DisableBtn> 
-						:
-						<ConfirmBtn onClick = {()=>{apply()}} join={join} >
-						{
-							join ? `참여 취소하기` : `참여 신청하기` 
-						}
-						</ConfirmBtn>
+						// 참여 신청, 취소 버튼
+						props.join ? `참여 취소하기` : `참여 신청하기` 
 					}
+					</ConfirmBtn>
+					
+				}
 					
 			</Box>
 		</React.Fragment>
@@ -90,9 +105,18 @@ const Participant = memo((props) => {
 
 // 참여인원 컴포넌트
 function PartyList(props) {
+	// const dispatch = useDispatch();
 
+	// const mylist = useSelector((state) => state.groupDetail.mylist)
+	// dispatch(groupDetailCreators.mylistMW())
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
+	const image = ip + props.UserImage
+	// const image = ip + mylist?.picture
+
+	// useEffect(() => {
+	// 	dispatch(groupDetailCreators.mylistMW())
+	// },[props])
 
 	return (
 		<CircleBox>
@@ -143,7 +167,7 @@ const Text = styled.div`
 `;
 
 const CircleBox = styled.div`
-	margin: 0 10px 20px 10px;
+	margin: 0 9px 20px 9px;
 `;
 
 const HostCircle = styled.div`

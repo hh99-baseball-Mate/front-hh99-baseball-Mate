@@ -104,15 +104,15 @@ export const GroupAdd = (props) => {
 
   // 입력체크
   const submitBtn = (e) => {
-    // const emptyValue = Object.values(inputValue).map((e) => {
-    //   return !e ? false : true
-    // })
+    const emptyValue = Object.values(inputValue).map((e) => {
+      return !e ? false : true
+    })
 
-    // if (emptyValue.includes(false) || !groupDate) {
-    //   window.alert("빈란을 채워주세요")
-    //   console.log("빈값있음")
-    //   return
-    // }
+    if (emptyValue.includes(false) || !groupDate) {
+      window.alert("빈란을 채워주세요")
+      console.log("빈값있음")
+      return
+    }
 
     const formData = new FormData()
 

@@ -40,7 +40,7 @@ export const MyPage = ({ is_login }) => {
 
   const srcChange = () => {
     if (usertype === "normal") {
-      return IMAGES_BASE_URL + "/" + picture
+      return IMAGES_BASE_URL + picture
     } else if (usertype === "kakao") {
       return picture
     } else {
@@ -106,7 +106,7 @@ export const MyPage = ({ is_login }) => {
           />
         </TextBox>
 
-        <TextLine>내모임</TextLine>
+        <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine>
 
         {/* 모달창 */}
         {showModal && (
@@ -121,7 +121,9 @@ export const MyPage = ({ is_login }) => {
           ></Modal>
         )}
 
-        <TextLine>공지사항</TextLine>
+        <TextLine onClick={() => window.alert(" 구현 중 입니다.")}>
+          공지사항
+        </TextLine>
       </Container>
 
       {/* 하단네비바 */}

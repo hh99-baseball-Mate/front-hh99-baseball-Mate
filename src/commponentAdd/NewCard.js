@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Image } from "react-bootstrap";
 import { Progress } from "../components";
@@ -9,11 +9,12 @@ import { useDispatch } from "react-redux";
 const NewCard = (props) => {
   const history = useDispatch();
   const leftPeople = props.peopleLimit - props.canApplyNum;
+
   return (
     <div>
       <Box
         onClick={() => {
-          history.push("/groupdetail/" + props.groupId);
+          history.push(`/groupdetail/${props.groupId}`);
         }}
       >
         <Warp flex="flex">

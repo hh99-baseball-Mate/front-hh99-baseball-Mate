@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ArrowBack, Container } from "../components";
+import { ArrowBack, Container, NaviBar, MarginBottom } from "../components";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
 import Etc from "../shared/icon/Etc.png";
@@ -27,13 +27,13 @@ const MyGroup = (props) => {
   const [participation, setParticipation] = useState(true);
   const [write, setWrite] = useState(false);
   const [wish, setWish] = useState(false);
-
+  //버튼
+  const { nowBtn1, nowBtn2, nowBtn3 } = props;
+  console.log(props);
   console.log(participation, "확");
   console.log(write, "인");
   console.log(wish, "용");
 
-  //버튼
-  const { nowBtn1, nowBtn2, nowBtn3 } = props;
   //카드
   useEffect(() => {
     dispatch(withCr.getWithAPI());
@@ -146,6 +146,9 @@ const MyGroup = (props) => {
       ) : (
         ""
       )}
+
+      <MarginBottom />
+      <NaviBar sch />
     </All>
   );
 };

@@ -41,4 +41,5 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   place-items: center;
   gap: 15px;
+  margin: 0 0 50px;
 `

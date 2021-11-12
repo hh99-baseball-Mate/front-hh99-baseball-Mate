@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Carousel, Image } from "react-bootstrap";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { history } from "../redux/configStore";
 //swiper
 import Swipers from "../components/Swipers";
 import GroupCard from "../componentsGroupList/GroupCard";
@@ -17,19 +17,26 @@ import {
   MarginBottom,
   NaviBar,
 } from "../components";
-
+// import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
+import { InfinityScroll } from "../components/InfinityScroll";
 
 const GroupList = (props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
-  const group_list = useSelector((state) => state.group.group_list);
+  const [team, setTeam] = useState("");
+  console.log(team);
   // console.log(group_list);
   //팀별
   const team_list = useSelector((state) => state.group.team_list);
+
+  const [infinity, setInfinity] = useState({
+    start: 0,
+    next: 3,
+  });
+
   console.log(team_list);
-  let team = "";
+
   function newPeople() {
     history.push("/grouplist/groupadd");
   }
@@ -38,93 +45,95 @@ const GroupList = (props) => {
     history.push("/groupdate");
   }
 
-  const onlyTeam = () => {
-    dispatch(groupCr.getTeamAPI(team));
-  };
-
-  useEffect(() => {
-    dispatch(groupCr.getGroupAPI());
-  }, []);
-
+  // const onlyTeam = () => {
+  //   dispatch(groupCr.getTeamAPI(team));
+  // };
   //팀별
   useEffect(() => {
-    console.log(team, "즐");
     dispatch(groupCr.getTeamAPI(team));
   }, [team]);
-  console.log(team_list);
 
   return (
     <>
-      <Header nowBtn2 />
-      <Container>
-        <Broder />
-        {/* 
-        {team_list.map((e) => ( */}
-        <div>
-          <Swipers>
-            <div style={{ marginRight: "10px" }}>
-              <Image
-                style={{ width: "68px", height: "68px" }}
-                roundedCircle
-                src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
-              ></Image>
-              <Text size="11px" center>
-                전체
-              </Text>
-            </div>
+      <InfinityScroll
+        callNext={() => {
+          setInfinity({
+            start: infinity.start,
+            next: (infinity.next += 3),
+          });
+        }}
+        // is_next={group_list > infinity.next}
+        // loading={is_loading}
+      >
+        <Header nowBtn2 />
+        <Container>
+          <Broder />
 
-            {clubImageSrc.map((e) => (
-              <SwiperSlide
-                style={{ width: "68px", marginRight: "15px" }}
-                onClick={() => {
-                  console.log(e.name);
-
-                  console.log(onlyTeam);
-                  // dispatch(groupCr.getTeamAPI(e.short_name));
-                  team = e.name;
-
-                  // history.push(`/${e.name}`);
-                }}
-              >
+          <div>
+            <Swipers>
+              <div style={{ marginRight: "10px" }}>
                 <Image
-                  src={baseUrl + e.img}
-                  style={{ width: "100%" }}
+                  onClick={() => {
+                    setTeam("전체");
+                  }}
+                  style={{ width: "68px", height: "68px" }}
                   roundedCircle
-                />
+                  src="https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
+                ></Image>
                 <Text size="11px" center>
-                  {team}
+                  전체
                 </Text>
-              </SwiperSlide>
-            ))}
-          </Swipers>
-        </div>
-        {/* ))} */}
-        <MoreContainer>
-          <div style={{ display: "block" }}>
-            <strong>모임 목록</strong>
-          </div>
-          <div
-            onClick={choose}
-            style={{
-              cursor: "pointer",
-              fontSize: "13px",
-              color: "#C4C4C4",
-            }}
-          >
-            일정선택
-          </div>
-        </MoreContainer>
-        <Broder />
-        {group_list.map((e, idx) => {
-          console.log(e);
-          team = e.name;
-          return <GroupCard key={idx} {...e} />;
-        })}
-        <PancilBtn onClick={newPeople} />
-      </Container>
+              </div>
 
-      <MarginBottom />
-      <NaviBar />
+              {clubImageSrc.map((e) => (
+                <SwiperSlide
+                  key={e.id}
+                  style={{ width: "68px", marginRight: "15px" }}
+                  onClick={() => {
+                    setTeam(e.name);
+                    console.log(e.name);
+                  }}
+                >
+                  <Image
+                    src={baseUrl + e.img}
+                    style={{ width: "100%" }}
+                    roundedCircle
+                  />
+                  <Text size="11px" center>
+                    {e.name}
+                  </Text>
+                </SwiperSlide>
+              ))}
+            </Swipers>
+          </div>
+
+          <MoreContainer>
+            <div style={{ display: "block" }}>
+              <strong>모임 목록</strong>
+            </div>
+            <div
+              onClick={choose}
+              style={{
+                cursor: "pointer",
+                fontSize: "13px",
+                color: "#C4C4C4",
+              }}
+            >
+              일정선택
+            </div>
+          </MoreContainer>
+          <Broder />
+          {team_list.map((e) => {
+            // console.log(e)
+
+            return <GroupCard key={e.groupId} {...e} />;
+          })}
+          <PancilBtn onClick={newPeople} />
+        </Container>
+
+        <MarginBottom />
+        <NaviBar />
+      </InfinityScroll>
     </>
   );
 };
