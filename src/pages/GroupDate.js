@@ -1,50 +1,59 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
-import { Buttons, Container, ArrowBack, Text } from "../components"
-import { actionCreators as playCr } from "../redux/modules/group"
-import { useDispatch, useSelector } from "react-redux"
-import group from "../redux/modules/group"
-import Position from "../shared/icon/Vector.png"
-import { history } from "../redux/configStore"
-import { Image } from "react-bootstrap"
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Buttons, Container, ArrowBack, Text } from "../components";
+import { actionCreators as playCr } from "../redux/modules/group";
+import { useDispatch, useSelector } from "react-redux";
+import group from "../redux/modules/group";
+import Position from "../shared/icon/Vector.png";
+import { history } from "../redux/configStore";
+import { Image } from "react-bootstrap";
 // 스와이퍼
 
-import { SwiperSlide, Swiper } from "swiper/react"
-
+import { SwiperSlide, Swiper } from "swiper/react";
+import { setDate } from "date-fns";
 const GroupDate = (props) => {
-  const dispatch = useDispatch()
-  const play_list = useSelector((state) => state.group.play_list)
+  const dispatch = useDispatch();
+  const play_list = useSelector((state) => state.group.play_list);
+  //일정선택
+  const [dateList, setDateList] = useState("");
+  console.log(dateList, "리스탕다리");
+
+  const cut = dateList.split(" ")[0];
+  console.log(cut);
+
   // console.log(play_list);
 
+  //일정선택
+
   useEffect(() => {
-    dispatch(playCr.getPlayAPI())
-  }, [])
+    dispatch(playCr.getPlayAPI());
+  }, []);
 
-  const _day = new Date()
+  const _day = new Date();
 
-  const year = _day.getFullYear()
-  const month = new Date().getMonth() + 1
-  const day = new Date().getDay()
+  const year = _day.getFullYear();
+  const month = new Date().getMonth() + 1;
+  const day = new Date().getDay();
 
   // 예시 날짜
   // const month = 10
   // const day = 15
 
-  let date = []
+  let date = [];
 
-  const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"]
+  const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"];
 
   // 일주일치 데이터 날짜 ++ 하기
-  for (let i = 0; i < 7; i++) {
-    const _date = String(month) + "." + String(day + i)
-    date.push(_date + " " + week[new Date(year + "." + _date).getDay()])
+  for (let i = 0; i < 20; i++) {
+    const _date = String(month) + "." + String(day + i);
+    date.push(_date + " " + week[new Date(year + "." + _date).getDay()]);
   }
   // 필터로 일주일치 날짜를 뽑은거에 해당하는 값 배열로 리턴받기
   const list = play_list.filter((e) => {
-    return date.includes(e.date)
-  })
+    return date.includes(e.date);
+  });
 
-  console.log(list)
+  // console.log(list);
   return (
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
@@ -64,14 +73,14 @@ const GroupDate = (props) => {
                 }}
               >
                 {list.map((e, i) => {
-                  console.log(e)
                   if (e && e.date === d.date) {
                     return (
                       <Box
                         key={e.matchId}
                         // name={e.matches}
                         onClick={() => {
-                          console.log(e.matches)
+                          dispatch(playCr.datePage(e.date));
+                          history.goBack();
                         }}
                       >
                         <Local>
@@ -129,12 +138,12 @@ const GroupDate = (props) => {
                           </Col>
                         </Card>
                       </Box>
-                    )
+                    );
                   }
                 })}
               </div>
             </div>
-          )
+          );
         })
       ) : (
         <NotGameList>
@@ -147,10 +156,10 @@ const GroupDate = (props) => {
         <Buttons submit>선택완료</Buttons>
       </div> */}
     </Container>
-  )
-}
+  );
+};
 
-export default GroupDate
+export default GroupDate;
 
 const Box = styled.div`
   margin: 0 10px;
@@ -163,23 +172,23 @@ const Box = styled.div`
   :focus {
     background-color: blue;
   }
-`
+`;
 
 const Local = styled.div`
   color: #777777;
   font-size: 12px;
-`
+`;
 
 const Col = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   min-width: 200px;
-`
+`;
 
 const Card = styled.div`
   margin-top: 21px;
-`
+`;
 
 const Time = styled.div`
   font-weight: bold;
@@ -187,7 +196,7 @@ const Time = styled.div`
   line-height: 20px;
   margin-top: 25px;
   /* margin-bottom: 11px; */
-`
+`;
 
 const NotGameList = styled.div`
   display: flex;
@@ -195,5 +204,4 @@ const NotGameList = styled.div`
   align-items: center;
   flex-direction: column;
   height: 50vh;
-`
-;
+`;

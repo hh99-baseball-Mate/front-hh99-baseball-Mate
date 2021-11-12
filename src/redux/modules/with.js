@@ -7,6 +7,10 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 const GET_WITH = "GET_WITH";
 const GET_WRITE = "GET_WRITE";
 const DELETE_GROUP = "DELETE_GROUP";
+const DELETE_ATTEND = "DELETE_ATTEND";
+//스크린 참가
+const GET_SCREEN = "GET_SCREEN";
+const DELETE_SCREEN = "DELETE_SCREEN";
 
 //액션함수
 const getWith = createAction(GET_WITH, (withList) => ({ withList }));
@@ -14,12 +18,21 @@ const getWrite = createAction(GET_WRITE, (writeList) => ({ writeList }));
 const deleteGroup = createAction(DELETE_GROUP, (deleteList) => ({
   deleteList,
 }));
+//내모임 참여취소
+const deleteAttend = createAction(DELETE_ATTEND, (attendList) => ({
+  attendList,
+}));
+const getScreen = createAction(GET_SCREEN, (ScreenList) => ({ ScreenList }));
+const deleteScreen = createAction(DELETE_SCREEN, (screenId) => ({ screenId }));
 
 //초기값
 const initialState = {
-  // 삭제와 함께
+  //참여취소와 함께
   with_list: [],
+  // 삭제와 함께
   write_list: [],
+  // 스야모임
+  screen_list: [],
 };
 
 //미들웨어
@@ -54,20 +67,64 @@ const getWriteAPI = () => {
 };
 
 //delete
-const deleyeGroupAPI = (groupId) => {
+const deleteGroupAPI = (groupId) => {
   return function (dispatch, getState, { history }) {
-    console.log(groupId, "dddfdf");
     tokenInstance
       .delete(`/groups/${groupId}`)
       .then((res) => {
         console.log(res);
-        dispatch(deleyeGroupAPI(groupId));
+        dispatch(deleteGroup(groupId));
       })
       .catch((err) => {
         console.log(err, "삭제에러");
       });
   };
 };
+
+//참여취소
+const deleteAttendAPI = (groupId) => {
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .delete(`/groups/${groupId}/applications`)
+      .then((res) => {
+        console.log(res);
+        dispatch(deleteAttend(groupId));
+      })
+      .catch((err) => {
+        console.log(err, "참여신청이다");
+      });
+  };
+};
+
+//스크린 참여
+const getScreenAPI = () => {
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .get(`my/screen/applications`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getScreen(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const deleteScreenAPI = (screenId) => {
+  return function (dispatch, getState, { history }) {
+    tokenInstance
+      .delete(`/screen/${screenId}/applications`)
+      .then((res) => {
+        console.log(res);
+        dispatch(deleteScreen(screenId));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 //리듀서
 export default handleActions(
   {
@@ -81,10 +138,29 @@ export default handleActions(
       }),
     [DELETE_GROUP]: (state, action) =>
       produce(state, (draft) => {
-        let idx = draft.with_list.findIndex(
-          (c) => c.groupId === action.payload.groupId
+        let idx = draft.write_list.find(
+          (c) => c.groupId === action.payload.deleteList
+        );
+        console.log(idx, "qweqweqwe");
+        draft.write_list.splice(idx, 1);
+      }),
+    [DELETE_ATTEND]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.with_list.find(
+          (c) => c.groupId === action.payload.attendList
         );
         draft.with_list.splice(idx, 1);
+      }),
+    [GET_SCREEN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.screen_list = action.payload.ScreenList;
+      }),
+    [DELETE_SCREEN]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.screen_list.find(
+          (c) => c.screenId === action.payload.screenId
+        );
+        draft.screen_list.splice(idx, 1);
       }),
   },
   initialState
@@ -93,7 +169,11 @@ export default handleActions(
 const actionCreators = {
   getWithAPI,
   getWriteAPI,
-  deleyeGroupAPI,
+  deleteGroupAPI,
+  deleteAttendAPI,
+  getScreenAPI,
+  deleteScreenAPI,
+  deleteScreen,
 };
 
 export { actionCreators };
