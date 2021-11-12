@@ -19,6 +19,9 @@ const GET_PLAY = "GET_PLAY";
 const GET_TEAM = "GET_TEAM";
 const SELECT_TEAM = "SELECT_TEAM";
 const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE";
+//일정선택
+const DATE = "DATE";
+const GET_DATE_LIST = "GET_DATE_LIST";
 
 // 팀선택
 const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
@@ -30,12 +33,16 @@ const getTeam = createAction(GET_TEAM, (teamList) => ({ teamList }));
 const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({
   groupId,
 }));
+const datePage = createAction(DATE, (date) => ({ date }));
+const getDateList = createAction(GET_DATE_LIST, (dateList) => ({ dateList }));
 
 //초기값
 const initialState = {
   play_list: [],
   team_list: [],
   selectTeam_list: [],
+  date: "",
+  date_list: [],
 };
 
 //미들웨어
@@ -145,7 +152,17 @@ export default handleActions(
       produce(state, (draft) => {
         draft.selectTeam_list = action.payload.team;
       }),
+    [DATE]: (state, action) =>
+      produce(state, (draft) => {
+        const day = action.payload.date;
+        const cut = day.split(" ")[0];
+        draft.date = cut;
+      }),
 
+    [GET_DATE_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.date_list = action.payload.dateList;
+      }),
     [DELETE_GROUP_PAGE]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.group_list.findIndex(
@@ -165,6 +182,8 @@ const actionCreators = {
   getTeamAPI,
   selectTeamMD,
   delGroupPageMW,
+  getDateList,
+  datePage,
 };
 
 export { actionCreators };

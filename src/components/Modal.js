@@ -15,8 +15,6 @@ export const Modal = (props) => {
     setShowModal,
     height,
     getOut,
-    three,
-    btnUpdate,
     margin,
   } = props
 
@@ -61,40 +59,6 @@ export const Modal = (props) => {
     )
   }
 
-  if (three) {
-    return (
-      <ModalCenter>
-        <ModalContent>
-          {/* 제목 */}
-          <Title>
-            <Text size="16px">{title}</Text>
-          </Title>
-
-          {/* 내용 */}
-          <Discription>
-            <DiscriptionText>
-              {descriptionOne} <br />
-              {descriptionTwo}
-            </DiscriptionText>
-          </Discription>
-
-          {/* 버튼 */}
-          <BtnBox>
-            <ModalCloseeBtn onClick={() => setShowModal(false)}>
-              <P>{btnClose}</P>
-            </ModalCloseeBtn>
-            <ModalConfirmBtn onClick={getOut}>
-              <P>{btnConfirm}</P>
-            </ModalConfirmBtn>
-            <ModalConfirmBtn>
-              <P>{btnUpdate}</P>
-            </ModalConfirmBtn>
-          </BtnBox>
-        </ModalContent>
-      </ModalCenter>
-    )
-  }
-}
 
 Modal.defaultProps = {
   children: null,

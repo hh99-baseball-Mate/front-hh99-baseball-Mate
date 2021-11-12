@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react"
 import { ConnectedRouter } from "connected-react-router"
 import { ClubChoice } from "../pages/ClubChoice"
@@ -35,22 +36,27 @@ import { Helmet } from "react-helmet"
 import favicon from "../shared/icon/favicon.ico"
 import img from "../shared/icon/image.jpg"
 
+
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
 
   const is_login = useSelector((state) => state.user.is_login)
   // const user_info = useSelector((state) => state.user.user_info)
 
+
   // console.log(user_info)
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
-  }, [is_login])
+  }, [is_login]);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
+
+
 
   return (
     <Container>
@@ -129,6 +135,8 @@ function App() {
             {/* 임시 */}
             <Route component={NotFound} />
           </Switch>
+
+
         )}
       </ConnectedRouter>
       {/* </div> */}
@@ -139,10 +147,11 @@ function App() {
 
 export default App
 
+
 const Container = styled.div`
   width: 375px;
   min-height: 100vh;
   margin: auto;
   background: #fff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-`
+`;
