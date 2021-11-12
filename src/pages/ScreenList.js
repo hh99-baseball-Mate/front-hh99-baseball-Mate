@@ -17,8 +17,9 @@ import { history } from "../redux/configStore"
 import { actionCreators as screenAction } from "../redux/modules/screen"
 import ETC from "../shared/icon/Etc.png"
 
-import { GiBaseballGlove } from "react-icons/gi"
+
 import { InfinityScroll } from "../components/InfinityScroll"
+import { NotGame } from "../components/NotGame"
 
 export const ScreenList = () => {
   const dispatch = useDispatch()
@@ -30,9 +31,19 @@ export const ScreenList = () => {
   const [showModal, setShowModal] = useState(false)
   const [regoin, setRegoin] = useState("")
 
+  const is_login = useSelector((state) => state.user.is_login)
+
   const screen_list = useSelector((state) => state.screen.screen_list)
   const is_loading = useSelector((state) => state.screen.is_loading)
   const list_length = useSelector((state) => state.screen.list_length)
+
+  console.log(is_loading)
+  const onSubmitBtn = (e) => {
+    !is_login
+      ? window.alert("로그인 후 이용해주세요")
+      : history.push("/screen/screenadd")
+    e.target.disabled = true
+  }
 
   useEffect(() => {
     // 필터 값을 넘겨서 겟 요청
@@ -77,18 +88,10 @@ export const ScreenList = () => {
         {screen_list && screen_list.length > 0 ? (
           screen_list.map((e) => <GroupCard key={e.screenId} screen_list={e} />)
         ) : (
-          <NotGame>
-            <GiBaseballGlove size="32px" color="#3c1010" />
-            생성된 모임이 없습니다.
-            <br /> 모임을 만들어주세요!
-          </NotGame>
+          <NotGame />
         )}
 
-        <PancilBtn
-          onClick={() => {
-            history.push("/screen/screenadd")
-          }}
-        />
+        <PancilBtn onClick={onSubmitBtn} />
       </Container>
       <MarginBottom />
       <NaviBar />
@@ -115,17 +118,4 @@ const IconText = styled.p`
 const Icons = styled.img`
   width: 13px;
   height: 13px;
-`
-
-const NotGame = styled.div`
-  margin: 0 auto;
-  width: 300px;
-  height: 500px;
-  /* background-color: red; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  line-height: 2;
-  text-align: center;
 `

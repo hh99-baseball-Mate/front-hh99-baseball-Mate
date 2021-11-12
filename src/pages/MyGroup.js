@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Participation } from "../componentsGroupList/Participation";
 // import { Wish } from "../componentsGroupList/Wish";
 import { Write } from "../componentsGroupList/Write";
-import { actionCreators as withCr } from "../redux/modules/with"
+import { actionCreators as withCr } from "../redux/modules/with";
 import Reciangle from "../shared/icon/Rectangle.png";
 
 const MyGroup = (props) => {
@@ -27,7 +27,9 @@ const MyGroup = (props) => {
   const [participation, setParticipation] = useState(true);
   const [write, setWrite] = useState(false);
   const [wish, setWish] = useState(false);
-
+  //버튼
+  const { nowBtn1, nowBtn2, nowBtn3 } = props;
+  console.log(props);
   console.log(participation, "확");
   console.log(write, "인");
   console.log(wish, "용");
@@ -59,6 +61,7 @@ const MyGroup = (props) => {
       <Container>
         <Group>
           <Button1
+            nowBtn1={nowBtn1}
             onClick={() => {
               if (write === true || participation === false) {
                 setWrite(false);
@@ -69,7 +72,8 @@ const MyGroup = (props) => {
             참여모임
           </Button1>
 
-          <Button1
+          <Button2
+            nowBtn2={nowBtn2}
             onClick={() => {
               if (participation === true) {
                 setParticipation(false);
@@ -79,14 +83,15 @@ const MyGroup = (props) => {
             }}
           >
             작성모임
-          </Button1>
-          <Button1
+          </Button2>
+          <Button3
+            nowBtn3={nowBtn3}
             onClick={() => {
               setWish(true);
             }}
           >
             찜한모임
-          </Button1>
+          </Button3>
         </Group>
       </Container>
 
@@ -95,8 +100,7 @@ const MyGroup = (props) => {
           display: "flex",
           justifyContent: "space-between",
           maxWidth: "375px",
-          width: "100%",
-          margin: "0 auto",
+          margin: "20px 25px",
         }}
       >
         <Up>내가 참여한 모임</Up>
@@ -130,25 +134,30 @@ const MyGroup = (props) => {
       })}
 
       {showModal ? (
-        <Modal bottom btnConfirm height="180px" setShowModal={setShowModal}>
+        <Modal bottom btnConfirm height="244px" setShowModal={setShowModal}>
           <Cen>
             <img src={Reciangle} alt="등등" />
-            <p>전체보기</p>
-            <But>경기모임만</But>
+            <p style={{ marginTop: "50px" }}>전체보기</p>
+            <But>경기 모임만</But>
             <br />
-            <But>경기모임만</But>
+            <But>스야 모임만</But>
           </Cen>
         </Modal>
       ) : (
         ""
       )}
 
-      <MarginBottom/>
-      <NaviBar sch/>
+      <MarginBottom />
+      <NaviBar sch />
     </All>
   );
 };
 
+MyGroup.defaultProps = {
+  nowBtn1: false,
+  nowBtn2: false,
+  nowBtn3: false,
+};
 export default MyGroup;
 
 const Button1 = styled.button`
@@ -162,6 +171,41 @@ const Button1 = styled.button`
 
   ${(props) =>
     props.nowBtn1 &&
+    `
+    border-bottom: 2px solid;
+    font-weight: bold;
+    color: red;
+  `}
+`;
+const Button2 = styled.button`
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 0;
+  padding-bottom: 10px;
+  color: #777777;
+
+  ${(props) =>
+    props.nowBtn2 &&
+    `
+    border-bottom: 2px solid;
+    font-weight: bold;
+    color: #000000;
+  `}
+`;
+
+const Button3 = styled.button`
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 0;
+  padding-bottom: 10px;
+  color: #777777;
+
+  ${(props) =>
+    props.nowBtn3 &&
     `
     border-bottom: 2px solid;
     font-weight: bold;
@@ -198,6 +242,8 @@ const Btn = styled.button`
   font-weight: 500;
   color: #c4c4c4;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 `;
 const All = styled.div`
   align-items: center;
@@ -208,12 +254,14 @@ const But = styled.button`
   border: none;
   font-size: 14px;
   color: #777777;
+  margin-top: 30px;
 `;
 
 const Cen = styled.div`
-  text-align: left;
+  text-align: center;
   width: 100px;
   margin: 0 auto;
   color: #777777;
   font-size: "14px";
+  margin-top: 10px;
 `;
