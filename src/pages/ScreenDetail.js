@@ -17,6 +17,14 @@ const ScreenDetail = (props) => {
   const [close, setClose] = useState(false)
   const [heartJoin, setHeartJoin] = useState(false);
   const [join, setJoin] = useState(false);
+
+
+  useEffect(()=>{
+    const screenId = params.screenId
+		dispatch(screenDetailCreators.loadScreenPageMW(screenId))
+		dispatch(screenDetailCreators.mylistMW())
+	},[screenId, selectPage, close, heartJoin, join])
+
 	
 	const loadDetail = useSelector((state) => state.screenDetail.screenPage)
   const mylist = useSelector((state) => state.screenDetail.mylist)
@@ -39,10 +47,6 @@ const ScreenDetail = (props) => {
   }
 
 
-  useEffect(()=>{
-		dispatch(screenDetailCreators.loadScreenPageMW(screenId))
-		dispatch(screenDetailCreators.mylistMW())
-	},[selectPage, screenId, heartJoin, join])
 
 	return (
 		<Container>

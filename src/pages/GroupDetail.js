@@ -17,6 +17,12 @@ const GroupDetail = memo((props) => {
   const [close, setClose] = useState(false)
   const [heart, setHeart] = useState(false);
   const [join, setJoin] = useState(false);
+
+  useEffect(()=>{
+    const groupId = params.groupId
+		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+		dispatch(groupDetailCreators.mylistMW())
+	},[groupId, selectPage, heart, join, close])
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -36,11 +42,6 @@ const GroupDetail = memo((props) => {
     }
   }
 
-
-  useEffect(()=>{
-		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-		dispatch(groupDetailCreators.mylistMW())
-	},[selectPage, groupId, heart, join, Info, Participant])
 
 	return (
 		<Container>

@@ -25,7 +25,7 @@ const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({ screen
 
 const like_post = createAction(LIKE_POST, (screenId, like) => ({ screenId, like }));
 const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }));
-const del_apply = createAction(DELETE_APPLY, (screenId, useridx) => ({ screenId, useridx }));
+const del_apply = createAction(DELETE_APPLY, (screenId, userid) => ({ screenId, userid }));
 
 const add_comment = createAction(ADD_COMMENT, (screenId, comment) => ({ screenId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (screenId, commentId, comment) => ({ screenId, commentId, comment }))
@@ -165,13 +165,13 @@ const screenApplyMW = (screenId, my) => {
 
 
 // 참석취소
-const delApplyMW = (screenId, useridx) => {
+const delApplyMW = (screenId, userid) => {
 	return (dispatch, getState, {history}) => {
 		tokenInstance
 			.delete(`/screen/${screenId}/applications`)
 			.then((res) => {
 				console.log("참석취소",res)
-				dispatch(del_apply(screenId, useridx))
+				dispatch(del_apply(screenId, userid))
 				window.alert("모임참여가 취소되었습니다.")
 			})
 			.catch((err) => {
@@ -287,13 +287,13 @@ export default handleActions(
 		}),
 		[SCREEN_APPLY]: (state, action) => produce(state, (draft) => {
 			// console.log("페이로드", action.payload.my)
-			draft.groupPage.appliedUserInfo.push(action.payload.my)
+			draft.screenPage.appliedUserInfo.push(action.payload.my)
 		}),
 		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
-			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserInx === action.payload.useridx);
+			const idx = draft.screenPage.appliedUserInfo.findIndex((p) => p.UserId === action.payload.userid);
 			console.log("리덕스모임삭제", idx)
 			if (idx !== -1) {
-				draft.groupPage.appliedUserInfo.splice(idx, 1);
+				draft.screenPage.appliedUserInfo.splice(idx, 1);
 			}
 		}),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {

@@ -31,7 +31,7 @@ const Participant = memo((props) => {
 	const id = props.groupId;
 
 	const mylist = useSelector((state) => state.groupDetail.mylist);
-	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
+	const my = {UserImage:mylist.picture, UserId:mylist.userid, UserInx:mylist.useridx, Username:mylist.username}
 	// const [join, setJoin] = useState(false);
 	
 	
@@ -41,23 +41,13 @@ const Participant = memo((props) => {
 	const apply = () => {
 		props.setJoin(true)
 		dispatch(groupDetailCreators.groupApplyMW(id, my))
-		// if (!props.join) {
-		// 	dispatch(groupDetailCreators.groupApplyMW(id, my))
-		// 	props.setJoin(true)
-		// 	window.alert("참여가 완료되었습니다.")
-		// 	return
-		// } else {
-		// 	props.setJoin(false)
-		// 	window.alert("참여가 취소됩니다.")
-		// 	return
-		// }
 	}
 
 	// 참석취소버튼
 	const delapply = () => {
 		if (window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
 			props.setJoin(false)
-			dispatch(groupDetailCreators.delApplyMW(groupId, props.useridx));
+			dispatch(groupDetailCreators.delApplyMW(groupId, props.userid));
 		}
 	}
 

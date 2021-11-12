@@ -31,7 +31,7 @@ const Participant = memo((props) => {
 	const id = props.id;
 
 	const mylist = useSelector((state) => state.screenDetail.mylist);
-	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
+	const my = {UserImage:mylist.picture, UserId:mylist.userid, UserInx:mylist.useridx, Username:mylist.username}
 	// const [join, setJoin] = useState(false);
 	
 	
@@ -47,7 +47,7 @@ const Participant = memo((props) => {
 	const delapply = () => {
 		if (window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
 			props.setJoin(false)
-			dispatch(screenDetailCreators.delApplyMW(groupId, props.useridx));
+			dispatch(screenDetailCreators.delApplyMW(groupId, props.userid));
 		}
 	}
 

@@ -25,7 +25,7 @@ const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage
 const edit_groupPage = createAction(EDIT_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
 const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
 const group_apply = createAction(GROUP_APPLY, (my) => ({ my }));
-const del_apply = createAction(DELETE_APPLY, (groupId, useridx) => ({ groupId, useridx }));
+const del_apply = createAction(DELETE_APPLY, (groupId, userid) => ({ groupId, userid }));
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
@@ -134,13 +134,13 @@ const groupApplyMW = (groupId, my) => {
 }
 
 // 참석취소
-const delApplyMW = (groupId, useridx) => {
+const delApplyMW = (groupId, userid) => {
 	return (dispatch, getState, {history}) => {
-		tokenApis
-			.delApply(groupId)
+		tokenInstance
+			.delete(`/groups/${groupId}/applications`, )
 			.then((res) => {
 				console.log("참석취소",res)
-				dispatch(del_apply(groupId, useridx))
+				dispatch(del_apply(groupId, userid))
 				window.alert("모임참여가 취소되었습니다.")
 			})
 			.catch((err) => {
@@ -251,12 +251,12 @@ export default handleActions(
 			}
 		}),
 		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
-			// console.log("페이로드", action.payload.my)
+			console.log("페이로드", action.payload.my)
 			draft.groupPage.appliedUserInfo.push(action.payload.my)
 		}),
 		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
-			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserInx === action.payload.useridx);
-			console.log("리덕스모임삭제", idx)
+			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserId === action.payload.userid);
+			console.log("리덕스모임삭제", idx, action.payload.useridx)
 			if (idx !== -1) {
 				draft.groupPage.appliedUserInfo.splice(idx, 1);
 			}

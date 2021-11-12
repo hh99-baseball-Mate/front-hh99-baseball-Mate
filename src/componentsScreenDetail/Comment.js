@@ -200,7 +200,7 @@ const CommentList = memo((props) => {
 								{props.commentUsername}
 							</Text>
 							<Text color="#C4C4C4" size="12px">
-								{/* 시간표시 */}
+								{props.modifiedAt}
 							</Text>
 						</Warp>
 
