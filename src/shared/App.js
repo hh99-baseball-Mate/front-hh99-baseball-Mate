@@ -31,12 +31,15 @@ import { ScreenAdd } from "../pages/ScreenAdd"
 import styled from "styled-components"
 import ScreenDetail from "../pages/ScreenDetail"
 import { Loading } from "../components/Loading"
+import { Helmet } from "react-helmet"
+import favicon from "../shared/icon/favicon.ico"
+import img from "../shared/icon/image.jpg"
 
 function App() {
   const dispatch = useDispatch()
 
   const is_login = useSelector((state) => state.user.is_login)
-  const user_info = useSelector((state) => state.user.user_info)
+  // const user_info = useSelector((state) => state.user.user_info)
 
   // console.log(user_info)
   useEffect(() => {
@@ -48,57 +51,49 @@ function App() {
   }, [is_login])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
-  if (!is_login) {
-    return (
-      <React.Fragment>
-        <Container>
-          <ConnectedRouter history={history}>
-            <GlobalStyles />
-            <Switch>
-              <Route path="/" exact component={Main} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/phoneAuth" component={PhoneAuth} />
-              <Route path="/user/kakao/callback" component={KAKAOhandle} />
-              <Route exact path="/login/clubchoice" component={ClubChoice} />
-              <Route path="/grouplist" exact component={GroupList} />
-              <Route path="/groupdate" exact component={GroupDate} />
-              <Route
-                path="/groupdetail/:groupId"
-                exact
-                component={GroupDetail}
-              />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
-              <Route path="/timeline" exact component={TimelineList} />
-              <Route path="/goods" exact component={Goods} />
-              <Route path="/mygroup" exact component={MyGroup} />
-              <Route
-                path="/alarm"
-                render={() => <Alarm is_login={is_login} />}
-              />
-              <Route
-                path="/mypage/:useridx"
-                exact
-                render={() => <MyPage is_login={is_login} />}
-              />
-              <Route path="/screen" exact component={ScreenList} />
 
-              {/* 임시 */}
-              <Route component={NotFound} />
-            </Switch>
-          </ConnectedRouter>
-          {/* </div> */}
-        </Container>
-      </React.Fragment>
-    )
-  }
-
-  // 로그인을 한 경우 보여지는 페이지들
   return (
-    <React.Fragment>
-      <Container>
-        <ConnectedRouter history={history}>
-          <GlobalStyles />
+    <Container>
+      <ConnectedRouter history={history}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>미트 볼</title>
+          <link rel="icon" href={favicon} />
+
+          <meta property="og:type" content="mobile" />
+          <meta property="og:title" content="미트 볼" />
+          <meta property="og:image" content={img} />
+          <meta property="og:locale" content="ko_KR" />
+          <meta property="og:description" content="우리 같이 직관가자!" />
+        </Helmet>
+        <GlobalStyles />
+        {!is_login ? (
+          <Switch>
+            <Route path="/" exact component={Main} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/phoneAuth" component={PhoneAuth} />
+            <Route path="/user/kakao/callback" component={KAKAOhandle} />
+            <Route exact path="/login/clubchoice" component={ClubChoice} />
+            <Route path="/grouplist" exact component={GroupList} />
+            <Route path="/groupdate" exact component={GroupDate} />
+            <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
+            <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+            <Route path="/timeline" exact component={TimelineList} />
+            <Route path="/goods" exact component={Goods} />
+            <Route path="/mygroup" exact component={MyGroup} />
+            <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
+            <Route
+              path="/mypage/:useridx"
+              exact
+              render={() => <MyPage is_login={is_login} />}
+            />
+            <Route path="/screen" exact component={ScreenList} />
+
+            {/* 임시 */}
+            <Route component={NotFound} />
+          </Switch>
+        ) : (
           <Switch>
             <Route path="/" exact component={Main} />
             {/* <Route exact path="/login" component={Login} />
@@ -124,18 +119,23 @@ function App() {
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
-            <Route path="/screendetail/:groupId" exact component={ScreenDetail} />
+            <Route
+              path="/screendetail/:groupId"
+              exact
+              component={ScreenDetail}
+            />
             <Route path="/loading" exact component={Loading} />
 
             {/* 임시 */}
             <Route component={NotFound} />
           </Switch>
-        </ConnectedRouter>
-        {/* </div> */}
-      </Container>
-    </React.Fragment>
+        )}
+      </ConnectedRouter>
+      {/* </div> */}
+    </Container>
   )
 }
+
 
 export default App
 

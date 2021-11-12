@@ -28,6 +28,7 @@ export const ScreenList = () => {
     start: 0,
     next: 4,
   })
+
   const [showModal, setShowModal] = useState(false)
   const [regoin, setRegoin] = useState("")
 
@@ -75,8 +76,9 @@ export const ScreenList = () => {
             <IconText>필터</IconText>
             <Icons src={ETC} alt="필터 이미지" />
           </IconBox>
+
           {showModal ? (
-            <Modal bottom height="335px">
+            <Modal bottom height="335px" margin="0 -20px">
               <Region
                 setShowModal={setShowModal}
                 setRegoin={setRegoin}
@@ -118,4 +120,7 @@ const IconText = styled.p`
 const Icons = styled.img`
   width: 13px;
   height: 13px;
+`
+const ModalGrid = styled.div`
+  /* margin:0 20px */
 `

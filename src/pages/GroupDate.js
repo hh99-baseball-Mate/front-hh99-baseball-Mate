@@ -71,7 +71,7 @@ const GroupDate = (props) => {
                         key={e.matchId}
                         // name={e.matches}
                         onClick={() => {
-                          console.log(e.matches)
+                          console.log(e.date)
                         }}
                       >
                         <Local>
