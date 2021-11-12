@@ -76,13 +76,14 @@ export const Login = (props) => {
             <Buttons
               submit
               margin="24px 0 7px 0"
-              _onClick={() => {
+              _onClick={(e) => {
                 dispatch(
                   userActions.logInMD({
                     userid: formik.values.email,
                     password: formik.values.password,
                   })
                 )
+                e.target.disabled = true
               }}
             >
               로그인

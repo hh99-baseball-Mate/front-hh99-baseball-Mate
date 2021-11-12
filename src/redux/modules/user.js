@@ -2,9 +2,9 @@ import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { getCookie, setCookie } from "../../shared/Cookie"
 import axios from "axios"
-import { img, instance, tokenInstance } from "../../lib/axios"
+import { img, instance } from "../../lib/axios"
 
-const serverUrl = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 // 액션타입
 
@@ -12,7 +12,6 @@ const LOGIN = "LOGIN"
 const LOGIN_CHECK = "LOGIN_CHECK"
 const CHOICE_CLUB = "CHOICE_CLUB"
 const PHONE_AUTH = "PHONE_AUTH"
-const USER_UPDATE = "USER_UPDATE"
 
 // 액션 함수
 
@@ -95,7 +94,7 @@ const logInCheckMD = () => {
 
     axios
       .post(
-        "http://54.180.148.132/user/logincheck",
+        `${BASE_URL}/user/logincheck`,
         {},
         {
           headers: {
@@ -127,7 +126,7 @@ const userUpdateMD = (formdata, id) => {
     // const user_info = getState().user.user_info
 
     img
-      .patch(`http://54.180.148.132/users/${id}`, formdata)
+      .patch(`${BASE_URL}/users/${id}`, formdata)
       .then((res) => {
         // console.log(res.data)
         dispatch(logInCheckMD())
@@ -141,21 +140,21 @@ const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
     const id = getState().user.user_info.useridx
 
+    const myteam = club
+    console.log(id)
+    console.log(myteam)
     axios
-      .patch(
-        `http://54.180.148.132/users/${id}`,
-        { myteam: club },
-        {
-          headers: {
-            "content-type": "application/json;charset=UTF-8",
-            accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "X-AUTH-TOKEN": getCookie("is_login"),
-          },
-        }
-      )
+      .patch(`${BASE_URL}/users/${id}`, myteam, {
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "X-AUTH-TOKEN": getCookie("is_login"),
+        },
+      })
       .then((res) => {
-        dispatch(choiceClub(res.data.myteam))
+        console.log(res)
+        dispatch(choiceClub(myteam))
         history.replace("/")
       })
       .catch((err) => console.log(err, "클럽선택 err입니다."))
@@ -167,12 +166,13 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
-      .get(`http://54.180.148.132/user/kakao/callback?code=${key}`)
+      .get(`${BASE_URL}/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 
-        console.log(res.data)
         setCookie("is_login", access_token)
+
+        dispatch(logInCheckMD())
 
         window.alert("로그인 완료")
         history.push("/")

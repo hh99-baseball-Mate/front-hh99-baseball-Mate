@@ -1,5 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
+import { Loading } from "../../components/Loading"
 import { actionCreators as userActions } from "../../redux/modules/user"
 
 const KAKAOhandle = (props) => {
@@ -15,7 +16,7 @@ const KAKAOhandle = (props) => {
 
   return (
     <>
-      <h1>카카오로그인중</h1>
+      <Loading/>
     </>
   )
 }

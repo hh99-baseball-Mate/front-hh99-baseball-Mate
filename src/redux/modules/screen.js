@@ -29,8 +29,6 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (formData) => {
   return function (dispatch, getState, { history }) {
-    dispatch(loading(true))
-
     img
       .post("/screen", formData)
       .then((res) => {
@@ -44,11 +42,12 @@ const screenAddMD = (formData) => {
   }
 }
 
+// 스크린 모임 불러오기
 const screenGetMD = (regoin, infinity) => {
   return function (dispatch, getState, { history }) {
     // console.log("디스패치", regoin, infinity)
-    dispatch(loading(false))
 
+    dispatch(loading(false))
     const { start, next } = infinity
 
     if (!regoin || regoin === "전국") {
@@ -59,9 +58,8 @@ const screenGetMD = (regoin, infinity) => {
 
           const infinityView = res.data.slice(start, next)
 
-          dispatch(screenGetGroup(infinityView, screenLength))
-
           dispatch(loading(true))
+          dispatch(screenGetGroup(infinityView, screenLength))
         })
         .catch((err) => console.log(err, "스야 모임 전체 불러오기 오류"))
       console.log("스야 전체모임 불러오기")
@@ -74,9 +72,8 @@ const screenGetMD = (regoin, infinity) => {
         const screenLength = res.data.length
 
         const infinityView = res.data.slice(start, next)
-
-        dispatch(screenGetGroup(infinityView, screenLength))
         dispatch(loading(true))
+        dispatch(screenGetGroup(infinityView, screenLength))
       })
       .catch((err) => console.log(err, "스야 지역별 불러오기 오류"))
     console.log("스야 지역별 불러오기")
@@ -90,6 +87,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screen_list = action.payload.screen_list
         draft.list_length = action.payload.list_length
+        draft.is_loading = true
       }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
