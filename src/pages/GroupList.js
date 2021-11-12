@@ -26,6 +26,7 @@ const GroupList = (props) => {
   const history = useHistory()
 
   const group_list = useSelector((state) => state.group.group_list)
+  const is_login = useSelector((state) => state.user.is_login)
   // console.log(group_list);
   //팀별
   const team_list = useSelector((state) => state.group.team_list)
@@ -37,8 +38,12 @@ const GroupList = (props) => {
 
   console.log(team_list)
   let team = ""
-  function newPeople() {
-    history.push("/grouplist/groupadd")
+
+  function newPeople(e) {
+    !is_login
+      ? window.alert("로그인 후 이용해주세요")
+      : history.push("/grouplist/groupadd")
+    e.target.disabled = true
   }
 
   function choose() {
