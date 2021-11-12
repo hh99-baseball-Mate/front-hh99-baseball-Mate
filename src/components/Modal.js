@@ -15,8 +15,10 @@ export const Modal = (props) => {
     setShowModal,
     height,
     getOut,
+    three,
+    btnUpdate,
     margin,
-  } = props
+  } = props;
 
   // const styles = { margin }
 
@@ -25,7 +27,7 @@ export const Modal = (props) => {
       <ModalBottom margin={margin}>
         <ModalBottomContent height={height}>{children}</ModalBottomContent>
       </ModalBottom>
-    )
+    );
   }
 
   if (center) {
@@ -56,9 +58,43 @@ export const Modal = (props) => {
           </BtnBox>
         </ModalContent>
       </ModalCenter>
-    )
+    );
   }
 
+  if (three) {
+    return (
+      <ModalCenter>
+        <ModalContent>
+          {/* 제목 */}
+          <Title>
+            <Text size="16px">{title}</Text>
+          </Title>
+
+          {/* 내용 */}
+          <Discription>
+            <DiscriptionText>
+              {descriptionOne} <br />
+              {descriptionTwo}
+            </DiscriptionText>
+          </Discription>
+
+          {/* 버튼 */}
+          <BtnBox>
+            <ModalCloseeBtn onClick={() => setShowModal(false)}>
+              <P>{btnClose}</P>
+            </ModalCloseeBtn>
+            <ModalConfirmBtn onClick={getOut}>
+              <P>{btnConfirm}</P>
+            </ModalConfirmBtn>
+            <ModalConfirmBtn>
+              <P>{btnUpdate}</P>
+            </ModalConfirmBtn>
+          </BtnBox>
+        </ModalContent>
+      </ModalCenter>
+    );
+  }
+};
 
 Modal.defaultProps = {
   children: null,
@@ -73,7 +109,7 @@ Modal.defaultProps = {
   btnUpdate: "수정",
   height: "",
   margin: "",
-}
+};
 
 const ModalBottom = styled.div`
   width: 375px;
@@ -83,7 +119,7 @@ const ModalBottom = styled.div`
   position: fixed;
   bottom: 0;
   margin: ${(props) => props.margin};
-`
+`;
 const ModalCenter = styled.div`
   width: 375px;
   height: 100vh;
