@@ -19,7 +19,7 @@ const GroupCard = ({ screen_list }) => {
   // 모집중, 마감중 표시
 
   useEffect(() => {
-    if (screen_list.dday < 1 || screen_list.canApplyNum === 0) {
+    if (screen_list.dday < 0 || screen_list.canApplyNum === 0) {
       setClose(true)
     } else {
       setClose(false)
@@ -52,7 +52,7 @@ const GroupCard = ({ screen_list }) => {
                 모집중
               </Ellipse>
             )}
-            {screen_list && screen_list.dday > 0 && (
+            {screen_list && screen_list.dday >= 0 && (
               <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
                 D-{screen_list.dday}
               </Ellipse>
@@ -177,10 +177,8 @@ const Circle = styled.div`
   border: 1px solid #e7e7e7;
   /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
   position: absolute;
-  left: 78.51%;
-  right: 7.16%;
-  top: 12%;
-  bottom: 61.02%;
+  right: 2.16%;
+  top: 4px;
   background-image: url(${(props) => props.url});
   /* background-size: contain; */
   background-size: cover;
