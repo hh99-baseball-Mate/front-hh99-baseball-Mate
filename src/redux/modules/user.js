@@ -96,11 +96,7 @@ const logInCheckMD = () => {
 
     axios
       .post(
-<<<<<<< HEAD
-        "http://52.78.93.38/user/logincheck",
-=======
         `${BASE_URL}/user/logincheck`,
->>>>>>> master
         {},
         {
           headers: {
@@ -132,11 +128,7 @@ const userUpdateMD = (formdata, id) => {
     // const user_info = getState().user.user_info
 
     img
-<<<<<<< HEAD
-      .patch(`http://52.78.93.38/users/${id}`, formdata)
-=======
       .patch(`${BASE_URL}/users/${id}`, formdata)
->>>>>>> master
       .then((res) => {
         // console.log(res.data)
         dispatch(logInCheckMD());
@@ -148,25 +140,6 @@ const userUpdateMD = (formdata, id) => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-<<<<<<< HEAD
-    const id = getState().user.user_info.useridx
-    axios
-      .patch(
-        `http://52.78.93.38/users/${id}`,
-        { myteam: club },
-        {
-          headers: {
-            "content-type": "application/json;charset=UTF-8",
-            accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "X-AUTH-TOKEN": getCookie("is_login"),
-          },
-        }
-      )
-      .then((res) => {
-        dispatch(choiceClub(club))
-        history.replace("/")
-=======
     const id = getState().user.user_info.useridx;
 
     const myteam = club;
@@ -185,7 +158,6 @@ const choiceClubMD = (club) => {
         console.log(res);
         dispatch(choiceClub(myteam));
         history.replace("/");
->>>>>>> master
       })
       .catch((err) => console.log(err, "클럽선택 err입니다."));
   };
@@ -196,11 +168,7 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
-<<<<<<< HEAD
-      .get(`http://52.78.93.38/user/kakao/callback?code=${key}`)
-=======
       .get(`${BASE_URL}/user/kakao/callback?code=${key}`)
->>>>>>> master
       .then((res) => {
         const access_token = res.data.token;
 

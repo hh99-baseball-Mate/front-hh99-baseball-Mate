@@ -9,14 +9,9 @@ import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-<<<<<<< HEAD
 import _with from "./modules/with"
 import screen from "./modules/screen"
 import screenDetail from "./modules/screenDetail";
-=======
-import _with from "./modules/with";
-import screen from "./modules/screen";
->>>>>>> master
 
 export const history = createBrowserHistory();
 
