@@ -121,19 +121,18 @@ const MyGroup = (props) => {
         </NotGame>
       )}
 
-      {write_list && write_list.length > 0 ? write_list.map((e, idx) => {
-        return (
-          <div style={{ margin: "20px" }}>
-            {write && !participation ? (
-              <Write key={idx} {...e} />
-            ) : (
-              ""
-            )}
-          </div>
-        )
-      }): (
-          <NotGame>작성한 모임이 없습니다 <br /> 모임을 작성해주세요</NotGame>
-      
+      {write_list && write_list.length > 0 ? (
+        write_list.map((e, idx) => {
+          return (
+            <div style={{ margin: "20px" }}>
+              {write && !participation ? <Write key={idx} {...e} /> : ""}
+            </div>
+          )
+        })
+      ) : (
+        <NotGame>
+          작성한 모임이 없습니다 <br /> 모임을 작성해주세요
+        </NotGame>
       )}
 
       {showModal ? (
