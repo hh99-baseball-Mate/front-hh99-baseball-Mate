@@ -5,12 +5,14 @@ import { Progress } from "../components";
 import colorUsers from "../shared/icon/colorUsers.svg";
 import More from "../shared/icon/more.svg";
 import { Modal } from "../components/Modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as actionCr } from "../redux/modules/with";
+import history from "../redux/configStore";
 
 export const Participation = (props) => {
-  console.log(props);
+  const dispatch = useDispatch();
+  console.log(props, "ㅁㅊ");
   const leftPeople = props.peopleLimit - props.canApplyNum;
-  //삭제
 
   const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
   //모달
@@ -22,10 +24,19 @@ export const Participation = (props) => {
     btnConfirm: "나가기",
   });
   const [showModal, setShowModal] = useState(false);
-  //나가기 함수
+  //삭제
   const getOut = () => {
-    console.log("나가는게 어때");
+    if (!props.screenId) {
+      console.log(props.screenId, "아이디");
+      dispatch(actionCr.deleteAttendAPI(props.groupId));
+      setShowModal(false);
+      return;
+    } else {
+      dispatch(actionCr.deleteScreenAPI(props.screenId));
+      console.log(props, "밑");
+    }
   };
+  console.log(props.screenId);
   const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =
     inputValue;
 
@@ -44,6 +55,7 @@ export const Participation = (props) => {
             }}
           />
           <img
+            style={{ transform: "translate(200px, 1px)", marginBottom: "50px" }}
             src={More}
             alt="위치"
             onClick={() => {
@@ -66,16 +78,13 @@ export const Participation = (props) => {
               </Text>
             </Warp>
             <Warp flex="flex">
-              <Text size="12px" color="#777777">
+              <Text size="11px" color="#777777">
                 {props.groupDate}
               </Text>
 
-              <Text size="12px" color="#777777">
-                {props.stadium}
-              </Text>
               <Slice> &ensp;|&ensp; </Slice>
               <Text
-                size="12px"
+                size="11px"
                 color="#777777"
                 style={{ marginBottom: "8px " }}
               >
@@ -97,7 +106,12 @@ export const Participation = (props) => {
               &nbsp;{leftPeople}명&nbsp;
             </Text>
 
-            <Text size="12px" color="#F25343" spacing="-0.03em;">
+            <Text
+              size="12px"
+              color="#F25343"
+              spacing="-0.03em;"
+              marginRight="20px"
+            >
               남음
             </Text>
           </Warp>
@@ -120,7 +134,7 @@ export const Participation = (props) => {
         ""
       )}
     </div>
-  )
+  );
 };
 
 const Box = styled.div`
@@ -154,6 +168,7 @@ const Text = styled.div`
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
+  margin-right: ${(props) => props.marginRight};
   line-height: ${(props) => props.lineHeight};
   display: -webkit-box;
   -webkit-line-clamp: 2;

@@ -25,17 +25,12 @@ export const Write = (props) => {
   });
   const [showModal, setShowModal] = useState(false);
   const getOut = () => {
-    dispatch(acionCr.deleyeGroupAPI(props.groupId));
+    dispatch(acionCr.deleteGroupAPI(props.groupId));
+    setShowModal(false);
     console.log(props, "제바류");
   };
-  const {
-    title,
-    descriptionOne,
-    descriptionTwo,
-    btnClose,
-    btnConfirm,
-    btnUpdate,
-  } = inputValue;
+  const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =
+    inputValue;
   return (
     <div>
       <Box>
@@ -51,10 +46,11 @@ export const Write = (props) => {
             }}
           />
           <img
+            style={{ transform: "translate(200px, 1px)", marginBottom: "50px" }}
             src={More}
             alt="위치"
             onClick={() => {
-              setShowModal(true)
+              setShowModal(true);
             }}
           />
 
@@ -73,16 +69,14 @@ export const Write = (props) => {
               </Text>
             </Warp>
             <Warp flex="flex">
-              <Text size="12px" color="#777777">
+              <Text size="11px" color="#777777">
                 {props.groupDate}
               </Text>
 
-              <Text size="12px" color="#777777">
-                {props.stadium}
-              </Text>
               <Slice> &ensp;|&ensp; </Slice>
+
               <Text
-                size="12px"
+                size="11px"
                 color="#777777"
                 style={{ marginBottom: "8px " }}
               >
@@ -104,7 +98,12 @@ export const Write = (props) => {
               &nbsp;{leftPeople}명&nbsp;
             </Text>
 
-            <Text size="12px" color="#F25343" spacing="-0.03em;">
+            <Text
+              size="12px"
+              color="#F25343"
+              spacing="-0.03em;"
+              marginRight="20px"
+            >
               남음
             </Text>
           </Warp>
@@ -113,7 +112,7 @@ export const Write = (props) => {
 
       {showModal ? (
         <Modal
-          three
+          center
           height="180px"
           setShowModal={setShowModal}
           title={title}
@@ -121,14 +120,13 @@ export const Write = (props) => {
           descriptionTwo={descriptionTwo}
           btnClose={btnClose}
           btnConfirm={btnConfirm}
-          btnUpdate={btnUpdate}
           getOut={getOut}
         ></Modal>
       ) : (
         ""
       )}
     </div>
-  )
+  );
 };
 
 const Box = styled.div`
@@ -162,6 +160,7 @@ const Text = styled.div`
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
+  margin-right: ${(props) => props.marginRight};
   line-height: ${(props) => props.lineHeight};
   display: -webkit-box;
   -webkit-line-clamp: 2;

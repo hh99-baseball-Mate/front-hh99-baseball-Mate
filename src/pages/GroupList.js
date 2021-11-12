@@ -20,24 +20,34 @@ import {
 // import Pancil from "../shared/icon/Pancil.png";
 import PancilBtn from "../components/PancilBtn";
 import { InfinityScroll } from "../components/InfinityScroll";
+import { NotGame } from "../components/NotGame";
 
 const GroupList = (props) => {
   const dispatch = useDispatch();
 
   const [team, setTeam] = useState("");
   console.log(team);
-  const group_list = useSelector((state) => state.group.group_list);
+
+  //일정선택
+  const date = useSelector((state) => state.group.date);
+  console.log(date, "데이트");
+
   const is_login = useSelector((state) => state.user.is_login);
   // console.log(group_list);
   //팀별
   const team_list = useSelector((state) => state.group.team_list);
+  const date_list = useSelector((state) => state.group.date_list);
+
+  const dateList = team_list.filter((e) => {
+    const timeCut = e.groupDate.split(" ")[0];
+    console.log(timeCut);
+    return timeCut === date;
+  });
 
   const [infinity, setInfinity] = useState({
     start: 0,
     next: 3,
   });
-
-  console.log(team_list);
 
   function newPeople(e) {
     !is_login
@@ -55,7 +65,11 @@ const GroupList = (props) => {
   // };
   //팀별
   useEffect(() => {
-    dispatch(groupCr.getTeamAPI(team));
+    if (date === "") {
+      dispatch(groupCr.getTeamAPI(team));
+    } else {
+      dispatch(groupCr.getDateList(dateList));
+    }
   }, [team]);
 
   return (
@@ -128,11 +142,17 @@ const GroupList = (props) => {
             </div>
           </MoreContainer>
           <Broder />
-          {team_list.map((e) => {
-            // console.log(e)
 
-            return <GroupCard key={e.groupId} {...e} />;
-          })}
+          {!date
+            ? team_list.map((e) => {
+                // console.log(e)
+
+                return <GroupCard key={e.groupId} {...e} />;
+              })
+            : date_list.map((e) => {
+                return <GroupCard key={e.groupId} {...e} />;
+              })}
+
           <PancilBtn onClick={newPeople} />
         </Container>
 

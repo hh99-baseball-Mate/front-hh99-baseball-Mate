@@ -10,6 +10,7 @@ import { Participation } from "../componentsGroupList/Participation";
 import { Write } from "../componentsGroupList/Write";
 import { actionCreators as withCr } from "../redux/modules/with";
 import Reciangle from "../shared/icon/Rectangle.png";
+import { NotGame } from "../components/NotGame";
 
 const MyGroup = (props) => {
   const dispatch = useDispatch();
@@ -22,29 +23,54 @@ const MyGroup = (props) => {
   //모달
 
   const [showModal, setShowModal] = useState(false);
+  //스크린
+  const screen_list = useSelector((state) => state.with.screen_list);
+  const [allList, setAllList] = useState(true);
+  const [screen, setScreen] = useState(false);
+  const [games, setGames] = useState(false);
 
+  console.log(allList);
   //구분
   const [participation, setParticipation] = useState(true);
   const [write, setWrite] = useState(false);
   const [wish, setWish] = useState(false);
   //버튼
+
   const { nowBtn1, nowBtn2, nowBtn3 } = props;
-  console.log(props);
-  console.log(participation, "확");
-  console.log(write, "인");
-  console.log(wish, "용");
+
+  console.log(games, screen);
+  console.log(nowBtn1, nowBtn2);
+
+  const all_list = with_list.concat(screen_list);
 
   //카드
   useEffect(() => {
-    dispatch(withCr.getWithAPI());
-  }, []);
-  console.log(with_list, "확인좀해보자");
+    if (allList) {
+      dispatch(withCr.getWithAPI());
+      dispatch(withCr.getScreenAPI());
+    }
+
+    if (games) {
+      // 경기관람 모임 리스트 부르기
+      dispatch(withCr.getWithAPI());
+      setShowModal(false);
+      return;
+      // setGames(false);
+    }
+    if (screen) {
+      console.log("스야관람");
+      // 스야 모임 리스트 부르기
+      dispatch(withCr.getScreenAPI());
+      setShowModal(false);
+      // setScreen(false);
+      return;
+    }
+  }, [screen, games]);
 
   //작성
   useEffect(() => {
     dispatch(withCr.getWriteAPI());
   }, []);
-  console.log(write_list, "피곤해");
 
   return (
     <All>
@@ -87,7 +113,8 @@ const MyGroup = (props) => {
           <Button3
             nowBtn3={nowBtn3}
             onClick={() => {
-              setWish(true);
+              window.alert("준비 중 입니다.");
+              // setWish(true)
             }}
           >
             찜한모임
@@ -113,22 +140,47 @@ const MyGroup = (props) => {
         </Btn>
       </div>
       {/* 카드 */}
-      {with_list.map((e, idx) => {
-        console.log(e);
 
+      {allList
+        ? all_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {participation ? (
+                  <Participation key={e.groupId} {...e} />
+                ) : (
+                  <NotGame>게임이없어요</NotGame>
+                )}
+              </div>
+            );
+          })
+        : !screen
+        ? with_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {participation || !e ? (
+                  <Participation key={e.groupId} {...e} />
+                ) : (
+                  <NotGame>게임이없어요</NotGame>
+                )}
+              </div>
+            );
+          })
+        : screen_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {participation || !e ? (
+                  <Participation key={e.screenId} {...e} />
+                ) : (
+                  <NotGame>게임이없어요</NotGame>
+                )}
+              </div>
+            );
+          })}
+
+      {write_list.map((e) => {
         return (
           <div style={{ margin: "20px" }}>
-            {participation ? <Participation key={idx} {...e} /> : ""}
-          </div>
-        );
-      })}
-
-      {write_list.map((e, idx) => {
-        console.log(e, "아직");
-
-        return (
-          <div style={{ margin: "20px" }}>
-            {write && !participation ? <Write key={idx} {...e} /> : ""}
+            {write && !participation ? <Write key={e.groupId} {...e} /> : ""}
           </div>
         );
       })}
@@ -137,10 +189,34 @@ const MyGroup = (props) => {
         <Modal bottom btnConfirm height="244px" setShowModal={setShowModal}>
           <Cen>
             <img src={Reciangle} alt="등등" />
-            <p style={{ marginTop: "50px" }}>전체보기</p>
-            <But>경기 모임만</But>
-            <br />
-            <But>스야 모임만</But>
+            <But
+              onClick={() => {
+                setAllList(true);
+                setGames(false);
+                setScreen(false);
+                setShowModal(false);
+              }}
+            >
+              전체보기
+            </But>
+            <But
+              onClick={() => {
+                setAllList(false);
+                setGames(true);
+                setScreen(false);
+              }}
+            >
+              경기 모임만
+            </But>
+            <But
+              onClick={() => {
+                setAllList(false);
+                setGames(false);
+                setScreen(true);
+              }}
+            >
+              스야 모임만
+            </But>
           </Cen>
         </Modal>
       ) : (
@@ -158,6 +234,7 @@ MyGroup.defaultProps = {
   nowBtn2: false,
   nowBtn3: false,
 };
+
 export default MyGroup;
 
 const Button1 = styled.button`
@@ -264,4 +341,6 @@ const Cen = styled.div`
   color: #777777;
   font-size: "14px";
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 `;
