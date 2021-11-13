@@ -118,7 +118,7 @@ const Circle = styled.div`
 `;
 
 const List = styled.div`
- 	height: 64vh;
+ 	height: 550px;
 	overflow: auto;
 	/* NaviBar안겹치게 */
 	/* margin-bottom: 94px; */
