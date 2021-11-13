@@ -11,11 +11,12 @@ import HotGroup from "../componentsMain/HotGroup";
 import GroupCard from "../componentsGroupList/GroupCard";
 // import MainTimeline from "../componentsMain/MainTimeline";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
-import Timeline from "../componentsTimeline/Timeline";
+import Timeline from "../componentsMain/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { Card } from "../componentsGoods/Card";
 import { Footer, MarginBottom, NaviBar } from "../components";
 import TimelineList from "./TimelineList";
+import logo from "../shared/icon/logo.png"
 
 const Main = memo((props) => {
 
@@ -47,7 +48,6 @@ const Main = memo((props) => {
   return (
     <React.Fragment>
       <Container>
-        <p style={{ fontSize: "30px" }}>야구 MATE</p>
 
         {/* 헤더 네비 */}
         <Header nowBtn1 />
