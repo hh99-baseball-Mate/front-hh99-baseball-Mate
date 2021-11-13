@@ -59,7 +59,7 @@ export const GroupAdd = (props) => {
     }
 
     setPreview("")
-    console.log("삭제를 해야되는데..")
+    // console.log("삭제를 해야되는데..")
   }
 
   const showModalBtn = () => {
@@ -110,7 +110,7 @@ export const GroupAdd = (props) => {
 
     if (emptyValue.includes(false) || !groupDate) {
       window.alert("빈란을 채워주세요")
-      console.log("빈값있음")
+      // console.log("빈값있음")
       return
     }
 

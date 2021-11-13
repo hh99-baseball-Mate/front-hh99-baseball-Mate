@@ -23,41 +23,41 @@ import { InfinityScroll } from "../components/InfinityScroll";
 import { NotGame } from "../components/NotGame";
 
 const GroupList = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [team, setTeam] = useState("");
-  console.log(team);
+  const [team, setTeam] = useState("")
+  // console.log(team);
 
   //일정선택
-  const date = useSelector((state) => state.group.date);
-  console.log(date, "데이트");
+  const date = useSelector((state) => state.group.date)
+  // console.log(date, "데이트");
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login)
   // console.log(group_list);
   //팀별
-  const team_list = useSelector((state) => state.group.team_list);
-  const date_list = useSelector((state) => state.group.date_list);
+  const team_list = useSelector((state) => state.group.team_list)
+  const date_list = useSelector((state) => state.group.date_list)
 
   const dateList = team_list.filter((e) => {
-    const timeCut = e.groupDate.split(" ")[0];
-    console.log(timeCut);
-    return timeCut === date;
-  });
+    const timeCut = e.groupDate.split(" ")[0]
+    // console.log(timeCut);
+    return timeCut === date
+  })
 
   const [infinity, setInfinity] = useState({
     start: 0,
     next: 3,
-  });
+  })
 
   function newPeople(e) {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/grouplist/groupadd");
-    e.target.disabled = true;
+      : history.push("/grouplist/groupadd")
+    e.target.disabled = true
   }
 
   function choose() {
-    history.push("/groupdate");
+    history.push("/groupdate")
   }
 
   // const onlyTeam = () => {
@@ -66,11 +66,11 @@ const GroupList = (props) => {
   //팀별
   useEffect(() => {
     if (date === "") {
-      dispatch(groupCr.getTeamAPI(team));
+      dispatch(groupCr.getTeamAPI(team))
     } else {
-      dispatch(groupCr.getDateList(dateList));
+      dispatch(groupCr.getDateList(dateList))
     }
-  }, [team]);
+  }, [team])
 
   return (
     <>
@@ -79,7 +79,7 @@ const GroupList = (props) => {
           setInfinity({
             start: infinity.start,
             next: (infinity.next += 3),
-          });
+          })
         }}
         // is_next={group_list > infinity.next}
         // loading={is_loading}
@@ -93,7 +93,7 @@ const GroupList = (props) => {
               <div style={{ marginRight: "10px" }}>
                 <Image
                   onClick={() => {
-                    setTeam("전체");
+                    setTeam("전체")
                   }}
                   style={{ width: "68px", height: "68px" }}
                   roundedCircle
@@ -109,8 +109,8 @@ const GroupList = (props) => {
                   key={e.id}
                   style={{ width: "68px", marginRight: "15px" }}
                   onClick={() => {
-                    setTeam(e.name);
-                    console.log(e.name);
+                    setTeam(e.name)
+                    console.log(e.name)
                   }}
                 >
                   <Image
@@ -147,10 +147,10 @@ const GroupList = (props) => {
             ? team_list.map((e) => {
                 // console.log(e)
 
-                return <GroupCard key={e.groupId} {...e} />;
+                return <GroupCard key={e.groupId} {...e} />
               })
             : date_list.map((e) => {
-                return <GroupCard key={e.groupId} {...e} />;
+                return <GroupCard key={e.groupId} {...e} />
               })}
 
           <PancilBtn onClick={newPeople} />
@@ -160,7 +160,7 @@ const GroupList = (props) => {
         <NaviBar />
       </InfinityScroll>
     </>
-  );
+  )
 };
 export default GroupList;
 

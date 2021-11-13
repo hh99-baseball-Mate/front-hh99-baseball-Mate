@@ -19,7 +19,7 @@ export const InfinityScroll = (props) => {
     // 브라우저 총 높이 - 현재화면 총 높이 - 스크롤 숨겨진 높이
     if (scrollHeight - innerHeight - scrollTop < 250) {
       if (!loading) {
-        console.log("무한스크롤")
+        // console.log("무한스크롤")
         return
       }
       callNext()

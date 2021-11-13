@@ -79,8 +79,8 @@ const loadGroupPageMW = (groupId) => {
 				dispatch(load_groupPage(groupPage))
 			})
 			.catch((err) => {
-				console.log(err);
-			})
+        // console.log(err);
+      })
 	}
 }
 

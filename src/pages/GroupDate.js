@@ -12,46 +12,46 @@ import { Image } from "react-bootstrap";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { setDate } from "date-fns";
 const GroupDate = (props) => {
-  const dispatch = useDispatch();
-  const play_list = useSelector((state) => state.group.play_list);
+  const dispatch = useDispatch()
+  const play_list = useSelector((state) => state.group.play_list)
   //일정선택
-  const [dateList, setDateList] = useState("");
-  console.log(dateList, "리스탕다리");
+  const [dateList, setDateList] = useState("")
+  // console.log(dateList, "리스탕다리");
 
-  const cut = dateList.split(" ")[0];
-  console.log(cut);
+  const cut = dateList.split(" ")[0]
+  // console.log(cut);
 
   // console.log(play_list);
 
   //일정선택
 
   useEffect(() => {
-    dispatch(playCr.getPlayAPI());
-  }, []);
+    dispatch(playCr.getPlayAPI())
+  }, [])
 
-  const _day = new Date();
+  const _day = new Date()
 
-  const year = _day.getFullYear();
-  const month = new Date().getMonth() + 1;
-  const day = new Date().getDay();
+  const year = _day.getFullYear()
+  const month = new Date().getMonth() + 1
+  const day = new Date().getDay()
 
   // 예시 날짜
   // const month = 10
   // const day = 15
 
-  let date = [];
+  let date = []
 
-  const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"];
+  const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"]
 
   // 일주일치 데이터 날짜 ++ 하기
   for (let i = 0; i < 20; i++) {
-    const _date = String(month) + "." + String(day + i);
-    date.push(_date + " " + week[new Date(year + "." + _date).getDay()]);
+    const _date = String(month) + "." + String(day + i)
+    date.push(_date + " " + week[new Date(year + "." + _date).getDay()])
   }
   // 필터로 일주일치 날짜를 뽑은거에 해당하는 값 배열로 리턴받기
   const list = play_list.filter((e) => {
-    return date.includes(e.date);
-  });
+    return date.includes(e.date)
+  })
 
   // console.log(list);
   return (
@@ -79,10 +79,8 @@ const GroupDate = (props) => {
                         key={e.matchId}
                         // name={e.matches}
                         onClick={() => {
-
-                          dispatch(playCr.datePage(e.date));
-                          history.goBack();
-
+                          dispatch(playCr.datePage(e.date))
+                          history.goBack()
                         }}
                       >
                         <Local>
@@ -140,12 +138,12 @@ const GroupDate = (props) => {
                           </Col>
                         </Card>
                       </Box>
-                    );
+                    )
                   }
                 })}
               </div>
             </div>
-          );
+          )
         })
       ) : (
         <NotGameList>
@@ -158,7 +156,7 @@ const GroupDate = (props) => {
         <Buttons submit>선택완료</Buttons>
       </div> */}
     </Container>
-  );
+  )
 };
 
 export default GroupDate;

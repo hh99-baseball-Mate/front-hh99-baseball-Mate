@@ -13,63 +13,59 @@ import send from "../shared/icon/send.svg"
 
 
 const Comment = memo((props) => {
-	
-	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-	const ip = IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
 
-		// 기본 로그인일 때 프로필 사진
-		const profileImg = ip + props.picture
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.picture
 
-		// kakaocdn (카카오 프사인지 확인)
-		const kakaoCheck = props.picture?.split(".")[1]
-		const kakaoImg = props.picture
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.picture?.split(".")[1]
+  const kakaoImg = props.picture
 
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const cookie = getCookie("is_login");
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const cookie = getCookie("is_login")
 
-	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
-	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
+  // const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
+  // const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
-	// console.log("groupPage야야", groupPage)
-	console.log("코멘트컴포넌트", props)
+  // console.log("groupPage야야", groupPage)
+  // console.log("코멘트컴포넌트", props)
 
-
-	const id = props.id
-//  console.log("페이지아이디",id)
-	const [message, setMessage] = useState("");
+  const id = props.id
+  //  console.log("페이지아이디",id)
+  const [message, setMessage] = useState("")
 
   const addComment = () => {
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요");
+      window.alert("로그인 후 이용해주세요")
       history.push("/login")
-      return;
-    }
-    else if (message !== "") {
-      dispatch(screenDetailCreators.addCommentMW(id, message));
-      setMessage("");
-      return;
-    } 
-    else {
+      return
+    } else if (message !== "") {
+      dispatch(screenDetailCreators.addCommentMW(id, message))
+      setMessage("")
+      return
+    } else {
       window.alert("내용을 입력하세요")
-      return;
+      return
     }
-  };
+  }
 
-	// useEffect(()=>{
-	// 	dispatch(screenDetailCreators.loadScreenPageMW(props.id))
-	// 	dispatch(screenDetailCreators.mylistMW())
-	// },[])
+  // useEffect(()=>{
+  // 	dispatch(screenDetailCreators.loadScreenPageMW(props.id))
+  // 	dispatch(screenDetailCreators.mylistMW())
+  // },[])
 
-	return (
-		<React.Fragment>
-			<Box padding="13px 20px 13px 20px" background="#fff">
-				<Warp justify="space-between">
-					<Text size="14px" color="#777777">
-						방명록 {props.screenCommentList.length}
-					</Text>
+  return (
+    <React.Fragment>
+      <Box padding="13px 20px 13px 20px" background="#fff">
+        <Warp justify="space-between">
+          <Text size="14px" color="#777777">
+            방명록 {props.screenCommentList.length}
+          </Text>
 
-					{/* <Warp>
+          {/* <Warp>
 						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
 							인기순
 						</Text>
@@ -77,181 +73,198 @@ const Comment = memo((props) => {
 							최신순
 						</Text>
 					</Warp> */}
-				</Warp>
-			</Box>
+        </Warp>
+      </Box>
 
-			<Rectangle/>
+      <Rectangle />
 
-			<Box height="42px" background="#F6F6F6" flex="flex" justify="center" align="center" >
-				<Text color="#C4C4C4" size="14px">
-					방명록을 사용할 때는 욕설과 비방 삼가해주시기 바랍니다.
-				</Text>
-			</Box>
+      <Box
+        height="42px"
+        background="#F6F6F6"
+        flex="flex"
+        justify="center"
+        align="center"
+      >
+        <Text color="#C4C4C4" size="14px">
+          방명록을 사용할 때는 욕설과 비방 삼가해주시기 바랍니다.
+        </Text>
+      </Box>
 
-			{/* 댓글작성 */}
-			<Box height="69px" position="relative" flex="flex" align="center" background="#fff">
-				<Warp>
-					<div>
-						<Circle marginT="17px" 
-							url={
-								kakaoCheck === "kakaocdn" ?
-								kakaoImg : profileImg
-							}
-						/>
-					</div>
-					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
-						value={message}
-						onChange={(e) => {
-							setMessage(e.target.value);
-						}}
-					/>
-				</Warp>
-					<SendImg src={send} alt="send"
-						onClick={() => {addComment()}}
-					/>
-			</Box>
+      {/* 댓글작성 */}
+      <Box
+        height="69px"
+        position="relative"
+        flex="flex"
+        align="center"
+        background="#fff"
+      >
+        <Warp>
+          <div>
+            <Circle
+              marginT="17px"
+              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+            />
+          </div>
+          <TextArea
+            placeholder="&#13;&#10;댓글을 입력해 주세요..."
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value)
+            }}
+          />
+        </Warp>
+        <SendImg
+          src={send}
+          alt="send"
+          onClick={() => {
+            addComment()
+          }}
+        />
+      </Box>
 
-			<Rectangle/>
-			
+      <Rectangle />
 
-			{/* 댓글 */}
-			{
-				props.screenCommentList.map((comment, idx) => {
-					return (
-						<CommentList key={idx} {...comment} id={id} 
-							myScreenCommentLikesList={props.myScreenCommentLikesList} 
-							idx={idx} 
-						/>
-					)
-				})
-			}
-
-		</React.Fragment>	
-	)
+      {/* 댓글 */}
+      {props.screenCommentList.map((comment, idx) => {
+        return (
+          <CommentList
+            key={idx}
+            {...comment}
+            id={id}
+            myScreenCommentLikesList={props.myScreenCommentLikesList}
+            idx={idx}
+          />
+        )
+      })}
+    </React.Fragment>
+  )
 })
-
-
 
 // 댓글 컴포넌트
 const CommentList = memo((props) => {
-	console.log("댓글 컴포넌트", props)
-	const dispatch = useDispatch();
+  // console.log("댓글 컴포넌트", props)
+  const dispatch = useDispatch()
 
-	const mylist = useSelector((state) => state.screenDetail.mylist)
+  const mylist = useSelector((state) => state.screenDetail.mylist)
 
-	// const user = useSelector((state) => state.user.user_info)
-	const Me = mylist.userid
-	const likeList = mylist.myScreenCommentLikesList
-	const commentId = props.screenCommentId
+  // const user = useSelector((state) => state.user.user_info)
+  const Me = mylist.userid
+  const likeList = mylist.myScreenCommentLikesList
+  const commentId = props.screenCommentId
 
-	// 사진 받아오기
-	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-	const ip = IMAGES_BASE_URL;
+  // 사진 받아오기
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
 
-	// 기본 로그인일 때 프로필 사진
-	const profileImg = ip + props.commentUserPicture
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.commentUserPicture
 
-	// kakaocdn (카카오 프사인지 확인)
-	const kakaoCheck = props.commentUserPicture?.split(".")[1]
-	const kakaoImg = props.commentUserPicture
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.commentUserPicture?.split(".")[1]
+  const kakaoImg = props.commentUserPicture
 
-	const [edit, setEdit] = useState(false);
-	const [modal, setModal] = useState(false);
-	const [like, setLike] = useState(false);
+  const [edit, setEdit] = useState(false)
+  const [modal, setModal] = useState(false)
+  const [like, setLike] = useState(false)
 
-	useEffect(() => {
-		dispatch(screenDetailCreators.loadScreenPageMW(props.id));
-	}, [])
+  useEffect(() => {
+    dispatch(screenDetailCreators.loadScreenPageMW(props.id))
+  }, [])
 
-	// 댓글 좋아요 누른거 아이콘 표시하기
-	useEffect(() => {
+  // 댓글 좋아요 누른거 아이콘 표시하기
+  useEffect(() => {
     const likeIdx = likeList.indexOf(commentId)
-		console.log("likeIdx", likeIdx)
+    // console.log("likeIdx", likeIdx)
     if (likeIdx >= 0) {
       setLike(true)
     }
-  }, [likeList]) 
+  }, [likeList])
 
+  const likeBtn = () => {
+    setLike(!like)
+    // console.log(like)
+    dispatch(
+      screenDetailCreators.likeCommentMW(props.id, props.screenCommentId, like)
+    )
+  }
 
-	const likeBtn = () => {
-		setLike(!like)
-		console.log(like)
-		dispatch(screenDetailCreators.likeCommentMW(props.id, props.screenCommentId, like));
-	}
-	
+  return (
+    <React.Fragment>
+      <Box
+        position="relative"
+        background="#fff"
+        onClick={() => {
+          setModal(false)
+        }}
+      >
+        <Warp>
+          <div>
+            <Circle
+              marginT="26px"
+              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+            />
+          </div>
 
-	return (
-		<React.Fragment>	
-			<Box position="relative" background="#fff" onClick = {()=>{ setModal(false)}} >
-				<Warp>
-					<div>
-						<Circle marginT="26px" 
-							url={
-								kakaoCheck === "kakaocdn" ?
-								kakaoImg : profileImg
-							} 
-						/>
-					</div>
+          <Box margin="20px 20px 20px 14px">
+            <Warp align="center">
+              <Text size="14px" weight="bold" marginR="10px">
+                {props.commentUsername}
+              </Text>
+              <Text color="#C4C4C4" size="12px">
+                {props.modifiedAt}
+              </Text>
+            </Warp>
 
-					<Box margin="20px 20px 20px 14px">
+            <Text size="14px" marginT="5px" width>
+              {/* 댓글수정 기능 */}
+              {edit ? (
+                <EditComment {...props} setEdit={setEdit} />
+              ) : (
+                <p>{props.comment}</p>
+              )}
+            </Text>
 
-						<Warp align="center">
-							<Text size="14px" weight="bold" marginR="10px">
-								{props.commentUsername}
-							</Text>
-							<Text color="#C4C4C4" size="12px">
-								{props.modifiedAt}
-							</Text>
-						</Warp>
+            {/* 좋아요 싫어요 */}
+            <Warp marginT="11px">
+              <p
+                onClick={() => {
+                  likeBtn()
+                }}
+              >
+                {like ? `🥰` : `😶`}
+              </p>
+              <Text size="14px" marginL="7px">
+                {props.screencommentlikeCount}
+              </Text>
+            </Warp>
+          </Box>
 
-						<Text size="14px" marginT="5px" width>
-							{/* 댓글수정 기능 */}
-							{
-								edit ?
-									<EditComment {...props} setEdit={setEdit} />
-									: <p>{props.comment}</p>
-							}
-						</Text>
-						
+          {/* 더보기 버튼 */}
+          {Me === props.commentUserId ? (
+            <MoreBtn
+              src={more}
+              alt="more"
+              marginT="-34px"
+              marginR="22px"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setModal(!modal)
+              }}
+            >
+              <img src={more} alt="more" />
+            </MoreBtn>
+          ) : null}
 
-						{/* 좋아요 싫어요 */}
-						<Warp marginT="11px">
-							<p onClick={() => { likeBtn() }} >
-							{
-								like ? 
-								`🥰` : `😶`
-							}
-							</p>
-							<Text size="14px" marginL="7px">
-								{props.screencommentlikeCount}
-							</Text> 
-						</Warp>
-
-					</Box>
-					
-					{/* 더보기 버튼 */}
-					{
-						Me === props.commentUserId ?
-						<MoreBtn src={more} alt="more" marginT="-34px" marginR="22px" 
-							onClick = {(e)=>{ 
-								e.preventDefault();
-                e.stopPropagation();
-								setModal(!modal)
-							}}
-						> 
-							<img src={more} alt="more"/>
-						</MoreBtn>
-						: null
-					}
-
-					{/* 수정 삭제 모달 */}
-					{ modal === true ?  <Modal {...props}  edit={edit} setEdit={setEdit} /> : null }
-
-				</Warp>
-			</Box>
-			<Rectangle/>
-		</React.Fragment>	
-	)
+          {/* 수정 삭제 모달 */}
+          {modal === true ? (
+            <Modal {...props} edit={edit} setEdit={setEdit} />
+          ) : null}
+        </Warp>
+      </Box>
+      <Rectangle />
+    </React.Fragment>
+  )
 })
 
 

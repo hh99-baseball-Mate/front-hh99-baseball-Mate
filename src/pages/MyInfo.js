@@ -29,7 +29,7 @@ export const MyInfo = (props) => {
     formdata.append("address", region)
     formdata.append("file", preview)
 
-    for (const keyValue of formdata) console.log(keyValue)
+    // for (const keyValue of formdata) console.log(keyValue)
     dispatch(userActions.userUpdateMD(formdata, useridx))
   }
 

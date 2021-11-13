@@ -30,19 +30,18 @@ import "react-datepicker/dist/react-datepicker.css"
 import { useParams } from "react-router"
 
 export const ScreenEdit = (props) => {
-
-  const params = useParams();
+  const params = useParams()
   const groupId = params.groupId
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const ip = IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
   const dispatch = useDispatch()
 
   const loadDetail = useSelector((state) => state.screenDetail.screenPage)
   const mylist = useSelector((state) => state.screenDetail.mylist)
 
   const img = ip + loadDetail.filePath
-  console.log("스야수정",loadDetail)
+  // console.log("스야수정",loadDetail)
   // 날짜 datePicker 라이브러리
 
   const [startDate, setStartDate] = useState("")
@@ -134,8 +133,8 @@ export const ScreenEdit = (props) => {
     })
 
     const groupDate = dayjs(startDate).format("MM.DD (dd)")
-    // const groupDate = 
-    console.log(groupDate)
+    // const groupDate =
+    // console.log(groupDate)
 
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
@@ -149,7 +148,7 @@ export const ScreenEdit = (props) => {
 
       const placeInfomation = roadAddress.substring(0, 2)
 
-      console.log(placeInfomation)
+      // console.log(placeInfomation)
 
       formData.append("title", inputValue.title)
       formData.append("groupDate", groupDate)
@@ -166,7 +165,7 @@ export const ScreenEdit = (props) => {
       e.target.disabled = true
 
       // 폼데이터 console
-      for (const keyValue of formData) console.log(keyValue)
+      // for (const keyValue of formData) console.log(keyValue)
     }
   }
 

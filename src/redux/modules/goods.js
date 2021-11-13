@@ -21,7 +21,7 @@ const getGoodsMD = () => {
     instance
       .get("/main/nowGoods/2")
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         // dispatch(getGoods(res.data))
       })
       .catch((err) => console.log(err, "굿즈 가져오기 에러"))
@@ -30,12 +30,12 @@ const getGoodsMD = () => {
 
 const addGoodsMD = (addList) => {
   return function (dispatch, getState, { history }) {
-    console.log(addList)
+    // console.log(addList)
     tokenInstance
       .post("/page/goods", {})
       .then((res) => {
         dispatch(addGoods(addList))
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch((err) => console.log(err, "굿즈 등록 에러"))
   }

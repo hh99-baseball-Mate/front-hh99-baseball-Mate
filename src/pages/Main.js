@@ -6,7 +6,7 @@ import { timelineCreators } from "../redux/modules/timeline";
 import { useHistory } from "react-router-dom";
 
 import { Header } from "../components";
-import Banner from "../componentsMain/Banner";
+// import Banner from "../componentsMain/Banner";
 import HotGroup from "../componentsMain/HotGroup";
 import GroupCard from "../componentsGroupList/GroupCard";
 // import MainTimeline from "../componentsMain/MainTimeline";
@@ -17,6 +17,7 @@ import { Card } from "../componentsGoods/Card";
 import { Footer, MarginBottom, NaviBar } from "../components";
 import TimelineList from "./TimelineList";
 import logo from "../shared/icon/logo.png"
+import { Banner } from "../components/Banner";
 
 const Main = memo((props) => {
 
@@ -42,8 +43,8 @@ const Main = memo((props) => {
     dispatch(mainCreators.loadMainTimelineMW(5));
   }, []);
 
-  console.log("mainTimeline",mainTimeline)
-  console.log("hotGroup", hotGroup);
+  // console.log("mainTimeline",mainTimeline)
+  // console.log("hotGroup", hotGroup);
 
   return (
     <React.Fragment>
@@ -53,7 +54,8 @@ const Main = memo((props) => {
         <Header nowBtn1 />
 
         {/* 야구 일정 */}
-        <Banner />
+        {/* <Banner /> */}
+        <Banner/>
 
         {/* 핫한 모임 타이틀 */}
         <Box>
