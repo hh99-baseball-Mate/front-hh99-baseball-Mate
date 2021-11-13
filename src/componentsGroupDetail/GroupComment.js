@@ -12,16 +12,23 @@ import more from "../shared/icon/more.svg"
 import send from "../shared/icon/send.svg"
 
 
-const Comment = memo((props) => {
+const GroupComment = memo((props) => {
 	
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
 
+	// 기본 로그인일 때 프로필 사진
+	const profileImg = ip + props.picture
+
+	// kakaocdn (카카오 프사인지 확인)
+	const kakaoCheck = props.picture?.split(".")[1]
+	const kakaoImg = props.picture
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const cookie = getCookie("is_login");
+	
 
-	const profileImg = ip + props.picture
 	// const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
 	// const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
@@ -86,7 +93,12 @@ const Comment = memo((props) => {
 			<Box height="69px" position="relative" flex="flex" align="center" background="#fff">
 				<Warp>
 					<div>
-						<Circle marginT="17px" url={profileImg}/>
+						<Circle marginT="17px" 
+							url={
+								kakaoCheck === "kakaocdn" ?
+								kakaoImg : profileImg
+							}
+						/>
 					</div>
 					<TextArea placeholder="&#13;&#10;댓글을 입력해 주세요..."
 						value={message}
@@ -136,7 +148,13 @@ const CommentList = memo((props) => {
 	// 사진 받아오기
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
+
+	// 기본 로그인일 때 프로필 사진
 	const profileImg = ip + props.commentUserPicture
+
+	// kakaocdn (카카오 프사인지 확인)
+	const kakaoCheck = props.commentUserPicture?.split(".")[1]
+	const kakaoImg = props.commentUserPicture
 
 	const [edit, setEdit] = useState(false);
 	const [modal, setModal] = useState(false);
@@ -159,7 +177,7 @@ const CommentList = memo((props) => {
 	const likeBtn = () => {
 		setLike(!like)
 		console.log(like)
-		dispatch(groupDetailCreators.likeCommentMW(props.id, props.groupCommentId, like));
+		dispatch(groupDetailCreators.likegroupCommentMW(props.id, props.groupCommentId, like));
 	}
 	
 
@@ -168,7 +186,12 @@ const CommentList = memo((props) => {
 			<Box position="relative" background="#fff" onClick = {()=>{ setModal(false)}} >
 				<Warp>
 					<div>
-						<Circle marginT="26px" url={profileImg} />
+						<Circle marginT="26px" 
+							url={
+								kakaoCheck === "kakaocdn" ?
+								kakaoImg : profileImg
+							} 
+						/>
 					</div>
 
 					<Box margin="20px 20px 20px 14px">
@@ -177,8 +200,8 @@ const CommentList = memo((props) => {
 							<Text size="14px" weight="bold" marginR="10px">
 								{props.commentUsername}
 							</Text>
-							<Text color="#C4C4C4" size="12px">
-								{/* 시간표시 */}
+							<Text color="#C4C4C4" size="12px" >
+								{props.modifiedAt}
 							</Text>
 						</Warp>
 
@@ -203,7 +226,7 @@ const CommentList = memo((props) => {
 							}
 							</p>
 							<Text size="14px" marginL="7px">
-								{props.groupcommentlikeCount}
+									{props.groupcommentlikeCount}
 							</Text>
 							{/* <Icon src={unSmail} alt="unSmail" marginR="7px" />
 							<Text size="12px">0</Text> */}
@@ -308,10 +331,15 @@ const EditText = styled.textarea`
 	resize: none;
 `;
 
-Comment.defaultProps = {
-	myGroupCommentLikesList: []
+GroupComment.defaultProps = {
+	myGroupCommentLikesList: [],
+	commentUserPicture:""
 } 
-export default Comment;
+
+CommentList.defaultProps = {
+	commentUserPicture:""
+}
+export default GroupComment;
 
 
 

@@ -24,7 +24,7 @@ const Main = memo((props) => {
 
   const hotGroup = useSelector((state) => state.mainPage.hotGroup);
   const mainTimeline = useSelector((state) => state.mainPage.mainTimeline);
-  const likeState = useSelector((state) => state.timeline.like);
+  const likelist = useSelector((state) => state.timeline.likelist);
   const user = useSelector((state) => state.user.user_info);
 
   const [close, setClose] = useState(false)
@@ -41,7 +41,7 @@ const Main = memo((props) => {
     dispatch(mainCreators.loadMainTimelineMW(5));
   }, []);
 
-  // console.log("mainTimeline",mainTimeline)
+  console.log("mainTimeline",mainTimeline)
   console.log("hotGroup", hotGroup);
 
   return (
@@ -115,20 +115,20 @@ const Main = memo((props) => {
         <TimelineBanner />
         <Box>
           {/* 타임라인 작성 & 갯수 */}
-          <TimelimeWrite />
+          {/* <TimelimeWrite /> */}
 
           {/* 타임라인 리스트 */}
-          {/* {mainTimeline.map((mainTimeline, idx) => {
+          {mainTimeline.map((mainTimeline, idx) => {
             return (
               <Timeline
                 key={idx}
                 {...mainTimeline}
-                {...likeState}
+                likelist={likelist}
                 user={user}
                 idx={idx}
               ></Timeline>
             );
-          })} */}
+          })}
           {/* <TimelineList/> */}
         </Box>
 
