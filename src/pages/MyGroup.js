@@ -160,7 +160,8 @@ const MyGroup = (props) => {
                 {participation || !e ? (
                   <Participation key={e.groupId} {...e} />
                 ) : (
-                  <NotGame>게임이없어요</NotGame>
+                  // <NotGame>게임이없어요</NotGame>
+                    ""
                 )}
               </div>
             );
@@ -171,10 +172,11 @@ const MyGroup = (props) => {
                 {participation || !e ? (
                   <Participation key={e.screenId} {...e} />
                 ) : (
-                  <NotGame>게임이없어요</NotGame>
+                  // <NotGame>게임이없어요</NotGame>
+                  ""
                 )}
               </div>
-            );
+            )
           })}
 
       {write_list.map((e) => {
