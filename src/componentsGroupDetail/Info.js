@@ -24,17 +24,31 @@ const Info = memo((props) => {
   const params = useParams();
   const groupId = params.groupId
 
+  // const srcChange = () => {
+  //   if (preview) {
+  //     return URL.createObjectURL(preview)
+  //   } else if (usertype === "normal") {
+  //     return IMAGES_BASE_URL + picture
+  //   } else if (usertype === "kakao") {
+  //     return picture
+  //   } else {
+  //     return picture
+  //   }
+  // }
+
 	// 사진 ip주소 + 사진이름 조합
 	const ip = IMAGES_BASE_URL;
 	const img = props.filePath;
-	const imageUrl = ip + img
-  // 방장 프로필이미지
-  const profileUrl =  ip + props.createdUserProfileImg
-    
-	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  // const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  const [heartJoin, setHeartJoin] = useState(false);
+  // 배경사진
+	const imageUrl = ip + img
+
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.createdUserProfileImg;
+ 
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
+  const kakaoImg = props.createdUserProfileImg;
 
   const myGroupLikesList= props.myGroupLikesList;
   const id = props.groupId;
@@ -49,11 +63,11 @@ const Info = memo((props) => {
     const groupLike = myGroupLikesList.indexOf(id)
     console.log("표시",groupLike)
     if (groupLike >= 0) {
-      setHeartJoin(true)
+      props.setHeart(true)
     } else {
-      setHeartJoin(false)
+      props.setHeart(false)
     }
-  },[props]) 
+  },[myGroupLikesList]) 
 
 
 
@@ -67,9 +81,9 @@ const Info = memo((props) => {
   }, [props])
 
   // 찜(하트) 버튼
-  const joinHeartBtn = () => {
-    setHeartJoin(!heartJoin)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, heartJoin))
+  const HeartBtn = () => {
+    props.setHeart(!props.heart)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heart))
   }
 
   // 수정버튼 
@@ -96,11 +110,11 @@ const Info = memo((props) => {
 			  <Img src={imageUrl} alt="" />
         <JoinCircle
           onClick = {() => {
-            joinHeartBtn()
+            HeartBtn()
           }}
         >
           {
-            heartJoin ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
+            props.heart ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
           }
         </JoinCircle>
       </Box>
@@ -181,7 +195,15 @@ const Info = memo((props) => {
 			{/* 유저정보 */}
 			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
 				<Warp width="55px" height="55px">
-					<Circle url={profileUrl} />
+
+          {/* 기본프사 & 카카오프사 */}
+					<Circle 
+            url={
+              kakaoCheck === "kakaocdn" ?
+                kakaoImg : profileImg
+              } 
+          />
+
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
@@ -203,7 +225,7 @@ const Info = memo((props) => {
 Info.defaultProps = {
   myGroupLikesList: [],
   // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
-  UserImage: "sample.png"
+  UserImage: "sample.png",
 }
 
 export default Info;

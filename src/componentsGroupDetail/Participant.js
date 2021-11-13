@@ -20,12 +20,18 @@ const Participant = memo((props) => {
 	const dispatch = useDispatch();
 
 	const ip = IMAGES_BASE_URL;
-  const profileUrl = ip + props.createdUserProfileImg
+
+	// 기본 로그인일 때 프로필 사진
+	const profileImg = ip + props.createdUserProfileImg;
+
+	// kakaocdn (카카오 프사인지 확인)
+	const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
+	const kakaoImg = props.createdUserProfileImg;
 
 	const id = props.groupId;
 
 	const mylist = useSelector((state) => state.groupDetail.mylist);
-	const my = {picture:mylist.picture, userid:mylist.userid, useridx:mylist.useridx, username:mylist.username}
+	const my = {UserImage:mylist.picture, UserId:mylist.userid, UserInx:mylist.useridx, Username:mylist.username}
 	// const [join, setJoin] = useState(false);
 	
 	
@@ -35,24 +41,13 @@ const Participant = memo((props) => {
 	const apply = () => {
 		props.setJoin(true)
 		dispatch(groupDetailCreators.groupApplyMW(id, my))
-		window.alert("참여가 완료되었습니다.")
-		// if (!props.join) {
-		// 	dispatch(groupDetailCreators.groupApplyMW(id, my))
-		// 	props.setJoin(true)
-		// 	window.alert("참여가 완료되었습니다.")
-		// 	return
-		// } else {
-		// 	props.setJoin(false)
-		// 	window.alert("참여가 취소됩니다.")
-		// 	return
-		// }
 	}
 
 	// 참석취소버튼
 	const delapply = () => {
 		if (window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
 			props.setJoin(false)
-			dispatch(groupDetailCreators.delApplyMW(groupId, props.useridx));
+			dispatch(groupDetailCreators.delApplyMW(groupId, props.userid));
 		}
 	}
 
@@ -63,9 +58,9 @@ const Participant = memo((props) => {
 		if(myJoin >= 0) {
 			return props.setJoin(true)
 		} else {
-			return props.setJoin(false)
+			props.setJoin(false)
 		}
-	}, [props, props.join, myJoin])
+	}, [props.appliedUserInfo, props.join, myJoin])
 
 
 	return (
@@ -75,7 +70,15 @@ const Participant = memo((props) => {
 
 					{/* 방장 */}
 					<CircleBox>
-						<HostCircle url={profileUrl} name={props.createdUserName}/>
+
+						{/* 기본프사 & 카카오프사 */}
+						<HostCircle  name={props.createdUserName}
+							url={
+								kakaoCheck === "kakaocdn" ?
+								kakaoImg : profileImg
+							}
+						/>
+
 						<Text>
 							<img src={host} alt="host"/> {props.createdUserName}
 						</Text>
@@ -110,25 +113,6 @@ const Participant = memo((props) => {
 						모임 참여하기
 					</ConfirmBtn>
 				}
-
-
-						
-{/* 
-					
-					// {
-					// 	// 참여 신청, 취소 버튼
-					// 	props.join ? 
-					// 	(<ConfirmBtn onClick = {()=>{delapply()}} join={props.join} >
-					// 		참여 취소하기
-					// 	</ConfirmBtn>)
-					// 	: 
-					// 	(<ConfirmBtn onClick = {()=>{apply()}} join={props.join} >
-					// 		모임 참여하기
-					// 	</ConfirmBtn>)
-					// }
-					
-					
-				} */}
 					
 			</Box>
 		</React.Fragment>
@@ -137,14 +121,18 @@ const Participant = memo((props) => {
 
 // 참여인원 컴포넌트
 function PartyList(props) {
-	// const dispatch = useDispatch();
 
-	// const mylist = useSelector((state) => state.groupDetail.mylist)
-	// dispatch(groupDetailCreators.mylistMW())
+	console.log("참여인원 컴포넌트", props)
+
 	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
 	const ip = IMAGES_BASE_URL;
+
+	// 기본 로그인일 때 프로필 사진
 	const image = ip + props.UserImage
-	// const image = ip + mylist?.picture
+
+	// kakaocdn (카카오 프사인지 확인)
+ 	const kakaoCheck = props.UserImage?.split(".")[1]
+	const kakaoImg = props.UserImage;
 
 	// useEffect(() => {
 	// 	dispatch(groupDetailCreators.mylistMW())
@@ -152,10 +140,19 @@ function PartyList(props) {
 
 	return (
 		<CircleBox>
-			<Circle url={ip + props.UserImage}/>
+			<Circle 
+				url={
+					kakaoCheck === "kakaocdn" ?
+					kakaoImg : image
+				}
+			/>
 			<Text>{props.Username}</Text>
 		</CircleBox>
 	)
+}
+
+Participant.defaultProps = {
+	UserImage: ""
 }
 
 export default Participant;

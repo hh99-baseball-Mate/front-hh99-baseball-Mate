@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
+import logo from "../shared/icon/logo.png"
+
 const Header = (props) => {
   const history = useHistory();
 
@@ -9,6 +11,7 @@ const Header = (props) => {
 
   return (
     <Container minWidth="370px">
+      <Img src={logo} alt="logo" />
       <Box>
         <Button1
           nowBtn1={nowBtn1}
@@ -75,6 +78,11 @@ const Container = styled.div`
   padding: 0;
 `;
 
+const Img = styled.img`
+  margin-left: 26px;
+  padding-top: 20px;
+`;
+
 const Box = styled.div`
   display: flex;
   justify-content: space-between;
@@ -82,7 +90,7 @@ const Box = styled.div`
   width: 280px;
   /* margin-bottom: 11px; */
   margin-left: 26px;
-  padding-top: 30px;
+  padding-top: 20px;
 `;
 
 const Button1 = styled.button`

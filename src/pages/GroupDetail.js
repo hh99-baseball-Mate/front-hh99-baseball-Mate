@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -6,17 +6,23 @@ import { useParams } from "react-router-dom";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import Info from "../componentsGroupDetail/Info";
 import Participant from "../componentsGroupDetail/Participant";
-import Comment from "../componentsGroupDetail/Comment";
+import Comment from "../componentsGroupDetail/GroupComment";
 
 
-const GroupDetail = (props) => {
+const GroupDetail = memo((props) => {
 	const dispatch = useDispatch();
   const params = useParams();
   const groupId = params.groupId
 	const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
-  const [heartJoin, setHeartJoin] = useState(false);
+  const [heart, setHeart] = useState(false);
   const [join, setJoin] = useState(false);
+
+  useEffect(()=>{
+    const groupId = params.groupId
+		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+		dispatch(groupDetailCreators.mylistMW())
+	},[groupId, selectPage, heart, join, close])
 	
 	const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -37,18 +43,13 @@ const GroupDetail = (props) => {
   }
 
 
-  useEffect(()=>{
-		dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-		dispatch(groupDetailCreators.mylistMW())
-	},[selectPage, groupId, heartJoin, join])
-
 	return (
 		<Container>
 
 			{/* 글 정보 */}
 			<Info {...loadDetail} {...mylist} 
         close={close} setClose={setClose} 
-        heartJoin={heartJoin} setHeartJoin={setHeartJoin}
+        heart={heart} setHeart={setHeart}
       />
 
 			{/* 참여자 & 방명록 */}
@@ -79,7 +80,7 @@ const GroupDetail = (props) => {
 
 		</Container>
 	)
-}
+})
 
 export default GroupDetail;
 

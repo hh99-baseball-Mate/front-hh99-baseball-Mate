@@ -31,6 +31,7 @@ import { ScreenList } from "../pages/ScreenList"
 import { ScreenAdd } from "../pages/ScreenAdd"
 import styled from "styled-components"
 import ScreenDetail from "../pages/ScreenDetail"
+import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
 import { Loading } from "../components/Loading"
 import { Helmet } from "react-helmet"
 import favicon from "../shared/icon/favicon.ico"
@@ -125,11 +126,8 @@ function App() {
             <Route path="/mypage/:useridx/update" exact component={MyInfo} />
             <Route path="/screen" exact component={ScreenList} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
-            <Route
-              path="/screendetail/:groupId"
-              exact
-              component={ScreenDetail}
-            />
+            <Route path="/screendetail/:screenId" exact component={ScreenDetail} />
+            <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
 
             {/* 임시 */}

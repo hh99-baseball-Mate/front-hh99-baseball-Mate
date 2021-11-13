@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
-// import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { screenDetailCreators } from "../redux/modules/screenDetail";
-import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
@@ -23,14 +21,20 @@ const Info = memo((props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
-  const groupId = params.groupId
+  const screenId = params.screenId
 
 	// 사진 ip주소 + 사진이름 조합
 	const ip = IMAGES_BASE_URL;
 	const img = props.filePath;
 	const imageUrl = ip + img
-  // 방장 프로필이미지
-  const profileUrl =  ip + props.createdUserProfileImg
+
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.createdUserProfileImg;
+
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
+  const kakaoImg = props.createdUserProfileImg;
+
     
 	// const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   // const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -54,7 +58,7 @@ const Info = memo((props) => {
     } else {
       props.setHeartJoin(false)
     }
-  },[props]) 
+  },[myScreenLikesList]) 
 
 
 
@@ -76,14 +80,13 @@ const Info = memo((props) => {
 
   // 수정버튼 
   const editBtn = () => {
-    history.push(`/groupdedit/${groupId}`)
+    history.push(`/screenedit/${screenId}`)
   } 
 
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupListCreators.delGroupPageMW(props.groupId))
-      history.push("/grouplist");
+      dispatch(screenDetailCreators.delScreenPageMW(props.id))
     }
   }
 
@@ -183,7 +186,14 @@ const Info = memo((props) => {
 			{/* 유저정보 */}
 			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
 				<Warp width="55px" height="55px">
-					<Circle url={profileUrl} />
+
+          {/* 일반프사 & 카카오프사 */}
+					<Circle 
+            url={
+              kakaoCheck === "kakaocdn" ?
+                kakaoImg : profileImg
+            } 
+          />
 				</Warp>
 				<Warp direction="column" marginLeft="12px">
 					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
@@ -203,7 +213,7 @@ const Info = memo((props) => {
 })
 
 Info.defaultProps = {
-  myGroupLikesList: [],
+  myScreenLikesList: [],
   // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
   UserImage: "sample.png"
 }
