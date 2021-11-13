@@ -23,12 +23,11 @@ import { groupDetailCreators } from "../redux/modules/groupDetail"
 import { useParams } from "react-router"
 
 export const GroupEdit = (props) => {
-
-  const params = useParams();
+  const params = useParams()
   const groupId = params.groupId
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const ip = IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
   const dispatch = useDispatch()
 
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
@@ -39,10 +38,10 @@ export const GroupEdit = (props) => {
   const img = ip + loadDetail.filePath
 
   // loadDetail ? ip + loadDetail.filePath : props.defaultImg
-  console.log("모임수정",loadDetail)
-  
+  // console.log("모임수정",loadDetail)
+
   // 구단선택
-  const team = loadDetail.groupDate.split("vs")[1];
+  const team = loadDetail.groupDate.split("vs")[1]
   // console.log("팀",team);
 
   // console.log(selectTeam_list)
@@ -72,7 +71,7 @@ export const GroupEdit = (props) => {
   // 이미지 업로드 / 미리보기
 
   const imgPreview = (e) => {
-    console.log("이미지업로드",e.target.files[0])
+    // console.log("이미지업로드",e.target.files[0])
     setPreview(e.target.files[0])
   }
 
@@ -85,7 +84,7 @@ export const GroupEdit = (props) => {
     }
 
     setPreview("")
-    console.log("삭제를 해야되는데..")
+    // console.log("삭제를 해야되는데..")
   }
 
   const showModalBtn = () => {
@@ -105,7 +104,7 @@ export const GroupEdit = (props) => {
 
   useEffect(() => {
     if (selectTeam) {
-      console.log(selectTeam, "asdasd")
+      // console.log(selectTeam, "asdasd")
       dispatch(groupActions.selectTeamMD(selectTeam))
     }
   }, [selectTeam])
@@ -162,7 +161,7 @@ export const GroupEdit = (props) => {
 
     dispatch(groupDetailCreators.editGroupPageMW(groupId, formData))
     e.target.disabled = true
-    for (const keyValue of formData) console.log(keyValue)
+    // for (const keyValue of formData) console.log(keyValue)
   }
 
   return (
@@ -172,7 +171,7 @@ export const GroupEdit = (props) => {
       {/* 모임 타이틀 */}
       <div style={{ marginTop: "15px" }}>
         <Inputs
-          value={ title }
+          value={title}
           name="title"
           onChange={onChange}
           placeholder="모임명을 입력해주세요"
@@ -210,7 +209,11 @@ export const GroupEdit = (props) => {
 
             {/* 일정 정보 */}
             <GameDate>
-              {loadDetail ? <Text margin="0 10px">{loadDetail.groupDate}</Text> : "" }
+              {loadDetail ? (
+                <Text margin="0 10px">{loadDetail.groupDate}</Text>
+              ) : (
+                ""
+              )}
               <AiOutlineDown color="777777" onClick={showModalBtn} />
             </GameDate>
           </TextBox>
@@ -218,7 +221,7 @@ export const GroupEdit = (props) => {
           {/* 일정선택 모달창 props 전달 */}
           {showModal ? (
             <GroupAddModal
-              selectTeam_list={ selectTeam_list }
+              selectTeam_list={selectTeam_list}
               setGroupDate={setGroupDate}
               setShowModal={setShowModal}
             ></GroupAddModal>
@@ -248,7 +251,7 @@ export const GroupEdit = (props) => {
         <Inputs
           textarea
           name="content"
-          value={ content }
+          value={content}
           placeholder="모임소개를 해주세요 (최대길이 500자)"
           onChange={onChange}
           maxLength="500"
@@ -272,14 +275,14 @@ export const GroupEdit = (props) => {
 
           {/* 업로드 이미지 미리보기 */}
           <Preview
-            src={ 
+            src={
               // 이미지가 받아온 이미지와 같으면 받아온 이미지
-              preview === img ? 
-              preview 
-              : 
-              // 프리뷰가 빈값이면 빈이미지, 아니면 새로운 이미지
-              preview === "" ?
-              props.defaultImg : URL.createObjectURL(preview)
+              preview === img
+                ? preview
+                : // 프리뷰가 빈값이면 빈이미지, 아니면 새로운 이미지
+                preview === ""
+                ? props.defaultImg
+                : URL.createObjectURL(preview)
             }
             name="preview"
             onClick={deletePreview}

@@ -10,11 +10,11 @@ import { actionCreators as actionCr } from "../redux/modules/with";
 import history from "../redux/configStore";
 
 export const Participation = (props) => {
-  const dispatch = useDispatch();
-  console.log(props, "ㅁㅊ");
-  const leftPeople = props.peopleLimit - props.canApplyNum;
+  const dispatch = useDispatch()
+  // console.log(props, "ㅁㅊ");
+  const leftPeople = props.peopleLimit - props.canApplyNum
 
-  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL;
+  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL
   //모달
   const [inputValue, setInputValue] = useState({
     title: "모임나가기",
@@ -22,23 +22,23 @@ export const Participation = (props) => {
     descriptionTwo: "나가신 모임은 다시 참여불가능합니다.",
     btnClose: "취소",
     btnConfirm: "나가기",
-  });
-  const [showModal, setShowModal] = useState(false);
+  })
+  const [showModal, setShowModal] = useState(false)
   //삭제
   const getOut = () => {
     if (!props.screenId) {
-      console.log(props.screenId, "아이디");
-      dispatch(actionCr.deleteAttendAPI(props.groupId));
-      setShowModal(false);
-      return;
+      // console.log(props.screenId, "아이디");
+      dispatch(actionCr.deleteAttendAPI(props.groupId))
+      setShowModal(false)
+      return
     } else {
-      dispatch(actionCr.deleteScreenAPI(props.screenId));
-      console.log(props, "밑");
+      dispatch(actionCr.deleteScreenAPI(props.screenId))
+      // console.log(props, "밑");
     }
-  };
-  console.log(props.screenId);
+  }
+  // console.log(props.screenId);
   const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =
-    inputValue;
+    inputValue
 
   return (
     <div>
@@ -59,7 +59,7 @@ export const Participation = (props) => {
             src={More}
             alt="위치"
             onClick={() => {
-              setShowModal(true);
+              setShowModal(true)
             }}
           />
 
@@ -134,7 +134,7 @@ export const Participation = (props) => {
         ""
       )}
     </div>
-  );
+  )
 };
 
 const Box = styled.div`

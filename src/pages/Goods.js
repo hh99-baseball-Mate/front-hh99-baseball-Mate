@@ -35,13 +35,14 @@ export const Goods = () => {
   // const goodsList = useSelector(stats => console.log(state))
 
   useEffect(() => {
+    window.alert("준비 중입니다.")
     dispatch(goodsActions.getGoodsMD())
   }, [])
 
   return (
     <>
       <Header nowBtn4="nowBtn4" />
-      <Banner>
+      <Banner bg>
         <GoodsBannerBox>
           <Logo src={goodBanner} />
           <TextBox>

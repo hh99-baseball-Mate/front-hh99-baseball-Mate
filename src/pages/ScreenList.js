@@ -38,7 +38,7 @@ export const ScreenList = () => {
   const is_loading = useSelector((state) => state.screen.is_loading)
   const list_length = useSelector((state) => state.screen.list_length)
 
-  console.log(is_loading)
+  // console.log(is_loading)
   const onSubmitBtn = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
@@ -50,7 +50,7 @@ export const ScreenList = () => {
     // 필터 값을 넘겨서 겟 요청
     dispatch(screenAction.screenGetMD(regoin, infinity))
 
-    console.log("디스패치횟수")
+    // console.log("디스패치횟수")
   }, [regoin, infinity])
 
   return (
@@ -65,7 +65,7 @@ export const ScreenList = () => {
       loading={is_loading}
     >
       <Header nowBtnSB />
-      <Banner bg="#e7e7e7">배너</Banner>
+      <Banner />
       <Container>
         {/* 리스트 바 */}
         <ListBar>

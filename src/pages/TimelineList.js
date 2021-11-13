@@ -8,59 +8,58 @@ import Timeline from "../componentsTimeline/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { MarginBottom, NaviBar } from "../components";
 import { timelineCreators } from "../redux/modules/timeline";
-
+import { Banner } from "../components/Banner"
 
 const TimelineList = React.memo((props) => {
+  const dispatch = useDispatch()
+  const timeline = useSelector((state) => state.timeline.timeline)
+  // const likeState = useSelector((state) => state.timeline.like);
+  const user = useSelector((state) => state.user.user_info)
+  const likelist = useSelector((state) => state.timeline.likelist)
 
-	const dispatch = useDispatch();
-	const timeline = useSelector((state) => state.timeline.timeline);
-	// const likeState = useSelector((state) => state.timeline.like);
-	const user = useSelector((state) => state.user.user_info);
-	const likelist = useSelector((state) => state.timeline.likelist);
+  // console.log("likelist", likelist)
+  useEffect(() => {
+    dispatch(timelineCreators.loadTimelineMW())
+    dispatch(timelineCreators.likeListMW())
+  }, [])
 
-	console.log("likelist",likelist)
-	useEffect(() => {
-		dispatch(timelineCreators.loadTimelineMW());
-		dispatch(timelineCreators.likeListMW());
-	}, [])
+  return (
+    <React.Fragment>
+      <Container>
+        {/* 헤더 */}
+        <Header nowBtn3 />
 
-	return (
-		<React.Fragment>
-			<Container>
+        {/* 배너 */}
+        {/* <TimelineBanner /> */}
+        <Banner />
 
-				{/* 헤더 */}
-				<Header nowBtn3 />
+        <Warp padding="0 20px">
+          {/* 타임라인 작성 & 응원갯수 */}
+          <TimelimeWrite />
 
-				{/* 배너 */}
-				<TimelineBanner />
+          {/* 타임라인 리스트 */}
+          <List>
+            {timeline.map((timeline, idx) => {
+              return (
+                <Timeline
+                  key={idx}
+                  {...timeline}
+                  user={user}
+                  likelist={likelist}
+                  idx={idx}
+                ></Timeline>
+              )
+            })}
+          </List>
+        </Warp>
+      </Container>
 
-				<Warp padding="0 20px" >
-
-					{/* 타임라인 작성 & 응원갯수 */}			
-					<TimelimeWrite  />
-
-					{/* 타임라인 리스트 */}
-					<List>
-						{
-							timeline.map((timeline, idx) => {
-								return (
-									<Timeline key={idx} {...timeline} user={user} likelist={likelist} idx={idx}>
-									</Timeline>
-								)
-							})
-						}
-					</List>
-				</Warp>
-					
-			
-			</Container>
-
-			{/* 하단 네비바 */}
-			<MarginBottom/>
-			<NaviBar/>
-		</React.Fragment>
-	)
-});
+      {/* 하단 네비바 */}
+      <MarginBottom />
+      <NaviBar />
+    </React.Fragment>
+  )
+})
 
 export default TimelineList;
 

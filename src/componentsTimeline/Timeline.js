@@ -5,93 +5,94 @@ import { timelineCreators } from "../redux/modules/timeline";
 import { mainCreators } from "../redux/modules/mainPage";
 
 const Timeline = React.memo((props) => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-	const user = useSelector((state) => state.user.user_info)
+  const user = useSelector((state) => state.user.user_info)
 
-	const likelist = props.likelist
-	const [like, setLike] = useState(false)
-	const idx = props.idx
+  const likelist = props.likelist
+  const [like, setLike] = useState(false)
+  const idx = props.idx
 
-	
-	useEffect(() => {
-		dispatch(timelineCreators.loadTimelineMW());
-	}, [])
+  useEffect(() => {
+    dispatch(timelineCreators.loadTimelineMW())
+  }, [])
 
-	// 좋아요 누른거 가져와서 표시
-	useEffect(() => {
+  // 좋아요 누른거 가져와서 표시
+  useEffect(() => {
     const likeIdx = likelist.indexOf(props.timelineId)
     if (likeIdx >= 0) {
       setLike(true)
     }
-  }, [likelist]) 
+  }, [likelist])
 
+  // 본인 아이디 확인
+  const Me = user.username
+  // console.log("내아이디", Me)
+  // console.log("내정보", user)
 
+  const delTimeline = () => {
+    // const timeLineId = props.id
+    if (window.confirm("정말 삭제하시겠습니까?") === true) {
+      dispatch(timelineCreators.deleteTimelineMW(props.timelineId))
+    }
+  }
 
-	// 본인 아이디 확인
-	const Me = user.username 
-	console.log("내아이디", Me)
-	console.log("내정보", user)
+  const likeToggle = () => {
+    setLike(!like)
+    dispatch(timelineCreators.likeTimelineMW(props.timelineId, like))
+  }
 
-	const delTimeline = () => {
-		// const timeLineId = props.id
-		if (window.confirm("정말 삭제하시겠습니까?") === true) {
-			dispatch(timelineCreators.deleteTimelineMW(props.timelineId));
-		}
-  };
+  return (
+    <React.Fragment>
+      <TimeLineCard idx={idx}>
+        <Box>
+          <Warp justify="space-between" align="center" bottom="7px">
+            <Warp align="flex-end">
+              <Text size="14px" weight="bold" marginR="10px">
+                {props.userName}
+              </Text>
+              <Text color="#C4C4C4" size="12px">
+                {props.dayBefore}
+              </Text>
+            </Warp>
 
+            <Warp>
+              {Me === props.userName ? (
+                <Text
+                  size="10px"
+                  onClick={() => {
+                    delTimeline()
+                  }}
+                >
+                  ❌
+                </Text>
+              ) : (
+                ""
+              )}
+            </Warp>
+          </Warp>
 
-	const likeToggle = () => {
-		setLike(!like)
-		dispatch(timelineCreators.likeTimelineMW(props.timelineId, like))
-	}
+          <Text size="14px" style={{ overflowWrap: "break-word" }}>
+            {props.content}
+          </Text>
 
-
-
-	return (
-		<React.Fragment>
-
-			<TimeLineCard idx={idx}>
-					
-				<Box>
-					<Warp justify="space-between" align="center" bottom="7px">
-						<Warp align="flex-end">
-							<Text size="14px" weight="bold" marginR="10px" >
-								{props.userName}
-							</Text>
-							<Text color="#C4C4C4" size="12px">
-								{props.dayBefore}
-							</Text>
-						</Warp>
-						
-						<Warp>
-							{ 
-								Me === props.userName ?
-								(<Text size="10px" onClick={()=>{delTimeline()}}>❌</Text>) : ""
-							}
-						</Warp>
-					</Warp>
-
-					<Text size="14px" style={{overflowWrap:"break-word"}}>
-						{props.content}
-					</Text>
-
-					<Warp justify="flex-end">
-						<Text size="12px" 
-							onClick={()=>{likeToggle()}}
-						>
-							{ like ? `😍` : `😶` }
-						</Text>
-						<Text size="12px" marginL="5px">
-							{props.likecount}
-						</Text>
-					</Warp>
-				</Box>
-				
-			</TimeLineCard>
-
-		</React.Fragment>
-	)
+          <Warp justify="flex-end">
+            <Text
+              size="12px"
+              onClick={() => {
+                likeToggle()
+              }}
+            >
+              {like ? `😍` : `😶`}
+            </Text>
+            <Text size="12px" marginL="5px">
+              {props.likecount}
+            </Text>
+          </Warp>
+        </Box>
+      </TimeLineCard>
+    </React.Fragment>
+  )
 });
 
 

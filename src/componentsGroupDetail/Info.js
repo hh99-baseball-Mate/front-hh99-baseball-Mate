@@ -17,11 +17,10 @@ import users from "../shared/icon/users.svg"
 
 
 const Info = memo((props) => {
-
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const params = useParams();
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const params = useParams()
   const groupId = params.groupId
 
   // const srcChange = () => {
@@ -36,40 +35,38 @@ const Info = memo((props) => {
   //   }
   // }
 
-	// 사진 ip주소 + 사진이름 조합
-	const ip = IMAGES_BASE_URL;
-	const img = props.filePath;
+  // 사진 ip주소 + 사진이름 조합
+  const ip = IMAGES_BASE_URL
+  const img = props.filePath
 
   // 배경사진
-	const imageUrl = ip + img
+  const imageUrl = ip + img
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.createdUserProfileImg;
- 
+  const profileImg = ip + props.createdUserProfileImg
+
   // kakaocdn (카카오 프사인지 확인)
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
-  const kakaoImg = props.createdUserProfileImg;
+  const kakaoImg = props.createdUserProfileImg
 
-  const myGroupLikesList= props.myGroupLikesList;
-  const id = props.groupId;
+  const myGroupLikesList = props.myGroupLikesList
+  const id = props.groupId
 
-	// useEffect(() => {
-	// 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-	// 	dispatch(groupDetailCreators.mylistMW())
+  // useEffect(() => {
+  // 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+  // 	dispatch(groupDetailCreators.mylistMW())
   // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
   useEffect(() => {
     const groupLike = myGroupLikesList.indexOf(id)
-    console.log("표시",groupLike)
+    // console.log("표시",groupLike)
     if (groupLike >= 0) {
       props.setHeart(true)
     } else {
       props.setHeart(false)
     }
-  },[myGroupLikesList]) 
-
-
+  }, [myGroupLikesList])
 
   // 모집마감 표시
   useEffect(() => {
@@ -86,54 +83,61 @@ const Info = memo((props) => {
     dispatch(groupDetailCreators.likePostMW(props.groupId, props.heart))
   }
 
-  // 수정버튼 
+  // 수정버튼
   const editBtn = () => {
     history.push(`/groupdedit/${groupId}`)
-  } 
+  }
 
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
       dispatch(groupListCreators.delGroupPageMW(props.groupId))
-      history.push("/grouplist");
+      history.push("/grouplist")
     }
   }
 
-
-  console.log("받아오기", props)
+  // console.log("받아오기", props)
 
   // if props.myGroupLikesList
   // {ip + props.appliedUserInfo[0].UserImage}
-	return (
-		<Container>
-      <Box position="relative"> 
-			  <Img src={imageUrl} alt="" />
+  return (
+    <Container>
+      <Box position="relative">
+        <Img src={imageUrl} alt="" />
         <JoinCircle
-          onClick = {() => {
+          onClick={() => {
             HeartBtn()
           }}
         >
-          {
-            props.heart ? <img src={heart_join} alt="Heart" /> : <img src={heart_null} alt="nullHeart" />
-          }
+          {props.heart ? (
+            <img src={heart_join} alt="Heart" />
+          ) : (
+            <img src={heart_null} alt="nullHeart" />
+          )}
         </JoinCircle>
       </Box>
-      
-      
-			{/* 타이틀 */}
-			<TitleBox>
-				<Warp margin="0 0 11px 0" justify="space-between">
+
+      {/* 타이틀 */}
+      <TitleBox>
+        <Warp margin="0 0 11px 0" justify="space-between">
           <Warp>
-            {
-              props.close ? 
-              <Ellipse borderColor="#C4C4C4" background="#C4C4C4" color="#FFFFFF">
+            {props.close ? (
+              <Ellipse
+                borderColor="#C4C4C4"
+                background="#C4C4C4"
+                color="#FFFFFF"
+              >
                 마감
               </Ellipse>
-                :
-              <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
+            ) : (
+              <Ellipse
+                borderColor="#F25343"
+                background="#F25343"
+                color="#FFFFFF"
+              >
                 모집중
               </Ellipse>
-            }
+            )}
 
             <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
               D-{props.dday}
@@ -141,85 +145,117 @@ const Info = memo((props) => {
           </Warp>
 
           {/* 수정버튼 & 삭제버튼 */}
-          {
-            props.createdUserId===props.userid ? 
+          {props.createdUserId === props.userid ? (
             <Warp>
-              <p onClick={()=>{editBtn()}}>📝</p> 
-              <p onClick={()=>{delBtn()}} style={{marginLeft:"5px"}}>❌</p>
-            </Warp>  
-            : null
-          }
+              <p
+                onClick={() => {
+                  editBtn()
+                }}
+              >
+                📝
+              </p>
+              <p
+                onClick={() => {
+                  delBtn()
+                }}
+                style={{ marginLeft: "5px" }}
+              >
+                ❌
+              </p>
+            </Warp>
+          ) : null}
+        </Warp>
 
-				</Warp>
-			
-
-				<Text
+        <Text
           size="16px"
           weight="bold"
           width="295px"
           height="46px"
           lineHeight="23px"
         >
-					{props.title}
-				</Text>
+          {props.title}
+        </Text>
 
-				<Warp justify="space-between" align="center" marginT="11px" >
+        <Warp justify="space-between" align="center" marginT="11px">
           {/* 인원 상태바 */}
-					<Progress {...props}/>
-					<Warp flex="flex">
-						<img src={colorUsers} alt="users"/>
-						<Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-							&nbsp;{props.canApplyNum}명&nbsp;
-						</Text>
-						<Text size="12px" color="#F25343" spacing="-0.03em;">
-							남음
-						</Text>
-					</Warp>
-				</Warp>
-			</TitleBox>
+          <Progress {...props} />
+          <Warp flex="flex">
+            <img src={colorUsers} alt="users" />
+            <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+              &nbsp;{props.canApplyNum}명&nbsp;
+            </Text>
+            <Text size="12px" color="#F25343" spacing="-0.03em;">
+              남음
+            </Text>
+          </Warp>
+        </Warp>
+      </TitleBox>
 
-			{/* 모임 정보 */}
-			<Box height="163px" background="rgba(247, 247, 247, 0.5)" position="relative" margin="20px">
-				<Warp width="100%" justify="space-around" align="center" position="absolute" padding="0 40px 0 40px" style={{top:"78%"}}>
-					<img src={calendar} alt="calendar" />
-					<Text color="#777777" size="12px">{props.groupDate}</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
-					{/* <img src={location} alt="location" />
+      {/* 모임 정보 */}
+      <Box
+        height="163px"
+        background="rgba(247, 247, 247, 0.5)"
+        position="relative"
+        margin="20px"
+      >
+        <Warp
+          width="100%"
+          justify="space-around"
+          align="center"
+          position="absolute"
+          padding="0 40px 0 40px"
+          style={{ top: "78%" }}
+        >
+          <img src={calendar} alt="calendar" />
+          <Text color="#777777" size="12px">
+            {props.groupDate}
+          </Text>
+          <Slice> &ensp;|&ensp; </Slice>
+          {/* <img src={location} alt="location" />
 					<Text color="#777777" size="12px">{props.stadium}</Text>
 					<Slice> &ensp;|&ensp; </Slice>  */}
-					<img src={users} alt="users" />
-					<Text color="#777777" size="12px">최대 {props.peopleLimit}명</Text>
-				</Warp>
-			</Box>
+          <img src={users} alt="users" />
+          <Text color="#777777" size="12px">
+            최대 {props.peopleLimit}명
+          </Text>
+        </Warp>
+      </Box>
 
-			{/* 유저정보 */}
-			<Box height="80px" background="#fff" flex="flex" align="center" padding="18px">
-				<Warp width="55px" height="55px">
-
+      {/* 유저정보 */}
+      <Box
+        height="80px"
+        background="#fff"
+        flex="flex"
+        align="center"
+        padding="18px"
+      >
+        <Warp width="55px" height="55px">
           {/* 기본프사 & 카카오프사 */}
-					<Circle 
-            url={
-              kakaoCheck === "kakaocdn" ?
-                kakaoImg : profileImg
-              } 
-          />
+          <Circle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
+        </Warp>
+        <Warp direction="column" marginLeft="12px">
+          <Text size="14px" weight="bold" margin="1px">
+            {props.createdUserName}
+          </Text>
+          <Text size="12px" color="#C4C4C4" margin="1px">
+            {props.createdUserId}
+          </Text>
+        </Warp>
+      </Box>
 
-				</Warp>
-				<Warp direction="column" marginLeft="12px">
-					<Text size="14px" weight="bold"  margin="1px">{props.createdUserName}</Text>
-					<Text size="12px" color="#C4C4C4" margin="1px">{props.createdUserId}</Text>
-				</Warp>
-			</Box>
+      {/* 모임소개 */}
+      <Box height="121px" background="#F2FAFC" padding="20px">
+        <Text size="16px" weight="bold" margin="0 0 15px 0 ">
+          모임소개
+        </Text>
+        <Text size="14px" color="#333333">
+          {props.content}
+        </Text>
+      </Box>
 
-			{/* 모임소개 */}
-			<Box height="121px" background="#F2FAFC" padding="20px">
-				<Text size="16px" weight="bold" margin="0 0 15px 0 ">모임소개</Text>
-				<Text size="14px" color="#333333">{props.content}</Text>
-			</Box>
-
-			<Rectangle/>
-		</Container>
-	)
+      <Rectangle />
+    </Container>
+  )
 })
 
 Info.defaultProps = {

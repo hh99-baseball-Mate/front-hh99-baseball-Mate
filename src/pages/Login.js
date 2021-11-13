@@ -11,6 +11,7 @@ import { SocialLogin } from "../componentsLogin/SocialLogin"
 
 import { actionCreators as userActions } from "../redux/modules/user"
 import { history } from "../redux/configStore"
+import LogoImg from "../shared/icon/Logo.png"
 
 import { IoEyeSharp } from "react-icons/io5"
 import { MdKeyboardArrowDown } from "react-icons/md"
@@ -35,7 +36,7 @@ export const Login = (props) => {
 
   return (
     <Container>
-      <Logo>야구메이트</Logo>
+      <Logo />
       <Formik
         initialValues={{
           email: "",
@@ -118,10 +119,11 @@ export const Login = (props) => {
 }
 
 const Logo = styled.div`
-  width: 278px;
-  height: 58px;
+  width: 203px;
+  height: 38px;
   margin: 132px auto;
   font-size: 37px;
   font-weight: 700px;
   text-align: center;
-`;
+  background-image: url(${LogoImg});
+`

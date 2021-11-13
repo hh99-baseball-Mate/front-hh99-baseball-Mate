@@ -17,7 +17,7 @@ export const ClubImage = (props) => {
 
     // for (const keyValue of formdata) console.log(keyValue)
     dispatch(userActions.choiceClubMD(e.target.className))
-    console.log(e.target.className)
+    // console.log(e.target.className)
     // history.replace("/")
   }
 

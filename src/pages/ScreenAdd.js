@@ -38,6 +38,9 @@ export const ScreenAdd = (props) => {
   registerLocale("ko", ko)
   dayjs.locale("ko")
 
+  const date = dayjs().add(1, "day").format("YYYY-MM-DD")
+  // console.log(date)
+
   const [inputValue, setInputValue] = useState({
     title: "",
     peopleLimit: 0,
@@ -117,7 +120,7 @@ export const ScreenAdd = (props) => {
     })
 
     const groupDate = dayjs(startDate).format("MM.DD (dd)")
-    console.log(groupDate)
+    // console.log(groupDate)
 
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
@@ -131,7 +134,7 @@ export const ScreenAdd = (props) => {
 
       const placeInfomation = roadAddress.substring(0, 2)
 
-      console.log(placeInfomation)
+      // console.log(placeInfomation)
 
       formData.append("title", inputValue.title)
       formData.append("groupDate", groupDate)
@@ -148,7 +151,7 @@ export const ScreenAdd = (props) => {
       e.target.disabled = true
 
       // 폼데이터 console
-      for (const keyValue of formData) console.log(keyValue)
+      // for (const keyValue of formData) console.log(keyValue)
     }
   }
 
@@ -209,7 +212,7 @@ export const ScreenAdd = (props) => {
             <div style={{ width: "100px" }}>
               <SDatePicker
                 locale="ko"
-                minDate={new Date()}
+                minDate={new Date(date)}
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 // showTimeSelect
