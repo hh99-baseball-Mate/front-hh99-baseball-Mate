@@ -15,7 +15,7 @@ const DELETE_APPLY = "DELETE_APPLY"
 const ADD_COMMENT = "ADD_COMMENT"
 const EDIT_COMMENT = "EDIT_COMMENT"
 const DELETE_COMMENT = "DELETE_COMMENT"
-const LIKE_GROUP_COMMENT = "LIKE_COMMENT";
+const LIKE_GROUP_COMMENT = "LIKE_GROUP_COMMENT";
 
 const LOAD_MYLIST = "LOAD_MYLIS";
 
@@ -30,7 +30,7 @@ const del_apply = createAction(DELETE_APPLY, (groupId, userid) => ({ groupId, us
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({ groupId, comment }));
 const edit_comment = createAction(EDIT_COMMENT, (groupId, commentId, comment) => ({ groupId, commentId, comment }))
 const del_comment = createAction(DELETE_COMMENT, (groupId, commentId) => ({ groupId, commentId }));
-const like_comment = createAction(LIKE_GROUP_COMMENT, (groupId, commentId, like) => ({ groupId, commentId, like }));
+const like_group_comment = createAction(LIKE_GROUP_COMMENT, (groupId, commentId, like) => ({ groupId, commentId, like }));
 
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }));
 
@@ -205,7 +205,7 @@ const likegroupCommentMW = (groupId, commentId, like) => {
 			.post(`/groups/${groupId}/comment/${commentId}/like`, isLiked)
 			.then((res) => {
 				console.log(res)
-				dispatch(like_comment(groupId, commentId, isLiked))
+				dispatch(like_group_comment(groupId, commentId, isLiked))
 			})
 			.catch((err) => {
 				console.log(err)
