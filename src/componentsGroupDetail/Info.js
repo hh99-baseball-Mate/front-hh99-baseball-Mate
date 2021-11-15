@@ -91,7 +91,7 @@ const Info = memo((props) => {
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupListCreators.delGroupPageMW(props.groupId))
+      dispatch(groupDetailCreators.delGroupPageMW(props.groupId))
       history.push("/grouplist")
     }
   }
