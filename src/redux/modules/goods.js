@@ -9,7 +9,6 @@ const ADD_GOODS = "ADD_GOODS"
 // 액션 함수
 
 const getGoods = createAction(GET_GOODS, (goods_list) => ({ goods_list }))
-const addGoods = createAction(ADD_GOODS, (add_list) => ({ add_list }))
 
 const initialState = {
   goods_list: [],
@@ -18,24 +17,28 @@ const initialState = {
 
 const getGoodsMD = () => {
   return function (dispatch, getState, { history }) {
-    instance
-      .get("/main/nowGoods/2")
+    tokenInstance
+      .get("/goods")
       .then((res) => {
-        // console.log(res.data)
-        // dispatch(getGoods(res.data))
+        console.log(res.data, "굿즈 목록")
+
+        const goods_info = res.data
+
+        dispatch(getGoods(goods_info))
       })
       .catch((err) => console.log(err, "굿즈 가져오기 에러"))
   }
 }
 
-const addGoodsMD = (addList) => {
+const addGoodsMD = (formData) => {
   return function (dispatch, getState, { history }) {
     // console.log(addList)
     tokenInstance
-      .post("/page/goods", {})
+      .post("/goods", { formData })
       .then((res) => {
-        dispatch(addGoods(addList))
-        // console.log(res.data)
+        // console.log(res.data, "굿즈등록")
+        window.alert("굿즈가 등록되었습니다.")
+        history.replace("/goods")
       })
       .catch((err) => console.log(err, "굿즈 등록 에러"))
   }
@@ -43,18 +46,18 @@ const addGoodsMD = (addList) => {
 
 export default handleActions(
   {
-    [GET_GOODS]: (state, action) => produce(state, (draft) => ({})),
+    [GET_GOODS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.goods_list = action.payload.goods_list
+      }),
   },
-  {
-    [ADD_GOODS]: (state, action) => produce(state, (draft) => ({})),
-  },
+
   initialState
 )
 
 const actionCreators = {
   getGoods,
   getGoodsMD,
-  addGoods,
   addGoodsMD,
 }
 

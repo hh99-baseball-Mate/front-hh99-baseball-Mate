@@ -32,11 +32,7 @@ const GroupCard = (props) => {
   // console.log("props.close", close)
 
   return (
-    <Container
-      onClick={() => {
-        history.push("/groupdetail/" + props.groupId)
-      }}
-    >
+    <Container>
       <Card>
         <Warp margin="0 0 16px 0">
           <Warp flex="flex" margin="0 0 12px 0">

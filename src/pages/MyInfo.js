@@ -89,7 +89,7 @@ export const MyInfo = (props) => {
 
             {/* 주소변경 모달 */}
             {showModal && (
-              <Modal bottom height="250px">
+              <Modal bottom>
                 <Region setShowModal={setShowModal} setRegoin={setRegion} />
               </Modal>
             )}

@@ -4,10 +4,9 @@ import {
   Container,
   Header,
   MoreContainer,
-  PancilBtn,
   Text,
   MarginBottom,
-  NaviBar
+  NaviBar,
 } from "../components"
 import { Card } from "../componentsGoods/Card"
 import goodBanner from "../shared/icon/goodBanner.png"
@@ -17,25 +16,32 @@ import { history } from "../redux/configStore"
 import { Banner } from "../components/Banner"
 
 export const Goods = () => {
-
   const dispatch = useDispatch()
+
+  const goods_list = useSelector((state) => state.goods.goods_list)
 
   const [sortDate, setSortDate] = useState(false)
   const [sortItem, setSortItem] = useState(false)
 
+  const goodsAddBtn = () => {
+    history.push("/goods/goodsadd")
+  }
   // 최신순
   const DateList = () => {
-    sortItem ? setSortDate(sortDate) : setSortDate(!sortDate)
+    setSortDate(!sortDate)
+    setSortItem(false)
   }
 
   // 인기순
   const HotList = () => {
-    sortDate ? setSortItem(sortItem) : setSortItem(!sortItem)
+    setSortItem(!sortItem)
+    setSortDate(false)
   }
-  // const goodsList = useSelector(stats => console.log(state))
+
+  console.log(goods_list)
 
   useEffect(() => {
-    window.alert("준비 중입니다.")
+    // window.alert("준비 중입니다.")
     dispatch(goodsActions.getGoodsMD())
   }, [])
 
@@ -57,34 +63,37 @@ export const Goods = () => {
       </Banner>
 
       <Container>
-        <Position>
-          <MoreContainer>
-            <Text size="16px" bold>
-              굿즈 목록
-            </Text>
-            <BtnGroup>
-              <MoreBtn onClick={HotList}>
-                <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
-              </MoreBtn>
-              <MoreBtn onClick={DateList}>
-                <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
-              </MoreBtn>
-            </BtnGroup>
-          </MoreContainer>
+        {/* <Position> */}
+        <MoreContainer>
+          <Text size="16px" bold>
+            굿즈 목록
+          </Text>
+          <BtnGroup>
+            <MoreBtn onClick={HotList}>
+              <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
+            </MoreBtn>
+            <MoreBtn onClick={DateList}>
+              <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
+            </MoreBtn>
+          </BtnGroup>
+        </MoreContainer>
 
-          <CardContainer>
-            <Card></Card>
-          </CardContainer>
-          <PancilBtn
-            onClick={() => {
-              history.push("/goods/goodsadd")
-            }}
-          />
-        </Position>
+        {/* 굿즈 카드 */}
+
+        <CardContainer>
+          {goods_list && goods_list.length > 0 ? (
+            goods_list.map((e) => {
+              return <Card key={e.goodsId} {...e} />
+            })
+          ) : (
+            <div>없음</div>
+          )}
+        </CardContainer>
+        {/* </Position> */}
       </Container>
 
       <MarginBottom />
-      <NaviBar />
+      <NaviBar writeBtn onClick={goodsAddBtn} />
     </>
   )
 }
@@ -115,8 +124,4 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
-`
-
-const Position = styled.div`
-  position: relative;
 `

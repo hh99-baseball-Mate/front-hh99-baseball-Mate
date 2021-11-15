@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import {
   ArrowBack,
   Buttons,
   Container,
-  Header,
   InputCheck,
   Inputs,
   Text,
@@ -23,53 +22,9 @@ export const GoodsAdd = (props) => {
   const [inputValue, setInputValue] = useState({
     goodsName: "",
     goodsContent: "",
-    goodsImg: {
-      name: "",
-      size: 0,
-      base64: "",
-      type: "",
-    },
   })
 
-  const imgPreview = (e) => {
-    const img = e.target.files[0]
-
-    let reader = new FileReader()
-
-    reader.onloadend = () => {
-      setInputValue({
-        ...inputValue,
-        goodsImg: {
-          name: img.name,
-          size: img.size,
-          base64: reader.result,
-          type: img.type,
-        },
-      })
-    }
-    if (img) {
-      reader.readAsDataURL(img)
-    }
-  }
-
-  const deleteImg = () => {
-    if (!goodsImg.base64) {
-      window.alert("삭제 할 사진이 없어요")
-
-      return
-    }
-    setInputValue({
-      ...inputValue,
-      goodsImg: {
-        name: "",
-        size: "",
-        type: 0,
-        base64: "",
-      },
-    })
-  }
-
-  const { goodsName, goodsContent, goodsImg } = inputValue
+  const { goodsName, goodsContent } = inputValue
 
   const onChange = (e) => {
     const { name, value } = e.target
@@ -79,28 +34,40 @@ export const GoodsAdd = (props) => {
     })
   }
 
+  const [preview, setPreview] = useState("")
+
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0])
+  }
+
+  const deleteImg = () => {
+    if (!preview) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+  }
   const submitBtn = (e) => {
-    const _emptyValue = Object.values(inputValue).map((e) => {
-      if (!e || e.base64 === "") {
-        return false
-      }
+    const emptyValue = Object.values(inputValue).map((e) => {
+      return !e ? false : true
     })
 
-    const emptyValue = _emptyValue.includes(false)
-
-    if (emptyValue) {
+    if (emptyValue.includes(false)) {
       window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
       return
     }
-    dispatch(goodsActions.addGoodsMD(inputValue))
-    e.target.disabled = true
-    // console.log("빈값이 없음")
-  }
 
-  useEffect(() => {
-    window.alert("준비 중입니다.")
-  }, [])
+    const formData = new FormData()
+
+    formData.append("goodsName", inputValue.goodsName)
+    formData.append("goodsContent", inputValue.goodsContent)
+    formData.append("goodsPrice", 120000)
+    formData.append("goodsImg", preview)
+
+    dispatch(goodsActions.addGoodsMD(formData))
+    e.target.disabled = true
+    for (const keyValue of formData) console.log(keyValue)
+  }
 
   return (
     <>
@@ -112,15 +79,15 @@ export const GoodsAdd = (props) => {
         </ArrowBack>
         <Text margin="30px 0 7px 0">
           대표 이미지
-          {goodsImg.base64 && <InputCheck />}
+          {preview && <InputCheck />}
         </Text>
         <ImgBox>
           <Picture basic onChange={imgPreview}>
-            {goodsImg.base64 ? 1 : 0} / 1
+            {preview ? 1 : 0} / 1
           </Picture>
           <Preview
             name="goodsImg"
-            src={goodsImg.base64 ? goodsImg.base64 : defaultImg}
+            src={preview ? URL.createObjectURL(preview) : defaultImg}
             onClick={deleteImg}
           ></Preview>
         </ImgBox>
@@ -140,6 +107,7 @@ export const GoodsAdd = (props) => {
           placeholder="내 굿즈를 마음껏 소개해 주세요(최대500자)"
           value={goodsContent}
           onChange={onChange}
+          height="147px"
         >
           굿즈 내용
           {goodsContent && <InputCheck />}
@@ -151,6 +119,11 @@ export const GoodsAdd = (props) => {
       </Container>
     </>
   )
+}
+
+GoodsAdd.defaultProps = {
+  defaultImg:
+    "https://lh3.googleusercontent.com/proxy/WEGePtNT0Kg0dwUYlFOdMR23NOcxunhlZL5opUfUeZN_IDr3id47Uj1ZX1P4xs1wOsm8E6wPkH3j02d5v2FUtj0wDZw-z_VN3dNozsZUGPKkdxw_4It4QNqdWUuNsTGZnF7pzD_anFXLxREOWVX0-78LTD2pmoIi",
 }
 
 const ImgBox = styled.div`

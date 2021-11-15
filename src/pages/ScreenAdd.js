@@ -38,7 +38,8 @@ export const ScreenAdd = (props) => {
   registerLocale("ko", ko)
   dayjs.locale("ko")
 
-  const date = dayjs().add(1, "day").format("YYYY-MM-DD")
+  const minDate = dayjs().add(1, "day").format("YYYY-MM-DD")
+  const maxDate = dayjs().add(15, "day").format("YYYY-MM-DD")
   // console.log(date)
 
   const [inputValue, setInputValue] = useState({
@@ -212,7 +213,8 @@ export const ScreenAdd = (props) => {
             <div style={{ width: "100px" }}>
               <SDatePicker
                 locale="ko"
-                minDate={new Date(date)}
+                minDate={new Date(minDate)}
+                maxDate={new Date(maxDate)}
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 // showTimeSelect

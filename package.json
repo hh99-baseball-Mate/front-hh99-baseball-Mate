@@ -37,6 +37,7 @@
     "swiper": "6.8.4",
     "throttle": "^1.0.3",
     "web-vitals": "^1.0.1",
+    "yarn": "^1.22.17",
     "yup": "^0.32.11"
   },
   "scripts": {

@@ -9,6 +9,7 @@ import axios from "axios"
 import "./shared/font.css"
 
 axios.defaults.withCredentials = true
+// axios defulat 헤더
 
 ReactDOM.render(
   <Provider store={store}>
