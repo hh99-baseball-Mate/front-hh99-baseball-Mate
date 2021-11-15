@@ -51,6 +51,9 @@ export const tokenInstance = axios.create({
   },
 });
 
+// 스토어 서브크라이브 함수 실행하고 이즈로그인이 바뀔때 마다 헤더를 수정
+// axios 헤더를 업데이트 해줄 문서 확인
+
 export const img = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
   baseURL: BASE_URL,

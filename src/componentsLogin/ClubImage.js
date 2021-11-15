@@ -3,7 +3,6 @@ import Image from "react-bootstrap/Image"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { Text } from "../components"
-import { history } from "../redux/configStore"
 import { actionCreators as userActions } from "../redux/modules/user"
 import { clubImageSrc, baseUrl } from "../shared/clubImage"
 
@@ -26,7 +25,7 @@ export const ClubImage = (props) => {
       {clubImageSrc.map((src) => (
         <Choice key={src.id}>
           <Bg>
-            <Image
+            <ClubImg
               src={baseUrl + src.img}
               style={{ width: "98px", padding: "10px" }}
               className={src.name}
@@ -55,4 +54,10 @@ const Bg = styled.div`
   border: 1px solid #e7e7e7;
   background-color: transparent;
   margin-bottom: 5px;
+`
+
+const ClubImg = styled(Image)`
+  :hover {
+    cursor: pointer;
+  }
 `

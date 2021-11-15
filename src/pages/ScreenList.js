@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import {
-  Container,
-  Header,
-  PancilBtn,
-  Text,
-  NaviBar,
-  MarginBottom,
-} from "../components"
+import { Container, Header, Text, NaviBar, MarginBottom } from "../components"
 import { Banner } from "../components/Banner"
 import { Modal } from "../components/Modal"
 import GroupCard from "../componentsScreen/GroupCard"
@@ -16,7 +9,6 @@ import { Region } from "../componentsScreen/Region"
 import { history } from "../redux/configStore"
 import { actionCreators as screenAction } from "../redux/modules/screen"
 import ETC from "../shared/icon/Etc.png"
-
 
 import { InfinityScroll } from "../components/InfinityScroll"
 import { NotGame } from "../components/NotGame"
@@ -78,7 +70,7 @@ export const ScreenList = () => {
           </IconBox>
 
           {showModal ? (
-            <Modal bottom height="335px" margin="0 -20px">
+            <Modal bottom margin="0 -20px">
               <Region
                 setShowModal={setShowModal}
                 setRegoin={setRegoin}
@@ -95,11 +87,9 @@ export const ScreenList = () => {
             모임을 생성해주세요!
           </NotGame>
         )}
-
-        <PancilBtn onClick={onSubmitBtn} />
       </Container>
       <MarginBottom />
-      <NaviBar />
+      <NaviBar writeBtn onClick={onSubmitBtn} />
     </InfinityScroll>
   )
 }
@@ -123,7 +113,4 @@ const IconText = styled.p`
 const Icons = styled.img`
   width: 13px;
   height: 13px;
-`
-const ModalGrid = styled.div`
-  /* margin:0 20px */
 `
