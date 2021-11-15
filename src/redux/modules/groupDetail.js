@@ -1,9 +1,10 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { tokenInstance, apis, tokenApis, img } from "../../lib/axios"
+import { tokenInstance, img } from "../../lib/axios"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
-const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
+// const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
+// const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE";
 
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
@@ -22,7 +23,8 @@ const LOAD_MYLIST = "LOAD_MYLIS";
 
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({ groupPage }));
-const edit_groupPage = createAction(EDIT_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
+// const edit_groupPage = createAction(EDIT_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
+// const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
 const like_post = createAction(LIKE_POST, (groupId, like) => ({ groupId, like }));
 const group_apply = createAction(GROUP_APPLY, (my) => ({ my }));
 const del_apply = createAction(DELETE_APPLY, (groupId, userid) => ({ groupId, userid }));
@@ -71,8 +73,8 @@ const initialState = {
 // 불러오기
 const loadGroupPageMW = (groupId) => {
 	return (dispatch, getState, {history}) => {
-		tokenApis
-			.getGroupDetail(groupId)
+		tokenInstance
+			.get(`/groups/${groupId}`)
 			.then((res) => {
 				// console.log("loadGroupPageMW", res.data)
 				const groupPage = res.data
@@ -99,13 +101,29 @@ const editGroupPageMW = (groupId, formData) => {
 	}
 }
 
+// 모임삭제
+const delGroupPageMW = (groupId) => {
+  return (dispatch, getState, { history }) => {
+    tokenInstance
+      .delete(`/groups/${groupId}`)
+      .then((res) => {
+        console.log(res);
+        // dispatch(del_groupPage(groupId));
+				history.replace("/grouplist")
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 // 모임 좋아(찜) 하기/취소하기
 const likePostMW = (groupId,like) => {
 	return (dispatch, getState, {history}) => {
 		const isLiked = {isLiked:like}
 		console.log("isLiked",isLiked)
-		tokenApis
-			.postGroupsLike(groupId, isLiked)
+		tokenInstance
+			.post(`/groups/${groupId}/like`, isLiked)
 			.then((res) => {
 				console.log("모임찜",res)
 				dispatch(like_post(groupId, isLiked))
@@ -119,8 +137,8 @@ const likePostMW = (groupId,like) => {
 // 참석하기
 const groupApplyMW = (groupId, my) => {
 	return (dispatch, getState, {history}) => {
-		tokenApis
-			.postApply(groupId)
+		tokenInstance
+			.post(`/groups/${groupId}/applications`)
 			.then((res) => {
 				console.log(res)
 				dispatch(group_apply(my))
@@ -153,8 +171,8 @@ const delApplyMW = (groupId, userid) => {
 const addCommentMW = (groupId, message) => {
 	return (dispatch, getState, {history}) => {
 		const comment = {comment:message}
-		tokenApis
-			.postComment(groupId, comment)
+		tokenInstance
+			.post(`/groups/${groupId}/comment`, comment)
 			.then((res) => {
 				console.log("댓글추가",res);
 				dispatch(add_comment(groupId, comment))
@@ -169,8 +187,8 @@ const addCommentMW = (groupId, message) => {
 const editCommentMW = (groupId, commentId, message) => {
 	return (dispatch, getState, {history}) => {
 		const comment = {comment:message}
-		tokenApis
-			.putComment(groupId, commentId, comment)
+		tokenInstance
+			.put(`/groups/${groupId}/comment/${commentId}`, comment)
 			.then((res) => {
 				console.log("댓글수정", res)
 				dispatch(edit_comment(groupId, commentId, comment))
@@ -184,8 +202,8 @@ const editCommentMW = (groupId, commentId, message) => {
 // 댓글삭제
 const delCommentMW = (groupId, commentId) => {
 	return (dispatch, getState, {history}) => {
-		tokenApis
-			.delComment(groupId, commentId)
+		tokenInstance
+			.delete(`/groups/${groupId}/comment/${commentId}`)
 			.then((res) => {
 				console.log("댓글삭제",res);
 				dispatch(del_comment(groupId, commentId))
@@ -239,6 +257,12 @@ export default handleActions(
 		[LOAD_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
 			draft.groupPage = action.payload.groupPage;
 		}),
+		// [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
+		// 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);
+		// 	if (idx !== -1) {
+		// 		draft.group_list.splice(idx, 1);
+		// 	}
+		// }),
 		[LIKE_POST]: (state, action) => produce(state, (draft) => {
 			// console.log("찜받기",action.payload.like.isLiked)
 			if(action.payload.like.isLiked) {
@@ -296,6 +320,7 @@ export default handleActions(
 const groupDetailCreators = {
 	loadGroupPageMW,
 	editGroupPageMW,
+	delGroupPageMW,
 	likePostMW,
 	groupApplyMW,
 	delApplyMW,

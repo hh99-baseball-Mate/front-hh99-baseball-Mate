@@ -1,6 +1,6 @@
 import { createAction, handleActions} from "redux-actions";
 import produce from "immer";
-import { tokenInstance, apis, tokenApis } from "../../lib/axios";
+import { instance, tokenInstance } from "../../lib/axios";
 
 const LOAD_TIMELINE = "LOAD_TIMELINE";
 const ADD_TIMELINE = "ADD_TIMELINE";
@@ -26,8 +26,8 @@ const initialState = {
 // 전체 불러오기
 const loadTimelineMW = () => {
 	return (dispatch) => {
-		apis
-			.getTimeline()
+		instance
+			.get("/timelines")
 			.then((res) => {
 				// console.log("timeline", res)
 				const timeline = res.data;
@@ -42,8 +42,8 @@ const loadTimelineMW = () => {
 // 일정 갯수만 불러오기
 const loadTimelineNumMW = (number) => {
 	return (dispatch) => {
-		apis
-			.getTimelineNum(number)
+		instance
+			.get("/timelines", number)
 			.then((res) => {
 				// console.log("timeline", res)
 				const timeline = res.data;
@@ -59,8 +59,8 @@ const addTimelineMW = (message) => {
 	return (dispatch, getState, { history }) => {
 		console.log("addTimeline", message)
 		const content = {content:message}
-		tokenApis
-			.postTimeline(content)
+		tokenInstance
+			.post("/timelines", content)
 			.then((res) => {
 				console.log(res)
 				dispatch(add_timeline(content))
@@ -76,8 +76,8 @@ const deleteTimelineMW = (id) => {
 	return (dispatch, getState, { history }) => {
 		console.log("deleteTimeline", id, typeof(id))
 		const timeLineId = id
-		tokenApis
-			.delTimeline(timeLineId)
+		tokenInstance
+			.delete(`/timelines/${timeLineId}`)
 			.then((res) => {
 				// console.log(res)
 				dispatch(delete_timeline(id))
@@ -94,8 +94,8 @@ const likeTimelineMW = (id, like) => {
 		const timeLineId = id;
 		console.log("timeLineId", timeLineId)
 		const isLiked = {isLiked: like};
-		tokenApis
-			.likeTimeline(timeLineId, isLiked)
+		tokenInstance
+			.post(`/timelines/${timeLineId}/like`, isLiked)
 			.then((res) => {
 				console.log(res)
 				dispatch(like_timeline(timeLineId, isLiked))

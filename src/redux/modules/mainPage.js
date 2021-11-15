@@ -1,6 +1,6 @@
 import { createAction, handleActions} from "redux-actions";
 import produce from "immer";
-import { apis } from "../../lib/axios";
+import { instance } from "../../lib/axios";
 
 const LOAD_GAMETIME = "LOAD_GAMETIME";
 const LOAD_HOTGROUP = "LOAD_HOTGROUP";
@@ -18,8 +18,8 @@ const initialState = {
 
 const gameTimeMW = () => {
 	return (dispatch) => {
-		apis
-			.getGameTime()
+		instance
+			.get("/kbodata")
 			.then((res) => {
 				// console.log(res)
 				const gamelist = res.data;
@@ -58,8 +58,8 @@ const gameTimeMW = () => {
 
 const hotGroupMW = (number) => {
 	return (dispatch) => {
-		apis
-			.getHotGroup(number)
+		instance
+			.get("/groups/hotgroup", number)
 			.then((res) => {
 				// console.log("핫그룹",res)
 				const list = res.data;
@@ -73,8 +73,8 @@ const hotGroupMW = (number) => {
 
 const loadMainTimelineMW = (number) => {
 	return (dispatch, getState, { history }) => {
-		apis
-			.getMainTimeline(number)
+		instance
+			.get(`/timelines?count=${number}`, number)
 			.then((res) => {
 				const mainTimeline = res.data;
 				// console.log("메인타임라인", mainTimeline)
