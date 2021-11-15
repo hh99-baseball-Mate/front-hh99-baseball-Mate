@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Card, Carousel, Image } from "react-bootstrap";
-import styled from "styled-components";
-import { history } from "../redux/configStore";
+import React, { useEffect, useState } from "react"
+import { Image } from "react-bootstrap"
+import styled from "styled-components"
+import { history } from "../redux/configStore"
 //swiper
-import Swipers from "../components/Swipers";
-import GroupCard from "../componentsGroupList/GroupCard";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as groupCr } from "../redux/modules/group";
-import { baseUrl, clubImageSrc } from "../shared/clubImage";
-import { SwiperSlide } from "swiper/react";
+import Swipers from "../components/Swipers"
+import GroupCard from "../componentsGroupList/GroupCard"
+import { useDispatch, useSelector } from "react-redux"
+import { actionCreators as groupCr } from "../redux/modules/group"
+import { baseUrl, clubImageSrc } from "../shared/clubImage"
+import { SwiperSlide } from "swiper/react"
 import {
   Container,
   Header,
@@ -16,11 +16,11 @@ import {
   Text,
   MarginBottom,
   NaviBar,
-} from "../components";
+} from "../components"
 // import Pancil from "../shared/icon/Pancil.png";
-import PancilBtn from "../components/PancilBtn";
-import { InfinityScroll } from "../components/InfinityScroll";
-import { NotGame } from "../components/NotGame";
+import PancilBtn from "../components/PancilBtn"
+import { InfinityScroll } from "../components/InfinityScroll"
+import { NotGame } from "../components/NotGame"
 
 const GroupList = (props) => {
   const dispatch = useDispatch()
@@ -152,20 +152,18 @@ const GroupList = (props) => {
             : date_list.map((e) => {
                 return <GroupCard key={e.groupId} {...e} />
               })}
-
-          <PancilBtn onClick={newPeople} />
         </Container>
 
         <MarginBottom />
-        <NaviBar />
+        <NaviBar writeBtn onClick={newPeople} />
       </InfinityScroll>
     </>
   )
-};
-export default GroupList;
+}
+export default GroupList
 
 const Broder = styled.div`
   border: 1px solid #e7e7e7;
   margin-top: 9px;
   margin-bottom: 20px;
-`;
+`

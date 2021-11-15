@@ -33,10 +33,13 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (formData) => {
   return function (dispatch, getState, { history }) {
+   
+    dispatch(loading(true))
+
     axios
       .post(
         // `${BASE_URL}/users/${id}`,
-        `${BASE_URL}/user/myteam`,
+        `${BASE_URL}/screen`,
         formData,
         {
           headers: {
@@ -49,13 +52,13 @@ const screenAddMD = (formData) => {
         }
       )
       .then((res) => {
-        console.log(res);
-        history.replace("/screen");
-        dispatch(loading(false));
+        console.log(res)
+        history.replace("/screen")
+        dispatch(loading(false))
       })
       .catch((err) => {
-        console.log(err, "스야 모임생성오류");
-      });
+        console.log(err, "스야 모임생성오류")
+      })
   };
 };
 

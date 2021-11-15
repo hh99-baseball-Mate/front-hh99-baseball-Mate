@@ -51,7 +51,8 @@ export const Login = (props) => {
               label="이메일"
               name="email"
               type="email"
-              placeholder="아이디로 사용 할 이메일을 입력해주세요"
+              placeholder="아이디로 사용 할 이메일을 입력해주세요(최대 20자)"
+              maxLength="20"
             />
 
             <div style={{ position: "relative" }}>
@@ -60,6 +61,7 @@ export const Login = (props) => {
                 name="password"
                 type={showPwd ? "text" : "password"}
                 placeholder="비밀번호를 입력해주세요"
+                maxLength="16"
               />
               <IoEyeSharp
                 size="24"

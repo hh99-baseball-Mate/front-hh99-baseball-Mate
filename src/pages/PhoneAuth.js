@@ -11,6 +11,7 @@ export const PhoneAuth = (props) => {
   const [phoneAuth, setPhoneAuth] = useState("")
   const dispatch = useDispatch()
 
+
   const PhoneAuthNum = (e) => {
     setPhoneNumber(e.target.value)
   }

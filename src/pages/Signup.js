@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
 
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as userActions } from "../redux/modules/user"
@@ -12,9 +12,13 @@ import { IoEyeSharp } from "react-icons/io5"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { TextField } from "../componentsLogin/TextField"
+import { history } from "../redux/configStore"
 
 export const Signup = (props) => {
   const user_info = useSelector((state) => state.user.user_info)
+  const is_auth = useSelector((state) => state.user.is_auth)
+
+  console.log(is_auth, "asd")
 
   console.log(user_info)
   const dispatch = useDispatch()
@@ -36,6 +40,15 @@ export const Signup = (props) => {
   // 비밀번호 숨기기/보이기
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
+
+  useEffect(() => {
+    // 핸드폰 인증번호를 안할 시 인증하러 보냄
+    if (!is_auth) {
+      window.alert("번호 인증을 먼저 해주세요")
+      history.replace("/phoneAuth")
+      return
+    }
+  }, [])
 
   return (
     <Container>
@@ -65,14 +78,16 @@ export const Signup = (props) => {
               label="이메일"
               name="email"
               type="email"
-              placeholder="이메일을 입력해주세요"
+              placeholder="이메일을 입력해주세요(최대 20자)"
+              maxLength="20"
             ></TextField>
 
             <TextField
               label="닉네임"
               name="userName"
               type="text"
-              placeholder="닉네임을 입력해주세요"
+              placeholder="닉네임을 입력해주세요(최대 7자)"
+              maxLength="7"
             ></TextField>
 
             <InputPosition>
@@ -82,6 +97,7 @@ export const Signup = (props) => {
                 check
                 type={showPwd ? "text" : "password"}
                 placeholder="영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
+                maxLength="16"
               ></TextField>
 
               <IoEyeSharp
@@ -103,6 +119,7 @@ export const Signup = (props) => {
                 name="confirmPassword"
                 type={showPwd2 ? "text" : "password"}
                 placeholder="비밀번호를 입력해주세요"
+                maxLength="16"
               ></TextField>
               <IoEyeSharp
                 size="24"

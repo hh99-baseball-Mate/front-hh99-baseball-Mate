@@ -4,24 +4,25 @@ import { Text } from "../components"
 import { FaRegSmileBeam } from "react-icons/fa"
 
 export const Card = (props) => {
-  const { defaultTitleImg, defaultUserImg } = props
+  const { dayBefore, goodsImg, goodsName, userName } = props
 
   return (
     <CardBox>
       <CardContent>
-        <MainImg src={defaultTitleImg} />
+        <MainImg src={goodsImg} />
         <UserInfo>
-          <CircleImg src={defaultUserImg} />
+          {/* 유저 이미지 */}
+          <CircleImg src={goodsImg} />
           <Text center bold>
-            김진희
+            {userName}
           </Text>
         </UserInfo>
 
         <TextBox>
-          <Title>제목제목제목제목제목제목제목제목제목제목제목제목</Title>
+          <Title>{goodsName}</Title>
           <Desc>
-            제목제목제목제목제목제목제목제목제목제목제목제제목제제목제제목제제목제
-            제목제
+            {/* 굿즈 설명 */}
+            {goodsName}
           </Desc>
         </TextBox>
 
@@ -31,7 +32,7 @@ export const Card = (props) => {
             <Text size="12px">1</Text>
           </Icons>
           <Text size="12px" color="#777777">
-            2021-10-12
+            {/* {dayBefore} */}
           </Text>
         </IconBox>
       </CardContent>
@@ -39,12 +40,6 @@ export const Card = (props) => {
   )
 }
 
-Card.defaultProps = {
-  defaultTitleImg:
-    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
-  defaultUserImg:
-    "https://solvus.net/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png",
-}
 
 const CardBox = styled.div`
   background: #ffffff;

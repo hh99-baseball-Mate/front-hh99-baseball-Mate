@@ -24,8 +24,8 @@ const Btn = styled.button`
   border-radius: 50%;
   height: 61px;
   width: 61px;
-  position: fixed;
-  right: 10px;
+  position: absolute;
+  right: 0;
   bottom: 80px;
   transform: translate(-50%, -50%);
   background: #f25343;
@@ -35,7 +35,7 @@ const Btn = styled.button`
   cursor: pointer;
 
   /* 연필 숨김 방지 */
-  @media only screen and (max-width: 1024px) {
+  /* @media only screen and (max-width: 1024px) {
     position: fixed;
     right: 10px;
     bottom: 80px;
@@ -53,5 +53,5 @@ const Btn = styled.button`
     right: 10px;
     bottom: 80px;
     transform: translate(-50%, -50%);
-  }
+  } */
 `
