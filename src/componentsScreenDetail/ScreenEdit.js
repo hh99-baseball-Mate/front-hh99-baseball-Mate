@@ -31,7 +31,7 @@ import { useParams } from "react-router"
 
 export const ScreenEdit = (props) => {
   const params = useParams()
-  const groupId = params.groupId
+  const screenId = params.screenId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
   const ip = IMAGES_BASE_URL
@@ -72,7 +72,7 @@ export const ScreenEdit = (props) => {
   const { content, peopleLimit, title } = inputValue
 
   useEffect(() => {
-    dispatch(screenDetailCreators.loadScreenPageMW(groupId))
+    dispatch(screenDetailCreators.loadScreenPageMW(screenId))
   }, [])
 
   // 이미지 업로드 / 미리보기
@@ -161,7 +161,7 @@ export const ScreenEdit = (props) => {
       formData.append("placeInfomation", placeInfomation)
       formData.append("file", preview)
 
-      dispatch(screenDetailCreators.editGroupPageMW(groupId, formData))
+      dispatch(screenDetailCreators.editGroupPageMW(screenId, formData))
       e.target.disabled = true
 
       // 폼데이터 console
