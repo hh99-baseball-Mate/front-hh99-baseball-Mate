@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { tokenInstance, apis, tokenApis, instance, img } from "../../lib/axios"
+import { tokenInstance, instance, img } from "../../lib/axios"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
 // const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";

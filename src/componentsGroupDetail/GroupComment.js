@@ -52,10 +52,10 @@ const GroupComment = memo((props) => {
     }
   }
 
-  useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
-    dispatch(groupDetailCreators.mylistMW())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
+  //   dispatch(groupDetailCreators.mylistMW())
+  // }, [])
 
   return (
     <React.Fragment>
