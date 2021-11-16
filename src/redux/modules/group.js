@@ -73,7 +73,7 @@ const getTeamAPI = (teamname) => {
           console.log(res);
         })
         .catch((err) => {
-          console(err, "전체 모임 불러오기");
+          console.log(err, "전체 모임 불러오기")
         });
       return;
     }

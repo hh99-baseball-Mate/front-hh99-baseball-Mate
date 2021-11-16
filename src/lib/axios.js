@@ -1,13 +1,14 @@
 import axios from "axios";
-import { number } from "yup/lib/locale";
-import { getCookie } from "../shared/Cookie";
+import { config } from "dotenv"
+import { number } from "yup/lib/locale"
+import { getCookie } from "../shared/Cookie"
 
 // http://52.78.93.38/
 // http://54.180.148.132/ 임시서버
 // http://localhost:4000/
 // 토큰없는 api
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -18,7 +19,7 @@ export const instance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
 
 export const apis = {
   // baseURL을 미리 지정해줬기 때문에 함수의 첫 번째 인자에 들어가는 url은
@@ -37,7 +38,7 @@ export const apis = {
 
   // 스크인야구 상세조회
   getScreenDetail: (screenId) => instance.get(`/screen/${screenId}`),
-};
+}
 
 // 토큰인증 api
 export const tokenInstance = axios.create({
@@ -49,7 +50,7 @@ export const tokenInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
 
 // 스토어 서브크라이브 함수 실행하고 이즈로그인이 바뀔때 마다 헤더를 수정
 // axios 헤더를 업데이트 해줄 문서 확인
@@ -63,7 +64,14 @@ export const img = axios.create({
     "Access-Control-Allow-Origin": "*",
     "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
+
+// export const tokenInterceptors = instance.interceptors.request.use(() => {
+//   const token = getCookie("is_login")
+//   config.headers["Authorization"] = token
+//   console.log("실행")
+//   return config
+// })
 
 export const tokenApis = {
   // 타임라인 페이지
