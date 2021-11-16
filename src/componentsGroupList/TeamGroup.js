@@ -1,7 +1,7 @@
 import React from "react";
 
-const OnlyPlay = (props) => {
+const TeamGroup = (props) => {
   return <div>플레이스</div>;
 };
 
-export default OnlyPlay;
+export default TeamGroup;
