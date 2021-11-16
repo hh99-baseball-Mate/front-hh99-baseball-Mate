@@ -22,7 +22,7 @@ export default Progress;
 
 const ProgresBar = styled.div`
   background: #e7e7e7;
-  width: 230px;
+  width: 70%;
   height: 1.6px;
 `;
 

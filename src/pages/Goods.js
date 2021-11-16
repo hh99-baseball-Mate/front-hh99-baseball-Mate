@@ -47,7 +47,7 @@ export const Goods = () => {
 
   return (
     <>
-      <Header nowBtn4="nowBtn4" />
+      <Header goods />
       <Banner bg>
         <GoodsBannerBox>
           <Logo src={goodBanner} />

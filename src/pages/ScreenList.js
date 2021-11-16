@@ -18,7 +18,7 @@ export const ScreenList = () => {
 
   const [infinity, setinfinity] = useState({
     start: 0,
-    next: 4,
+    next: 5,
   })
 
   const [showModal, setShowModal] = useState(false)
@@ -54,7 +54,7 @@ export const ScreenList = () => {
         })
       }}
       is_next={list_length > infinity.next}
-      loading={is_loading}
+      // loading={is_loading}
     >
       <Header nowBtnSB />
       <Banner />
