@@ -189,7 +189,7 @@ export const ScreenAdd = (props) => {
 
         {/* 카카오지도 모달 */}
         {showModal ? (
-          <Modal bottom height="650px" margin="0 -20px">
+          <Modal bottom height="650px" margin="0 -10px">
             <CloseBtn onClick={() => setShowModal(false)}>
               <Buttons>닫기</Buttons>
             </CloseBtn>
@@ -279,11 +279,7 @@ export const ScreenAdd = (props) => {
         </ImgBox>
       </div>
 
-      <ButtonBox>
-        <Buttons complete _onClick={submitBtn}>
-          모임생성
-        </Buttons>
-      </ButtonBox>
+      <Buttons _onClick={submitBtn}>모임생성</Buttons>
     </Container>
   )
 }
@@ -305,13 +301,6 @@ const TextIcons = styled.div`
   display: flex;
   align-items: center;
 `
-
-const ButtonBox = styled.div`
-  position: fixed;
-  width: 335px;
-  bottom: 20px;
-`
-
 const PeopleCount = styled.div`
   width: 50px;
 `

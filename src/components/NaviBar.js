@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 
-import home from "../shared/icon/navbar/home.png";
-import home_select from "../shared/icon/navbar/home_select.png";
-import sch from "../shared/icon/navbar/sch.png";
-import sch_select from "../shared/icon/navbar/sch_select.png";
-import rec from "../shared/icon/navbar/rec.png";
-import rec_select from "../shared/icon/navbar/rec_select.png";
-import my from "../shared/icon/navbar/my.png";
-import my_select from "../shared/icon/navbar/my_select.png";
+import home from "../shared/icon/navbar/home.svg";
+import home_select from "../shared/icon/navbar/home_select.svg";
+import sch from "../shared/icon/navbar/sch.svg";
+import sch_select from "../shared/icon/navbar/sch_select.svg";
+import chat from "../shared/icon/navbar/chat.svg";
+import chat_select from "../shared/icon/navbar/chat_select.svg";
+import my from "../shared/icon/navbar/my.svg";
+import my_select from "../shared/icon/navbar/my_select.svg";
 import { useSelector } from "react-redux";
 import { PancilBtn } from "."
 
@@ -53,7 +53,7 @@ const NaviBar = (props) => {
           )}
         </Icon>
 
-        {/* 활동 */}
+        {/* 채팅 */}
         <Icon
           onClick={(e) => {
             is_login
@@ -62,10 +62,10 @@ const NaviBar = (props) => {
             e.target.disabled = true
           }}
         >
-          {props.rec ? (
-            <img src={rec_select} alt="rec_col" />
+          {props.chat ? (
+            <img src={chat_select} alt="rec_col" />
           ) : (
-            <img src={rec} alt="rec" />
+            <img src={chat} alt="rec" />
           )}
         </Icon>
 
@@ -95,10 +95,10 @@ NaviBar.defaultProps = {
 
 const Container = styled.div`
   background: #fff;
-  width: 376px;
-  height: 94px;
+  width: 425px;
+  height: 64px;
   border-top: 1px solid #e7e7e7;
-  padding: 15px 28px 38px 35px;
+  padding: 10px 30px 15px 30px;
   position: fixed;
   bottom: 0px;
   left: 50%;

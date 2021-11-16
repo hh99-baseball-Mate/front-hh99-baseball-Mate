@@ -128,7 +128,7 @@ const delGroupPageMW = (groupId) => {
       .then((res) => {
         console.log(res)
         // dispatch(del_groupPage(groupId));
-        history.replace("/grouplist")
+				history.replace("/")
       })
       .catch((err) => {
         console.log(err)

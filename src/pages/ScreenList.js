@@ -18,7 +18,7 @@ export const ScreenList = () => {
 
   const [infinity, setinfinity] = useState({
     start: 0,
-    next: 4,
+    next: 5,
   })
 
   const [showModal, setShowModal] = useState(false)

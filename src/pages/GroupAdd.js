@@ -247,11 +247,7 @@ export const GroupAdd = (props) => {
         </ImgBox>
       </div>
 
-      <ButtonBox>
-        <Buttons complete _onClick={submitBtn}>
-          모임생성
-        </Buttons>
-      </ButtonBox>
+      <Buttons _onClick={submitBtn}>모임생성</Buttons>
     </Container>
   )
 }
@@ -269,11 +265,6 @@ const Grid = styled.div`
   border-bottom: 1px solid #e7e7e7;
 `
 
-const ButtonBox = styled.div`
-  position: fixed;
-  width: 335px;
-  bottom: 20px;
-`
 
 const PeopleCount = styled.div`
   width: 50px;

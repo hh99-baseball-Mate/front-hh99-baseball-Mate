@@ -95,7 +95,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
   return (
     <Container>
       <div
-        style={{ width: "375px", height: "650px", margin: "0px -20px 0" }}
+        style={{ width: "600px", height: "650px", margin: "0px -20px 0" }}
         id="map"
       ></div>
     </Container>

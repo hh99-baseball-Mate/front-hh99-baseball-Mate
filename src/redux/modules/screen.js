@@ -1,12 +1,10 @@
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import { img, instance } from "../../lib/axios";
+import axios from "axios";
+import { getCookie } from "../../shared/Cookie";
 
-import { createAction, handleActions } from "redux-actions"
-import { produce } from "immer"
-import { img, instance } from "../../lib/axios"
-import axios from "axios"
-import { getCookie } from "../../shared/Cookie"
-
-
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP";
 const LOADING = "LOADING" //스크린 참가
@@ -18,8 +16,6 @@ const screenGetGroup = createAction(
     list_length,
   })
 )
-
-const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 const initialState = {
   list_length: 0,

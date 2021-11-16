@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
-import { Image } from "react-bootstrap"
-import styled from "styled-components"
-import { history } from "../redux/configStore"
+import React, { useEffect, useState } from "react";
+import { Image } from "react-bootstrap";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
 //swiper
 import Swipers from "../components/Swipers"
 import GroupCard from "../componentsGroupList/GroupCard"
@@ -16,7 +16,7 @@ import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
 
 const GroupList = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [team, setTeam] = useState("")
 
@@ -40,16 +40,16 @@ const GroupList = (props) => {
   const date = day.split(" ")[0]
 
   const dateList = team_list.filter((e) => {
-    const timeCut = e.groupDate.split(" ")[0]
+    const timeCut = e.groupDate.split(" ")[0];
     // console.log(timeCut);
-    return timeCut === date
-  })
+    return timeCut === date;
+  });
 
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/grouplist/groupadd")
-    e.target.disabled = true
+      : history.push("/grouplist/groupadd");
+    e.target.disabled = true;
   }
 
   const moreBtn = () => {
@@ -78,7 +78,7 @@ const GroupList = (props) => {
   }, [team, date, infinity])
 
   return (
-    <>
+    <Box>
       <InfinityScroll
         callNext={() => {
           console.log("되냐?")
@@ -90,14 +90,10 @@ const GroupList = (props) => {
         is_next={list_length > infinity.next}
         loading={is_loading}
       >
-        {/* 배너 */}
         <Banner />
-
-        <Header nowBtn2 />
+        <Header game />
 
         <Container>
-          {/* 구분 선 */}
-          <Broder />
           {/* overFlow 로 커스텀 한 Swipers */}
           <Swipers>
             {/* 기본 전체 */}
@@ -128,10 +124,10 @@ const GroupList = (props) => {
               </ClubBox>
             ))}
           </Swipers>
-          <Broder />
+
           <SubTitle more>롯데자이언츠 핫한 모임 🔥</SubTitle>
           {/* 핫 한모임 */}
-          <Swipers>
+          <Swipers height="300px">
             <GroupCard></GroupCard>
             <GroupCard></GroupCard>
             <GroupCard></GroupCard>
@@ -151,12 +147,20 @@ const GroupList = (props) => {
         </Container>
 
         <MarginBottom />
-        <NaviBar writeBtn onClick={newPeople} />
+        <NaviBar home writeBtn onClick={newPeople} />
       </InfinityScroll>
-    </>
+    </Box>
   )
-}
-export default GroupList
+};
+export default GroupList;
+
+const Box = styled.div`
+  /* width: 405px; */
+  /* height: 177px; */
+  /* margin: 15px auto; */
+  /* display: ${(props) => props.flex}; */
+  /* border: 1px solid; */
+`;
 
 const Broder = styled.div`
   border: 1px solid #e7e7e7;
