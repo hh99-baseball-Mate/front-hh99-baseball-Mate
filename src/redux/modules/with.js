@@ -8,6 +8,7 @@ const GET_WITH = "GET_WITH";
 const GET_WRITE = "GET_WRITE";
 const DELETE_GROUP = "DELETE_GROUP";
 const DELETE_ATTEND = "DELETE_ATTEND";
+const WISH_GROUP = "WHISH_GROUP";
 //스크린 참가
 const GET_SCREEN = "GET_SCREEN";
 const DELETE_SCREEN = "DELETE_SCREEN";
@@ -18,6 +19,9 @@ const getWrite = createAction(GET_WRITE, (writeList) => ({ writeList }));
 const deleteGroup = createAction(DELETE_GROUP, (deleteList) => ({
   deleteList,
 }));
+
+//찜하기
+const wishGroup = createAction(WISH_GROUP, (wishList) => ({ wishList }));
 //내모임 참여취소
 const deleteAttend = createAction(DELETE_ATTEND, (attendList) => ({
   attendList,
