@@ -13,65 +13,63 @@ import Reciangle from "../shared/icon/Rectangle.png";
 import { NotGame } from "../components/NotGame";
 
 const MyGroup = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //참석
-  const with_list = useSelector((state) => state.with.with_list)
+  const with_list = useSelector((state) => state.with.with_list);
   //작성
-  const write_list = useSelector((state) => state.with.write_list)
+  const write_list = useSelector((state) => state.with.write_list);
   // console.log(with_list, "테스트용")
   // console.log(write_list, "작성에 대해")
 
   //모달
 
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   //스크린
-  const screen_list = useSelector((state) => state.with.screen_list)
-  const [allList, setAllList] = useState(true)
-  const [screen, setScreen] = useState(false)
-  const [games, setGames] = useState(false)
+  const screen_list = useSelector((state) => state.with.screen_list);
+  const [allList, setAllList] = useState(true);
+  const [screen, setScreen] = useState(false);
+  // const [games, setGames] = useState(false);
 
   // console.log(allList)
   //구분
-  const [participation, setParticipation] = useState(true)
-  const [write, setWrite] = useState(false)
-  const [wish, setWish] = useState(false)
+  const [participation, setParticipation] = useState(true);
+  const [write, setWrite] = useState(false);
+  const [wish, setWish] = useState(false);
   //버튼
 
-  const { nowBtn1, nowBtn2, nowBtn3 } = props
+  const { nowBtn1, nowBtn2, nowBtn3 } = props;
 
   // console.log(games, screen);
   // console.log(nowBtn1, nowBtn2);
 
-  const all_list = with_list.concat(screen_list)
+  const all_list = with_list.concat(screen_list);
 
   //카드
   useEffect(() => {
-    if (allList) {
-      dispatch(withCr.getWithAPI())
-      dispatch(withCr.getScreenAPI())
-    }
+    dispatch(withCr.getWithAPI());
+    dispatch(withCr.getScreenAPI());
 
-    if (games) {
-      // 경기관람 모임 리스트 부르기
-      dispatch(withCr.getWithAPI())
-      setShowModal(false)
-      return
-      // setGames(false);
-    }
-    if (screen) {
-      // console.log("스야관람")
-      // 스야 모임 리스트 부르기
-      dispatch(withCr.getScreenAPI())
-      setShowModal(false)
-      // setScreen(false);
-      return
-    }
-  }, [screen, games])
+    // if (games) {
+    //   // 경기관람 모임 리스트 부르기
+    //   dispatch(withCr.getWithAPI());
+    //   setShowModal(false);
+    //   return;
+    //   // setGames(false);
+    // }
+    // if (screen) {
+    //   // console.log("스야관람")
+    //   // 스야 모임 리스트 부르기
+    //   dispatch(withCr.getScreenAPI());
+    //   setShowModal(false);
+    //   // setScreen(false);
+    //   return;
+    // }
+  }, []);
 
   //작성
   useEffect(() => {
-    dispatch(withCr.getWriteAPI())
-  }, [])
+    dispatch(withCr.getWriteAPI());
+  }, []);
 
   return (
     <All>
@@ -91,8 +89,8 @@ const MyGroup = (props) => {
             nowBtn1={nowBtn1}
             onClick={() => {
               if (write === true || participation === false) {
-                setWrite(false)
-                setParticipation(true)
+                setWrite(false);
+                setParticipation(true);
               }
             }}
           >
@@ -103,10 +101,10 @@ const MyGroup = (props) => {
             nowBtn2={nowBtn2}
             onClick={() => {
               if (participation === true) {
-                setParticipation(false)
-                setWrite(true)
+                setParticipation(false);
+                setWrite(true);
               }
-              setWrite(true)
+              setWrite(true);
             }}
           >
             작성모임
@@ -114,7 +112,7 @@ const MyGroup = (props) => {
           <Button3
             nowBtn3={nowBtn3}
             onClick={() => {
-              window.alert("준비 중 입니다.")
+              window.alert("준비 중 입니다.");
               // setWish(true)
             }}
           >
@@ -134,7 +132,7 @@ const MyGroup = (props) => {
         <Up>내가 참여한 모임</Up>
         <Btn
           onClick={() => {
-            setShowModal(true)
+            setShowModal(true);
           }}
         >
           상세보기 <img src={Etc} alt="등등" />
@@ -152,7 +150,7 @@ const MyGroup = (props) => {
                   <NotGame>게임이없어요</NotGame>
                 )}
               </div>
-            )
+            );
           })
         : !screen
         ? with_list.map((e) => {
@@ -165,7 +163,7 @@ const MyGroup = (props) => {
                   ""
                 )}
               </div>
-            )
+            );
           })
         : screen_list.map((e) => {
             return (
@@ -177,7 +175,7 @@ const MyGroup = (props) => {
                   ""
                 )}
               </div>
-            )
+            );
           })}
 
       {write_list.map((e) => {
@@ -185,7 +183,7 @@ const MyGroup = (props) => {
           <div style={{ margin: "20px" }}>
             {write && !participation ? <Write key={e.groupId} {...e} /> : ""}
           </div>
-        )
+        );
       })}
 
       {showModal ? (
@@ -194,28 +192,23 @@ const MyGroup = (props) => {
             <img src={Reciangle} alt="등등" />
             <But
               onClick={() => {
-                setAllList(true)
-                setGames(false)
-                setScreen(false)
-                setShowModal(false)
+                history.push("./mygroup");
+                setShowModal(false);
               }}
             >
               전체보기
             </But>
             <But
               onClick={() => {
-                setAllList(false)
-                setGames(true)
-                setScreen(false)
+                console.log("누ㅡ삼");
+                history.push("/onlyplay");
               }}
             >
               경기 모임만
             </But>
             <But
               onClick={() => {
-                setAllList(false)
-                setGames(false)
-                setScreen(true)
+                history.push("/onlyscreen");
               }}
             >
               스야 모임만
@@ -229,7 +222,7 @@ const MyGroup = (props) => {
       <MarginBottom />
       <NaviBar sch />
     </All>
-  )
+  );
 };
 
 MyGroup.defaultProps = {

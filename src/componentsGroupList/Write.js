@@ -25,8 +25,8 @@ export const Write = (props) => {
   });
   const [showModal, setShowModal] = useState(false);
   const getOut = () => {
-    dispatch(acionCr.deleteGroupAPI(props.groupId))
-    setShowModal(false)
+    dispatch(acionCr.deleteGroupAPI(props.groupId));
+    setShowModal(false);
     // console.log(props, "제바류");
   };
   const { title, descriptionOne, descriptionTwo, btnClose, btnConfirm } =

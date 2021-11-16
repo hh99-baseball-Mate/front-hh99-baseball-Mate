@@ -1,12 +1,10 @@
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import { img, instance } from "../../lib/axios";
+import axios from "axios";
+import { getCookie } from "../../shared/Cookie";
 
-import { createAction, handleActions } from "redux-actions"
-import { produce } from "immer"
-import { img, instance } from "../../lib/axios"
-import axios from "axios"
-import { getCookie } from "../../shared/Cookie"
-
-
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP";
 const LOADING = "LOADING"; //스크린 참가
@@ -33,8 +31,7 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (formData) => {
   return function (dispatch, getState, { history }) {
-   
-    dispatch(loading(true))
+    dispatch(loading(true));
 
     axios
       .post(
@@ -52,13 +49,13 @@ const screenAddMD = (formData) => {
         }
       )
       .then((res) => {
-        console.log(res)
-        history.replace("/screen")
-        dispatch(loading(false))
+        console.log(res);
+        history.replace("/screen");
+        dispatch(loading(false));
       })
       .catch((err) => {
-        console.log(err, "스야 모임생성오류")
-      })
+        console.log(err, "스야 모임생성오류");
+      });
   };
 };
 
