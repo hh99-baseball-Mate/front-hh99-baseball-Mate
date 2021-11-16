@@ -47,6 +47,12 @@ const logInMD = (user_info) => {
 
         // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
         setCookie("is_login", `${accessToken}`)
+        const token = getCookie("is_login")
+
+        // 기본 헤더 토큰 재설정
+        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
+        // 멀티 헤더 토큰 재설정
+        img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
         const userInfo = {
           userid,
@@ -96,25 +102,32 @@ const signUpMD = (user_info) => {
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
-    axios
-      .post(
-        `${BASE_URL}/user/logincheck`,
-        {},
-        {
-          headers: {
-            "content-type": "application/json;charset=UTF-8",
-            accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "X-AUTH-TOKEN": getCookie("is_login"),
-          },
-        }
-      )
+    // axios
+    //   .post(
+    //     `${BASE_URL}/user/logincheck`,
+    //     {},
+    //     {
+    //       headers: {
+    //         "content-type": "application/json;charset=UTF-8",
+    //         accept: "application/json",
+    //         "Access-Control-Allow-Origin": "*",
+    //         "X-AUTH-TOKEN": getCookie("is_login"),
+    //       },
+    //     }
+    //   )
+    instance
+      .post("/user/logincheck")
       .then((res) => {
         const myteam = res.data.myteam
         console.log(res)
 
         const login_user = { ...res.data }
 
+        const token = getCookie("is_login")
+        // 기본 헤더 토큰 재설정
+        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
+        // 멀티 헤더 토큰 재설정
+        img.defaults.headers.common["X-AUTH-TOKEN"] = token
         dispatch(loginCheck(login_user))
 
         if (myteam === null) {
@@ -134,6 +147,7 @@ const userUpdateMD = (formdata, id) => {
       .patch(`/users/${id}`, formdata)
       .then((res) => {
         // console.log(res.data)
+        dispatch(logInCheckMD())
         history.replace(`/mypage/${id}`)
       })
       .catch((err) => console.log(err, "유저업데이트 오류"))

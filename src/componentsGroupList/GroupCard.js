@@ -122,10 +122,10 @@ export default GroupCard;
 const Container = styled.div`
   width: 385px;
   /* height: 177px; */
-  margin: 0 10px 30px 10px;
+  margin: 10px 0;
   display: ${(props) => props.flex};
   /* border: 1px solid; */
-`;
+`
 
 const Warp = styled.div`
   /* width: 100%; */
@@ -140,7 +140,7 @@ const Warp = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
-`;
+`
 
 const Text = styled.div`
   width: ${(props) => props.width};
@@ -158,7 +158,7 @@ const Text = styled.div`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   overflow: hidden;
-`;
+`
 
 const Card = styled.div`
   width: 385px;
@@ -167,7 +167,7 @@ const Card = styled.div`
   flex-direction: ${(props) => props.direction};
   background: #ffffff;
   position: relative;
-`;
+`
 
 const Ellipse = styled.div`
   width: 50px;
@@ -183,14 +183,14 @@ const Ellipse = styled.div`
   font-weight: bold;
   font-size: 11px;
   color: ${(props) => props.color};
-`;
+`
 
 const ImgBox = styled.div`
   width: 110px;
   height: 110px;
   border-radius: 4px;
-  background: #c4c4c4;
-  border: 1px solid #e7e7e7;
+  /* background: #c4c4c4; */
+  /* border: 1px solid #e7e7e7; */
   /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
   /* position: absolute;
   left: 78.51%;
@@ -202,7 +202,7 @@ const ImgBox = styled.div`
   background-position: center;
   /* background-size: contain; */
   background-size: cover;
-`;
+`
 
 const Slice = styled.div`
   color: rgba(196, 196, 196, 0.3);

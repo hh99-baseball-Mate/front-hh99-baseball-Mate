@@ -13,6 +13,9 @@ import { img, instance } from "../../lib/axios";
 //   { withCredentials: true }
 // );
 
+// 핫 그룹
+const LOAD_HOTGROUP = "LOAD_HOTGROUP"
+
 //액션
 
 const GET_PLAY = "GET_PLAY";
@@ -28,30 +31,55 @@ const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
 
 //액션함수
 
-const getPlay = createAction(GET_PLAY, (playList) => ({ playList }));
-const getTeam = createAction(GET_TEAM, (teamList, group_list_length) => ({
-  teamList,
-  group_list_length,
-}))
+const getPlay = createAction(GET_PLAY, (play_list) => ({ play_list }))
+const getTeam = createAction(GET_TEAM, (team_list) => ({ team_list }))
 const datePage = createAction(DATE, (date) => ({ date }))
+const load_hotgroup = createAction(LOAD_HOTGROUP, (hotGroup) => ({ hotGroup }))
 const getDateList = createAction(GET_DATE_LIST, (date_list) => ({
   date_list,
 }))
 
 //초기값
 const initialState = {
+  // 경기일정 페이지 get
   play_list: [],
+
+  //구단별&전체조회
   team_list: [],
+
+  // 모임생성에서의 선택 된 팀 경기일정
   selectTeam_list: [],
+
+  // 경기 일정 페이지에서 선택 된 날짜를 담음
   date: "",
+
+  // 선택 된 날짜와 일치하는 경기일정
   date_list: [],
-  list_length: 0,
+
+  // 핫 그룹
+  hotGroup: [],
   is_loading: false,
 }
 
 //미들웨어
 
-//경기일정
+const hotGroupMW = (number) => {
+  return (dispatch) => {
+    instance
+      .get("/groups/hotgroup", number)
+      .then((res) => {
+        // console.log("핫그룹",res)
+        const list = res.data
+        console.log(res)
+        dispatch(load_hotgroup(list))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
+//경기일정 페이지
 const getPlayAPI = (team) => {
   return function (dispatch, getState, { history }) {
     // const team = 103
@@ -67,20 +95,14 @@ const getPlayAPI = (team) => {
   }
 }
 //구단별&전체조회
-const getTeamAPI = (teamname, infinity) => {
+const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
-    const { start, next } = infinity
-
     if (!teamname || teamname === "전체") {
       instance
         .get("/groups")
         .then((res) => {
-          const group_list_length = res.data.length
-
-          const infinityView = res.data.slice(start, next)
-          console.log(infinityView, group_list_length)
-          dispatch(getTeam(infinityView, group_list_length))
-          // console.log(res)
+          dispatch(getTeam(res.data))
+          console.log(res)
         })
         .catch((err) => {
           console.log(err, "전체 모임 불러오기")
@@ -91,11 +113,8 @@ const getTeamAPI = (teamname, infinity) => {
     instance
       .get(`/groups?team=${teamname}`)
       .then((res) => {
-        const group_list_length = res.data.length
-
-        const infinityView = res.data.slice(start, next)
-        console.log(infinityView, group_list_length)
-        dispatch(getTeam(infinityView, group_list_length))
+        console.log(res.data, "구단 선택")
+        dispatch(getTeam(res.data))
       })
       .catch((err) => {
         console.log("팀별조회에러", err)
@@ -104,7 +123,7 @@ const getTeamAPI = (teamname, infinity) => {
   }
 }
 
-// 팀선택
+// 모임추가 시 구단 선택 했을 시 해당 구단의 경기 일정을 보여주기
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
     const teamname = myteam.split(" ")
@@ -129,7 +148,7 @@ const addGroupMD = (formData) => {
       .post("/groups", formData)
       .then((res) => {
         console.log(res.data)
-        history.replace("/groupList")
+        history.replace("/")
       })
       .catch((err) => console.log(err, "모임생성 err입니다."))
   }
@@ -140,13 +159,11 @@ export default handleActions(
   {
     [GET_PLAY]: (state, action) =>
       produce(state, (draft) => {
-        draft.play_list = action.payload.playList
+        draft.play_list = action.payload.play_list
       }),
     [GET_TEAM]: (state, action) =>
       produce(state, (draft) => {
-        draft.team_list = action.payload.teamList
-        draft.list_length = action.payload.group_list_length
-        draft.is_loading = true
+        draft.team_list = action.payload.team_list
       }),
     [SELECT_TEAM]: (state, action) =>
       produce(state, (draft) => {
@@ -156,10 +173,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.date = action.payload.date
       }),
-
     [GET_DATE_LIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.date_list = action.payload.dateList
+        draft.date_list = action.payload.date_list
+      }),
+    [LOAD_HOTGROUP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.hotGroup = action.payload.hotGroup
       }),
   },
   initialState
@@ -172,6 +192,7 @@ const actionCreators = {
   selectTeamMD,
   getDateList,
   datePage,
-};
+  hotGroupMW,
+}
 
 export { actionCreators };

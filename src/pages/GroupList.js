@@ -14,45 +14,45 @@ import { NotGame } from "../components/NotGame"
 import { Banner } from "../components/Banner"
 import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
+import { HotCard } from "../components/HotCard"
 
 const GroupList = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [team, setTeam] = useState("")
 
   const is_login = useSelector((state) => state.user.is_login)
-  const [infinity, setInfinity] = useState({
-    start: 0,
-    next: 3,
-  })
   //일정선택
   const day = useSelector((state) => state.group.date)
 
   //팀 별
   const team_list = useSelector((state) => state.group.team_list)
-  const is_loading = useSelector((state) => state.group.is_loading)
-  const list_length = useSelector((state) => state.group.list_length)
-  console.log(list_length, is_loading)
 
   // 일정 별
   const date_list = useSelector((state) => state.group.date_list)
 
+  //  핫 그룹
+  const hotGroup = useSelector((state) => state.group.hotGroup)
+
+  // 일정선택에서 받아온 날짜 자르기
   const date = day.split(" ")[0]
 
+  // 자른 날짜와 일치하는 값 필터로 array로 반환
   const dateList = team_list.filter((e) => {
-    const timeCut = e.groupDate.split(" ")[0];
+    const timeCut = e.groupDate.split(" ")[0]
     // console.log(timeCut);
-    return timeCut === date;
-  });
+    return timeCut === date
+  })
 
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/grouplist/groupadd");
-    e.target.disabled = true;
+      : history.push("/grouplist/groupadd")
+    e.target.disabled = true
   }
 
-  const moreBtn = () => {
+  // 일정선택 페이지로 이동
+  const datePageBtn = () => {
     history.push("/groupdate")
   }
 
@@ -67,91 +67,81 @@ const GroupList = (props) => {
     "https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
 
   useEffect(() => {
+    // 일정 선택이 되지 않았다면 모임전체 리스트 get 요청
     if (date === "") {
-      dispatch(groupCr.getTeamAPI(team, infinity))
+      // 전체모임리스트
+      dispatch(groupCr.getTeamAPI(team))
+
+      // 핫 그룹 요청
+      dispatch(groupCr.hotGroupMW(5))
       return
     }
 
     // 해당날짜와 일치하는 경기들의 배열을 넣음
     dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
-  }, [team, date, infinity])
+  }, [team, date])
 
   return (
     <Box>
-      <InfinityScroll
-        callNext={() => {
-          console.log("되냐?")
-          setInfinity({
-            start: infinity.start,
-            next: (infinity.next += 3),
-          })
-        }}
-        is_next={list_length > infinity.next}
-        loading={is_loading}
-      >
-        <Banner />
-        <Header game />
+      <Banner />
+      <Header game />
 
-        <Container>
-          {/* overFlow 로 커스텀 한 Swipers */}
-          <Swipers>
-            {/* 기본 전체 */}
-            <ClubBox>
-              <ClubIcon
-                onClick={allTeam}
-                roundedCircle
-                src={KBOIcon}
-              ></ClubIcon>
+      <Container>
+        {/* overFlow 로 커스텀 한 Swipers */}
+        <Swipers>
+          {/* 기본 전체 */}
+          <ClubBox>
+            <ClubIcon onClick={allTeam} roundedCircle src={KBOIcon}></ClubIcon>
+            <Text size="11px" center>
+              전체
+            </Text>
+          </ClubBox>
+
+          {clubImageSrc.map((e) => (
+            //  구단 별 swipers
+            <ClubBox
+              key={e.id}
+              onClick={() => {
+                dispatch(groupCr.datePage(""))
+                setTeam(e.name)
+              }}
+            >
+              <ClubIcon src={baseUrl + e.img} roundedCircle />
               <Text size="11px" center>
-                전체
+                {e.name}
               </Text>
             </ClubBox>
+          ))}
+        </Swipers>
 
-            {clubImageSrc.map((e) => (
-              //  구단 별 swipers
-              <ClubBox
-                key={e.id}
-                onClick={() => {
-                  dispatch(groupCr.datePage(""))
-                  setTeam(e.name)
-                }}
-              >
-                <ClubIcon src={baseUrl + e.img} roundedCircle />
-                <Text size="11px" center>
-                  {e.name}
-                </Text>
-              </ClubBox>
-            ))}
-          </Swipers>
+        <SubTitle more>롯데자이언츠 핫한 모임 🔥</SubTitle>
+        {/* 핫 한모임 */}
+        <Swipers height="300px">
+          {hotGroup &&
+            hotGroup.map((e) => {
+              console.log(e, "e")
+              return <HotCard key={e.groupId} {...e} />
+            })}
+        </Swipers>
+        <SelectIcon enlargement moreBtn={datePageBtn}>
+          {day ? day : "원하는 경기 일정을 선택해주세요"}
+        </SelectIcon>
+        {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
+        {!day
+          ? team_list.map((e) => {
+              return <GroupCard key={e.groupId} {...e} />
+            })
+          : date_list.map((e) => {
+              return <GroupCard key={e.groupId} {...e} />
+            })}
+      </Container>
 
-          <SubTitle more>롯데자이언츠 핫한 모임 🔥</SubTitle>
-          {/* 핫 한모임 */}
-          <Swipers height="300px">
-            <GroupCard></GroupCard>
-            <GroupCard></GroupCard>
-            <GroupCard></GroupCard>
-            <GroupCard></GroupCard>
-          </Swipers>
-          <SelectIcon moreBtn={moreBtn}>
-            {day ? day : "원하는 경기 일정을 선택해주세요"}
-          </SelectIcon>
-          {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
-          {!day
-            ? team_list.map((e) => {
-                return <GroupCard key={e.groupId} {...e} />
-              })
-            : date_list.map((e) => {
-                return <GroupCard key={e.groupId} {...e} />
-              })}
-        </Container>
-
-        <MarginBottom />
-        <NaviBar home writeBtn onClick={newPeople} />
-      </InfinityScroll>
+      <MarginBottom />
+      <NaviBar home writeBtn onClick={newPeople} />
     </Box>
   )
-};
+}
 export default GroupList;
 
 const Box = styled.div`

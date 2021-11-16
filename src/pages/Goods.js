@@ -75,6 +75,6 @@ export const Goods = () => {
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 20px;
   margin: 20px 0;
 `
