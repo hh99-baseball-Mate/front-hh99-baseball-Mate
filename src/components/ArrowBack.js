@@ -36,6 +36,6 @@ const Headers = styled.div`
 
   ${(props) =>
     props.bg
-      ? "background-color:#EC5E4F; color:white; width:375px;  margin: 0 auto;"
+      ? "background-color:#EC5E4F; color:white; width:425px;  margin: 0 auto;"
       : null}
 `;

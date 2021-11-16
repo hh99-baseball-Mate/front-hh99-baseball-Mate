@@ -9,6 +9,7 @@ import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { MarginBottom, NaviBar } from "../components";
 import { timelineCreators } from "../redux/modules/timeline";
 import { Banner } from "../components/Banner"
+import eventBanner from "../shared/icon/banner/eventBanner.png"
 
 const TimelineList = React.memo((props) => {
   const dispatch = useDispatch()
@@ -27,11 +28,11 @@ const TimelineList = React.memo((props) => {
     <React.Fragment>
       <Container>
         {/* 헤더 */}
-        <Header nowBtn3 />
+        <Header timeline />
 
         {/* 배너 */}
         {/* <TimelineBanner /> */}
-        <Banner />
+        <img src={eventBanner} alt="" />
 
         <Warp padding="0 20px">
           {/* 타임라인 작성 & 응원갯수 */}
@@ -64,7 +65,7 @@ const TimelineList = React.memo((props) => {
 export default TimelineList;
 
 const Container = styled.div`
-	width: 375px; 
+	width: 425px; 
 	/* height: 177px; */
 	margin: auto;
 `;
