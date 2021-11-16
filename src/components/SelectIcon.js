@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Text } from "./"
 import { BiMapAlt } from "react-icons/bi"
-import enlargement from "../shared/icon/enlargement.png"
+import enlargements from "../shared/icon/enlargement.png"
 
 export const SelectIcon = ({
   children,
@@ -17,7 +17,7 @@ export const SelectIcon = ({
           {children}
         </Text>
         <ImgBox>
-          <Img src={enlargement} alt="돋보기" />
+          <Img src={enlargements} alt="돋보기" />
         </ImgBox>
       </Container>
     )
@@ -34,7 +34,7 @@ export const SelectIcon = ({
 
 SelectIcon.defaultProps = {
   children: null,
-  enlargement,
+  enlargement: false,
 }
 
 const Container = styled.div`
@@ -45,6 +45,7 @@ const Container = styled.div`
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `
 const Icon = styled(BiMapAlt)`
   margin: 12px;
