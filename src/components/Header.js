@@ -2,21 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import logo from "../shared/icon/logo.png"
+import logo from "../shared/icon/logo/logo.png"
 
 const Header = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
-  const { nowBtn1, nowBtn2, nowBtnSB, nowBtn3, nowBtn4 } = props;
+  const { nowBtn1, nowBtn2, nowBtnSB, nowBtn3, nowBtn4 } = props
 
   return (
     <Container minWidth="370px">
-      <Img src={logo} alt="logo" />
       <Box>
         <Button1
           nowBtn1={nowBtn1}
           onClick={() => {
-            history.push("/");
+            history.push("/")
           }}
         >
           추천
@@ -25,7 +24,7 @@ const Header = (props) => {
         <Button2
           nowBtn2={nowBtn2}
           onClick={() => {
-            history.push("/grouplist");
+            history.push("/grouplist")
           }}
         >
           모임
@@ -34,7 +33,7 @@ const Header = (props) => {
         <ButtonSB
           nowBtnSB={nowBtnSB}
           onClick={() => {
-            history.push("/screen");
+            history.push("/screen")
           }}
         >
           스야
@@ -43,7 +42,7 @@ const Header = (props) => {
         <Button3
           nowBtn3={nowBtn3}
           onClick={() => {
-            history.push("/timeline");
+            history.push("/timeline")
           }}
         >
           타임라인
@@ -52,15 +51,15 @@ const Header = (props) => {
         <Button4
           nowBtn4={nowBtn4}
           onClick={() => {
-            history.push("/goods");
+            history.push("/goods")
           }}
         >
           굿즈
         </Button4>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
 Header.defaultProps = {
   nowBtn1: false,

@@ -61,7 +61,7 @@ export const GoodsAdd = (props) => {
 
     formData.append("goodsName", inputValue.goodsName)
     formData.append("goodsContent", inputValue.goodsContent)
-    formData.append("goodsPrice", 120000)
+    formData.append("goodsPrice", null)
     formData.append("goodsImg", preview)
 
     dispatch(goodsActions.addGoodsMD(formData))

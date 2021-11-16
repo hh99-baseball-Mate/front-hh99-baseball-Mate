@@ -30,8 +30,6 @@ const TimelineList = React.memo((props) => {
         <Header nowBtn3 />
 
         {/* 배너 */}
-        {/* <TimelineBanner /> */}
-        <Banner />
 
         <Warp padding="0 20px">
           {/* 타임라인 작성 & 응원갯수 */}

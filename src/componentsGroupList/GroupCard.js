@@ -6,16 +6,14 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+ 
 
   const history = useHistory()
 
   const [close, setClose] = useState(false)
 
-  const ip = IMAGES_BASE_URL
-  const img = props.filePath
-  const imageUrl = ip + img
-  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + props.filePath
+
   // console.log("imageUrl", imageUrl);
 
   // console.log("그룹카드", props)
@@ -32,9 +30,9 @@ const GroupCard = (props) => {
   // console.log("props.close", close)
 
   return (
-    <Container 
+    <Container
       onClick={() => {
-        history.push("/groupdetail/" + props.groupId);
+        history.push("/groupdetail/" + props.groupId)
       }}
     >
       <Card>
@@ -82,7 +80,7 @@ const GroupCard = (props) => {
             </Text>
           </Warp>
         </Warp>
-        <Circle url={`${baseurl}${props.filePath}`} />
+        <Circle url={img} />
 
         <Text
           size="16px"

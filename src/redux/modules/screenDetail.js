@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { tokenInstance, instance, img } from "../../lib/axios"
+import { instance, img } from "../../lib/axios"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
 // const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";
@@ -16,253 +16,263 @@ const DELETE_APPLY = "DELETE_APPLY"
 const ADD_COMMENT = "ADD_COMMENT"
 const EDIT_COMMENT = "EDIT_COMMENT"
 const DELETE_COMMENT = "DELETE_COMMENT"
-const LIKE_COMMENT = "LIKE_COMMENT";
+const LIKE_COMMENT = "LIKE_COMMENT"
 
-const LOAD_MYLIST = "LOAD_MYLIS";
+const LOAD_MYLIST = "LOAD_MYLIS"
 
-const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({ screenPage }));
+const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({
+  screenPage,
+}))
 // const del_screenPage = createAction(DELETE_SCREEN_PAGE, (groupId) => ({ groupId }));
 
-const like_post = createAction(LIKE_POST, (screenId, like) => ({ screenId, like }));
-const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }));
-const del_apply = createAction(DELETE_APPLY, (screenId, userid) => ({ screenId, userid }));
+const like_post = createAction(LIKE_POST, (screenId, like) => ({
+  screenId,
+  like,
+}))
+const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }))
+const del_apply = createAction(DELETE_APPLY, (screenId, userid) => ({
+  screenId,
+  userid,
+}))
 
-const add_comment = createAction(ADD_COMMENT, (screenId, comment) => ({ screenId, comment }));
-const edit_comment = createAction(EDIT_COMMENT, (screenId, commentId, comment) => ({ screenId, commentId, comment }))
-const del_comment = createAction(DELETE_COMMENT, (screenId, commentId) => ({ screenId, commentId }));
-const like_comment = createAction(LIKE_COMMENT, (screenId, commentId, like) => ({ screenId, commentId, like }));
+const add_comment = createAction(ADD_COMMENT, (screenId, comment) => ({
+  screenId,
+  comment,
+}))
+const edit_comment = createAction(
+  EDIT_COMMENT,
+  (screenId, commentId, comment) => ({ screenId, commentId, comment })
+)
+const del_comment = createAction(DELETE_COMMENT, (screenId, commentId) => ({
+  screenId,
+  commentId,
+}))
+const like_comment = createAction(
+  LIKE_COMMENT,
+  (screenId, commentId, like) => ({ screenId, commentId, like })
+)
 
-const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }));
-
-
+const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
-	screenPage: {
-		appliedUserInfo: [],
-		canApplyNum: "",
-		content: "",
-		createdUserName: "",
-		filePath: "",
-		groupDate: "",
-		hotPercent: "",
-		id: "",
-		nowAppliedNum: "",
-		peopleLimit: "",
-		screenCommentList: [{
-			comment: "",
-			commentUserId: "",
-			commentUserIndex: "",
-			commentUsername: "",
-			createdAt: "",
-			modifiedAt: "",
-			screenCommentId: "",
-			screencommentlikeCount: "",
-		}],
-		title: ""
-	},
-	mylist: {
-		address: "",
-		myGoodsLikesList: [],
-		myGroupCommentLikesList: [],
-		myGroupLikesList: [],
-		myScreenCommentLikesList: [],
-		myScreenLikesList: [],
-		myTimeLineLikesList: [],
-		myteam: "",
-		picture: "",
-		selfIntroduce: "",
-		userid: "",
-		useridx: "",
-		username: "",
-		usertype: "",
-	}
+  screenPage: {
+    appliedUserInfo: [],
+    canApplyNum: "",
+    content: "",
+    createdUserName: "",
+    filePath: "",
+    groupDate: "",
+    hotPercent: "",
+    id: "",
+    nowAppliedNum: "",
+    peopleLimit: "",
+    screenCommentList: [
+      {
+        comment: "",
+        commentUserId: "",
+        commentUserIndex: "",
+        commentUsername: "",
+        createdAt: "",
+        modifiedAt: "",
+        screenCommentId: "",
+        screencommentlikeCount: "",
+      },
+    ],
+    title: "",
+  },
+  mylist: {
+    address: "",
+    myGoodsLikesList: [],
+    myGroupCommentLikesList: [],
+    myGroupLikesList: [],
+    myScreenCommentLikesList: [],
+    myScreenLikesList: [],
+    myTimeLineLikesList: [],
+    myteam: "",
+    picture: "",
+    selfIntroduce: "",
+    userid: "",
+    useridx: "",
+    username: "",
+    usertype: "",
+  },
 }
 
 // 불러오기
 const loadScreenPageMW = (screenId) => {
-	return (dispatch, getState, {history}) => {
-		instance
-			.get(`/screen/${screenId}`)
-			.then((res) => {
-				console.log("loadScreenPageMW", res.data)
-				const screenPage = res.data
-				dispatch(load_screenPage(screenPage))
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    instance
+      .get(`/screen/${screenId}`)
+      .then((res) => {
+        console.log("loadScreenPageMW", res.data)
+        const screenPage = res.data
+        dispatch(load_screenPage(screenPage))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 수정하기
 const editGroupPageMW = (screenId, formData) => {
-	return (dispatch, getState, {history}) => {
-		img
-			.patch(`/screen/${screenId}`, formData)
-			.then((res) => {
-				console.log(res)
-				history.replace(`/screendetail/${screenId}`)
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    img
+      .patch(`/screen/${screenId}`, formData)
+      .then((res) => {
+        console.log(res)
+        history.replace(`/screendetail/${screenId}`)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 모임삭제
 const delScreenPageMW = (screenId) => {
   return (dispatch, getState, { history }) => {
-    tokenInstance
+    instance
       .delete(`/screen/${screenId}`)
       .then((res) => {
-        console.log(res);
+        console.log(res)
         // dispatch(del_groupPage(groupId));
-				history.replace("/screen")
+        history.replace("/screen")
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-
-// 모임 좋아(찜) 하기/취소하기
-const likePostMW = (screenId,like) => {
-	return (dispatch, getState, {history}) => {
-		const isLiked = {isLiked:like}
-		console.log("isLiked",isLiked)
-		tokenInstance
-			.post(`/screen/${screenId}/like`, isLiked)
-			.then((res) => {
-				console.log("모임찜",res)
-				dispatch(like_post(screenId, isLiked))
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+        console.log(err)
+      })
+  }
 }
 
+// 모임 좋아(찜) 하기/취소하기
+const likePostMW = (screenId, like) => {
+  return (dispatch, getState, { history }) => {
+    const isLiked = { isLiked: like }
+    console.log("isLiked", isLiked)
+    instance
+      .post(`/screen/${screenId}/like`, isLiked)
+      .then((res) => {
+        console.log("모임찜", res)
+        dispatch(like_post(screenId, isLiked))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
 
 // 참여하기
 const screenApplyMW = (screenId, my) => {
-	return (dispatch, getState, {history}) => {
-		tokenInstance
-			.post(`/screen/${screenId}/applications`)
-			.then((res) => {
-				console.log(res)
-				dispatch(screen_apply(my))
-				window.alert("참여가 완료되었습니다.")
-			})
-			.catch((err) => {
-				console.log(err)
-				window.alert("재참가 할 수 없습니다.")
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    instance
+      .post(`/screen/${screenId}/applications`)
+      .then((res) => {
+        console.log(res)
+        dispatch(screen_apply(my))
+        window.alert("참여가 완료되었습니다.")
+      })
+      .catch((err) => {
+        console.log(err)
+        window.alert("재참가 할 수 없습니다.")
+      })
+  }
 }
-
 
 // 참석취소
 const delApplyMW = (screenId, userid) => {
-	return (dispatch, getState, {history}) => {
-		tokenInstance
-			.delete(`/screen/${screenId}/applications`)
-			.then((res) => {
-				console.log("참석취소",res)
-				dispatch(del_apply(screenId, userid))
-				window.alert("모임참여가 취소되었습니다.")
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}		
+  return (dispatch, getState, { history }) => {
+    instance
+      .delete(`/screen/${screenId}/applications`)
+      .then((res) => {
+        console.log("참석취소", res)
+        dispatch(del_apply(screenId, userid))
+        window.alert("모임참여가 취소되었습니다.")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 댓글작성
 const addCommentMW = (screenId, message) => {
-	return (dispatch, getState, {history}) => {
-		const comment = {comment:message}
-		tokenInstance
-			.post(`/screen/${screenId}/comment`, comment)
-			.then((res) => {
-				console.log("댓글추가",res);
-				dispatch(add_comment(screenId, comment))
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    const comment = { comment: message }
+    instance
+      .post(`/screen/${screenId}/comment`, comment)
+      .then((res) => {
+        console.log("댓글추가", res)
+        dispatch(add_comment(screenId, comment))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 댓글 수정
 const editCommentMW = (screenId, commentId, message) => {
-	return (dispatch, getState, {history}) => {
-		const comment = {comment:message}
-		tokenInstance
-			.put(`/screen/${screenId}/comment/${commentId}`, comment)
-			.then((res) => {
-				console.log("댓글수정", res)
-				dispatch(edit_comment(screenId, commentId, comment))
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    const comment = { comment: message }
+    instance
+      .put(`/screen/${screenId}/comment/${commentId}`, comment)
+      .then((res) => {
+        console.log("댓글수정", res)
+        dispatch(edit_comment(screenId, commentId, comment))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 댓글삭제
 const delCommentMW = (screenId, commentId) => {
-	return (dispatch, getState, {history}) => {
-		tokenInstance
-			.delete(`/screen/${screenId}/comment/${commentId}`)
-			.then((res) => {
-				console.log("댓글삭제",res);
-				dispatch(del_comment(screenId, commentId))
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    instance
+      .delete(`/screen/${screenId}/comment/${commentId}`)
+      .then((res) => {
+        console.log("댓글삭제", res)
+        dispatch(del_comment(screenId, commentId))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 댓글 좋아요
 const likeCommentMW = (screenId, commentId, like) => {
-	return (dispatch, getState, { history }) => {
-		const isLiked = {isLiked: like};
-		console.log(screenId, commentId,isLiked)
-		tokenInstance
-			.post(`/screen/${screenId}/comment/${commentId}/like`, isLiked)
-			.then((res) => {
-				console.log(res)
-				dispatch(like_comment(screenId, commentId, like))
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+  return (dispatch, getState, { history }) => {
+    const isLiked = { isLiked: like }
+    console.log(screenId, commentId, isLiked)
+    instance
+      .post(`/screen/${screenId}/comment/${commentId}/like`, isLiked)
+      .then((res) => {
+        console.log(res)
+        dispatch(like_comment(screenId, commentId, like))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 }
-
 
 // 나의 리스트 불러오기
 const mylistMW = () => {
   return function (dispatch, getState, { history }) {
-    tokenInstance
+    instance
       .post("/user/logincheck")
       .then((res) => {
-				console.log("좋아요리스트", res.data)
+        console.log("좋아요리스트", res.data)
         const mylist = res.data
-				// console.log("likelist체크", likelist)
-				dispatch(load_mylist(mylist))
+        // console.log("likelist체크", likelist)
+        dispatch(load_mylist(mylist))
       })
       .catch((err) => {
-				console.log(err)
-			})
+        console.log(err)
+      })
   }
 }
 

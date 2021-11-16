@@ -15,8 +15,7 @@ import Timeline from "../componentsMain/Timeline";
 import TimelimeWrite from "../componentsTimeline/TimelineWrite";
 import { Card } from "../componentsGoods/Card";
 import { Footer, MarginBottom, NaviBar } from "../components";
-import TimelineList from "./TimelineList";
-import logo from "../shared/icon/logo.png"
+import TimelineList from "./TimelineList"
 import { Banner } from "../components/Banner";
 
 const Main = memo((props) => {
