@@ -1,82 +1,56 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import {
-  Container,
-  Header,
-  MoreContainer,
-  Text,
-  MarginBottom,
-  NaviBar,
-} from "../components"
+import { Container, Header, Text, MarginBottom, NaviBar } from "../components"
 import { Card } from "../componentsGoods/Card"
-import goodBanner from "../shared/icon/goodBanner.png"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 import { history } from "../redux/configStore"
-import { Banner } from "../components/Banner"
+import { SubTitle } from "../components/SubTitle"
+import { InfinityScroll } from "../components/InfinityScroll"
+import { NotGame } from "../components/NotGame"
 
 export const Goods = () => {
   const dispatch = useDispatch()
 
-  const goods_list = useSelector((state) => state.goods.goods_list)
+  const [infinity, setInfinity] = useState({
+    start: 0,
+    next: 6,
+  })
 
-  const [sortDate, setSortDate] = useState(false)
-  const [sortItem, setSortItem] = useState(false)
+  const goods_list = useSelector((state) => state.goods.goods_list)
+  const is_loading = useSelector((state) => state.goods.is_loading)
+  const list_length = useSelector((state) => state.goods.list_length)
 
   const goodsAddBtn = () => {
     history.push("/goods/goodsadd")
   }
   // 최신순
-  const DateList = () => {
-    setSortDate(!sortDate)
-    setSortItem(false)
-  }
 
-  // 인기순
-  const HotList = () => {
-    setSortItem(!sortItem)
-    setSortDate(false)
-  }
-
-  console.log(goods_list)
+  console.log(goods_list, "굿즈 목록")
+  console.log(list_length, "list_length")
 
   useEffect(() => {
     // window.alert("준비 중입니다.")
-    dispatch(goodsActions.getGoodsMD())
-  }, [])
+    dispatch(goodsActions.getGoodsMD(infinity))
+  }, [infinity])
 
   return (
-    <>
-      <Header goods />
-      <Banner bg>
-        <GoodsBannerBox>
-          <Logo src={goodBanner} />
-          <TextBox>
-            <Text color="#fff" bold size="16px">
-              나의 굿즈를 뽐내봐
-            </Text>
-            <Text color="#FFAFA7" margin="6px 0">
-              싸인볼은 물론! 모자 싸인까지!
-            </Text>
-          </TextBox>
-        </GoodsBannerBox>
-      </Banner>
+    <InfinityScroll
+      callNext={() => {
+        console.log("되냐?")
+        setInfinity({
+          start: infinity.start,
+          next: (infinity.next += 4),
+        })
+      }}
+      is_next={list_length > infinity.next}
+      loading={is_loading}
+    >
+      <Header nowBtn4="nowBtn4" />
 
       <Container>
-        {/* <Position> */}
-        <MoreContainer>
-          <Text size="16px" bold>
-            굿즈 목록
-          </Text>
-          <BtnGroup>
-            <MoreBtn onClick={HotList}>
-              <Text color={sortItem ? "#498C9A" : "#C4C4C4"}>인기순</Text>
-            </MoreBtn>
-            <MoreBtn onClick={DateList}>
-              <Text color={sortDate ? "#498C9A" : "#C4C4C4"}>최신순</Text>
-            </MoreBtn>
-          </BtnGroup>
-        </MoreContainer>
+        {/* 서브타이틀 */}
+        <SubTitle sort>굿즈 목록</SubTitle>
 
         {/* 굿즈 카드 */}
 
@@ -86,7 +60,7 @@ export const Goods = () => {
               return <Card key={e.goodsId} {...e} />
             })
           ) : (
-            <div>없음</div>
+            <NotGame>등록 된 굿즈가 없습니다.</NotGame>
           )}
         </CardContainer>
         {/* </Position> */}
@@ -94,34 +68,13 @@ export const Goods = () => {
 
       <MarginBottom />
       <NaviBar writeBtn onClick={goodsAddBtn} />
-    </>
+    </InfinityScroll>
   )
 }
-
-const TextBox = styled.div``
-
-const GoodsBannerBox = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Logo = styled.img`
-  margin: 20px 10px 20px 20px;
-  width: 64px;
-  height: 64px;
-`
-const BtnGroup = styled.div``
-
-const MoreBtn = styled.button`
-  margin-left: 10px;
-  cursor: pointer;
-  color: #498c9a;
-  border: none;
-  background-color: transparent;
-`
 
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+  margin: 20px 0;
 `

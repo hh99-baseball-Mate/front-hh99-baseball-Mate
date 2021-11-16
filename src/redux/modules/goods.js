@@ -1,29 +1,44 @@
 // 액션 타입
 
+import axios from "axios"
 import produce from "immer"
 import { createAction, handleActions } from "redux-actions"
-import { instance, tokenInstance } from "../../lib/axios"
+import { img, instance } from "../../lib/axios"
+import { getCookie } from "../../shared/Cookie"
+
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const GET_GOODS = "GET_GOODS"
+const LOADING = "LOADING"
 // 액션 함수
 
-const getGoods = createAction(GET_GOODS, (goods_list) => ({ goods_list }))
+const getGoods = createAction(GET_GOODS, (goods_list, goods_list_length) => ({
+  goods_list,
+  goods_list_length,
+}))
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 const initialState = {
   goods_list: [],
-  goods_addList: [],
+  list_length: 0,
+  is_loading: false,
 }
 
-const getGoodsMD = () => {
+const getGoodsMD = (infinity) => {
   return function (dispatch, getState, { history }) {
-    tokenInstance
+    const { start, next } = infinity
+
+    dispatch(loading(false))
+
+    instance
       .get("/goods")
       .then((res) => {
-        console.log(res.data, "굿즈 목록")
+        const goods_list_length = res.data.length
 
-        const goods_info = res.data
+        const InfinityView = res.data.slice(start, next)
 
-        dispatch(getGoods(goods_info))
+        dispatch(getGoods(InfinityView, goods_list_length))
+        dispatch(loading(true))
       })
       .catch((err) => console.log(err, "굿즈 가져오기 에러"))
   }
@@ -32,14 +47,28 @@ const getGoodsMD = () => {
 const addGoodsMD = (formData) => {
   return function (dispatch, getState, { history }) {
     // console.log(addList)
-    tokenInstance
-      .post("/goods", { formData })
+    axios
+      .post(
+        // `${BASE_URL}/users/${id}`,
+        `${BASE_URL}/goods`,
+        formData,
+        {
+          headers: {
+            // "Content-type": "application/json;charset=UTF-8",
+            "Content-Type": "multipart/form-data",
+            // accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-AUTH-TOKEN": getCookie("is_login"),
+          },
+        }
+      )
       .then((res) => {
-        // console.log(res.data, "굿즈등록")
-        window.alert("굿즈가 등록되었습니다.")
+        console.log(res)
         history.replace("/goods")
       })
-      .catch((err) => console.log(err, "굿즈 등록 에러"))
+      .catch((err) => {
+        console.log(err, "굿즈 생성 오류")
+      })
   }
 }
 
@@ -48,6 +77,12 @@ export default handleActions(
     [GET_GOODS]: (state, action) =>
       produce(state, (draft) => {
         draft.goods_list = action.payload.goods_list
+        draft.list_length = action.payload.goods_list_length
+        draft.is_loading = true
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading
       }),
   },
 

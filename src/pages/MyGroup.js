@@ -77,7 +77,6 @@ const MyGroup = (props) => {
         style={{
           background: "#EC5E4F",
           color: "#FFFFFF",
-          maxWidth: "375px",
           margin: " 0 auto",
         }}
       >
@@ -89,8 +88,8 @@ const MyGroup = (props) => {
             nowBtn1={nowBtn1}
             onClick={() => {
               if (write === true || participation === false) {
-                setWrite(false);
-                setParticipation(true);
+                setWrite(false)
+                setParticipation(true)
               }
             }}
           >
@@ -101,10 +100,10 @@ const MyGroup = (props) => {
             nowBtn2={nowBtn2}
             onClick={() => {
               if (participation === true) {
-                setParticipation(false);
-                setWrite(true);
+                setParticipation(false)
+                setWrite(true)
               }
-              setWrite(true);
+              setWrite(true)
             }}
           >
             작성모임
@@ -112,7 +111,7 @@ const MyGroup = (props) => {
           <Button3
             nowBtn3={nowBtn3}
             onClick={() => {
-              window.alert("준비 중 입니다.");
+              window.alert("준비 중 입니다.")
               // setWish(true)
             }}
           >
@@ -132,7 +131,7 @@ const MyGroup = (props) => {
         <Up>내가 참여한 모임</Up>
         <Btn
           onClick={() => {
-            setShowModal(true);
+            setShowModal(true)
           }}
         >
           상세보기 <img src={Etc} alt="등등" />
@@ -150,7 +149,7 @@ const MyGroup = (props) => {
                   <NotGame>게임이없어요</NotGame>
                 )}
               </div>
-            );
+            )
           })
         : !screen
         ? with_list.map((e) => {
@@ -163,7 +162,7 @@ const MyGroup = (props) => {
                   ""
                 )}
               </div>
-            );
+            )
           })
         : screen_list.map((e) => {
             return (
@@ -175,7 +174,7 @@ const MyGroup = (props) => {
                   ""
                 )}
               </div>
-            );
+            )
           })}
 
       {write_list.map((e) => {
@@ -183,7 +182,7 @@ const MyGroup = (props) => {
           <div style={{ margin: "20px" }}>
             {write && !participation ? <Write key={e.groupId} {...e} /> : ""}
           </div>
-        );
+        )
       })}
 
       {showModal ? (
@@ -192,23 +191,23 @@ const MyGroup = (props) => {
             <img src={Reciangle} alt="등등" />
             <But
               onClick={() => {
-                history.push("./mygroup");
-                setShowModal(false);
+                history.push("./mygroup")
+                setShowModal(false)
               }}
             >
               전체보기
             </But>
             <But
               onClick={() => {
-                console.log("누ㅡ삼");
-                history.push("/onlyplay");
+                console.log("누ㅡ삼")
+                history.push("/onlyplay")
               }}
             >
               경기 모임만
             </But>
             <But
               onClick={() => {
-                history.push("/onlyscreen");
+                history.push("/onlyscreen")
               }}
             >
               스야 모임만
@@ -222,7 +221,7 @@ const MyGroup = (props) => {
       <MarginBottom />
       <NaviBar sch />
     </All>
-  );
+  )
 };
 
 MyGroup.defaultProps = {

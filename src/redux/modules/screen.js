@@ -7,35 +7,26 @@ import { getCookie } from "../../shared/Cookie";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 // const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP";
-const LOADING = "LOADING"; //스크린 참가
-const GET_SCREEN = "GET_SCREEN";
+const LOADING = "LOADING" //스크린 참가
 
-// const screenAddGroup = createAction(SCREEN_ADD_GROUP, (screenAddList) => ({
-//   screenAddList,
-// }))
 const screenGetGroup = createAction(
   SCREEN_GET_GROUP,
   (screen_list, list_length) => ({
     screen_list,
     list_length,
   })
-);
-
-const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+)
 
 const initialState = {
   list_length: 0,
   is_loading: false,
-};
+}
 
 // 스야 모임만들기
 const screenAddMD = (formData) => {
   return function (dispatch, getState, { history }) {
-    dispatch(loading(true));
-
     axios
       .post(
-        // `${BASE_URL}/users/${id}`,
         `${BASE_URL}/screen`,
         formData,
         {
@@ -49,53 +40,49 @@ const screenAddMD = (formData) => {
         }
       )
       .then((res) => {
-        console.log(res);
-        history.replace("/screen");
-        dispatch(loading(false));
+        console.log(res)
+        history.replace("/screen")
       })
       .catch((err) => {
-        console.log(err, "스야 모임생성오류");
-      });
-  };
-};
+        console.log(err, "스야 모임생성오류")
+      })
+  }
+}
 
 // 스크린 모임 불러오기
 const screenGetMD = (regoin, infinity) => {
   return function (dispatch, getState, { history }) {
     // console.log("디스패치", regoin, infinity)
 
-    dispatch(loading(false));
-    const { start, next } = infinity;
+    const { start, next } = infinity
 
     if (!regoin || regoin === "전국") {
       instance
         .get("/screen")
         .then((res) => {
-          const screenLength = res.data.length;
+          const screenLength = res.data.length
 
-          const infinityView = res.data.slice(start, next);
+          const infinityView = res.data.slice(start, next)
 
-          dispatch(loading(true));
-          dispatch(screenGetGroup(infinityView, screenLength));
+          dispatch(screenGetGroup(infinityView, screenLength))
         })
-        .catch((err) => console.log(err, "스야 모임 전체 불러오기 오류"));
-      console.log("스야 전체모임 불러오기");
-      return;
+        .catch((err) => console.log(err, "스야 모임 전체 불러오기 오류"))
+      console.log("스야 전체모임 불러오기")
+      return
     }
 
     instance
       .get(`/screen?region=${regoin}`)
       .then((res) => {
-        const screenLength = res.data.length;
+        const screenLength = res.data.length
 
-        const infinityView = res.data.slice(start, next);
-        dispatch(loading(true));
-        dispatch(screenGetGroup(infinityView, screenLength));
+        const infinityView = res.data.slice(start, next)
+        dispatch(screenGetGroup(infinityView, screenLength))
       })
-      .catch((err) => console.log(err, "스야 지역별 불러오기 오류"));
-    console.log("스야 지역별 불러오기");
-  };
-};
+      .catch((err) => console.log(err, "스야 지역별 불러오기 오류"))
+    console.log("스야 지역별 불러오기")
+  }
+}
 //스크린 참여
 
 //리듀서

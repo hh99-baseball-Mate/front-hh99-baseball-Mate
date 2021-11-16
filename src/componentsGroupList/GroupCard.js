@@ -6,16 +6,14 @@ import Progress from "../components/Progress";
 import colorUsers from "../shared/icon/colorUsers.svg";
 
 const GroupCard = (props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+ 
 
   const history = useHistory()
 
   const [close, setClose] = useState(false)
 
-  const ip = IMAGES_BASE_URL
-  const img = props.filePath
-  const imageUrl = ip + img
-  const baseurl = process.env.REACT_APP_IMAGES_BASE_URL
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + props.filePath
+
   // console.log("imageUrl", imageUrl);
 
   // console.log("그룹카드", props)
@@ -32,14 +30,14 @@ const GroupCard = (props) => {
   // console.log("props.close", close)
 
   return (
-    <Container 
+    <Container
       onClick={() => {
-        history.push("/groupdetail/" + props.groupId);
+        history.push("/groupdetail/" + props.groupId)
       }}
     >
       <Card flex="flex" >
 
-        <ImgBox url={`${baseurl}${props.filePath}`} />
+        <ImgBox url={img} />
         <Warp flex="flex" direction="column" width="250px" marginLeft="20px">
           
           <Warp flex="flex" margin="0 0 8px 0">

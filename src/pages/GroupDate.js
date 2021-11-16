@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Buttons, Container, ArrowBack, Text } from "../components";
-import { actionCreators as playCr } from "../redux/modules/group";
-import { useDispatch, useSelector } from "react-redux";
-import group from "../redux/modules/group";
-import Position from "../shared/icon/Vector.png";
-import { history } from "../redux/configStore";
-import { Image } from "react-bootstrap";
+import { actionCreators as groupCr } from "../redux/modules/group"
+import { useDispatch, useSelector } from "react-redux"
+import Position from "../shared/icon/Vector.png"
+import { history } from "../redux/configStore"
+import { Image } from "react-bootstrap"
 // 스와이퍼
 
-import { SwiperSlide, Swiper } from "swiper/react";
-import { setDate } from "date-fns";
 const GroupDate = (props) => {
   const dispatch = useDispatch()
   const play_list = useSelector((state) => state.group.play_list)
@@ -26,7 +23,7 @@ const GroupDate = (props) => {
   //일정선택
 
   useEffect(() => {
-    dispatch(playCr.getPlayAPI())
+    dispatch(groupCr.getPlayAPI())
   }, [])
 
   const _day = new Date()
@@ -79,7 +76,7 @@ const GroupDate = (props) => {
                         key={e.matchId}
                         // name={e.matches}
                         onClick={() => {
-                          dispatch(playCr.datePage(e.date))
+                          dispatch(groupCr.datePage(e.result))
                           history.goBack()
                         }}
                       >
@@ -151,13 +148,9 @@ const GroupDate = (props) => {
           <Buttons margin="30px 0">돌아가기</Buttons>
         </NotGameList>
       )}
-
-      {/* <div style={{ position: "fixed", width: "335px", bottom: "20px" }}>
-        <Buttons submit>선택완료</Buttons>
-      </div> */}
     </Container>
   )
-};
+}
 
 export default GroupDate;
 

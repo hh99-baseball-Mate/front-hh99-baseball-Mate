@@ -39,13 +39,13 @@ const logInMD = (user_info) => {
     instance
       .post("/user/login", { userid, password })
       .then((res) => {
-        console.log("로그인반환", res)
+        // console.log("로그인반환", res)
 
         const myteam = res.data.myteam
 
         const accessToken = res.data.token
 
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+        // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
         setCookie("is_login", `${accessToken}`)
 
         const userInfo = {
@@ -96,8 +96,6 @@ const signUpMD = (user_info) => {
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
-    getCookie("is_login")
-
     axios
       .post(
         `${BASE_URL}/user/logincheck`,
@@ -133,10 +131,9 @@ const userUpdateMD = (formdata, id) => {
     // const user_info = getState().user.user_info
 
     img
-      .patch(`${BASE_URL}/users/${id}`, formdata)
+      .patch(`/users/${id}`, formdata)
       .then((res) => {
         // console.log(res.data)
-        dispatch(logInCheckMD())
         history.replace(`/mypage/${id}`)
       })
       .catch((err) => console.log(err, "유저업데이트 오류"))
@@ -145,9 +142,6 @@ const userUpdateMD = (formdata, id) => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    const id = getState().user.user_info.useridx
-
-    console.log(club, "리덕스")
     axios
       .post(
         // `${BASE_URL}/users/${id}`,
@@ -183,8 +177,6 @@ const kakaoLogin = (key) => {
 
         setCookie("is_login", access_token)
 
-        dispatch(logInCheckMD())
-
         window.alert("로그인 완료")
         history.push("/")
       })
@@ -216,16 +208,16 @@ const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
 
     const auth = getState().user.is_auth
 
-    console.log(auth, "리덕스 auth")
     instance
       .post("/confirmNumChk", { phoneNumber, ranNum: phoneAuth })
       .then((res) => {
-        
-
         if (!auth) {
+          // 회원가입시 백엔드에 넘겨 줄 번호 저장
           dispatch(phone_auth(phoneNumber))
+
+          // 인증 여부
           dispatch(is_auth(true))
-          
+
           window.alert("번호인증 완료")
           history.push("/signup")
         }

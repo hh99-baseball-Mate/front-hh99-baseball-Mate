@@ -4,7 +4,7 @@ import { Text } from "../components"
 import { FaRegSmileBeam } from "react-icons/fa"
 
 export const Card = (props) => {
-  const { dayBefore, goodsImg, goodsName, userName } = props
+  const { dayBefore, goodsImg, goodsName, userName, goodsUserPicture } = props
 
   return (
     <CardBox>
@@ -12,7 +12,7 @@ export const Card = (props) => {
         <MainImg src={goodsImg} />
         <UserInfo>
           {/* 유저 이미지 */}
-          <CircleImg src={goodsImg} />
+          <CircleImg src={goodsUserPicture} />
           <Text center bold>
             {userName}
           </Text>

@@ -8,21 +8,22 @@ const Swipers = (props) => {
   const { children, height } = props;
   return (
     <>
-      <Sw>{children}</Sw>
+      <Sw height={height}>{children}</Sw>
     </>
-  );
+  )
 };
 
 export default Swipers;
 
 Swipers.defaultProps = {
   children: null,
+  height : "120px"
   // height: ${(props) => props.height};
-};
+}
 
 const Sw = styled.div`
   overflow: scroll hidden;
   display: flex;
   align-items: center;
-  min-height: 120px;
+  min-height: ${(props) => props.height};
 `

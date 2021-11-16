@@ -2,18 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-import logo from "../shared/icon/logo.png"
-
 const Header = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const { game, screen, timeline, goods } = props;
 
   return (
     <Container minWidth="370px">
-      {/* <Img src={logo} alt="logo" /> */}
       <Box>
-
         <Game
           game={game}
           onClick={() => {
@@ -26,7 +22,7 @@ const Header = (props) => {
         <Screen
           screen={screen}
           onClick={() => {
-            history.push("/screen");
+            history.push("/screen")
           }}
         >
           스야모임
@@ -35,7 +31,7 @@ const Header = (props) => {
         <Timeline
           timeline={timeline}
           onClick={() => {
-            history.push("/timeline");
+            history.push("/timeline")
           }}
         >
           타임라인
@@ -44,7 +40,7 @@ const Header = (props) => {
         <Goods
           goods={goods}
           onClick={() => {
-            history.push("/goods");
+            history.push("/goods")
           }}
         >
           굿즈자랑
@@ -56,8 +52,8 @@ const Header = (props) => {
       <Rectangle />
 
     </Container>
-  );
-};
+  )
+}
 
 Header.defaultProps = {
   _onClick: () => {},

@@ -61,7 +61,7 @@ export const GoodsAdd = (props) => {
 
     formData.append("goodsName", inputValue.goodsName)
     formData.append("goodsContent", inputValue.goodsContent)
-    formData.append("goodsPrice", 120000)
+    formData.append("goodsPrice", null)
     formData.append("goodsImg", preview)
 
     dispatch(goodsActions.addGoodsMD(formData))
@@ -113,9 +113,7 @@ export const GoodsAdd = (props) => {
           {goodsContent && <InputCheck />}
         </Inputs>
 
-        <ButtonBox>
-          <Buttons _onClick={submitBtn}>굿즈 등록</Buttons>
-        </ButtonBox>
+        <Buttons _onClick={submitBtn}>굿즈 등록</Buttons>
       </Container>
     </>
   )
@@ -138,6 +136,6 @@ GoodsAdd.defaultProps = {
 
 const ButtonBox = styled.div`
   position: fixed;
-  width: 335px;
+  width: 385px;
   bottom: 20px;
 `

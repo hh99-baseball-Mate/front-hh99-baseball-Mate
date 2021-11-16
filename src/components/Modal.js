@@ -112,16 +112,16 @@ Modal.defaultProps = {
 };
 
 const ModalBottom = styled.div`
-  width: 375px;
+  width: 425px;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 99;
   position: fixed;
   bottom: 0;
   margin: ${(props) => props.margin};
-`;
+`
 const ModalCenter = styled.div`
-  width: 375px;
+  width: 425;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 99;
@@ -129,7 +129,7 @@ const ModalCenter = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`;
+`
 
 const showModal = keyframes`
   0%{
@@ -137,10 +137,10 @@ const showModal = keyframes`
   }50%{
     transform: translateY(0%);
   }
-`;
+`
 
 const ModalBottomContent = styled.div`
-  width: 375px;
+  width: 425px;
   height: ${(props) => props.height};
   background-color: #ffffff;
   position: absolute;
@@ -148,7 +148,7 @@ const ModalBottomContent = styled.div`
   border-radius: 10px 10px 0px 0px;
   animation: ${showModal} 1.2s ease-out;
   overflow-y: auto;
-`;
+`
 
 const ModalContent = styled.div`
   width: 275px;

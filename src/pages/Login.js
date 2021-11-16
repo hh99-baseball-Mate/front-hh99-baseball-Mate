@@ -11,7 +11,7 @@ import { SocialLogin } from "../componentsLogin/SocialLogin"
 
 import { actionCreators as userActions } from "../redux/modules/user"
 import { history } from "../redux/configStore"
-import LogoImg from "../shared/icon/logo.png"
+import LogoImg from "../shared/icon/logo/logo.png"
 
 import { IoEyeSharp } from "react-icons/io5"
 import { MdKeyboardArrowDown } from "react-icons/md"
