@@ -5,7 +5,6 @@ import { createAction, handleActions } from "redux-actions"
 import { instance, tokenInstance } from "../../lib/axios"
 
 const GET_GOODS = "GET_GOODS"
-const ADD_GOODS = "ADD_GOODS"
 // 액션 함수
 
 const getGoods = createAction(GET_GOODS, (goods_list) => ({ goods_list }))

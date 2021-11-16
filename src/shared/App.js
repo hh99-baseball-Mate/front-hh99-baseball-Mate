@@ -50,7 +50,7 @@ function App() {
     } else {
       getCookie("is_login")
     }
-  }, [is_login])
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -151,7 +151,6 @@ function App() {
     </Container>
   )
 }
-
 
 export default App
 
