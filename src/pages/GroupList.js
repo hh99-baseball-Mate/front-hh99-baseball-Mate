@@ -73,7 +73,7 @@ const GroupList = (props) => {
   }, [team]);
 
   return (
-    <>
+    <Box>
       <InfinityScroll
         callNext={() => {
           setInfinity({
@@ -84,7 +84,7 @@ const GroupList = (props) => {
         // is_next={group_list > infinity.next}
         // loading={is_loading}
       >
-        <Header nowBtn2 />
+        <Header game />
         <Container>
           <Broder />
 
@@ -155,12 +155,20 @@ const GroupList = (props) => {
         </Container>
 
         <MarginBottom />
-        <NaviBar writeBtn onClick={newPeople} />
+        <NaviBar home writeBtn onClick={newPeople} />
       </InfinityScroll>
-    </>
+    </Box>
   );
 };
 export default GroupList;
+
+const Box = styled.div`
+  /* width: 405px; */
+  /* height: 177px; */
+  /* margin: 15px auto; */
+  /* display: ${(props) => props.flex}; */
+  /* border: 1px solid; */
+`;
 
 const Broder = styled.div`
   border: 1px solid #e7e7e7;

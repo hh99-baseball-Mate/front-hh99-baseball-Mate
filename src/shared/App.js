@@ -51,7 +51,7 @@ function App() {
     } else {
       getCookie("is_login");
     }
-  }, [is_login]);
+  }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -77,13 +77,13 @@ function App() {
         {!is_login ? (
           <Switch>
             {/* 구별문자를 달아놓고 조건문으로 해서 걸러낸다 */}
-            <Route path="/" exact component={Main} />
+            {/* <Route path="/" exact component={Main} /> */}
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route path="/user/kakao/callback" component={KAKAOhandle} />
             <Route exact path="/login/clubchoice" component={ClubChoice} />
-            <Route path="/grouplist" exact component={GroupList} />
+            <Route path="/" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
@@ -110,13 +110,13 @@ function App() {
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Main} />
+            {/* <Route path="/" exact component={Main} /> */}
             {/* <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} /> */}
             <Route exact path="/login/clubchoice" component={ClubChoice} />
             {/* <Route exact path="/phoneAuth" component={PhoneAuth} /> */}
             {/* <Route path="/user/kakao/callback" component={KAKAOhandle} /> */}
-            <Route path="/grouplist" exact component={GroupList} />
+            <Route path="/" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
             <Route path="/grouplist/groupadd" exact component={GroupAdd} />
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
@@ -158,7 +158,7 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   min-height: 100vh;
   margin: auto;
   background: #fff;

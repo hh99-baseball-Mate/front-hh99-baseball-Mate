@@ -23,26 +23,33 @@ const GroupCard = (props) => {
 
   // 모집중, 마감중 표시
   useEffect(() => {
-    if (props.dday < 0 || props.canApplyNum === 0) {
+    if (props.dday < 1 || props.canApplyNum === 0) {
       setClose(true)
     } else {
       setClose(false)
     }
-  }, [])
+  }, [close])
   // console.log("props.close", close)
 
   return (
-    <Container>
-      <Card>
-        <Warp margin="0 0 16px 0">
-          <Warp flex="flex" margin="0 0 12px 0">
+    <Container 
+      onClick={() => {
+        history.push("/groupdetail/" + props.groupId);
+      }}
+    >
+      <Card flex="flex" >
+
+        <ImgBox url={`${baseurl}${props.filePath}`} />
+        <Warp flex="flex" direction="column" width="250px" marginLeft="20px">
+          
+          <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
               <Ellipse
                 borderColor="#C4C4C4"
                 background="#C4C4C4"
                 color="#FFFFFF"
               >
-                마감
+                모집완료
               </Ellipse>
             ) : (
               <Ellipse
@@ -53,18 +60,17 @@ const GroupCard = (props) => {
                 모집중
               </Ellipse>
             )}
-            {/* <Ellipse borderColor="#F25343" background="#F25343" color="#FFFFFF">
-              모집중
-            </Ellipse> */}
+
             {props && props.dday >= 0 && props.canApplyNum !== 0 ? (
-              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-                D-{props.dday}
+              <Ellipse borderColor="#498C9A" background="#498C9A" color="#FFFFFF" marginLeft="4px">
+                D - {props.dday}
               </Ellipse>
             ) : (
               ""
             )}
           </Warp>
-          <Warp flex="flex">
+
+          <Warp flex="flex" marginB="4px">
             <Text size="12px" color="#777777">
               {props.groupDate}
             </Text>
@@ -77,36 +83,37 @@ const GroupCard = (props) => {
               최대 {props.peopleLimit}명
             </Text>
           </Warp>
-        </Warp>
-        <Circle url={`${baseurl}${props.filePath}`} />
 
-        <Text
-          size="16px"
-          weight="bold"
-          width="295px"
-          height="46px"
-          lineHeight="23px"
-        >
-          {props.title}
-        </Text>
+          <Text
+            size="15px"
+            weight="bold"
+            width="250px"
+            height="40px"
+            lineHeight="20px"
+            marginB="8px"
+          >
+            {props.title}
+          </Text>
 
-        <Warp
-          flex="flex"
-          justify="space-between"
-          align="center"
-          margin="10px 0 0 0"
-        >
-          <Progress {...props} />
-          <Warp flex="flex">
-            <img src={colorUsers} alt="users" />
-            <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-              &nbsp;{props.canApplyNum}명&nbsp;
-            </Text>
-            <Text size="12px" color="#F25343" spacing="-0.03em;">
-              남음
-            </Text>
+          <Warp
+            flex="flex"
+            justify="space-between"
+            align="center"
+            margin="0 0 0 0"
+          >
+            <Progress {...props} />
+            <Warp flex="flex">
+              <img src={colorUsers} alt="users" />
+              <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+                &nbsp;{props.canApplyNum}명&nbsp; 
+              </Text>
+              <Text size="12px" color="#F25343" spacing="-0.03em;">
+                남음
+              </Text>
+            </Warp>
           </Warp>
-        </Warp>
+        </Warp>  
+
       </Card>
     </Container>
   )
@@ -115,18 +122,23 @@ const GroupCard = (props) => {
 export default GroupCard;
 
 const Container = styled.div`
-  width: 335px;
+  width: 385px;
   /* height: 177px; */
-  margin: 20px auto;
+  margin: 0 10px 30px 10px;
+  display: ${(props) => props.flex};
+  /* border: 1px solid; */
 `;
 
 const Warp = styled.div`
   /* width: 100%; */
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   display: ${(props) => props.flex};
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   margin-left: ${(props) => props.marginLeft};
+  margin-bottom: ${(props) => props.marginB};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
@@ -140,6 +152,7 @@ const Text = styled.div`
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.marginB};
   line-height: ${(props) => props.lineHeight};
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -150,44 +163,45 @@ const Text = styled.div`
 `;
 
 const Card = styled.div`
-  width: 335px;
-  height: 177px;
-  padding: 18px;
+  width: 385px;
+  height: 110px;
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
   background: #ffffff;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   position: relative;
 `;
 
 const Ellipse = styled.div`
-  width: 55px;
+  width: 50px;
   height: 24px;
   background: ${(props) => props.background};
   border: 1px solid ${(props) => props.borderColor};
-  border-radius: 60px;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 1px;
   margin-left: ${(props) => props.marginLeft};
   font-weight: bold;
-  font-size: 12px;
+  font-size: 11px;
   color: ${(props) => props.color};
 `;
 
-const Circle = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+const ImgBox = styled.div`
+  width: 110px;
+  height: 110px;
+  border-radius: 4px;
   background: #c4c4c4;
   border: 1px solid #e7e7e7;
   /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-  position: absolute;
+  /* position: absolute;
   left: 78.51%;
   right: 7.16%;
   top: 12%;
-  bottom: 61.02%;
+  bottom: 61.02%; */
   background-image: url(${(props) => props.url});
+  background-repeat: no-repeat;
+  background-position: center;
   /* background-size: contain; */
   background-size: cover;
 `;

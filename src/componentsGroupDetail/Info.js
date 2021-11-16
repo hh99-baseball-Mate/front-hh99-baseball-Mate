@@ -63,10 +63,11 @@ const Info = memo((props) => {
     // console.log("표시",groupLike)
     if (groupLike >= 0) {
       props.setHeart(true)
+      return
     } else {
       props.setHeart(false)
     }
-  }, [myGroupLikesList])
+  }, [])
 
   // 모집마감 표시
   useEffect(() => {

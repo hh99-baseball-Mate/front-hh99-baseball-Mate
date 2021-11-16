@@ -7,73 +7,70 @@ import logo from "../shared/icon/logo.png"
 const Header = (props) => {
   const history = useHistory();
 
-  const { nowBtn1, nowBtn2, nowBtnSB, nowBtn3, nowBtn4 } = props;
+  const { game, screen, timeline, goods } = props;
 
   return (
     <Container minWidth="370px">
-      <Img src={logo} alt="logo" />
+      {/* <Img src={logo} alt="logo" /> */}
       <Box>
-        <Button1
-          nowBtn1={nowBtn1}
+
+        <Game
+          game={game}
           onClick={() => {
             history.push("/");
           }}
         >
-          추천
-        </Button1>
+          경기모임
+        </Game>
 
-        <Button2
-          nowBtn2={nowBtn2}
-          onClick={() => {
-            history.push("/grouplist");
-          }}
-        >
-          모임
-        </Button2>
-
-        <ButtonSB
-          nowBtnSB={nowBtnSB}
+        <Screen
+          screen={screen}
           onClick={() => {
             history.push("/screen");
           }}
         >
-          스야
-        </ButtonSB>
+          스야모임
+        </Screen>
 
-        <Button3
-          nowBtn3={nowBtn3}
+        <Timeline
+          timeline={timeline}
           onClick={() => {
             history.push("/timeline");
           }}
         >
           타임라인
-        </Button3>
+        </Timeline>
 
-        <Button4
-          nowBtn4={nowBtn4}
+        <Goods
+          goods={goods}
           onClick={() => {
             history.push("/goods");
           }}
         >
-          굿즈
-        </Button4>
+          굿즈자랑
+        </Goods>
+
       </Box>
+
+      {/* 구분선 */}
+      <Rectangle />
+
     </Container>
   );
 };
 
 Header.defaultProps = {
-  nowBtn1: false,
-  nowBtn2: false,
-  nowBtnSB: false,
-  nowBtn3: false,
-  nowBtn4: false,
+  _onClick: () => {},
+  nowBtn: false,
+  Game: false,
+  screen: false,
+  timeline: false,
 };
 
 export default Header;
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   margin: auto;
   padding: 0;
 `;
@@ -93,99 +90,84 @@ const Box = styled.div`
   padding-top: 20px;
 `;
 
-const Button1 = styled.button`
+const Game = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   margin-right: 0;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
   ${(props) =>
-    props.nowBtn1 &&
+    props.game &&
     `
     border-bottom: 2px solid;
     font-weight: bold;
-    color: #000000;
+    color: #F25343;
   `}
 `;
 
-const Button2 = styled.button`
+const Screen = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   margin-right: 0;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
   ${(props) =>
-    props.nowBtn2 &&
+    props.screen &&
     `
     border-bottom: 2px solid;
     font-weight: bold;
-    color: #000000;
+    color: #F25343;
   `}
 `;
 
-const ButtonSB = styled.button`
+const Timeline = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   margin-right: 0;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
   ${(props) =>
-    props.nowBtnSB &&
+    props.timeline &&
     `
     border-bottom: 2px solid;
     font-weight: bold;
-    color: #000000;
+    color: #F25343;
   `}
 `;
 
-
-
-const Button3 = styled.button`
+const Goods = styled.button`
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   cursor: pointer;
   margin-right: 0;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
 
   ${(props) =>
-    props.nowBtn3 &&
+    props.goods &&
     `
     border-bottom: 2px solid;
     font-weight: bold;
-    color: #000000;
+    color: #F25343;
   `}
 `;
 
-const Button4 = styled.button`
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 0;
-  padding-bottom: 10px;
-  background: none;
-  color: rgba(0, 0, 0, 0.5);
-
-  ${(props) =>
-    props.nowBtn4 &&
-    `
-    border-bottom: 2px solid;
-    font-weight: bold;
-    color: #000000;
-  `}
+const Rectangle = styled.div`
+  background: #e7e7e7;
+  width: 100%;
+  height: 1px;
 `;

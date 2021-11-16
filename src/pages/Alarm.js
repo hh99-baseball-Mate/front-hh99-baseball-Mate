@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useRef} from "react";
 import styled from "styled-components";
+import SockJsClient from 'react-stomp';
 
 import { ArrowBack } from "../components";
 import { MarginBottom, NaviBar } from "../components";
 
 
 const Alarm = (props) => {
+
+	const websoket = useRef(null);
+
 	return (
 		<React.Fragment>
 			<Container>
@@ -47,9 +51,9 @@ export default Alarm;
 
 
 const Container = styled.div`
-	width: 375px; 
+	width: 425px; 
 	/* height: 177px; */
-	margin: auto;
+	/* margin: auto; */
 `;
 
 const Alert = styled.div`

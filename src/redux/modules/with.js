@@ -129,6 +129,9 @@ const deleteScreenAPI = (screenId) => {
   };
 };
 
+//찜하기
+// const
+
 //리듀서
 export default handleActions(
   {

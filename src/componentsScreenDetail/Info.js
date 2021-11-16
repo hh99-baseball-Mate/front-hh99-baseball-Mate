@@ -56,7 +56,7 @@ const Info = memo((props) => {
     } else {
       props.setHeartJoin(false)
     }
-  }, [myScreenLikesList])
+  }, [])
 
   // 모집마감 표시
   useEffect(() => {
