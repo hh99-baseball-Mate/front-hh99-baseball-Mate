@@ -46,8 +46,8 @@ const CardBox = styled.div`
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 10px;
-  width: 160px;
-  height: 300px;
+  /* width: 160px; */
+  height: 320px;
   /* margin: 0 20px; */
 `
 
@@ -57,7 +57,7 @@ const CardContent = styled.div`
 `
 
 const MainImg = styled.img`
-  width: 140px;
+  width: 160px;
   height: 140px;
   background-color: #c4c4c4;
   border: 4px;
@@ -93,7 +93,7 @@ const Title = styled.p`
 `
 
 const Desc = styled.p`
-  height: 32px;
+  height: 50px;
   font-size: 12px;
   color: #c4c4c4;
   margin: 5px 0;

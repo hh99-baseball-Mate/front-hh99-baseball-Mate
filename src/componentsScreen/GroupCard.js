@@ -32,11 +32,9 @@ const GroupCard = ({ screen_list }) => {
         history.push("/screendetail/" + screen_list.screenId)
       }}
     >
-      <Card flex="flex" >
-
+      <Card flex="flex">
         <ImgBox url={serverURL + screen_list.filePath} />
         <Warp flex="flex" direction="column" width="250px" marginLeft="20px">
-          
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
               <Ellipse
@@ -56,8 +54,15 @@ const GroupCard = ({ screen_list }) => {
               </Ellipse>
             )}
 
-            {screen_list && screen_list.dday >= 0 && screen_list.canApplyNum !== 0 ? (
-              <Ellipse borderColor="#498C9A" background="#498C9A" color="#FFFFFF" marginLeft="4px">
+            {screen_list &&
+            screen_list.dday >= 0 &&
+            screen_list.canApplyNum !== 0 ? (
+              <Ellipse
+                borderColor="#498C9A"
+                background="#498C9A"
+                color="#FFFFFF"
+                marginLeft="4px"
+              >
                 D - {screen_list.dday}
               </Ellipse>
             ) : (
@@ -69,10 +74,10 @@ const GroupCard = ({ screen_list }) => {
             <Text size="12px" color="#777777">
               {screen_list.groupDate}
             </Text>
-            {/* <Slice> &ensp;|&ensp; </Slice>
+            <Slice> &ensp;|&ensp; </Slice>
             <Text size="12px" color="#777777">
-              {props.stadium}
-            </Text> */}
+              {screen_list.selectPlace}
+            </Text>
             <Slice> &ensp;|&ensp; </Slice>
             <Text size="12px" color="#777777">
               최대 {screen_list.peopleLimit}명
@@ -99,17 +104,20 @@ const GroupCard = ({ screen_list }) => {
             <Progress {...screen_list} />
             <Warp flex="flex">
               <img src={colorUsers} alt="users" />
-              <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-                &nbsp;{screen_list.canApplyNum}명&nbsp; 
+              <Text
+                size="12px"
+                color="#F25343"
+                weight="bold"
+                spacing="-0.03em;"
+              >
+                &nbsp;{screen_list.canApplyNum}명&nbsp;
               </Text>
               <Text size="12px" color="#F25343" spacing="-0.03em;">
                 남음
               </Text>
             </Warp>
           </Warp>
-          
-        </Warp>  
-
+        </Warp>
       </Card>
     </Container>
   )
@@ -119,7 +127,7 @@ export default GroupCard
 
 const Container = styled.div`
   width: 385px;
-  margin: 0 10px 30px 10px;
+  margin: 10px 0;
 `
 
 const Warp = styled.div`
@@ -183,19 +191,8 @@ const ImgBox = styled.div`
   width: 110px;
   height: 110px;
   border-radius: 4px;
-  background: #c4c4c4;
-  border: 1px solid #e7e7e7;
-  background-image: url(${(props) => props.url});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-`
-const Circle = styled.div`
-  width: 110px;
-  height: 110px;
-  border-radius: 4px;
-  background: #c4c4c4;
-  border: 1px solid #e7e7e7;
+  /* background: #c4c4c4; */
+  /* border: 1px solid #e7e7e7; */
   background-image: url(${(props) => props.url});
   background-repeat: no-repeat;
   background-position: center;
