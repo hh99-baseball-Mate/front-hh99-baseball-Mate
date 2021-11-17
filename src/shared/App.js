@@ -6,7 +6,6 @@ import { history } from "../redux/configStore";
 import { Route } from "react-router-dom";
 import KAKAOhandle from "./SocialLogin/KAKAOhandle";
 import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "./Cookie";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -75,7 +74,7 @@ function App() {
         {!is_login ? (
           <Switch>
             {/* 구별문자를 달아놓고 조건문으로 해서 걸러낸다 */}
-            {/* <Route path="/" exact component={Main} /> */}
+
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -108,7 +107,6 @@ function App() {
           </Switch>
         ) : (
           <Switch>
-            {/* <Route path="/" exact component={Main} /> */}
             {/* <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} /> */}
             <Route exact path="/login/clubchoice" component={ClubChoice} />

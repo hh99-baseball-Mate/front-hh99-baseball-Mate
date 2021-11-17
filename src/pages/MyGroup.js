@@ -52,11 +52,8 @@ const MyGroup = (props) => {
       dispatch(withCr.getScreenAPI());
     }
 
-    if (write) {
+    if (all_write) {
       dispatch(withCr.getWriteAPI());
-    }
-    if (wish) {
-      dispatch(withCr.getWishGroupAPI());
     }
 
     // if (games) {
@@ -74,7 +71,7 @@ const MyGroup = (props) => {
     //   // setScreen(false);
     //   return;
     // }
-  }, [write, wish, allList]);
+  }, [write]);
 
   // //작성
   // useEffect(() => {
