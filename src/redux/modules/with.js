@@ -1,33 +1,34 @@
 import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { apis, img, instance } from "../../lib/axios"
-import { AiOutlineConsoleSql } from "react-icons/ai"
+import { apis, img, instance } from "../../lib/axios";
+import { AiOutlineConsoleSql } from "react-icons/ai";
+import { Write } from "../../componentsGroupList/Write";
 
 //액션
 const GET_WITH = "GET_WITH";
 const GET_WRITE = "GET_WRITE";
 const DELETE_GROUP = "DELETE_GROUP";
 const DELETE_ATTEND = "DELETE_ATTEND";
-const WISH_GROUP = "WHISH_GROUP";
+
 //스크린 참가
-const GET_SCREEN = "GET_SCREEN"
-const DELETE_SCREEN = "DELETE_SCREEN"
+const GET_SCREEN = "GET_SCREEN";
+const DELETE_SCREEN = "DELETE_SCREEN";
+const SCREEN_WRITE = "SCREEN_WRITE";
 
 //액션함수
-const getWith = createAction(GET_WITH, (withList) => ({ withList }))
-const getWrite = createAction(GET_WRITE, (writeList) => ({ writeList }))
+const getWith = createAction(GET_WITH, (withList) => ({ withList }));
+const getWrite = createAction(GET_WRITE, (writeList) => ({ writeList }));
 const deleteGroup = createAction(DELETE_GROUP, (deleteList) => ({
   deleteList,
 }));
 
-//찜하기
-const wishGroup = createAction(WISH_GROUP, (wishList) => ({ wishList }));
 //내모임 참여취소
 const deleteAttend = createAction(DELETE_ATTEND, (attendList) => ({
   attendList,
-}))
-const getScreen = createAction(GET_SCREEN, (ScreenList) => ({ ScreenList }))
-const deleteScreen = createAction(DELETE_SCREEN, (screenId) => ({ screenId }))
+}));
+const getScreen = createAction(GET_SCREEN, (ScreenList) => ({ ScreenList }));
+const deleteScreen = createAction(DELETE_SCREEN, (screenId) => ({ screenId }));
+const screenWrite = createAction(SCREEN_WRITE, (writeId) => ({ writeId }));
 
 //초기값
 const initialState = {
@@ -35,9 +36,12 @@ const initialState = {
   with_list: [],
   // 삭제와 함께
   write_list: [],
+
   // 스야모임
   screen_list: [],
-}
+  //스야작성
+  scrwrite_list: [],
+};
 
 //미들웨어
 const getWithAPI = () => {
@@ -45,30 +49,30 @@ const getWithAPI = () => {
     instance
       .get(`/my/groups/applications`)
       .then((res) => {
-        console.log(res)
-        console.log(res.data)
-        dispatch(getWith(res.data))
+        console.log(res);
+        console.log(res.data);
+        dispatch(getWith(res.data));
       })
       .catch((err) => {
-        console.log(err, "참여에러")
-      })
-  }
-}
+        console.log(err, "참여에러");
+      });
+  };
+};
 
 const getWriteAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/my/groups/write`)
       .then((res) => {
-        console.log(res)
-        console.log(res.data)
-        dispatch(getWrite(res.data))
+        console.log(res);
+        console.log(res.data);
+        dispatch(getWrite(res.data));
       })
       .catch((err) => {
-        console.log(err, "작성에러")
-      })
-  }
-}
+        console.log(err, "작성에러");
+      });
+  };
+};
 
 //delete
 const deleteGroupAPI = (groupId) => {
@@ -76,14 +80,14 @@ const deleteGroupAPI = (groupId) => {
     instance
       .delete(`/groups/${groupId}`)
       .then((res) => {
-        console.log(res)
-        dispatch(deleteGroup(groupId))
+        console.log(res);
+        dispatch(deleteGroup(groupId));
       })
       .catch((err) => {
-        console.log(err, "삭제에러")
-      })
-  }
-}
+        console.log(err, "삭제에러");
+      });
+  };
+};
 
 //참여취소
 const deleteAttendAPI = (groupId) => {
@@ -91,14 +95,14 @@ const deleteAttendAPI = (groupId) => {
     instance
       .delete(`/groups/${groupId}/applications`)
       .then((res) => {
-        console.log(res)
-        dispatch(deleteAttend(groupId))
+        console.log(res);
+        dispatch(deleteAttend(groupId));
       })
       .catch((err) => {
-        console.log(err, "참여신청이다")
-      })
-  }
-}
+        console.log(err, "참여신청이다");
+      });
+  };
+};
 
 //스크린 참여
 const getScreenAPI = () => {
@@ -106,31 +110,41 @@ const getScreenAPI = () => {
     instance
       .get(`my/screen/applications`)
       .then((res) => {
-        console.log(res)
-        dispatch(getScreen(res.data))
+        console.log(res);
+        dispatch(getScreen(res.data));
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
-}
+        console.log(err);
+      });
+  };
+};
 
 const deleteScreenAPI = (screenId) => {
   return function (dispatch, getState, { history }) {
     instance
       .delete(`/screen/${screenId}/applications`)
       .then((res) => {
-        console.log(res)
-        dispatch(deleteScreen(screenId))
+        console.log(res);
+        dispatch(deleteScreen(screenId));
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
-}
+        console.log(err);
+      });
+  };
+};
 
-//찜하기
-// const
+//스크린 작성
+const getScreenWrite = (props) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`my/screen/write`)
+      .then((res) => {
+        console.log(res);
+        dispatch(screenWrite(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
 
 //리듀서
 export default handleActions(
@@ -169,6 +183,10 @@ export default handleActions(
         );
         draft.screen_list.splice(idx, 1);
       }),
+    [SCREEN_WRITE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.scrwrite_list = action.payload.writeId;
+      }),
   },
   initialState
 );
@@ -181,6 +199,7 @@ const actionCreators = {
   getScreenAPI,
   deleteScreenAPI,
   deleteScreen,
+  getScreenWrite,
 };
 
 export { actionCreators };

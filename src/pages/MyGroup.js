@@ -6,7 +6,7 @@ import { Modal } from "../components/Modal";
 import Etc from "../shared/icon/Etc.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Participation } from "../componentsGroupList/Participation";
-// import { Wish } from "../componentsGroupList/Wish";
+import { Wish } from "../componentsGroupList/Wish";
 import { Write } from "../componentsGroupList/Write";
 import { actionCreators as withCr } from "../redux/modules/with";
 import Reciangle from "../shared/icon/Rectangle.png";
@@ -18,17 +18,18 @@ const MyGroup = (props) => {
   const with_list = useSelector((state) => state.with.with_list);
   //작성
   const write_list = useSelector((state) => state.with.write_list);
-  // console.log(with_list, "테스트용")
-  // console.log(write_list, "작성에 대해")
 
+  //찜하기
+  const wish_list = useSelector((state) => state.with.with_list);
   //모달
-
   const [showModal, setShowModal] = useState(false);
   //스크린
   const screen_list = useSelector((state) => state.with.screen_list);
+  const screen_write = useSelector((state) => state.with.writeId);
+
   const [allList, setAllList] = useState(true);
   const [screen, setScreen] = useState(false);
-  // const [games, setGames] = useState(false);
+  const [games, setGames] = useState(false);
 
   // console.log(allList)
   //구분
@@ -43,11 +44,20 @@ const MyGroup = (props) => {
   // console.log(nowBtn1, nowBtn2);
 
   const all_list = with_list.concat(screen_list);
-
+  const all_write = write_list.concat(screen_write);
   //카드
   useEffect(() => {
-    dispatch(withCr.getWithAPI());
-    dispatch(withCr.getScreenAPI());
+    if (allList) {
+      dispatch(withCr.getWithAPI());
+      dispatch(withCr.getScreenAPI());
+    }
+
+    if (write) {
+      dispatch(withCr.getWriteAPI());
+    }
+    if (wish) {
+      dispatch(withCr.getWishGroupAPI());
+    }
 
     // if (games) {
     //   // 경기관람 모임 리스트 부르기
@@ -64,12 +74,16 @@ const MyGroup = (props) => {
     //   // setScreen(false);
     //   return;
     // }
-  }, []);
+  }, [write, wish, allList]);
 
-  //작성
-  useEffect(() => {
-    dispatch(withCr.getWriteAPI());
-  }, []);
+  // //작성
+  // useEffect(() => {
+  //   if (write) {
+  //     dispatch(withCr.getWriteAPI());
+  //   } else if (wish) {
+  //     dispatch(withCr.getWishGroupAPI());
+  //   }
+  // }, [write, wish]);
 
   return (
     <All>
@@ -77,6 +91,7 @@ const MyGroup = (props) => {
         style={{
           background: "#EC5E4F",
           color: "#FFFFFF",
+
           margin: " 0 auto",
         }}
       >
@@ -87,9 +102,10 @@ const MyGroup = (props) => {
           <Button1
             nowBtn1={nowBtn1}
             onClick={() => {
-              if (write === true || participation === false) {
-                setWrite(false)
-                setParticipation(true)
+              if (write === true || participation === false || wish === true) {
+                setWrite(false);
+                setWish(false);
+                setParticipation(true);
               }
             }}
           >
@@ -99,11 +115,12 @@ const MyGroup = (props) => {
           <Button2
             nowBtn2={nowBtn2}
             onClick={() => {
-              if (participation === true) {
-                setParticipation(false)
-                setWrite(true)
+              if (participation === true || write === false || wish === true) {
+                setParticipation(false);
+                setWish(false);
+                setWrite(true);
               }
-              setWrite(true)
+              setWrite(true);
             }}
           >
             작성모임
@@ -111,8 +128,9 @@ const MyGroup = (props) => {
           <Button3
             nowBtn3={nowBtn3}
             onClick={() => {
-              window.alert("준비 중 입니다.")
-              // setWish(true)
+              setWrite(false);
+              setAllList(false);
+              setWish(true);
             }}
           >
             찜한모임
@@ -131,7 +149,7 @@ const MyGroup = (props) => {
         <Up>내가 참여한 모임</Up>
         <Btn
           onClick={() => {
-            setShowModal(true)
+            setShowModal(true);
           }}
         >
           상세보기 <img src={Etc} alt="등등" />
@@ -149,41 +167,66 @@ const MyGroup = (props) => {
                   <NotGame>게임이없어요</NotGame>
                 )}
               </div>
-            )
+            );
           })
-        : !screen
+        : !wish
         ? with_list.map((e) => {
             return (
               <div style={{ margin: "20px" }}>
-                {participation || !e ? (
-                  <Participation key={e.groupId} {...e} />
+                {Participation || !wish || !e ? (
+                  <Write key={e.groupId} {...e} />
                 ) : (
                   // <NotGame>게임이없어요</NotGame>
                   ""
                 )}
               </div>
-            )
+            );
           })
-        : screen_list.map((e) => {
+        : with_list.map((e) => {
             return (
               <div style={{ margin: "20px" }}>
-                {participation || !e ? (
-                  <Participation key={e.screenId} {...e} />
+                {Participation || !write || !e ? (
+                  <Wish key={e.groupId} {...e} />
                 ) : (
                   // <NotGame>게임이없어요</NotGame>
                   ""
                 )}
               </div>
-            )
+            );
           })}
-
-      {write_list.map((e) => {
-        return (
-          <div style={{ margin: "20px" }}>
-            {write && !participation ? <Write key={e.groupId} {...e} /> : ""}
-          </div>
-        )
-      })}
+      {write
+        ? write_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {write && !wish ? <Write key={e.groupId} {...e} /> : ""}
+              </div>
+            );
+          })
+        : !wish
+        ? with_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {Participation || !wish || !e ? (
+                  <Write key={e.groupId} {...e} />
+                ) : (
+                  // <NotGame>게임이없어요</NotGame>
+                  ""
+                )}
+              </div>
+            );
+          })
+        : with_list.map((e) => {
+            return (
+              <div style={{ margin: "20px" }}>
+                {Participation || !write || !e ? (
+                  <Wish key={e.groupId} {...e} />
+                ) : (
+                  // <NotGame>게임이없어요</NotGame>
+                  ""
+                )}
+              </div>
+            );
+          })}
 
       {showModal ? (
         <Modal bottom btnConfirm height="244px" setShowModal={setShowModal}>
@@ -191,23 +234,21 @@ const MyGroup = (props) => {
             <img src={Reciangle} alt="등등" />
             <But
               onClick={() => {
-                history.push("./mygroup")
-                setShowModal(false)
+                history.push("/mygroup");
               }}
             >
               전체보기
             </But>
             <But
               onClick={() => {
-                console.log("누ㅡ삼")
-                history.push("/onlyplay")
+                history.push("/teamgroup");
               }}
             >
               경기 모임만
             </But>
             <But
               onClick={() => {
-                history.push("/onlyscreen")
+                history.push("/screengroup");
               }}
             >
               스야 모임만
@@ -221,7 +262,7 @@ const MyGroup = (props) => {
       <MarginBottom />
       <NaviBar sch />
     </All>
-  )
+  );
 };
 
 MyGroup.defaultProps = {
@@ -287,11 +328,10 @@ const Button3 = styled.button`
 
 const Group = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 250px;
-  text-align: center;
-  margin-left: 26px;
-  margin-top: 20px;
+  justify-content: space-around;
+  /* text-align: center; */
+  padding: 20px 20px;
+  border-bottom: 2px solid #e7e7e7;
 
   background-color: none;
   vertical-align: "middle";

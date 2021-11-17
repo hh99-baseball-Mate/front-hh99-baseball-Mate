@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function OnlyScreen() {
+export default function ScreenGroup() {
   return <div>ㅋㅋㅋ</div>;
 }
