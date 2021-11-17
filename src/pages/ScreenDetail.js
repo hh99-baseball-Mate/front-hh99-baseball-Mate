@@ -28,8 +28,8 @@ const ScreenDetail = (props) => {
   const mylist = useSelector((state) => state.screenDetail.mylist)
   // const allmylist = useSelector((state) => state.user.user_info)
 
-  // console.log("상세페이지", loadDetail)
-  // console.log("내꺼야", mylist)
+  // console.log("스크린상세페이지", loadDetail)
+  // console.log("슼린내꺼야", mylist)
   // console.log("내꺼내꺼", allmylist)
 
   const commentBtn = () => {

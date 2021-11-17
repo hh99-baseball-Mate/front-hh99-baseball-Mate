@@ -88,8 +88,8 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       })
     }
 
-    // var zoomControl = new kakao.maps.ZoomControl()
-    // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
+    var zoomControl = new kakao.maps.ZoomControl()
+    map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT)
   }, [])
 
   return (

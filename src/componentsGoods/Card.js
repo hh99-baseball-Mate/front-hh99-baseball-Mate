@@ -4,15 +4,28 @@ import { Text } from "../components"
 import { FaRegSmileBeam } from "react-icons/fa"
 
 export const Card = (props) => {
-  const { dayBefore, goodsImg, goodsName, userName, goodsUserPicture } = props
+  const {
+    goodsImg,
+    goodsName,
+    userName,
+    goodsUserPicture,
+    dayBefore,
+    onClick,
+  } = props
+
+  // 프로필이미지
+  const profileImg = process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture
+
+  // 굿즈 이미지
+  const goodsImgs = process.env.REACT_APP_IMAGES_BASE_URL + goodsImg
 
   return (
-    <CardBox>
+    <CardBox onClick={onClick}>
       <CardContent>
-        <MainImg src={goodsImg} />
+        <MainImg src={goodsImgs} />
         <UserInfo>
           {/* 유저 이미지 */}
-          <CircleImg src={goodsUserPicture} />
+          <CircleImg src={profileImg} />
           <Text center bold>
             {userName}
           </Text>
@@ -32,7 +45,7 @@ export const Card = (props) => {
             <Text size="12px">1</Text>
           </Icons>
           <Text size="12px" color="#777777">
-            {/* {dayBefore} */}
+            {dayBefore}
           </Text>
         </IconBox>
       </CardContent>
@@ -40,6 +53,7 @@ export const Card = (props) => {
   )
 }
 
+Card.defaultProps = {}
 
 const CardBox = styled.div`
   background: #ffffff;
@@ -59,7 +73,7 @@ const CardContent = styled.div`
 const MainImg = styled.img`
   width: 160px;
   height: 140px;
-  background-color: #c4c4c4;
+  /* background-color: #c4c4c4; */
   border: 4px;
 `
 
@@ -73,7 +87,7 @@ const UserInfo = styled.div`
 const CircleImg = styled.img`
   width: 22px;
   height: 22px;
-  background: #777777;
+  /* background: #777777; */
   border: 1px solid #e7e7e7;
   box-sizing: border-box;
   border-radius: 50%;

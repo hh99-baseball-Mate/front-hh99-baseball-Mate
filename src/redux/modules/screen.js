@@ -40,7 +40,7 @@ const screenAddMD = (formData) => {
         }
       )
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         history.replace("/screen")
       })
       .catch((err) => {
