@@ -49,19 +49,19 @@ export const Buttons = (props) => {
   }
 
   return (
-    <ButtonBox>
-      <DefaultButton onClick={_onClick} {...styles}>
-        <Text color="#F25343" bold>
-          {children}
-        </Text>
-      </DefaultButton>
-    </ButtonBox>
+    // <ButtonBox>
+    <DefaultButton onClick={_onClick} {...styles}>
+      <Text color="#F25343" bold>
+        {children}
+      </Text>
+    </DefaultButton>
+    // </ButtonBox>
   )
 }
 
 Buttons.defaultProps = {
   children: null,
-  margin: "7px 0",
+  margin: "30px 0",
   _onClick: () => {},
   bg: false,
   border: "none",
@@ -100,9 +100,4 @@ const SocialButton = styled.button`
   margin: ${(props) => props.margin};
   background-color: ${(props) => (props.bg ? props.bg : "#fff")};
   cursor: pointer;
-`
-
-const ButtonBox = styled.div`
-  width: 340px;
-  margin: 30px auto;
 `

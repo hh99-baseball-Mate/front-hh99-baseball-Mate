@@ -88,14 +88,14 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       })
     }
 
-    var zoomControl = new kakao.maps.ZoomControl()
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
+    // var zoomControl = new kakao.maps.ZoomControl()
+    // map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
   }, [])
 
   return (
     <Container>
       <div
-        style={{ width: "600px", height: "650px", margin: "0px -20px 0" }}
+        style={{ width: "425px", height: "650px", margin: "0px -20px 0" }}
         id="map"
       ></div>
     </Container>
