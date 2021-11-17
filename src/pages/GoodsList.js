@@ -26,8 +26,8 @@ export const Goods = () => {
   }
   // 최신순
 
-  console.log(goods_list, "굿즈 목록")
-  console.log(list_length, "list_length")
+  // console.log(goods_list, "굿즈 목록")
+  // console.log(list_length, "list_length")
 
   useEffect(() => {
     // window.alert("준비 중입니다.")
@@ -57,10 +57,11 @@ export const Goods = () => {
         <CardContainer>
           {goods_list && goods_list.length > 0 ? (
             goods_list.map((e) => {
+              console.log(e)
               return <Card key={e.goodsId} {...e} />
             })
           ) : (
-            <NotGame>등록 된 굿즈가 없습니다.</NotGame>
+            <NotGame width="400px">등록 된 굿즈가 없습니다.</NotGame>
           )}
         </CardContainer>
         {/* </Position> */}

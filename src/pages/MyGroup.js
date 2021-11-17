@@ -199,7 +199,7 @@ const MyGroup = (props) => {
             </But>
             <But
               onClick={() => {
-                console.log("누ㅡ삼")
+                // console.log("누ㅡ삼")
                 history.push("/onlyplay")
               }}
             >

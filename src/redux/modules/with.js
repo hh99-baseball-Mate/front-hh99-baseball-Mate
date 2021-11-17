@@ -45,8 +45,8 @@ const getWithAPI = () => {
     instance
       .get(`/my/groups/applications`)
       .then((res) => {
-        console.log(res)
-        console.log(res.data)
+        // console.log(res)
+        // console.log(res.data)
         dispatch(getWith(res.data))
       })
       .catch((err) => {
@@ -60,8 +60,8 @@ const getWriteAPI = () => {
     instance
       .get(`/my/groups/write`)
       .then((res) => {
-        console.log(res)
-        console.log(res.data)
+        // console.log(res)
+        // console.log(res.data)
         dispatch(getWrite(res.data))
       })
       .catch((err) => {
@@ -76,7 +76,7 @@ const deleteGroupAPI = (groupId) => {
     instance
       .delete(`/groups/${groupId}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(deleteGroup(groupId))
       })
       .catch((err) => {
@@ -91,7 +91,7 @@ const deleteAttendAPI = (groupId) => {
     instance
       .delete(`/groups/${groupId}/applications`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(deleteAttend(groupId))
       })
       .catch((err) => {
@@ -106,7 +106,7 @@ const getScreenAPI = () => {
     instance
       .get(`my/screen/applications`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(getScreen(res.data))
       })
       .catch((err) => {
@@ -120,7 +120,7 @@ const deleteScreenAPI = (screenId) => {
     instance
       .delete(`/screen/${screenId}/applications`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(deleteScreen(screenId))
       })
       .catch((err) => {
@@ -148,7 +148,7 @@ export default handleActions(
         let idx = draft.write_list.find(
           (c) => c.groupId === action.payload.deleteList
         );
-        console.log(idx, "qweqweqwe");
+        // console.log(idx, "qweqweqwe");
         draft.write_list.splice(idx, 1);
       }),
     [DELETE_ATTEND]: (state, action) =>

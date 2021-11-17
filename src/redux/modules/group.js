@@ -2,16 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { img, instance } from "../../lib/axios";
 
-// const api = axios.create(
-//   {
-//     baseURL: "http://localhost:3001",
-//     headers: {
-//       "content-type": "application/json;charset=UTF-8",
-//       accept: "application/json",
-//     },
-//   },
-//   { withCredentials: true }
-// );
 
 // 핫 그룹
 const LOAD_HOTGROUP = "LOAD_HOTGROUP"
@@ -102,7 +92,7 @@ const getTeamAPI = (teamname) => {
         .get("/groups")
         .then((res) => {
           dispatch(getTeam(res.data))
-          console.log(res)
+          // console.log(res)
         })
         .catch((err) => {
           console.log(err, "전체 모임 불러오기")
@@ -113,7 +103,7 @@ const getTeamAPI = (teamname) => {
     instance
       .get(`/groups?team=${teamname}`)
       .then((res) => {
-        console.log(res.data, "구단 선택")
+        // console.log(res.data, "구단 선택")
         dispatch(getTeam(res.data))
       })
       .catch((err) => {
