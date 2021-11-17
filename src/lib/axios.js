@@ -21,7 +21,7 @@ instance.interceptors.request.use((config) => {
   // config.headers.Authorization = token
   console.log(token)
   if (token) {
-    instance.defaults.headers.common["X-AUTH-TOKEN"] = `Bearer ${token}`
+    instance.defaults.headers.common["X-AUTH-TOKEN"] = token
   } else {
     instance.defaults.headers.common["X-AUTH-TOKEN"] = null
   }

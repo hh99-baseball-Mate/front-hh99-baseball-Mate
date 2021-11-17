@@ -287,7 +287,7 @@ export default handleActions(
 			if(action.payload.like.isLiked) {
 				draft.mylist.myGroupLikesList.push(action.payload.groupId);
 			} else {
-				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.commentId);
+				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.groupId);
 				if (idx !== -1) {
 					draft.mylist.myGroupLikesList.splice(idx, 1);
 				}

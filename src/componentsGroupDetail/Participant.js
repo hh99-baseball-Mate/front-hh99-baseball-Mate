@@ -13,7 +13,7 @@ const Participant = memo((props) => {
   const groupId = params.groupId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  // console.log("참여자컴포", props)
+  console.log("참여자컴포", props)
   // const {shape, src, size, pointer} = props;
   // flex="felx" justify="space-around"
   const dispatch = useDispatch()

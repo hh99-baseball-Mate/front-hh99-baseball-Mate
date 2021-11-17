@@ -100,7 +100,7 @@ const GroupDetail = memo((props) => {
 export default GroupDetail;
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;

@@ -6,7 +6,6 @@ import { history } from "../redux/configStore";
 import { Route } from "react-router-dom";
 import KAKAOhandle from "./SocialLogin/KAKAOhandle";
 import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "./Cookie";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -38,6 +37,7 @@ import img from "../shared/icon/image.jpg";
 import OnlyPlay from "../componentsGroupList/OnlyPlay";
 import OnlyScreen from "../componentsGroupList/OnlyScreen";
 import Chat from "../pages/Chat";
+import ChatRoom from "../componentsChat/ChatRoom";
 
 function App() {
   const dispatch = useDispatch();
@@ -143,6 +143,7 @@ function App() {
             <Route path="/onlyplay" exact component={OnlyPlay} />
             <Route path="/onlyscreen" exact component={OnlyScreen} />
             <Route path="/chat" exact component={Chat} />
+            <Route path="/chatroom" exact component={ChatRoom} />
 
             {/* 임시 */}
             {/* <Redirect */}
