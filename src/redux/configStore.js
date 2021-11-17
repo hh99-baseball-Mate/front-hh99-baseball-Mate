@@ -13,7 +13,7 @@ import _with from "./modules/with"
 import screen from "./modules/screen"
 import screenDetail from "./modules/screenDetail";
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
   user,
@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
   screenDetail,
 
   router: connectRouter(history),
-});
+})
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

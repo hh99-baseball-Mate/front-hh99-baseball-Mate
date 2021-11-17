@@ -27,8 +27,10 @@ const GroupComment = memo((props) => {
   const history = useHistory()
   const cookie = getCookie("is_login")
 
-  // const groupCommentList = useSelector((state) => state.groupDetail.groupPage.groupCommentList);
-  // const groupPage = useSelector((state) => state.groupDetail.groupPage);
+  const groupCommentList = useSelector(
+    (state) => state.groupDetail.groupPage.groupCommentList
+  )
+  const groupPage = useSelector((state) => state.groupDetail.groupPage)
 
   // console.log("groupPage야야", groupPage)
   // console.log("코멘트컴포넌트", props)
@@ -62,17 +64,17 @@ const GroupComment = memo((props) => {
       <Box padding="13px 20px 13px 20px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
-            방명록 {props.groupCommentList.length}
+            {/* 방명록 {props.groupCommentList.length} */}
           </Text>
 
-          {/* <Warp>
-						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
-							인기순
-						</Text>
-						<Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
-							최신순
-						</Text>
-					</Warp> */}
+          <Warp>
+            <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
+              인기순
+            </Text>
+            <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
+              최신순
+            </Text>
+          </Warp>
         </Warp>
       </Box>
 

@@ -1,13 +1,12 @@
-import React, { memo, useEffect, useState } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { memo, useEffect, useState } from "react"
+import styled from "styled-components"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
 
-import { groupDetailCreators } from "../redux/modules/groupDetail";
-import Info from "../componentsGroupDetail/Info";
-import Participant from "../componentsGroupDetail/Participant";
-import Comment from "../componentsGroupDetail/GroupComment";
-
+import { groupDetailCreators } from "../redux/modules/groupDetail"
+import Info from "../componentsGroupDetail/Info"
+import Participant from "../componentsGroupDetail/Participant"
+import Comment from "../componentsGroupDetail/GroupComment"
 
 const GroupDetail = memo((props) => {
   const dispatch = useDispatch()
@@ -97,15 +96,15 @@ const GroupDetail = memo((props) => {
   )
 })
 
-export default GroupDetail;
+export default GroupDetail
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
   position: relative;
-`;
+`
 
 const Warp = styled.div`
   display: flex;
@@ -117,8 +116,7 @@ const Warp = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
-`;
-
+`
 
 const Box = styled.div`
   width: 100%;
@@ -130,7 +128,7 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`;
+`
 
 const ParticipantBtn = styled.button`
   width: 187px;
@@ -148,7 +146,7 @@ const ParticipantBtn = styled.button`
 		color: #F25343; 
 		font-weight: bold;`
       : `border: none;`}
-`;
+`
 
 const CommentBtn = styled.button`
   width: 187px;
@@ -167,10 +165,10 @@ const CommentBtn = styled.button`
 		color: #F25343; 
 		font-weight: bold;`
       : `border: none;`}
-`;
+`
 
 const Rectangle = styled.div`
-	background: #C4C4C4;
-	width: 100%;
-	border: 1px solid #E7E7E7;
-`;
+  background: #c4c4c4;
+  width: 100%;
+  border: 1px solid #e7e7e7;
+`

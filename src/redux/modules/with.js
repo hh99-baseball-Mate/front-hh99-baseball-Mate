@@ -162,7 +162,7 @@ export default handleActions(
         let idx = draft.write_list.find(
           (c) => c.groupId === action.payload.deleteList
         );
-        console.log(idx, "qweqweqwe");
+        // console.log(idx, "qweqweqwe");
         draft.write_list.splice(idx, 1);
       }),
     [DELETE_ATTEND]: (state, action) =>

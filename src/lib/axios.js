@@ -19,7 +19,6 @@ instance.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login");
 instance.interceptors.request.use((config) => {
   const token = getCookie("is_login");
   // config.headers.Authorization = token
-  console.log(token);
   if (token) {
     instance.defaults.headers.common["X-AUTH-TOKEN"] = token;
   } else {

@@ -55,38 +55,8 @@ const like_group_comment = createAction(
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
-  groupPage: {
-    appliedUserInfo: [
-      { UserImage: "sample.png", Username: "", UserId: "", UserInx: "" },
-    ],
-    canApplyNum: "",
-    content: "",
-    createdUserId: "",
-    createdUserName: "",
-    createdUserProfileImg: "",
-    dday: "",
-    filePath: "",
-    groupCommentList: [{ commentUserPicture: "" }],
-    groupDate: "",
-    groupId: "",
-    hotPercent: "",
-    nowAppliedNum: "",
-    peopleLimit: "",
-    stadium: null,
-    title: "",
-  },
-  mylist: {
-    myGoodsLikesList: [],
-    myGroupCommentLikesList: [],
-    myGroupLikesList: [],
-    myTimeLineLikesList: [],
-    myteam: "",
-    picture: null,
-    userid: "",
-    useridx: "",
-    username: "",
-    usertype: "",
-  },
+  groupPage: {},
+  mylist: {},
 }
 
 // 불러오기
@@ -111,7 +81,7 @@ const editGroupPageMW = (groupId, formData) => {
     img
       .patch(`/groups/${groupId}`, formData)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         history.replace(`/groupdetail/${groupId}`)
       })
       .catch((err) => {
@@ -126,9 +96,9 @@ const delGroupPageMW = (groupId) => {
     instance
       .delete(`/groups/${groupId}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         // dispatch(del_groupPage(groupId));
-				history.replace("/")
+        history.replace("/")
       })
       .catch((err) => {
         console.log(err)
@@ -140,11 +110,11 @@ const delGroupPageMW = (groupId) => {
 const likePostMW = (groupId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    console.log("isLiked", isLiked)
+    // console.log("isLiked", isLiked)
     instance
       .post(`/groups/${groupId}/like`, isLiked)
       .then((res) => {
-        console.log("모임찜", res)
+        // console.log("모임찜", res)
         dispatch(like_post(groupId, isLiked))
       })
       .catch((err) => {
@@ -159,7 +129,7 @@ const groupApplyMW = (groupId, my) => {
     instance
       .post(`/groups/${groupId}/applications`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(group_apply(my))
         window.alert("참여가 완료되었습니다.")
       })
@@ -176,7 +146,7 @@ const delApplyMW = (groupId, userid) => {
     instance
       .delete(`/groups/${groupId}/applications`)
       .then((res) => {
-        console.log("참석취소", res)
+        // console.log("참석취소", res)
         dispatch(del_apply(groupId, userid))
         window.alert("모임참여가 취소되었습니다.")
       })
@@ -193,7 +163,7 @@ const addCommentMW = (groupId, message) => {
     instance
       .post(`/groups/${groupId}/comment`, comment)
       .then((res) => {
-        console.log("댓글추가", res)
+        // console.log("댓글추가", res)
         dispatch(add_comment(groupId, comment))
       })
       .catch((err) => {
@@ -209,7 +179,7 @@ const editCommentMW = (groupId, commentId, message) => {
     instance
       .put(`/groups/${groupId}/comment/${commentId}`, comment)
       .then((res) => {
-        console.log("댓글수정", res)
+        // console.log("댓글수정", res)
         dispatch(edit_comment(groupId, commentId, comment))
       })
       .catch((err) => {
@@ -224,7 +194,7 @@ const delCommentMW = (groupId, commentId) => {
     instance
       .delete(`/groups/${groupId}/comment/${commentId}`)
       .then((res) => {
-        console.log("댓글삭제", res)
+        // console.log("댓글삭제", res)
         dispatch(del_comment(groupId, commentId))
       })
       .catch((err) => {
@@ -237,11 +207,11 @@ const delCommentMW = (groupId, commentId) => {
 const likegroupCommentMW = (groupId, commentId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    console.log(groupId, commentId, isLiked)
+    // console.log(groupId, commentId, isLiked)
     instance
       .post(`/groups/${groupId}/comment/${commentId}/like`, isLiked)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(like_group_comment(groupId, commentId, isLiked))
       })
       .catch((err) => {
@@ -256,7 +226,7 @@ const mylistMW = () => {
     instance
       .post("/user/logincheck")
       .then((res) => {
-        console.log("좋아요리스트", res.data)
+        // console.log("좋아요리스트", res.data)
         const mylist = res.data
         // console.log("likelist체크", likelist)
         dispatch(load_mylist(mylist))
@@ -266,9 +236,6 @@ const mylistMW = () => {
       })
   }
 }
-
-
-
 
 //reducer
 export default handleActions(
@@ -287,7 +254,7 @@ export default handleActions(
 			if(action.payload.like.isLiked) {
 				draft.mylist.myGroupLikesList.push(action.payload.groupId);
 			} else {
-				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.commentId);
+				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.groupId);
 				if (idx !== -1) {
 					draft.mylist.myGroupLikesList.splice(idx, 1);
 				}

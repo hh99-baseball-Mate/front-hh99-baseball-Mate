@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { history } from "../redux/configStore";
 //swiper
 import Swipers from "../components/Swipers"
-import GroupCard from "../componentsGroupList/GroupCard"
+import GroupCard from "../components/GroupCard"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../redux/modules/group"
 import { baseUrl, clubImageSrc } from "../shared/clubImage"
 import { Container, Header, Text, MarginBottom, NaviBar } from "../components"
-import { InfinityScroll } from "../components/InfinityScroll"
+// import { InfinityScroll } from "../components/InfinityScroll"
 import { NotGame } from "../components/NotGame"
 import { Banner } from "../components/Banner"
 import { SubTitle } from "../components/SubTitle"
@@ -20,6 +20,9 @@ const GroupList = (props) => {
   const dispatch = useDispatch()
 
   const [team, setTeam] = useState("")
+
+  // 유저정보
+  const user_info = useSelector((state) => state.user.user_info)
 
   const is_login = useSelector((state) => state.user.is_login)
   //일정선택
@@ -43,6 +46,8 @@ const GroupList = (props) => {
     // console.log(timeCut);
     return timeCut === date
   })
+
+  // const team = user_info.
 
   const newPeople = (e) => {
     !is_login
@@ -78,8 +83,10 @@ const GroupList = (props) => {
     }
 
     // 해당날짜와 일치하는 경기들의 배열을 넣음
-    dispatch(groupCr.getTeamAPI(""))
+    // dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
+
+    return () => { console.log("난언제실행됨?")}
   }, [team, date])
 
   return (
@@ -115,13 +122,18 @@ const GroupList = (props) => {
           ))}
         </Swipers>
 
-        <SubTitle more>롯데자이언츠 핫한 모임 🔥</SubTitle>
+        <SubTitle more>{user_info.myteam} 핫한 모임 🔥</SubTitle>
         {/* 핫 한모임 */}
-        <Swipers height="300px">
+        <Swipers height="330px">
           {hotGroup &&
             hotGroup.map((e) => {
-              console.log(e, "e")
-              return <HotCard key={e.groupId} {...e} />
+              return (
+                <HotCard
+                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                  key={e.groupId}
+                  {...e}
+                />
+              )
             })}
         </Swipers>
         <SelectIcon enlargement moreBtn={datePageBtn}>
@@ -130,11 +142,30 @@ const GroupList = (props) => {
         {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
         {!day
           ? team_list.map((e) => {
-              return <GroupCard key={e.groupId} {...e} />
+              return (
+                <GroupCard
+                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                  key={e.groupId}
+                  {...e}
+                />
+              )
             })
           : date_list.map((e) => {
-              return <GroupCard key={e.groupId} {...e} />
+              return (
+                <GroupCard
+                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                  key={e.groupId}
+                  {...e}
+                />
+              )
             })}
+
+        {(team_list.length === 0 || date_list.length.length === 0) && (
+          <NotGame>해당 팀 경기는 모임이 없습니다</NotGame>
+        )}
+
+        {console.log(team_list.length, "team")}
+        {console.log(date_list.length, "date")}
       </Container>
 
       <MarginBottom />
@@ -156,6 +187,7 @@ const Broder = styled.div`
   border: 1px solid #e7e7e7;
   margin: 10px 0;
 `
+
 const ClubBox = styled.div`
   margin-right: 16px;
 `
