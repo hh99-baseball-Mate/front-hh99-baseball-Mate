@@ -34,6 +34,8 @@ import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
+import Chat from "../pages/Chat";
+import ChatRoom from "../componentsChat/ChatRoom";
 import TeamGroup from "../componentsGroupList/TeamGroup";
 import ScreenGroup from "../componentsGroupList/ScreenGroup";
 
@@ -138,6 +140,8 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
+            <Route path="/chat" exact component={Chat} />
+            <Route path="/chatroom" exact component={ChatRoom} />
             <Route path="/teamgroup" exact component={TeamGroup} />
             <Route path="/screengroup" exact component={ScreenGroup} />
 

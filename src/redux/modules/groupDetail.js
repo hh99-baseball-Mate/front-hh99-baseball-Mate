@@ -239,89 +239,67 @@ const mylistMW = () => {
 
 //reducer
 export default handleActions(
-  {
-    [LOAD_GROUP_PAGE]: (state, action) =>
-      produce(state, (draft) => {
-        draft.groupPage = action.payload.groupPage
-      }),
-    // [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
-    // 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);
-    // 	if (idx !== -1) {
-    // 		draft.group_list.splice(idx, 1);
-    // 	}
-    // }),
-    [LIKE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        // console.log("찜받기",action.payload.like.isLiked)
-        if (action.payload.like.isLiked) {
-          draft.mylist.myGroupLikesList.push(action.payload.groupId)
-        } else {
-          const idx = draft.mylist.myGroupLikesList.indexOf(
-            action.payload.commentId
-          )
-          if (idx !== -1) {
-            draft.mylist.myGroupLikesList.splice(idx, 1)
-          }
-        }
-      }),
-    [GROUP_APPLY]: (state, action) =>
-      produce(state, (draft) => {
-        // console.log("페이로드", action.payload.my)
-        draft.groupPage.appliedUserInfo.push(action.payload.my)
-      }),
-    [DELETE_APPLY]: (state, action) =>
-      produce(state, (draft) => {
-        const idx = draft.groupPage.appliedUserInfo.findIndex(
-          (p) => p.UserId === action.payload.userid
-        )
-        // console.log("리덕스모임삭제", idx, action.payload.useridx)
-        if (idx !== -1) {
-          draft.groupPage.appliedUserInfo.splice(idx, 1)
-        }
-      }),
-    [ADD_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        draft.groupPage.groupCommentList.push(action.payload.comment)
-      }),
-    [EDIT_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        const idx = draft.groupPage.groupCommentList.findIndex(
-          (p) => p.groupCommentId === action.payload.commentId
-        )
-        draft.groupPage.groupCommentList[idx] = {
-          ...draft.groupPage.groupCommentList[idx],
-          ...action.payload.comment,
-        }
-      }),
-    [DELETE_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        const idx = draft.groupPage.groupCommentList.findIndex(
-          (p) => p.groupCommentId === action.payload.commentId
-        )
-        if (idx !== -1) {
-          draft.groupPage.groupCommentList.splice(idx, 1)
-        }
-      }),
-    [LIKE_GROUP_COMMENT]: (state, action) =>
-      produce(state, (draft) => {
-        const idx = draft.groupPage.groupCommentList.findIndex(
-          (p) => p.groupCommentId === action.payload.commentId
-        )
-        // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-        // console.log("액션좋아요",action.payload.like.isLiked, idx)
-        if (action.payload.like.isLiked) {
-          draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1
-          return
-        } else {
-          draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1
-        }
-      }),
-    [LOAD_MYLIST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.mylist = action.payload.mylist
-      }),
-  },
-  initialState
+	{
+		[LOAD_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
+			draft.groupPage = action.payload.groupPage;
+		}),
+		// [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
+		// 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);
+		// 	if (idx !== -1) {
+		// 		draft.group_list.splice(idx, 1);
+		// 	}
+		// }),
+		[LIKE_POST]: (state, action) => produce(state, (draft) => {
+			// console.log("찜받기",action.payload.like.isLiked)
+			if(action.payload.like.isLiked) {
+				draft.mylist.myGroupLikesList.push(action.payload.groupId);
+			} else {
+				const idx = draft.mylist.myGroupLikesList.indexOf(action.payload.groupId);
+				if (idx !== -1) {
+					draft.mylist.myGroupLikesList.splice(idx, 1);
+				}
+			}
+		}),
+		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
+			console.log("페이로드", action.payload.my)
+			draft.groupPage.appliedUserInfo.push(action.payload.my)
+		}),
+		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserId === action.payload.userid);
+			console.log("리덕스모임삭제", idx, action.payload.useridx)
+			if (idx !== -1) {
+				draft.groupPage.appliedUserInfo.splice(idx, 1);
+			}
+		}),
+		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
+			draft.groupPage.groupCommentList.push(action.payload.comment)
+		}),
+		[EDIT_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
+      draft.groupPage.groupCommentList[idx] = {...draft.groupPage.groupCommentList[idx], ...action.payload.comment};	
+		}),
+		[DELETE_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
+			if (idx !== -1) {
+				draft.groupPage.groupCommentList.splice(idx, 1);
+			}
+		}),
+		[LIKE_GROUP_COMMENT]: (state, action) => produce(state, (draft) => {
+			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
+			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+			console.log("액션좋아요",action.payload.like.isLiked, idx)
+			if (action.payload.like.isLiked) {
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
+				return
+			} else {
+				draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1;
+			}
+		}),
+		[LOAD_MYLIST]: (state, action) => produce(state, (draft) => {
+			draft.mylist = action.payload.mylist;
+		}),
+	},
+	initialState
 )
 
 
