@@ -37,6 +37,7 @@ import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
 import OnlyPlay from "../componentsGroupList/OnlyPlay";
 import OnlyScreen from "../componentsGroupList/OnlyScreen";
+import Chat from "../pages/Chat";
 
 function App() {
   const dispatch = useDispatch();
@@ -141,6 +142,7 @@ function App() {
             <Route path="/loading" exact component={Loading} />
             <Route path="/onlyplay" exact component={OnlyPlay} />
             <Route path="/onlyscreen" exact component={OnlyScreen} />
+            <Route path="/chat" exact component={Chat} />
 
             {/* 임시 */}
             {/* <Redirect */}
