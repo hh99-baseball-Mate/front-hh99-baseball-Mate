@@ -6,22 +6,12 @@ import Progress from "./Progress"
 import colorUsers from "../shared/icon/colorUsers.svg"
 
 export const HotCard = (props) => {
-  const {
-    canApplyNum,
-    createdUsername,
-    dday,
-    filePath,
-    groupDate,
-    hotPercent,
-    peopleLimit,
-    selectTeam,
-    title,
-  } = props
-  console.log("핫그룹", props)
+  const { canApplyNum, filePath, groupDate, peopleLimit, title, onClick } =
+    props
 
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath
   return (
-    <CardBox>
+    <CardBox onClick={onClick}>
       <CardContent>
         <MainImg src={img} />
         <PostInfo>

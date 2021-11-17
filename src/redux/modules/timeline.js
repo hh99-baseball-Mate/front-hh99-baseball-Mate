@@ -57,7 +57,7 @@ const loadTimelineNumMW = (number) => {
 
 const addTimelineMW = (message) => {
   return (dispatch, getState, { history }) => {
-    console.log("addTimeline", message)
+    // console.log("addTimeline", message)
     const content = { content: message }
     instance
       .post("/timelines", content)
@@ -73,7 +73,7 @@ const addTimelineMW = (message) => {
 
 const deleteTimelineMW = (id) => {
   return (dispatch, getState, { history }) => {
-    console.log("deleteTimeline", id, typeof id)
+    // console.log("deleteTimeline", id, typeof id)
     const timeLineId = id
     instance
       .delete(`/timelines/${timeLineId}`)
@@ -91,7 +91,7 @@ const likeTimelineMW = (id, like) => {
   return (dispatch, getState, { history }) => {
     // console.log("likeTimeline", id, like)
     const timeLineId = id
-    console.log("timeLineId", timeLineId)
+    // console.log("timeLineId", timeLineId)
     const isLiked = { isLiked: like }
     instance
       .post(`/timelines/${timeLineId}/like`, isLiked)
@@ -111,7 +111,7 @@ const likeListMW = () => {
       .post("/user/logincheck")
       .then((res) => {
         const likelist = res.data.myTimeLineLikesList
-        console.log("likelist체크", likelist)
+        // console.log("likelist체크", likelist)
         dispatch(load_likelist(likelist))
       })
       .catch((err) => {

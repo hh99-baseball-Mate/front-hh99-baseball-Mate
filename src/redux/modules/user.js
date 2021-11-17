@@ -2,8 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { getCookie, setCookie } from "../../shared/Cookie";
 import axios from "axios";
-import { img, instance } from "../../lib/axios";
-import { history } from "../configStore"
+import { img, instance } from "../../lib/axios"
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
@@ -54,6 +53,8 @@ const logInMD = (user_info) => {
         // 멀티 헤더 토큰 재설정
         img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
+        dispatch(logInCheckMD())
+
         const userInfo = {
           userid,
           myteam,
@@ -62,7 +63,7 @@ const logInMD = (user_info) => {
         dispatch(logIn(userInfo))
 
         if (myteam === null) {
-          console.log("구단선택하세요")
+          // console.log("구단선택하세요")
           history.push("/login/clubchoice")
           return
         }
@@ -102,19 +103,6 @@ const signUpMD = (user_info) => {
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
-    // axios
-    //   .post(
-    //     `${BASE_URL}/user/logincheck`,
-    //     {},
-    //     {
-    //       headers: {
-    //         "content-type": "application/json;charset=UTF-8",
-    //         accept: "application/json",
-    //         "Access-Control-Allow-Origin": "*",
-    //         "X-AUTH-TOKEN": getCookie("is_login"),
-    //       },
-    //     }
-    //   )
     instance
       .post("/user/logincheck")
       .then((res) => {
@@ -172,7 +160,7 @@ const choiceClubMD = (club) => {
         }
       )
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(choiceClub(club))
         history.replace("/")
       })
@@ -205,7 +193,7 @@ const PhoneAuthSubmitMD = (phoneNumber) => {
     instance
       .post("/checkPhone", { phoneNumber })
       .then((res) => {
-        console.log(res, "번호인증")
+        // console.log(res, "번호인증")
       })
       .catch((err) => {
         window.alert("입력하신 번호가 올바르지 않습니다.")
@@ -218,7 +206,7 @@ const PhoneAuthSubmitMD = (phoneNumber) => {
 
 const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
   return function (dispatch, getState, { history }) {
-    console.log(phoneNumber, phoneAuth)
+    // console.log(phoneNumber, phoneAuth)
 
     const auth = getState().user.is_auth
 

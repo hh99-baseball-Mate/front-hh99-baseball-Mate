@@ -35,6 +35,7 @@ const getGoodsMD = (infinity) => {
       .then((res) => {
         const goods_list_length = res.data.length
 
+        console.log(res)
         const InfinityView = res.data.slice(start, next)
 
         dispatch(getGoods(InfinityView, goods_list_length))
@@ -63,7 +64,7 @@ const addGoodsMD = (formData) => {
         }
       )
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         history.replace("/goods")
       })
       .catch((err) => {

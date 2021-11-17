@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { Container, Header, Text, NaviBar, MarginBottom } from "../components"
 import { Modal } from "../components/Modal"
-import GroupCard from "../componentsScreen/GroupCard"
+import GroupCard from "../components/GroupCard"
 import { Region } from "../componentsScreen/Region"
 import { history } from "../redux/configStore"
 import { actionCreators as screenAction } from "../redux/modules/screen"
@@ -46,6 +46,7 @@ export const ScreenList = () => {
   }, [regoin, infinity])
 
   return (
+    
     <InfinityScroll
       callNext={() => {
         setinfinity({
@@ -77,7 +78,13 @@ export const ScreenList = () => {
         ) : null}
 
         {screen_list && screen_list.length > 0 ? (
-          screen_list.map((e) => <GroupCard key={e.screenId} screen_list={e} />)
+          screen_list.map((e) => (
+            <GroupCard
+              onClick={() => history.push(`/screendetail/${e.screenId}`)}
+              key={e.screenId}
+              {...e}
+            />
+          ))
         ) : (
           <NotGame>
             생성된 모임이 없습니다 <br />

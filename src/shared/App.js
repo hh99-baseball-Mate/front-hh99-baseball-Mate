@@ -6,7 +6,6 @@ import { history } from "../redux/configStore";
 import { Route } from "react-router-dom";
 import KAKAOhandle from "./SocialLogin/KAKAOhandle";
 import { GlobalStyles } from "./GlobalStyles";
-import Main from "../pages/Main";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "./Cookie";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -16,7 +15,7 @@ import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
 import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
 import { GroupAdd } from "../pages/GroupAdd";
-import { Goods } from "../pages/Goods";
+import { GoodsList } from "../pages/GoodsList"
 import { GoodsAdd } from "../pages/GoodsAdd";
 import MyGroup from "../pages/MyGroup";
 import { Login } from "../pages/Login";
@@ -39,17 +38,17 @@ import TeamGroup from "../componentsGroupList/TeamGroup";
 import ScreenGroup from "../componentsGroupList/ScreenGroup";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
+      dispatch(userActions.logInCheckMD())
     } else {
-      getCookie("is_login");
+      getCookie("is_login")
     }
-  }, [is_login]);
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -86,7 +85,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
+            <Route path="/goods" exact component={GoodsList} />
             <Route path="/mygroup" exact component={MyGroup} />
 
             {/* 커스텀 훅 사용 */}
@@ -102,7 +101,6 @@ function App() {
               exact
               component={ScreenDetail}
             />
-
             {/* 임시 */}
             <Route component={NotFound} />
           </Switch>
@@ -120,7 +118,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
+            <Route path="/goods" exact component={GoodsList} />
             <Route path="/goods/goodsadd" exact component={GoodsAdd} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
@@ -137,6 +135,7 @@ function App() {
               exact
               component={ScreenDetail}
             />
+
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
             <Route path="/teamgroup" exact component={TeamGroup} />
@@ -150,7 +149,7 @@ function App() {
       </ConnectedRouter>
       {/* </div> */}
     </Container>
-  );
+  )
 }
 
 export default App;

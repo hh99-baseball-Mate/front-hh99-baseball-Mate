@@ -4,7 +4,7 @@ import { GiBaseballGlove } from "react-icons/gi"
 
 export const NotGame = (props) => {
   return (
-    <NotGames>
+    <NotGames width={props.width}>
       <GiBaseballGlove size="32px" color="#3c1010" />
       {props.children}
     </NotGames>
@@ -13,11 +13,12 @@ export const NotGame = (props) => {
 
 NotGame.defaultProps = {
   children: null,
+  width: "300px",
 }
 
 const NotGames = styled.div`
   margin: 0 auto;
-  width: 300px;
+  width: ${(props) => props.width};
   height: 500px;
   /* background-color: red; */
   display: flex;

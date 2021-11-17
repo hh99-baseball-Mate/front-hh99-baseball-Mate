@@ -62,7 +62,7 @@ export const GoodsAdd = (props) => {
     formData.append("goodsName", inputValue.goodsName)
     formData.append("goodsContent", inputValue.goodsContent)
     formData.append("goodsPrice", null)
-    formData.append("goodsImg", preview)
+    formData.append("file", preview)
 
     dispatch(goodsActions.addGoodsMD(formData))
     e.target.disabled = true

@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { useHistory } from "react-router-dom"
-import Progress from "../components/Progress"
+import Progress from "./Progress"
 
 import colorUsers from "../shared/icon/colorUsers.svg"
 
-const GroupCard = ({ screen_list }) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-
-  const history = useHistory()
+const GroupCard = (props) => {
+  const { onClick } = props
 
   const [close, setClose] = useState(false)
 
-  const serverURL = IMAGES_BASE_URL
-
-  // const date = new Date()
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + props.filePath
 
   // 모집중, 마감중 표시
-
   useEffect(() => {
-    if (screen_list.dday < 0 || screen_list.canApplyNum === 0) {
+    if (props.dday < 1 || props.canApplyNum === 0) {
       setClose(true)
     } else {
       setClose(false)
     }
-  }, [])
+  }, [close])
+  // console.log("props.close", close)
 
   return (
-    <Container
-      onClick={() => {
-        history.push("/screendetail/" + screen_list.screenId)
-      }}
-    >
+    <Container onClick={onClick}>
       <Card flex="flex">
-        <ImgBox url={serverURL + screen_list.filePath} />
+        <ImgBox url={img} />
         <Warp flex="flex" direction="column" width="250px" marginLeft="20px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
@@ -54,16 +45,14 @@ const GroupCard = ({ screen_list }) => {
               </Ellipse>
             )}
 
-            {screen_list &&
-            screen_list.dday >= 0 &&
-            screen_list.canApplyNum !== 0 ? (
+            {props && props.dday >= 0 && props.canApplyNum !== 0 ? (
               <Ellipse
                 borderColor="#498C9A"
                 background="#498C9A"
                 color="#FFFFFF"
                 marginLeft="4px"
               >
-                D - {screen_list.dday}
+                D - {props.dday}
               </Ellipse>
             ) : (
               ""
@@ -72,15 +61,22 @@ const GroupCard = ({ screen_list }) => {
 
           <Warp flex="flex" marginB="4px">
             <Text size="12px" color="#777777">
-              {screen_list.groupDate}
+              {props.groupDate}
             </Text>
             <Slice> &ensp;|&ensp; </Slice>
+
+            {/* 지점명 */}
+            {props.selectPlace && (
+              <>
+                <Text size="12px" color="#777777">
+                  {props.selectPlace}
+                </Text>
+                <Slice> &ensp;| &ensp; </Slice>
+              </>
+            )}
+
             <Text size="12px" color="#777777">
-              {screen_list.selectPlace}
-            </Text>
-            <Slice> &ensp;|&ensp; </Slice>
-            <Text size="12px" color="#777777">
-              최대 {screen_list.peopleLimit}명
+              최대 {props.peopleLimit}명
             </Text>
           </Warp>
 
@@ -92,7 +88,7 @@ const GroupCard = ({ screen_list }) => {
             lineHeight="20px"
             marginB="8px"
           >
-            {screen_list.title}
+            {props.title}
           </Text>
 
           <Warp
@@ -101,7 +97,7 @@ const GroupCard = ({ screen_list }) => {
             align="center"
             margin="0 0 0 0"
           >
-            <Progress {...screen_list} />
+            <Progress {...props} />
             <Warp flex="flex">
               <img src={colorUsers} alt="users" />
               <Text
@@ -110,7 +106,7 @@ const GroupCard = ({ screen_list }) => {
                 weight="bold"
                 spacing="-0.03em;"
               >
-                &nbsp;{screen_list.canApplyNum}명&nbsp;
+                &nbsp;{props.canApplyNum}명&nbsp;
               </Text>
               <Text size="12px" color="#F25343" spacing="-0.03em;">
                 남음
@@ -127,7 +123,11 @@ export default GroupCard
 
 const Container = styled.div`
   width: 385px;
+  /* height: 177px; */
   margin: 10px 0;
+  display: ${(props) => props.flex};
+  cursor: pointer;
+  /* border: 1px solid; */
 `
 
 const Warp = styled.div`
@@ -153,6 +153,7 @@ const Text = styled.div`
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.marginB};
   line-height: ${(props) => props.lineHeight};
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -172,18 +173,18 @@ const Card = styled.div`
 `
 
 const Ellipse = styled.div`
-  width: 55px;
+  width: 50px;
   height: 24px;
   background: ${(props) => props.background};
   border: 1px solid ${(props) => props.borderColor};
-  border-radius: 60px;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 1px;
   margin-left: ${(props) => props.marginLeft};
   font-weight: bold;
-  font-size: 12px;
+  font-size: 11px;
   color: ${(props) => props.color};
 `
 
@@ -193,9 +194,16 @@ const ImgBox = styled.div`
   border-radius: 4px;
   /* background: #c4c4c4; */
   /* border: 1px solid #e7e7e7; */
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  /* position: absolute;
+  left: 78.51%;
+  right: 7.16%;
+  top: 12%;
+  bottom: 61.02%; */
   background-image: url(${(props) => props.url});
   background-repeat: no-repeat;
   background-position: center;
+  /* background-size: contain; */
   background-size: cover;
 `
 
