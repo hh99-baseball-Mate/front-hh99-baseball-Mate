@@ -2,16 +2,18 @@ import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { apis, img, instance } from "../../lib/axios";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import { Write } from "../../componentsGroupList/Write";
 
 //액션
 const GET_WITH = "GET_WITH";
 const GET_WRITE = "GET_WRITE";
 const DELETE_GROUP = "DELETE_GROUP";
 const DELETE_ATTEND = "DELETE_ATTEND";
-const WISH_GROUP = "WISH_GROUP";
+
 //스크린 참가
 const GET_SCREEN = "GET_SCREEN";
 const DELETE_SCREEN = "DELETE_SCREEN";
+const SCREEN_WRITE = "SCREEN_WRITE";
 
 //액션함수
 const getWith = createAction(GET_WITH, (withList) => ({ withList }));
@@ -20,14 +22,13 @@ const deleteGroup = createAction(DELETE_GROUP, (deleteList) => ({
   deleteList,
 }));
 
-//찜하기
-const wishGroup = createAction(WISH_GROUP, (wishList) => ({ wishList }));
 //내모임 참여취소
 const deleteAttend = createAction(DELETE_ATTEND, (attendList) => ({
   attendList,
 }));
 const getScreen = createAction(GET_SCREEN, (ScreenList) => ({ ScreenList }));
 const deleteScreen = createAction(DELETE_SCREEN, (screenId) => ({ screenId }));
+const screenWrite = createAction(SCREEN_WRITE, (writeId) => ({ writeId }));
 
 //초기값
 const initialState = {
@@ -35,10 +36,11 @@ const initialState = {
   with_list: [],
   // 삭제와 함께
   write_list: [],
-  //찜하기
-  wish_list: [],
+
   // 스야모임
   screen_list: [],
+  //스야작성
+  scrwrite_list: [],
 };
 
 //미들웨어
@@ -131,15 +133,16 @@ const deleteScreenAPI = (screenId) => {
   };
 };
 
-//찜하기
-const getWishGroupAPI = (props) => {
+//스크린 작성
+const getScreenWrite = (props) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/my/groups/like`)
+      .get(`my/screen/write`)
       .then((res) => {
         console.log(res);
+        dispatch(screenWrite(res.data));
       })
-      .catch((err) => [console.log(err, "찜하기")]);
+      .catch((err) => console.log(err));
   };
 };
 
@@ -180,7 +183,10 @@ export default handleActions(
         );
         draft.screen_list.splice(idx, 1);
       }),
-    [WISH_GROUP]: (state, action) => produce(state, (draft) => {}),
+    [SCREEN_WRITE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.scrwrite_list = action.payload.writeId;
+      }),
   },
   initialState
 );
@@ -193,7 +199,7 @@ const actionCreators = {
   getScreenAPI,
   deleteScreenAPI,
   deleteScreen,
-  getWishGroupAPI,
+  getScreenWrite,
 };
 
 export { actionCreators };

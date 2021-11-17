@@ -1,7 +1,7 @@
-import axios from "axios"
-import { getCookie } from "../shared/Cookie"
+import axios from "axios";
+import { getCookie } from "../shared/Cookie";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
@@ -11,23 +11,23 @@ export const instance = axios.create({
     accept: "application/json",
     "Access-Control-Allow-Origin": "*",
   },
-})
+});
 
-instance.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login")
+instance.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login");
 
 // // 요청 then catch 전에 인터셉터(가로채기) 가로채서 토큰이 있을 경우 저장해줌
 instance.interceptors.request.use((config) => {
-  const token = getCookie("is_login")
+  const token = getCookie("is_login");
   // config.headers.Authorization = token
-  console.log(token)
+  console.log(token);
   if (token) {
-    instance.defaults.headers.common["X-AUTH-TOKEN"] = `Bearer ${token}`
+    instance.defaults.headers.common["X-AUTH-TOKEN"] = token;
   } else {
-    instance.defaults.headers.common["X-AUTH-TOKEN"] = null
+    instance.defaults.headers.common["X-AUTH-TOKEN"] = null;
   }
   // console.log("인터셉터", token)
-  return config
-})
+  return config;
+});
 
 // 멀티 폼 이미지 넘길 시 사용
 
@@ -40,6 +40,6 @@ export const img = axios.create({
     "Access-Control-Allow-Origin": "*",
     // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-})
+});
 
-img.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login")
+img.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login");

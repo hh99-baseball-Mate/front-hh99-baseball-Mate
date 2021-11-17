@@ -35,8 +35,8 @@ import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
-import ScreenGroup from "../componentsGroupList/ScreenGroup";
 import TeamGroup from "../componentsGroupList/TeamGroup";
+import ScreenGroup from "../componentsGroupList/ScreenGroup";
 
 function App() {
   const dispatch = useDispatch();
