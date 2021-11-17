@@ -34,8 +34,6 @@ import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
-// import OnlyPlay from "../componentsGroupList/OnlyPlay";
-// import OnlyScreen from "../componentsGroupList/OnlyScreen";
 import Chat from "../pages/Chat";
 import ChatRoom from "../componentsChat/ChatRoom";
 import TeamGroup from "../componentsGroupList/TeamGroup";
@@ -142,8 +140,6 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
-            {/* <Route path="/onlyplay" exact component={OnlyPlay} /> */}
-            {/* <Route path="/onlyscreen" exact component={OnlyScreen} /> */}
             <Route path="/chat" exact component={Chat} />
             <Route path="/chatroom" exact component={ChatRoom} />
             <Route path="/teamgroup" exact component={TeamGroup} />
