@@ -5,37 +5,37 @@ import { Signup } from "../pages/Signup";
 import { history } from "../redux/configStore";
 import { Route } from "react-router-dom";
 import KAKAOhandle from "./SocialLogin/KAKAOhandle";
-import { GlobalStyles } from "./GlobalStyles"
-import { useDispatch, useSelector } from "react-redux"
-import { getCookie } from "./Cookie"
-import { actionCreators as userActions } from "../redux/modules/user"
-import TimelineList from "../pages/TimelineList"
-import GroupList from "../pages/GroupList"
-import GroupDate from "../pages/GroupDate"
-import GroupDetail from "../pages/GroupDetail"
-import { GroupEdit } from "../componentsGroupDetail/GroupEdit"
-import { GroupAdd } from "../pages/GroupAdd"
-import { Goods } from "../pages/GoodsList"
-import { GoodsAdd } from "../pages/GoodsAdd"
-import MyGroup from "../pages/MyGroup"
-import { Login } from "../pages/Login"
-import { MyPage } from "../pages/MyPage"
-import { PhoneAuth } from "../pages/PhoneAuth"
-import { NotFound } from "../pages/NotFound"
-import { Redirect, Switch } from "react-router"
-import Alarm from "../pages/Alarm"
-import { MyInfo } from "../pages/MyInfo"
-import { ScreenList } from "../pages/ScreenList"
-import { ScreenAdd } from "../pages/ScreenAdd"
-import styled from "styled-components"
-import ScreenDetail from "../pages/ScreenDetail"
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
-import { Loading } from "../components/Loading"
-import { Helmet } from "react-helmet"
-import favicon from "../shared/icon/logo/favicon.ico"
-import img from "../shared/icon/image.jpg"
-import OnlyPlay from "../componentsGroupList/OnlyPlay"
-import OnlyScreen from "../componentsGroupList/OnlyScreen"
+import { GlobalStyles } from "./GlobalStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "./Cookie";
+import { actionCreators as userActions } from "../redux/modules/user";
+import TimelineList from "../pages/TimelineList";
+import GroupList from "../pages/GroupList";
+import GroupDate from "../pages/GroupDate";
+import GroupDetail from "../pages/GroupDetail";
+import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
+import { GroupAdd } from "../pages/GroupAdd";
+import { GoodsList } from "../pages/GoodsList"
+import { GoodsAdd } from "../pages/GoodsAdd";
+import MyGroup from "../pages/MyGroup";
+import { Login } from "../pages/Login";
+import { MyPage } from "../pages/MyPage";
+import { PhoneAuth } from "../pages/PhoneAuth";
+import { NotFound } from "../pages/NotFound";
+import { Redirect, Switch } from "react-router";
+import Alarm from "../pages/Alarm";
+import { MyInfo } from "../pages/MyInfo";
+import { ScreenList } from "../pages/ScreenList";
+import { ScreenAdd } from "../pages/ScreenAdd";
+import styled from "styled-components";
+import ScreenDetail from "../pages/ScreenDetail";
+import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
+import { Loading } from "../components/Loading";
+import { Helmet } from "react-helmet";
+import favicon from "../shared/icon/logo/favicon.ico";
+import img from "../shared/icon/image.jpg";
+import TeamGroup from "../componentsGroupList/TeamGroup";
+import ScreenGroup from "../componentsGroupList/ScreenGroup";
 
 function App() {
   const dispatch = useDispatch()
@@ -85,7 +85,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
+            <Route path="/goods" exact component={GoodsList} />
             <Route path="/mygroup" exact component={MyGroup} />
 
             {/* 커스텀 훅 사용 */}
@@ -118,7 +118,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
+            <Route path="/goods" exact component={GoodsList} />
             <Route path="/goods/goodsadd" exact component={GoodsAdd} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
@@ -138,8 +138,8 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
-            <Route path="/onlyplay" exact component={OnlyPlay} />
-            <Route path="/onlyscreen" exact component={OnlyScreen} />
+            <Route path="/teamgroup" exact component={TeamGroup} />
+            <Route path="/screengroup" exact component={ScreenGroup} />
 
             {/* 임시 */}
             {/* <Redirect */}

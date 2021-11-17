@@ -9,7 +9,7 @@ import { SubTitle } from "../components/SubTitle"
 import { InfinityScroll } from "../components/InfinityScroll"
 import { NotGame } from "../components/NotGame"
 
-export const Goods = () => {
+export const GoodsList = () => {
   const dispatch = useDispatch()
 
   const [infinity, setInfinity] = useState({
