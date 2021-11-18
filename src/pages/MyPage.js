@@ -1,14 +1,15 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { ArrowBack, Inputs, Text, MarginBottom, NaviBar } from "../components"
-import { IoIosArrowForward } from "react-icons/io"
 import { BsGear } from "react-icons/bs"
 import { history } from "../redux/configStore"
-import { useSelector } from "react-redux"
-import { Modal } from "../components/Modal"
+import { useDispatch, useSelector } from "react-redux"
 import { TextLine } from "../components/TextLine"
+import { actionCreators as userActions } from "../redux/modules/user"
 
 export const MyPage = ({ is_login }) => {
+  const dispatch = useDispatch()
+
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
   // const defaultUserProfile =
@@ -23,20 +24,8 @@ export const MyPage = ({ is_login }) => {
     useridx,
     address,
     selfIntroduce,
+    myteam,
   } = user_info
-  // console.log(user_info)
-
-  // 모달 뜨기/ 숨기기
-  const [showModal, setShowModal] = useState(false)
-
-  // 모달 값 변경
-  const [ModalContent, setModalContent] = useState({
-    title: "나가지마이자식아",
-    descriptionOne: "ㅇㅇ",
-    descriptionTwo: "ㄹㄹ",
-    btnClose: "취소",
-    btnConfirm: "나가기",
-  })
 
   const srcChange = () => {
     if (usertype === "normal") {
@@ -45,6 +34,17 @@ export const MyPage = ({ is_login }) => {
       return picture
     } else {
       return picture
+    }
+  }
+
+  const logOutBtn = () => {
+    // 미들웨어를 안썼기 때문에 혹시 모를 err에 대비해서 try catch를 써봄
+    try {
+      dispatch(userActions.logOut())
+      window.alert("로그아웃 하셨습니다.")
+      history.replace("/")
+    } catch (error) {
+      window.alert("로그아웃을 실패했습니다.")
     }
   }
 
@@ -58,11 +58,11 @@ export const MyPage = ({ is_login }) => {
               <ProfileImg src={srcChange()} />
               <UserId>
                 <Text size="14px">{username}</Text>
-                <Text color="#777777" size="12px" margin="5px 0">
+                <Text color="#777777" size="12px" margin="5px 0 10px">
                   {userid}
                 </Text>
                 <Text color="#000" size="12px">
-                  {address}
+                  {myteam} {address}
                 </Text>
               </UserId>
               <BsGear
@@ -92,34 +92,21 @@ export const MyPage = ({ is_login }) => {
 
         <Line />
 
-        <TextBox
-          onClick={() =>
-            is_login
-              ? window.alert("이미 로그인 하셨습니다.")
-              : history.push("/login")
-          }
-        >
-          <Text margin="0px 20px 0">로그인 및 회원가입</Text>
-          <IoIosArrowForward
-            color="777777"
-            style={{ position: "absolute", right: "20px" }}
-          />
-        </TextBox>
+        {!is_login ? (
+          <TextLine
+            onClick={() =>
+              is_login
+                ? window.alert("이미 로그인 하셨습니다.")
+                : history.push("/login")
+            }
+          >
+            로그인 및 회원가입
+          </TextLine>
+        ) : (
+          <TextLine onClick={logOutBtn}>로그아웃</TextLine>
+        )}
 
         <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine>
-
-        {/* 모달창 */}
-        {showModal && (
-          <Modal
-            center
-            title={ModalContent.title}
-            descriptionOne={ModalContent.descriptionOne}
-            descriptionTwo={ModalContent.descriptionTwo}
-            btnClose={ModalContent.btnClose}
-            btnConfirm={ModalContent.btnConfirm}
-            setShowModal={setShowModal}
-          ></Modal>
-        )}
 
         <TextLine onClick={() => window.alert(" 구현 중 입니다.")}>
           공지사항

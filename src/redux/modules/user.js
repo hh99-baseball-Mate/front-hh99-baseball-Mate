@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
+import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie"
+import axios from "axios"
 import { img, instance } from "../../lib/axios"
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
@@ -9,6 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL
 // 액션타입
 
 const LOGIN = "LOGIN"
+const LOGOUT = "LOGOUT"
 const LOGIN_CHECK = "LOGIN_CHECK"
 const PHONE_AUTH = "PHONE_AUTH"
 const IS_AUTH = "IS_AUTH"
@@ -17,6 +18,7 @@ const CHOICE_CLUB = "CHOICE_CLUB"
 // 액션 함수
 
 const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
+const logOut = createAction(LOGOUT, (user_info) => ({ user_info }))
 const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
 const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }))
 const phone_auth = createAction(PHONE_AUTH, (phoneNumber) => ({ phoneNumber }))
@@ -107,7 +109,7 @@ const logInCheckMD = () => {
       .post("/user/logincheck")
       .then((res) => {
         const myteam = res.data.myteam
-        console.log(res)
+        // console.log(res)
 
         const login_user = { ...res.data }
 
@@ -240,6 +242,12 @@ export default handleActions(
         draft.user_info = action.payload.user_info
         draft.is_login = true
       }),
+    [LOGOUT]: (state, action) =>
+      produce(state, (draft) => {
+        deleteCookie("is_login")
+        draft.user_info = []
+        draft.is_login = false
+      }),
     [LOGIN_CHECK]: (state, action) =>
       produce(state, (draft) => {
         draft.user_info = action.payload.login_user
@@ -267,6 +275,7 @@ export default handleActions(
 const actionCreators = {
   logIn,
   logInMD,
+  logOut,
   signUpMD,
   kakaoLogin,
   logInCheckMD,
@@ -275,6 +284,6 @@ const actionCreators = {
   PhoneAuthSubmitMD,
   PhoneAuthConfirmMD,
   // userUpdate,
-};
+}
 
 export { actionCreators };
