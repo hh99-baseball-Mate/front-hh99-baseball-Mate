@@ -46,7 +46,6 @@ export const ScreenList = () => {
   }, [regoin, infinity])
 
   return (
-    
     <InfinityScroll
       callNext={() => {
         setinfinity({
@@ -57,7 +56,7 @@ export const ScreenList = () => {
       is_next={list_length > infinity.next}
       loading={is_loading}
     >
-      <Header nowBtnSB />
+      <Header screen />
 
       <Container>
         {/* 서브 타이틀*/}

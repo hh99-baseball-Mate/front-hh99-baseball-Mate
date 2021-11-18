@@ -15,7 +15,7 @@ import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
 import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
 import { GroupAdd } from "../pages/GroupAdd";
-import { GoodsList } from "../pages/GoodsList"
+import { GoodsList } from "../pages/GoodsList";
 import { GoodsAdd } from "../pages/GoodsAdd";
 import MyGroup from "../pages/MyGroup";
 import { Login } from "../pages/Login";
@@ -35,9 +35,9 @@ import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
 import Chat from "../pages/Chat";
-import ChatRoom from "../componentsChat/ChatRoom";
-import TeamGroup from "../componentsGroupList/TeamGroup";
-import ScreenGroup from "../componentsGroupList/ScreenGroup";
+import ChatRoom from "../componentsChat/ChatRoom"
+import Community from "../pages/Community"
+import { CommunityDetail } from "../pages/CommunityDetail"
 
 function App() {
   const dispatch = useDispatch()
@@ -76,7 +76,7 @@ function App() {
         {!is_login ? (
           <Switch>
             {/* 구별문자를 달아놓고 조건문으로 해서 걸러낸다 */}
-            {/* <Route path="/" exact component={Main} /> */}
+
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -89,6 +89,7 @@ function App() {
             <Route path="/timeline" exact component={TimelineList} />
             <Route path="/goods" exact component={GoodsList} />
             <Route path="/mygroup" exact component={MyGroup} />
+            <Route path="/community" exact component={Community} />
 
             {/* 커스텀 훅 사용 */}
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
@@ -108,7 +109,6 @@ function App() {
           </Switch>
         ) : (
           <Switch>
-            {/* <Route path="/" exact component={Main} /> */}
             {/* <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} /> */}
             <Route exact path="/login/clubchoice" component={ClubChoice} />
@@ -142,8 +142,8 @@ function App() {
             <Route path="/loading" exact component={Loading} />
             <Route path="/chat" exact component={Chat} />
             <Route path="/chatroom" exact component={ChatRoom} />
-            <Route path="/teamgroup" exact component={TeamGroup} />
-            <Route path="/screengroup" exact component={ScreenGroup} />
+            <Route path="/community" exact component={Community} />
+            <Route path="/communitydetail" exact component={CommunityDetail} />
 
             {/* 임시 */}
             {/* <Redirect */}

@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { VscBell } from "react-icons/vsc";
 
 const Header = (props) => {
-  const history = useHistory()
+  const history = useHistory();
 
   const { game, screen, timeline, goods } = props;
 
@@ -22,7 +23,7 @@ const Header = (props) => {
         <Screen
           screen={screen}
           onClick={() => {
-            history.push("/screen")
+            history.push("/screen");
           }}
         >
           스야모임
@@ -31,29 +32,28 @@ const Header = (props) => {
         <Timeline
           timeline={timeline}
           onClick={() => {
-            history.push("/timeline")
+            history.push("/community");
           }}
         >
-          타임라인
+          커뮤니티
         </Timeline>
 
         <Goods
           goods={goods}
           onClick={() => {
-            history.push("/goods")
+            history.push("/goods");
           }}
         >
           굿즈자랑
         </Goods>
-
+        <Icon />
       </Box>
 
       {/* 구분선 */}
       <Rectangle />
-
     </Container>
-  )
-}
+  );
+};
 
 Header.defaultProps = {
   _onClick: () => {},
@@ -61,7 +61,8 @@ Header.defaultProps = {
   Game: false,
   screen: false,
   timeline: false,
-};
+  goods: false,
+}
 
 export default Header;
 
@@ -69,6 +70,7 @@ const Container = styled.div`
   width: 425px;
   margin: auto;
   padding: 0;
+  position: relative;
 `;
 
 const Img = styled.img`
@@ -166,4 +168,9 @@ const Rectangle = styled.div`
   background: #e7e7e7;
   width: 100%;
   height: 1px;
+`;
+
+const Icon = styled(VscBell)`
+  position: absolute;
+  right: 20px;
 `;
