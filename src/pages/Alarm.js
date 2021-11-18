@@ -1,14 +1,11 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
-import SockJsClient from 'react-stomp';
 
 import { ArrowBack } from "../components";
 import { MarginBottom, NaviBar } from "../components";
 
 
 const Alarm = (props) => {
-
-	const websoket = useRef(null);
 
 	return (
 		<React.Fragment>

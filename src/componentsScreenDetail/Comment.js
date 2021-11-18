@@ -34,7 +34,7 @@ const Comment = memo((props) => {
   // console.log("코멘트컴포넌트", props)
 
   const id = props.id
-  //  console.log("페이지아이디",id)
+   console.log("페이지아이디",id)
   const [message, setMessage] = useState("")
 
   const addComment = () => {
@@ -57,9 +57,11 @@ const Comment = memo((props) => {
   // 	dispatch(screenDetailCreators.mylistMW())
   // },[])
 
+  console.log("콘솔이야",kakaoCheck)
+
   return (
     <React.Fragment>
-      <Box padding="13px 20px 13px 20px" background="#fff">
+      <Box padding="13px 30px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
             방명록 {props.screenCommentList.length}
@@ -128,7 +130,7 @@ const Comment = memo((props) => {
       {props.screenCommentList.map((comment, idx) => {
         return (
           <CommentList
-            key={idx}
+            key={comment.groupCommentId}
             {...comment}
             id={id}
             myScreenCommentLikesList={props.myScreenCommentLikesList}
@@ -398,7 +400,7 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 285px;
+  width: 310px;
   height: 70px;
 	border: none;
   padding: 5px 5px 5px 5px;
@@ -414,7 +416,7 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: 5px;
+  right: 20px;
   bottom: 0%;
   transform: translateY(-50%);
   cursor: pointer;
