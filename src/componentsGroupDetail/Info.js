@@ -58,16 +58,16 @@ const Info = memo((props) => {
   // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
-  useEffect(() => {
-    const groupLike = myGroupLikesList.indexOf(id)
-    // console.log("표시",groupLike)
-    if (groupLike >= 0) {
-      props.setHeart(true)
-      return
-    } else {
-      props.setHeart(false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const groupLike = myGroupLikesList.indexOf(id)
+  //   // console.log("표시",groupLike)
+  //   if (groupLike >= 0) {
+  //     props.setHeart(true)
+  //     return
+  //   } else {
+  //     props.setHeart(false)
+  //   }
+  // }, [])
 
   // 모집마감 표시
   useEffect(() => {
@@ -97,7 +97,7 @@ const Info = memo((props) => {
     }
   }
 
-  // console.log("받아오기", props)
+  console.log("받아오기", props)
 
   // if props.myGroupLikesList
   // {ip + props.appliedUserInfo[0].UserImage}
@@ -268,7 +268,7 @@ Info.defaultProps = {
 export default Info;
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
