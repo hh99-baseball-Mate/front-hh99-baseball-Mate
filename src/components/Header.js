@@ -61,7 +61,8 @@ Header.defaultProps = {
   Game: false,
   screen: false,
   timeline: false,
-};
+  goods: false,
+}
 
 export default Header;
 

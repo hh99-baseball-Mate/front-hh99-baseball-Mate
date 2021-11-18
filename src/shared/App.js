@@ -33,9 +33,7 @@ import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
 import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
-import img from "../shared/icon/image.jpg";
-import TeamGroup from "../componentsGroupList/TeamGroup";
-import ScreenGroup from "../componentsGroupList/ScreenGroup";
+import img from "../shared/icon/image.jpg"
 
 function App() {
   const dispatch = useDispatch()
@@ -138,8 +136,6 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
-            <Route path="/teamgroup" exact component={TeamGroup} />
-            <Route path="/screengroup" exact component={ScreenGroup} />
 
             {/* 임시 */}
             {/* <Redirect */}

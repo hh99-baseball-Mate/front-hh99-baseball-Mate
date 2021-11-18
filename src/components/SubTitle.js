@@ -32,8 +32,8 @@ export const SubTitle = ({
           {children}
         </Text>
         <IconBox onClick={() => setShowModal(true)}>
-          <IconText>필터</IconText>
-          <Icons src={ETC} alt="필터 이미지" />
+          <IconText>상세보기</IconText>
+          <Icons src={ETC} alt="등등" />
         </IconBox>
       </MoreContainer>
     )
@@ -63,7 +63,7 @@ export const SubTitle = ({
         <Text size="16px" bold>
           {children}
         </Text>
-        <MoreBtn onClick={moreBtn}>+ More</MoreBtn>
+        {/* <MoreBtn onClick={moreBtn}>+ More</MoreBtn> */}
       </MoreContainer>
     )
   }
@@ -80,7 +80,18 @@ SubTitle.defaultProps = {
 }
 
 const IconBox = styled.div`
+  width: 90px;
+  height: 30px;
+  border-radius: 30px;
+  background: none;
+  border: 1px solid #e7e7e7;
+  font-size: 14px;
   display: flex;
+  font-weight: 500;
+  color: #c4c4c4;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 `
 const IconText = styled.p`

@@ -48,11 +48,11 @@ export const HotCard = (props) => {
 }
 
 const CardBox = styled.div`
-  margin: 10px 10px 10px 0;
+  margin: 10px 20px 10px 0;
   background: #ffffff;
   height: 300px;
-  width: 240px;
-  /* margin: 0 20px; */
+  /* min-width: 240px; */
+  cursor: pointer;
 `
 const PostInfo = styled.div`
   margin: 25px 0 3px;

@@ -11,6 +11,8 @@ import {
 } from "../components"
 import { Picture } from "../componentsGroupAdd/Picture"
 import { Preview } from "../componentsGroupAdd/Preview"
+import { useInputs } from "../customHook/useInputs"
+import { usePreview } from "../customHook/usePreview"
 import { history } from "../redux/configStore"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 
@@ -19,33 +21,17 @@ export const GoodsAdd = (props) => {
 
   const dispatch = useDispatch()
 
-  const [inputValue, setInputValue] = useState({
+  // 인풋 커스텀훅
+  const [inputValue, onChange] = useInputs({
     goodsName: "",
     goodsContent: "",
   })
 
   const { goodsName, goodsContent } = inputValue
 
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    })
-  }
+  // 이미지 미리보기 /삭제 커스텀훅
+  const [imgPreview, deletePreview, preview] = usePreview("")
 
-  const [preview, setPreview] = useState("")
-
-  const imgPreview = (e) => {
-    setPreview(e.target.files[0])
-  }
-
-  const deleteImg = () => {
-    if (!preview) {
-      window.alert("삭제 할 사진이 없어요")
-      return
-    }
-  }
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
       return !e ? false : true
@@ -59,8 +45,8 @@ export const GoodsAdd = (props) => {
 
     const formData = new FormData()
 
-    formData.append("goodsName", inputValue.goodsName)
-    formData.append("goodsContent", inputValue.goodsContent)
+    formData.append("goodsName", goodsName)
+    formData.append("goodsContent", goodsContent)
     formData.append("goodsPrice", null)
     formData.append("file", preview)
 
@@ -77,10 +63,13 @@ export const GoodsAdd = (props) => {
             굿즈 등록
           </Text>
         </ArrowBack>
+
         <Text margin="30px 0 7px 0">
           대표 이미지
           {preview && <InputCheck />}
         </Text>
+
+        {/* 이미지 미리보기 */}
         <ImgBox>
           <Picture basic onChange={imgPreview}>
             {preview ? 1 : 0} / 1
@@ -88,10 +77,11 @@ export const GoodsAdd = (props) => {
           <Preview
             name="goodsImg"
             src={preview ? URL.createObjectURL(preview) : defaultImg}
-            onClick={deleteImg}
+            onClick={deletePreview}
           ></Preview>
         </ImgBox>
 
+        {/* 굿즈 타이틀 */}
         <Inputs
           name="goodsName"
           placeholder="내 굿즈의 이름을 적어주세요!"
@@ -101,6 +91,8 @@ export const GoodsAdd = (props) => {
           굿즈 이름
           {goodsName && <InputCheck />}
         </Inputs>
+
+        {/* 굿즈 내용 */}
         <Inputs
           name="goodsContent"
           textarea
@@ -127,15 +119,4 @@ GoodsAdd.defaultProps = {
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
-`
-
-GoodsAdd.defaultProps = {
-  defaultImg:
-    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
-}
-
-const ButtonBox = styled.div`
-  position: fixed;
-  width: 385px;
-  bottom: 20px;
 `

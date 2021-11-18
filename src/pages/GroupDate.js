@@ -11,14 +11,6 @@ import { Image } from "react-bootstrap"
 const GroupDate = (props) => {
   const dispatch = useDispatch()
   const play_list = useSelector((state) => state.group.play_list)
-  //일정선택
-  const [dateList, setDateList] = useState("")
-  // console.log(dateList, "리스탕다리");
-
-  const cut = dateList.split(" ")[0]
-  // console.log(cut);
-
-  // console.log(play_list);
 
   //일정선택
 
@@ -40,8 +32,8 @@ const GroupDate = (props) => {
 
   const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"]
 
-  // 일주일치 데이터 날짜 ++ 하기
-  for (let i = 0; i < 20; i++) {
+  // 2주일치 데이터 날짜 ++ 하기
+  for (let i = 0; i < 14; i++) {
     const _date = String(month) + "." + String(day + i)
     date.push(_date + " " + week[new Date(year + "." + _date).getDay()])
   }
