@@ -26,10 +26,8 @@ const MyGroup = (props) => {
   //스크린
   const screen_list = useSelector((state) => state.with.screen_list);
   const screen_write = useSelector((state) => state.with.writeId);
-
+  //전체보기
   const [allList, setAllList] = useState(true);
-  const [screen, setScreen] = useState(false);
-  const [games, setGames] = useState(false);
 
   // console.log(allList)
   //구분
@@ -73,14 +71,10 @@ const MyGroup = (props) => {
     // }
   }, [write]);
 
-  // //작성
-  // useEffect(() => {
-  //   if (write) {
-  //     dispatch(withCr.getWriteAPI());
-  //   } else if (wish) {
-  //     dispatch(withCr.getWishGroupAPI());
-  //   }
-  // }, [write, wish]);
+  //작성
+  useEffect(() => {
+    dispatch(withCr.getWriteAPI());
+  }, []);
 
   return (
     <All>
@@ -99,10 +93,10 @@ const MyGroup = (props) => {
           <Button1
             nowBtn1={nowBtn1}
             onClick={() => {
-              if (write === true || participation === false || wish === true) {
+              if (write === true || allList === false) {
                 setWrite(false);
                 setWish(false);
-                setParticipation(true);
+                setAllList(true);
               }
             }}
           >
@@ -112,8 +106,8 @@ const MyGroup = (props) => {
           <Button2
             nowBtn2={nowBtn2}
             onClick={() => {
-              if (participation === true || write === false || wish === true) {
-                setParticipation(false);
+              if (allList === true || write === false) {
+                setAllList(false);
                 setWish(false);
                 setWrite(true);
               }

@@ -15,7 +15,7 @@ import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
 import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
 import { GroupAdd } from "../pages/GroupAdd";
-import { GoodsList } from "../pages/GoodsList"
+import { GoodsList } from "../pages/GoodsList";
 import { GoodsAdd } from "../pages/GoodsAdd";
 import MyGroup from "../pages/MyGroup";
 import { Login } from "../pages/Login";
@@ -38,19 +38,21 @@ import Chat from "../pages/Chat";
 import ChatRoom from "../componentsChat/ChatRoom";
 import TeamGroup from "../componentsGroupList/TeamGroup";
 import ScreenGroup from "../componentsGroupList/ScreenGroup";
+import Community from "../pages/Community";
+import { CommunityDetail } from "../pages/CommunityDetail";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
-  }, [])
+  }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -89,6 +91,7 @@ function App() {
             <Route path="/timeline" exact component={TimelineList} />
             <Route path="/goods" exact component={GoodsList} />
             <Route path="/mygroup" exact component={MyGroup} />
+            <Route path="/community" exact component={Community} />
 
             {/* 커스텀 훅 사용 */}
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
@@ -143,6 +146,8 @@ function App() {
             <Route path="/chatroom" exact component={ChatRoom} />
             <Route path="/teamgroup" exact component={TeamGroup} />
             <Route path="/screengroup" exact component={ScreenGroup} />
+            <Route path="/community" exact component={Community} />
+            <Route path="/communitydetail" exact component={CommunityDetail} />
 
             {/* 임시 */}
             {/* <Redirect */}
@@ -152,7 +157,7 @@ function App() {
       </ConnectedRouter>
       {/* </div> */}
     </Container>
-  )
+  );
 }
 
 export default App;

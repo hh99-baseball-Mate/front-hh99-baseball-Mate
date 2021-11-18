@@ -9,7 +9,7 @@ export const ArrowBack = (props) => {
   const styles = { onClick, bg };
 
   return (
-    <Headers bg={bg}>
+    <Headers bg={bg} style={{ fontWeight: "bold", fontSize: "16px" }}>
       <IoIosArrowBack
         style={{ position: "absolute", left: "0px", marginLeft: "20px" }}
         {...styles}
