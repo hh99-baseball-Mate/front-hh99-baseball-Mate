@@ -38,7 +38,7 @@ export const ScreenEdit = (props) => {
   const dispatch = useDispatch()
 
   const loadDetail = useSelector((state) => state.screenDetail.screenPage)
-  const mylist = useSelector((state) => state.screenDetail.mylist)
+  const mylist = useSelector((state) => state.screenDetail.screenMylist)
 
   const img = ip + loadDetail.filePath
   // console.log("스야수정",loadDetail)

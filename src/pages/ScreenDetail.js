@@ -15,18 +15,30 @@ const ScreenDetail = (props) => {
   const screenId = params.screenId
   const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
-  const [heartJoin, setHeartJoin] = useState(false)
+  const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
+
+  const loadDetail = useSelector((state) => state.screenDetail.screenPage)
+  const mylist = useSelector((state) => state.screenDetail.screenMylist)
+
+  
 
   useEffect(() => {
     const screenId = params.screenId
+    const myScreenLikesList = mylist.myScreenLikesList
+
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-  }, [screenId, selectPage, close, heartJoin, join])
 
-  const loadDetail = useSelector((state) => state.screenDetail.screenPage)
-  const mylist = useSelector((state) => state.screenDetail.mylist)
-  // const allmylist = useSelector((state) => state.user.user_info)
+    // const groupLike = mylist.myScreenLikesList.indexOf(screenId)
+    // console.log("표시",groupLike, mylist?.myScreenLikesList, screenId)
+    // if (groupLike !== -1) {
+    //   setHeart(true)
+    // } else {
+    //   setHeart(false)
+    // }
+  }, [dispatch, screenId, selectPage, close, heart, join])
+
 
   // console.log("스크린상세페이지", loadDetail)
   // console.log("슼린내꺼야", mylist)
@@ -54,8 +66,8 @@ const ScreenDetail = (props) => {
         {...mylist}
         close={close}
         setClose={setClose}
-        heartJoin={heartJoin}
-        setHeartJoin={setHeartJoin}
+        heart={heart}
+        setHeart={setHeart}
       />
 
       {/* 참여자 & 방명록 */}

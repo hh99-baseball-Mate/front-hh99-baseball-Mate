@@ -13,7 +13,7 @@ const Participant = memo((props) => {
   const groupId = params.screenId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  // console.log("참여자컴포", props)
+  console.log("참여자컴포", props)
   // const {shape, src, size, pointer} = props;
   // flex="felx" justify="space-around"
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const Participant = memo((props) => {
 
   const id = props.id
 
-  const mylist = useSelector((state) => state.screenDetail.mylist)
+  const mylist = useSelector((state) => state.screenDetail.screenMylist)
   const my = {
     UserImage: mylist.picture,
     UserId: mylist.userid,
@@ -88,8 +88,8 @@ const Participant = memo((props) => {
             </Text>
           </CircleBox>
 
-          {props.appliedUserInfo?.map((list, idx) => {
-            return <PartyList key={idx} {...list} />
+          {props.appliedUserInfo?.map((list) => {
+            return <PartyList key={list.UserInx} {...list} />
           })}
         </Warp>
         <Warp flex="flex" justify="center">

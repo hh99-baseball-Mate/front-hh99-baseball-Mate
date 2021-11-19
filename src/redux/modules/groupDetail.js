@@ -237,6 +237,35 @@ const mylistMW = () => {
   }
 }
 
+// 모임확정하기
+const confirmMW = (groupId) => {
+  return function (dispatch, getState, { history }) {
+    // const isLiked = { isLiked: like }
+    instance
+      .patch(`/groups/${groupId}/applications`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
+//채팅
+const chatMW = ()  => {
+  return function (dispatch, getState, { history }) {
+    instance
+     .get("/chatting")
+     .then((res) => {
+       console.log(res)
+     })
+     .catch((err) => {
+       console.log(err)
+     })
+  }
+}
+
 //reducer
 export default handleActions(
 	{
@@ -314,7 +343,9 @@ const groupDetailCreators = {
 	editCommentMW,
 	delCommentMW,
 	likegroupCommentMW,
-	mylistMW
+	mylistMW,
+  confirmMW,
+  chatMW
 }
 
 export {groupDetailCreators};
