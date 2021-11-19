@@ -19,87 +19,48 @@ import { Preview } from "../componentsGroupAdd/Preview"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupActions } from "../redux/modules/group"
 import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
+import { useVolumeBtn } from "../customHook/useVolumeBtn"
+import { useInputs } from "../customHook/useInputs"
+import { usePreview } from "../customHook/usePreview"
 
 export const GroupAdd = (props) => {
   const dispatch = useDispatch()
 
+  // 선택한 구단에 대한 경기일정 리스트 state
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
 
-  // console.log(selectTeam_list)
-  // 인풋 값 state
-  const [inputValue, setInputValue] = useState({
+  // 커스텀 훅 인풋
+  const [inputValue, onChange] = useInputs({
     title: "",
     selectTeam: "",
-    peopleLimit: 0,
     content: "",
   })
 
-  // 이미지 미리보기 state
-  const [preview, setPreview] = useState("")
+  const { content, title, selectTeam } = inputValue
+
+  // + - 버튼 커스텀 훅
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0)
+
+  // 이미지 미리보기/ 삭제 커스텀훅
+  const [imgPreview, deletePreview, preview] = usePreview("")
 
   // 모달 보기 state
   const [showModal, setShowModal] = useState(false)
 
+  // 경기일정 state
   const [groupDate, setGroupDate] = useState("")
-
-  const { content, peopleLimit, title, selectTeam } = inputValue
-
-  // 이미지 업로드 / 미리보기
-
-  const imgPreview = (e) => {
-    setPreview(e.target.files[0])
-  }
-
-  // 미리보기 삭제,
-
-  const deletePreview = () => {
-    if (!preview) {
-      window.alert("삭제 할 사진이 없어요")
-      return
-    }
-
-    setPreview("")
-    // console.log("삭제를 해야되는데..")
-  }
 
   const showModalBtn = () => {
     if (selectTeam) setShowModal(!showModal)
     else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
   }
 
-  // 인풋 입력 값 추적 e.target.value 대행
-
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    })
-  }
-
-  //  인원수 + 버튼
-  const plusBtn = () => {
-    if (peopleLimit < 8) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit + 1,
-      })
-    } else {
-      window.alert("8명 이상은 안됩니다")
-      return
-    }
-  }
-
-  // 인원수 - 버튼
-  const minusBtn = () => {
-    if (peopleLimit !== 0) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit - 1,
-      })
-    } else {
-      window.alert("0이하는 선택불가")
-    }
+  const data = {
+    title: "",
+    selectTeam: "",
+    content: "",
+    groupDate: "",
+    preview: "",
   }
 
   // 입력체크
@@ -116,11 +77,11 @@ export const GroupAdd = (props) => {
 
     const formData = new FormData()
 
-    formData.append("title", inputValue.title)
+    formData.append("title", title)
     formData.append("groupDate", groupDate)
-    formData.append("content", inputValue.content)
-    formData.append("peopleLimit", inputValue.peopleLimit)
-    formData.append("selectTeam", inputValue.selectTeam)
+    formData.append("content", content)
+    formData.append("peopleLimit", peopleLimit)
+    formData.append("selectTeam", selectTeam)
     formData.append("file", preview)
 
     dispatch(groupActions.addGroupMD(formData))
@@ -129,9 +90,8 @@ export const GroupAdd = (props) => {
   }
 
   useEffect(() => {
-    if (selectTeam) {
-      dispatch(groupActions.selectTeamMD(selectTeam))
-    }
+    // 선택한 구단을 파라미터로 넘겨서 get 요청
+    dispatch(groupActions.selectTeamMD(selectTeam))
   }, [selectTeam])
 
   return (
@@ -204,7 +164,12 @@ export const GroupAdd = (props) => {
           <PeopleSelect>
             <AiOutlineMinusCircle color="#498C9A" onClick={minusBtn} />
             <PeopleCount>
-              <Text center size="18px" name="peopleLimit" onChange={onChange}>
+              <Text
+                center
+                size="18px"
+                name="peopleLimit"
+                onChange={onChangeBtn}
+              >
                 {peopleLimit}
               </Text>
             </PeopleCount>

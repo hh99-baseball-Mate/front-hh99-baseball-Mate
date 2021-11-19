@@ -35,24 +35,22 @@ import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
 import Chat from "../pages/Chat";
-import ChatRoom from "../componentsChat/ChatRoom";
-import TeamGroup from "../componentsGroupList/TeamGroup";
-import ScreenGroup from "../componentsGroupList/ScreenGroup";
-import Community from "../pages/Community";
-import { CommunityDetail } from "../pages/CommunityDetail";
+import ChatRoom from "../componentsChat/ChatRoom"
+import Community from "../pages/Community"
+import { CommunityDetail } from "../pages/CommunityDetail"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
+      dispatch(userActions.logInCheckMD())
     } else {
-      getCookie("is_login");
+      getCookie("is_login")
     }
-  }, []);
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -144,8 +142,6 @@ function App() {
             <Route path="/loading" exact component={Loading} />
             <Route path="/chat" exact component={Chat} />
             <Route path="/chatroom" exact component={ChatRoom} />
-            <Route path="/teamgroup" exact component={TeamGroup} />
-            <Route path="/screengroup" exact component={ScreenGroup} />
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
 
@@ -157,7 +153,7 @@ function App() {
       </ConnectedRouter>
       {/* </div> */}
     </Container>
-  );
+  )
 }
 
 export default App;

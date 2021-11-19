@@ -45,7 +45,7 @@ const GroupCard = (props) => {
               </Ellipse>
             )}
 
-            {props && props.dday >= 0 && props.canApplyNum !== 0 ? (
+            {props && props.dday > 0 && props.canApplyNum !== 0 ? (
               <Ellipse
                 borderColor="#498C9A"
                 background="#498C9A"

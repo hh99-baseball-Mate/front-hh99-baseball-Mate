@@ -26,92 +26,45 @@ import "dayjs/locale/ko"
 import DatePicker, { registerLocale } from "react-datepicker"
 import { ko } from "date-fns/esm/locale"
 import "react-datepicker/dist/react-datepicker.css"
+import { useInputs } from "../customHook/useInputs"
+import { useVolumeBtn } from "../customHook/useVolumeBtn"
+import { usePreview } from "../customHook/usePreview"
 
 export const ScreenAdd = (props) => {
   const dispatch = useDispatch()
 
   // 날짜 datePicker 라이브러리
-
   const [startDate, setStartDate] = useState("")
 
   // datePicker 한글버전
   registerLocale("ko", ko)
   dayjs.locale("ko")
 
+  // 사용자가 날짜 선택시 최소날짜 ~ 최대날짜 2주를 주기 위함
   const minDate = dayjs().add(1, "day").format("YYYY-MM-DD")
   const maxDate = dayjs().add(15, "day").format("YYYY-MM-DD")
-  // console.log(date)
 
-  const [inputValue, setInputValue] = useState({
+  // 커스텀 훅 인풋
+  const [inputValue, onChange] = useInputs({
     title: "",
-    peopleLimit: 0,
     content: "",
   })
+
+  // + - 버튼 커스텀 훅
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0)
+
+  // 이미지 미리보기 /삭제하기 커스텀 훅
+  const [imgPreview, deletePreview, preview] = usePreview("")
+
+  const { content, title } = inputValue
 
   // 장소 설정 state
 
   const [location, setLocation] = useState("")
   const [roadAddress, setRoadAddress] = useState("")
-  // console.log(roadAddress, "주소")
-  // console.log(location)
-
-  // 이미지 미리보기 state
-  const [preview, setPreview] = useState("")
 
   // 모달 보기 state
   const [showModal, setShowModal] = useState(false)
-
-  const { content, peopleLimit, title } = inputValue
-
-  // 이미지 업로드 / 미리보기
-
-  const imgPreview = (e) => {
-    setPreview(e.target.files[0])
-  }
-
-  // 미리보기 삭제,
-
-  const deletePreview = () => {
-    if (!preview) {
-      window.alert("삭제 할 사진이 없어요")
-      return
-    }
-    setPreview("")
-  }
-
-  // 인풋 입력 값 추적 e.target.value 대행
-
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    })
-  }
-  //  인원수 + 버튼
-  const plusBtn = () => {
-    if (peopleLimit < 8) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit + 1,
-      })
-    } else {
-      window.alert("8명 이상은 안됩니다")
-      return
-    }
-  }
-
-  // 인원수 - 버튼
-  const minusBtn = () => {
-    if (peopleLimit !== 0) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit - 1,
-      })
-    } else {
-      window.alert("0이하는 선택불가")
-    }
-  }
 
   // 입력체크
   const submitBtn = (e) => {
@@ -137,10 +90,10 @@ export const ScreenAdd = (props) => {
 
       // console.log(placeInfomation)
 
-      formData.append("title", inputValue.title)
+      formData.append("title", title)
       formData.append("groupDate", groupDate)
-      formData.append("content", inputValue.content)
-      formData.append("peopleLimit", inputValue.peopleLimit)
+      formData.append("content", content)
+      formData.append("peopleLimit", peopleLimit)
 
       // 스야 지점 지점명
       formData.append("selectPlace", location)
@@ -236,7 +189,12 @@ export const ScreenAdd = (props) => {
           <PeopleSelect>
             <AiOutlineMinusCircle color="#498C9A" onClick={minusBtn} />
             <PeopleCount>
-              <Text center size="18px" name="peopleLimit" onChange={onChange}>
+              <Text
+                center
+                size="18px"
+                name="peopleLimit"
+                onChange={onChangeBtn}
+              >
                 {peopleLimit}
               </Text>
             </PeopleCount>

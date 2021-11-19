@@ -60,19 +60,19 @@ const GroupComment = memo((props) => {
 
   return (
     <React.Fragment>
-      <Box padding="13px 20px 13px 20px" background="#fff">
+      <Box padding="13px 30px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
-            {/* 방명록 {props.groupCommentList.length} */}
+            방명록 {props.groupCommentList.length}
           </Text>
 
           <Warp>
-            <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
+            {/* <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
               인기순
             </Text>
             <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
               최신순
-            </Text>
+            </Text> */}
           </Warp>
         </Warp>
       </Box>
@@ -427,7 +427,7 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 285px;
+  width: 310px;
   height: 70px;
   border: none;
   padding: 5px 5px 5px 5px;
@@ -442,7 +442,7 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: 5px;
+  right: 20px;
   bottom: 0%;
   transform: translateY(-50%);
   cursor: pointer;

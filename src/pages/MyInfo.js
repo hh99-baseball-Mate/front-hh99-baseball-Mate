@@ -13,7 +13,9 @@ export const MyInfo = (props) => {
 
   const is_login = useSelector((state) => state.user.is_login)
   const user_info = useSelector((state) => state.user.user_info)
-  const { picture, userid, username, usertype, useridx, address } = user_info
+
+  const { picture, userid, username, usertype, useridx, address, myteam } =
+    user_info
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
@@ -62,9 +64,10 @@ export const MyInfo = (props) => {
               />
               <ProfileSrc src={srcChange()} alt="dd" />
               <Text margin="10px 0 0">{username}</Text>
-              <Text color="#777777" size="10px" margin="10px 0">
+              <Text color="#777777" size="10px" margin="10px 0 0">
                 {userid ? userid : "나는유저아이디?"}
               </Text>
+              <Text margin="10px 0">{myteam}</Text>
               <Text>{region}</Text>
             </UserInfo>
 

@@ -8,15 +8,34 @@ const MessageBox = (props) => {
 	return (
 		<Container>
 
-		<Warp position="relative">	
-			<Warp flex="flex">	
+			<Warp >	
+
 				<Circle marginR="13px"/>
-				<Text>김태웅</Text>
-			</Warp>
-			<Talk>
-				asddddsdsddasdasdasd
-			</Talk>	
-		</Warp>		
+				<Warp direction="column">	
+					<Text>김태웅</Text>
+
+					<Warp align="flex-end" margin="5px 5px 6px 0">
+						<Talk>
+							지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요? 
+						</Talk>	
+						<Time position="relative">
+							오전 10:34
+						</Time>
+					</Warp>
+				</Warp>
+				
+			</Warp>		
+
+
+			{/* 내가 보낸 메세지 */}
+			<Warp align="flex-end" direction="row-reverse" marginR="40px" margin="5px 0">
+				<MyTalk>
+					오전 11:34오전 11:34오전 11:34오전 11:34오전 11:34
+				</MyTalk>
+				<MyTime margin="0 6px 0 0">
+					오전 11:34
+				</MyTime>
+			</Warp>	
 
 		</Container>
 	)
@@ -28,6 +47,7 @@ export default MessageBox;
 const Container = styled.div`
   margin-bottom: 10px;
 	width: 425px;
+	position: relative;
 `;
 
 const Box = styled.div`
@@ -44,15 +64,18 @@ const Box = styled.div`
 
 const Warp = styled.div`
 	/* width: 100%; */
-	display: ${(props) => props.flex};
+	display: flex;
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	margin-left: ${(props) => props.marginLeft};
 	margin-bottom: ${(props) => props.bottom};
 	margin: ${(props) => props.margin};
+	margin-left: ${(props) => props.marginL};
+	margin-right: ${(props) => props.marginR};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
+	/* right: -160px; */
 `;
 
 const Text = styled.div`
@@ -64,6 +87,18 @@ const Text = styled.div`
 	margin-bottom: ${(props) => props.bottom};
 `;
 
+const Time = styled.div`
+	font-size: 11px;
+	font-weight: ${(props) => props.weight};
+	color: #777777;
+	letter-spacing: ${(props) => props.spacing};
+	margin: ${(props) => props.margin};
+	margin-bottom: ${(props) => props.bottom};
+	/* right: 10px;
+	top: 30px; */
+	/* padding: 12px 10px; */
+`;
+
 const Circle = styled.div`
 	width: 45px;
 	height: 45px;
@@ -73,18 +108,21 @@ const Circle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-	margin-left: 8px;
+	margin-left: ${(props) => props.marginL};
 	margin-right: ${(props) => props.marginR};
 `;
 
 const Talk = styled.div`
-	max-width: 222px;
+	max-width: 280px;
+	min-width: 10px;
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;
-	position: absolute;
-	left: 60px;
-	top: 30px;
 	padding: 12px 10px;
+	/* position: absolute;
+	left: 60px;
+	top: 30px; */
+	
+	/* word-break: pre-line; */
 `;
 
 const Input = styled.input`
@@ -106,4 +144,32 @@ const SendImg = styled.img`
   bottom: 50%;
   transform: translateY(50%);
   cursor: pointer;
+`;
+
+/* 내가 보낸 메세지 */
+const MyTalk = styled.div`
+	max-width: 320px;
+	min-width: 10px;
+	background: #F25343;
+	color: #FFFFFF;
+	border-radius: 10px 0px 10px 10px;
+	padding: 12px 10px;
+	/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+	/* position: absolute;
+	right: 0px;
+	top: 30px; */
+	/* word-break: pre-line; */
+`;
+
+const MyTime = styled.div`
+	font-size: 11px;
+	font-weight: ${(props) => props.weight};
+	color: #777777;
+	letter-spacing: ${(props) => props.spacing};
+	margin: ${(props) => props.margin};
+	margin-bottom: ${(props) => props.bottom};
+	/* position: absolute; */
+	/* right: 10px;
+	top: 30px; */
+	/* padding: 12px 10px; */
 `;

@@ -21,11 +21,6 @@ export const GoodsList = () => {
   const is_loading = useSelector((state) => state.goods.is_loading)
   const list_length = useSelector((state) => state.goods.list_length)
 
-  const goodsAddBtn = () => {
-    history.push("/goods/goodsadd")
-  }
-  // 최신순
-
   // console.log(goods_list, "굿즈 목록")
   // console.log(list_length, "list_length")
 
@@ -37,7 +32,7 @@ export const GoodsList = () => {
   return (
     <InfinityScroll
       callNext={() => {
-        console.log("되냐?")
+        // console.log("되냐?")
         setInfinity({
           start: infinity.start,
           next: (infinity.next += 4),
@@ -46,7 +41,7 @@ export const GoodsList = () => {
       is_next={list_length > infinity.next}
       loading={is_loading}
     >
-      <Header nowBtn4="nowBtn4" />
+      <Header goods />
 
       <Container>
         {/* 서브타이틀 */}
@@ -57,7 +52,7 @@ export const GoodsList = () => {
         <CardContainer>
           {goods_list && goods_list.length > 0 ? (
             goods_list.map((e) => {
-              console.log(e)
+              // console.log(e)
               return <Card key={e.goodsId} {...e} />
             })
           ) : (
@@ -68,7 +63,7 @@ export const GoodsList = () => {
       </Container>
 
       <MarginBottom />
-      <NaviBar writeBtn onClick={goodsAddBtn} />
+      <NaviBar writeBtn onClick={() => history.push("/goods/goodsadd")} />
     </InfinityScroll>
   )
 }

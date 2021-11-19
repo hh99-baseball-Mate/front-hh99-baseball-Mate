@@ -19,12 +19,14 @@ import { HotCard } from "../components/HotCard"
 const GroupList = (props) => {
   const dispatch = useDispatch()
 
+  // 선택 한 팀 값 저장
   const [team, setTeam] = useState("")
+
+  const is_login = useSelector((state) => state.user.is_login)
 
   // 유저정보
   const user_info = useSelector((state) => state.user.user_info)
 
-  const is_login = useSelector((state) => state.user.is_login)
   //일정선택
   const day = useSelector((state) => state.group.date)
 
@@ -86,7 +88,9 @@ const GroupList = (props) => {
     // dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
 
-    return () => { console.log("난언제실행됨?")}
+    return () => {
+      console.log("난언제실행됨?")
+    }
   }, [team, date])
 
   return (
@@ -122,9 +126,12 @@ const GroupList = (props) => {
           ))}
         </Swipers>
 
-        <SubTitle more>{user_info.myteam} 핫한 모임 🔥</SubTitle>
+        <SubTitle more>
+          {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한 모임
+          🔥
+        </SubTitle>
         {/* 핫 한모임 */}
-        <Swipers height="330px">
+        <Swipers height="350px">
           {hotGroup &&
             hotGroup.map((e) => {
               return (
@@ -164,8 +171,8 @@ const GroupList = (props) => {
           <NotGame>해당 팀 경기는 모임이 없습니다</NotGame>
         )}
 
-        {console.log(team_list.length, "team")}
-        {console.log(date_list.length, "date")}
+        {/* {console.log(team_list.length, "team")}
+        {console.log(date_list.length, "date")} */}
       </Container>
 
       <MarginBottom />
@@ -173,7 +180,7 @@ const GroupList = (props) => {
     </Box>
   )
 }
-export default GroupList;
+export default GroupList
 
 const Box = styled.div`
   /* width: 405px; */
@@ -181,15 +188,11 @@ const Box = styled.div`
   /* margin: 15px auto; */
   /* display: ${(props) => props.flex}; */
   /* border: 1px solid; */
-`;
-
-const Broder = styled.div`
-  border: 1px solid #e7e7e7;
-  margin: 10px 0;
 `
 
 const ClubBox = styled.div`
   margin-right: 16px;
+  cursor: pointer;
 `
 
 const ClubIcon = styled(Image)`
