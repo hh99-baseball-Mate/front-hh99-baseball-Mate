@@ -26,7 +26,7 @@ const GroupDetail = memo((props) => {
   const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  // console.log("상세페이지", loadDetail)
+  console.log("상세페이지", loadDetail)
   // console.log("내꺼야", mylist)
 
   const commentBtn = () => {
@@ -131,7 +131,7 @@ const Box = styled.div`
 `
 
 const ParticipantBtn = styled.button`
-  width: 187px;
+  width: 50%;
   height: 45px;
   background: none;
   padding-bottom: 20px;
@@ -149,7 +149,7 @@ const ParticipantBtn = styled.button`
 `
 
 const CommentBtn = styled.button`
-  width: 187px;
+  width: 50%;
   height: 45px;
   background: none;
   padding-bottom: 20px;

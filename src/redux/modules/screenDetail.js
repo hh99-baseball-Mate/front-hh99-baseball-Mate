@@ -55,8 +55,8 @@ const like_comment = createAction(
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
-  screenPage: {},
-  mylist: {},
+  screenPage: [],
+  mylist: [],
 }
 
 // 불러오기
@@ -303,7 +303,7 @@ export default handleActions(
           (p) => p.screenCommentId === action.payload.commentId
         )
         // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-        // console.log("액션좋아요",action.payload.like)
+        console.log("액션좋아요",action.payload.like)
         if (action.payload.like) {
           draft.screenPage.screenCommentList[idx].screencommentlikeCount -= 1
           return

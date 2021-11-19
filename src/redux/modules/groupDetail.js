@@ -55,8 +55,8 @@ const like_group_comment = createAction(
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
-  groupPage: {},
-  mylist: {},
+  groupPage: [],
+  mylist: [],
 }
 
 // 불러오기
@@ -70,7 +70,7 @@ const loadGroupPageMW = (groupId) => {
         dispatch(load_groupPage(groupPage))
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       })
   }
 }
@@ -212,7 +212,7 @@ const likegroupCommentMW = (groupId, commentId, like) => {
       .post(`/groups/${groupId}/comment/${commentId}/like`, isLiked)
       .then((res) => {
         // console.log(res)
-        dispatch(like_group_comment(groupId, commentId, isLiked))
+        dispatch(like_group_comment(groupId, commentId, like))
       })
       .catch((err) => {
         console.log(err)
@@ -287,8 +287,8 @@ export default handleActions(
 		[LIKE_GROUP_COMMENT]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.groupCommentList.findIndex((p) => p.groupCommentId === action.payload.commentId);
 			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-			console.log("액션좋아요",action.payload.like.isLiked, idx)
-			if (action.payload.like.isLiked) {
+			// console.log("액션좋아요",action.payload.like, idx)
+			if (action.payload.like) {
 				draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1;
 				return
 			} else {

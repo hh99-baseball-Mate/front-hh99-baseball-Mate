@@ -2,6 +2,9 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
+import SockJS from "sockjs-client";
+import Stomp from "stompjs"
+
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatCard from "../componentsChat/ChatCard";
 
@@ -9,6 +12,49 @@ import ChatCard from "../componentsChat/ChatCard";
 const Chat = (props) => {
 
 	const history = useHistory();
+
+ // 배포, 개발 환경 채팅 주소 관리
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
+	// 소켓
+	const sock = new SockJS(BASE_URL);
+	const ws = Stomp.over(sock);
+
+
+  // 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
+  // const wsConnectSubscribe = () => {
+  //   try {
+  //     ws.debug = null;
+  //     ws.connect(
+  //       {
+  //         // token: token,
+  //       },
+  //       () => {
+  //         ws.subscribe(
+  //           `/sub/api/chat/rooms/${room_id}`,
+  //           (data) => {
+  //             const newMessage = JSON.parse(data.body);
+  //             // logger("구독후 새로운 메세지 data", newMessage);
+  //             console.log("구독후 새로운 메세지 data", newMessage);
+
+  //             // 실시간 채팅 시간 넣어주는 부분
+  //             const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
+  //             dispatch(
+  //               chatActions.getMessages({ ...newMessage, createdAt: now_time })
+  //             );
+  //           },
+  //           {
+  //             token: token,
+  //           }
+  //         );
+  //       }
+  //     );
+  //   } catch (err) {
+	// 		console.log(err);
+  //     // logger("소켓 커넥트 에러", e);
+	// 		console.log(err)
+  //   }
+  // };
+
 
 	return (
 		<React.Fragment>

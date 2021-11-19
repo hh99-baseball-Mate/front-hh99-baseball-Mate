@@ -99,12 +99,11 @@ const Info = memo((props) => {
 
   console.log("받아오기", props)
 
-  // if props.myGroupLikesList
-  // {ip + props.appliedUserInfo[0].UserImage}
+
   return (
     <Container>
       <Box position="relative">
-        <Img src={imageUrl} alt="" />
+        <Img url={imageUrl} />
         <JoinCircle
           onClick={() => {
             HeartBtn()
@@ -228,7 +227,7 @@ const Info = memo((props) => {
         background="#fff"
         flex="flex"
         align="center"
-        padding="18px"
+        padding="10px 30px"
       >
         <Warp width="55px" height="55px">
           {/* 기본프사 & 카카오프사 */}
@@ -245,7 +244,7 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box height="121px" background="#F2FAFC" padding="20px">
+      <Box height="121px" background="#F2FAFC" padding="20px 30px">
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>
@@ -287,10 +286,14 @@ const Box = styled.div`
   position: ${(props) => props.position};
 `;
 
-const Img = styled.img`
+const Img = styled.div`
   width: 100%;
   height: 375px;
   background-color: #c4c4c4;
+  background: url(${(props) => props.url});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const JoinCircle = styled.div`
@@ -299,7 +302,7 @@ const JoinCircle = styled.div`
   height: 28px;
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.5);
-  left: 327px;
+  left: 360px;
   top: 298px;
   display: flex;
   justify-content: center;

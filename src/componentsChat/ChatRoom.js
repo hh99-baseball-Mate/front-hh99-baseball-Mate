@@ -8,40 +8,31 @@ import MessageBox from "./MessageBox";
 const ChatRoom = (props) => {
 
 
-
 	return (
 		<Container>
-			<Box background="#FFF0EE" height="100vh">
 			<ArrowBack>롯데 응원방</ArrowBack>
 			<Rectangle/>
+			<Box background="#FFF0EE" height="96vh" padding="20px">
 
-				<Box position="relative">
-
-
-					<MessageBox/>
-					
-
-
-					<ChatWrite/>
-
-				</Box>	
+				<MessageBox/>
 
 			</Box>
+			<ChatWrite/>
 		</Container>
 	)
 }
 
 export default ChatRoom;
 
+const Container = styled.div`
+  margin-bottom: 10px;
+	width: 425px;
+`;
+
 const Rectangle = styled.div`
 	background: #E7E7E7;
 	width: 100%;
 	height: 1px;
-`;
-
-const Container = styled.div`
-  margin-bottom: 10px;
-	width: 425px;
 `;
 
 const Box = styled.div`

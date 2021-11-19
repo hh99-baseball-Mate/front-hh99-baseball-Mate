@@ -102,7 +102,7 @@ const ScreenDetail = (props) => {
 export default ScreenDetail;
 
 const Container = styled.div`
-  width: 375px;
+  width: 425px;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
@@ -135,7 +135,7 @@ const Box = styled.div`
 `;
 
 const ParticipantBtn = styled.button`
-  width: 187px;
+  width: 50%;
   height: 45px;
   background: none;
   padding-bottom: 20px;
@@ -153,7 +153,7 @@ const ParticipantBtn = styled.button`
 `;
 
 const CommentBtn = styled.button`
-  width: 187px;
+  width: 50%;
   height: 45px;
   background: none;
   padding-bottom: 20px;
