@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { BsTranslate } from "react-icons/bs";
 import styled from "styled-components";
 import { Text } from "../components";
+import { history } from "../redux/configStore";
 import Question from "../shared/icon/Question.png";
 const CommunityCard = (props) => {
   return (
-    <Card>
+    <Card
+      onClick={() => {
+        history.push("/communitydetail");
+      }}
+    >
       <UserInfo>
         <UserImg />
         <InfoBox>

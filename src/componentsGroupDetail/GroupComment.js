@@ -3,56 +3,55 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { getCookie } from '../shared/Cookie';
+import { getCookie } from "../shared/Cookie";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
-import smail from "../shared/icon/smail.svg"
-import unSmail from "../shared/icon/unSmail.svg"
-import more from "../shared/icon/more.svg"
-import send from "../shared/icon/send.svg"
-
+import smail from "../shared/icon/smail.svg";
+import unSmail from "../shared/icon/unSmail.svg";
+import more from "../shared/icon/more.svg";
+import send from "../shared/icon/send.svg";
 
 const GroupComment = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  const ip = IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+  const ip = IMAGES_BASE_URL;
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.picture
+  const profileImg = ip + props.picture;
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.picture?.split(".")[1]
-  const kakaoImg = props.picture
+  const kakaoCheck = props.picture?.split(".")[1];
+  const kakaoImg = props.picture;
 
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const cookie = getCookie("is_login")
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const cookie = getCookie("is_login");
 
   const groupCommentList = useSelector(
     (state) => state.groupDetail.groupPage.groupCommentList
-  )
-  const groupPage = useSelector((state) => state.groupDetail.groupPage)
+  );
+  const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
   // console.log("groupPage야야", groupPage)
   // console.log("코멘트컴포넌트", props)
 
-  const id = props.groupId
+  const id = props.groupId;
   //  console.log("페이지아이디",id)
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
 
   const addComment = () => {
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요")
-      history.push("/login")
-      return
+      window.alert("로그인 후 이용해주세요");
+      history.push("/login");
+      return;
     } else if (message !== "") {
-      dispatch(groupDetailCreators.addCommentMW(id, message))
-      setMessage("")
-      return
+      dispatch(groupDetailCreators.addCommentMW(id, message));
+      setMessage("");
+      return;
     } else {
-      window.alert("내용을 입력하세요")
-      return
+      window.alert("내용을 입력하세요");
+      return;
     }
-  }
+  };
 
   // useEffect(() => {
   //   dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
@@ -111,7 +110,7 @@ const GroupComment = memo((props) => {
             placeholder="&#13;&#10;댓글을 입력해 주세요..."
             value={message}
             onChange={(e) => {
-              setMessage(e.target.value)
+              setMessage(e.target.value);
             }}
           />
         </Warp>
@@ -119,7 +118,7 @@ const GroupComment = memo((props) => {
           src={send}
           alt="send"
           onClick={() => {
-            addComment()
+            addComment();
           }}
         />
       </Box>
@@ -136,54 +135,54 @@ const GroupComment = memo((props) => {
             myGroupCommentLikesList={props.myGroupCommentLikesList}
             idx={idx}
           />
-        )
+        );
       })}
     </React.Fragment>
-  )
-})
+  );
+});
 
 // 댓글 컴포넌트
 const CommentList = memo((props) => {
   // console.log("댓글 컴포넌트", props)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const mylist = useSelector((state) => state.groupDetail.mylist)
+  const mylist = useSelector((state) => state.groupDetail.mylist);
 
-  const user = useSelector((state) => state.user.user_info)
-  const Me = user.username
-  const likeList = mylist.myGroupCommentLikesList
-  const commentId = props.groupCommentId
+  const user = useSelector((state) => state.user.user_info);
+  const Me = user.username;
+  const likeList = mylist.myGroupCommentLikesList;
+  const commentId = props.groupCommentId;
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  const ip = IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+  const ip = IMAGES_BASE_URL;
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.commentUserPicture
+  const profileImg = ip + props.commentUserPicture;
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.commentUserPicture?.split(".")[1]
-  const kakaoImg = props.commentUserPicture
+  const kakaoCheck = props.commentUserPicture?.split(".")[1];
+  const kakaoImg = props.commentUserPicture;
 
-  const [edit, setEdit] = useState(false)
-  const [modal, setModal] = useState(false)
-  const [like, setLike] = useState(false)
+  const [edit, setEdit] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [like, setLike] = useState(false);
 
   useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(props.id))
-  }, [])
+    dispatch(groupDetailCreators.loadGroupPageMW(props.id));
+  }, []);
 
   // 댓글 좋아요 누른거 아이콘 표시하기
   useEffect(() => {
-    const likeIdx = likeList.indexOf(commentId)
+    const likeIdx = likeList.indexOf(commentId);
     // console.log("likeIdx", likeIdx)
     if (likeIdx >= 0) {
-      setLike(true)
+      setLike(true);
     }
-  }, [likeList])
+  }, [likeList]);
 
   const likeBtn = () => {
-    setLike(!like)
+    setLike(!like);
     // console.log(like)
     dispatch(
       groupDetailCreators.likegroupCommentMW(
@@ -191,8 +190,8 @@ const CommentList = memo((props) => {
         props.groupCommentId,
         like
       )
-    )
-  }
+    );
+  };
 
   return (
     <React.Fragment>
@@ -200,7 +199,7 @@ const CommentList = memo((props) => {
         position="relative"
         background="#fff"
         onClick={() => {
-          setModal(false)
+          setModal(false);
         }}
       >
         <Warp>
@@ -234,7 +233,7 @@ const CommentList = memo((props) => {
             <Warp marginT="11px">
               <p
                 onClick={() => {
-                  likeBtn()
+                  likeBtn();
                 }}
               >
                 {
@@ -259,9 +258,9 @@ const CommentList = memo((props) => {
               marginT="-34px"
               marginR="22px"
               onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                setModal(!modal)
+                e.preventDefault();
+                e.stopPropagation();
+                setModal(!modal);
               }}
             >
               <img src={more} alt="more" />
@@ -276,18 +275,20 @@ const CommentList = memo((props) => {
       </Box>
       <Rectangle />
     </React.Fragment>
-  )
-})
+  );
+});
 
 // 모달 컴포넌트
 const Modal = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const delComment = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId))
+      dispatch(
+        groupDetailCreators.delCommentMW(props.id, props.groupCommentId)
+      );
     }
-  }
+  };
   // edit={edit}
   return (
     <React.Fragment>
@@ -295,14 +296,14 @@ const Modal = (props) => {
       <MWarp direction="column" border="1px solid" radius="10px">
         <ModalButton
           onClick={() => {
-            props.setEdit(true)
+            props.setEdit(true);
           }}
         >
           수정
         </ModalButton>
         <ModalButton
           onClick={() => {
-            delComment()
+            delComment();
           }}
         >
           삭제
@@ -310,136 +311,132 @@ const Modal = (props) => {
       </MWarp>
       {/* </Box> */}
     </React.Fragment>
-  )
-}
+  );
+};
 
 // 수정 컴포넌트
 const EditComment = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [message, setMessage] = useState(props.comment)
+  const [message, setMessage] = useState(props.comment);
   // console.log(message, props.id, props.groupCommentId,)
 
   const editComment = () => {
     if (message === "") {
-      return window.alert("댓글을 입력해주세요.")
+      return window.alert("댓글을 입력해주세요.");
     }
     dispatch(
       groupDetailCreators.editCommentMW(props.id, props.groupCommentId, message)
-    )
-    props.setEdit(false)
-  }
+    );
+    props.setEdit(false);
+  };
 
   return (
     <React.Fragment>
       <EditText
         value={message}
         onChange={(e) => {
-          setMessage(e.target.value)
+          setMessage(e.target.value);
         }}
       />
       <button
         onClick={() => {
-          editComment()
+          editComment();
         }}
       >
         수정완료
       </button>
       <button
         onClick={() => {
-          props.setEdit(false)
+          props.setEdit(false);
         }}
       >
         취소
       </button>
     </React.Fragment>
-  )
-}
+  );
+};
 
 const EditText = styled.textarea`
   width: 285px;
   height: 70px;
-	/* border: none; */
+  /* border: none; */
   padding: 5px 5px 5px 5px;
   /* margin-left: 12px; */
-	resize: none;
+  resize: none;
 `;
 
 GroupComment.defaultProps = {
-	myGroupCommentLikesList: [],
-	commentUserPicture:""
-} 
+  myGroupCommentLikesList: [],
+  commentUserPicture: "",
+};
 
 CommentList.defaultProps = {
-	commentUserPicture:""
-}
+  commentUserPicture: "",
+};
 export default GroupComment;
 
-
-
 const Rectangle = styled.div`
-	background: #C4C4C4;
-	width: 100%;
-	border: 1px solid #E7E7E7;
+  background: #c4c4c4;
+  width: 100%;
+  border: 1px solid #e7e7e7;
 `;
 
 const Box = styled.div`
-	width: 100%;
-	height: ${(props) => props.height};
-	background: ${(props) => props.background};
-	padding: ${(props) => props.padding};
-	margin: ${(props) => props.margin};
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	position: ${(props) => props.position};
-	
+  width: 100%;
+  height: ${(props) => props.height};
+  background: ${(props) => props.background};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  position: ${(props) => props.position};
 `;
 
 const Warp = styled.div`
-	display: flex;
-	width: ${(props) => props.width};
-	height: ${(props) => props.height};
-	flex-direction: ${(props) => props.direction};
-	flex-wrap: ${(props) => props.wrap};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	align-content: ${(props) => props.start};
-	margin-left: ${(props) => props.marginLeft};
-	margin-top: ${(props) => props.marginT};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  display: flex;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  flex-direction: ${(props) => props.direction};
+  flex-wrap: ${(props) => props.wrap};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  align-content: ${(props) => props.start};
+  margin-left: ${(props) => props.marginLeft};
+  margin-top: ${(props) => props.marginT};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Text = styled.p`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
-	margin-right: ${(props) => props.marginR};
-	margin-left: ${(props) => props.marginL};
-	margin-top: ${(props) => props.marginT};
-	cursor: ${(props) => props.pointer};
-	line-height: ${(props) => props.height};
-	word-break: break-all;
-	/* text-align: center; */
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  letter-spacing: ${(props) => props.spacing};
+  margin: ${(props) => props.margin};
+  margin-right: ${(props) => props.marginR};
+  margin-left: ${(props) => props.marginL};
+  margin-top: ${(props) => props.marginT};
+  cursor: ${(props) => props.pointer};
+  line-height: ${(props) => props.height};
+  word-break: break-all;
+  /* text-align: center; */
 `;
 
 const TextArea = styled.textarea`
   width: 310px;
   height: 70px;
-	border: none;
+  border: none;
   padding: 5px 5px 5px 5px;
   margin-left: 12px;
-	resize: none;
-	:required
-  ::placeholder {
+  resize: none;
+  :required ::placeholder {
     font-weight: 500;
     font-size: 14px;
-    color: #C4C4C4;
+    color: #c4c4c4;
   }
 `;
 
@@ -452,54 +449,53 @@ const SendImg = styled.img`
 `;
 
 const Circle = styled.div`
-	width: 29px;
-	height: 29px;
-	border-radius: 50%;
-	background: #C4C4C4;
-	border: 1px solid #E7E7E7;
-	margin-top: ${(props) => props.marginT};
-	margin-left: 20px;
-	background-image: url(${(props) => props.url});
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: #c4c4c4;
+  border: 1px solid #e7e7e7;
+  margin-top: ${(props) => props.marginT};
+  margin-left: 20px;
+  background-image: url(${(props) => props.url});
   background-size: cover;
 `;
 
 const Icon = styled.img`
-	margin-top: ${(props) => props.marginT};
-	margin-right: ${(props) => props.marginR};
-	cursor: pointer;
+  margin-top: ${(props) => props.marginT};
+  margin-right: ${(props) => props.marginR};
+  cursor: pointer;
 `;
 
 const MoreBtn = styled.button`
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	/* margin: 5px 10px 0 0 ; */
-	/* height: 30px; */
-	padding : 5px;
-	background: none;
-	border: none;
-	cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  /* margin: 5px 10px 0 0 ; */
+  /* height: 30px; */
+  padding: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
-
 
 // 모달 컴포넌트 스타일
 const ModalButton = styled.button`
-	width: 50px;
-	height: auto;
-	display: block;
-	background: #FFF;
-	border: none;
-	font-size: 13px;
-	padding: 5px;
-	&:hover {
-		background: lightgrey;
-	}
+  width: 50px;
+  height: auto;
+  display: block;
+  background: #fff;
+  border: none;
+  font-size: 13px;
+  padding: 5px;
+  &:hover {
+    background: lightgrey;
+  }
 `;
 
 const MWarp = styled.div`
-	box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
-	height: 50px;
-	position: absolute;
-	right: 10px; 
-	top: 30px
+  box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
+  height: 50px;
+  position: absolute;
+  right: 10px;
+  top: 30px;
 `;
