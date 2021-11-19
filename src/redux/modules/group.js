@@ -53,10 +53,10 @@ const initialState = {
 
 //미들웨어
 
-const hotGroupMW = (number) => {
+const hotGroupMW = (team) => {
   return (dispatch) => {
     instance
-      .get("/groups/hotgroup", number)
+      .get(`groups/hotgroup?team=${team}`)
       .then((res) => {
         // console.log("핫그룹",res)
         const list = res.data

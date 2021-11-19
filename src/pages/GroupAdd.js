@@ -55,14 +55,6 @@ export const GroupAdd = (props) => {
     else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
   }
 
-  const data = {
-    title: "",
-    selectTeam: "",
-    content: "",
-    groupDate: "",
-    preview: "",
-  }
-
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
