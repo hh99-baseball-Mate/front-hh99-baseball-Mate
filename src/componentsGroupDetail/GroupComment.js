@@ -32,7 +32,7 @@ const GroupComment = memo((props) => {
   const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
   // console.log("groupPage야야", groupPage)
-  // console.log("코멘트컴포넌트", props)
+  console.log("코멘트컴포넌트", props)
 
   const id = props.groupId;
   //  console.log("페이지아이디",id)
@@ -126,14 +126,13 @@ const GroupComment = memo((props) => {
       <Rectangle />
 
       {/* 댓글 */}
-      {props.groupCommentList.map((comment, idx) => {
+      {props.groupCommentList.map((comment) => {
         return (
           <CommentList
-            key={idx}
+            key={comment.groupCommentId}
             {...comment}
             id={id}
             myGroupCommentLikesList={props.myGroupCommentLikesList}
-            idx={idx}
           />
         );
       })}

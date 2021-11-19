@@ -31,7 +31,7 @@ const Comment = memo((props) => {
   // const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
   // console.log("groupPage야야", groupPage)
-  // console.log("코멘트컴포넌트", props)
+  console.log("코멘트컴포넌트", props)
 
   const id = props.id
    console.log("페이지아이디",id)
@@ -57,7 +57,6 @@ const Comment = memo((props) => {
   // 	dispatch(screenDetailCreators.mylistMW())
   // },[])
 
-  console.log("콘솔이야",kakaoCheck)
 
   return (
     <React.Fragment>
@@ -127,14 +126,13 @@ const Comment = memo((props) => {
       <Rectangle />
 
       {/* 댓글 */}
-      {props.screenCommentList.map((comment, idx) => {
+      {props.screenCommentList.map((comment) => {
         return (
           <CommentList
-            key={comment.groupCommentId}
+            key={comment.screenCommentId}
             {...comment}
             id={id}
             myScreenCommentLikesList={props.myScreenCommentLikesList}
-            idx={idx}
           />
         )
       })}
@@ -147,7 +145,7 @@ const CommentList = memo((props) => {
   // console.log("댓글 컴포넌트", props)
   const dispatch = useDispatch()
 
-  const mylist = useSelector((state) => state.screenDetail.mylist)
+  const mylist = useSelector((state) => state.screenDetail.screenMylist)
 
   // const user = useSelector((state) => state.user.user_info)
   const Me = mylist.userid
@@ -177,7 +175,7 @@ const CommentList = memo((props) => {
   useEffect(() => {
     const likeIdx = likeList.indexOf(commentId)
     // console.log("likeIdx", likeIdx)
-    if (likeIdx >= 0) {
+    if (likeIdx !== -1) {
       setLike(true)
     }
   }, [likeList])

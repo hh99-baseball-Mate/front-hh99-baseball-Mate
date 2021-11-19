@@ -58,6 +58,12 @@ const Participant = memo((props) => {
     }
   }
 
+  // 참석 확정 버튼
+  const confirm = () => {
+    dispatch(groupDetailCreators.confirmMW(groupId, true))
+    dispatch(groupDetailCreators.chatMW())
+  }
+
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
   )
@@ -88,14 +94,21 @@ const Participant = memo((props) => {
             </Text>
           </CircleBox>
 
-          {props.appliedUserInfo?.map((list, idx) => {
-            return <PartyList key={idx} {...list} />
+          {props.appliedUserInfo?.map((list) => {
+            return <PartyList key={list.UserInx} {...list} />
           })}
         </Warp>
         <Warp flex="flex" justify="center">
           {
             // 글작성자랑 내아이디랑 같으면 버튼 안보임
-            props.createdUserId === props.userid ? null : // 모집완료되면 모집마감
+            props.createdUserId === props.userid ? 
+            // 모집완료되면 모집마감
+            <ConfirmBtn
+              onClick={()=>{confirm()}}
+            >
+              모임확정하기
+            </ConfirmBtn>
+               : 
             props.close ? (
               <DisableBtn disabled> 모집 마감 </DisableBtn>
             ) : // 참여 했을 때 참여 취소버튼
