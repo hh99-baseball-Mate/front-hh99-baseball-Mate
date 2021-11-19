@@ -2,21 +2,18 @@ import { width } from "dom-helpers";
 import React from "react";
 import styled from "styled-components";
 
-const Progress = (props) => {
-
-  let progress = props.hotPercent
+const Progress = ({ hotPercent }) => {
+  let progress = hotPercent
   if (progress > 100) {
-    progress = 100;
+    progress = 100
   }
 
   return (
     <ProgresBar>
-      <HighLight
-        width={progress+"%"}
-      />
+      <HighLight width={progress + "%"} />
     </ProgresBar>
-  );
-};
+  )
+}
 
 export default Progress;
 

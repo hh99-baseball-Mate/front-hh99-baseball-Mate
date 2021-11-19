@@ -15,7 +15,7 @@ export const ClubImage = (props) => {
     // formdata.append("myteam", e.target.className)
 
     // for (const keyValue of formdata) console.log(keyValue)
-    dispatch(userActions.choiceClubMD(e.target.className))
+    dispatch(userActions.choiceClubMD(e.target.name))
     // console.log(e.target.className)
     // history.replace("/")
   }
@@ -28,7 +28,7 @@ export const ClubImage = (props) => {
             <ClubImg
               src={baseUrl + src.img}
               style={{ width: "98px", padding: "10px" }}
-              className={src.name}
+              name={src.name}
               onClick={choiceClub}
             />
           </Bg>
