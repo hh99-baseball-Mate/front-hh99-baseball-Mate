@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import {
   Inputs,
   Text,
@@ -6,54 +6,54 @@ import {
   Container,
   ArrowBack,
   Buttons,
-} from "../components"
+} from "../components";
 import {
   AiOutlinePlusCircle,
   AiOutlineMinusCircle,
   AiOutlineDown,
-} from "react-icons/ai"
-import { Picture } from "../componentsGroupAdd/Picture"
-import styled from "styled-components"
-import { clubImageSrc } from "../shared/clubImage"
-import { Preview } from "../componentsGroupAdd/Preview"
-import { useDispatch, useSelector } from "react-redux"
-import { actionCreators as groupActions } from "../redux/modules/group"
-import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
-import { useVolumeBtn } from "../customHook/useVolumeBtn"
-import { useInputs } from "../customHook/useInputs"
-import { usePreview } from "../customHook/usePreview"
+} from "react-icons/ai";
+import { Picture } from "../componentsGroupAdd/Picture";
+import styled from "styled-components";
+import { clubImageSrc } from "../shared/clubImage";
+import { Preview } from "../componentsGroupAdd/Preview";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as groupActions } from "../redux/modules/group";
+import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal";
+import { useVolumeBtn } from "../customHook/useVolumeBtn";
+import { useInputs } from "../customHook/useInputs";
+import { usePreview } from "../customHook/usePreview";
 
 export const GroupAdd = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // 선택한 구단에 대한 경기일정 리스트 state
-  const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
+  const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
 
   // 커스텀 훅 인풋
   const [inputValue, onChange] = useInputs({
     title: "",
     selectTeam: "",
     content: "",
-  })
+  });
 
-  const { content, title, selectTeam } = inputValue
+  const { content, title, selectTeam } = inputValue;
 
   // + - 버튼 커스텀 훅
-  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0)
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0);
 
   // 이미지 미리보기/ 삭제 커스텀훅
-  const [imgPreview, deletePreview, preview] = usePreview("")
+  const [imgPreview, deletePreview, preview] = usePreview("");
 
   // 모달 보기 state
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   // 경기일정 state
-  const [groupDate, setGroupDate] = useState("")
+  const [groupDate, setGroupDate] = useState("");
 
   const showModalBtn = () => {
-    if (selectTeam) setShowModal(!showModal)
-    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
-  }
+    if (selectTeam) setShowModal(!showModal);
+    else window.alert("직관하고싶은 구단을 먼저 선택해주세요");
+  };
 
   const data = {
     title: "",
@@ -61,38 +61,38 @@ export const GroupAdd = (props) => {
     content: "",
     groupDate: "",
     preview: "",
-  }
+  };
 
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true
-    })
+      return !e ? false : true;
+    });
 
     if (emptyValue.includes(false) || !groupDate) {
-      window.alert("빈란을 채워주세요")
+      window.alert("빈란을 채워주세요");
       // console.log("빈값있음")
-      return
+      return;
     }
 
-    const formData = new FormData()
+    const formData = new FormData();
 
-    formData.append("title", title)
-    formData.append("groupDate", groupDate)
-    formData.append("content", content)
-    formData.append("peopleLimit", peopleLimit)
-    formData.append("selectTeam", selectTeam)
-    formData.append("file", preview)
+    formData.append("title", title);
+    formData.append("groupDate", groupDate);
+    formData.append("content", content);
+    formData.append("peopleLimit", peopleLimit);
+    formData.append("selectTeam", selectTeam);
+    formData.append("file", preview);
 
-    dispatch(groupActions.addGroupMD(formData))
-    e.target.disabled = true
-    for (const keyValue of formData) console.log(keyValue)
-  }
+    dispatch(groupActions.addGroupMD(formData));
+    e.target.disabled = true;
+    for (const keyValue of formData) console.log(keyValue);
+  };
 
   useEffect(() => {
     // 선택한 구단을 파라미터로 넘겨서 get 요청
-    dispatch(groupActions.selectTeamMD(selectTeam))
-  }, [selectTeam])
+    dispatch(groupActions.selectTeamMD(selectTeam));
+  }, [selectTeam]);
 
   return (
     <Container>
@@ -214,13 +214,13 @@ export const GroupAdd = (props) => {
 
       <Buttons _onClick={submitBtn}>모임생성</Buttons>
     </Container>
-  )
-}
+  );
+};
 
 GroupAdd.defaultProps = {
   defaultImg:
     "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
-}
+};
 
 const Grid = styled.div`
   margin-top: 20px;
@@ -228,43 +228,42 @@ const Grid = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e7e7e7;
-`
-
+`;
 
 const PeopleCount = styled.div`
   width: 50px;
-`
+`;
 
 const PeopleSelectContainer = styled.div`
   margin: 24px 0 40px;
   display: flex;
   position: relative;
   align-items: center;
-`
+`;
 
 const PeopleSelect = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
   right: 0px;
-`
+`;
 
 const Option = styled.option`
   text-align: center;
-`
+`;
 
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
-`
+`;
 const TextBox = styled.div`
   width: 100%;
   padding: 20px 0;
   display: flex;
   cursor: pointer;
   justify-content: space-between;
-`
+`;
 
 const GameDate = styled.div`
   display: flex;
-`
+`;
