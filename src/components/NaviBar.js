@@ -103,7 +103,7 @@ const Container = styled.div`
   bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `;
 
 const Warp = styled.div`

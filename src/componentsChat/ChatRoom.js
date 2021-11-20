@@ -10,13 +10,14 @@ import MessageBox from "./MessageBox";
 import ChatRoomModal from "./ChatRoomModal";
 
 import more from "../shared/icon/more.svg"
+import more2 from "../shared/icon/more2.svg"
 
 const ChatRoom = (props) => {
 
-	const [info, setInfo] = useState(false);
+	const [modal, setModal] = useState(false);
 	
-	const infoModal =() => {
-		setInfo(true);
+	const modalInfo =() => {
+		setModal(true);
 
 	}
 
@@ -63,30 +64,37 @@ const ChatRoom = (props) => {
 	// };
 
 	return (
+		// <React.Fragment>
 		<Container>
-
-	
-
-			<ArrowBack>롯데 응원방
-				<ModalBtn src={more} alt="" 
-					onClick={()=>{infoModal()}}
-				/>
+			<ArrowBack>
+				롯데 응원방
+				<Warp flex="flex" align="center">
+					<ModalBtn src={more2} alt="" 
+						onClick={()=>{modalInfo()}}
+					/>
+				</Warp>
 			</ArrowBack>
 			<Rectangle/>
 
-			{/* 모달 */}
-			{
-				info ? <ChatRoomModal/> : null
-			}
-			
 
-			<Box background="#FFF0EE" height="96vh" padding="20px">
 
-				<MessageBox/>
 
-			</Box>
-			<ChatWrite/>
-		</Container>
+		
+
+				{/* 모달 */}
+				{
+					modal ? <ChatRoomModal modal={modal} setModal={setModal}/> : null
+				}
+				
+
+				<Box padding="20px" >
+
+					{/* <MessageBox/> */}
+
+				</Box>
+				{/* <ChatWrite/> */}
+			</Container>
+		// </React.Fragment>
 	)
 }
 
@@ -95,10 +103,18 @@ export default ChatRoom;
 const Container = styled.div`
   margin-bottom: 10px;
 	width: 425px;
+	position: relative;
+	background: #FFF0EE;
+	/* height: 100vh; */
 `;
 
-const ModalBtn = styled.button`
-
+const ModalBtn = styled.img`
+	padding: 10px;
+	position: absolute;
+	/* left: 41.67%; */
+	right: 10px;
+	/* top: 12.5%;
+	bottom: 12.5%; */
 `;
 
 const Rectangle = styled.div`

@@ -17,17 +17,20 @@ const GroupDetail = memo((props) => {
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
+  const loadDetail = useSelector((state) => state.groupDetail.groupPage)
+  const mylist = useSelector((state) => state.groupDetail.mylist)
+
+  // 하트(찜) 한것 배열 몇번째인지 찾기
+  const myGroupLikesList = mylist.myGroupLikesList;
+  const likePost = myGroupLikesList.indexOf(Number(groupId))
+
   useEffect(() => {
     const groupId = params.groupId
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
-  }, [groupId, selectPage, heart, join, close])
+  }, [dispatch, likePost, groupId, selectPage, close])
 
-  const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  console.log("상세페이지", loadDetail)
-  // console.log("내꺼야", mylist)
 
   const commentBtn = () => {
     const myJoin = loadDetail.appliedUserInfo.findIndex(
@@ -53,6 +56,7 @@ const GroupDetail = memo((props) => {
         setClose={setClose}
         heart={heart}
         setHeart={setHeart}
+        likePost={likePost}
       />
 
       {/* 참여자 & 방명록 */}

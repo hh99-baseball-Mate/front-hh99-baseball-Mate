@@ -102,7 +102,7 @@ function App() {
             />
             <Route path="/screen" exact component={ScreenList} />
             <Route
-              path="/screendetail/:screenId"
+              path="/screen/screendetail/:screenId"
               exact
               component={ScreenDetail}
             />
@@ -135,7 +135,7 @@ function App() {
             <Route path="/screen" exact component={ScreenList} />
             <Route path="/screen/screenadd" exact component={ScreenAdd} />
             <Route
-              path="/screendetail/:screenId"
+              path="/screen/screendetail/:screenId"
               exact
               component={ScreenDetail}
             />
@@ -143,7 +143,7 @@ function App() {
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
             <Route path="/chat" exact component={Chat} />
-            <Route path="/chatroom" exact component={ChatRoom} />
+            <Route path="/chat/chatroom" exact component={ChatRoom} />
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
 
@@ -165,5 +165,5 @@ const Container = styled.div`
   min-height: 100vh;
   margin: auto;
   background: #fff;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `;

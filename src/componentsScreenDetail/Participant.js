@@ -71,6 +71,18 @@ const Participant = memo((props) => {
     }
   }, [props, props.join, myJoin])
 
+
+    // 참석 확정/취소 버튼
+    const confirm = () => {
+      dispatch(screenDetailCreators.confirmMW(groupId))
+      dispatch(screenDetailCreators.chatMW())
+    }
+  
+    // 채팅방 생성 버튼
+    const chat = () => {
+      
+    }
+
   return (
     <React.Fragment>
       <Box padding="28px 20px 40px 20px" background="#fff">

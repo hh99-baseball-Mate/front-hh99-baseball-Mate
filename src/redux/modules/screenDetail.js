@@ -57,20 +57,12 @@ const load_mylist = createAction(LOAD_SCREEN_MYLIST, (mylist) => ({ mylist }))
 const initialState = {
   screenPage: [],
   screenMylist: {
-		// address: "",
-		// myGoodsLikesList: [],
-		// myGroupCommentLikesList: [],
-		// myGroupLikesList: [],
-		// myScreenCommentLikesList: [],
-		// myScreenLikesList: [],
-		// myTimeLineLikesList: [],
-		// myteam: "",
-		// picture: "",
-		// selfIntroduce: "",
-		// userid: "",
-		// useridx: "",
-		// username: "",
-		// usertype: "",
+		myGoodsLikesList: [],
+		myGroupCommentLikesList: [],
+		myGroupLikesList: [],
+		myScreenCommentLikesList: [],
+		myScreenLikesList: [],
+		myTimeLineLikesList: [],
 	},
 }
 
@@ -252,6 +244,37 @@ const mylistMW = () => {
   }
 }
 
+// 모임확정하기
+const confirmMW = (groupId) => {
+  return function (dispatch, getState, { history }) {
+    // const isLiked = { isLiked: like }
+    instance
+      .patch(`/groups/${groupId}/applications`)
+      .then((res) => {
+        console.log(res)
+        const msg = res.data.message
+        window.alert(msg)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
+//채팅
+const chatMW = ()  => {
+  return function (dispatch, getState, { history }) {
+    instance
+     .post("/chat/rooms")
+     .then((res) => {
+       console.log(res)
+     })
+     .catch((err) => {
+       console.log(err)
+     })
+  }
+}
+
 //reducer
 export default handleActions(
   {
@@ -343,7 +366,9 @@ const screenDetailCreators = {
 	editCommentMW,
 	delCommentMW,
 	likeCommentMW,
-	mylistMW
+	mylistMW,
+  confirmMW,
+  chatMW
 }
 
 export {screenDetailCreators};
