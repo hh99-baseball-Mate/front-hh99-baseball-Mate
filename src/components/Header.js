@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { VscBell } from "react-icons/vsc";
+import bell from "../shared/icon/bell.svg"
 
 const Header = (props) => {
   const history = useHistory();
@@ -46,7 +47,12 @@ const Header = (props) => {
         >
           굿즈자랑
         </Goods>
-        <Icon />
+
+        {/* 알림 */}
+        <Icon src={bell} alt="alert" 
+          onClick={()=>{history.push("/alarm")}}
+        />
+        <RedDot/>
       </Box>
 
       {/* 구분선 */}
@@ -170,7 +176,23 @@ const Rectangle = styled.div`
   height: 1px;
 `;
 
-const Icon = styled(VscBell)`
+// const Icon = styled(VscBell)`
+//   position: absolute;
+//   right: 20px;
+// `;
+
+const Icon = styled.img`
   position: absolute;
   right: 20px;
 `;
+
+const RedDot = styled.div`
+  width: 4px;
+  height: 4px;
+  border-radius: 50px;
+  background: #F25343;
+  position: absolute;
+  right: 20px;
+`;
+
+

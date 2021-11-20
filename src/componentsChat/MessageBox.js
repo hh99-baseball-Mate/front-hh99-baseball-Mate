@@ -113,7 +113,7 @@ const Circle = styled.div`
 `;
 
 const Talk = styled.div`
-	max-width: 280px;
+	max-width: 275px;
 	min-width: 10px;
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;

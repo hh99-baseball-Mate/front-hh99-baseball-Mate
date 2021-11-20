@@ -18,4 +18,5 @@ export const CommunityDetail = (props) => {
 const Border = styled.div`
   width: 100%;
   border: 1px solid #e7e7e7;
+  margin: ${(props) => props.margin};
 `;

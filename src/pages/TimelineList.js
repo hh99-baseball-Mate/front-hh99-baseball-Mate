@@ -18,6 +18,7 @@ const TimelineList = React.memo((props) => {
   const user = useSelector((state) => state.user.user_info)
   const likelist = useSelector((state) => state.timeline.likelist)
 
+  console.log(timeline)
   // console.log("likelist", likelist)
   useEffect(() => {
     dispatch(timelineCreators.loadTimelineMW())
@@ -43,7 +44,7 @@ const TimelineList = React.memo((props) => {
             {timeline.map((timeline, idx) => {
               return (
                 <Timeline
-                  key={idx}
+                  key={timeline.timelineId}
                   {...timeline}
                   user={user}
                   likelist={likelist}

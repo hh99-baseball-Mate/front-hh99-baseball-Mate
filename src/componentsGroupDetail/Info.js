@@ -6,6 +6,7 @@ import { useHistory, useParams } from "react-router";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
+import { ArrowBack } from "../components";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -58,16 +59,15 @@ const Info = memo((props) => {
   // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
-  // useEffect(() => {
-  //   const groupLike = myGroupLikesList.indexOf(id)
-  //   // console.log("표시",groupLike)
-  //   if (groupLike >= 0) {
-  //     props.setHeart(true)
-  //     return
-  //   } else {
-  //     props.setHeart(false)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (props.likePost !== -1) {
+      props.setHeart(true)
+    } else {
+      props.setHeart(false)
+    }
+    console.log("props.likePost",props.likePost, props.heart)
+  }, [props.likePost])
+
 
   // 모집마감 표시
   useEffect(() => {
@@ -103,7 +103,9 @@ const Info = memo((props) => {
   return (
     <Container>
       <Box position="relative">
-        <Img url={imageUrl} />
+        <Img url={imageUrl}>
+          <ArrowBack/>
+        </Img>
         <JoinCircle
           onClick={() => {
             HeartBtn()

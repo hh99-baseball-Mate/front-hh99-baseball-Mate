@@ -1,10 +1,11 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Progress from "../components/Progress";
+import { ArrowBack } from "../components";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -34,29 +35,18 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-  // const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  // const mylist = useSelector((state) => state.groupDetail.mylist)
-
-  // const [heartJoin, setHeartJoin] = useState(false);
-
-  const myScreenLikesList = props.myScreenLikesList
-  const id = props.id
-
-  // useEffect(() => {
-  // 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-  // 	dispatch(groupDetailCreators.mylistMW())
-  // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
   useEffect(() => {
-    const groupLike = myScreenLikesList.indexOf(id)
-    // console.log("표시",groupLike)
-    if (groupLike >= 0) {
-      props.setHeartJoin(true)
+    if (props.likePost !== -1) {
+      props.setHeart(true)
+      return
     } else {
-      props.setHeartJoin(false)
+      props.setHeart(false)
     }
-  }, [])
+  }, [props.likePost])
+
+  // console.log("찜", props.heart, myScreenLikesList)
 
   // 모집마감 표시
   useEffect(() => {
@@ -68,10 +58,9 @@ const Info = memo((props) => {
   }, [props])
 
   // 찜(하트) 버튼
-  const joinHeartBtn = () => {
-    props.setHeartJoin(!props.heartJoin)
-    // console.log("",props.heartJoin)
-    dispatch(screenDetailCreators.likePostMW(props.id, props.heartJoin))
+  const heartBtn = () => {
+    props.setHeart(!props.heart)
+    dispatch(screenDetailCreators.likePostMW(props.id, props.heart))
   }
 
   // 수정버튼
@@ -86,19 +75,23 @@ const Info = memo((props) => {
     }
   }
 
-  // console.log("받아오기", props)
+  console.log("받아오기", props)
 
 
   return (
     <Container>
       <Box position="relative">
-        <Img url={imageUrl} />
+        {/* 배경사진 */}
+        <Img url={imageUrl}> 
+          <ArrowBack />        
+        </Img>
+        {/* 찜버튼 */}
         <JoinCircle
           onClick={() => {
-            joinHeartBtn()
+            heartBtn()
           }}
         >
-          {props.heartJoin ? (
+          {props.heart ? (
             <img src={heart_join} alt="Heart" />
           ) : (
             <img src={heart_null} alt="nullHeart" />
@@ -200,9 +193,9 @@ const Info = memo((props) => {
             {props.groupDate}
           </Text>
           <Slice> &ensp;|&ensp; </Slice>
-          {/* <img src={location} alt="location" />
-					<Text color="#777777" size="12px">{props.stadium}</Text>
-					<Slice> &ensp;|&ensp; </Slice>  */}
+          <img src={location} alt="location" />
+					<Text color="#777777" size="12px">{props.placeInfomation}</Text>
+					<Slice> &ensp;|&ensp; </Slice> 
           <img src={users} alt="users" />
           <Text color="#777777" size="12px">
             최대 {props.peopleLimit}명
@@ -248,6 +241,7 @@ const Info = memo((props) => {
 })
 
 Info.defaultProps = {
+  id: "",
   myScreenLikesList: [],
   // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
   UserImage: "sample.png"
@@ -261,6 +255,7 @@ const Container = styled.div`
   /* height: auto; */
   margin: 0 auto;
   position: relative;
+  z-index: 0;
 `;
 
 const Box = styled.div`

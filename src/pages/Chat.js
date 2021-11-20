@@ -1,69 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
-import SockJS from "sockjs-client";
-import Stomp from "stompjs"
-
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatCard from "../componentsChat/ChatCard";
-
+import { chatCreators } from "../redux/modules/chat";
 
 const Chat = (props) => {
 
 	const history = useHistory();
+	const disptch = useDispatch()
 
- // 배포, 개발 환경 채팅 주소 관리
-	const BASE_URL = process.env.REACT_APP_BASE_URL;
-	// 소켓
-	const sock = new SockJS(BASE_URL);
-	const ws = Stomp.over(sock);
-
-
-  // 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
-  // const wsConnectSubscribe = () => {
-  //   try {
-  //     ws.debug = null;
-  //     ws.connect(
-  //       {
-  //         // token: token,
-  //       },
-  //       () => {
-  //         ws.subscribe(
-  //           `/sub/api/chat/rooms/${room_id}`,
-  //           (data) => {
-  //             const newMessage = JSON.parse(data.body);
-  //             // logger("구독후 새로운 메세지 data", newMessage);
-  //             console.log("구독후 새로운 메세지 data", newMessage);
-
-  //             // 실시간 채팅 시간 넣어주는 부분
-  //             const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
-  //             dispatch(
-  //               chatActions.getMessages({ ...newMessage, createdAt: now_time })
-  //             );
-  //           },
-  //           {
-  //             token: token,
-  //           }
-  //         );
-  //       }
-  //     );
-  //   } catch (err) {
-	// 		console.log(err);
-  //     // logger("소켓 커넥트 에러", e);
-	// 		console.log(err)
-  //   }
-  // };
-
+	
+  // const chatList = useSelector((state) => state.screenDetail.screenPage)
+	useEffect(() => {
+		disptch(chatCreators.loadChatListMW())
+	})
 
 	return (
 		<React.Fragment>
 			<ArrowBack>채팅</ArrowBack>
 			<Rectangle/>
 
-			<ChatCard/>
-			<ChatCard/>
-			<ChatCard/>
+			<Box>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+				<ChatCard/>
+			</Box>
 			
 			<Container  position="absolute" top="50%" trans="translateY(-50%)">
 				<Warp direction="column">
@@ -76,6 +49,11 @@ const Chat = (props) => {
 				</Warp>
 			</Container>
 			
+			<Box>
+				<TimelineBtn onClick={()=>{history.push("/timeline")}}>
+					{/* 채팅이 없으면 다른 사람들과 한 줄 생각을 나눠보세요 */}
+				</TimelineBtn>
+			</Box>
 
 			<MarginBottom/>
 			<NaviBar/>
@@ -141,4 +119,33 @@ const Button = styled.button`
 	border: 1px solid #F25343;
 	color: #F25343;
 	font-size: 14px;
+`;
+
+const Box = styled.div`
+	width: 100%;
+	height: ${(props) => props.height};
+	background: ${(props) => props.background};
+	padding: ${(props) => props.padding};
+	margin: ${(props) => props.margin};
+	margin-bottom: ${(props) => props.bottom};
+	display: ${(props) => props.flex};
+	flex-direction: ${(props) => props.direction};
+	justify-content: ${(props) => props.justify};
+	align-items: ${(props) => props.align};
+	position: ${(props) => props.position};
+
+`;
+
+const List = styled.div`
+ 	height: 550px;
+	overflow: auto;
+	/* NaviBar안겹치게 */
+	/* margin-bottom: 94px; */
+`;
+
+const TimelineBtn = styled.button`
+	position: absolute; 
+	bottom:80px; 
+  left: 50%;
+  transform: translateX(-50%);
 `;

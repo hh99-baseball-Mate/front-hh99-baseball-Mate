@@ -83,7 +83,7 @@ const Timeline = React.memo((props) => {
                 likeToggle()
               }}
             >
-              {like ? `😍` : `😶`}
+              {like ? `🧡` : `🤍`}
             </Text>
             <Text size="12px" marginL="5px">
               {props.likecount}

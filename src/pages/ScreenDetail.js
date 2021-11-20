@@ -15,18 +15,22 @@ const ScreenDetail = (props) => {
   const screenId = params.screenId
   const [selectPage, setSelectPage] = useState(true)
   const [close, setClose] = useState(false)
-  const [heartJoin, setHeartJoin] = useState(false)
+  const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
+
+  const loadDetail = useSelector((state) => state.screenDetail.screenPage)
+  const mylist = useSelector((state) => state.screenDetail.screenMylist)
+
+  // 하트(찜) 한것 배열 몇번째인지 찾기
+  const myScreenLikesList = mylist.myScreenLikesList;
+  const likePost = myScreenLikesList.indexOf(Number(screenId))
 
   useEffect(() => {
     const screenId = params.screenId
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-  }, [screenId, selectPage, close, heartJoin, join])
+  }, [dispatch, likePost, screenId, selectPage, close])
 
-  const loadDetail = useSelector((state) => state.screenDetail.screenPage)
-  const mylist = useSelector((state) => state.screenDetail.mylist)
-  // const allmylist = useSelector((state) => state.user.user_info)
 
   // console.log("스크린상세페이지", loadDetail)
   // console.log("슼린내꺼야", mylist)
@@ -54,8 +58,9 @@ const ScreenDetail = (props) => {
         {...mylist}
         close={close}
         setClose={setClose}
-        heartJoin={heartJoin}
-        setHeartJoin={setHeartJoin}
+        heart={heart}
+        setHeart={setHeart}
+        likePost={likePost}
       />
 
       {/* 참여자 & 방명록 */}
@@ -97,6 +102,13 @@ const ScreenDetail = (props) => {
       </Box>
     </Container>
   )
+}
+
+ScreenDetail.defaultProps = {
+  // id: "",
+  myScreenLikesList: [],
+  // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
+  // UserImage: "sample.png"
 }
 
 export default ScreenDetail;

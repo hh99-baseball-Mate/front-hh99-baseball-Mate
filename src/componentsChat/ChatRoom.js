@@ -1,24 +1,100 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import SockJS from "sockjs-client";
+import Stomp from "stompjs"
+
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatWrite from "./ChatWrite";
 import MessageBox from "./MessageBox";
+import ChatRoomModal from "./ChatRoomModal";
+
+import more from "../shared/icon/more.svg"
+import more2 from "../shared/icon/more2.svg"
 
 const ChatRoom = (props) => {
 
+	const [modal, setModal] = useState(false);
+	
+	const modalInfo =() => {
+		setModal(true);
+
+	}
+
+	// 배포, 개발 환경 채팅 주소 관리
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
+	// 소켓
+	const sock = new SockJS(BASE_URL);
+	const ws = Stomp.over(sock);
+
+
+	// 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
+	// const wsConnectSubscribe = () => {
+	//   try {
+	//     ws.debug = null;
+	//     ws.connect(
+	//       {
+	//         // token: token,
+	//       },
+	//       () => {
+	//         ws.subscribe(
+	//           `/sub/api/chat/rooms/${room_id}`,
+	//           (data) => {
+	//             const newMessage = JSON.parse(data.body);
+	//             // logger("구독후 새로운 메세지 data", newMessage);
+	//             console.log("구독후 새로운 메세지 data", newMessage);
+
+	//             // 실시간 채팅 시간 넣어주는 부분
+	//             const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
+	//             dispatch(
+	//               chatActions.getMessages({ ...newMessage, createdAt: now_time })
+	//             );
+	//           },
+	//           {
+	//             token: token,
+	//           }
+	//         );
+	//       }
+	//     );
+	//   } catch (err) {
+	// 		console.log(err);
+	//     // logger("소켓 커넥트 에러", e);
+	// 		console.log(err)
+	//   }
+	// };
 
 	return (
+		// <React.Fragment>
 		<Container>
-			<ArrowBack>롯데 응원방</ArrowBack>
+			<ArrowBack>
+				롯데 응원방
+				<Warp flex="flex" align="center">
+					<ModalBtn src={more2} alt="" 
+						onClick={()=>{modalInfo()}}
+					/>
+				</Warp>
+			</ArrowBack>
 			<Rectangle/>
-			<Box background="#FFF0EE" height="96vh" padding="20px">
 
-				<MessageBox/>
 
-			</Box>
-			<ChatWrite/>
-		</Container>
+
+
+		
+
+				{/* 모달 */}
+				{
+					modal ? <ChatRoomModal modal={modal} setModal={setModal}/> : null
+				}
+				
+
+				<Box padding="20px" >
+
+					{/* <MessageBox/> */}
+
+				</Box>
+				{/* <ChatWrite/> */}
+			</Container>
+		// </React.Fragment>
 	)
 }
 
@@ -27,6 +103,18 @@ export default ChatRoom;
 const Container = styled.div`
   margin-bottom: 10px;
 	width: 425px;
+	position: relative;
+	background: #FFF0EE;
+	/* height: 100vh; */
+`;
+
+const ModalBtn = styled.img`
+	padding: 10px;
+	position: absolute;
+	/* left: 41.67%; */
+	right: 10px;
+	/* top: 12.5%;
+	bottom: 12.5%; */
 `;
 
 const Rectangle = styled.div`
