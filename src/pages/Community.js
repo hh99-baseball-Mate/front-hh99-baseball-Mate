@@ -1,10 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import CommunityCard from "../communityList/CommunityCard";
 import { Container, Header, NaviBar, Text } from "../components";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
-import { PancilBtn } from "../components";
-
+import { history } from "../redux/configStore";
 const Community = (props) => {
+  const is_login = useSelector((state) => state.user.is_login);
+  const newPeople = (e) => {
+    !is_login
+      ? window.alert("로그인 후 이용해주세요")
+      : history.push("/grouplist/groupadd");
+    e.target.disabled = true;
+  };
+
   return (
     <div>
       <Header timeline />
@@ -17,7 +25,8 @@ const Community = (props) => {
         <CommunityCard />
         <CommunityCard />
       </Container>
-      <NaviBar home />
+
+      <NaviBar home writeBtn onClick={newPeople} />
     </div>
   );
 };
