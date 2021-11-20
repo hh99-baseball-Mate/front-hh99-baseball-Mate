@@ -5,11 +5,20 @@ import Progress from "./Progress"
 import colorUsers from "../shared/icon/colorUsers.svg"
 
 const GroupCard = (props) => {
-  const { onClick } = props
+  const {
+    onClick,
+    filePath,
+    dday,
+    canApplyNum,
+    groupDate,
+    selectPlace,
+    peopleLimit,title,
+    hotPercent,
+  } = props
 
   const [close, setClose] = useState(false)
 
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + props.filePath
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath
 
   // 모집중, 마감중 표시
   useEffect(() => {
@@ -45,14 +54,14 @@ const GroupCard = (props) => {
               </Ellipse>
             )}
 
-            {props && props.dday > 0 && props.canApplyNum !== 0 ? (
+            {dday && canApplyNum && dday > 0 && canApplyNum !== 0 ? (
               <Ellipse
                 borderColor="#498C9A"
                 background="#498C9A"
                 color="#FFFFFF"
                 marginLeft="4px"
               >
-                D - {props.dday}
+                D - {dday}
               </Ellipse>
             ) : (
               ""
@@ -61,22 +70,22 @@ const GroupCard = (props) => {
 
           <Warp flex="flex" marginB="4px">
             <Text size="12px" color="#777777">
-              {props.groupDate}
+              {groupDate}
             </Text>
             <Slice> &ensp;|&ensp; </Slice>
 
             {/* 지점명 */}
-            {props.selectPlace && (
+            {selectPlace && (
               <>
                 <Text size="12px" color="#777777">
-                  {props.selectPlace}
+                  {selectPlace}
                 </Text>
                 <Slice> &ensp;| &ensp; </Slice>
               </>
             )}
 
             <Text size="12px" color="#777777">
-              최대 {props.peopleLimit}명
+              최대 {peopleLimit}명
             </Text>
           </Warp>
 
@@ -88,7 +97,7 @@ const GroupCard = (props) => {
             lineHeight="20px"
             marginB="8px"
           >
-            {props.title}
+            {title}
           </Text>
 
           <Warp
@@ -97,7 +106,7 @@ const GroupCard = (props) => {
             align="center"
             margin="0 0 0 0"
           >
-            <Progress {...props} />
+            <Progress hotPercent={hotPercent} />
             <Warp flex="flex">
               <img src={colorUsers} alt="users" />
               <Text
@@ -106,7 +115,7 @@ const GroupCard = (props) => {
                 weight="bold"
                 spacing="-0.03em;"
               >
-                &nbsp;{props.canApplyNum}명&nbsp;
+                &nbsp;{canApplyNum}명&nbsp;
               </Text>
               <Text size="12px" color="#F25343" spacing="-0.03em;">
                 남음

@@ -80,7 +80,7 @@ const GroupList = (props) => {
       dispatch(groupCr.getTeamAPI(team))
 
       // 핫 그룹 요청
-      dispatch(groupCr.hotGroupMW(5))
+      dispatch(groupCr.hotGroupMW(user_info.myteam))
       return
     }
 

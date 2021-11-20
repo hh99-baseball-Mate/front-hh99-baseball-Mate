@@ -6,57 +6,72 @@ const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
 // const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";
 
 // 모임 좋아(찜) 하기/취소하기
-const LIKE_POST = "LIKE_POST"
+const SCREEN_LIKE_POST = "SCREEN_LIKE_POST"
 
 // 모임참여/취소
 const SCREEN_APPLY = "SCREEN_APPLY"
-const DELETE_APPLY = "DELETE_APPLY"
+const SCREEN_DELETE_APPLY = "SCREEN_DELETE_APPLY"
 
 // 댓글기능
-const ADD_COMMENT = "ADD_COMMENT"
-const EDIT_COMMENT = "EDIT_COMMENT"
-const DELETE_COMMENT = "DELETE_COMMENT"
-const LIKE_COMMENT = "LIKE_COMMENT"
+const SCREEN_ADD_COMMENT = "SCREEN_ADD_COMMENT"
+const SCREEN_EDIT_COMMENT = "SCREEN_EDIT_COMMENT"
+const SCREEN_DELETE_COMMENT = "SCREEN_DELETE_COMMENT"
+const SCREEN_LIKE_COMMENT = "SCREEN_LIKE_COMMENT"
 
-const LOAD_MYLIST = "LOAD_MYLIS"
+const LOAD_SCREEN_MYLIST = "LOAD_SCREEN_MYLIST"
 
 const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({
   screenPage,
 }))
 // const del_screenPage = createAction(DELETE_SCREEN_PAGE, (groupId) => ({ groupId }));
 
-const like_post = createAction(LIKE_POST, (screenId, like) => ({
+const like_post = createAction(SCREEN_LIKE_POST, (screenId, like) => ({
   screenId,
   like,
 }))
 const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }))
-const del_apply = createAction(DELETE_APPLY, (screenId, userid) => ({
+const del_apply = createAction(SCREEN_DELETE_APPLY, (screenId, userid) => ({
   screenId,
   userid,
 }))
 
-const add_comment = createAction(ADD_COMMENT, (screenId, comment) => ({
+const add_comment = createAction(SCREEN_ADD_COMMENT, (screenId, comment) => ({
   screenId,
   comment,
 }))
 const edit_comment = createAction(
-  EDIT_COMMENT,
+  SCREEN_EDIT_COMMENT,
   (screenId, commentId, comment) => ({ screenId, commentId, comment })
 )
-const del_comment = createAction(DELETE_COMMENT, (screenId, commentId) => ({
+const del_comment = createAction(SCREEN_DELETE_COMMENT, (screenId, commentId) => ({
   screenId,
   commentId,
 }))
 const like_comment = createAction(
-  LIKE_COMMENT,
+  SCREEN_LIKE_COMMENT,
   (screenId, commentId, like) => ({ screenId, commentId, like })
 )
 
-const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
+const load_mylist = createAction(LOAD_SCREEN_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
   screenPage: [],
-  mylist: [],
+  screenMylist: {
+		// address: "",
+		// myGoodsLikesList: [],
+		// myGroupCommentLikesList: [],
+		// myGroupLikesList: [],
+		// myScreenCommentLikesList: [],
+		// myScreenLikesList: [],
+		// myTimeLineLikesList: [],
+		// myteam: "",
+		// picture: "",
+		// selfIntroduce: "",
+		// userid: "",
+		// useridx: "",
+		// username: "",
+		// usertype: "",
+	},
 }
 
 // 불러오기
@@ -244,18 +259,16 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screenPage = action.payload.screenPage
       }),
-    [LIKE_POST]: (state, action) =>
+    [SCREEN_LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
         // console.log("찜받기",action.payload.like.isLiked)
         if (action.payload.like.isLiked) {
-          draft.mylist.myScreenLikesList.push(action.payload.screenId)
+          draft.screenMylist.myScreenLikesList.push(action.payload.screenId)
           return
         } else {
-          const idx = draft.mylist.myScreenLikesList.indexOf(
-            action.payload.screenId
-          )
+          const idx = draft.screenMylist.myScreenLikesList.indexOf(action.payload.screenId)
           if (idx !== -1) {
-            draft.mylist.myScreenLikesList.splice(idx, 1)
+            draft.screenMylist.myScreenLikesList.splice(idx, 1)
           }
         }
       }),
@@ -264,7 +277,7 @@ export default handleActions(
         // console.log("페이로드", action.payload.my)
         draft.screenPage.appliedUserInfo.push(action.payload.my)
       }),
-    [DELETE_APPLY]: (state, action) =>
+    [SCREEN_DELETE_APPLY]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.appliedUserInfo.findIndex(
           (p) => p.UserId === action.payload.userid
@@ -274,11 +287,11 @@ export default handleActions(
           draft.screenPage.appliedUserInfo.splice(idx, 1)
         }
       }),
-    [ADD_COMMENT]: (state, action) =>
+    [SCREEN_ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage.screenCommentList.push(action.payload.comment)
       }),
-    [EDIT_COMMENT]: (state, action) =>
+    [SCREEN_EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
           (p) => p.screenCommentId === action.payload.commentId
@@ -288,7 +301,7 @@ export default handleActions(
           ...action.payload.comment,
         }
       }),
-    [DELETE_COMMENT]: (state, action) =>
+    [SCREEN_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
           (p) => p.screenCommentId === action.payload.commentId
@@ -297,7 +310,7 @@ export default handleActions(
           draft.screenPage.screenCommentList.splice(idx, 1)
         }
       }),
-    [LIKE_COMMENT]: (state, action) =>
+    [SCREEN_LIKE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
           (p) => p.screenCommentId === action.payload.commentId
@@ -311,9 +324,9 @@ export default handleActions(
           draft.screenPage.screenCommentList[idx].screencommentlikeCount += 1
         }
       }),
-    [LOAD_MYLIST]: (state, action) =>
+    [LOAD_SCREEN_MYLIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.mylist = action.payload.mylist
+        draft.screenMylist = action.payload.mylist
       }),
   },
   initialState

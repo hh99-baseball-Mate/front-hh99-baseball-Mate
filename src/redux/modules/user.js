@@ -146,21 +146,14 @@ const userUpdateMD = (formdata, id) => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    axios
+    console.log(club);
+
+    // const myteam = club
+    instance
       .post(
         // `${BASE_URL}/users/${id}`,
         `${BASE_URL}/user/myteam`,
-        { myteam: club },
-
-        {
-          headers: {
-            "Content-type": "application/json;charset=UTF-8",
-            // "Content-Type": "multipart/form-data",
-            // accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "X-AUTH-TOKEN": getCookie("is_login"),
-          },
-        }
+        { myteam: club }
       )
       .then((res) => {
         // console.log(res)
