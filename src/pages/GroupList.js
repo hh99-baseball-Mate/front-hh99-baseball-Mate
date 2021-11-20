@@ -132,7 +132,7 @@ const GroupList = (props) => {
         </SubTitle>
         {/* 핫 한모임 */}
         <Swipers height="350px">
-          {hotGroup &&
+          {hotGroup && hotGroup.length > 0 ? (
             hotGroup.map((e) => {
               return (
                 <HotCard
@@ -141,7 +141,10 @@ const GroupList = (props) => {
                   {...e}
                 />
               )
-            })}
+            })
+          ) : (
+            <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
+          )}
         </Swipers>
         <SelectIcon enlargement moreBtn={datePageBtn}>
           {day ? day : "원하는 경기 일정을 선택해주세요"}

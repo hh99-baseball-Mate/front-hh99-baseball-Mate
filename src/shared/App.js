@@ -39,6 +39,7 @@ import ChatRoom from "../componentsChat/ChatRoom";
 import Community from "../pages/Community";
 import { CommunityDetail } from "../pages/CommunityDetail";
 import CommunityAdd from "../pages/CommunityAdd";
+import { Goods } from "../pages/Goods"
 
 function App() {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={GoodsList} />
+            <Route path="/goods" exact component={Goods} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/community" exact component={Community} />
             <Route path="/communityadd" exact component={CommunityAdd} />
@@ -122,7 +123,7 @@ function App() {
             <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
             <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
             <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={GoodsList} />
+            <Route path="/goods" exact component={Goods} />
             <Route path="/goods/goodsadd" exact component={GoodsAdd} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
