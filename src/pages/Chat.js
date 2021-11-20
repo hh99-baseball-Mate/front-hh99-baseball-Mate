@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatCard from "../componentsChat/ChatCard";
-
+import { chatCreators } from "../redux/modules/chat";
 
 const Chat = (props) => {
 
 	const history = useHistory();
+	const disptch = useDispatch()
+
+	
+  // const chatList = useSelector((state) => state.screenDetail.screenPage)
+	useEffect(() => {
+		disptch(chatCreators.loadChatListMW())
+	})
 
 	return (
 		<React.Fragment>

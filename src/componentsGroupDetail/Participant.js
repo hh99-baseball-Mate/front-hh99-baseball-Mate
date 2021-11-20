@@ -58,9 +58,14 @@ const Participant = memo((props) => {
     }
   }
 
-  // 참석 확정 버튼
+  // 참석 확정/취소 버튼
   const confirm = () => {
-    dispatch(groupDetailCreators.confirmMW(groupId, true))
+    dispatch(groupDetailCreators.confirmMW(groupId))
+    dispatch(groupDetailCreators.chatMW())
+  }
+
+  // 채팅방 생성 버튼
+  const chat = () => {
     dispatch(groupDetailCreators.chatMW())
   }
 
@@ -76,6 +81,9 @@ const Participant = memo((props) => {
       props.setJoin(false)
     }
   }, [props.appliedUserInfo, props.join, myJoin])
+
+ const me = props.createdUserId === props.userid
+ console.log("나다", me) 
 
   return (
     <React.Fragment>
@@ -99,26 +107,26 @@ const Participant = memo((props) => {
           })}
         </Warp>
         <Warp flex="flex" justify="center">
+
+          {/* 버튼 보이게 or 안보이게 */}
+
+          
+       
+
+
           {
-            // 글작성자랑 내아이디랑 같으면 버튼 안보임
+            // 글작성자랑 내아이디랑 같으면 모집마감 버튼
             props.createdUserId === props.userid ? 
-            // 모집완료되면 모집마감
-            <ConfirmBtn
-              onClick={()=>{confirm()}}
-            >
+            <ConfirmBtn onClick={()=>{confirm()}}>
               모임확정하기
             </ConfirmBtn>
                : 
             props.close ? (
               <DisableBtn disabled> 모집 마감 </DisableBtn>
-            ) : // 참여 했을 때 참여 취소버튼
+            ) : 
+            // 참여 했을 때 참여 취소버튼
             props.join ? (
-              <ConfirmBtn
-                onClick={() => {
-                  delapply()
-                }}
-                join={props.join}
-              >
+              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
                 참여 취소하기
               </ConfirmBtn>
             ) : (
@@ -133,6 +141,16 @@ const Participant = memo((props) => {
               </ConfirmBtn>
             )
           }
+
+          {/* 채팅방버튼 */}
+          <ConfirmBtn
+           onClick={() => {
+            chat()
+          }}
+          >
+            채팅방생성
+          </ConfirmBtn>
+
         </Warp>
       </Box>
     </React.Fragment>
