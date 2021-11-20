@@ -54,19 +54,30 @@ const initialState = {
 
 const hotGroupMW = (team) => {
   return (dispatch) => {
+    console.log(team)
+    if (!team) {
+      instance
+        .get(`groups/hotgroup`)
+        .then((res) => {
+          dispatch(load_hotgroup(res.data))
+        })
+        .catch((err) => console.log(err, "핫그룹에러"))
+      return
+    }
+
     instance
       .get(`groups/hotgroup?team=${team}`)
       .then((res) => {
         // console.log("핫그룹",res)
-        const list = res.data;
-        console.log(res);
-        dispatch(load_hotgroup(list));
+        const list = res.data
+        // console.log(res)
+        dispatch(load_hotgroup(list))
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
-};
+        console.log(err, "핫 그룹 그룹선택 에러")
+      })
+  }
+}
 
 //경기일정 페이지
 const getPlayAPI = (team) => {
