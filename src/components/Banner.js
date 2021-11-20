@@ -39,6 +39,7 @@ const BannerContainer = styled.div`
   background-size: cover;
   position: relative;
   height: 437px;
+  background-color: #000;
 `;
 
 const Headers = styled.div`
