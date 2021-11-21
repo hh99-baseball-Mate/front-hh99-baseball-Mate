@@ -27,6 +27,20 @@ const loadChatListMW = () => {
 }
 
 
+const getChatMessagesAX = () => {
+  return function (dispatch, getState, { history }) {
+    const roomId = 117;
+
+    instance
+      .get(`/chat/${roomId}/messages`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  } 
+}
 
 export default handleActions(
 	{
@@ -39,7 +53,8 @@ export default handleActions(
 
 
 const chatCreators = {
-	loadChatListMW
+	loadChatListMW,
+  getChatMessagesAX
 }
 
 export {chatCreators};
