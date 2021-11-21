@@ -59,16 +59,15 @@ const Info = memo((props) => {
   // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
-  // useEffect(() => {
-  //   const groupLike = myGroupLikesList.indexOf(id)
-  //   // console.log("표시",groupLike)
-  //   if (groupLike >= 0) {
-  //     props.setHeart(true)
-  //     return
-  //   } else {
-  //     props.setHeart(false)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (props.likePost !== -1) {
+      props.setHeart(true)
+    } else {
+      props.setHeart(false)
+    }
+    console.log("props.likePost",props.likePost, props.heart)
+  }, [props.likePost])
+
 
   // 모집마감 표시
   useEffect(() => {
@@ -379,9 +378,9 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #E7E7E7;
   background-image: url(${(props) => props.url});
-  /* background-size: contain; */
   background-size: cover;
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Slice = styled.div`

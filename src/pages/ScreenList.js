@@ -79,7 +79,7 @@ export const ScreenList = () => {
         {screen_list && screen_list.length > 0 ? (
           screen_list.map((e) => (
             <GroupCard
-              onClick={() => history.push(`/screendetail/${e.screenId}`)}
+              onClick={() => history.push(`/screen/screendetail/${e.screenId}`)}
               key={e.screenId}
               {...e}
             />

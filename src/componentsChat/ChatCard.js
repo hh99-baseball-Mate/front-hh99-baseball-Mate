@@ -1,12 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import users from "../shared/icon/users.svg" 
 
 const ChatCard = (props) => {
 
+	const history = useHistory();
+
 	return(
-		<Container>
+		<Container onClick={()=>{history.push("/chat/chatroom")}}>
 
 			<Warp>
 

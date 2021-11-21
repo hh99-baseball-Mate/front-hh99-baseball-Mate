@@ -35,35 +35,22 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-  // const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  // const mylist = useSelector((state) => state.groupDetail.mylist)
-
-  // const [heartJoin, setHeartJoin] = useState(false);
-
-  const myScreenLikesList = props?.myScreenLikesList
-  const id = props?.id
-
-  // useEffect(() => {
-  // 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-  // 	dispatch(groupDetailCreators.mylistMW())
-  // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
   useEffect(() => {
-    const groupLike = myScreenLikesList.indexOf(id)
-    console.log("표시", groupLike, props.myScreenLikesList , props.id)
-    if (groupLike !== -1) {
+    if (props.likePost !== -1) {
       props.setHeart(true)
+      return
     } else {
       props.setHeart(false)
     }
-  }, [])
+  }, [props.likePost])
 
-  console.log("찜", props.heart, myScreenLikesList)
+  // console.log("찜", props.heart, myScreenLikesList)
 
   // 모집마감 표시
   useEffect(() => {
-    if (props.dday < 0 || props.canApplyNum === 0) {
+    if (props.dday < 1) {
       props.setClose(true)
     } else {
       props.setClose(false)
@@ -373,9 +360,9 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #E7E7E7;
   background-image: url(${(props) => props.url});
-  /* background-size: contain; */
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 `;
 
 const Slice = styled.div`

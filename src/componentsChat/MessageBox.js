@@ -28,7 +28,7 @@ const MessageBox = (props) => {
 
 
 			{/* 내가 보낸 메세지 */}
-			<Warp align="flex-end" direction="row-reverse" marginR="40px" margin="5px 0">
+			<Warp align="flex-end" direction="row-reverse"  margin="5px 0">
 				<MyTalk>
 					오전 11:34오전 11:34오전 11:34오전 11:34오전 11:34
 				</MyTalk>
@@ -46,12 +46,12 @@ export default MessageBox;
 
 const Container = styled.div`
   margin-bottom: 10px;
-	width: 425px;
+	width: 385px;
 	position: relative;
 `;
 
 const Box = styled.div`
-  width: 425px;
+  width: 385px;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
@@ -113,7 +113,7 @@ const Circle = styled.div`
 `;
 
 const Talk = styled.div`
-	max-width: 280px;
+	max-width: 270px;
 	min-width: 10px;
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;

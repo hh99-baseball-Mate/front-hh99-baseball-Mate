@@ -56,7 +56,14 @@ const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
 
 const initialState = {
   groupPage: [],
-  mylist: [],
+  mylist: {
+    myGoodsLikesList: [],
+		myGroupCommentLikesList: [],
+		myGroupLikesList: [],
+		myScreenCommentLikesList: [],
+		myScreenLikesList: [],
+		myTimeLineLikesList: [],
+  },
 }
 
 // 불러오기
@@ -245,6 +252,8 @@ const confirmMW = (groupId) => {
       .patch(`/groups/${groupId}/applications`)
       .then((res) => {
         console.log(res)
+        const msg = res.data.message
+        window.alert(msg)
       })
       .catch((err) => {
         console.log(err)
@@ -256,7 +265,7 @@ const confirmMW = (groupId) => {
 const chatMW = ()  => {
   return function (dispatch, getState, { history }) {
     instance
-     .get("/chatting")
+     .post("/chat/rooms")
      .then((res) => {
        console.log(res)
      })
