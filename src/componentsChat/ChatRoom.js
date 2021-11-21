@@ -89,10 +89,10 @@ const ChatRoom = (props) => {
 
 				<Box padding="20px" >
 
-					{/* <MessageBox/> */}
+					<MessageBox/>
 
 				</Box>
-				{/* <ChatWrite/> */}
+				<ChatWrite/>
 			</Container>
 		// </React.Fragment>
 	)
@@ -101,11 +101,11 @@ const ChatRoom = (props) => {
 export default ChatRoom;
 
 const Container = styled.div`
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 	width: 425px;
 	position: relative;
 	background: #FFF0EE;
-	/* height: 100vh; */
+	height: 100vh;
 `;
 
 const ModalBtn = styled.img`

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { Header, NaviBar } from "../components"
+import { Header, MarginBottom, NaviBar } from "../components"
 import { Post } from "../componentsGoods/Post"
 import styled from "styled-components"
 
@@ -18,6 +18,7 @@ export const Goods = () => {
       <Post />
       <Post />
 
+      <MarginBottom/>
       <NaviBar writeBtn />
     </>
   )

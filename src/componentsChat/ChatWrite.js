@@ -58,7 +58,7 @@ const Container = styled.div`
 
 const Box = styled.div`
   width: 425px;
-  height: 82px;
+  height: 74px;
   background: #fff;
   padding: ${(props) => props.padding};
   display: flex;

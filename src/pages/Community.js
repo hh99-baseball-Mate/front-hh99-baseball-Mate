@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CommunityCard from "../communityList/CommunityCard";
-import { Container, Header, NaviBar, Text } from "../components";
+import { Container, Header, MarginBottom, NaviBar, Text } from "../components";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import { history } from "../redux/configStore";
 const Community = (props) => {
@@ -26,6 +26,7 @@ const Community = (props) => {
         <CommunityCard />
       </Container>
 
+      <MarginBottom/>
       <NaviBar home writeBtn onClick={newPeople} />
     </div>
   );
