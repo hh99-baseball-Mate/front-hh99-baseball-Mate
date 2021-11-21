@@ -6,7 +6,7 @@ export const GlobalStyles = createGlobalStyle`
 	${normalize}
 	html,
 	body {
-		/* height: 100vh; */
+		/* height: 100%; */
 		min-height: 100vh;
 		width: 425px;
 		background-color: #fafafa;

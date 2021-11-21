@@ -378,9 +378,9 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #E7E7E7;
   background-image: url(${(props) => props.url});
-  /* background-size: contain; */
   background-size: cover;
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Slice = styled.div`

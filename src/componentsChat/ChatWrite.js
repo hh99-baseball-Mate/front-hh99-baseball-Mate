@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { memo, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
+import logger from "../shared/Console";
 
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import send from "../shared/icon/send.svg"
+import upload from "../shared/icon/upload.svg"
 
 const ChatWrite = (props) => {
 
-  const [message, setMessage] = useState("");
+	const { sendMessage } = props;  // 메세지 보내기 stomp 함수
 
-	const addTimeline = () => {
+  // 보낼 메세지 텍스트
+  const now_message = useRef();
+  const msg = now_message.current;
 
-    if (message !== "") {
-      // dispatch(timelineCreators.addTimelineMW(message));
-      setMessage("");
-      return;
-    } 
-    else {
-      window.alert("내용을 입력하세요")
-      return;
-    }
-  };
+	const [message, setMessage] = useState("");
+	// const changeMessage = (e) => {
+  //   setMessage(e.target.value);
+  // };
+
+	// 메세지 보내기 버튼 클릭 시 실행 될 함수
+	const sendMessageBtn = () => {
+		logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue);
+		sendMessage(msg.defaultValue);  //메세지 실제로 보내기
+		setMessage("");  // input 비우기
+	};
+
+	// console.log("aa")
 
 	return (
 		<Container>
@@ -29,19 +36,24 @@ const ChatWrite = (props) => {
 					<Input type="text"
 						placeholder="메시지를 입력하세요" 
 						value={message}
+						ref={now_message}
 						onChange={(e) => {
 							setMessage(e.target.value);
 						}}
 						onKeyPress={(e) => {
 							if(e.key === "Enter"){
-								addTimeline(e);
+								sendMessageBtn(e);
 							}
 						}}
 					/>
 
-					<SendImg src={send} alt="send"
-						onClick={() => {addTimeline()}}
-					/>
+					{
+						message &&
+						<SendImg src={upload} alt="send"
+							onClick={() => {sendMessageBtn()}}
+						/>
+					}
+
 				</Warp>
 			</Box>
 
@@ -58,7 +70,7 @@ const Container = styled.div`
 
 const Box = styled.div`
   width: 425px;
-  height: 82px;
+  height: 74px;
   background: #fff;
   padding: ${(props) => props.padding};
   display: flex;
@@ -92,15 +104,16 @@ const Text = styled.div`
 `;
 
 const Input = styled.input`
-  width: 335px;
+  width: 380px;
   height: 44px;
   border: 1px solid #E7E7E7;
-  border-radius: 5px;
-  padding: 14px 40px 14px 14px;
+  border-radius: 50px;
+  padding: 14px 45px 14px 14px;
   ::placeholder {
     font-size: 14px;
     color: #C4C4C4;
   }
+	:focus {outline:none;}
 `;
 
 const SendImg = styled.img`
