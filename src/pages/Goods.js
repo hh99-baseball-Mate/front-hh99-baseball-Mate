@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react"
-import { useSelector } from "react-redux"
-=======
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
->>>>>>> master
 import { Header, MarginBottom, NaviBar } from "../components"
 import { Post } from "../componentsGoods/Post"
 import { history } from "../redux/configStore"
@@ -62,13 +57,8 @@ export const Goods = () => {
         )}
       </InfinityScroll>
 
-<<<<<<< HEAD
-      <MarginBottom/>
-      <NaviBar writeBtn />
-=======
       <MarginBottom />
       <NaviBar writeBtn onClick={() => history.push("/goods/goodsadd")} />
->>>>>>> master
     </>
   )
 }
