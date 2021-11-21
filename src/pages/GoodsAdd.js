@@ -13,7 +13,6 @@ import { Picture } from "../componentsGroupAdd/Picture"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useInputs } from "../customHook/useInputs"
 import { usePreview } from "../customHook/usePreview"
-import { history } from "../redux/configStore"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 
 export const GoodsAdd = (props) => {
@@ -113,7 +112,7 @@ export const GoodsAdd = (props) => {
 
 GoodsAdd.defaultProps = {
   defaultImg:
-    "https://lh3.googleusercontent.com/proxy/WEGePtNT0Kg0dwUYlFOdMR23NOcxunhlZL5opUfUeZN_IDr3id47Uj1ZX1P4xs1wOsm8E6wPkH3j02d5v2FUtj0wDZw-z_VN3dNozsZUGPKkdxw_4It4QNqdWUuNsTGZnF7pzD_anFXLxREOWVX0-78LTD2pmoIi",
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
 }
 
 const ImgBox = styled.div`

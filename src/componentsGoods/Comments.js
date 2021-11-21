@@ -1,24 +1,39 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
+import { useProfile } from "../customHook/useProfile"
 import { UserProfile } from "./UserProfile"
 
 export const Comments = (props) => {
+  const [ImgUrl] = useProfile()
+
+  const [commentMore, setCommentMore] = useState(false)
+  // console.log(props, "프롭슨")
+
+  const { comment, userName, comment_preview } = props
+
+  // console.log(comment_preview)
+
   return (
     <CommentList>
-      <UserProfile
-        size="32"
-        url="https://img1.daumcdn.net/thumb/S272x320/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FQFcXC%2FbtqCFy6Fjlq%2FLKXlrrmaoXVIgFkHXixNr0%2Fimg.jpg"
-      />
+      <UserProfile size="32" url={ImgUrl} />
       <CommentBox>
         <CommentInfo>
-          <CommentUserName>박서준</CommentUserName>
+          <CommentUserName>
+            {comment_preview?.userName ? comment_preview?.userName : userName}
+          </CommentUserName>
           <P>1분전</P>
         </CommentInfo>
-        <Comment>
-          aㅇㅇㄹㅇㄹㅇㄹㅇㄹㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅁㄴㅇㅁㄴㅇㅁㄴㅇ
-          ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ
-        </Comment>
-        <P>...더보기</P>
+
+        {commentMore ? (
+          <Comment>
+            {comment_preview?.comment ? comment_preview?.comment : comment}
+          </Comment>
+        ) : (
+          <MoreComment>
+            {comment_preview?.comment ? comment_preview?.comment : comment}
+          </MoreComment>
+        )}
+        <P onClick={() => setCommentMore(!commentMore)}>...더보기</P>
       </CommentBox>
     </CommentList>
   )
@@ -54,8 +69,11 @@ const Comment = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.2;
   /* color: #c4c4c4; */
   font-size: 12px;
   /* -webkit-line-clamp: 2; */
+`
+const MoreComment = styled.p`
+  /* max-height: 40px; */
+  font-size: 12px;
 `
