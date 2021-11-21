@@ -164,7 +164,7 @@ export default App;
 const Container = styled.div`
   width: 425px;
   min-height: 100vh;
-  margin: auto;
+  /* margin: auto; */
   background: #fff;
   /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `;

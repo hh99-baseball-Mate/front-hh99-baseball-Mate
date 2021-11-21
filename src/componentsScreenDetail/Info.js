@@ -50,7 +50,7 @@ const Info = memo((props) => {
 
   // 모집마감 표시
   useEffect(() => {
-    if (props.dday < 0 || props.canApplyNum === 0) {
+    if (props.dday < 1) {
       props.setClose(true)
     } else {
       props.setClose(false)
@@ -360,9 +360,9 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #E7E7E7;
   background-image: url(${(props) => props.url});
-  /* background-size: contain; */
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 `;
 
 const Slice = styled.div`

@@ -89,7 +89,7 @@ const Participant = memo((props) => {
     <React.Fragment>
       <Box padding="28px 20px 40px 20px" background="#fff">
         <Warp wrap="wrap" align="center" start="space-around">
-          {/* 방장 */}
+          {/* 방장 프사 */}
           <CircleBox>
             {/* 기본프사 & 카카오프사 */}
             <HostCircle
@@ -239,7 +239,8 @@ const HostCircle = styled.div`
 	background: #FFFFFF;
 	margin-bottom: 5px;
 	background-image: url(${(props) => props.url});
-  /* background-size: contain; */
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
 `;
 

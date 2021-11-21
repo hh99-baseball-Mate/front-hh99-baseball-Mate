@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
+import { getCookie } from "../shared/Cookie";
+import logger from "../shared/Console"
+
+// 소켓통신
+import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import Stomp from "stompjs"
 
 import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatWrite from "./ChatWrite";
@@ -12,9 +17,18 @@ import ChatRoomModal from "./ChatRoomModal";
 import more from "../shared/icon/more.svg"
 import more2 from "../shared/icon/more2.svg"
 
+
 const ChatRoom = (props) => {
 
 	const [modal, setModal] = useState(false);
+
+	const token = getCookie("is_login");
+	// console.log(token)
+
+	const sender_nick = useSelector((state) => state.user.user_info?.username);
+	const sender_id = useSelector((state) => state.user.user_info?.useridx);
+
+	console.log("sender_id",sender_id)
 	
 	const modalInfo =() => {
 		setModal(true);
@@ -22,10 +36,16 @@ const ChatRoom = (props) => {
 	}
 
 	// 배포, 개발 환경 채팅 주소 관리
-	const BASE_URL = process.env.REACT_APP_BASE_URL;
+	const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
+
+	// const env = process.env.NODE_ENV;
+  // const devTarget =
+  //   env === "development" ? "http://115.85.182.57/chatting" : "https://gorokke.shop/chatting";
 	// 소켓
 	const sock = new SockJS(BASE_URL);
 	const ws = Stomp.over(sock);
+
+	console.log("sock",sock)
 
 
 	// 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
@@ -63,10 +83,70 @@ const ChatRoom = (props) => {
 	//   }
 	// };
 
+
+	  // 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
+		// const wsDisConnectUnsubscribe = () => {
+		// 	try {
+		// 		ws.debug = null;
+		// 		ws.disconnect(
+		// 			() => {
+		// 				ws.unsubscribe("sub-0");
+		// 				clearTimeout(waitForConnection);
+		// 			},
+		// 			{ token: token }
+		// 		);
+		// 	} catch (e) {
+		// 		logger("연결 구독 해체 에러", e);
+		// 	}
+		// };
+
+
+		// 웹소켓이 연결될 때 까지 실행하는 함수
+		const waitForConnection = (ws, callback) => {
+			setTimeout(() => {
+				if (ws.ws.readyState === 1) {
+					callback();
+				} else {
+					waitForConnection(ws, callback);
+				}
+			}, 0.1);
+		};
+
+
+		const sendMessage = (new_message) => {
+			try {
+				// 토큰없으면 다시 로그인 시키기
+				// if (!token) {
+				// 	customAlert.sweetNeedLogin();
+				// }
+
+				// send할 데이터
+				const data = {
+					type: "TALK",
+					roomId: 117,
+					sender: sender_nick,
+					// senderImg: sender_profile,
+					senderId: sender_id,
+					message: new_message,
+				};
+				waitForConnection(ws, () => {
+					ws.debug = null;
+	
+					ws.send("/pub/message", { token: token }, JSON.stringify(data));
+					logger("메세지보내기 상태", ws.ws.readyState);
+				});
+			} catch (e) {
+				logger("message 소켓 함수 에러", e);
+				logger("메세지보내기 상태", ws.ws.readyState);
+			}
+		};
+
+		// console.log("bb")
+
 	return (
 		// <React.Fragment>
 		<Container>
-			<ArrowBack>
+			<ArrowBack background>
 				롯데 응원방
 				<Warp flex="flex" align="center">
 					<ModalBtn src={more2} alt="" 
@@ -92,7 +172,7 @@ const ChatRoom = (props) => {
 					<MessageBox/>
 
 				</Box>
-				<ChatWrite/>
+				<ChatWrite sendMessage={sendMessage}/>
 			</Container>
 		// </React.Fragment>
 	)

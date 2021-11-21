@@ -236,7 +236,7 @@ const CommentList = memo((props) => {
                 }}
               >
                 {
-                  like ? `🥰` : `😶`
+                  like ? `🧡` : `🤍`
                   // <Icon src={smail} alt="smail" marginR="7px" />
                   // : <Icon src={unSmail} alt="smail" marginR="7px" />
                 }
@@ -457,6 +457,8 @@ const Circle = styled.div`
   margin-left: 20px;
   background-image: url(${(props) => props.url});
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Icon = styled.img`
