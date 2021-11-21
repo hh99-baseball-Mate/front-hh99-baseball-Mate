@@ -22,11 +22,11 @@ PancilBtn.defaultProps = {
 
 const Btn = styled.button`
   border-radius: 50%;
-  height: 61px;
-  width: 61px;
+  height: 45px;
+  width: 45px;
   position: absolute;
   right: 0;
-  bottom: 80px;
+  bottom: 120px;
   transform: translate(-50%, -50%);
   background: #f25343;
   opacity: 0.8;

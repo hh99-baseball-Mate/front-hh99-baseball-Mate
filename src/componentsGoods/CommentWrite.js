@@ -1,18 +1,45 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import submit from "../shared/icon/submit.png"
 import { UserProfile } from "./UserProfile"
+import { useDispatch, useSelector } from "react-redux"
+import { actionCreators as goodsActions } from "../redux/modules/goods"
 
-export const CommentWrite = () => {
+export const CommentWrite = (props) => {
+  const { userProfile, nickName, goodsId } = props
+  const dispatch = useDispatch()
+
+  const userImg = process.env.REACT_APP_IMAGES_BASE_URL + userProfile
+
+  const is_login = useSelector((state) => state.user.is_login)
+
+  const [getComment, setGetComment] = useState()
+
+  const onChange = (e) => {
+    setGetComment(e.target.value)
+  }
+
+  const SubmitBtn = () => {
+    dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment))
+    setGetComment("")
+  }
+
   return (
     <CommentInputContainer>
       <CommentInputBox>
-        <UserProfile
-          size="32"
-          url="https://img1.daumcdn.net/thumb/S272x320/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FQFcXC%2FbtqCFy6Fjlq%2FLKXlrrmaoXVIgFkHXixNr0%2Fimg.jpg"
-        />
-        <CommentInput placeholder="댓글을 입력해주세요" />
-        <CommentWritIcons src={submit} />
+        {is_login ? (
+          <>
+            <UserProfile size="32" url={userImg ? userImg : ""} />
+            <CommentInput
+              placeholder="댓글을 입력해주세요"
+              onChange={onChange}
+              value={getComment}
+            />
+            <CommentWritIcons src={submit} onClick={SubmitBtn} />
+          </>
+        ) : (
+          <div>댓글 작성은 로그인 후 이용가능합니다.</div>
+        )}
       </CommentInputBox>
     </CommentInputContainer>
   )

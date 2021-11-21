@@ -7,18 +7,24 @@ export const Modal = (props) => {
     children,
     bottom,
     center,
-    title,
-    descriptionOne,
-    descriptionTwo,
-    btnClose,
-    btnConfirm,
     setShowModal,
     height,
     getOut,
     three,
-    btnUpdate,
     margin,
+    modalData,
+    updataBtn,
+    deleteBtn,
   } = props
+
+  // const {
+  //   title,
+  //   descriptionOne,
+  //   descriptionTwo,
+  //   btnClose,
+  //   btnConfirm,
+  //   btnUpdate,
+  // } = modalData
 
   // 모달 오버레이에서 스크롤 방지
   useEffect(() => {
@@ -50,24 +56,24 @@ export const Modal = (props) => {
         <ModalContent>
           {/* 제목 */}
           <Title>
-            <Text size="16px">{title}</Text>
+            <Text size="16px">{modalData.title}</Text>
           </Title>
 
           {/* 내용 */}
           <Discription>
             <DiscriptionText>
-              {descriptionOne} <br />
-              {descriptionTwo}
+              {modalData.descriptionOne} <br />
+              {modalData.descriptionTwo}
             </DiscriptionText>
           </Discription>
 
           {/* 버튼 */}
           <BtnBox>
             <ModalCloseeBtn onClick={() => setShowModal(false)}>
-              <P>{btnClose}</P>
+              <P>{modalData.btnClose}</P>
             </ModalCloseeBtn>
             <ModalConfirmBtn onClick={getOut}>
-              <P>{btnConfirm}</P>
+              <P>{modalData.btnConfirm}</P>
             </ModalConfirmBtn>
           </BtnBox>
         </ModalContent>
@@ -81,27 +87,27 @@ export const Modal = (props) => {
         <ModalContent>
           {/* 제목 */}
           <Title>
-            <Text size="16px">{title}</Text>
+            <Text size="16px">{modalData.title}</Text>
           </Title>
 
           {/* 내용 */}
           <Discription>
             <DiscriptionText>
-              {descriptionOne} <br />
-              {descriptionTwo}
+              {modalData.descriptionOne} <br />
+              {modalData.descriptionTwo}
             </DiscriptionText>
           </Discription>
 
           {/* 버튼 */}
           <BtnBox>
             <ModalCloseeBtn onClick={() => setShowModal(false)}>
-              <P>{btnClose}</P>
+              <P>{modalData.btnClose}</P>
             </ModalCloseeBtn>
-            <ModalConfirmBtn onClick={getOut}>
-              <P>{btnConfirm}</P>
-            </ModalConfirmBtn>
-            <ModalConfirmBtn>
-              <P>{btnUpdate}</P>
+            <ModalUpdataBtn onClick={updataBtn}>
+              <P>{modalData.btnConfirm}</P>
+            </ModalUpdataBtn>
+            <ModalConfirmBtn onClick={deleteBtn}>
+              <P>{modalData.btnUpdate}</P>
             </ModalConfirmBtn>
           </BtnBox>
         </ModalContent>
@@ -205,6 +211,15 @@ const ModalCloseeBtn = styled.button`
   border-radius: 0px 0px 0px 10px;
   width: 50%;
   height: 46px;
+  border: none;
+  cursor: pointer;
+`
+
+const ModalUpdataBtn = styled.button`
+  border-radius: 0px 0px 0px 0px;
+  width: 50%;
+  height: 46px;
+  background-color: #140c2d;
   border: none;
   cursor: pointer;
 `
