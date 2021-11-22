@@ -17,7 +17,8 @@ const GroupDetail = memo((props) => {
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
   const [selectPage, setSelectPage] = useState(true)
-  const [close, setClose] = useState(loadDetail?.allowtype)
+  // close가 false일때 모집완료, true일때 모집중
+  const [close, setClose] = useState(loadDetail.allowtype)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
@@ -92,7 +93,7 @@ const GroupDetail = memo((props) => {
             {...loadDetail}
             {...mylist}
             close={close}
-            setClose={setClose}
+            // setClose={setClose}
             join={join}
             setJoin={setJoin}
           />

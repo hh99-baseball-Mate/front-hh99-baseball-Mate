@@ -61,7 +61,7 @@ const Participant = memo((props) => {
   // 참석 확정/취소 버튼
   const confirm = () => {
     dispatch(groupDetailCreators.confirmMW(groupId))
-    props.setClose(true)
+    // props.setClose(false)
   }
 
   // 채팅방 생성 버튼
@@ -124,7 +124,7 @@ const Participant = memo((props) => {
           }
 
           { // 모집완료 되었을 때 모집마감
-            (props.close === true) &&
+            (props.close === false) &&
             <DisableBtn disabled> 모집 마감 </DisableBtn>
           } 
 

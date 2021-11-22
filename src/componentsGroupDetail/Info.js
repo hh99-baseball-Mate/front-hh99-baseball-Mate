@@ -71,10 +71,10 @@ const Info = memo((props) => {
 
   // 모집마감 표시
   useEffect(() => {
-    if (props.dday < 0 || props.canApplyNum === 0) {
-      props.setClose(true)
-    } else {
+    if (props.dday < 1 || props.canApplyNum === 0) {
       props.setClose(false)
+    } else {
+      props.setClose(true)
     }
   }, [props])
 
