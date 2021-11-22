@@ -12,7 +12,7 @@ import group from "./modules/group";
 import _with from "./modules/with"
 import screen from "./modules/screen"
 import screenDetail from "./modules/screenDetail";
-import alarm from "./modules/alarm"
+import alarm from "./modules/alarm";
 
 export const history = createBrowserHistory()
 

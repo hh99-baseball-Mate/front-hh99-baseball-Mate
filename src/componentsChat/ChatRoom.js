@@ -31,7 +31,7 @@ const ChatRoom = (props) => {
 
 	const sender_nick = useSelector((state) => state.user.user_info?.username);
 	const sender_id = useSelector((state) => state.user.user_info?.useridx);
-	const room_id = 117;
+	const room_id = 514;
 
 	console.log("sender_id",sender_id)
 	
@@ -208,7 +208,7 @@ const ChatRoom = (props) => {
 	return (
 		// <React.Fragment>
 		<Container>
-			<ArrowBack background>
+			<ArrowBack background="background">
 				롯데 응원방
 				<Warp flex="flex" align="center">
 					<ModalBtn src={more2} alt="" 
