@@ -72,11 +72,11 @@ const Participant = memo((props) => {
   }, [props, props.join, myJoin])
 
 
-  const [ok, setOk] = useState(false);
+  // const [ok, setOk] = useState(false);
 
   // 참석 확정/취소 버튼
   const confirm = () => {
-    setOk(true)
+    // setOk(true)
     dispatch(screenDetailCreators.confirmMW(groupId))
     // dispatch(screenDetailCreators.chatMW())
   }
@@ -87,7 +87,7 @@ const Participant = memo((props) => {
   }
 
   const me = props.createdUserId === props.userid
-  console.log("나다", me) 
+  console.log("나다", me, props.allowtype) 
 
   return (
     <React.Fragment>

@@ -69,7 +69,7 @@ const CommunityAdd = (props) => {
             onClick={deletePreview}
           />
         </ImgBox>
-        <Buttons _onClick={submitBtn}>글 등록</Buttons>
+        {/* <Buttons _onClick={submitBtn}>글 등록</Buttons> */}
       </Container>
     </div>
   );
