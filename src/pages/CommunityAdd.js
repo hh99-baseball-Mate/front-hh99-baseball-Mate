@@ -24,17 +24,17 @@ const CommunityAdd = (props) => {
 
   const { content } = inputValue;
 
-  // 입력체크
-  // const submitBtn = (e) => {
-  //   const emptyValue = Object.values(inputValue).map((e) => {
-  //     return !e ? false : true;
-  //   });
+  //입력체크
+  const submitBtn = (e) => {
+    const emptyValue = Object.values(inputValue).map((e) => {
+      return !e ? false : true;
+    });
 
-  //   if (!inputValue) {
-  //     window.alert("빈란을 채워주세요");
-  //     return;
-  //   }
-  // };
+    if (!inputValue) {
+      window.alert("빈란을 채워주세요");
+      return;
+    }
+  };
 
   return (
     <div>
