@@ -249,7 +249,7 @@ const confirmMW = (groupId) => {
   return function (dispatch, getState, { history }) {
     // const isLiked = { isLiked: like }
     instance
-      .patch(`/groups/${groupId}/applications`)
+      .patch(`/screen/${groupId}/applications`)
       .then((res) => {
         console.log(res)
         const msg = res.data.message
@@ -257,6 +257,7 @@ const confirmMW = (groupId) => {
       })
       .catch((err) => {
         console.log(err)
+        window.alert(err)
       })
   }
 }
@@ -268,9 +269,11 @@ const chatMW = ()  => {
      .post("/chat/rooms")
      .then((res) => {
        console.log(res)
+       window.alert("채팅방이 생성되었습니다.")
      })
      .catch((err) => {
        console.log(err)
+       window.alert(err)
      })
   }
 }

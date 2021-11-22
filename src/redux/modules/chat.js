@@ -10,6 +10,8 @@ const initialState = {
   chatList: [],
 }
 
+// const loadChat
+
 // 불러오기
 const loadChatListMW = () => {
   return (dispatch, getState, { history }) => {
@@ -26,7 +28,35 @@ const loadChatListMW = () => {
   }
 }
 
+// 해당 채팅방의 메세지 조회
+const getChatMessagesAX = () => {
+  return function (dispatch, getState, { history }) {
+    const roomId = 514;
 
+    instance
+      .get(`/chat/${roomId}/messages`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  } 
+}
+
+// 해당 채팅방 나가기
+const leaveChatAX = (postId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/chat/quit/${postId}`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
 
 export default handleActions(
 	{
@@ -39,7 +69,9 @@ export default handleActions(
 
 
 const chatCreators = {
-	loadChatListMW
+	loadChatListMW,
+  getChatMessagesAX,
+  leaveChatAX
 }
 
 export {chatCreators};

@@ -134,11 +134,11 @@ const likePostMW = (groupId, like) => {
 const groupApplyMW = (groupId, my) => {
   return (dispatch, getState, { history }) => {
     instance
-      .post(`/groups/${groupId}/applications`)
+      .get(`/groups/join/request/${groupId}`)
       .then((res) => {
-        // console.log(res)
-        dispatch(group_apply(my))
-        window.alert("참여가 완료되었습니다.")
+        console.log("결과",res)
+        // dispatch(group_apply(my))
+        window.alert(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -151,7 +151,7 @@ const groupApplyMW = (groupId, my) => {
 const delApplyMW = (groupId, userid) => {
   return (dispatch, getState, { history }) => {
     instance
-      .delete(`/groups/${groupId}/applications`)
+      .delete(`/groups/join/request/${groupId}`)
       .then((res) => {
         // console.log("참석취소", res)
         dispatch(del_apply(groupId, userid))
@@ -262,12 +262,13 @@ const confirmMW = (groupId) => {
 }
 
 //채팅
-const chatMW = ()  => {
+const chatMW = (groupId)  => {
   return function (dispatch, getState, { history }) {
     instance
-     .post("/chat/rooms")
+     .post(`/chat/${groupId}`)
      .then((res) => {
        console.log(res)
+       window.alert("채팅방이 생성되었습니다.")
      })
      .catch((err) => {
        console.log(err)
@@ -298,10 +299,10 @@ export default handleActions(
 				}
 			}
 		}),
-		[GROUP_APPLY]: (state, action) => produce(state, (draft) => {
-			console.log("페이로드", action.payload.my)
-			draft.groupPage.appliedUserInfo.push(action.payload.my)
-		}),
+		// [GROUP_APPLY]: (state, action) => produce(state, (draft) => {
+		// 	console.log("페이로드", action.payload.my)
+		// 	draft.groupPage.appliedUserInfo.push(action.payload.my)
+		// }),
 		[DELETE_APPLY]: (state, action) => produce(state, (draft) => {
 			const idx = draft.groupPage.appliedUserInfo.findIndex((p) => p.UserId === action.payload.userid);
 			console.log("리덕스모임삭제", idx, action.payload.useridx)

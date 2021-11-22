@@ -24,7 +24,7 @@ const CommunityAdd = (props) => {
 
   const { content } = inputValue;
 
-  // 입력체크
+  //입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
       return !e ? false : true;
@@ -69,7 +69,7 @@ const CommunityAdd = (props) => {
             onClick={deletePreview}
           />
         </ImgBox>
-        <Buttons _onClick={submitBtn}>글 등록</Buttons>
+        {/* <Buttons _onClick={submitBtn}>글 등록</Buttons> */}
       </Container>
     </div>
   );

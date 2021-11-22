@@ -61,12 +61,12 @@ const Participant = memo((props) => {
   // 참석 확정/취소 버튼
   const confirm = () => {
     dispatch(groupDetailCreators.confirmMW(groupId))
-    dispatch(groupDetailCreators.chatMW())
+    props.setClose(true)
   }
 
   // 채팅방 생성 버튼
   const chat = () => {
-    dispatch(groupDetailCreators.chatMW())
+    dispatch(groupDetailCreators.chatMW(id))
   }
 
   const myJoin = props.appliedUserInfo?.findIndex(
@@ -75,7 +75,7 @@ const Participant = memo((props) => {
   // console.log("myJoin",myJoin)
   // 참석버튼 표시
   useEffect(() => {
-    if (myJoin >= 0) {
+    if (myJoin !== -1) {
       return props.setJoin(true)
     } else {
       props.setJoin(false)
@@ -84,12 +84,13 @@ const Participant = memo((props) => {
 
  const me = props.createdUserId === props.userid
  console.log("나다", me) 
+ console.log("나다2", props.allowtype) 
 
   return (
     <React.Fragment>
       <Box padding="28px 20px 40px 20px" background="#fff">
         <Warp wrap="wrap" align="center" start="space-around">
-          {/* 방장 */}
+          {/* 방장 프사 */}
           <CircleBox>
             {/* 기본프사 & 카카오프사 */}
             <HostCircle
@@ -106,15 +107,44 @@ const Participant = memo((props) => {
             return <PartyList key={list.UserInx} {...list} />
           })}
         </Warp>
-        <Warp flex="flex" justify="center">
+        <Warp flex="flex" direction="column" align="center" justify="center">
 
-          {/* 버튼 보이게 or 안보이게 */}
+          { // 글작성자가 본인일 때 모임확정
+            (me && props.allowtype === true) &&             
+            <ConfirmBtn onClick={()=>{confirm()}}>
+             모임확정하기
+            </ConfirmBtn>
+          }
 
-          
+          { // 글작성자가 본인일 때 채팅방 생성
+            (me && props.allowtype === false) &&
+            <ConfirmBtn onClick={()=>{chat()}}>
+              채팅방 생성
+            </ConfirmBtn>
+          }
+
+          { // 모집완료 되었을 때 모집마감
+            (props.close === true) &&
+            <DisableBtn disabled> 모집 마감 </DisableBtn>
+          } 
+
+          { // 참여 안했을 때 참여버튼
+            (!me && !props.join && props.allowtype === true) && 
+              <ConfirmBtn onClick={() => {apply()}} join={props.join}>
+                모임 참여하기
+              </ConfirmBtn>
+          }
+
+          { // 참여 했을 때 참여 취소버튼
+           (!me && props.join && props.allowtype === true) && 
+              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
+                참여 취소하기
+              </ConfirmBtn>
+          }  
        
 
 
-          {
+          {/* {
             // 글작성자랑 내아이디랑 같으면 모집마감 버튼
             props.createdUserId === props.userid ? 
             <ConfirmBtn onClick={()=>{confirm()}}>
@@ -140,16 +170,8 @@ const Participant = memo((props) => {
                 모임 참여하기
               </ConfirmBtn>
             )
-          }
+          } */}
 
-          {/* 채팅방버튼 */}
-          <ConfirmBtn
-           onClick={() => {
-            chat()
-          }}
-          >
-            채팅방생성
-          </ConfirmBtn>
 
         </Warp>
       </Box>
@@ -199,7 +221,7 @@ const Box = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	position: ${(props) => props.position};
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+	/* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `;
 
 const Warp = styled.div`
@@ -239,7 +261,8 @@ const HostCircle = styled.div`
 	background: #FFFFFF;
 	margin-bottom: 5px;
 	background-image: url(${(props) => props.url});
-  /* background-size: contain; */
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
 `;
 

@@ -13,14 +13,16 @@ const ScreenDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const screenId = params.screenId
-  const [selectPage, setSelectPage] = useState(true)
-  const [close, setClose] = useState(false)
-  const [heart, setHeart] = useState(false)
-  const [join, setJoin] = useState(false)
 
   const loadDetail = useSelector((state) => state.screenDetail.screenPage)
   const mylist = useSelector((state) => state.screenDetail.screenMylist)
 
+  const [selectPage, setSelectPage] = useState(true)
+  const [close, setClose] = useState(loadDetail?.allowtype)
+  const [heart, setHeart] = useState(false)
+  const [join, setJoin] = useState(false)
+
+  console.log("완료?",loadDetail.allowtype, close)
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myScreenLikesList = mylist.myScreenLikesList;
   const likePost = myScreenLikesList.indexOf(Number(screenId))
@@ -29,7 +31,7 @@ const ScreenDetail = (props) => {
     const screenId = params.screenId
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-  }, [dispatch, likePost, screenId, selectPage, close])
+  }, [dispatch, likePost, screenId, selectPage, join, close])
 
 
   // console.log("스크린상세페이지", loadDetail)
@@ -104,12 +106,6 @@ const ScreenDetail = (props) => {
   )
 }
 
-ScreenDetail.defaultProps = {
-  // id: "",
-  myScreenLikesList: [],
-  // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
-  // UserImage: "sample.png"
-}
 
 export default ScreenDetail;
 

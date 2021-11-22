@@ -1,13 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { chatCreators } from "../redux/modules/chat";
 
 const ChatRoomModal = (props) => {
+
+  const dispatch = useDispatch();
+
+  // 채팅방 나가기
+  const leaveChat = () => {
+    dispatch(chatCreators.leaveChatAX(props.postId))
+  }
 
 	return(
 		<Background onClick={()=>{props.setModal(false)}}>
 			<Container>
         <Text size="16px" weight="bold" marginB="20px">
-          대화상대
+          대화상대 
         </Text>
 
         <Warp marginB="10px" align="center">
@@ -25,7 +34,13 @@ const ChatRoomModal = (props) => {
         {
           // Profile.map
         }
-
+      
+        {/* 하단고정 */}
+        <Footer position="fixed">
+          <Text onClick={()=>{leaveChat()}}>
+            채팅방 나가기🔚
+          </Text>
+        </Footer>
       </Container>
 		</Background>
 	)
@@ -121,3 +136,12 @@ const Circle = styled.div`
   margin-right: 6px;
 `;
 
+const Footer = styled.div`
+  position: fixed;
+  background-color: #fff2f2; /*임의색상*/
+  width: inherit;
+  padding: 20px;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+`;

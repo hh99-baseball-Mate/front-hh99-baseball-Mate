@@ -12,13 +12,16 @@ const GroupDetail = memo((props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const groupId = params.groupId
-  const [selectPage, setSelectPage] = useState(true)
-  const [close, setClose] = useState(false)
-  const [heart, setHeart] = useState(false)
-  const [join, setJoin] = useState(false)
 
   const loadDetail = useSelector((state) => state.groupDetail.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
+
+  const [selectPage, setSelectPage] = useState(true)
+  const [close, setClose] = useState(loadDetail?.allowtype)
+  const [heart, setHeart] = useState(false)
+  const [join, setJoin] = useState(false)
+
+  console.log("완료?",loadDetail.allowtype, close)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myGroupLikesList = mylist.myGroupLikesList;
@@ -89,6 +92,7 @@ const GroupDetail = memo((props) => {
             {...loadDetail}
             {...mylist}
             close={close}
+            setClose={setClose}
             join={join}
             setJoin={setJoin}
           />
