@@ -12,6 +12,11 @@ const DELETE_GOODS = "DELETE_GOODS"
 const ADD_GOODS_COMMENT = "ADD_GOODS_COMMENT"
 const GET_GOODS_COMMENT = "GET_GOODS_COMMENT"
 const DELETE_GOODS_COMMENT = "DELETE_GOODS_COMMENT"
+const UPDATE_GOODS_COMMENT = "UPDATE_GOODS_COMMENT"
+
+// 액션 타입 좋아요
+
+const ADD_COODS_LIKE = "ADD_COODS_LIKE"
 
 const LOADING = "LOADING"
 
@@ -20,20 +25,42 @@ const getGoods = createAction(GET_GOODS, (goods_list, goods_list_length) => ({
   goods_list,
   goods_list_length,
 }))
-const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
-const addGoodsComment = createAction(ADD_GOODS_COMMENT, (goodsId, comment) => ({
-  goodsId,
-  comment,
-}))
-const getGoodsComment = createAction(GET_GOODS_COMMENT, (comment_list) => ({
-  comment_list,
-}))
+const addGoodsComment = createAction(
+  ADD_GOODS_COMMENT,
+  (goodsId, addComment) => ({
+    goodsId,
+    addComment,
+  })
+)
+const getGoodsComment = createAction(
+  GET_GOODS_COMMENT,
+  (goodsId, goodsComment) => ({
+    goodsId,
+    goodsComment,
+  })
+)
+const deleteGoodsComment = createAction(
+  DELETE_GOODS_COMMENT,
+  (goodsId, commentId) => ({ goodsId, commentId })
+)
+
+const updateGoodsComment = createAction(
+  UPDATE_GOODS_COMMENT,
+  (goodsId, commentId, comment) => ({ goodsId, commentId, comment })
+)
+
 const deleteGoods = createAction(DELETE_GOODS, (goodsId) => ({ goodsId }))
 
+const addGoodsLike = createAction(ADD_COODS_LIKE, (goodsId, useridx, like) => ({
+  goodsId,
+  useridx,
+  like,
+}))
+
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+
 const initialState = {
-  goods_list: {
-    comment_list: [],
-  },
+  goods_list: [],
   list_length: 0,
   is_loading: false,
 }
@@ -83,37 +110,81 @@ const deleteGoodsMD = (goodsId) => {
       .catch((err) => console.log(err, "굿즈 삭제에러"))
   }
 }
-// 댓글 조회
-
-const getGoodsCommentMD = (goodsId) => {
-  return function (dispatch, geState, { history }) {
-    instance
-      .get(`/goods/`)
-      .then((res) => {
-        const comment_list = res.data
-        dispatch(getGoodsComment(comment_list))
-        console.log(res, "댓글불러오기")
-      })
-      .catch((err) => console.log(err, "굿즈 댓글 조회 에러"))
-  }
-}
 
 // 댓글 추가
 
-const addGoodsCommentMD = (goodsId, comment) => {
+const addGoodsCommentMD = (goodsId, getComment) => {
   return function (dispatch, getState, { history }) {
-    console.log(goodsId, comment, "내가 댓글내용")
     instance
-      .post(`/goods/${goodsId}/comment`, { comment: comment })
+      .post(`/goods/${goodsId}/comment`, { comment: getComment })
       .then((res) => {
         console.log(res, "댓글추가")
-        dispatch(addGoodsComment(goodsId, comment))
+        // dispatch(addGoodsComment(goodsId, addComment))
+        dispatch(getGoodsCommentMD(goodsId))
       })
       .catch((err) => console.log(err, "굿즈 댓글 추가 에러"))
   }
 }
 
-// 댓글
+// 댓글 불러오기
+
+const getGoodsCommentMD = (goodsId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get("/goods")
+      .then((res) => {
+        const rowData = res.data
+
+        const idx = rowData.findIndex((e) => e.goodsId === goodsId)
+
+        const goodsCommentList = rowData[idx].goodsCommentList
+
+        dispatch(getGoodsComment(goodsId, goodsCommentList))
+      })
+      .catch((err) => console.log(err, "굿즈 가져오기 에러"))
+  }
+}
+
+// 댓글삭제
+
+const deleteGoodsCommentMD = (goodsId, commentId) => {
+  return function (dispatch, getState, { history }) {
+    // console.log(goodsId, commentId)
+    instance
+      .delete(`/goods/${goodsId}/comment/${commentId}`)
+      .then((res) => {
+        dispatch(deleteGoodsComment(goodsId, commentId))
+      })
+      .catch((err) => console.log(err, "굿즈 댓글삭제 에러"))
+  }
+}
+
+// 댓글 수정
+const updateGoodsCommentMD = (goodsId, commentId, comment) => {
+  return function (dispatch, getState, { history }) {
+    console.log(goodsId, commentId)
+    instance
+      .put(`/goods/${goodsId}/comment/${commentId}`, { comment: comment })
+      .then((res) => {
+        console.log(res)
+        dispatch(updateGoodsComment(goodsId, commentId, comment))
+      })
+      .catch((err) => console.log(err, "댓글수정 에러입니다."))
+  }
+}
+
+const addGoodsLikeMD = (goodsId, useridx, like) => {
+  return function (dispatch, getState, { history }) {
+    console.log(goodsId, useridx, like)
+    instance
+      .post(`/goods/${goodsId}/like`, { isLiked: like })
+      .then((res) => {
+        console.log(res)
+        dispatch(addGoodsLike(goodsId, useridx, like))
+      })
+      .catch((err) => console.log(err, "굿즈 좋아요 에러"))
+  }
+}
 
 export default handleActions(
   {
@@ -138,21 +209,64 @@ export default handleActions(
         const idx = draft.goods_list.findIndex((e) => {
           return e.goodsId === action.payload.goodsId
         })
-        // const idx = draft.comment_list.findIndex((e) => {
-        //   console.log(e)
-        // })
-        draft.goods_list[idx] = {
-          ...draft.goods_list[idx],
-          commnt_list: {
-            comment: action.payload.comment,
-          },
-        }
+        draft.goods_list[idx].goodsCommentList.unshift(
+          action.payload.addComment
+        )
       }),
     [GET_GOODS_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.comment_list = action.payload.comment_list
+        const idx = draft.goods_list.findIndex((e) => {
+          return e.goodsId === action.payload.goodsId
+        })
+        draft.goods_list[idx].goodsCommentList = action.payload.goodsComment
       }),
+    [DELETE_GOODS_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        // 굿즈 리스트에서 인덱스 조회
+        const goodsIdx = draft.goods_list.findIndex((e) => {
+          return e.goodsId === action.payload.goodsId
+        })
 
+        // 굿즈 리스트의 인덱스 안에서의 댓글리스트 인덱스 조회
+        const commentIdx = draft.goods_list[
+          goodsIdx
+        ].goodsCommentList.findIndex((e) => {
+          return e.id === action.payload.commentId
+        })
+
+        // 조회 한 인덱스로 인덱스 번째의 굿즈리스트에서 인덱스 번째 댓글을 삭제
+
+        draft.goods_list[goodsIdx].goodsCommentList.splice(commentIdx, 1)
+      }),
+    [UPDATE_GOODS_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        // 굿즈 리스트에서 goodsId 찾기
+        const goodsIdx = draft.goods_list.findIndex((e) => {
+          return e.goodsId === action.payload.goodsId
+        })
+
+        // 굿즈 리스트의 인덱스 안에서의 댓글리스트 인덱스 조회
+        const commentIdx = draft.goods_list[
+          goodsIdx
+        ].goodsCommentList.findIndex((e) => {
+          return e.id === action.payload.commentId
+        })
+
+        draft.goods_list[goodsIdx].goodsCommentList[commentIdx] = {
+          ...draft.goods_list[goodsIdx].goodsCommentList[commentIdx],
+          comment: action.payload.comment,
+        }
+      }),
+    [ADD_COODS_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        const goodsIdx = draft.goods_list.findIndex((e) => {
+          return e.goodsId === action.payload.goodsId
+        })
+
+        draft.goods_list[goodsIdx].goodsLikesList.push({
+          id: action.payload.useridx,
+        })
+      }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading
@@ -172,6 +286,12 @@ const actionCreators = {
   addGoodsComment,
   deleteGoodsMD,
   deleteGoods,
+  deleteGoodsCommentMD,
+  deleteGoodsComment,
+  updateGoodsCommentMD,
+  updateGoodsComment,
+  addGoodsLikeMD,
+  addGoodsLike,
 }
 
 export { actionCreators }

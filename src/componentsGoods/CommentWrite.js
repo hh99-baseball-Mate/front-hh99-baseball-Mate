@@ -1,25 +1,30 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import styled from "styled-components"
 import submit from "../shared/icon/submit.png"
 import { UserProfile } from "./UserProfile"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
+// import dayjs from "dayjs"
+import { useProfile } from "../customHook/useProfile"
 
 export const CommentWrite = (props) => {
-  const { userProfile, nickName, goodsId } = props
+  const { picture, username, useridx, goodsId } = props
   const dispatch = useDispatch()
 
-  const userImg = process.env.REACT_APP_IMAGES_BASE_URL + userProfile
+  const [userImg] = useProfile()
 
   const is_login = useSelector((state) => state.user.is_login)
 
   const [getComment, setGetComment] = useState()
 
+  // 댓글작성시 보내줄  날짜 세팅
+  // const day = dayjs().format("YYYY-MM-DD :HH:mm:ss")
+
   const onChange = (e) => {
     setGetComment(e.target.value)
   }
 
-  const SubmitBtn = () => {
+  const submitBtn = () => {
     dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment))
     setGetComment("")
   }
@@ -33,9 +38,9 @@ export const CommentWrite = (props) => {
             <CommentInput
               placeholder="댓글을 입력해주세요"
               onChange={onChange}
-              value={getComment}
+              value={getComment || ""}
             />
-            <CommentWritIcons src={submit} onClick={SubmitBtn} />
+            <CommentWritIcons src={submit} onClick={submitBtn} />
           </>
         ) : (
           <div>댓글 작성은 로그인 후 이용가능합니다.</div>

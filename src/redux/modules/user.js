@@ -146,24 +146,24 @@ const userUpdateMD = (formdata, id) => {
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
-    console.log(club);
+    console.log(club)
 
     // const myteam = club
     instance
       .post(
         // `${BASE_URL}/users/${id}`,
-        `${BASE_URL}/user/myteam`,
+        "/user/myteam",
         { myteam: club }
       )
       .then((res) => {
         // console.log(res)
-        dispatch(choiceClub(club));
-        history.replace("/");
-        console.log(club);
+        dispatch(choiceClub(club))
+        history.replace("/")
+        console.log(club)
       })
-      .catch((err) => console.log(err, "클럽선택 err입니다."));
-  };
-};
+      .catch((err) => console.log(err, "클럽선택 err입니다."))
+  }
+}
 
 // 카카오 로그인
 const kakaoLogin = (key) => {
@@ -172,16 +172,24 @@ const kakaoLogin = (key) => {
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
       .get(`${BASE_URL}/user/kakao/callback?code=${key}`)
       .then((res) => {
-        const access_token = res.data.token;
+        const access_token = res.data.token
 
-        setCookie("is_login", access_token);
+        setCookie("is_login", access_token)
 
-        window.alert("로그인 완료");
-        history.push("/");
+        const token = getCookie("is_login")
+        // 기본 헤더 토큰 재설정
+        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
+        // 멀티 헤더 토큰 재설정
+        img.defaults.headers.common["X-AUTH-TOKEN"] = token
+
+        window.alert("로그인 완료")
+        history.push("/")
+
+        dispatch(logInCheckMD())
       })
-      .catch((err) => console.log(err, "카카오 로그인 실패"));
-  };
-};
+      .catch((err) => console.log(err, "카카오 로그인 실패"))
+  }
+}
 
 // 인증번호 보내기
 
