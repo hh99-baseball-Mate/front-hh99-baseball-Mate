@@ -87,13 +87,13 @@ const getPlayAPI = (team) => {
     instance
       .get(`/kbodatas`)
       .then((res) => {
-        dispatch(getPlay(res.data));
+        dispatch(getPlay(res.data))
       })
       .catch((err) => {
-        console.log(err, "경기일정err");
-      });
-  };
-};
+        console.log(err, "경기일정err")
+      })
+  }
+}
 //구단별&전체조회
 const getTeamAPI = (teamname) => {
   return function (dispatch, getState, { history }) {
@@ -101,27 +101,26 @@ const getTeamAPI = (teamname) => {
       instance
         .get("/groups")
         .then((res) => {
-          dispatch(getTeam(res.data));
+          dispatch(getTeam(res.data))
           // console.log(res)
         })
         .catch((err) => {
-          console.log(err, "전체 모임 불러오기");
-        });
-      return;
+          console.log(err, "전체 모임 불러오기")
+        })
+      return
     }
 
     instance
       .get(`/groups?team=${teamname}`)
       .then((res) => {
         // console.log(res.data, "구단 선택")
-        dispatch(getTeam(res.data));
+        dispatch(getTeam(res.data))
       })
       .catch((err) => {
-        console.log("팀별조회에러", err);
-      });
-    // }
-  };
-};
+        console.log("팀별조회에러", err)
+      })
+  }
+}
 
 // 모임추가 시 구단 선택 했을 시 해당 구단의 경기 일정을 보여주기
 const selectTeamMD = (myteam) => {
