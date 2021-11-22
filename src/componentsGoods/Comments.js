@@ -2,39 +2,115 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { useProfile } from "../customHook/useProfile"
 import { UserProfile } from "./UserProfile"
+import { TiTimes, TiSpanner, TiTick } from "react-icons/ti"
+import { useDispatch } from "react-redux"
+import { actionCreators as goodsActions } from "../redux/modules/goods"
 
 export const Comments = (props) => {
-  const [ImgUrl] = useProfile()
+  const {
+    comment,
+    userName,
+    comment_preview,
+    createdAt,
+    commentUserIndex,
+    useridx,
+    goodsId,
+    id,
+  } = props
 
-  const [commentMore, setCommentMore] = useState(false)
-  // console.log(props, "프롭슨")
+  // console.log(props)
 
-  const { comment, userName, comment_preview } = props
+  const dispatch = useDispatch()
 
-  // console.log(comment_preview)
+  const [userImg] = useProfile()
+
+  // const [commentMore, setCommentMore] = useState(false)
+
+  // 업데이트 인풋창 보이기/숨기기
+  const [updateCommentBtn, setUpdateCommentBtn] = useState(false)
+
+  // 업데이트 내용 담는 state
+  const [updateComment, setUpdateComment] = useState("")
+
+  // 댓글 삭제 시 보낼 코맨트아이디 정하기 // 미리보기 아이디 또는 그냥 아이디
+  const commentId = comment_preview?.id ? comment_preview?.id : id
+
+  // 댓글 삭제
+  const deleteCommentBtn = () => {
+    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
+  }
+
+  // 업데이트 인풋창 보이기 버튼
+  const updateBtn = () => {
+    setUpdateCommentBtn(true)
+  }
+
+  // 업데이트 버튼
+  const updateSubmitBtn = () => {
+    dispatch(
+      goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
+    )
+    setUpdateComment("")
+    setUpdateCommentBtn(false)
+  }
 
   return (
+    // 1개의 댓글만 미리보기 comment_preview
     <CommentList>
-      <UserProfile size="32" url={ImgUrl} />
-      <CommentBox>
-        <CommentInfo>
-          <CommentUserName>
-            {comment_preview?.userName ? comment_preview?.userName : userName}
-          </CommentUserName>
-          <P>1분전</P>
-        </CommentInfo>
+      {comment_preview || comment ? (
+        <>
+          <UserProfile size="32" url={userImg} />
+          <CommentBox>
+            {/* 1개의 댓글미리보기 */}
+            <CommentInfo>
+              <CommentUserName>
+                {comment_preview?.userName
+                  ? comment_preview?.userName
+                  : userName}
+              </CommentUserName>
+              <P>
+                {comment_preview?.createdAt
+                  ? comment_preview?.createdAt
+                  : createdAt}
+              </P>
+            </CommentInfo>
 
-        {commentMore ? (
-          <Comment>
-            {comment_preview?.comment ? comment_preview?.comment : comment}
-          </Comment>
-        ) : (
-          <MoreComment>
-            {comment_preview?.comment ? comment_preview?.comment : comment}
-          </MoreComment>
-        )}
-        <P onClick={() => setCommentMore(!commentMore)}>...더보기</P>
-      </CommentBox>
+            {/* 댓글 / 수정 */}
+            {updateCommentBtn ? (
+              // 수정시
+              <UpdateInputBox>
+                <CommentInput
+                  value={updateComment}
+                  onChange={(e) => setUpdateComment(e.target.value)}
+                  placeholder="수정할 내용을 입력해주세요"
+                />
+                <TiTick size="20" onClick={updateSubmitBtn} />
+              </UpdateInputBox>
+            ) : (
+              // 댓글 보이기
+              <MoreComment>
+                {comment_preview?.comment ? comment_preview?.comment : comment}
+              </MoreComment>
+            )}
+
+            {/* <P onClick={() => setCommentMore(!commentMore)}>...더보기</P> */}
+          </CommentBox>
+
+          {/* 수정 버튼을 눌렀을 때는 삭제/수정 아이콘 숨김 */}
+          {!updateCommentBtn &&
+          (comment_preview?.commentUserIndex ||
+            useridx === commentUserIndex) ? (
+            <IconBox>
+              <IconsUpdate size="22" onClick={updateBtn} />
+              <IconsDelete size="22" onClick={deleteCommentBtn} />
+            </IconBox>
+          ) : (
+            ""
+          )}
+        </>
+      ) : (
+        <NoComment>댓글을작성해주세요</NoComment>
+      )}
     </CommentList>
   )
 }
@@ -54,7 +130,7 @@ const CommentUserName = styled.p`
   margin-right: 5px;
 `
 const CommentBox = styled.div`
-  width: 320px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   margin-left: 15px;
@@ -76,4 +152,48 @@ const Comment = styled.p`
 const MoreComment = styled.p`
   /* max-height: 40px; */
   font-size: 12px;
+`
+
+const NoComment = styled.div`
+  margin: 0 auto;
+  cursor: pointer;
+  font-weight: bold;
+  color: #005eb6;
+`
+
+const IconBox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const IconsDelete = styled(TiTimes)`
+  color: #000;
+  cursor: pointer;
+  :hover {
+    color: #f04949;
+  }
+`
+
+const IconsUpdate = styled(TiSpanner)`
+  color: #000;
+  cursor: pointer;
+  :hover {
+    color: #005ad3;
+  }
+`
+
+const CommentInput = styled.input`
+  padding: 5px;
+  border: none;
+  ::placeholder {
+    font-size: 13px;
+  }
+  :focus {
+    outline: none;
+  }
+`
+
+const UpdateInputBox = styled.div`
+  display: flex;
+  align-items: center;
 `
