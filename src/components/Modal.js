@@ -72,8 +72,8 @@ export const Modal = (props) => {
             <ModalCloseeBtn onClick={() => setShowModal(false)}>
               <P>{modalData.btnClose}</P>
             </ModalCloseeBtn>
-            <ModalConfirmBtn onClick={getOut}>
-              <P>{modalData.btnConfirm}</P>
+            <ModalConfirmBtn onClick={deleteBtn}>
+              <P>{modalData.btnUpdate}</P>
             </ModalConfirmBtn>
           </BtnBox>
         </ModalContent>

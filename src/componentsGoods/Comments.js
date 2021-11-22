@@ -16,13 +16,23 @@ export const Comments = (props) => {
     useridx,
     goodsId,
     id,
+    usertype,
+    commentUserPicture,
   } = props
-
-  // console.log(props)
 
   const dispatch = useDispatch()
 
-  const [userImg] = useProfile()
+  // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
+  const userImage = comment_preview?.commentUserPicture
+    ? comment_preview?.commentUserPicture
+    : commentUserPicture
+
+  // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
+  const userType = comment_preview?.usertype
+    ? comment_preview?.usertype
+    : usertype
+
+  const [userImg] = useProfile(userType, userImage)
 
   // const [commentMore, setCommentMore] = useState(false)
 
@@ -98,11 +108,12 @@ export const Comments = (props) => {
 
           {/* 수정 버튼을 눌렀을 때는 삭제/수정 아이콘 숨김 */}
           {!updateCommentBtn &&
-          (comment_preview?.commentUserIndex ||
-            useridx === commentUserIndex) ? (
+          (            useridx === commentUserIndex) ? (
             <IconBox>
-              <IconsUpdate size="22" onClick={updateBtn} />
-              <IconsDelete size="22" onClick={deleteCommentBtn} />
+              {/* 댓글 수정 버튼 */}
+              <IconsUpdate size="22px" onClick={updateBtn} />
+              {/* 댓글 삭제버튼 */}
+              <IconsDelete size="22px" onClick={deleteCommentBtn} />
             </IconBox>
           ) : (
             ""

@@ -8,14 +8,15 @@ import { actionCreators as goodsActions } from "../redux/modules/goods"
 import { useProfile } from "../customHook/useProfile"
 
 export const CommentWrite = (props) => {
-  const { picture, username, useridx, goodsId } = props
+  const { picture, username, useridx, goodsId, usertype } = props
+
   const dispatch = useDispatch()
 
-  const [userImg] = useProfile()
-
+  // 댓글 작성을 위한 로그인 체크
   const is_login = useSelector((state) => state.user.is_login)
 
-  const [getComment, setGetComment] = useState()
+  // 댓글 내용 저장 state
+  const [getComment, setGetComment] = useState("")
 
   // 댓글작성시 보내줄  날짜 세팅
   // const day = dayjs().format("YYYY-MM-DD :HH:mm:ss")
@@ -24,14 +25,28 @@ export const CommentWrite = (props) => {
     setGetComment(e.target.value)
   }
 
+  // 유저 프로필
+  const userImg = () => {
+    if (usertype === "kakao") {
+      return picture
+    }
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + picture
+    }
+    return
+  }
+
   const submitBtn = () => {
-    dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment))
+    !getComment
+      ? window.alert("댓글을 입력해주세요")
+      : dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment))
     setGetComment("")
   }
 
   return (
     <CommentInputContainer>
       <CommentInputBox>
+        {/* 로그인 사용자만 댓글 사용 가능 */}
         {is_login ? (
           <>
             <UserProfile size="32" url={userImg ? userImg : ""} />
