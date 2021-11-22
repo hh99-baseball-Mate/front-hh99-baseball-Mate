@@ -1,51 +1,69 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 import { Container, Text } from "../components"
 import { BsThreeDots } from "react-icons/bs"
-import { FcLike } from "react-icons/fc"
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { Comments } from "./Comments"
 import { CommentWrite } from "./CommentWrite"
 import { UserProfile } from "./UserProfile"
 import { Modal } from "../components/Modal"
 // import { useProfile } from "../customHook/useProfile"
 import { useDispatch } from "react-redux"
-import { useSelector } from "react-redux"
 // import { Comments } from "../components/Comments"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 
 export const Post = (props) => {
   const dispatch = useDispatch()
   const {
-    username,
-    picture,
-    // myteam,
-    // address,
-    dayBefore,
-    goodsContent,
-    goodsImg,
-    goodsUserPicture,
-    userName,
-    goodsName,
+    // 유저 info
+    user_info: { useridx },
+
+    // 굿즈 info
+    // commentUserIndex,
     goodsId,
+    userAddress,
+    myTeam,
+    userName,
+    filePath,
+    goodsUserPicture,
+    goodsName,
+    goodsContent,
+    goodsCommentList,
+    dayBefore,
+    goodsLikesList,
+    userId,
+    usertype,
   } = props
 
-  // 유저프로필사진 불러오기 커스텀훅
-  // const [ImgUrl] = useProfile()
-
   // 게시글 이미지
-  const postImage = process.env.REACT_APP_IMAGES_BASE_URL + goodsImg
-  const userImg = process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture
-  // 모달
+
+  const postImage = process.env.REACT_APP_IMAGES_BASE_URL + filePath
+
+  const userImg = () => {
+    if (usertype === "kakao") {
+      return goodsUserPicture
+    }
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture
+    }
+  }
+
+  // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)
+
   // 게시글 내용 더보기
   const [showContents, setShowContents] = useState(false)
+
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false)
 
-  const comment_list = useSelector((state) => state.goods.comment_list)
+  // 좋아요
+  const [like, setLike] = useState(true)
 
-  // const comment_preview = comment_list[0]
+  // 댓글 1개 미리보기
+  const comment_preview = goodsCommentList[0]
 
+  // 삭제/수정 모달내용
   const modalData = {
     title: "굿즈 에디터",
     descriptionOne: "굿즈를 수정/삭제 하시겠습니까?",
@@ -54,12 +72,22 @@ export const Post = (props) => {
     btnUpdate: "삭제",
   }
 
+  const moreBtn = () => {
+    setShowComments(!showComments)
+  }
+
   const deleteBtn = () => {
     dispatch(goodsActions.deleteGoodsMD(goodsId))
     setShowModal(false)
   }
 
-  console.log(comment_list, "커내트")
+  // const memoLike = useMemo(
+  //   () =>{
+  //     dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, like))
+  //     console.log('메모')
+  //     },
+  //   [like]
+  // )
 
   return (
     <>
@@ -68,32 +96,39 @@ export const Post = (props) => {
         <PostHeader>
           {/* 유저 정보 */}
           <UserInfo>
-            <UserProfile size="32" url={userImg ? userImg : ""} />
+            <UserProfile size="32" url={userImg} />
             <Text bold margin="0 8px">
-              {userName}
+              {userName ? userName : "이름없음"}
             </Text>
-            <Text size="12px">롯데</Text>
+            <Text size="12px">{myTeam ? myTeam : "구단없음"}</Text>
             <Text size="12px" margin="0 8px">
-              전국
+              {userAddress ? userAddress : "전국"}
             </Text>
           </UserInfo>
-          {/* 아이콘 */}
-          <MoreIcons onClick={() => setShowModal(true)} />
+
+          {/* 수정/삭제 모달 아이콘 */}
+          {/* 유저id로 바꿔야함 */}
+          {useridx === userId ? (
+            <MoreIcons onClick={() => setShowModal(true)} />
+          ) : (
+            ""
+          )}
         </PostHeader>
         <PostImg url={postImage ? postImage : ""} />
 
         <Container>
-          {/* 아이콘 */}
+          {/* 좋아요 */}
           <PostIcons>
-            {/* 좋아요 */}
-            <PostLike size="20px" />
-            <Text size="12px">3개</Text>
+            <LikeBtn onClick={() => setLike(!like)}>
+              {like ? <PostNoLike size="20px" /> : <PostLike size="20px" />}
+            </LikeBtn>
+            <Text size="12px">{goodsLikesList.length}</Text>
           </PostIcons>
 
-          {/* 포스트 제목 */}
+          {/* 굿즈 제목 */}
           <Text margin="8px 0"> {goodsName}</Text>
-          {/* 포스트 내용 */}
 
+          {/* 굿즈 내용 */}
           {showContents ? (
             <P>{goodsContent}</P>
           ) : (
@@ -101,16 +136,16 @@ export const Post = (props) => {
           )}
           <P onClick={() => setShowContents(!showContents)}>...더보기</P>
           {/* 게시물 내용 더 보기 */}
-
           {/* 해쉬태그 */}
-          <Hash>
+          {/* <Hash>
             <Span>#롯데 # 김원중</Span>
             <Span>#롯데 # 김원중</Span>
             <Span>#롯데 # 김원중</Span>
-          </Hash>
+          </Hash> */}
 
-          <P onClick={() => setShowComments(!showComments)}>
-            댓글 {comment_list ? comment_list.length : "0"} 더보기
+          {/* 댓글 전체 보기 */}
+          <P onClick={moreBtn}>
+            댓글 {goodsCommentList ? goodsCommentList.length : "0"} 더보기
           </P>
 
           {/* 게시글 시간 */}
@@ -118,16 +153,24 @@ export const Post = (props) => {
         </Container>
         <Hr />
 
-        {showComments
-          ? comment_list.map((e) => <Comments key={e.id} {...e}></Comments>)
-          : // <Comments comment_preview={comment_preview} />
-            ""}
+        {showComments ? (
+          goodsCommentList.map((e) => (
+            <Comments
+              key={e.id}
+              {...e}
+              useridx={useridx}
+              goodsId={goodsId}
+            ></Comments>
+          ))
+        ) : (
+          <Comments
+            comment_preview={comment_preview}
+            useridx={useridx}
+            goodsId={goodsId}
+          />
+        )}
 
-        <CommentWrite
-          nickName={username}
-          userProfile={picture}
-          goodsId={goodsId}
-        />
+        <CommentWrite {...props.user_info} goodsId={goodsId} />
       </PostContainer>
 
       {showModal && (
@@ -182,10 +225,17 @@ const PostIcons = styled.div`
   padding: 8px 0;
   display: flex;
   align-items: center;
+  /* cursor: pointer; */
 `
+const LikeBtn = styled.div``
 
 const PostLike = styled(FcLike)`
   margin: 0 5px 0;
+  cursor: pointer;
+`
+const PostNoLike = styled(FcLikePlaceholder)`
+  margin: 0 5px 0;
+  cursor: pointer;
 `
 
 const PostContents = styled.div`

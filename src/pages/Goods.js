@@ -14,6 +14,8 @@ export const Goods = () => {
     start: 0,
     next: 2,
   })
+
+  // 댓글 작성시 유저정보를 기입하기 위해 불러옴
   const user_info = useSelector((state) => state.user.user_info)
 
   // 무한스크롤
@@ -21,14 +23,10 @@ export const Goods = () => {
   const is_loading = useSelector((state) => state.goods.is_loading)
   const list_length = useSelector((state) => state.goods.list_length)
 
-  console.log(is_loading, list_length)
-
-  // console.log(user_info, goods_list)
-
   useEffect(() => {
     dispatch(goodsActions.getGoodsMD(infinity))
-    dispatch(goodsActions.getGoodsCommentMD(user_info.goodsId))
   }, [infinity])
+
   return (
     <>
       <Header goods />
@@ -36,7 +34,6 @@ export const Goods = () => {
       {/* 무한스크롤 컴포넌트 */}
       <InfinityScroll
         callNext={() => {
-          console.log("되는중?")
           setInfinity({
             start: infinity.start,
             next: (infinity.next += 2),
@@ -47,7 +44,7 @@ export const Goods = () => {
       >
         {goods_list && goods_list.length > 0 ? (
           goods_list.map((e) => {
-            return <Post key={e.goodsId} {...e} {...user_info} />
+            return <Post key={e.goodsId} {...e} user_info={user_info} />
           })
         ) : (
           <NotGame>
