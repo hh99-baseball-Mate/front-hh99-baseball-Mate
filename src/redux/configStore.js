@@ -12,6 +12,7 @@ import group from "./modules/group";
 import _with from "./modules/with"
 import screen from "./modules/screen"
 import screenDetail from "./modules/screenDetail";
+import alarm from "./modules/alarm";
 
 export const history = createBrowserHistory()
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   groupDetail,
   screen,
   screenDetail,
+  alarm,
 
   router: connectRouter(history),
 })

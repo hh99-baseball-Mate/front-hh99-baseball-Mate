@@ -14,7 +14,9 @@ const ChatWrite = (props) => {
   const now_message = useRef();
   const msg = now_message.current;
 
-	const [message, setMessage] = useState("");
+	// console.log("msg",msg)
+
+	const [new_message, setMessage] = useState("");
 	// const changeMessage = (e) => {
   //   setMessage(e.target.value);
   // };
@@ -35,7 +37,7 @@ const ChatWrite = (props) => {
 				<Warp position="relative">
 					<Input type="text"
 						placeholder="메시지를 입력하세요" 
-						value={message}
+						value={new_message}
 						ref={now_message}
 						onChange={(e) => {
 							setMessage(e.target.value);
@@ -47,12 +49,12 @@ const ChatWrite = (props) => {
 						}}
 					/>
 
-					{
-						message &&
+					{/* {
+						new_message &&
 						<SendImg src={upload} alt="send"
 							onClick={() => {sendMessageBtn()}}
 						/>
-					}
+					} */}
 
 				</Warp>
 			</Box>
