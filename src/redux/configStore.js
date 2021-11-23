@@ -9,12 +9,12 @@ import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-import _with from "./modules/with"
-import screen from "./modules/screen"
+import _with from "./modules/with";
+import screen from "./modules/screen";
 import screenDetail from "./modules/screenDetail";
 import alarm from "./modules/alarm";
-
-export const history = createBrowserHistory()
+import community from "./modules/community";
+export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user,
@@ -27,9 +27,10 @@ const rootReducer = combineReducers({
   screen,
   screenDetail,
   alarm,
+  community,
 
   router: connectRouter(history),
-})
+});
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

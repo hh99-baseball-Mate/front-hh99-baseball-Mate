@@ -1,17 +1,28 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CommunityCard from "../communityList/CommunityCard";
 import { Container, Header, MarginBottom, NaviBar, Text } from "../components";
 import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import { history } from "../redux/configStore";
+import { actionCreators as actionCr } from "../redux/modules/community";
 const Community = (props) => {
+  const dispatch = useDispatch();
+
+  //카드 조회
+  const card_list = useSelector((state) => state.community.card_list);
+  console.log(card_list);
   const is_login = useSelector((state) => state.user.is_login);
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/grouplist/groupadd");
+      : history.push("/communityadd");
     e.target.disabled = true;
   };
+
+  //카드 조회
+  useEffect(() => {
+    dispatch(actionCr.getCardAPI());
+  }, []);
 
   return (
     <div>
@@ -21,12 +32,12 @@ const Community = (props) => {
         <Text bold size="16px">
           우리 같이 이야기 해봐요!
         </Text>
-        <CommunityCard />
-        <CommunityCard />
-        <CommunityCard />
+        {card_list.map((e) => {
+          return <CommunityCard key={e.communityId} {...e} />;
+        })}
       </Container>
 
-      <MarginBottom/>
+      <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </div>
   );
