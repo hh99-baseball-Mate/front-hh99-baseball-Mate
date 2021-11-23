@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { chatCreators } from "../redux/modules/chat";
 
@@ -7,9 +7,34 @@ const ChatRoomModal = (props) => {
 
   const dispatch = useDispatch();
 
+  // 사진 ip주소 + 사진이름 조합
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
+  const img = props.filePath
+  const imageUrl = ip + img
+
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props[0].picture
+
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props[0].picture?.split(".")[1]
+  const kakaoImg = props[0].picture
+
+  // const chatUser = useSelector((state) => state.chat?.chatUser)
+
+  console.log("유저", props[0].picture)
+
+   useEffect (() => {
+    dispatch(chatCreators.getChatUserAX(props.room_id))
+   },[])
+  // const chatUser = () => {
+  //   dispatch(chatCreators.getChatUserAX(props.postId))
+  // }
+
+
   // 채팅방 나가기
   const leaveChat = () => {
-    dispatch(chatCreators.leaveChatAX(props.postId))
+    dispatch(chatCreators.leaveChatAX(props.room_id))
   }
 
 	return(
@@ -20,14 +45,14 @@ const ChatRoomModal = (props) => {
         </Text>
 
         <Warp marginB="10px" align="center">
-          <CircleImg /> 
+          <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} /> 
           <Circle>
             <Text color="#fff" size="10px">
               나
             </Text>
           </Circle>
           <Text>
-            김태웅
+            {props[0].username}
           </Text>
         </Warp>
 
@@ -113,7 +138,7 @@ const Text = styled.div`
   overflow: hidden; */
 `;
 
-const CircleImg = styled.div`
+const ImgCircle = styled.div`
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -121,7 +146,9 @@ const CircleImg = styled.div`
   border: 1px solid #E7E7E7;
   background-image: url(${(props) => props.url});
   /* background-size: contain; */
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+	background-size: cover;
   margin-right: 13px;
 `;
 

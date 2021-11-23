@@ -8,22 +8,34 @@ const ChatCard = (props) => {
 
 	const history = useHistory();
 
+	// 사진 받아오기
+	const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+	const ip = IMAGES_BASE_URL;
+
+	console.log("ss",props)
+	const roomId = props.roomId
+
 	return(
-		<Container onClick={()=>{history.push("/chat/chatroom")}}>
+		<Container onClick={()=>{history.push("/chatlist/chatroom/"+roomId)}}>
 
 			<Warp>
 
-			<ImgBox url={""} />
+			<ImgBox url={ip + props.chatRoomIamge} />
 
 			<Box>
 				<Warp justify="space-between">
 					{/* <Warp> */}
 						<Warp>
 							<Text size="14px" marginR="7px">
-								야구봇
+								{
+									props.chatRoomtype === "group" ?
+									"경기모임" : "스야모임"
+								}
 							</Text >
 							<img src={users} alt="user"/>
-							<Text marginL="4px">6</Text>
+							<Text marginL="4px">
+								{props.headCountChat}
+							</Text>
 						</Warp>
 					{/* </Warp> */}
 					<Text color="#C4C4C4" size="10px">11:24</Text>
@@ -31,9 +43,15 @@ const ChatCard = (props) => {
 
 				<Warp margin="7px 0 0 0" justify="space-between">
 					<Text size="13px" width="280px" lineHeight="19px">
-						안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다
+						{props.title}
+						{/* 안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다 */}
 					</Text>
-					<NumCircle></NumCircle>
+
+					{ // 새로운 알림
+						props.newMessage &&
+						<NumCircle></NumCircle>
+					}
+					
 				</Warp>
 			</Box>
 

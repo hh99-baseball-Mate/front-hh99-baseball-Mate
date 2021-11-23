@@ -57,7 +57,7 @@ const NaviBar = (props) => {
         <Icon
           onClick={(e) => {
             is_login
-              ? history.push("/chat")
+              ? history.push("/chatlist")
               : window.alert("로그인 후 이용해주세요")
             e.target.disabled = true
           }}

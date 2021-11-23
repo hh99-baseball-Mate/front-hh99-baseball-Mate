@@ -1,46 +1,71 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 
 const MessageBox = (props) => {
 
+	const sender_id = useSelector((state) => state.user.user_info?.useridx);
 
-	return (
-		<Container>
+	  // 사진 ip주소 + 사진이름 조합
+		const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+		const ip = IMAGES_BASE_URL
+		const img = props.filePath
+		const imageUrl = ip + img
+	
+		// 기본 로그인일 때 프로필 사진
+		const profileImg = ip + props.senderImage
+	
+		// kakaocdn (카카오 프사인지 확인)
+		const kakaoCheck = props.senderImage?.split(".")[1]
+		const kakaoImg = props.senderImage
 
-			<Warp >	
+	// console.log("MB",props)
 
-				<Circle marginR="13px"/>
-				<Warp direction="column">	
-					<Text>김태웅</Text>
+	// 내가 보낸 메세지가 아닐 때
+	if(props.senderId !== sender_id) {
+		return (
 
-					<Warp align="flex-end" margin="5px 5px 6px 0">
-						<Talk>
-							지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요?지금 참여 가능 한가요? 
-						</Talk>	
-						<Time position="relative">
-							오전 10:34
-						</Time>
+			<Container>
+
+				<Warp >	
+
+					<ImgCircle marginR="13px" url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}/>
+					<Warp direction="column">	
+						<Text>{props.senderName}</Text>
+
+						<Warp align="flex-end" margin="5px 5px 6px 0">
+							<Talk>
+								{props.message}
+							</Talk>	
+							<Time position="relative">
+								{/* 오전 10:34 */}
+								{props.modifiedAt}
+							</Time>
+						</Warp>
 					</Warp>
-				</Warp>
-				
-			</Warp>		
+					
+				</Warp>	
+			</Container>
+		)	
+	}			
 
-
-			{/* 내가 보낸 메세지 */}
-			<Warp align="flex-end" direction="row-reverse"  margin="5px 0">
-				<MyTalk>
-					오전 11:34오전 11:34오전 11:34오전 11:34오전 11:34
-				</MyTalk>
-				<MyTime margin="0 6px 0 0">
-					오전 11:34
-				</MyTime>
-			</Warp>	
-
-		</Container>
-	)
+		// 내가 보낸 메세지 일 때
+	if(props.senderId === sender_id) {
+		return (
+			<Container>
+				<Warp align="flex-end" direction="row-reverse"  margin="5px 0">
+					<MyTalk>
+						{props.message}
+					</MyTalk>
+					<MyTime margin="0 6px 0 0">
+						{props.modifiedAt}
+					</MyTime>
+				</Warp>	
+			</Container>
+		)
+	}
 }
-
 export default MessageBox;
 
 
@@ -99,11 +124,15 @@ const Time = styled.div`
 	/* padding: 12px 10px; */
 `;
 
-const Circle = styled.div`
+const ImgCircle = styled.div`
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;
 	background: #FFFFFF;
+	background-image: url(${(props) => props.url});
+	background-repeat: no-repeat;
+  background-position: center;
+	background-size: cover;
 	border: 1px solid #E7E7E7;
   display: flex;
   justify-content: center;
