@@ -36,9 +36,11 @@ const Participant = memo((props) => {
     UserInx: mylist.useridx,
     Username: mylist.username,
   }
-  // const [join, setJoin] = useState(false);
 
-  // console.log("나는",my)
+  // const [close, setClose] = useState(props.allowtype)
+  // const [a, setA] = useState(props.allowtype);
+
+  // console.log("나는",close)
 
   // 참석버튼
   const apply = () => {
@@ -61,7 +63,8 @@ const Participant = memo((props) => {
   // 참석 확정/취소 버튼
   const confirm = () => {
     dispatch(groupDetailCreators.confirmMW(groupId))
-    props.setClose(true)
+    // dispatch(groupDetailCreators.chatMW(id))
+    // setClose(false)
   }
 
   // 채팅방 생성 버튼
@@ -81,6 +84,10 @@ const Participant = memo((props) => {
       props.setJoin(false)
     }
   }, [props.appliedUserInfo, props.join, myJoin])
+
+  useEffect(() => {
+    dispatch(groupDetailCreators.loadGroupPageMW(id))
+  },[props.allowtype])
 
  const me = props.createdUserId === props.userid
  console.log("나다", me) 
@@ -112,7 +119,7 @@ const Participant = memo((props) => {
           { // 글작성자가 본인일 때 모임확정
             (me && props.allowtype === true) &&             
             <ConfirmBtn onClick={()=>{confirm()}}>
-             모임확정하기
+             모임 확정하기
             </ConfirmBtn>
           }
 
@@ -124,7 +131,7 @@ const Participant = memo((props) => {
           }
 
           { // 모집완료 되었을 때 모집마감
-            (props.close === true) &&
+            (props.allowtype === false) &&
             <DisableBtn disabled> 모집 마감 </DisableBtn>
           } 
 
@@ -136,7 +143,7 @@ const Participant = memo((props) => {
           }
 
           { // 참여 했을 때 참여 취소버튼
-           (!me && props.join && props.allowtype === true) && 
+           (!me && props.join && props.close === true) && 
               <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
                 참여 취소하기
               </ConfirmBtn>

@@ -10,7 +10,12 @@ const initialState = {
   chatList: [],
 }
 
-// const loadChat
+// const loadMyChatListMW = () => {
+//   return (dispatch) => {
+//     instance
+//       .get("/chat/rooms/mine")
+//   }
+// }
 
 // 불러오기
 const loadChatListMW = () => {
@@ -18,7 +23,7 @@ const loadChatListMW = () => {
     instance
       .get("/chat/rooms/mine")
       .then((res) => {
-        console.log(res.data)
+        console.log(res)
 				const list = res.data
 				dispatch(load_chatList(list))
       })
@@ -31,7 +36,7 @@ const loadChatListMW = () => {
 // 해당 채팅방의 메세지 조회
 const getChatMessagesAX = () => {
   return function (dispatch, getState, { history }) {
-    const roomId = 514;
+    const roomId = 912;
 
     instance
       .get(`/chat/${roomId}/messages`)
