@@ -185,7 +185,7 @@ const updateGoodsCommentMD = (goodsId, commentId, comment) => {
 // 좋아요
 const addGoodsLikeMD = (goodsId, useridx, like, likeCheck) => {
   return function (dispatch, getState, { history }) {
-    // console.log(goodsId, useridx, like, likeCheck)
+    console.log(goodsId, useridx, like)
 
     instance
       .post(`/goods/${goodsId}/like`, { isLiked: like })

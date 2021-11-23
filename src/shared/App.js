@@ -14,45 +14,45 @@ import GroupList from "../pages/GroupList";
 import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
 import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
-import { GroupAdd } from "../pages/GroupAdd";
-import { GoodsList } from "../pages/GoodsList";
-import { GoodsAdd } from "../pages/GoodsAdd";
-import MyGroup from "../pages/MyGroup";
-import { Login } from "../pages/Login";
-import { MyPage } from "../pages/MyPage";
-import { PhoneAuth } from "../pages/PhoneAuth";
-import { NotFound } from "../pages/NotFound";
-import { Redirect, Switch } from "react-router";
-import Alarm from "../pages/Alarm";
-import { MyInfo } from "../pages/MyInfo";
-import { ScreenList } from "../pages/ScreenList";
-import { ScreenAdd } from "../pages/ScreenAdd";
-import styled from "styled-components";
-import ScreenDetail from "../pages/ScreenDetail";
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
-import { Loading } from "../components/Loading";
-import { Helmet } from "react-helmet";
-import favicon from "../shared/icon/logo/favicon.ico";
-import img from "../shared/icon/image.jpg";
-import Chat from "../pages/Chat";
-import ChatRoom from "../componentsChat/ChatRoom";
-import Community from "../pages/Community";
-import { CommunityDetail } from "../pages/CommunityDetail";
-import CommunityAdd from "../pages/CommunityAdd";
+import { GroupAdd } from "../pages/GroupAdd"
+import { GoodsAdd } from "../pages/GoodsAdd"
+import MyGroup from "../pages/MyGroup"
+import { Login } from "../pages/Login"
+import { MyPage } from "../pages/MyPage"
+import { PhoneAuth } from "../pages/PhoneAuth"
+import { NotFound } from "../pages/NotFound"
+import { Redirect, Switch } from "react-router"
+import Alarm from "../pages/Alarm"
+import { MyInfo } from "../pages/MyInfo"
+import { ScreenList } from "../pages/ScreenList"
+import { ScreenAdd } from "../pages/ScreenAdd"
+import styled from "styled-components"
+import ScreenDetail from "../pages/ScreenDetail"
+import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
+import { Loading } from "../components/Loading"
+import { Helmet } from "react-helmet"
+import favicon from "../shared/icon/logo/favicon.ico"
+import img from "../shared/icon/image.jpg"
+import Chat from "../pages/Chat"
+import ChatRoom from "../componentsChat/ChatRoom"
+import Community from "../pages/Community"
+import { CommunityDetail } from "../pages/CommunityDetail"
+import CommunityAdd from "../pages/CommunityAdd"
 import { Goods } from "../pages/Goods"
+import { Notice } from "../pages/Notice"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
+      dispatch(userActions.logInCheckMD())
     } else {
-      getCookie("is_login");
+      getCookie("is_login")
     }
-  }, []);
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -61,14 +61,13 @@ function App() {
     <Container>
       <ConnectedRouter history={history}>
         <Helmet>
-          <meta charSet="utf-8" />
           <title>미트 볼</title>
           <link rel="icon" href={favicon} />
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="theme-color" content="#000000" />
 
-          <meta property="og:type" content="mobile" />
+          <meta property="og:type" content="website" />
           <meta property="og:title" content="미트 볼" />
           <meta property="og:image" content={img} />
           <meta property="og:locale" content="ko_KR" />
@@ -93,8 +92,6 @@ function App() {
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/community" exact component={Community} />
             <Route path="/communityadd" exact component={CommunityAdd} />
-
-            {/* 커스텀 훅 사용 */}
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
             <Route
               path="/mypage/:useridx"
@@ -107,16 +104,13 @@ function App() {
               exact
               component={ScreenDetail}
             />
+            <Route path="/notice" component={Notice} />
             {/* 임시 */}
             <Route component={NotFound} />
           </Switch>
         ) : (
           <Switch>
-            {/* <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} /> */}
             <Route exact path="/login/clubchoice" component={ClubChoice} />
-            {/* <Route exact path="/phoneAuth" component={PhoneAuth} /> */}
-            {/* <Route path="/user/kakao/callback" component={KAKAOhandle} /> */}
             <Route path="/" exact component={GroupList} />
             <Route path="/groupdate" exact component={GroupDate} />
             <Route path="/grouplist/groupadd" exact component={GroupAdd} />
@@ -148,6 +142,8 @@ function App() {
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
 
+            <Route path="/notice" component={Notice} />
+
             {/* 임시 */}
             {/* <Redirect */}
             <Route component={NotFound} />
@@ -156,7 +152,7 @@ function App() {
       </ConnectedRouter>
       {/* </div> */}
     </Container>
-  );
+  )
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as withActions } from "../redux/modules/with"
-import GroupCard from "../components/GroupCard"
+import { GroupCard } from "../components/GroupCard"
 import { Container } from "../components"
 // import { NotGame } from "../components/NotGame"
 import styled from "styled-components"

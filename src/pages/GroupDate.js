@@ -30,9 +30,10 @@ const GroupDate = (props) => {
 
   let date = []
 
+  // 요일
   const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"]
 
-  // 2주일치 데이터 날짜 ++ 하기
+  // 2주일치 데이터 날짜 보여주기 위한 for문 하기
   for (let i = 0; i < 14; i++) {
     const _date = String(month) + "." + String(day + i)
     date.push(_date + " " + week[new Date(year + "." + _date).getDay()])
@@ -46,21 +47,21 @@ const GroupDate = (props) => {
   return (
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
+
       {/* 여기서부터 카드 */}
       {list && list.length > 0 ? (
+        // 경기 날짜 세로 행 나열
+
         list.map((d, i) => {
           return (
             <div key={i}>
+
+              {/* 경기날짜 */}
               <Time>{d.date}</Time>
 
-              <div
-                style={{
-                  overflow: "auto hidden",
-                  display: "flex",
-                  height: "210px",
-                  alignItems: "center",
-                }}
-              >
+              {/* 커스텀 마이징 한 Swiper (overflow 사용) */}
+              <Swipers>
+                {/* 해당경기 날짜에 맞는 모든 경기 보여주기 가로행 */}
                 {list.map((e, i) => {
                   if (e && e.date === d.date) {
                     return (
@@ -72,6 +73,7 @@ const GroupDate = (props) => {
                           history.goBack()
                         }}
                       >
+                        {/* 경기장소 / 시간 정보 */}
                         <Local>
                           <Text bold margin="0 0 7px">
                             {e.time}
@@ -86,41 +88,21 @@ const GroupDate = (props) => {
                           {e.location}
                         </Local>
 
+                        {/* 경기 구단 정보 홈 vs 어웨이 */}
                         <Card>
                           <Col>
                             <div>
-                              <Image
+                              <TeamImg
                                 src={e.awayImage}
                                 roundedCircle
-                                style={{
-                                  width: "37px",
-                                  height: "37px",
-                                  background: "#FFFFFF",
-                                  border: "1px solid #E7E7E7",
-                                  boxSizing: "border-box",
-                                  borderRadius: "50%",
-                                }}
-                              ></Image>
+                              ></TeamImg>
                             </div>
 
                             <div>{e.awayteam}</div>
                           </Col>
                           <Col>
                             <div>
-                              {" "}
-                              <Image
-                                src={e.homeImage}
-                                roundedCircle
-                                style={{
-                                  width: "37px",
-                                  height: "37px",
-                                  background: "#FFFFFF",
-                                  border: "1px solid #E7E7E7",
-                                  boxSizing: "border-box",
-                                  borderRadius: "50%",
-                                  marginRight: "4px",
-                                }}
-                              />
+                              <TeamImg src={e.homeImage} roundedCircle />
                             </div>
 
                             <div>{e.hometeam}</div>
@@ -130,21 +112,23 @@ const GroupDate = (props) => {
                     )
                   }
                 })}
-              </div>
+              </Swipers>
             </div>
           )
         })
       ) : (
         <NotGameList>
           경기가 없습니다
-          <Buttons margin="30px 0">돌아가기</Buttons>
+          <Buttons margin="30px 0" _onClick={() => history.goBack()}>
+            돌아가기
+          </Buttons>
         </NotGameList>
       )}
     </Container>
   )
 }
 
-export default GroupDate;
+export default GroupDate
 
 const Box = styled.div`
   margin: 0 10px;
@@ -157,23 +141,23 @@ const Box = styled.div`
   :focus {
     background-color: blue;
   }
-`;
+`
 
 const Local = styled.div`
   color: #777777;
   font-size: 12px;
-`;
+`
 
 const Col = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   min-width: 200px;
-`;
+`
 
 const Card = styled.div`
   margin-top: 21px;
-`;
+`
 
 const Time = styled.div`
   font-weight: bold;
@@ -181,7 +165,7 @@ const Time = styled.div`
   line-height: 20px;
   margin-top: 25px;
   /* margin-bottom: 11px; */
-`;
+`
 
 const NotGameList = styled.div`
   display: flex;
@@ -189,4 +173,21 @@ const NotGameList = styled.div`
   align-items: center;
   flex-direction: column;
   height: 50vh;
-`;
+`
+
+const TeamImg = styled(Image)`
+  width: 37px;
+  height: 37px;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  border-radius: 50%;
+  /* marginRight: "4px", */
+`
+
+const Swipers = styled.div`
+  overflow: auto hidden;
+  display: flex;
+  height: 210px;
+  align-items: center;
+`

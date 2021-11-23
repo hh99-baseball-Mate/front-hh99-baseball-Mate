@@ -12,46 +12,47 @@ import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
 
 const GroupComment = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const ip = IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.picture;
+  const profileImg = ip + props.picture
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.picture?.split(".")[1];
-  const kakaoImg = props.picture;
+  const kakaoCheck = props.picture?.split(".")[1]
+  const kakaoImg = props.picture
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const cookie = getCookie("is_login");
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const cookie = getCookie("is_login")
 
   const groupCommentList = useSelector(
     (state) => state.groupDetail.groupPage.groupCommentList
-  );
-  const groupPage = useSelector((state) => state.groupDetail.groupPage);
+  )
+  const groupPage = useSelector((state) => state.groupDetail.groupPage)
 
   // console.log("groupPage야야", groupPage)
-  console.log("코멘트컴포넌트", props)
+  // console.log("코멘트컴포넌트", props)
+  console.log("댓글")
 
-  const id = props.groupId;
+  const id = props.groupId
   //  console.log("페이지아이디",id)
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("")
 
   const addComment = () => {
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요");
-      history.push("/login");
-      return;
+      window.alert("로그인 후 이용해주세요")
+      history.push("/login")
+      return
     } else if (message !== "") {
-      dispatch(groupDetailCreators.addCommentMW(id, message));
-      setMessage("");
-      return;
+      dispatch(groupDetailCreators.addCommentMW(id, message))
+      setMessage("")
+      return
     } else {
-      window.alert("내용을 입력하세요");
-      return;
+      window.alert("내용을 입력하세요")
+      return
     }
-  };
+  }
 
   // useEffect(() => {
   //   dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
@@ -65,15 +66,6 @@ const GroupComment = memo((props) => {
           <Text size="14px" color="#777777">
             방명록 {props.groupCommentList.length}
           </Text>
-
-          <Warp>
-            {/* <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
-              인기순
-            </Text>
-            <Text marginR="5px" size="14px" weight="500" color="#C4C4C4">
-              최신순
-            </Text> */}
-          </Warp>
         </Warp>
       </Box>
 
@@ -110,7 +102,7 @@ const GroupComment = memo((props) => {
             placeholder="&#13;&#10;댓글을 입력해 주세요..."
             value={message}
             onChange={(e) => {
-              setMessage(e.target.value);
+              setMessage(e.target.value)
             }}
           />
         </Warp>
@@ -118,7 +110,7 @@ const GroupComment = memo((props) => {
           src={send}
           alt="send"
           onClick={() => {
-            addComment();
+            addComment()
           }}
         />
       </Box>
@@ -134,54 +126,54 @@ const GroupComment = memo((props) => {
             id={id}
             myGroupCommentLikesList={props.myGroupCommentLikesList}
           />
-        );
+        )
       })}
     </React.Fragment>
-  );
-});
+  )
+})
 
 // 댓글 컴포넌트
 const CommentList = memo((props) => {
   // console.log("댓글 컴포넌트", props)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const mylist = useSelector((state) => state.groupDetail.mylist);
+  const mylist = useSelector((state) => state.groupDetail.mylist)
 
-  const user = useSelector((state) => state.user.user_info);
-  const Me = user.username;
-  const likeList = mylist.myGroupCommentLikesList;
-  const commentId = props.groupCommentId;
+  const user = useSelector((state) => state.user.user_info)
+  const Me = user.username
+  const likeList = mylist.myGroupCommentLikesList
+  const commentId = props.groupCommentId
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const ip = IMAGES_BASE_URL;
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.commentUserPicture;
+  const profileImg = ip + props.commentUserPicture
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.commentUserPicture?.split(".")[1];
-  const kakaoImg = props.commentUserPicture;
+  const kakaoCheck = props.commentUserPicture?.split(".")[1]
+  const kakaoImg = props.commentUserPicture
 
-  const [edit, setEdit] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [like, setLike] = useState(false);
+  const [edit, setEdit] = useState(false)
+  const [modal, setModal] = useState(false)
+  const [like, setLike] = useState(false)
 
-  useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(props.id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(groupDetailCreators.loadGroupPageMW(props.id));
+  // }, []);
 
   // 댓글 좋아요 누른거 아이콘 표시하기
   useEffect(() => {
-    const likeIdx = likeList.indexOf(commentId);
+    const likeIdx = likeList.indexOf(commentId)
     // console.log("likeIdx", likeIdx)
     if (likeIdx >= 0) {
-      setLike(true);
+      setLike(true)
     }
-  }, [likeList]);
+  }, [likeList])
 
   const likeBtn = () => {
-    setLike(!like);
+    setLike(!like)
     // console.log(like)
     dispatch(
       groupDetailCreators.likegroupCommentMW(
@@ -189,8 +181,8 @@ const CommentList = memo((props) => {
         props.groupCommentId,
         like
       )
-    );
-  };
+    )
+  }
 
   return (
     <React.Fragment>
@@ -198,7 +190,7 @@ const CommentList = memo((props) => {
         position="relative"
         background="#fff"
         onClick={() => {
-          setModal(false);
+          setModal(false)
         }}
       >
         <Warp>
@@ -232,7 +224,7 @@ const CommentList = memo((props) => {
             <Warp marginT="11px">
               <p
                 onClick={() => {
-                  likeBtn();
+                  likeBtn()
                 }}
               >
                 {
@@ -257,9 +249,9 @@ const CommentList = memo((props) => {
               marginT="-34px"
               marginR="22px"
               onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setModal(!modal);
+                e.preventDefault()
+                e.stopPropagation()
+                setModal(!modal)
               }}
             >
               <img src={more} alt="more" />
@@ -274,8 +266,8 @@ const CommentList = memo((props) => {
       </Box>
       <Rectangle />
     </React.Fragment>
-  );
-});
+  )
+})
 
 // 모달 컴포넌트
 const Modal = (props) => {

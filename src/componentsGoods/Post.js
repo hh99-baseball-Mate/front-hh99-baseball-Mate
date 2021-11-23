@@ -92,9 +92,9 @@ export const Post = memo((props) => {
   console.log(likeCheck, "중복검사")
 
   const memoLike = useCallback(() => {
-    setLike(!like)
     dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, like, likeCheck))
-    console.log("메모")
+    setLike(!like)
+    console.log("메모", like)
   }, [like])
 
   return (
