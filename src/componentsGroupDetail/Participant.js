@@ -68,9 +68,9 @@ const Participant = memo((props) => {
   }
 
   // 채팅방 생성 버튼
-  const chat = () => {
-    dispatch(groupDetailCreators.chatMW(id))
-  }
+  // const chat = () => {
+  //   dispatch(groupDetailCreators.chatMW(id))
+  // }
 
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
@@ -85,9 +85,9 @@ const Participant = memo((props) => {
     }
   }, [props.appliedUserInfo, props.join, myJoin])
 
-  useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(id))
-  },[props.allowtype])
+  // useEffect(() => {
+  //   dispatch(groupDetailCreators.loadGroupPageMW(id))
+  // },[props.allowtype])
 
  const me = props.createdUserId === props.userid
  console.log("나다", me) 
@@ -116,24 +116,32 @@ const Participant = memo((props) => {
         </Warp>
         <Warp flex="flex" direction="column" align="center" justify="center">
 
+            {/* <ConfirmBtn onClick={()=>{chat()}}>
+              채팅방 생성
+            </ConfirmBtn> */}
+
           { // 글작성자가 본인일 때 모임확정
-            (me && props.allowtype === true) &&             
+            (me && props.allowtype === true) ?            
             <ConfirmBtn onClick={()=>{confirm()}}>
              모임 확정하기
             </ConfirmBtn>
+            :
+            <ConfirmBtn onClick={()=>{confirm()}}>
+              모임 확정취소하기
+            </ConfirmBtn>
           }
 
-          { // 글작성자가 본인일 때 채팅방 생성
+          {/* { // 글작성자가 본인일 때 채팅방 생성
             (me && props.allowtype === false) &&
             <ConfirmBtn onClick={()=>{chat()}}>
               채팅방 생성
             </ConfirmBtn>
-          }
+          } */}
 
-          { // 모집완료 되었을 때 모집마감
+          {/* { // 모집완료 되었을 때 모집마감
             (props.allowtype === false) &&
             <DisableBtn disabled> 모집 마감 </DisableBtn>
-          } 
+          }  */}
 
           { // 참여 안했을 때 참여버튼
             (!me && !props.join && props.allowtype === true) && 

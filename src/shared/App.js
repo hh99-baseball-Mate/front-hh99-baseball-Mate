@@ -34,7 +34,7 @@ import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet";
 import favicon from "../shared/icon/logo/favicon.ico";
 import img from "../shared/icon/image.jpg";
-import Chat from "../pages/Chat";
+import ChatList from "../pages/ChatList";
 import ChatRoom from "../componentsChat/ChatRoom";
 import Community from "../pages/Community";
 import { CommunityDetail } from "../pages/CommunityDetail";
@@ -142,8 +142,8 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
-            <Route path="/chat" exact component={Chat} />
-            <Route path="/chat/chatroom" exact component={ChatRoom} />
+            <Route path="/chatlist" exact component={ChatList} />
+            <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
             <Route path="/communityadd" exact component={CommunityAdd} />
