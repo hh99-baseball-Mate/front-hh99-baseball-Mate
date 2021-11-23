@@ -28,38 +28,38 @@ const ChatWrite = (props) => {
 		setMessage("");  // input 비우기
 	};
 
-	// console.log("aa")
+
 
 	return (
-		<Container>
-				
-			<Box>
-				<Warp position="relative">
-					<Input type="text"
-						placeholder="메시지를 입력하세요" 
-						value={new_message}
-						ref={now_message}
-						onChange={(e) => {
-							setMessage(e.target.value);
-						}}
-						onKeyPress={(e) => {
-							if(e.key === "Enter"){
-								sendMessageBtn(e);
-							}
-						}}
-					/>
+			<Container>
 
-					{/* {
-						new_message &&
-						<SendImg src={upload} alt="send"
-							onClick={() => {sendMessageBtn()}}
+				<Box>
+					<Warp position="relative">
+						<Input type="text"
+							placeholder="메시지를 입력하세요" 
+							value={new_message}
+							ref={now_message}
+							onChange={(e) => {
+								setMessage(e.target.value);
+							}}
+							onKeyPress={(e) => {
+								if(e.key === "Enter"){
+									sendMessageBtn(e);
+								}
+							}}
 						/>
-					} */}
 
-				</Warp>
-			</Box>
+						{
+							new_message &&
+							<SendImg src={upload} alt="send"
+								onClick={() => {sendMessageBtn()}}
+							/>
+						}
 
-		</Container>
+					</Warp>
+				</Box>
+
+			</Container>
 	)
 }
 
@@ -68,7 +68,9 @@ export default ChatWrite;
 const Container = styled.div`
   margin-bottom: 10px;
 	width: 425px;
+	opacity: 0.5;
 `;
+
 
 const Box = styled.div`
   width: 425px;

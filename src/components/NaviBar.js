@@ -11,15 +11,15 @@ import chat_select from "../shared/icon/navbar/chat_select.svg";
 import my from "../shared/icon/navbar/my.svg";
 import my_select from "../shared/icon/navbar/my_select.svg";
 import { useSelector } from "react-redux";
-import { PancilBtn } from "."
+import { PancilBtn } from ".";
 
 const NaviBar = (props) => {
-  const user_info = useSelector((state) => state.user.user_info)
-  const is_login = useSelector((state) => state.user.is_login)
+  const user_info = useSelector((state) => state.user.user_info);
+  const is_login = useSelector((state) => state.user.is_login);
 
-  const { useridx } = user_info
+  const { useridx } = user_info;
 
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <Container writeBtn={props.writeBtn}>
@@ -27,7 +27,7 @@ const NaviBar = (props) => {
         {/* 메인 */}
         <Icon
           onClick={() => {
-            history.push("/")
+            history.push("/");
           }}
         >
           {props.home ? (
@@ -42,8 +42,8 @@ const NaviBar = (props) => {
           onClick={(e) => {
             is_login
               ? history.push("/mygroup")
-              : window.alert("로그인 후 이용해주세요")
-            e.target.disabled = true
+              : window.alert("로그인 후 이용해주세요");
+            e.target.disabled = true;
           }}
         >
           {props.sch ? (
@@ -57,7 +57,7 @@ const NaviBar = (props) => {
         <Icon
           onClick={(e) => {
             is_login
-              ? history.push("/chat")
+              ? history.push("/chatlist")
               : window.alert("로그인 후 이용해주세요")
             e.target.disabled = true
           }}
@@ -72,7 +72,7 @@ const NaviBar = (props) => {
         {/* 마이페이지 */}
         <Icon
           onClick={() => {
-            history.push(`/mypage/${useridx}`)
+            history.push(`/mypage/${useridx}`);
           }}
         >
           {props.my ? (
@@ -84,14 +84,14 @@ const NaviBar = (props) => {
       </Warp>
       {props.writeBtn ? <PancilBtn onClick={props.onClick} /> : null}
     </Container>
-  )
-}
+  );
+};
 
-export default NaviBar
+export default NaviBar;
 
 NaviBar.defaultProps = {
   writeBtn: false,
-}
+};
 
 const Container = styled.div`
   background: #fff;

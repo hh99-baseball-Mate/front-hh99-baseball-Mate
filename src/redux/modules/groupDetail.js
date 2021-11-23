@@ -356,7 +356,7 @@ const groupDetailCreators = {
 	likegroupCommentMW,
 	mylistMW,
   confirmMW,
-  chatMW
+  // chatMW
 }
 
 export {groupDetailCreators};

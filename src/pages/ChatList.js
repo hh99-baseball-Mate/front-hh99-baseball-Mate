@@ -7,18 +7,22 @@ import { ArrowBack, MarginBottom, NaviBar } from "../components";
 import ChatCard from "../componentsChat/ChatCard";
 import { chatCreators } from "../redux/modules/chat";
 
-const Chat = (props) => {
+const ChatList = (props) => {
 
 	const history = useHistory();
 	const disptch = useDispatch()
 
+	
 	useEffect(() => {
 		disptch(chatCreators.loadChatListMW())
-	})
+	},[])
 
-	// const chatList = useSelector((state) => state.chat?.chatList)
+	const chatList = useSelector((state) => state.chat?.chatList)
 
-	console.log("chatList", props)
+
+
+
+	console.log("chatList", chatList.length)
 
 	return (
 		<React.Fragment>
@@ -26,36 +30,27 @@ const Chat = (props) => {
 			<Rectangle/>
 
 			<Box>
-				{/* {
+				{ //채팅방 리스트
 					chatList.map((list) => {
-						return <ChatCard list />
+						return <ChatCard key={list.groupId} {...list} />
 					})
-				} */}
-				
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
-				<ChatCard/>
+				}
 			</Box>
 			
-			<Container  position="absolute" top="50%" trans="translateY(-50%)">
-				<Warp direction="column">
-					<Text margin="auto">
-						채팅 내역이 없습니다.
-					</Text>	
-					<Button margin="auto" onClick={()=>{history.push("/mygroup")}}>
-						나의 모임으로 이동하기
-					</Button>
-				</Warp>
-			</Container>
+			{
+				chatList.length === 0 &&
+				<Container  position="absolute" top="50%" trans="translateY(-50%)">
+					<Warp direction="column">
+						<Text margin="auto">
+							채팅 내역이 없습니다.
+						</Text>	
+						<Button margin="auto" onClick={()=>{history.push("/mygroup")}}>
+							나의 모임으로 이동하기
+						</Button>
+					</Warp>
+				</Container>
+			}
+
 			
 			<Box>
 				<TimelineBtn onClick={()=>{history.push("/timeline")}}>
@@ -69,7 +64,7 @@ const Chat = (props) => {
 	)
 }
 
-export default Chat;
+export default ChatList;
 
 const Container = styled.div`
   width: 425px;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -12,8 +13,10 @@ import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
 import { useInputs } from "../customHook/useInputs";
 import { usePreview } from "../customHook/usePreview";
-
+import { history } from "../redux/configStore";
+import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
+  const dispatch = useDispatch();
   //이미지 미리보기 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
 
@@ -30,10 +33,24 @@ const CommunityAdd = (props) => {
       return !e ? false : true;
     });
 
-    if (!inputValue) {
+    if (emptyValue.includes(false) || inputValue === null) {
       window.alert("빈란을 채워주세요");
+      // console.log("빈값있음")
       return;
     }
+
+    if (inputValue !== null) {
+      window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.");
+      history.push("/community");
+    }
+    const formData = new FormData();
+
+    formData.append("content", content);
+    formData.append("file", preview);
+
+    dispatch(actionCr.postAddAPI(formData));
+    e.target.disabled = true;
+    for (const keyValue of formData) console.log(keyValue);
   };
 
   return (
@@ -49,7 +66,11 @@ const CommunityAdd = (props) => {
         placeholder="내용을 입력해주세요."
         height="400px"
         onChange={onChange}
-      ></Inputs>
+      >
+        {/* 안에 내용 */}
+        {content && <InputCheck />}
+      </Inputs>
+
       <Container>
         {/* 이미지 미리 */}
         <Text margin="7px 0">
@@ -69,7 +90,7 @@ const CommunityAdd = (props) => {
             onClick={deletePreview}
           />
         </ImgBox>
-        {/* <Buttons _onClick={submitBtn}>글 등록</Buttons> */}
+        <Buttons _onClick={submitBtn}>글 등록</Buttons>
       </Container>
     </div>
   );

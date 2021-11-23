@@ -69,9 +69,9 @@ const Participant = memo((props) => {
   }
 
   // 채팅방 생성 버튼
-  const chat = () => {
-    dispatch(groupDetailCreators.chatMW(id))
-  }
+  // const chat = () => {
+  //   dispatch(groupDetailCreators.chatMW(id))
+  // }
 
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
@@ -121,7 +121,7 @@ const Participant = memo((props) => {
             ) : (
               <>
                 {/* <DisableBtn disabled> 모집 마감 </DisableBtn> */}
-                <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn>
+                {/* <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn> */}
               </>
             )
           }

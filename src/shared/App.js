@@ -14,31 +14,31 @@ import GroupList from "../pages/GroupList";
 import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
 import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
-import { GroupAdd } from "../pages/GroupAdd"
-import { GoodsAdd } from "../pages/GoodsAdd"
-import MyGroup from "../pages/MyGroup"
-import { Login } from "../pages/Login"
-import { MyPage } from "../pages/MyPage"
-import { PhoneAuth } from "../pages/PhoneAuth"
-import { NotFound } from "../pages/NotFound"
-import { Redirect, Switch } from "react-router"
-import Alarm from "../pages/Alarm"
-import { MyInfo } from "../pages/MyInfo"
-import { ScreenList } from "../pages/ScreenList"
-import { ScreenAdd } from "../pages/ScreenAdd"
-import styled from "styled-components"
-import ScreenDetail from "../pages/ScreenDetail"
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
-import { Loading } from "../components/Loading"
-import { Helmet } from "react-helmet"
-import favicon from "../shared/icon/logo/favicon.ico"
-import img from "../shared/icon/image.jpg"
-import Chat from "../pages/Chat"
-import ChatRoom from "../componentsChat/ChatRoom"
-import Community from "../pages/Community"
-import { CommunityDetail } from "../pages/CommunityDetail"
-import CommunityAdd from "../pages/CommunityAdd"
-import { Goods } from "../pages/Goods"
+import { GroupAdd } from "../pages/GroupAdd";
+import { GoodsAdd } from "../pages/GoodsAdd";
+import MyGroup from "../pages/MyGroup";
+import { Login } from "../pages/Login";
+import { MyPage } from "../pages/MyPage";
+import { PhoneAuth } from "../pages/PhoneAuth";
+import { NotFound } from "../pages/NotFound";
+import { Redirect, Switch } from "react-router";
+import Alarm from "../pages/Alarm";
+import { MyInfo } from "../pages/MyInfo";
+import { ScreenList } from "../pages/ScreenList";
+import { ScreenAdd } from "../pages/ScreenAdd";
+import styled from "styled-components";
+import ScreenDetail from "../pages/ScreenDetail";
+import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
+import { Loading } from "../components/Loading";
+import { Helmet } from "react-helmet";
+import favicon from "../shared/icon/logo/favicon.ico";
+import img from "../shared/icon/image.jpg";
+import ChatList from "../pages/ChatList";
+import ChatRoom from "../componentsChat/ChatRoom";
+import Community from "../pages/Community";
+import { CommunityDetail } from "../pages/CommunityDetail";
+import CommunityAdd from "../pages/CommunityAdd";
+import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice"
 
 function App() {
@@ -137,13 +137,12 @@ function App() {
 
             <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
             <Route path="/loading" exact component={Loading} />
-            <Route path="/chat" exact component={Chat} />
-            <Route path="/chat/chatroom" exact component={ChatRoom} />
+            <Route path="/chatlist" exact component={ChatList} />
+            <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
-
-            <Route path="/notice" component={Notice} />
-
+              <Route path="/communityadd" exact component={CommunityAdd} />
+              <Route path="/notice" component={Notice} />
             {/* 임시 */}
             {/* <Redirect */}
             <Route component={NotFound} />
@@ -163,4 +162,4 @@ const Container = styled.div`
   /* margin: auto; */
   background: #fff;
   /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
-`
+`;

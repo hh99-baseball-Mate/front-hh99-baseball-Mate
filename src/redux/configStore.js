@@ -3,17 +3,18 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
-import user from "./modules/user"
-import timeline from "./modules/timeline"
-import groupDetail from "./modules/groupDetail"
-import goods from "./modules/goods"
-import group from "./modules/group"
-import _with from "./modules/with"
-import screen from "./modules/screen"
-import screenDetail from "./modules/screenDetail"
-import alarm from "./modules/alarm"
-
-export const history = createBrowserHistory()
+import user from "./modules/user";
+import timeline from "./modules/timeline";
+import groupDetail from "./modules/groupDetail";
+import goods from "./modules/goods";
+import group from "./modules/group";
+import _with from "./modules/with";
+import screen from "./modules/screen";
+import screenDetail from "./modules/screenDetail";
+import alarm from "./modules/alarm";
+import chat from "./modules/chat"
+import community from "./modules/community";
+export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user,
@@ -25,9 +26,11 @@ const rootReducer = combineReducers({
   screen,
   screenDetail,
   alarm,
+  chat,
+  community,
 
   router: connectRouter(history),
-})
+});
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

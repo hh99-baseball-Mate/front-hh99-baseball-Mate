@@ -113,6 +113,9 @@ const Participant = memo((props) => {
         </Warp>
         <Warp flex="flex" direction="column" align="center" justify="center" >
           
+
+            
+
           { // 글작성자가 본인일 때 모임확정
             (me && props.allowtype === true) &&             
             <ConfirmBtn onClick={()=>{confirm()}}>
