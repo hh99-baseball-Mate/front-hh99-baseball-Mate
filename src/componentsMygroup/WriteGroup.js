@@ -14,13 +14,15 @@ export const WriteGroup = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()
 
   // 작성 모임 리스트
-  const write_list = useSelector((state) => state.with.write_list)
+  const group_write_list = useSelector((state) => state.with.group_write_list)
 
   // 스크린 모임 리스트
-  const screen_write = useSelector((state) => state.with.scrwrite_list)
+  const scrwrite_write_list = useSelector(
+    (state) => state.with.scrwrite_write_list
+  )
 
   // 전체모임은 작성모임리스트에 스크린 리스트를 붙여서 사용
-  const all_list = write_list.concat(screen_write)
+  const all_list = group_write_list.concat(scrwrite_write_list)
 
   // 커스텀 훅 myGroupModalBtn
   const [allListBtn, partiBtn, writeBtn, allList, game, screen] =
@@ -68,8 +70,8 @@ export const WriteGroup = ({ showModal, setShowModal }) => {
           : ""}
 
         {/* 게임만 모임 */}
-        {game && write_list && write_list.length > 0
-          ? write_list.map((e) => (
+        {game && group_write_list && group_write_list.length > 0
+          ? group_write_list.map((e) => (
               <GroupCard
                 onClick={() => history.push(`/groupdetail/${e.groupId}`)}
                 key={e.groupId}
@@ -78,8 +80,8 @@ export const WriteGroup = ({ showModal, setShowModal }) => {
             ))
           : ""}
         {/* 스크린만 모임 */}
-        {screen && screen_write && screen_write.length > 0
-          ? screen_write.map((e) => (
+        {screen && scrwrite_write_list && scrwrite_write_list.length > 0
+          ? scrwrite_write_list.map((e) => (
               <GroupCard
                 onClick={() => history.push(`/screendetail/${e.screenId}`)}
                 key={e.screenId}

@@ -97,7 +97,10 @@ const SocialButton = styled.button`
   height: 50px;
   border-radius: 80px;
   border: none;
-  margin: ${(props) => props.margin};
+  margin: 5px 0;
   background-color: ${(props) => (props.bg ? props.bg : "#fff")};
   cursor: pointer;
+  :last-child {
+    margin-bottom: 30px;
+  }
 `

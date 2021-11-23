@@ -1,63 +1,72 @@
-import { createAction, handleAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import { apis, img, instance } from "../../lib/axios";
+import { createAction, handleActions } from "redux-actions"
+import { produce } from "immer"
+import { instance } from "../../lib/axios"
 
 //액션
-const GET_PARTICIPATION = "GET_PARTICIPATION"
-const GET_WRITE = "GET_WRITE"
-// const DELETE_GROUP = "DELETE_GROUP"
-// const DELETE_ATTEND = "DELETE_ATTEND"
+const GET_GROUP_PARTICIPATION = "GET_GROUP_PARTICIPATION"
+const GET_GROUP_WRITE = "GET_GROUP_WRITE"
+const GET_GROUP_LIKE = "GET_GROUP_LIKE"
 
 //스크린 참가
-const GET_SCREEN = "GET_SCREEN"
-// const DELETE_SCREEN = "DELETE_SCREEN"
-const SCREEN_WRITE = "SCREEN_WRITE"
+const GET_SCREEN_PARTICIPATION = "GET_SCREEN_PARTICIPATION"
+const GET_SCREEN_WRITE = "GET_SCREEN_WRITE"
+const GET_SCREEN_LIKE = "GET_SCREEN_LIKE"
 
 //액션함수
-const getParticipation = createAction(
-  GET_PARTICIPATION,
-  (participation_list) => ({
-    participation_list,
+const getGroupParticipation = createAction(
+  GET_GROUP_PARTICIPATION,
+  (group_participation_list) => ({
+    group_participation_list,
   })
 )
-const getWrite = createAction(GET_WRITE, (write_list) => ({ write_list }))
 
-// const deleteGroup = createAction(DELETE_GROUP, (delete_list) => ({
-//   delete_list,
-// }))
+const getGroupWrite = createAction(GET_GROUP_WRITE, (group_write_list) => ({
+  group_write_list,
+}))
 
+const getGroupLike = createAction(GET_GROUP_LIKE, (group_like_list) => ({
+  group_like_list,
+}))
 
-// const deleteAttend = createAction(DELETE_ATTEND, (attendList) => ({
-//   attendList,
-// }))
+const getScreen = createAction(
+  GET_SCREEN_PARTICIPATION,
+  (screen_participation_list) => ({
+    screen_participation_list,
+  })
+)
 
-const getScreen = createAction(GET_SCREEN, (screen_list) => ({ screen_list }))
-// const deleteScreen = createAction(DELETE_SCREEN, (screenId) => ({ screenId }))
+const screenWrite = createAction(GET_SCREEN_WRITE, (scrwrite_write_list) => ({
+  scrwrite_write_list,
+}))
 
-const screenWrite = createAction(SCREEN_WRITE, (scrwrite_list) => ({
-  scrwrite_list,
+const getScreenLike = createAction(GET_SCREEN_LIKE, (likeScreen_list) => ({
+  likeScreen_list,
 }))
 
 //초기값
 const initialState = {
   // 참가모임
-  participation_list: [],
+  group_participation_list: [],
   // 작성모임
-  write_list: [],
+  group_write_list: [],
+  // 직관 찜모임
+  group_like_list: [],
   // 스야모임
-  screen_list: [],
+  screen_participation_list: [],
   //스야작성
-  scrwrite_list: [],
+  scrwrite_write_list: [],
 }
 
 //미들웨어
+
+// 직관 참가모임 api
 const getParticipationAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/my/groups/applications`)
       .then((res) => {
         // console.log(res, "참가모임")
-        dispatch(getParticipation(res.data))
+        dispatch(getGroupParticipation(res.data))
       })
       .catch((err) => {
         console.log(err, "참여에러")
@@ -65,13 +74,14 @@ const getParticipationAPI = () => {
   }
 }
 
+// 직관 작성모임 api
 const getWriteAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
       .get(`/my/groups/write`)
       .then((res) => {
         // console.log(res, "작성")
-        dispatch(getWrite(res.data))
+        dispatch(getGroupWrite(res.data))
       })
       .catch((err) => {
         console.log(err, "작성에러")
@@ -79,37 +89,22 @@ const getWriteAPI = () => {
   }
 }
 
-// //delete
-// const deleteGroupAPI = (groupId) => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .delete(`/groups/${groupId}`)
-//       .then((res) => {
-//         // console.log(res)
-//         dispatch(deleteGroup(groupId))
-//       })
-//       .catch((err) => {
-//         console.log(err, "삭제에러")
-//       })
-//   }
-// }
+// 직관 찜모임 api
+const getLikeAPi = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/my/groups/like`)
+      .then((res) => {
+        console.log(res, "찜모임")
+        // dispatch(getParticipation(res.data))
+      })
+      .catch((err) => {
+        console.log(err, "참여에러")
+      })
+  }
+}
 
-// //참여취소
-// const deleteAttendAPI = (groupId) => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .delete(`/groups/${groupId}/applications`)
-//       .then((res) => {
-//         console.log(res)
-//         dispatch(deleteAttend(groupId))
-//       })
-//       .catch((err) => {
-//         console.log(err, "참여신청이다")
-//       })
-//   }
-// }
-
-//스크린 참여
+//스크린 참여모임 api
 const getScreenAPI = () => {
   return function (dispatch, getState, { history }) {
     instance
@@ -124,21 +119,7 @@ const getScreenAPI = () => {
   }
 }
 
-// const deleteScreenAPI = (screenId) => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .delete(`/screen/${screenId}/applications`)
-//       .then((res) => {
-//         console.log(res)
-//         dispatch(deleteScreen(screenId))
-//       })
-//       .catch((err) => {
-//         console.log(err)
-//       })
-//   }
-// }
-
-//스크린 작성모임
+//스크린 작성모임 api
 const getScreenWriteAPI = (props) => {
   return function (dispatch, getState, { history }) {
     instance
@@ -154,43 +135,23 @@ const getScreenWriteAPI = (props) => {
 //리듀서
 export default handleActions(
   {
-    [GET_PARTICIPATION]: (state, action) =>
+    [GET_GROUP_PARTICIPATION]: (state, action) =>
       produce(state, (draft) => {
-        draft.participation_list = action.payload.participation_list
+        draft.group_participation_list = action.payload.group_participation_list
       }),
-    [GET_WRITE]: (state, action) =>
+    [GET_GROUP_WRITE]: (state, action) =>
       produce(state, (draft) => {
-        draft.write_list = action.payload.write_list
+        draft.group_write_list = action.payload.group_write_list
       }),
-    // [DELETE_GROUP]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let idx = draft.write_list.find(
-    //       (c) => c.groupId === action.payload.delete_list
-    //     )
-    //     // console.log(idx, "qweqweqwe");
-    //     draft.write_list.splice(idx, 1)
-    //   }),
-    // [DELETE_ATTEND]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let idx = draft.with_list.find(
-    //       (c) => c.groupId === action.payload.attendList
-    //     )
-    //     draft.with_list.splice(idx, 1)
-    //   }),
-    [GET_SCREEN]: (state, action) =>
+    [GET_SCREEN_PARTICIPATION]: (state, action) =>
       produce(state, (draft) => {
-        draft.screen_list = action.payload.screen_list
+        draft.screen_participation_list =
+          action.payload.screen_participation_list
       }),
-    // [DELETE_SCREEN]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     let idx = draft.screen_list.find(
-    //       (c) => c.screenId === action.payload.screenId
-    //     )
-    //     draft.screen_list.splice(idx, 1)
-    //   }),
-    [SCREEN_WRITE]: (state, action) =>
+
+    [GET_SCREEN_WRITE]: (state, action) =>
       produce(state, (draft) => {
-        draft.scrwrite_list = action.payload.scrwrite_list
+        draft.scrwrite_write_list = action.payload.scrwrite_write_list
       }),
   },
   initialState
@@ -201,10 +162,7 @@ const actionCreators = {
   getWriteAPI,
   getScreenWriteAPI,
   getScreenAPI,
-  // deleteGroupAPI,
-  // deleteAttendAPI,
-  // deleteScreenAPI,
-  // deleteScreen,
+  getLikeAPi,
 }
 
-export { actionCreators };
+export { actionCreators }

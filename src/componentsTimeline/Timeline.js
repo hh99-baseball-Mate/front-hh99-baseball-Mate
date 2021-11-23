@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { timelineCreators } from "../redux/modules/timeline";
-import { mainCreators } from "../redux/modules/mainPage";
+import { timelineCreators } from "../redux/modules/timeline"
 
 const Timeline = React.memo((props) => {
   const dispatch = useDispatch()
