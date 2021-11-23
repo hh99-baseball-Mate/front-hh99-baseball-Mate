@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { history } from "../redux/configStore";
 //swiper
 import Swipers from "../components/Swipers"
-import GroupCard from "../components/GroupCard"
+import { GroupCard } from "../components/GroupCard"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../redux/modules/group"
 import { baseUrl, clubImageSrc } from "../shared/clubImage"

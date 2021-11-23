@@ -13,7 +13,7 @@ const Participant = memo((props) => {
   const groupId = params.groupId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  console.log("참여자컴포", props)
+  // console.log("참여자컴포", props)
   // const {shape, src, size, pointer} = props;
   // flex="felx" justify="space-around"
   const dispatch = useDispatch()
@@ -37,6 +37,7 @@ const Participant = memo((props) => {
     Username: mylist.username,
   }
 
+  console.log("참여자")
   // const [close, setClose] = useState(props.allowtype)
   // const [a, setA] = useState(props.allowtype);
 
@@ -77,21 +78,19 @@ const Participant = memo((props) => {
   )
   // console.log("myJoin",myJoin)
   // 참석버튼 표시
-  useEffect(() => {
-    if (myJoin !== -1) {
-      return props.setJoin(true)
-    } else {
-      props.setJoin(false)
-    }
-  }, [props.appliedUserInfo, props.join, myJoin])
+  // useEffect(() => {
+  //   if (myJoin !== -1) {
+  //     return props.setJoin(true)
+  //   } else {
+  //     props.setJoin(false)
+  //   }
+  // }, [props.appliedUserInfo, props.join, myJoin])
 
   // useEffect(() => {
   //   dispatch(groupDetailCreators.loadGroupPageMW(id))
   // },[props.allowtype])
 
- const me = props.createdUserId === props.userid
- console.log("나다", me) 
- console.log("나다2", props.allowtype) 
+  const me = props.createdUserId === props.userid
 
   return (
     <React.Fragment>
@@ -115,49 +114,61 @@ const Participant = memo((props) => {
           })}
         </Warp>
         <Warp flex="flex" direction="column" align="center" justify="center">
-
-            {/* <ConfirmBtn onClick={()=>{chat()}}>
-              채팅방 생성
-            </ConfirmBtn> */}
-
-          { // 글작성자가 본인일 때 모임확정
-            (me && props.allowtype === true) ?            
-            <ConfirmBtn onClick={()=>{confirm()}}>
-             모임 확정하기
-            </ConfirmBtn>
-            :
-            <ConfirmBtn onClick={()=>{confirm()}}>
-              모임 확정취소하기
-            </ConfirmBtn>
+          {
+            // 글작성자가 본인일 때 모임확정
+            me && props.allowtype ? (
+              <ConfirmBtn onClick={confirm}>모임 확정하기</ConfirmBtn>
+            ) : (
+              <>
+                {/* <DisableBtn disabled> 모집 마감 </DisableBtn> */}
+                {/* <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn> */}
+              </>
+            )
           }
 
-          {/* { // 글작성자가 본인일 때 채팅방 생성
-            (me && props.allowtype === false) &&
-            <ConfirmBtn onClick={()=>{chat()}}>
-              채팅방 생성
-            </ConfirmBtn>
+          {/* {
+            // 글작성자가 본인일 때 채팅방 생성
+            me && props.allowtype === false && (
+              <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn>
+            )
           } */}
 
-          {/* { // 모집완료 되었을 때 모집마감
-            (props.allowtype === false) &&
-            <DisableBtn disabled> 모집 마감 </DisableBtn>
-          }  */}
+          {/* {
+            // 모집완료 되었을 때 모집마감
+            props.allowtype === false && (
+              <DisableBtn disabled> 모집 마감 </DisableBtn>
+            )
+          } */}
 
-          { // 참여 안했을 때 참여버튼
-            (!me && !props.join && props.allowtype === true) && 
-              <ConfirmBtn onClick={() => {apply()}} join={props.join}>
+          {/* {
+            // 참여 안했을 때 참여버튼
+            !me && !props.join && props.allowtype ? (
+              <ConfirmBtn onClick={apply} join={props.join}>
                 모임 참여하기
               </ConfirmBtn>
-          }
-
-          { // 참여 했을 때 참여 취소버튼
-           (!me && props.join && props.close === true) && 
-              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
+            ) : (
+              <ConfirmBtn onClick={delapply} join={props.join}>
                 참여 취소하기
               </ConfirmBtn>
-          }  
-       
+            )
+          } */}
+          {
+            // 참여 했을 때 참여 취소버튼
+            !me && !props.join && props.allowtype && (
+              <ConfirmBtn onClick={apply} join={props.join}>
+                모임 참여하기
+              </ConfirmBtn>
+            )
+          }
 
+          {
+            // 참여 했을 때 참여 취소버튼
+            !me && props.join && props.close && (
+              <ConfirmBtn onClick={delapply} join={props.join}>
+                참여 취소하기
+              </ConfirmBtn>
+            )
+          }
 
           {/* {
             // 글작성자랑 내아이디랑 같으면 모집마감 버튼
@@ -186,8 +197,6 @@ const Participant = memo((props) => {
               </ConfirmBtn>
             )
           } */}
-
-
         </Warp>
       </Box>
     </React.Fragment>

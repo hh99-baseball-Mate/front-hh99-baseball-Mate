@@ -108,9 +108,7 @@ export const MyPage = ({ is_login }) => {
 
         <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine>
 
-        <TextLine onClick={() => window.alert(" 구현 중 입니다.")}>
-          공지사항
-        </TextLine>
+        <TextLine onClick={() => history.push("/notice")}>공지사항</TextLine>
       </Container>
 
       {/* 하단네비바 */}

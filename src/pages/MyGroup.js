@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { ArrowBack, Container, NaviBar, MarginBottom } from "../components"
 import { PartiGroup } from "../componentsMygroup/PartiGroup"
 import { WriteGroup } from "../componentsMygroup/WriteGroup"
+import { LikeGroup } from "../componentsMygroup/LikeGroup"
 import { SubTitle } from "../components/SubTitle"
 
 const MyGroup = (props) => {
@@ -12,6 +13,7 @@ const MyGroup = (props) => {
   //구분
   const [allParticipation, setAllParticipation] = useState(true)
   const [allWrite, setAllWrite] = useState(false)
+  const [allLike, setAllLike] = useState(false)
 
   // const [wish, setWish] = useState(false)
 
@@ -19,12 +21,21 @@ const MyGroup = (props) => {
   const allParticipationBtn = () => {
     setAllParticipation(true)
     setAllWrite(false)
+    setAllLike(false)
   }
 
   // 작성 모든 모임 버튼
   const allWriteBtn = () => {
     setAllWrite(true)
     setAllParticipation(false)
+    setAllLike(false)
+  }
+
+  // 찜한모임
+  const allLikeBtn = () => {
+    setAllLike(true)
+    setAllParticipation(false)
+    setAllWrite(false)
   }
 
   return (
@@ -34,20 +45,12 @@ const MyGroup = (props) => {
       <Container>
         <Group>
           <GroupBtn onClick={allParticipationBtn}>참여모임</GroupBtn>
-
           <GroupBtn onClick={allWriteBtn}>작성모임</GroupBtn>
-          <GroupBtn
-            onClick={() => {
-              window.alert("준비중")
-            }}
-          >
-            찜한모임
-          </GroupBtn>
+          <GroupBtn onClick={allLikeBtn}>찜한모임</GroupBtn>
         </Group>
 
         <SubTitle filter setShowModal={setShowModal}>
-          내가 지금{" "}
-          {allParticipation ? <Span>참여한</Span> : <Span>작성한</Span>} 모임
+          나의 모임
         </SubTitle>
       </Container>
 
@@ -61,6 +64,10 @@ const MyGroup = (props) => {
       {/* 작성모임 */}
       {allWrite && (
         <WriteGroup showModal={showModal} setShowModal={setShowModal} />
+      )}
+
+      {allLike && (
+        <LikeGroup showModal={showModal} setShowModal={setShowModal} />
       )}
 
       <MarginBottom />
