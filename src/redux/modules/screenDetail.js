@@ -134,7 +134,7 @@ const likePostMW = (screenId, like) => {
 const screenApplyMW = (screenId, my) => {
   return (dispatch, getState, { history }) => {
     instance
-      .post(`/screen/${screenId}/applications`)
+      .post(`/screen/join/request/${screenId}`)
       .then((res) => {
         // console.log(res)
         dispatch(screen_apply(my))
@@ -151,7 +151,7 @@ const screenApplyMW = (screenId, my) => {
 const delApplyMW = (screenId, userid) => {
   return (dispatch, getState, { history }) => {
     instance
-      .delete(`/screen/${screenId}/applications`)
+      .delete(`/screen/join/request/${screenId}`)
       .then((res) => {
         // console.log("참석취소", res)
         dispatch(del_apply(screenId, userid))
@@ -263,17 +263,16 @@ const confirmMW = (groupId) => {
 }
 
 //채팅
-const chatMW = ()  => {
+const chatMW = (groupId)  => {
   return function (dispatch, getState, { history }) {
     instance
-     .post("/chat/rooms")
+     .post(`/chat/screen/${groupId}`)
      .then((res) => {
        console.log(res)
        window.alert("채팅방이 생성되었습니다.")
      })
      .catch((err) => {
        console.log(err)
-       window.alert(err)
      })
   }
 }

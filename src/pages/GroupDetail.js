@@ -13,11 +13,12 @@ const GroupDetail = memo((props) => {
   const params = useParams()
   const groupId = params.groupId
 
-  const loadDetail = useSelector((state) => state.groupDetail.groupPage)
+  const loadDetail = useSelector((state) => state.groupDetail?.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
   const [selectPage, setSelectPage] = useState(true)
-  const [close, setClose] = useState(loadDetail?.allowtype)
+  // close가 false일때 모집완료, true일때 모집중
+  const [close, setClose] = useState(false)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
@@ -31,7 +32,7 @@ const GroupDetail = memo((props) => {
     const groupId = params.groupId
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
-  }, [dispatch, likePost, groupId, selectPage, close])
+  }, [dispatch, likePost, groupId, close, loadDetail.allowtype])
 
 
 
@@ -56,7 +57,7 @@ const GroupDetail = memo((props) => {
         {...loadDetail}
         {...mylist}
         close={close}
-        setClose={setClose}
+        // setClose={setClose}
         heart={heart}
         setHeart={setHeart}
         likePost={likePost}

@@ -83,7 +83,7 @@ const Participant = memo((props) => {
 
   // 채팅방 생성 버튼
   const chat = () => {
-    dispatch(screenDetailCreators.chatMW())
+    dispatch(screenDetailCreators.chatMW(id))
   }
 
   const me = props.createdUserId === props.userid

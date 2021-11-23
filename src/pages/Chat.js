@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
@@ -12,11 +12,13 @@ const Chat = (props) => {
 	const history = useHistory();
 	const disptch = useDispatch()
 
-	
-  // const chatList = useSelector((state) => state.screenDetail.screenPage)
 	useEffect(() => {
 		disptch(chatCreators.loadChatListMW())
 	})
+
+	// const chatList = useSelector((state) => state.chat?.chatList)
+
+	console.log("chatList", props)
 
 	return (
 		<React.Fragment>
@@ -24,6 +26,12 @@ const Chat = (props) => {
 			<Rectangle/>
 
 			<Box>
+				{/* {
+					chatList.map((list) => {
+						return <ChatCard list />
+					})
+				} */}
+				
 				<ChatCard/>
 				<ChatCard/>
 				<ChatCard/>

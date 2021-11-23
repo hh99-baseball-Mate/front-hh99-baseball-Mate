@@ -52,7 +52,7 @@ const del_alarmMW = (alarmId) => {
 	}
 }
 
-// 방장의 알림창에서 신청들어온 데이터조회하기
+// 방장의 알림창에서 신청들어온 데이터조회하기(경기모임)
 const requestChatListMW = () => {
 	return (dispatch) => {
 		instance
@@ -79,6 +79,7 @@ const requestChatListMW = () => {
 			})
 	}
 }
+
 
 // (방장이 참여자들을)참여승인하기 / 거절하기
 const alarmComfirmMW = (joinRequestId, join) => {
@@ -119,6 +120,51 @@ const awaitChatListMW = () => {
 }
 
 
+
+// 방장의 알림창에서 신청들어온 데이터조회하기(스크린야구)
+const requestScreenChatListMW = () => {
+	return (dispatch) => {
+		instance
+			.get("/screen/join/request/list")
+			.then((res) => {
+				console.log(res.data)
+
+				let request_list = [];
+				res.data.forEach((req) => {
+					let one_req = {
+						join_id: req.joinRequestId,
+						user_id: req.userId,
+						username: req.username,
+						user_img: req.profileImg,
+						title: req.postTitle,
+					};
+					request_list.push(one_req);
+				});
+
+				dispatch(setRequestList(request_list));
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
+}
+
+
+// (방장이 참여자들을)참여승인하기 / 거절하기
+const alarmScreenComfirmMW = (joinRequestId, join) => {
+	return (dispatch) => {
+		instance
+			.get(`/screen/join/request/accept/${joinRequestId}?accept=${join}`)
+			.then((res) => {
+				console.log(res)
+			})
+			.catch((err) => {
+				console(err)
+			})
+	}
+}
+
+
 export default handleActions({
 	[LOAD_ALARM]: (state, action) => produce(state, (draft) => {
 		draft.alarmList = action.payload.alarm
@@ -142,7 +188,9 @@ const alarmCreators = {
 	del_alarmMW,
 	requestChatListMW,
 	alarmComfirmMW,
-	awaitChatListMW
+	awaitChatListMW,
+	requestScreenChatListMW,
+	alarmScreenComfirmMW
 }
 
 export {alarmCreators};
