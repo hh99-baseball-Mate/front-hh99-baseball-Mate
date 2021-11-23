@@ -70,13 +70,13 @@ const Info = memo((props) => {
 
 
   // 모집마감 표시
-  useEffect(() => {
-    if (props.dday < 1 || props.canApplyNum === 0) {
-      props.setClose(false)
-    } else {
-      props.setClose(true)
-    }
-  }, [props])
+  // useEffect(() => {
+  //   if (props.dday < 1 || props.canApplyNum === 0) {
+  //     props.setClose(true)
+  //   } else {
+  //     props.setClose(false)
+  //   }
+  // }, [props])
 
   // 찜(하트) 버튼
   const HeartBtn = () => {
