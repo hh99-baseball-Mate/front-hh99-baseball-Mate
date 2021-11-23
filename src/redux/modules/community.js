@@ -5,9 +5,11 @@ import { instance } from "../../lib/axios";
 
 //액션
 const GET_CARD = "GET_CARD";
+const POST_ADD = "POST ADD";
 
 //액션함수
 const getCard = createAction(GET_CARD, (cardList) => ({ cardList }));
+const postAdd = createAction(POST_ADD, (addList) => ({ addList }));
 
 //초기값
 const initialState = {
@@ -21,7 +23,7 @@ const getCardAPI = () => {
       .get(`/community`)
       .then((res) => {
         console.log(res);
-        dispatch(getCardAPI(res.data));
+        dispatch(getCard(res.data));
       })
       .catch((err) => {
         console.log(err, "커뮤니티카드 조회 에러");
@@ -29,6 +31,19 @@ const getCardAPI = () => {
   };
 };
 
+//커뮤니티 글작성
+const postAddAPI = (formData) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post("/community", formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err, "모임 만들기 에러");
+      });
+  };
+};
 //리듀서
 export default handleActions(
   {
@@ -36,12 +51,17 @@ export default handleActions(
       produce(state, (draft) => {
         draft.card_list = action.payload.cardList;
       }),
+    [POST_ADD]: (state, action) =>
+      produce(state, (draft) => {
+        draft.card_list = action.payload.addList;
+      }),
   },
   initialState
 );
 
 const actionCreators = {
   getCardAPI,
+  postAddAPI,
 };
 
 export { actionCreators };

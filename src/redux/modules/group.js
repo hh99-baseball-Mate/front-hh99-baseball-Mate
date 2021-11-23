@@ -66,7 +66,7 @@ const hotGroupMW = (team) => {
     }
 
     instance
-      .get(`groups/hotgroup?team=${team}`)
+      .get(`groups/hotgroup?team=${encodeURIComponent(team)}`)
       .then((res) => {
         // console.log("핫그룹",res)
         const list = res.data
@@ -103,6 +103,7 @@ const getTeamAPI = (teamname) => {
         .then((res) => {
           dispatch(getTeam(res.data))
           // console.log(res)
+          console.log("겟팀")
         })
         .catch((err) => {
           console.log(err, "전체 모임 불러오기")
@@ -111,10 +112,11 @@ const getTeamAPI = (teamname) => {
     }
 
     instance
-      .get(`/groups?team=${teamname}`)
+      .get(`/groups?team=${encodeURIComponent(teamname)}`)
       .then((res) => {
-        // console.log(res.data, "구단 선택")
+        console.log(res.data, "구단 선택")
         dispatch(getTeam(res.data))
+        console.log("구단선택")
       })
       .catch((err) => {
         console.log("팀별조회에러", err)
@@ -125,20 +127,20 @@ const getTeamAPI = (teamname) => {
 // 모임추가 시 구단 선택 했을 시 해당 구단의 경기 일정을 보여주기
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-    const teamname = myteam.split(" ");
+    const teamname = myteam.split(" ")
 
     instance
-      .get(`/kbodatas?team=${teamname[0]}`)
+      .get(`/kbodatas?team=${encodeURIComponent(teamname[0])}`)
       .then((res) => {
-        const _team = res.data;
+        const _team = res.data
 
-        const team = _team.slice(-5);
+        const team = _team.slice(-5)
 
-        dispatch(selectTeam(team));
+        dispatch(selectTeam(team))
       })
-      .catch((err) => console.log(err, "팀선택 err입니다."));
-  };
-};
+      .catch((err) => console.log(err, "팀선택 err입니다."))
+  }
+}
 
 // 직관 모임만들기
 const addGroupMD = (formData) => {
@@ -146,12 +148,12 @@ const addGroupMD = (formData) => {
     img
       .post("/groups", formData)
       .then((res) => {
-        console.log(res.data);
-        history.replace("/");
+        // console.log(res.data);
+        history.replace("/")
       })
-      .catch((err) => console.log(err, "모임생성 err입니다."));
-  };
-};
+      .catch((err) => console.log(err, "모임생성 err입니다."))
+  }
+}
 
 //리듀서
 export default handleActions(

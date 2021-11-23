@@ -171,7 +171,7 @@ const deleteGoodsCommentMD = (goodsId, commentId) => {
 // 댓글 수정
 const updateGoodsCommentMD = (goodsId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log(goodsId, commentId)
+    // console.log(goodsId, commentId)
     instance
       .put(`/goods/${goodsId}/comment/${commentId}`, { comment: comment })
       .then((res) => {
@@ -185,7 +185,7 @@ const updateGoodsCommentMD = (goodsId, commentId, comment) => {
 // 좋아요
 const addGoodsLikeMD = (goodsId, useridx, like, likeCheck) => {
   return function (dispatch, getState, { history }) {
-    console.log(goodsId, useridx, like, likeCheck)
+    // console.log(goodsId, useridx, like, likeCheck)
 
     instance
       .post(`/goods/${goodsId}/like`, { isLiked: like })

@@ -4,34 +4,33 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import user from "./modules/user";
-import mainPage from "./modules/mainPage";
 import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
 import group from "./modules/group";
-import _with from "./modules/with"
-import screen from "./modules/screen"
+import _with from "./modules/with";
+import screen from "./modules/screen";
 import screenDetail from "./modules/screenDetail";
 import alarm from "./modules/alarm";
 import chat from "./modules/chat"
-
-export const history = createBrowserHistory()
+import community from "./modules/community";
+export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user,
   with: _with,
   group,
   goods,
-  mainPage,
   timeline,
   groupDetail,
   screen,
   screenDetail,
   alarm,
   chat,
+  community,
 
   router: connectRouter(history),
-})
+});
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

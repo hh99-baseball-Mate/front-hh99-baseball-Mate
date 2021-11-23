@@ -2,30 +2,30 @@ import React, { useState } from "react";
 import { BsTranslate } from "react-icons/bs";
 import styled from "styled-components";
 import { Text } from "../components";
-import { history } from "../redux/configStore";
 import Question from "../shared/icon/Question.png";
+import Progress from "../components/Progress";
 const CommunityCard = (props) => {
+  const { filePath, myTeam, content, userName, communityUserPicture } = props;
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
   return (
-    <Card
-      onClick={() => {
-        history.push("/communitydetail");
-      }}
-    >
+    <Card>
       <UserInfo>
-        <UserImg />
+        <UserImg src={communityUserPicture} />
         <InfoBox>
-          <Text>제목</Text>
+          <Text>{userName}</Text>
           <Time>
-            <Text>롯테</Text>
+            <Text margin="0 10px 0 0">{myTeam}</Text>
             <Text>시간</Text>
           </Time>
         </InfoBox>
       </UserInfo>
-      <TextBox>내용</TextBox>
+      <TextBox>{content}</TextBox>
       <Border />
       <Good>
         <img src={Question} alt="말풍선" />
-        <Text size="12px">숫자</Text>
+        <Text size="12px" margin="0 0 0 7px">
+          숫자
+        </Text>
       </Good>
 
       <Boundary />
@@ -39,7 +39,6 @@ const Card = styled.div`
   width: 100%;
   height: 225px;
   margin-top: 20px;
-  background: tomato;
 `;
 
 const UserImg = styled.img`
@@ -57,17 +56,17 @@ const UserInfo = styled.div`
 const InfoBox = styled.div`
   flex-direction: column;
   display: "flex";
-  margin-left: 30px;
+  margin-left: 12px;
 `;
 
 const Time = styled.div`
   display: flex;
+  margin-top: 5px;
 `;
 
 const TextBox = styled.div`
   width: 100%;
   height: 60px;
-  background: yellowgreen;
   font-size: 14px;
   margin-top: 14px;
 `;
@@ -79,7 +78,7 @@ const Border = styled.div`
 `;
 
 const Boundary = styled.div`
-  background: yellowgreen;
+  background: #f8f8f8;
   width: 100%;
   height: 6px;
 `;

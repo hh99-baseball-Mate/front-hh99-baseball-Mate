@@ -39,7 +39,7 @@ import ChatRoom from "../componentsChat/ChatRoom";
 import Community from "../pages/Community";
 import { CommunityDetail } from "../pages/CommunityDetail";
 import CommunityAdd from "../pages/CommunityAdd";
-import { Goods } from "../pages/Goods"
+import { Goods } from "../pages/Goods";
 
 function App() {
   const dispatch = useDispatch();
@@ -92,7 +92,6 @@ function App() {
             <Route path="/goods" exact component={Goods} />
             <Route path="/mygroup" exact component={MyGroup} />
             <Route path="/community" exact component={Community} />
-            <Route path="/communityadd" exact component={CommunityAdd} />
 
             {/* 커스텀 훅 사용 */}
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
@@ -147,7 +146,7 @@ function App() {
             <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
             <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
-
+            <Route path="/communityadd" exact component={CommunityAdd} />
             {/* 임시 */}
             {/* <Redirect */}
             <Route component={NotFound} />
@@ -167,4 +166,4 @@ const Container = styled.div`
   /* margin: auto; */
   background: #fff;
   /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
-`
+`;

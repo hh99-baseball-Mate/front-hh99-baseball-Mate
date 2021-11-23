@@ -17,15 +17,6 @@ export const Modal = (props) => {
     deleteBtn,
   } = props
 
-  // const {
-  //   title,
-  //   descriptionOne,
-  //   descriptionTwo,
-  //   btnClose,
-  //   btnConfirm,
-  //   btnUpdate,
-  // } = modalData
-
   // 모달 오버레이에서 스크롤 방지
   useEffect(() => {
     document.body.style.cssText = `
