@@ -262,19 +262,19 @@ const confirmMW = (groupId) => {
 }
 
 //채팅
-const chatMW = (groupId)  => {
-  return function (dispatch, getState, { history }) {
-    instance
-     .post(`/chat/${groupId}`)
-     .then((res) => {
-       console.log(res)
-       window.alert("채팅방이 생성되었습니다.")
-     })
-     .catch((err) => {
-       console.log(err)
-     })
-  }
-}
+// const chatMW = (groupId)  => {
+//   return function (dispatch, getState, { history }) {
+//     instance
+//      .post(`/chat/${groupId}`)
+//      .then((res) => {
+//        console.log(res)
+//        window.alert("채팅방이 생성되었습니다.")
+//      })
+//      .catch((err) => {
+//        console.log(err)
+//      })
+//   }
+// }
 
 //reducer
 export default handleActions(
@@ -355,7 +355,7 @@ const groupDetailCreators = {
 	likegroupCommentMW,
 	mylistMW,
   confirmMW,
-  chatMW
+  // chatMW
 }
 
 export {groupDetailCreators};
