@@ -3,16 +3,15 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
-import user from "./modules/user";
-import mainPage from "./modules/mainPage";
-import timeline from "./modules/timeline";
-import groupDetail from "./modules/groupDetail";
-import goods from "./modules/goods";
-import group from "./modules/group";
+import user from "./modules/user"
+import timeline from "./modules/timeline"
+import groupDetail from "./modules/groupDetail"
+import goods from "./modules/goods"
+import group from "./modules/group"
 import _with from "./modules/with"
 import screen from "./modules/screen"
-import screenDetail from "./modules/screenDetail";
-import alarm from "./modules/alarm";
+import screenDetail from "./modules/screenDetail"
+import alarm from "./modules/alarm"
 
 export const history = createBrowserHistory()
 
@@ -21,7 +20,6 @@ const rootReducer = combineReducers({
   with: _with,
   group,
   goods,
-  mainPage,
   timeline,
   groupDetail,
   screen,

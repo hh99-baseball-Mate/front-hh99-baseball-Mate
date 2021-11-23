@@ -14,15 +14,17 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()
 
   // 직관 참가모임 리스트
-  const participation_list = useSelector(
-    (state) => state.with.participation_list
+  const group_participation_list = useSelector(
+    (state) => state.with.group_participation_list
   )
 
   // 스크린 야구 참고모임 리스트
-  const screen_list = useSelector((state) => state.with.screen_list)
+  const screen_participation_list = useSelector(
+    (state) => state.with.screen_participation_list
+  )
 
   // concat 으로 하나로 합쳐서 all_list를 새로 만듦
-  const all_list = participation_list.concat(screen_list)
+  const all_list = group_participation_list.concat(screen_participation_list)
 
   // 커스텀 훅 myGroupModalBtn
   const [allListBtn, partiBtn, writeBtn, allList, game, screen] =
@@ -70,8 +72,8 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
           : ""}
 
         {/* 경기만 모임 */}
-        {game && participation_list && participation_list.length > 0
-          ? participation_list.map((e) => (
+        {game && group_participation_list && group_participation_list.length > 0
+          ? group_participation_list.map((e) => (
               <GroupCard
                 onClick={() => history.push(`/groupdetail/${e.groupId}`)}
                 key={e.groupId}
@@ -81,8 +83,10 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
           : ""}
 
         {/* 스크린만 모임 */}
-        {screen && screen_list && screen_list.length > 0
-          ? screen_list.map((e) => (
+        {screen &&
+        screen_participation_list &&
+        screen_participation_list.length > 0
+          ? screen_participation_list.map((e) => (
               <GroupCard
                 onClick={() => history.push(`/screendetail/${e.screenId}`)}
                 key={e.screenId}

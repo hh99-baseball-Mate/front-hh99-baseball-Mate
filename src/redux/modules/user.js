@@ -34,55 +34,55 @@ const initialState = {
 
 const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
-    const { userid, password } = user_info;
+    const { userid, password } = user_info
 
-    console.log(user_info);
+    // console.log(user_info);
     instance
       .post("/user/login", { userid, password })
       .then((res) => {
         // console.log("로그인반환", res)
 
-        const myteam = res.data.myteam;
+        const myteam = res.data.myteam
 
-        const accessToken = res.data.token;
+        const accessToken = res.data.token
 
         // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
-        setCookie("is_login", `${accessToken}`);
-        const token = getCookie("is_login");
+        setCookie("is_login", `${accessToken}`)
+        const token = getCookie("is_login")
 
         // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token;
+        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
         // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token;
+        img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
-        dispatch(logInCheckMD());
+        dispatch(logInCheckMD())
 
         const userInfo = {
           userid,
           myteam,
-        };
+        }
 
-        dispatch(logIn(userInfo));
+        dispatch(logIn(userInfo))
 
         if (myteam === null) {
           // console.log("구단선택하세요")
-          history.push("/login/clubchoice");
-          return;
+          history.push("/login/clubchoice")
+          return
         }
 
-        window.alert("로그인 완료");
-        history.push("/");
+        window.alert("로그인 완료")
+        history.push("/")
       })
       .catch((err) => {
-        console.log(err, "로그인에러입니다.");
-        window.alert("일치하는 회원정보가 없습니다.");
-      });
-  };
-};
+        console.log(err, "로그인에러입니다.")
+        window.alert("일치하는 회원정보가 없습니다.")
+      })
+  }
+}
 
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
-    const { userid, username, password, phonenumber } = user_info;
+    const { userid, username, password, phonenumber } = user_info
 
     instance
       .post("/user/signup", {
@@ -92,42 +92,42 @@ const signUpMD = (user_info) => {
         phonenumber,
       })
       .then((res) => {
-        window.alert("회원가입 성공");
-        history.replace("/login");
-        console.log(res);
+        window.alert("회원가입 성공")
+        history.replace("/login")
+        console.log(res)
       })
       .catch((err) => {
-        window.alert("중복 된 이메일이 있습니다");
-        console.log(err, "회원가입 에러");
-      });
-  };
-};
+        window.alert("중복 된 이메일이 있습니다")
+        console.log(err, "회원가입 에러")
+      })
+  }
+}
 
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     instance
       .post("/user/logincheck")
       .then((res) => {
-        const myteam = res.data.myteam;
+        const myteam = res.data.myteam
         // console.log(res)
 
-        const login_user = { ...res.data };
+        const login_user = { ...res.data }
 
-        const token = getCookie("is_login");
+        const token = getCookie("is_login")
         // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token;
+        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
         // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token;
-        dispatch(loginCheck(login_user));
+        img.defaults.headers.common["X-AUTH-TOKEN"] = token
+        dispatch(loginCheck(login_user))
 
         if (myteam === null) {
-          history.replace("/login/clubchoice");
-          return;
+          history.replace("/login/clubchoice")
+          return
         }
       })
-      .catch((err) => console.log(err, "로그인체크에러"));
-  };
-};
+      .catch((err) => console.log(err, "로그인체크에러"))
+  }
+}
 
 const userUpdateMD = (formdata, id) => {
   return function (dispatch, getState, { history }) {
@@ -137,29 +137,24 @@ const userUpdateMD = (formdata, id) => {
       .patch(`/users/${id}`, formdata)
       .then((res) => {
         // console.log(res.data)
-        dispatch(logInCheckMD());
-        history.replace(`/mypage/${id}`);
+        dispatch(logInCheckMD())
+        history.replace(`/mypage/${id}`)
       })
-      .catch((err) => console.log(err, "유저업데이트 오류"));
-  };
-};
+      .catch((err) => console.log(err, "유저업데이트 오류"))
+  }
+}
 
 const choiceClubMD = (club) => {
   return function (dispatch, getState, { history }) {
     console.log(club)
 
-    // const myteam = club
     instance
-      .post(
-        // `${BASE_URL}/users/${id}`,
-        "/user/myteam",
-        { myteam: club }
-      )
+      .post("/user/myteam", { myteam: club })
       .then((res) => {
         // console.log(res)
         dispatch(choiceClub(club))
         history.replace("/")
-        console.log(club)
+        // console.log(club)
       })
       .catch((err) => console.log(err, "클럽선택 err입니다."))
   }
@@ -170,7 +165,7 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {REDIRECT_URI}?code={AUTHORIZE_CODE}
-      .get(`${BASE_URL}/user/kakao/callback?code=${key}`)
+      .get(`http://meetball.shop/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 
