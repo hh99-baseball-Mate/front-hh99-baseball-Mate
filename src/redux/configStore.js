@@ -21,7 +21,6 @@ const rootReducer = combineReducers({
   with: _with,
   group,
   goods,
-  mainPage,
   timeline,
   groupDetail,
   screen,

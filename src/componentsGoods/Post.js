@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { memo, useCallback, useState } from "react"
 import styled from "styled-components"
 import { Container, Text } from "../components"
 import { BsThreeDots } from "react-icons/bs"
@@ -7,12 +7,10 @@ import { Comments } from "./Comments"
 import { CommentWrite } from "./CommentWrite"
 import { UserProfile } from "./UserProfile"
 import { Modal } from "../components/Modal"
-// import { useProfile } from "../customHook/useProfile"
 import { useDispatch } from "react-redux"
-// import { Comments } from "../components/Comments"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 
-export const Post = (props) => {
+export const Post = memo((props) => {
   const dispatch = useDispatch()
   const {
     // 유저 info
@@ -37,6 +35,10 @@ export const Post = (props) => {
 
   // 게시글 이미지
 
+  // const like_list = useSelector((state) => state.goods.goods_list)
+
+  // const likeCnt = like_list.map()
+
   const postImage = process.env.REACT_APP_IMAGES_BASE_URL + filePath
 
   const userImg = () => {
@@ -58,7 +60,7 @@ export const Post = (props) => {
   const [showComments, setShowComments] = useState(false)
 
   // 좋아요
-  const [like, setLike] = useState(true)
+  const [like, setLike] = useState(false)
 
   // 댓글 1개 미리보기
   const comment_preview = goodsCommentList[0]
@@ -66,9 +68,9 @@ export const Post = (props) => {
   // 삭제/수정 모달내용
   const modalData = {
     title: "굿즈 에디터",
-    descriptionOne: "굿즈를 수정/삭제 하시겠습니까?",
+    descriptionOne: "선택하신 굿즈를 삭제 하시겠습니까?",
+    descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
-    btnConfirm: "수정",
     btnUpdate: "삭제",
   }
 
@@ -81,13 +83,19 @@ export const Post = (props) => {
     setShowModal(false)
   }
 
-  // const memoLike = useMemo(
-  //   () =>{
-  //     dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, like))
-  //     console.log('메모')
-  //     },
-  //   [like]
-  // )
+  // 좋아요 중복 검사
+  const likeCheck = goodsLikesList.map((e) => {
+    // console.log(userId, e.id)
+    return userId === e.id
+  })
+
+  console.log(likeCheck, "중복검사")
+
+  const memoLike = useCallback(() => {
+    setLike(!like)
+    dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, like, likeCheck))
+    console.log("메모")
+  }, [like])
 
   return (
     <>
@@ -107,7 +115,6 @@ export const Post = (props) => {
           </UserInfo>
 
           {/* 수정/삭제 모달 아이콘 */}
-          {/* 유저id로 바꿔야함 */}
           {useridx === userId ? (
             <MoreIcons onClick={() => setShowModal(true)} />
           ) : (
@@ -119,8 +126,8 @@ export const Post = (props) => {
         <Container>
           {/* 좋아요 */}
           <PostIcons>
-            <LikeBtn onClick={() => setLike(!like)}>
-              {like ? <PostNoLike size="20px" /> : <PostLike size="20px" />}
+            <LikeBtn onClick={memoLike}>
+              {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
             </LikeBtn>
             <Text size="12px">{goodsLikesList.length}</Text>
           </PostIcons>
@@ -136,7 +143,9 @@ export const Post = (props) => {
           )}
           <P onClick={() => setShowContents(!showContents)}>...더보기</P>
           {/* 게시물 내용 더 보기 */}
+
           {/* 해쉬태그 */}
+
           {/* <Hash>
             <Span>#롯데 # 김원중</Span>
             <Span>#롯데 # 김원중</Span>
@@ -175,7 +184,7 @@ export const Post = (props) => {
 
       {showModal && (
         <Modal
-          three
+          center
           setShowModal={setShowModal}
           modalData={modalData}
           deleteBtn={deleteBtn}
@@ -183,7 +192,7 @@ export const Post = (props) => {
       )}
     </>
   )
-}
+})
 
 Post.defaultProps = {}
 

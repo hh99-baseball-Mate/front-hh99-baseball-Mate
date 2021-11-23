@@ -17,15 +17,6 @@ export const Modal = (props) => {
     deleteBtn,
   } = props
 
-  // const {
-  //   title,
-  //   descriptionOne,
-  //   descriptionTwo,
-  //   btnClose,
-  //   btnConfirm,
-  //   btnUpdate,
-  // } = modalData
-
   // 모달 오버레이에서 스크롤 방지
   useEffect(() => {
     document.body.style.cssText = `
@@ -72,8 +63,8 @@ export const Modal = (props) => {
             <ModalCloseeBtn onClick={() => setShowModal(false)}>
               <P>{modalData.btnClose}</P>
             </ModalCloseeBtn>
-            <ModalConfirmBtn onClick={getOut}>
-              <P>{modalData.btnConfirm}</P>
+            <ModalConfirmBtn onClick={deleteBtn}>
+              <P>{modalData.btnUpdate}</P>
             </ModalConfirmBtn>
           </BtnBox>
         </ModalContent>

@@ -1,16 +1,17 @@
 import React from "react"
 import { useSelector } from "react-redux"
 
-export const useProfile = () => {
-  const user_info = useSelector((state) => state.user.user_info)
+export const useProfile = (usertype, userImage) => {
+  // const = useSelector((state) => state.user.user_info)
 
   const userImg = () => {
-    if (user_info.usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + user_info.picture
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + userImage
     }
-    if (user_info.usertype === "kakao") {
-      return user_info.picture
+    if (usertype === "kakao") {
+      return userImage
     }
+    return
   }
 
   return [userImg]

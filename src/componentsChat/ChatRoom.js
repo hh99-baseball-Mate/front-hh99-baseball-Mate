@@ -31,7 +31,7 @@ const ChatRoom = (props) => {
 
 	const sender_nick = useSelector((state) => state.user.user_info?.username);
 	const sender_id = useSelector((state) => state.user.user_info?.useridx);
-	const room_id = 514;
+	const room_id = 912;
 
 	console.log("sender_id",sender_id)
 	

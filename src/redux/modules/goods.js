@@ -16,7 +16,8 @@ const UPDATE_GOODS_COMMENT = "UPDATE_GOODS_COMMENT"
 
 // 액션 타입 좋아요
 
-const ADD_COODS_LIKE = "ADD_COODS_LIKE"
+const ADD_GOODS_LIKE = "ADD_COODS_LIKE"
+const DELETE_GOODS_LIKE = "DELETE_GOODS_LIKE"
 
 const LOADING = "LOADING"
 
@@ -51,13 +52,21 @@ const updateGoodsComment = createAction(
 
 const deleteGoods = createAction(DELETE_GOODS, (goodsId) => ({ goodsId }))
 
-const addGoodsLike = createAction(ADD_COODS_LIKE, (goodsId, useridx, like) => ({
+const addGoodsLike = createAction(ADD_GOODS_LIKE, (goodsId, useridx, like) => ({
   goodsId,
   useridx,
   like,
 }))
+const deleteGoodsLike = createAction(
+  DELETE_GOODS_LIKE,
+  (goodsId, useridx, like) => ({
+    goodsId,
+    useridx,
+    like,
+  })
+)
 
-const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
+// const loading = createAction(LOADING, (is_loading) => ({ is_loading }))
 
 const initialState = {
   goods_list: [],
@@ -105,7 +114,7 @@ const deleteGoodsMD = (goodsId) => {
       .delete(`/goods/${goodsId}`)
       .then((res) => {
         dispatch(deleteGoods(goodsId))
-        console.log(res, "삭제")
+        // console.log(res, "삭제")
       })
       .catch((err) => console.log(err, "굿즈 삭제에러"))
   }
@@ -118,7 +127,7 @@ const addGoodsCommentMD = (goodsId, getComment) => {
     instance
       .post(`/goods/${goodsId}/comment`, { comment: getComment })
       .then((res) => {
-        console.log(res, "댓글추가")
+        // console.log(res, "댓글추가")
         // dispatch(addGoodsComment(goodsId, addComment))
         dispatch(getGoodsCommentMD(goodsId))
       })
@@ -162,7 +171,7 @@ const deleteGoodsCommentMD = (goodsId, commentId) => {
 // 댓글 수정
 const updateGoodsCommentMD = (goodsId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log(goodsId, commentId)
+    // console.log(goodsId, commentId)
     instance
       .put(`/goods/${goodsId}/comment/${commentId}`, { comment: comment })
       .then((res) => {
@@ -173,14 +182,23 @@ const updateGoodsCommentMD = (goodsId, commentId, comment) => {
   }
 }
 
-const addGoodsLikeMD = (goodsId, useridx, like) => {
+// 좋아요
+const addGoodsLikeMD = (goodsId, useridx, like, likeCheck) => {
   return function (dispatch, getState, { history }) {
-    console.log(goodsId, useridx, like)
+    // console.log(goodsId, useridx, like, likeCheck)
+
     instance
       .post(`/goods/${goodsId}/like`, { isLiked: like })
       .then((res) => {
-        console.log(res)
-        dispatch(addGoodsLike(goodsId, useridx, like))
+        if (res.data === true) {
+          dispatch(addGoodsLike(goodsId, useridx, like))
+          return
+        }
+
+        if (res.data === false) {
+          dispatch(deleteGoodsLike(goodsId, useridx, like))
+          return
+        }
       })
       .catch((err) => console.log(err, "굿즈 좋아요 에러"))
   }
@@ -188,6 +206,7 @@ const addGoodsLikeMD = (goodsId, useridx, like) => {
 
 export default handleActions(
   {
+    // 굿즈 curd 중 r d
     [GET_GOODS]: (state, action) =>
       produce(state, (draft) => {
         draft.goods_list = action.payload.goods_list
@@ -204,6 +223,8 @@ export default handleActions(
           draft.goods_list.splice(idx, 1)
         }
       }),
+
+    // 댓글 curd
     [ADD_GOODS_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.goods_list.findIndex((e) => {
@@ -257,7 +278,9 @@ export default handleActions(
           comment: action.payload.comment,
         }
       }),
-    [ADD_COODS_LIKE]: (state, action) =>
+
+    // 좋아요
+    [ADD_GOODS_LIKE]: (state, action) =>
       produce(state, (draft) => {
         const goodsIdx = draft.goods_list.findIndex((e) => {
           return e.goodsId === action.payload.goodsId
@@ -266,6 +289,18 @@ export default handleActions(
         draft.goods_list[goodsIdx].goodsLikesList.push({
           id: action.payload.useridx,
         })
+      }),
+    [DELETE_GOODS_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        const goodsIdx = draft.goods_list.findIndex((e) => {
+          return e.goodsId === action.payload.goodsId
+        })
+
+        const userIdx = draft.goods_list[goodsIdx].goodsLikesList.map((e) => {
+          return e.id === action.payload.useridx
+        })
+
+        draft.goods_list[goodsIdx].goodsLikesList.splice(userIdx, 1)
       }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
@@ -292,6 +327,7 @@ const actionCreators = {
   updateGoodsComment,
   addGoodsLikeMD,
   addGoodsLike,
+  deleteGoodsLike,
 }
 
 export { actionCreators }

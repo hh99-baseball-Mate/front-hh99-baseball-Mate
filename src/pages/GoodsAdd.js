@@ -31,12 +31,13 @@ export const GoodsAdd = (props) => {
   // 이미지 미리보기 /삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("")
 
+  // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
       return !e ? false : true
     })
 
-    if (emptyValue.includes(false)) {
+    if (emptyValue.includes(false) || !preview) {
       window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
       return
