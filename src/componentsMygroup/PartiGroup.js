@@ -49,8 +49,8 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
           </Cen>
         </Modal>
       ) : (
-        // ""
-        <NotGame> 경기가 없습니다.</NotGame>
+        ""
+        // <NotGame> 경기가 없습니다.</NotGame>
       )}
 
       <Container>
