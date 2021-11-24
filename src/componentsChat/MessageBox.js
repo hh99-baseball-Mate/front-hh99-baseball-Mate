@@ -71,9 +71,9 @@ export default MessageBox;
 
 const Container = styled.div`
   margin-bottom: 10px;
-	width: 385px;
-	position: relative;
-`;
+  width: 385px;
+  position: relative;
+`
 
 const Box = styled.div`
   width: 385px;

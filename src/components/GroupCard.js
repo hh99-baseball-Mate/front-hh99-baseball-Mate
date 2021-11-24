@@ -178,11 +178,19 @@ const Text = styled.div`
 
 const Card = styled.div`
   width: 385px;
-  height: 110px;
+  /* height: 110px; */
   display: ${(props) => props.flex};
   flex-direction: ${(props) => props.direction};
   background: #ffffff;
   position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  :hover {
+    padding: 8px;
+    border: 2px solid #ff00007d;
+    /* background-color: #fff7e8; */
+  }
 `
 
 const Ellipse = styled.div`
