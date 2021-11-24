@@ -17,11 +17,19 @@ export const Goods = () => {
 
   // 댓글 작성시 유저정보를 기입하기 위해 불러옴
   const user_info = useSelector((state) => state.user.user_info)
+  const is_login = useSelector((state) => state.user.is_login)
 
   // 무한스크롤
   const goods_list = useSelector((state) => state.goods.goods_list)
   const is_loading = useSelector((state) => state.goods.is_loading)
   const list_length = useSelector((state) => state.goods.list_length)
+
+  const AddBtn = (e) => {
+    !is_login
+      ? window.alert("로그인 후 이용해주세요")
+      : history.push("/goods/goodsadd")
+    e.target.disabled = true
+  }
 
   useEffect(() => {
     dispatch(goodsActions.getGoodsMD(infinity))
@@ -44,7 +52,14 @@ export const Goods = () => {
       >
         {goods_list && goods_list.length > 0 ? (
           goods_list.map((e) => {
-            return <Post key={e.goodsId} {...e} user_info={user_info} />
+            return (
+              <Post
+                key={e.goodsId}
+                {...e}
+                user_info={user_info}
+                is_login={is_login}
+              />
+            )
           })
         ) : (
           <NotGame>
@@ -55,7 +70,7 @@ export const Goods = () => {
       </InfinityScroll>
 
       <MarginBottom />
-      <NaviBar writeBtn onClick={() => history.push("/goods/goodsadd")} />
+      <NaviBar writeBtn onClick={AddBtn} />
     </>
   )
 }
