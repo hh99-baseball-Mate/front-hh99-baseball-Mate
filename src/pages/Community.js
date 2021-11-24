@@ -33,7 +33,13 @@ const Community = (props) => {
           우리 같이 이야기 해봐요!
         </Text>
         {card_list.map((e) => {
-          return <CommunityCard key={e.communityId} {...e} />;
+          return (
+            <CommunityCard
+              onClick={() => history.push(`/communitydetail/${e.communityId}`)}
+              key={e.communityId}
+              {...e}
+            />
+          );
         })}
       </Container>
 

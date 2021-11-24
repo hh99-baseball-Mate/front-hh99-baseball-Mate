@@ -1,7 +1,7 @@
 import produce from "immer";
 import React from "react";
 import { createAction, handleActions } from "redux-actions";
-import { instance } from "../../lib/axios";
+import { img, instance } from "../../lib/axios";
 
 //액션
 const GET_CARD = "GET_CARD";
@@ -34,10 +34,12 @@ const getCardAPI = () => {
 //커뮤니티 글작성
 const postAddAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    instance
+    console.log("배고파");
+    img
       .post("/community", formData)
       .then((res) => {
         console.log(res);
+        history.replace("/community");
       })
       .catch((err) => {
         console.log(err, "모임 만들기 에러");

@@ -4,7 +4,6 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import user from "./modules/user";
-import mainPage from "./modules/mainPage";
 import timeline from "./modules/timeline";
 import groupDetail from "./modules/groupDetail";
 import goods from "./modules/goods";
