@@ -3,6 +3,7 @@ import styled from "styled-components";
 import banner from "../shared/icon/logo/Banners.png"
 import logo from "../shared/icon/logo/whiteLogo.png"
 import { IoIosArrowForward } from "react-icons/io"
+import { history } from "../redux/configStore"
 // import { VscBell } from "react-icons/vsc";
 
 export const Banner = (props) => {
@@ -21,7 +22,7 @@ export const Banner = (props) => {
           미트볼 사용하고 <br />
           스타벅스+홈런볼 받자!
         </Title>
-        <MoreBtn>
+        <MoreBtn onClick={() => history.push("/event")}>
           자세히보기 <IoIosArrowForward />
         </MoreBtn>
       </TextBox>

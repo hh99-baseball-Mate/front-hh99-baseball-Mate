@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux"
 import Position from "../shared/icon/Vector.png"
 import { history } from "../redux/configStore"
 import { Image } from "react-bootstrap"
+import dayjs from "dayjs"
+
 // 스와이퍼
 
 const GroupDate = (props) => {
@@ -18,32 +20,23 @@ const GroupDate = (props) => {
     dispatch(groupCr.getPlayAPI())
   }, [])
 
-  const _day = new Date()
-
-  const year = _day.getFullYear()
-  const month = new Date().getMonth() + 1
-  const day = new Date().getDay()
-
-  // 예시 날짜
-  // const month = 10
-  // const day = 15
+  dayjs.locale("ko")
+  const day = dayjs()
 
   let date = []
 
-  // 요일
-  const week = ["(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)"]
-
   // 2주일치 데이터 날짜 보여주기 위한 for문 하기
   for (let i = 0; i < 14; i++) {
-    const _date = String(month) + "." + String(day + i)
-    date.push(_date + " " + week[new Date(year + "." + _date).getDay()])
+    const addDate = day.add(i, "day").format("MM.DD (dd)")
+    date.push(addDate)
   }
+
   // 필터로 일주일치 날짜를 뽑은거에 해당하는 값 배열로 리턴받기
   const list = play_list.filter((e) => {
+    console.log(e.date, date)
     return date.includes(e.date)
   })
 
-  // console.log(list);
   return (
     <Container margin="0px auto">
       <ArrowBack>일정선택</ArrowBack>
@@ -55,7 +48,6 @@ const GroupDate = (props) => {
         list.map((d, i) => {
           return (
             <div key={i}>
-
               {/* 경기날짜 */}
               <Time>{d.date}</Time>
 
