@@ -52,11 +52,14 @@ const updateGoodsComment = createAction(
 
 const deleteGoods = createAction(DELETE_GOODS, (goodsId) => ({ goodsId }))
 
-const addGoodsLike = createAction(ADD_GOODS_LIKE, (goodsId, useridx, like) => ({
-  goodsId,
-  useridx,
-  like,
-}))
+const addGoodsLike = createAction(
+  ADD_GOODS_LIKE,
+  (goodsId, useridx, likeCheck) => ({
+    goodsId,
+    useridx,
+    likeCheck,
+  })
+)
 const deleteGoodsLike = createAction(
   DELETE_GOODS_LIKE,
   (goodsId, useridx, like) => ({
@@ -183,20 +186,20 @@ const updateGoodsCommentMD = (goodsId, commentId, comment) => {
 }
 
 // 좋아요
-const addGoodsLikeMD = (goodsId, useridx, like, likeCheck) => {
+const addGoodsLikeMD = (goodsId, useridx, likeCheck) => {
   return function (dispatch, getState, { history }) {
-    // console.log(goodsId, useridx, like, likeCheck)
-
     instance
-      .post(`/goods/${goodsId}/like`, { isLiked: like })
+      .post(`/goods/${goodsId}/like`, {
+        isLiked: likeCheck,
+        userIdGoods: useridx,
+      })
       .then((res) => {
-        if (res.data === true) {
-          dispatch(addGoodsLike(goodsId, useridx, like))
+        if (likeCheck === false && res.data === true) {
+          dispatch(addGoodsLike(goodsId, useridx, likeCheck))
           return
         }
-
-        if (res.data === false) {
-          dispatch(deleteGoodsLike(goodsId, useridx, like))
+        if (likeCheck || res.data === false) {
+          dispatch(deleteGoodsLike(goodsId, useridx, likeCheck))
           return
         }
       })
@@ -287,7 +290,7 @@ export default handleActions(
         })
 
         draft.goods_list[goodsIdx].goodsLikesList.push({
-          id: action.payload.useridx,
+          userIdGoods: action.payload.useridx,
         })
       }),
     [DELETE_GOODS_LIKE]: (state, action) =>
@@ -296,10 +299,13 @@ export default handleActions(
           return e.goodsId === action.payload.goodsId
         })
 
-        const userIdx = draft.goods_list[goodsIdx].goodsLikesList.map((e) => {
-          return e.id === action.payload.useridx
-        })
+        const userIdx = draft.goods_list[goodsIdx].goodsLikesList.findIndex(
+          (e) => {
+            return e.userIdGoods === action.payload.useridx
+          }
+        )
 
+        console.log(userIdx, "리듀스")
         draft.goods_list[goodsIdx].goodsLikesList.splice(userIdx, 1)
       }),
     [LOADING]: (state, action) =>

@@ -65,9 +65,8 @@ const Info = memo((props) => {
     } else {
       props.setHeart(false)
     }
-    console.log("props.likePost",props.likePost, props.heart)
+    console.log("props.likePost", props.likePost, props.heart)
   }, [props.likePost])
-
 
   // 모집마감 표시
   // useEffect(() => {
@@ -97,20 +96,14 @@ const Info = memo((props) => {
     }
   }
 
-  console.log("받아오기", props)
-
+  console.log("info")
+  // console.log("받아오기", props)
 
   return (
     <Container>
       <Box position="relative">
-        <Img url={imageUrl}>
-          <ArrowBack/>
-        </Img>
-        <JoinCircle
-          onClick={() => {
-            HeartBtn()
-          }}
-        >
+        <Img url={imageUrl} />
+        <JoinCircle onClick={HeartBtn}>
           {props.heart ? (
             <img src={heart_join} alt="Heart" />
           ) : (
@@ -123,7 +116,7 @@ const Info = memo((props) => {
       <TitleBox>
         <Warp margin="0 0 11px 0" justify="space-between">
           <Warp>
-            {props.close ? (
+            {!props.allowtype && !props.close ? (
               <Ellipse
                 borderColor="#C4C4C4"
                 background="#C4C4C4"
@@ -141,31 +134,31 @@ const Info = memo((props) => {
               </Ellipse>
             )}
 
-            <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-              D-{props.dday}
-            </Ellipse>
+            {/* 모임 중이고, 마감이 안됬을 때 디데이 숨기기 */}
+            {props.allowtype && !props.close && (
+              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+                D-{props.dday}
+              </Ellipse>
+            )}
           </Warp>
 
-          {/* 수정버튼 & 삭제버튼 */}
-          {props.createdUserId === props.userid ? (
-            <Warp>
-              <p
-                onClick={() => {
-                  editBtn()
-                }}
-              >
-                📝
-              </p>
-              <p
-                onClick={() => {
-                  delBtn()
-                }}
-                style={{ marginLeft: "5px" }}
-              >
+          <Warp>
+            {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
+            {props.allowtype && props.createdUserId === props.userid ? (
+              <p onClick={editBtn}>📝</p>
+            ) : (
+              ""
+            )}
+
+            {/* 마감되더라도 삭제 가능 */}
+            {props.createdUserId === props.userid ? (
+              <p onClick={delBtn} style={{ marginLeft: "5px" }}>
                 ❌
               </p>
-            </Warp>
-          ) : null}
+            ) : (
+              ""
+            )}
+          </Warp>
         </Warp>
 
         <Text
@@ -266,7 +259,7 @@ Info.defaultProps = {
   UserImage: "sample.png",
 }
 
-export default Info;
+export default Info
 
 const Container = styled.div`
   width: 425px;
@@ -274,7 +267,7 @@ const Container = styled.div`
   /* height: auto; */
   margin: 0 auto;
   position: relative;
-`;
+`
 
 const Box = styled.div`
   width: 100%;
@@ -286,17 +279,17 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`;
+`
 
 const Img = styled.div`
   width: 100%;
   height: 375px;
   background-color: #c4c4c4;
   background: url(${(props) => props.url});
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
-`;
+`
 
 const JoinCircle = styled.div`
   position: absolute;

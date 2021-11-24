@@ -10,21 +10,17 @@ import Reciangle from "../shared/icon/Rectangle.png"
 import { useMygroupBtn } from "../customHook/useMygroupBtn"
 import { history } from "../redux/configStore"
 
-export const PartiGroup = ({ showModal, setShowModal }) => {
+export const LikeGroup = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()
 
   // 직관 참가모임 리스트
-  const group_participation_list = useSelector(
-    (state) => state.with.group_participation_list
-  )
+  const group_like_list = useSelector((state) => state.with.group_like_list)
 
   // 스크린 야구 참고모임 리스트
-  const screen_participation_list = useSelector(
-    (state) => state.with.screen_participation_list
-  )
+  const screen_like_list = useSelector((state) => state.with.screen_like_list)
 
   // concat 으로 하나로 합쳐서 all_list를 새로 만듦
-  const all_list = group_participation_list.concat(screen_participation_list)
+  const all_list = group_like_list.concat(screen_like_list)
 
   // 커스텀 훅 myGroupModalBtn
   const [allListBtn, partiBtn, writeBtn, allList, game, screen] =
@@ -32,8 +28,8 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
 
   useEffect(() => {
     // 직관 / 스크린 야구 모임을 위해 두개를 모두 호출
-    dispatch(withActions.getParticipationAPI())
-    dispatch(withActions.getScreenAPI())
+    dispatch(withActions.getLikeAPi())
+    dispatch(withActions.getScreenLikeAPI())
   }, [])
 
   return (
@@ -50,51 +46,57 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
         </Modal>
       ) : (
         ""
-        // <NotGame> 경기가 없습니다.</NotGame>
       )}
 
       <Container>
         {/* key 값으로 넣을 id가 screenId와 groupId 으로 변수명이 각자 달라 임시로 idx로 하였음 */}
-        {allList && all_list && all_list.length > 0
-          ? all_list.map((e, idx) => (
-              <GroupCard
-                onClick={() => {
-                  if (e.groupId) {
-                    history.push(`/groupdetail/${e.groupId}`)
-                  }
-                  if (e.screenId) {
-                    history.push(`/screendetail/${e.screenId}`)
-                  }
-                }}
-                key={idx}
-                {...e}
-              />
-            ))
-          : ""}
+        {
+          allList && all_list && all_list.length > 0
+            ? all_list.map((e, idx) => (
+                <GroupCard
+                  onClick={() => {
+                    if (e.groupId) {
+                      history.push(`/groupdetail/${e.groupId}`)
+                    }
+                    if (e.screenId) {
+                      history.push(`/screendetail/${e.screenId}`)
+                    }
+                  }}
+                  key={idx}
+                  {...e}
+                />
+              ))
+            : ""
+          // <NotGame>경기가 없습니다.</NotGame>
+        }
 
         {/* 경기만 모임 */}
-        {game && group_participation_list && group_participation_list.length > 0
-          ? group_participation_list.map((e) => (
-              <GroupCard
-                onClick={() => history.push(`/groupdetail/${e.groupId}`)}
-                key={e.groupId}
-                {...e}
-              />
-            ))
-          : ""}
+        {
+          game && group_like_list && group_like_list.length > 0
+            ? group_like_list.map((e) => (
+                <GroupCard
+                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                  key={e.groupId}
+                  {...e}
+                />
+              ))
+            : ""
+          // <NotGame>경기가 없습니다.</NotGame>
+        }
 
         {/* 스크린만 모임 */}
-        {screen &&
-        screen_participation_list &&
-        screen_participation_list.length > 0
-          ? screen_participation_list.map((e) => (
-              <GroupCard
-                onClick={() => history.push(`/screendetail/${e.screenId}`)}
-                key={e.screenId}
-                {...e}
-              />
-            ))
-          : ""}
+        {
+          screen && screen_like_list && screen_like_list.length > 0
+            ? screen_like_list.map((e) => (
+                <GroupCard
+                  onClick={() => history.push(`/screendetail/${e.screenId}`)}
+                  key={e.screenId}
+                  {...e}
+                />
+              ))
+            : ""
+          // <NotGame>경기가 없습니다.</NotGame>
+        }
       </Container>
     </>
   )

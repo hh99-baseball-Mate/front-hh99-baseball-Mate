@@ -1,5 +1,4 @@
 import produce from "immer";
-import React from "react";
 import { createAction, handleActions } from "redux-actions";
 import { img, instance } from "../../lib/axios";
 

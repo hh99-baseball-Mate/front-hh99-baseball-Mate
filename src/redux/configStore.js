@@ -12,6 +12,7 @@ import _with from "./modules/with";
 import screen from "./modules/screen";
 import screenDetail from "./modules/screenDetail";
 import alarm from "./modules/alarm";
+import chat from "./modules/chat";
 import community from "./modules/community";
 export const history = createBrowserHistory();
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   screen,
   screenDetail,
   alarm,
+  chat,
   community,
 
   router: connectRouter(history),

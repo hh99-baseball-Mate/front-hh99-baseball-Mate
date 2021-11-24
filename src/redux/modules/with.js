@@ -39,8 +39,8 @@ const screenWrite = createAction(GET_SCREEN_WRITE, (scrwrite_write_list) => ({
   scrwrite_write_list,
 }))
 
-const getScreenLike = createAction(GET_SCREEN_LIKE, (likeScreen_list) => ({
-  likeScreen_list,
+const getScreenLike = createAction(GET_SCREEN_LIKE, (screen_like_list) => ({
+  screen_like_list,
 }))
 
 //초기값
@@ -55,6 +55,8 @@ const initialState = {
   screen_participation_list: [],
   //스야작성
   scrwrite_write_list: [],
+  // 스야 찜모임
+  screen_like_list: [],
 }
 
 //미들웨어
@@ -96,7 +98,7 @@ const getLikeAPi = () => {
       .get(`/my/groups/like`)
       .then((res) => {
         console.log(res, "찜모임")
-        // dispatch(getParticipation(res.data))
+        dispatch(getGroupLike(res.data))
       })
       .catch((err) => {
         console.log(err, "참여에러")
@@ -132,6 +134,19 @@ const getScreenWriteAPI = (props) => {
   }
 }
 
+//스크린 찜모임 api
+const getScreenLikeAPI = (props) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/my/screen/like`)
+      .then((res) => {
+        console.log(res, "스크린찜모임")
+        dispatch(getScreenLike(res.data))
+      })
+      .catch((err) => console.log(err))
+  }
+}
+
 //리듀서
 export default handleActions(
   {
@@ -143,15 +158,22 @@ export default handleActions(
       produce(state, (draft) => {
         draft.group_write_list = action.payload.group_write_list
       }),
+    [GET_GROUP_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.group_like_list = action.payload.group_like_list
+      }),
     [GET_SCREEN_PARTICIPATION]: (state, action) =>
       produce(state, (draft) => {
         draft.screen_participation_list =
           action.payload.screen_participation_list
       }),
-
     [GET_SCREEN_WRITE]: (state, action) =>
       produce(state, (draft) => {
         draft.scrwrite_write_list = action.payload.scrwrite_write_list
+      }),
+    [GET_SCREEN_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.screen_like_list = action.payload.screen_like_list
       }),
   },
   initialState
@@ -160,9 +182,10 @@ export default handleActions(
 const actionCreators = {
   getParticipationAPI,
   getWriteAPI,
+  getLikeAPi,
   getScreenWriteAPI,
   getScreenAPI,
-  getLikeAPi,
+  getScreenLikeAPI,
 }
 
 export { actionCreators }

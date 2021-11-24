@@ -7,6 +7,7 @@ import { groupDetailCreators } from "../redux/modules/groupDetail"
 import Info from "../componentsGroupDetail/Info"
 import Participant from "../componentsGroupDetail/Participant"
 import Comment from "../componentsGroupDetail/GroupComment"
+import { ArrowBack } from "../components"
 
 const GroupDetail = memo((props) => {
   const dispatch = useDispatch()
@@ -22,19 +23,17 @@ const GroupDetail = memo((props) => {
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
-  console.log("완료?",loadDetail.allowtype, close)
+  console.log("완료?", loadDetail.allowtype, close)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myGroupLikesList = mylist.myGroupLikesList;
+  const myGroupLikesList = mylist.myGroupLikesList
   const likePost = myGroupLikesList.indexOf(Number(groupId))
 
   useEffect(() => {
     const groupId = params.groupId
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
-  }, [dispatch, likePost, groupId, close, loadDetail.allowtype])
-
-
+  }, [])
 
   const commentBtn = () => {
     const myJoin = loadDetail.appliedUserInfo.findIndex(
@@ -52,6 +51,7 @@ const GroupDetail = memo((props) => {
 
   return (
     <Container>
+      <ArrowBack>상세 페이지</ArrowBack>
       {/* 글 정보 */}
       <Info
         {...loadDetail}
@@ -67,21 +67,13 @@ const GroupDetail = memo((props) => {
       <Box height="65px">
         <Warp padding="20px 0 0 0">
           <ParticipantBtn
-            {...loadDetail}
-            onClick={() => {
-              setSelectPage(true)
-            }}
+            onClick={() => setSelectPage(true)}
             selectPage={selectPage}
           >
             참여자
           </ParticipantBtn>
 
-          <CommentBtn
-            onClick={() => {
-              commentBtn()
-            }}
-            selectPage={selectPage}
-          >
+          <CommentBtn onClick={commentBtn} selectPage={selectPage}>
             방명록
           </CommentBtn>
         </Warp>

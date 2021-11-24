@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import styled from "styled-components"
 import Progress from "./Progress"
 
 import colorUsers from "../shared/icon/colorUsers.svg"
 
-const GroupCard = (props) => {
+export const GroupCard = memo((props) => {
   const {
     onClick,
     filePath,
@@ -12,8 +12,10 @@ const GroupCard = (props) => {
     canApplyNum,
     groupDate,
     selectPlace,
-    peopleLimit,title,
+    peopleLimit,
+    title,
     hotPercent,
+    allowtype,
   } = props
 
   const [close, setClose] = useState(false)
@@ -22,7 +24,7 @@ const GroupCard = (props) => {
 
   // 모집중, 마감중 표시
   useEffect(() => {
-    if (props.dday < 1 || props.canApplyNum === 0) {
+    if (!allowtype || props.dday < 1 || props.canApplyNum === 0) {
       setClose(true)
     } else {
       setClose(false)
@@ -54,7 +56,11 @@ const GroupCard = (props) => {
               </Ellipse>
             )}
 
-            {dday && canApplyNum && dday > 0 && canApplyNum !== 0 ? (
+            {allowtype &&
+            dday &&
+            canApplyNum &&
+            dday > 0 &&
+            canApplyNum !== 0 ? (
               <Ellipse
                 borderColor="#498C9A"
                 background="#498C9A"
@@ -126,9 +132,7 @@ const GroupCard = (props) => {
       </Card>
     </Container>
   )
-}
-
-export default GroupCard
+})
 
 const Container = styled.div`
   width: 385px;

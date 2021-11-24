@@ -134,7 +134,7 @@ const likePostMW = (screenId, like) => {
 const screenApplyMW = (screenId, my) => {
   return (dispatch, getState, { history }) => {
     instance
-      .post(`/screen/join/request/${screenId}`)
+      .get(`/screen/join/request/${screenId}`)
       .then((res) => {
         // console.log(res)
         dispatch(screen_apply(my))

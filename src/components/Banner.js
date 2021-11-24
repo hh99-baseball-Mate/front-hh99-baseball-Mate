@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import banner from "../shared/icon/logo/Banner.png";
-import logo from "../shared/icon/logo/whiteLogo.png";
-import { IoIosArrowForward } from "react-icons/io";
+import banner from "../shared/icon/logo/Banners.png"
+import logo from "../shared/icon/logo/whiteLogo.png"
+import { IoIosArrowForward } from "react-icons/io"
 // import { VscBell } from "react-icons/vsc";
 
 export const Banner = (props) => {
-  const { children } = props;
+  const { children } = props
 
   return (
     <BannerContainer>
@@ -18,19 +18,19 @@ export const Banner = (props) => {
       <TextBox>
         <HeaderText>OPEN EVENT</HeaderText>
         <Title>
-          미트볼 서비스 오픈 기념 <br />
-          회원가입 이벤트!
+          미트볼 사용하고 <br />
+          스타벅스+홈런볼 받자!
         </Title>
         <MoreBtn>
           자세히보기 <IoIosArrowForward />
         </MoreBtn>
       </TextBox>
     </BannerContainer>
-  );
-};
+  )
+}
 Banner.defaultProps = {
   children: null,
-};
+}
 
 const BannerContainer = styled.div`
   background-image: url(${banner});
@@ -40,7 +40,7 @@ const BannerContainer = styled.div`
   position: relative;
   height: 437px;
   background-color: #000;
-`;
+`
 
 const Headers = styled.div`
   display: flex;

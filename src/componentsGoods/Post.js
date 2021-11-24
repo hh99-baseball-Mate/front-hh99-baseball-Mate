@@ -16,8 +16,10 @@ export const Post = memo((props) => {
     // 유저 info
     user_info: { useridx },
 
+    // 로그인 여부
+    is_login,
+
     // 굿즈 info
-    // commentUserIndex,
     goodsId,
     userAddress,
     myTeam,
@@ -50,6 +52,20 @@ export const Post = memo((props) => {
     }
   }
 
+  // 좋아요 중복 검사
+
+  const likeCheckList = goodsLikesList.map((e) => {
+    console.log(e, e.userIdGoods, useridx, "검사하자")
+    if (useridx === e.userIdGoods) {
+      return true
+    }
+    return false
+  })
+
+  // 같은 아이디로 좋아요를 누른 적이 있는지 중복 값을 포함하고있음을 검사
+
+  const likeCheck = likeCheckList.includes(true)
+
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)
 
@@ -58,9 +74,6 @@ export const Post = memo((props) => {
 
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false)
-
-  // 좋아요
-  const [like, setLike] = useState(false)
 
   // 댓글 1개 미리보기
   const comment_preview = goodsCommentList[0]
@@ -83,19 +96,13 @@ export const Post = memo((props) => {
     setShowModal(false)
   }
 
-  // 좋아요 중복 검사
-  const likeCheck = goodsLikesList.map((e) => {
-    // console.log(userId, e.id)
-    return userId === e.id
-  })
+  // console.log(props)
 
-  console.log(likeCheck, "중복검사")
-
-  const memoLike = useCallback(() => {
-    setLike(!like)
-    dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, like, likeCheck))
-    console.log("메모")
-  }, [like])
+  const memoLike = () => {
+    !is_login
+      ? window.alert("로그인 후 이용해주세요")
+      : dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, likeCheck))
+  }
 
   return (
     <>
@@ -127,7 +134,11 @@ export const Post = memo((props) => {
           {/* 좋아요 */}
           <PostIcons>
             <LikeBtn onClick={memoLike}>
-              {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
+              {likeCheck ? (
+                <PostLike size="20px" />
+              ) : (
+                <PostNoLike size="20px" />
+              )}
             </LikeBtn>
             <Text size="12px">{goodsLikesList.length}</Text>
           </PostIcons>
@@ -144,13 +155,7 @@ export const Post = memo((props) => {
           <P onClick={() => setShowContents(!showContents)}>...더보기</P>
           {/* 게시물 내용 더 보기 */}
 
-          {/* 해쉬태그 */}
-
-          {/* <Hash>
-            <Span>#롯데 # 김원중</Span>
-            <Span>#롯데 # 김원중</Span>
-            <Span>#롯데 # 김원중</Span>
-          </Hash> */}
+          {/* 해쉬태그 버류*/}
 
           {/* 댓글 전체 보기 */}
           <P onClick={moreBtn}>
@@ -265,15 +270,7 @@ const P = styled.p`
   margin: 5px 0;
   cursor: pointer;
 `
-const Hash = styled.div`
-  display: flex;
-`
-const Span = styled.span`
-  margin: 5px 2px;
-  font-size: 12px;
-  color: #4f4f8f;
-  cursor: pointer;
-`
+
 const Hr = styled.div`
   height: 6px;
   background-color: #f8f8f8;
