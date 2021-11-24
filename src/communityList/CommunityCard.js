@@ -5,10 +5,11 @@ import { Text } from "../components";
 import Question from "../shared/icon/Question.png";
 import Progress from "../components/Progress";
 const CommunityCard = (props) => {
-  const { filePath, myTeam, content, userName, communityUserPicture } = props;
+  const { filePath, myTeam, content, userName, communityUserPicture, onClick } =
+    props;
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
   return (
-    <Card>
+    <Card onClick={onClick}>
       <UserInfo>
         <UserImg src={communityUserPicture} />
         <InfoBox>

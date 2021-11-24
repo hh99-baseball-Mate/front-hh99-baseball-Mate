@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -17,15 +17,23 @@ import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
   const dispatch = useDispatch();
+
+  const user_list = useSelector((state) => state.user.user_info.myteam);
   //이미지 미리보기 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
 
   // 입력창
   const [inputValue, onChange] = useInputs({
     content: "",
+    title: null,
+    filePath: "",
+    myTeam: "",
+    userName: "",
+    communityUserPicture: "",
   });
 
-  const { content } = inputValue;
+  const { content, title, filePath, myTeam, userName, communityUserPicture } =
+    inputValue;
 
   //입력체크
   const submitBtn = (e) => {
@@ -33,7 +41,7 @@ const CommunityAdd = (props) => {
       return !e ? false : true;
     });
 
-    if (emptyValue.includes(false) || inputValue === null) {
+    if (inputValue === null) {
       window.alert("빈란을 채워주세요");
       // console.log("빈값있음")
       return;
@@ -41,8 +49,8 @@ const CommunityAdd = (props) => {
 
     if (inputValue !== null) {
       window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.");
-      history.push("/community");
     }
+
     const formData = new FormData();
 
     formData.append("content", content);
