@@ -10,11 +10,11 @@ import { chatCreators } from "../redux/modules/chat";
 const ChatList = (props) => {
 
 	const history = useHistory();
-	const disptch = useDispatch()
+	const dispatch = useDispatch()
 
 	
 	useEffect(() => {
-		disptch(chatCreators.loadChatListMW())
+		dispatch(chatCreators.loadChatListMW())
 	},[])
 
 	const chatList = useSelector((state) => state.chat?.chatList)
@@ -37,7 +37,7 @@ const ChatList = (props) => {
 				}
 			</Box>
 			
-			{
+			{ // 채팅방이 없으면 나옴
 				chatList.length === 0 &&
 				<Container  position="absolute" top="50%" trans="translateY(-50%)">
 					<Warp direction="column">
@@ -52,11 +52,11 @@ const ChatList = (props) => {
 			}
 
 			
-			<Box>
+			{/* <Box>
 				<TimelineBtn onClick={()=>{history.push("/timeline")}}>
-					{/* 채팅이 없으면 다른 사람들과 한 줄 생각을 나눠보세요 */}
+					채팅이 없으면 다른 사람들과 한 줄 생각을 나눠보세요
 				</TimelineBtn>
-			</Box>
+			</Box> */}
 
 			<MarginBottom/>
 			<NaviBar/>

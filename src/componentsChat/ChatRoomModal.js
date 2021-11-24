@@ -4,41 +4,61 @@ import styled from "styled-components";
 import { chatCreators } from "../redux/modules/chat";
 
 const ChatRoomModal = (props) => {
-
+  
+  console.log("유저", props)
   const dispatch = useDispatch();
+
+  // 유저 리스트 중에 나만 골라내기
+  const me = props.chatUser.find(users => users.id === props.id)
+
+  // 나를 제외한 다른 유저
+  const otherUsers =  props.chatUser.filter(users => users.id !== props.id)
+  console.log("다른사람",otherUsers)
 
   // 사진 ip주소 + 사진이름 조합
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
   const ip = IMAGES_BASE_URL
-  const img = props.filePath
-  const imageUrl = ip + img
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props[0].picture
+  const profileImg = ip + me.picture
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props[0].picture?.split(".")[1]
-  const kakaoImg = props[0].picture
+  const kakaoCheck = me.picture?.split(".")[1]
+  const kakaoImg = me.picture
 
-  // const chatUser = useSelector((state) => state.chat?.chatUser)
+  const chatList = useSelector((state) => state.chat?.chatList)
+  console.log("chatList",chatList, props.room_id)
+  // const chatInfo = chatList.find(list => list.roomId == props.room_id)
+  // console.log("groupId", chatInfo.groupId) 
 
-  console.log("유저", props[0].picture)
-
-   useEffect (() => {
-    dispatch(chatCreators.getChatUserAX(props.room_id))
-   },[])
-  // const chatUser = () => {
-  //   dispatch(chatCreators.getChatUserAX(props.postId))
-  // }
+  //  useEffect (() => {
+  //   // dispatch(chatCreators.getChatUserAX(props.room_id))
+  //   dispatch(chatCreators.loadChatListMW())
+  //  },[])
+  // // const chatUser = () => {
+  // //   dispatch(chatCreators.getChatUserAX(props.postId))
+  // // }
 
 
   // 채팅방 나가기
   const leaveChat = () => {
-    dispatch(chatCreators.leaveChatAX(props.room_id))
+    dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
+  }
+
+  // 스크린야구 채팅방 나가기 
+  const leaveScreenChat = () => {
+    dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
   }
 
 	return(
-		<Background onClick={()=>{props.setModal(false)}}>
+		<React.Fragment>
+
+      {/* 바깥여백 */}
+      <Background
+        onClick={()=>{props.setModal(false)}}
+      />
+
+      {/* 모달창 */}
 			<Container>
         <Text size="16px" weight="bold" marginB="20px">
           대화상대 
@@ -52,41 +72,81 @@ const ChatRoomModal = (props) => {
             </Text>
           </Circle>
           <Text>
-            {props[0].username}
+            {me.username}
           </Text>
         </Warp>
 
         {
-          // Profile.map
+          otherUsers.map((list) => {
+            return <Profile key={list.id} {...list}/>
+          })
         }
-      
+        
+
         {/* 하단고정 */}
         <Footer position="fixed">
-          <Text onClick={()=>{leaveChat()}}>
+          <Text onClick={()=>
+            {
+              props.roomInfo.chatRoomtype === "screen" ?
+              leaveScreenChat() :
+              leaveChat()
+            }}
+          >
             채팅방 나가기🔚
           </Text>
         </Footer>
+
       </Container>
-		</Background>
+		 </React.Fragment>
 	)
 }
   
-
+// 다른사람 프로필 컴포넌트
 const Profile = (props) => {
   
-  return(
-    <div>
+  // 사진 ip주소 + 사진이름 조합
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
 
-    </div>
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.picture
+
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.picture?.split(".")[1]
+  const kakaoImg = props.picture
+
+
+  // 모달 오버레이에서 스크롤 방지
+  React.useEffect(() => {
+    document.body.style.cssText = `
+        position: fixed; 
+        top: -${window.scrollY}px;
+        overflow-y: scroll;
+        width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
+  return(
+    
+    <Warp marginB="10px" align="center">
+      <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} /> 
+      <Text>
+        {props.username}
+      </Text>
+    </Warp>
+    
   )
 }
 
 export default ChatRoomModal;
 
-
-
 const Background = styled.div`
-  width: 100vw;
+  width: calc(100vw - 296px);
+  /* width: 100vw; */
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.65);
   position: fixed;
@@ -103,6 +163,10 @@ const Container = styled.div`
   height: 100vh;
   background-color: white;
   padding: 26px 20px;
+  position: fixed;
+  top:0;
+  right: 0;
+  z-index: 2;
 `;
 
 const Warp = styled.div`
