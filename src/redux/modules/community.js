@@ -1,20 +1,19 @@
 import produce from "immer";
-import React from "react";
 import { createAction, handleActions } from "redux-actions";
-import { img, instance } from "../../lib/axios"
+import { img, instance } from "../../lib/axios";
 
 //액션
-const GET_CARD = "GET_CARD"
-const POST_ADD = "POST ADD"
+const GET_CARD = "GET_CARD";
+const POST_ADD = "POST ADD";
 
 //액션함수
-const getCard = createAction(GET_CARD, (cardList) => ({ cardList }))
-const postAdd = createAction(POST_ADD, (addList) => ({ addList }))
+const getCard = createAction(GET_CARD, (cardList) => ({ cardList }));
+const postAdd = createAction(POST_ADD, (addList) => ({ addList }));
 
 //초기값
 const initialState = {
   card_list: [],
-}
+};
 
 //카트 불러오기
 const getCardAPI = () => {
@@ -22,29 +21,30 @@ const getCardAPI = () => {
     instance
       .get(`/community`)
       .then((res) => {
-        console.log(res)
-        dispatch(getCard(res.data))
+        console.log(res);
+        dispatch(getCard(res.data));
       })
       .catch((err) => {
-        console.log(err, "커뮤니티카드 조회 에러")
-      })
-  }
-}
+        console.log(err, "커뮤니티카드 조회 에러");
+      });
+  };
+};
 
 //커뮤니티 글작성
 const postAddAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    console.log("dd")
+    console.log("배고파");
     img
       .post("/community", formData)
       .then((res) => {
-        console.log(res, "dsfsdf")
+        console.log(res);
+        history.replace("/community");
       })
       .catch((err) => {
-        console.log(err, "모임 만들기 에러")
-      })
-  }
-}
+        console.log(err, "모임 만들기 에러");
+      });
+  };
+};
 //리듀서
 export default handleActions(
   {
