@@ -64,6 +64,7 @@ const Participant = memo((props) => {
   // 참석 확정/취소 버튼
   const confirm = () => {
     dispatch(groupDetailCreators.confirmMW(groupId))
+    // dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     // dispatch(groupDetailCreators.chatMW(id))
     // setClose(false)
   }
@@ -116,14 +117,10 @@ const Participant = memo((props) => {
         <Warp flex="flex" direction="column" align="center" justify="center">
           {
             // 글작성자가 본인일 때 모임확정
-            me && props.allowtype ? (
+            (me && props.allowtype) ? 
               <ConfirmBtn onClick={confirm}>모임 확정하기</ConfirmBtn>
-            ) : (
-              <>
-                {/* <DisableBtn disabled> 모집 마감 </DisableBtn> */}
-                {/* <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn> */}
-              </>
-            )
+              : <ConfirmBtn onClick={confirm}>모임 확정취소하기</ConfirmBtn>
+             
           }
 
           {/* {
@@ -160,7 +157,7 @@ const Participant = memo((props) => {
               </ConfirmBtn>
             )
           }
-
+{/* 
           {
             // 참여 했을 때 참여 취소버튼
             !me && props.join && props.close && (
@@ -168,7 +165,15 @@ const Participant = memo((props) => {
                 참여 취소하기
               </ConfirmBtn>
             )
+          } */}
+
+          {
+            // 참여 했을 때 참여 취소버튼
+              <ConfirmBtn onClick={delapply} join={props.join}>
+                모임 나가기
+              </ConfirmBtn>
           }
+
 
           {/* {
             // 글작성자랑 내아이디랑 같으면 모집마감 버튼

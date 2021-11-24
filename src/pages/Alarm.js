@@ -128,8 +128,8 @@ const Alert = (props) => {
 		setShowModal(false)
 	}
 
-	const day = props.modifiedAt.split(" ")[0]
-	const time = props.modifiedAt.split(" ")[1]
+	const day = props.modifiedAt
+	// const time = props.modifiedAt.split(" ")[1]
 
 	return (
 		<React.Fragment>
@@ -148,7 +148,7 @@ const Alert = (props) => {
 				<Text size="10px" color="#777777">
 					<Warp flex="flex" direction="column" align="center">
 						<div style={{marginBottom:"3px"}}>{day}</div>
-						<div>{time}</div>
+						{/* <div>{time}</div> */}
 					</Warp>
 				</Text>
 			</AlertCard>

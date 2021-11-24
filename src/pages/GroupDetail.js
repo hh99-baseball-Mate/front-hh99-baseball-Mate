@@ -33,7 +33,7 @@ const GroupDetail = memo((props) => {
     const groupId = params.groupId
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
-  }, [])
+  }, [groupId, join, loadDetail.allowtype])
 
   const commentBtn = () => {
     const myJoin = loadDetail.appliedUserInfo.findIndex(
