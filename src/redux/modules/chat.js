@@ -80,10 +80,26 @@ const getChatUserAX = (roomId) => {
 }
 
 // 해당 채팅방 나가기
-const leaveChatAX = (postId) => {
+const leaveChatAX = (groupId) => {
   return function (dispatch, getState, { history }) {
     instance
-      .delete(`/chat/quit/${postId}`)
+      .delete(`/chat/quit/${groupId}`)
+      .then((res) => {
+        console.log(res)
+        history.replace("/chatlist")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+
+
+// 스크린야구 모임 채팅방 나가기
+const leaveScreenChatAX = (groupId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/chat/screen/quit/${groupId}`)
       .then((res) => {
         console.log(res)
         history.replace("/chatlist")
@@ -134,9 +150,10 @@ export default handleActions(
 const chatCreators = {
 	loadChatListMW,
   getChatMessagesAX,
-  leaveChatAX,
   getChatUserAX,
-  getMessages
+  getMessages,
+  leaveChatAX,
+  leaveScreenChatAX
 }
 
 export {chatCreators};

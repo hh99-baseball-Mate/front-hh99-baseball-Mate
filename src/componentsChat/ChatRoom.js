@@ -26,18 +26,26 @@ const ChatRoom = memo((props) => {
 	const dispatch =  useDispatch()
 	const history = useHistory()
 	const params = useParams();
-	const groupId = params.id
+	const roomId = params.id
 	const [modal, setModal] = useState(false);
 
 	const token = getCookie("is_login");
-	console.log("groupId",groupId)
+	console.log("roomId",roomId)
 
 	const sender_nick = useSelector((state) => state.user.user_info?.username);
 	const sender_id = useSelector((state) => state.user.user_info?.useridx);
 	const messages = useSelector((state) => state.chat.messages)
-	const room_id = groupId;
+	const room_id = roomId;
 
-	// 모달창 유저정보
+	useEffect(() => {
+		dispatch(chatCreators.loadChatListMW())
+	},[])
+	const chatList = useSelector((state) => state.chat?.chatList)
+	const roomInfo = chatList.find(list => list.roomId == roomId)
+	console.log("챗리스트",chatList)
+	
+	// 모달창 정보
+	// const chatList = useSelector((state) => state.chat?.chatList)
 	const chatUser = useSelector((state) => state.chat?.chatUser)
 
   //  useEffect (() => {
@@ -88,7 +96,7 @@ const ChatRoom = memo((props) => {
 			// 현재 채팅방 참여 사용자 정보 불러오기
 			dispatch(chatCreators.getChatUserAX(room_id));
 		// }
-	}, [messages.length]);
+	}, []);
 
 
   // 방 정보가 바뀌면 소켓 연결 구독, 구독해제
@@ -240,7 +248,7 @@ const ChatRoom = memo((props) => {
 		// <React.Fragment>
 		<Container>
 			<ArrowBack background="background">
-				롯데 응원방
+				{roomInfo?.title}
 				<Warp flex="flex" align="center">
 					<ModalBtn src={more2} alt="" 
 						onClick={()=>{modalInfo()}}
@@ -259,7 +267,10 @@ const ChatRoom = memo((props) => {
 					modal ? 
 						<ChatRoomModal 
 							modal={modal} setModal={setModal} 
-							room_id={room_id} {...chatUser}
+							room_id={room_id} chatUser={chatUser}
+							id={sender_id}
+							roomInfo={roomInfo}
+							// chatList={chatList}
 						/> 
 						: null
 				}

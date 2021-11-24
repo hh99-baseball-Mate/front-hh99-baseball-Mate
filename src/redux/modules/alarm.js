@@ -4,22 +4,36 @@ import { instance, img } from "../../lib/axios"
 
 const LOAD_ALARM = "LOAD_ALARM"
 const DELETE_ALARM = "DELETE_ALARM"
-// 입장 요청 리스트(방장용)
+// 경기모임 입장 요청 리스트(방장용)
 const SET_REQ_LIST = "SET_REQ_LIST"
-// 입장 대기 리스트(신청자용)
+// 경기모임 입장 대기 리스트(신청자용)
 const AWAIT_LIST = "AWAIT_LIST";
+
+// 스크린야구모임 입장 요청 리스트(방장용)
+const SET_SCREEN_REQ_LIST = "SET_SCREEN_REQ_LIST"
+// 스크린야구모임 입장 대기 리스트(신청자용)
+const AWAIT_SCREEN_LIST = "AWAIT_SCREEN_LIST";
 
 const load_alarm = createAction(LOAD_ALARM, (alarm) => ({ alarm }))
 const delete_alarm = createAction(DELETE_ALARM, (alarmId) => ({ alarmId }))
-// 들어온 요청 대기 목록
+// 경기모임 들어온 요청 대기 목록
 const setRequestList = createAction(SET_REQ_LIST, (request_list) => ({ request_list }));
-// 보낸 요청 승인 대기 목록
+// 경기모임 보낸 요청 승인 대기 목록
 const setAwaitList = createAction(AWAIT_LIST, (await_list) => ({ await_list }));
 
+// 스크린야구모임 들어온 요청 대기 목록
+const setScreenRequestList = createAction(SET_SCREEN_REQ_LIST, (request_list) => ({ request_list }));
+// 스크린야구모임 보낸 요청 승인 대기 목록
+const setScreenAwaitList = createAction(AWAIT_SCREEN_LIST, (await_list) => ({ await_list }));
+
 const initialState = {
-  alarmList: [],
+  alarmList: [], // 전체 알람 리스트
+
 	requestList: [], // 방장에게 보이는 승인요청 리스트
 	awaitList: [], 	 // 승인 대기중인 리스트
+
+	requestScreenList: [], // 방장에게 보이는 승인요청 리스트(스크린야구)
+	awaitScreenList: [], 	 // 승인 대기중인 리스트(스크린야구)
 }
 
 // 알람 읽기
@@ -59,18 +73,18 @@ const requestChatListMW = () => {
 			.get("/groups/join/request/list")
 			.then((res) => {
 				console.log(res.data)
-
-				let request_list = [];
-				res.data.forEach((req) => {
-					let one_req = {
-						join_id: req.joinRequestId,
-						user_id: req.userId,
-						username: req.username,
-						user_img: req.profileImg,
-						title: req.postTitle,
-					};
-					request_list.push(one_req);
-				});
+				const request_list = res.data
+				// let request_list = [];
+				// res.data.forEach((req) => {
+				// 	let one_req = {
+				// 		join_id: req.joinRequestId,
+				// 		user_id: req.userId,
+				// 		username: req.username,
+				// 		user_img: req.profileImg,
+				// 		title: req.postTitle,
+				// 	};
+				// 	request_list.push(one_req);
+				// });
 
 				dispatch(setRequestList(request_list));
 			})
@@ -81,7 +95,7 @@ const requestChatListMW = () => {
 }
 
 
-// (방장이 참여자들을)참여승인하기 / 거절하기
+// 경기모임 (방장이 참여자들을)참여승인하기 / 거절하기
 const alarmComfirmMW = (joinRequestId, join) => {
 	return (dispatch) => {
 		instance
@@ -90,26 +104,26 @@ const alarmComfirmMW = (joinRequestId, join) => {
 				console.log(res)
 			})
 			.catch((err) => {
-				console(err)
+				console.log(err)
 			})
 	}
 }
 
-// (참여자기준) 대기중인 신청 목록
+// 경기모임 (참여자기준) 대기중인 신청 목록
 const awaitChatListMW = () => {
   return function (dispatch) {
     instance
       .get("/groups/join/request/await")
       .then((res) => {
-        // logger("대기 목록", res);
-        let await_list = [];
-        res.data.forEach((l) => {
-          let one_list = {
-            title: l.postTitle,
-            join_id: l.joinRequestId,
-          };
-          await_list.push(one_list);
-        });
+        const await_list = res.data;
+
+        // res.data.forEach((l) => {
+        //   let one_list = {
+        //     title: l.postTitle,
+        //     join_id: l.joinRequestId,
+        //   };
+        //   await_list.push(one_list);
+        // });
 
         dispatch(setAwaitList(await_list));
       })
@@ -128,20 +142,21 @@ const requestScreenChatListMW = () => {
 			.get("/screen/join/request/list")
 			.then((res) => {
 				console.log(res.data)
+				const request_list = res.data
 
-				let request_list = [];
-				res.data.forEach((req) => {
-					let one_req = {
-						join_id: req.joinRequestId,
-						user_id: req.userId,
-						username: req.username,
-						user_img: req.profileImg,
-						title: req.postTitle,
-					};
-					request_list.push(one_req);
-				});
+				// let request_list = [];
+				// res.data.forEach((req) => {
+				// 	let one_req = {
+				// 		join_id: req.joinRequestId,
+				// 		user_id: req.userId,
+				// 		username: req.username,
+				// 		user_img: req.profileImg,
+				// 		title: req.postTitle,
+				// 	};
+				// 	request_list.push(one_req);
+				// });
 
-				dispatch(setRequestList(request_list));
+				dispatch(setScreenRequestList(request_list));
 			})
 			.catch((err) => {
 				console.log(err)
@@ -150,7 +165,7 @@ const requestScreenChatListMW = () => {
 }
 
 
-// (방장이 참여자들을)참여승인하기 / 거절하기
+// (방장이 참여자들을)참여승인하기 / 거절하기(스크린야구)
 const alarmScreenComfirmMW = (joinRequestId, join) => {
 	return (dispatch) => {
 		instance
@@ -159,11 +174,37 @@ const alarmScreenComfirmMW = (joinRequestId, join) => {
 				console.log(res)
 			})
 			.catch((err) => {
-				console(err)
+				console.log(err)
 			})
 	}
 }
 
+
+// 스크린모임 (참여자기준) 대기중인 신청 목록
+const awaitScreenChatListMW = () => {
+  return function (dispatch) {
+    instance
+      .get("/screen/join/request/await")
+      .then((res) => {
+
+				const await_ScreenList = res.data;
+        // logger("대기 목록", res);
+        // let await_list = [];
+        // res.data.forEach((l) => {
+        //   let one_list = {
+        //     title: l.postTitle,
+        //     join_id: l.joinRequestId,
+        //   };
+        //   await_list.push(one_list);
+        // });
+
+        dispatch(setAwaitList(await_ScreenList));
+      })
+      .catch((err) => {
+				console.log(err)
+      })
+  }
+}
 
 export default handleActions({
 	[LOAD_ALARM]: (state, action) => produce(state, (draft) => {
@@ -181,6 +222,12 @@ export default handleActions({
 	[AWAIT_LIST]: (state, action) => produce(state, (draft) => {
 		draft.awaitList = action.payload.await_list;
 	}),
+	[SET_SCREEN_REQ_LIST]: (state, action) => produce(state, (draft) => {
+		draft.requestScreenList = action.payload.request_list;
+	}),
+	[AWAIT_SCREEN_LIST]: (state, action) => produce(state, (draft) => {
+		draft.awaitScreenList = action.payload.await_list;
+	}),
 }, initialState)
 
 const alarmCreators = {
@@ -190,7 +237,8 @@ const alarmCreators = {
 	alarmComfirmMW,
 	awaitChatListMW,
 	requestScreenChatListMW,
-	alarmScreenComfirmMW
+	alarmScreenComfirmMW,
+	awaitScreenChatListMW
 }
 
 export {alarmCreators};

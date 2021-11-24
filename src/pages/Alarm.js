@@ -14,16 +14,25 @@ const Alarm = (props) => {
 
 	const alarm = useSelector(state => state.alarm.alarmList)
 	// (방장이 참여자들을)승인 요청 목록
-	const allow_list = useSelector((state) => state.alarm?.requestList);
+	const requestList = useSelector((state) => state.alarm?.requestList);
 	// (참여자기준) 대기중인 신청 목록
 	const awaitList = useSelector((state) => state.alarm?.awaitList);
 
-	console.log("awaitList", awaitList)
+	// 스크린야구 (방장이 참여자들을)승인 요청 목록
+	const requestScreenList = useSelector((state) => state.alarm.requestScreenList)
+	// 스크린야구 (참여자기준) 대기중인 신청 목록
+	const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
+
+	console.log("alarm", requestList)
+	console.log("ScreenAlarm", requestScreenList)
 
 	useEffect(() => {
 		dispatch(alarmCreators.load_alarmMW())
 		dispatch(alarmCreators.requestChatListMW())
 		dispatch(alarmCreators.awaitChatListMW())
+
+		dispatch(alarmCreators.requestScreenChatListMW())
+		dispatch(alarmCreators.awaitScreenChatListMW())
 	}, [])
 
 
@@ -34,9 +43,15 @@ const Alarm = (props) => {
 
 				<Rectangle marginT="35px"/>
 
-				{ alarm.map((alarm) => {
-					return <Alert key={alarm.id} {...alarm} allow_list={allow_list} />
-				})}
+				{ 
+					alarm.map((alarm) => {
+						return (
+						<Alert key={alarm.id} {...alarm} 
+							requestList={requestList} 
+							requestScreenList={requestScreenList}
+						/>)
+					})
+				}
 
 				{props.is_login ? (
 					<p>내 알림</p>
@@ -58,33 +73,42 @@ export default Alarm;
 const Alert = (props) => {
 
 	const dispatch = useDispatch();
+	console.log("props", props)
 
-	// const [joinAllow, setJoinAllow] = useState(false)
 
-	// 채팅 승인 목록
-	// const allow_list = useSelector((state) => state.alarm?.requestList);
+	// 경기모임 누가 요청했는지 찾기
+	const num = props.requestList.findIndex(list => list.joinRequestId === props.joinRequestId)
+	const requestList = props.requestList[num]
 
-	// console.log("요청", props.joinRequestId, typeof(props.joinRequestId))
-	// console.log("리스트", props.allow_list.join_id, )
+	// 스야모임 누가 요청했는지 찾기
+	const screenNum = props.requestScreenList.findIndex(list => list.joinRequestId === props.joinRequestId)
+	const requestScreenList = props.requestScreenList[screenNum]
 
-	// 누가 요청했는지 찾기
-	const num = props.allow_list.findIndex(list => list.join_id === props.joinRequestId)
-	// console.log(num)
-	// console.log("gg", props.allow_list[num])
-	const allow_list = props.allow_list[num]
+	
 
-	// console.log("1122",allow_list)
-	// console.log("알람", props.allow_list[num].join_id)
+
 
 	// 그룹참가 허용
 	const allow = () => {
-		dispatch(alarmCreators.alarmComfirmMW(allow_list?.join_id, true))
+		dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
 		setShowModal(false)
 	}
 
 	// 그룹참가 거절
 	const refuse = () => {
-		dispatch(alarmCreators.alarmComfirmMW(allow_list?.join_id, false))
+		dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
+		setShowModal(false)
+	}
+
+	// 스크린야구 그룹참가 허용
+	const allowScreen = () => {
+		dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, true))
+		setShowModal(false)
+	}
+
+	// 스크린야구 그룹참가 거절
+	const refuseScreen = () => {
+		dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, false))
 		setShowModal(false)
 	}
 
@@ -130,6 +154,7 @@ const Alert = (props) => {
 			</AlertCard>
 			<Rectangle/>
 
+			{/* 경기모임일 때 모달창 */}
 			{(num !== -1 && showModal) && (
         <Modal
           three
@@ -137,6 +162,17 @@ const Alert = (props) => {
           modalData={modalData}
 					updataBtn = {allow}
           deleteBtn={refuse}
+        ></Modal>
+      )}
+
+			{/* 스크린야구 모임일 때 모달창 */}
+			{(screenNum !== -1 && showModal) && (
+        <Modal
+          three
+          setShowModal={setShowModal}
+          modalData={modalData}
+					updataBtn = {allowScreen}
+          deleteBtn={refuseScreen}
         ></Modal>
       )}
 
