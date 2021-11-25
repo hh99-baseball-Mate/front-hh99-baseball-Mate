@@ -31,13 +31,14 @@ const getCardAPI = () => {
 };
 
 //커뮤니티 글작성
-const postAddAPI = (formData) => {
+const postAddAPI = (contents) => {
   return function (dispatch, getState, { history }) {
     console.log("배고파");
-    img
-      .post("/community", formData)
+    instance
+      .post("/community", { content: contents })
       .then((res) => {
-        console.log(res);
+        console.log(res, "커뮤티니");
+        dispatch(postAdd(res.data));
         history.replace("/community");
       })
       .catch((err) => {
@@ -54,7 +55,7 @@ export default handleActions(
       }),
     [POST_ADD]: (state, action) =>
       produce(state, (draft) => {
-        draft.card_list = action.payload.addList;
+        draft.card_list.unshift(action.payload.addList);
       }),
   },
   initialState
