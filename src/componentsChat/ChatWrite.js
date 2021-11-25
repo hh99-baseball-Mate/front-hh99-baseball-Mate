@@ -68,7 +68,7 @@ export default ChatWrite;
 const Container = styled.div`
   margin-bottom: 10px;
 	width: 425px;
-	opacity: 0.5;
+	/* opacity: 0.5; */
 `;
 
 

@@ -40,6 +40,21 @@ const ChatRoomModal = (props) => {
   // // }
 
 
+  // 모달 오버레이에서 스크롤 방지
+  React.useEffect(() => {
+    document.body.style.cssText = `
+        position: fixed; 
+        top: -${window.scrollY}px;
+        overflow-y: scroll;
+        width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
+
   // 채팅방 나가기
   const leaveChat = () => {
     dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
@@ -49,6 +64,8 @@ const ChatRoomModal = (props) => {
   const leaveScreenChat = () => {
     dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
   }
+
+  console.log("B")
 
 	return(
 		<React.Fragment>
@@ -116,19 +133,7 @@ const Profile = (props) => {
   const kakaoImg = props.picture
 
 
-  // 모달 오버레이에서 스크롤 방지
-  React.useEffect(() => {
-    document.body.style.cssText = `
-        position: fixed; 
-        top: -${window.scrollY}px;
-        overflow-y: scroll;
-        width: 100%;`;
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    };
-  }, []);
+
 
   return(
     
@@ -142,11 +147,11 @@ const Profile = (props) => {
   )
 }
 
-export default ChatRoomModal;
+export default React.memo(ChatRoomModal);
 
 const Background = styled.div`
-  width: calc(100vw - 296px);
-  /* width: 100vw; */
+  /* width: calc(100vw - 200px); */
+  width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.65);
   position: fixed;

@@ -19,35 +19,42 @@ const GroupDetail = memo((props) => {
 
   const [selectPage, setSelectPage] = useState(true)
   // close가 false일때 모집완료, true일때 모집중
-  const [close, setClose] = useState(false)
+  // const [close, setClose] = useState(false)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
-
-  console.log("완료?", loadDetail.allowtype, close)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myGroupLikesList = mylist.myGroupLikesList
   const likePost = myGroupLikesList.indexOf(Number(groupId))
 
+
   useEffect(() => {
-    const groupId = params.groupId
+
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
-  }, [groupId, join, loadDetail.allowtype])
 
-  const commentBtn = () => {
-    const myJoin = loadDetail.appliedUserInfo.findIndex(
-      (list) => list.UserId === mylist.userid
-    )
-    // console.log("myJoin",myJoin)
-    if (loadDetail.createdUserName === mylist.username) {
-      return setSelectPage(false)
-    } else if (myJoin >= 0) {
-      return setSelectPage(false)
+    if (likePost !== -1) {
+      setHeart(true)
     } else {
-      window.alert("모임 참여자만 이용 가능합니다.")
+      setHeart(false)
     }
-  }
+
+  }, [groupId, join,])
+
+  
+  // const commentBtn = () => {
+  //   const myJoin = loadDetail.appliedUserInfo.findIndex(
+  //     (list) => list.UserId === mylist.userid
+  //   )
+  //   // console.log("myJoin",myJoin)
+  //   if (loadDetail.createdUserName === mylist.username) {
+  //     return setSelectPage(false)
+  //   } else if (myJoin >= 0) {
+  //     return setSelectPage(false)
+  //   } else {
+  //     window.alert("모임 참여자만 이용 가능합니다.")
+  //   }
+  // }
 
   return (
     <Container>
@@ -56,11 +63,11 @@ const GroupDetail = memo((props) => {
       <Info
         {...loadDetail}
         {...mylist}
-        close={close}
+        // close={close}
         // setClose={setClose}
         heart={heart}
         setHeart={setHeart}
-        likePost={likePost}
+        // likePost={likePost}
       />
 
       {/* 참여자 & 방명록 */}
@@ -73,7 +80,7 @@ const GroupDetail = memo((props) => {
             참여자
           </ParticipantBtn>
 
-          <CommentBtn onClick={commentBtn} selectPage={selectPage}>
+          <CommentBtn onClick={() => setSelectPage(false)} selectPage={selectPage}>
             방명록
           </CommentBtn>
         </Warp>
@@ -84,8 +91,8 @@ const GroupDetail = memo((props) => {
           <Participant
             {...loadDetail}
             {...mylist}
-            close={close}
-            setClose={setClose}
+            // close={close}
+            // setClose={setClose}
             join={join}
             setJoin={setJoin}
           />

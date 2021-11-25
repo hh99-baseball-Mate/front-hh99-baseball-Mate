@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 
-const MessageBox = (props) => {
+const MessageBox = memo((props) => {
 
 	const sender_id = useSelector((state) => state.user.user_info?.useridx);
 
@@ -20,7 +20,7 @@ const MessageBox = (props) => {
 		const kakaoCheck = props.senderImage?.split(".")[1]
 		const kakaoImg = props.senderImage
 
-	// console.log("MB",props)
+	console.log("A")
 
 	// 내가 보낸 메세지가 아닐 때
 	if(props.senderId !== sender_id) {
@@ -65,8 +65,8 @@ const MessageBox = (props) => {
 			</Container>
 		)
 	}
-}
-export default MessageBox;
+})
+export default React.memo(MessageBox);
 
 
 const Container = styled.div`

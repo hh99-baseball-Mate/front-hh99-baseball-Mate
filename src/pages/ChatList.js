@@ -12,12 +12,11 @@ const ChatList = (props) => {
 	const history = useHistory();
 	const dispatch = useDispatch()
 
-	
+	const chatList = useSelector((state) => state.chat?.chatList)
+
 	useEffect(() => {
 		dispatch(chatCreators.loadChatListMW())
-	},[])
-
-	const chatList = useSelector((state) => state.chat?.chatList)
+	},[chatList.newMessage])
 
 
 
@@ -26,7 +25,7 @@ const ChatList = (props) => {
 
 	return (
 		<React.Fragment>
-			<ArrowBack>채팅</ArrowBack>
+			<ArrowBack background="background" fixed="fixed" margin="margin">채팅</ArrowBack>
 			<Rectangle/>
 
 			<Box>
@@ -59,7 +58,7 @@ const ChatList = (props) => {
 			</Box> */}
 
 			<MarginBottom/>
-			<NaviBar/>
+			<NaviBar chat/>
 		</React.Fragment>
 	)
 }

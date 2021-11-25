@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 	body {
 		/* height: 100%; */
 		min-height: 100vh;
-		width: 425px;
+		max-width: 425px;
 		background-color: #fafafa;
 		margin: auto;
 		box-shadow: 0px 1px 4px 9999px rgba(0, 0, 0, 0.01); 

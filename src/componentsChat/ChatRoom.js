@@ -21,7 +21,7 @@ import more2 from "../shared/icon/more2.svg"
 
 
 
-const ChatRoom = memo((props) => {
+const ChatRoom = (props) => {
 
 	const dispatch =  useDispatch()
 	const history = useHistory()
@@ -242,12 +242,13 @@ const ChatRoom = memo((props) => {
 		console.log("tell me you are moving now", messageEndRef);
 	}, [messages.length]);
 
-
+	console.log("C")
 
 	return (
 		// <React.Fragment>
-		<Container>
-			<ArrowBack background="background">
+		<Container ref={messageEndRef}>
+		{/* <Container > */}
+			<ArrowBack background="background" fixed="fixed" margin="margin">
 				{roomInfo?.title}
 				<Warp flex="flex" align="center">
 					<ModalBtn src={more2} alt="" 
@@ -290,7 +291,7 @@ const ChatRoom = memo((props) => {
 			</Container>
 		// </React.Fragment>
 	)
-})
+}
 
 export default ChatRoom;
 
@@ -300,6 +301,11 @@ const Container = styled.div`
 	position: relative;
 	background: #FFF0EE;
 	height: 100vh;
+	overflow: scroll;
+
+	&::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ModalBtn = styled.img`
