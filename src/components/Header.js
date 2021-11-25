@@ -5,9 +5,9 @@ import { VscBell } from "react-icons/vsc";
 import bell from "../shared/icon/bell.svg"
 
 const Header = (props) => {
-  const history = useHistory();
+  const history = useHistory()
 
-  const { game, screen, timeline, goods } = props;
+  const { game, screen, timeline, goods, community } = props
 
   return (
     <Container minWidth="370px">
@@ -15,7 +15,7 @@ const Header = (props) => {
         <Game
           game={game}
           onClick={() => {
-            history.push("/");
+            history.push("/")
           }}
         >
           경기모임
@@ -24,42 +24,56 @@ const Header = (props) => {
         <Screen
           screen={screen}
           onClick={() => {
-            history.push("/screen");
+            history.push("/screen")
           }}
         >
           스야모임
         </Screen>
 
+        <Community
+          community={community}
+          onClick={() => {
+            history.push("/community")
+          }}
+        >
+          {" "}
+          커뮤니티
+        </Community>
+
         <Timeline
           timeline={timeline}
           onClick={() => {
-            history.push("/community");
+            history.push("/timeline")
           }}
         >
-          커뮤니티
+          타임라인
         </Timeline>
 
         <Goods
           goods={goods}
           onClick={() => {
-            history.push("/goods");
+            history.push("/goods")
           }}
         >
           굿즈자랑
         </Goods>
 
         {/* 알림 */}
-        <Icon src={bell} alt="alert" 
-          onClick={()=>{history.push("/alarm")}}
+        <Icon
+          src={bell}
+          alt="alert"
+          onClick={() => {
+            history.push("/alarm")
+          }}
         />
-        <RedDot/>
+        <RedDot />
       </Box>
 
       {/* 구분선 */}
       <Rectangle />
     </Container>
-  );
-};
+  )
+}
 
 Header.defaultProps = {
   _onClick: () => {},
@@ -70,19 +84,19 @@ Header.defaultProps = {
   goods: false,
 }
 
-export default Header;
+export default Header
 
 const Container = styled.div`
   width: 425px;
   margin: auto;
   padding: 0;
   position: relative;
-`;
+`
 
 const Img = styled.img`
   margin-left: 26px;
   padding-top: 20px;
-`;
+`
 
 const Box = styled.div`
   display: flex;
@@ -92,7 +106,7 @@ const Box = styled.div`
   /* margin-bottom: 11px; */
   margin-left: 26px;
   padding-top: 20px;
-`;
+`
 
 const Game = styled.button`
   background: none;
@@ -111,7 +125,7 @@ const Game = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
 const Screen = styled.button`
   background: none;
@@ -130,7 +144,7 @@ const Screen = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
 const Timeline = styled.button`
   background: none;
@@ -149,7 +163,27 @@ const Timeline = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
+
+const Community = styled.button`
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 0;
+  padding-bottom: 18px;
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+
+  ${(props) =>
+    props.community &&
+    `
+    border-bottom: 2px solid;
+    font-weight: bold;
+    color: #F25343;
+  `}
+`
+
 
 const Goods = styled.button`
   background: none;
