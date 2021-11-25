@@ -23,6 +23,7 @@ const GroupDate = (props) => {
   dayjs.locale("ko")
   const day = dayjs()
 
+  // 경기 일자 2주치 모음
   let date = []
 
   // 2주일치 데이터 날짜 보여주기 위한 for문 하기
@@ -31,11 +32,18 @@ const GroupDate = (props) => {
     date.push(addDate)
   }
 
-  // 필터로 일주일치 날짜를 뽑은거에 해당하는 값 배열로 리턴받기
+  // 필터로 2주일치 날짜를 뽑은거에 경기가 있는 날만 값 배열로 리턴받기
   const list = play_list.filter((e) => {
-    console.log(e.date, date)
     return date.includes(e.date)
   })
+
+  // 경기 날짜가 있는 날짜만 소팅
+  const days = list.map((e) => {
+    return e.date
+  })
+
+  // 경기가 있는 날짜 중 중복제거
+  const gameDate = Array.from(new Set(days))
 
   return (
     <Container margin="0px auto">
@@ -45,21 +53,21 @@ const GroupDate = (props) => {
       {list && list.length > 0 ? (
         // 경기 날짜 세로 행 나열
 
-        list.map((d, i) => {
+        gameDate.map((d, i) => {
           return (
             <div key={i}>
               {/* 경기날짜 */}
-              <Time>{d.date}</Time>
+              <Time>{d}</Time>
 
               {/* 커스텀 마이징 한 Swiper (overflow 사용) */}
               <Swipers>
                 {/* 해당경기 날짜에 맞는 모든 경기 보여주기 가로행 */}
+
                 {list.map((e, i) => {
-                  if (e && e.date === d.date) {
+                  if (e && e.date === d) {
                     return (
                       <Box
                         key={e.matchId}
-                        // name={e.matches}
                         onClick={() => {
                           dispatch(groupCr.datePage(e.result))
                           history.goBack()
