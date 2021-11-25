@@ -63,36 +63,36 @@ const ChatList = (props) => {
 	)
 }
 
-export default ChatList;
+export default ChatList
 
 const Container = styled.div`
   width: 425px;
   /* background-size: cover; */
   /* height: auto; */
   /* margin: auto; */
-	position: ${(props) => props.position};
-	top: ${(props) => props.top};
-	transform: ${(props) => props.trans};
-`;
+  position: ${(props) => props.position};
+  top: ${(props) => props.top};
+  transform: ${(props) => props.trans};
+`
 
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 1px;
-`;
+  background: #e7e7e7;
+  width: 100%;
+  height: 1px;
+`
 
 const Warp = styled.div`
-	display: flex;
-	width: ${(props) => props.width};
-	flex-direction: ${(props) => props.direction};
-	flex-wrap: ${(props) => props.wrap};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	align-content: ${(props) => props.start};
-	margin-left: ${(props) => props.marginLeft};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-`;
+  display: flex;
+  width: ${(props) => props.width};
+  flex-direction: ${(props) => props.direction};
+  flex-wrap: ${(props) => props.wrap};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  align-content: ${(props) => props.start};
+  margin-left: ${(props) => props.marginLeft};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+`
 
 const Text = styled.div`
   width: ${(props) => props.width};
@@ -109,34 +109,33 @@ const Text = styled.div`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   overflow: hidden;
-`;
+`
 
 const Button = styled.button`
-	width: 184px;
-	height: 42px;
-	margin: 15px auto;
-	/* margin-top: 10px; */
-	background: #FFF;
-	border-radius: 4px;
-	border: 1px solid #F25343;
-	color: #F25343;
-	font-size: 14px;
-`;
+  width: 184px;
+  height: 42px;
+  margin: 15px auto;
+  /* margin-top: 10px; */
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #f25343;
+  color: #f25343;
+  font-size: 14px;
+`
 
 const Box = styled.div`
-	width: 100%;
-	height: ${(props) => props.height};
-	background: ${(props) => props.background};
-	padding: ${(props) => props.padding};
-	margin: ${(props) => props.margin};
-	margin-bottom: ${(props) => props.bottom};
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	position: ${(props) => props.position};
-
-`;
+  width: 100%;
+  height: ${(props) => props.height};
+  background: ${(props) => props.background};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.bottom};
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  position: ${(props) => props.position};
+`
 
 const List = styled.div`
  	height: 550px;

@@ -21,99 +21,95 @@ import more2 from "../shared/icon/more2.svg"
 
 
 
-const ChatRoom = (props) => {
+const ChatRoom = memo((props) => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const params = useParams()
+  const roomId = params.id
+  const [modal, setModal] = useState(false)
 
-	const dispatch =  useDispatch()
-	const history = useHistory()
-	const params = useParams();
-	const roomId = params.id
-	const [modal, setModal] = useState(false);
+  const token = getCookie("is_login")
+  console.log("roomId", roomId)
 
-	const token = getCookie("is_login");
-	console.log("roomId",roomId)
+  const sender_nick = useSelector((state) => state.user.user_info?.username)
+  const sender_id = useSelector((state) => state.user.user_info?.useridx)
+  const messages = useSelector((state) => state.chat.messages)
+  const room_id = roomId
 
-	const sender_nick = useSelector((state) => state.user.user_info?.username);
-	const sender_id = useSelector((state) => state.user.user_info?.useridx);
-	const messages = useSelector((state) => state.chat.messages)
-	const room_id = roomId;
+  useEffect(() => {
+    dispatch(chatCreators.loadChatListMW())
+  }, [])
+  const chatList = useSelector((state) => state.chat?.chatList)
+  const roomInfo = chatList.find((list) => list.roomId == roomId)
+  console.log("챗리스트", chatList)
 
-	useEffect(() => {
-		dispatch(chatCreators.loadChatListMW())
-	},[])
-	const chatList = useSelector((state) => state.chat?.chatList)
-	const roomInfo = chatList.find(list => list.roomId == roomId)
-	console.log("챗리스트",chatList)
-	
-	// 모달창 정보
-	// const chatList = useSelector((state) => state.chat?.chatList)
-	const chatUser = useSelector((state) => state.chat?.chatUser)
+  // 모달창 정보
+  // const chatList = useSelector((state) => state.chat?.chatList)
+  const chatUser = useSelector((state) => state.chat?.chatUser)
 
   //  useEffect (() => {
   //   dispatch(chatCreators.getChatUserAX(room_id))
   //  },[])
 
-	console.log("sender_id",messages)
-	
-	const modalInfo =() => {
-		setModal(true);
+  console.log("sender_id", messages)
 
-	}
+  const modalInfo = () => {
+    setModal(true)
+  }
 
-	// 배포, 개발 환경 채팅 주소 관리
-	// const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
-	const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
+  // 배포, 개발 환경 채팅 주소 관리
+  // const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
+  const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting"
 
-	// const env = process.env.NODE_ENV;
+  // const env = process.env.NODE_ENV;
   // const devTarget =
   //   env === "development" ? "http://115.85.182.57/chatting" : "https://gorokke.shop/chatting";
-	// 소켓
-	const sock = new SockJS(BASE_URL);
-	const ws = Stomp.over(sock);
+  // 소켓
+  const sock = new SockJS(BASE_URL)
+  const ws = Stomp.over(sock)
 
-	console.log("sock",sock)
+  console.log("sock", sock)
 
+  // 새로고침될때 방 정보 날아가지 않도록 함
+  useEffect(() => {
+    // logger("chat props", props);
+    // logger("chat sender info", sender_profile);
+    // logger("chat user_in_chat", user_in_chat);
+    // dispatch(userAction.loginCheck());
 
-	// 새로고침될때 방 정보 날아가지 않도록 함
-	useEffect(() => {
-		// logger("chat props", props);
-		// logger("chat sender info", sender_profile);
-		// logger("chat user_in_chat", user_in_chat);
-		// dispatch(userAction.loginCheck());
-
-		// 리덕스의 현재방 정보 변경
-		// if (token) {
-		// 	dispatch(
-		// 		chatActions.moveChatRoom(
-		// 			room_id,
-		// 			roomName,
-		// 			post_id,
-		// 			own_user_id,
-		// 			order_time
-		// 		)
-		// 	);
-			// 이전 대화 기록 불러오기
-			dispatch(chatCreators.getChatMessagesAX(room_id));
-			// 현재 채팅방 참여 사용자 정보 불러오기
-			dispatch(chatCreators.getChatUserAX(room_id));
-		// }
-	}, []);
-
+    // 리덕스의 현재방 정보 변경
+    // if (token) {
+    // 	dispatch(
+    // 		chatActions.moveChatRoom(
+    // 			room_id,
+    // 			roomName,
+    // 			post_id,
+    // 			own_user_id,
+    // 			order_time
+    // 		)
+    // 	);
+    // 이전 대화 기록 불러오기
+    dispatch(chatCreators.getChatMessagesAX(room_id))
+    // 현재 채팅방 참여 사용자 정보 불러오기
+    dispatch(chatCreators.getChatUserAX(room_id))
+    // }
+  }, [])
 
   // 방 정보가 바뀌면 소켓 연결 구독, 구독해제
   useEffect(() => {
     // 방 정보가 없는 경우 홈으로 돌려보내기
     if (!room_id) {
-      return window.alert
-        (
+      return window
+        .alert(
           "잘못된 접근입니다.",
           "홈으로 돌아갑니다.",
-          "채팅 신청 후 채팅탭을 이용해주세요.",
+          "채팅 신청 후 채팅탭을 이용해주세요."
         )
         .then((res) => {
-          return history.replace("/");
-        });
+          return history.replace("/")
+        })
     }
-    wsConnectSubscribe();
+    wsConnectSubscribe()
     return () => {
       wsDisConnectUnsubscribe();
     };
@@ -291,9 +287,9 @@ const ChatRoom = (props) => {
 			</Container>
 		// </React.Fragment>
 	)
-}
+})
 
-export default ChatRoom;
+export default ChatRoom
 
 const Container = styled.div`
   /* margin-bottom: 10px; */
@@ -309,22 +305,21 @@ const Container = styled.div`
 `;
 
 const ModalBtn = styled.img`
-	padding: 10px;
-	position: absolute;
-	/* left: 41.67%; */
-	right: 10px;
-	/* top: 12.5%;
+  padding: 10px;
+  position: absolute;
+  /* left: 41.67%; */
+  right: 10px;
+  /* top: 12.5%;
 	bottom: 12.5%; */
-`;
+`
 
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 1px;
-`;
+  background: #e7e7e7;
+  width: 100%;
+  height: 1px;
+`
 
 const Box = styled.div`
-  width: 425px;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
@@ -333,7 +328,7 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`;
+`
 
 const Warp = styled.div`
 	/* width: 100%; */

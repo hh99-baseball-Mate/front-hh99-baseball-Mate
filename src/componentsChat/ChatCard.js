@@ -75,18 +75,21 @@ const ChatCard = (props) => {
 	)
 }
 
-export default ChatCard;
+export default ChatCard
 
 const Container = styled.div`
   width: 425px;
-	height: 90px;
+  height: 90px;
   /* background-size: cover; */
   /* height: auto; */
   /* margin: 0 auto; */
   position: relative;
-	padding: 15px 20px;
-	border-bottom: 1px solid #E7E7E7;
-`;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e7e7e7;
+  :hover {
+    background-color: rgba(255, 249, 233, 1);
+  }
+`
 
 const ImgBox = styled.div`
   width: 60px;

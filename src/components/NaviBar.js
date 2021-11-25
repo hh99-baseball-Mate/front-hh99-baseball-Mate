@@ -27,7 +27,7 @@ const NaviBar = (props) => {
         {/* 메인 */}
         <Icon
           onClick={() => {
-            history.push("/");
+            history.push("/")
           }}
         >
           {props.home ? (
@@ -42,8 +42,8 @@ const NaviBar = (props) => {
           onClick={(e) => {
             is_login
               ? history.push("/mygroup")
-              : window.alert("로그인 후 이용해주세요");
-            e.target.disabled = true;
+              : window.alert("로그인 후 이용해주세요")
+            e.target.disabled = true
           }}
         >
           {props.sch ? (
@@ -72,7 +72,7 @@ const NaviBar = (props) => {
         {/* 마이페이지 */}
         <Icon
           onClick={() => {
-            history.push(`/mypage/${useridx}`);
+            history.push(`/mypage/${useridx}`)
           }}
         >
           {props.my ? (
@@ -82,9 +82,11 @@ const NaviBar = (props) => {
           )}
         </Icon>
       </Warp>
-      {props.writeBtn ? <PancilBtn onClick={props.onClick} /> : null}
+      {is_login && props.writeBtn ? (
+        <PancilBtn onClick={props.onClick} />
+      ) : null}
     </Container>
-  );
+  )
 };
 
 export default NaviBar;
