@@ -34,7 +34,11 @@ const ChatRoom = memo((props) => {
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
   const messages = useSelector((state) => state.chat.messages)
+ 
   const room_id = roomId
+
+  // const [messages, setMessages] = useState("") 
+  console.log("메세지", dispatch(chatCreators.load_msg))
 
   useEffect(() => {
     dispatch(chatCreators.loadChatListMW())
@@ -129,9 +133,9 @@ const ChatRoom = memo((props) => {
 	          `/sub/api/chat/rooms/${room_id}`,
 	          (data) => {
 	            const newMessage = JSON.parse(data.body);
-	            logger("구독후 새로운 메세지 data", newMessage);
+	            // logger("구독후 새로운 메세지 data", newMessage);
 	            console.log("구독후 새로운 메세지 data", newMessage);
-
+              // setMessages(newMessage)
 							dispatch(chatCreators.getChatMessagesAX(room_id));
 
 	            // 실시간 채팅 시간 넣어주는 부분

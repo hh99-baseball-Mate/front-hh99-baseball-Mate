@@ -115,31 +115,31 @@ const Info = memo((props) => {
               </Ellipse>
             )}
 
-            <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-              D-{props.dday}
-            </Ellipse>
+            {/* 모임 중이고, 마감이 안됬을 때 디데이 숨기기 */}
+            {props.allowtype && !props.close && (
+              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+                D-{props.dday}
+              </Ellipse>
+            )}
           </Warp>
 
-          {/* 수정버튼 & 삭제버튼 */}
-          {props.createdUserId === props.userid ? (
-            <Warp>
-              <p
-                onClick={() => {
-                  editBtn()
-                }}
-              >
-                📝
-              </p>
-              <p
-                onClick={() => {
-                  delBtn()
-                }}
-                style={{ marginLeft: "5px" }}
-              >
+          <Warp>
+            {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
+            {props.allowtype && props.createdUserId === props.userid ? (
+              <p onClick={editBtn}>📝</p>
+            ) : (
+              ""
+            )}
+
+            {/* 마감되더라도 삭제 가능 */}
+            {props.createdUserId === props.userid ? (
+              <p onClick={delBtn} style={{ marginLeft: "5px" }}>
                 ❌
               </p>
-            </Warp>
-          ) : null}
+            ) : (
+              ""
+            )}
+          </Warp>
         </Warp>
 
         <Text
