@@ -38,10 +38,10 @@ const Participant = memo((props) => {
   }
 
   console.log("참여자")
-  // const [close, setClose] = useState(props.allowtype)
-  // const [a, setA] = useState(props.allowtype);
 
-  // console.log("나는",close)
+  // useEffect(() => {
+  //   dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+  // },[])
 
   // 참석버튼
   const apply = () => {
@@ -61,34 +61,28 @@ const Participant = memo((props) => {
     }
   }
 
-  // 참석 확정/취소 버튼
+  // 모임 확정/취소 버튼
   const confirm = () => {
-    dispatch(groupDetailCreators.confirmMW(groupId))
+    dispatch(groupDetailCreators.confirmMW(groupId, !props.allowtype))
     // dispatch(groupDetailCreators.chatMW(id))
     // setClose(false)
   }
+ 
 
-  // 채팅방 생성 버튼
-  // const chat = () => {
-  //   dispatch(groupDetailCreators.chatMW(id))
-  // }
 
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
   )
   // console.log("myJoin",myJoin)
   // 참석버튼 표시
-  // useEffect(() => {
-  //   if (myJoin !== -1) {
-  //     return props.setJoin(true)
-  //   } else {
-  //     props.setJoin(false)
-  //   }
-  // }, [props.appliedUserInfo, props.join, myJoin])
+  useEffect(() => {
+    if (myJoin !== -1) {
+      return props.setJoin(true)
+    } else {
+      props.setJoin(false)
+    }
+  }, [props.appliedUserInfo])
 
-  // useEffect(() => {
-  //   dispatch(groupDetailCreators.loadGroupPageMW(id))
-  // },[props.allowtype])
 
   const me = props.createdUserId === props.userid
 
@@ -114,89 +108,48 @@ const Participant = memo((props) => {
           })}
         </Warp>
         <Warp flex="flex" direction="column" align="center" justify="center">
-          {
-            // 글작성자가 본인일 때 모임확정
-            me && props.allowtype ? (
-              <ConfirmBtn onClick={confirm}>모임 확정하기</ConfirmBtn>
-            ) : (
-              <>
-                {/* <DisableBtn disabled> 모집 마감 </DisableBtn> */}
-                {/* <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn> */}
-              </>
-            )
-          }
 
-          {/* {
-            // 글작성자가 본인일 때 채팅방 생성
-            me && props.allowtype === false && (
-              <ConfirmBtn onClick={chat}>채팅방 생성</ConfirmBtn>
-            )
-          } */}
-
-          {/* {
-            // 모집완료 되었을 때 모집마감
-            props.allowtype === false && (
-              <DisableBtn disabled> 모집 마감 </DisableBtn>
-            )
-          } */}
-
-          {/* {
-            // 참여 안했을 때 참여버튼
-            !me && !props.join && props.allowtype ? (
-              <ConfirmBtn onClick={apply} join={props.join}>
-                모임 참여하기
+          { me ?
+            // 방장일 때 모임확정/취소, 내가 아니면 null
+            props.allowtype ? 
+              <ConfirmBtn onClick={confirm} background="#F25343">
+                모임 확정하기
               </ConfirmBtn>
-            ) : (
-              <ConfirmBtn onClick={delapply} join={props.join}>
-                참여 취소하기
+              : 
+              <ConfirmBtn onClick={confirm} background="#ff8787">
+                모임 확정 취소하기
               </ConfirmBtn>
-            )
-          } */}
-          {
-            // 참여 했을 때 참여 취소버튼
-            !me && !props.join && props.allowtype && (
-              <ConfirmBtn onClick={apply} join={props.join}>
-                모임 참여하기
-              </ConfirmBtn>
-            )
+              :
+              null  
           }
 
           {
-            // 참여 했을 때 참여 취소버튼
-            !me && props.join && props.close && (
-              <ConfirmBtn onClick={delapply} join={props.join}>
-                참여 취소하기
-              </ConfirmBtn>
-            )
-          }
-
-          {/* {
-            // 글작성자랑 내아이디랑 같으면 모집마감 버튼
-            props.createdUserId === props.userid ? 
-            <ConfirmBtn onClick={()=>{confirm()}}>
-              모임확정하기
+            (!me && myJoin === -1 && props.allowtype) &&
+            // 방장이 아닐 때
+            <ConfirmBtn onClick={() => {apply()}} background="#F25343">
+              모임 참여하기
             </ConfirmBtn>
-               : 
-            props.close ? (
-              <DisableBtn disabled> 모집 마감 </DisableBtn>
-            ) : 
-            // 참여 했을 때 참여 취소버튼
-            props.join ? (
-              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
-                참여 취소하기
-              </ConfirmBtn>
-            ) : (
-              // 참여 안했을 때 참여버튼
-              <ConfirmBtn
-                onClick={() => {
-                  apply()
-                }}
-                join={props.join}
-              >
-                모임 참여하기
-              </ConfirmBtn>
-            )
-          } */}
+          }
+
+          {
+            (!me && myJoin !== -1) &&
+            // 방장이 아닐 때
+            (<ConfirmBtn onClick={() => {delapply()}} background="#ff8787">
+              모임 나가기
+            </ConfirmBtn>)
+          }
+
+
+
+          { 
+            (!me && myJoin === -1 && !props.allowtype ) &&
+            //방장아니고, 참가자 아니고, 모집마감일 때
+            (<ConfirmBtn disabled background="#e9ecef">
+              모집이 마감되었습니다.
+            </ConfirmBtn>)
+          } 
+
+          
         </Warp>
       </Box>
     </React.Fragment>
@@ -307,16 +260,12 @@ const ConfirmBtn = styled.button`
 	height: 50px;
 	margin: 10px 10px;
 	/* margin-top: 10px; */
-	background: #F25343;
+	background: ${(props) => props.background};
 	border-radius: 80px;
 	border: none;
 	color: #fff;
 
-	${(props) =>
-    props.join ?
-    `background: #ff8787;`
-		: `background: #F25343;`
-	}
+
 `;
 
 const DisableBtn = styled.button`

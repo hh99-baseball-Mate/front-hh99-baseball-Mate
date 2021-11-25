@@ -7,6 +7,7 @@ import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Info from "../componentsScreenDetail/Info";
 import Participant from "../componentsScreenDetail/Participant";
 import Comment from "../componentsScreenDetail/Comment";
+import { ArrowBack } from "../components"
 
 
 const ScreenDetail = (props) => {
@@ -18,51 +19,58 @@ const ScreenDetail = (props) => {
   const mylist = useSelector((state) => state.screenDetail.screenMylist)
 
   const [selectPage, setSelectPage] = useState(true)
-  const [close, setClose] = useState(loadDetail?.allowtype)
+  // const [close, setClose] = useState(loadDetail?.allowtype)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
-  console.log("완료?",loadDetail.allowtype, close)
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myScreenLikesList = mylist.myScreenLikesList;
   const likePost = myScreenLikesList.indexOf(Number(screenId))
 
   useEffect(() => {
-    const screenId = params.screenId
+
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-  }, [dispatch, likePost, screenId, selectPage, join, close])
+
+    if (likePost !== -1) {
+      setHeart(true)
+    } else {
+      setHeart(false)
+    }
+
+  }, [screenId, join])
 
 
   // console.log("스크린상세페이지", loadDetail)
   // console.log("슼린내꺼야", mylist)
   // console.log("내꺼내꺼", allmylist)
 
-  const commentBtn = () => {
-    const myJoin = loadDetail.appliedUserInfo.findIndex(
-      (list) => list.UserId === mylist.userid
-    )
-    // console.log("myJoin",myJoin)
-    if (loadDetail.createdUserName === mylist.username) {
-      return setSelectPage(false)
-    } else if (myJoin >= 0) {
-      return setSelectPage(false)
-    } else {
-      window.alert("모임 참여자만 이용 가능합니다.")
-    }
-  }
+  // const commentBtn = () => {
+  //   const myJoin = loadDetail.appliedUserInfo.findIndex(
+  //     (list) => list.UserId === mylist.userid
+  //   )
+  //   // console.log("myJoin",myJoin)
+  //   if (loadDetail.createdUserName === mylist.username) {
+  //     return setSelectPage(false)
+  //   } else if (myJoin >= 0) {
+  //     return setSelectPage(false)
+  //   } else {
+  //     window.alert("모임 참여자만 이용 가능합니다.")
+  //   }
+  // }
 
   return (
     <Container>
+      <ArrowBack>상세 페이지</ArrowBack>
       {/* 글 정보 */}
       <Info
         {...loadDetail}
         {...mylist}
-        close={close}
-        setClose={setClose}
+        // close={close}
+        // setClose={setClose}
         heart={heart}
         setHeart={setHeart}
-        likePost={likePost}
+        // likePost={likePost}
       />
 
       {/* 참여자 & 방명록 */}
@@ -80,7 +88,7 @@ const ScreenDetail = (props) => {
 
           <CommentBtn
             onClick={() => {
-              commentBtn()
+              setSelectPage(false)
             }}
             selectPage={selectPage}
           >
@@ -94,7 +102,7 @@ const ScreenDetail = (props) => {
           <Participant
             {...loadDetail}
             {...mylist}
-            close={close}
+            // close={close}
             join={join}
             setJoin={setJoin}
           />

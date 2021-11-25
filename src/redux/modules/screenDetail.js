@@ -12,6 +12,9 @@ const SCREEN_LIKE_POST = "SCREEN_LIKE_POST"
 const SCREEN_APPLY = "SCREEN_APPLY"
 const SCREEN_DELETE_APPLY = "SCREEN_DELETE_APPLY"
 
+// 방장이 모임확정/취소
+const SCREEN_CONFIRM = "SCREEN_CONFIRM"
+
 // 댓글기능
 const SCREEN_ADD_COMMENT = "SCREEN_ADD_COMMENT"
 const SCREEN_EDIT_COMMENT = "SCREEN_EDIT_COMMENT"
@@ -34,6 +37,9 @@ const del_apply = createAction(SCREEN_DELETE_APPLY, (screenId, userid) => ({
   screenId,
   userid,
 }))
+
+// 그룹 확정/취소
+const screen_confirm = createAction(SCREEN_CONFIRM, (allowtype) => ({ allowtype }))
 
 const add_comment = createAction(SCREEN_ADD_COMMENT, (screenId, comment) => ({
   screenId,
@@ -89,7 +95,7 @@ const editGroupPageMW = (screenId, formData) => {
       .patch(`/screen/${screenId}`, formData)
       .then((res) => {
         // console.log(res)
-        history.replace(`/screendetail/${screenId}`)
+        history.replace(`/screen/screendetail/${screenId}`)
       })
       .catch((err) => {
         console.log(err)
@@ -136,9 +142,9 @@ const screenApplyMW = (screenId, my) => {
     instance
       .get(`/screen/join/request/${screenId}`)
       .then((res) => {
-        // console.log(res)
-        dispatch(screen_apply(my))
-        window.alert("참여가 완료되었습니다.")
+        console.log(res)
+        // dispatch(screen_apply(my))
+        window.alert(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -244,16 +250,17 @@ const mylistMW = () => {
   }
 }
 
-// 모임확정하기
-const confirmMW = (groupId) => {
+// 모임확정/취소하기
+const confirmMW = (screenId, allowtype) => {
   return function (dispatch, getState, { history }) {
     // const isLiked = { isLiked: like }
     instance
-      .patch(`/screen/${groupId}/applications`)
+      .patch(`/screen/${screenId}/applications`)
       .then((res) => {
         console.log(res)
         const msg = res.data.message
         window.alert(msg)
+        dispatch(screen_confirm(allowtype))
       })
       .catch((err) => {
         console.log(err)
@@ -262,20 +269,6 @@ const confirmMW = (groupId) => {
   }
 }
 
-//채팅
-const chatMW = (groupId)  => {
-  return function (dispatch, getState, { history }) {
-    instance
-     .post(`/chat/screen/${groupId}`)
-     .then((res) => {
-       console.log(res)
-       window.alert("채팅방이 생성되었습니다.")
-     })
-     .catch((err) => {
-       console.log(err)
-     })
-  }
-}
 
 //reducer
 export default handleActions(
@@ -297,11 +290,11 @@ export default handleActions(
           }
         }
       }),
-    [SCREEN_APPLY]: (state, action) =>
-      produce(state, (draft) => {
-        // console.log("페이로드", action.payload.my)
-        draft.screenPage.appliedUserInfo.push(action.payload.my)
-      }),
+    // [SCREEN_APPLY]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     // console.log("페이로드", action.payload.my)
+    //     draft.screenPage.appliedUserInfo.push(action.payload.my)
+    //   }),
     [SCREEN_DELETE_APPLY]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.appliedUserInfo.findIndex(
@@ -312,6 +305,10 @@ export default handleActions(
           draft.screenPage.appliedUserInfo.splice(idx, 1)
         }
       }),
+    // 모임 확정/취소
+    [SCREEN_CONFIRM]: (state, action) => produce(state, (draft) => {
+      draft.screenPage.allowtype = action.payload.allowtype
+    }),
     [SCREEN_ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage.screenCommentList.push(action.payload.comment)
@@ -370,7 +367,6 @@ const screenDetailCreators = {
 	likeCommentMW,
 	mylistMW,
   confirmMW,
-  chatMW
 }
 
 export {screenDetailCreators};
