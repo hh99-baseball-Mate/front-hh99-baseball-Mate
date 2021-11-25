@@ -39,7 +39,7 @@ export const GroupAdd = (props) => {
   const { content, title, selectTeam } = inputValue;
 
   // + - 버튼 커스텀 훅
-  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0);
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
   // 이미지 미리보기/ 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");

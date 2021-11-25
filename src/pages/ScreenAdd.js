@@ -51,7 +51,7 @@ export const ScreenAdd = (props) => {
   })
 
   // + - 버튼 커스텀 훅
-  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0)
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
   // 이미지 미리보기 /삭제하기 커스텀 훅
   const [imgPreview, deletePreview, preview] = usePreview("")
@@ -79,6 +79,7 @@ export const ScreenAdd = (props) => {
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
     if (emptyValue.includes(false) || !location || !startDate) {
+      console.log(peopleLimit)
       window.alert("빈란이 있습니다")
       return
     } else {
