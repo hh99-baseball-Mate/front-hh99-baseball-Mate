@@ -169,11 +169,13 @@ const choiceClubMD = (club) => {
 const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
+      // 리다이렉션주소
       //  {서버주소/콜백}?code={AUTHORIZE_CODE}
       .get(`http://54.180.148.132:8080/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 
+        console.log(res)
         setCookie("is_login", access_token)
 
         const token = getCookie("is_login")
