@@ -143,6 +143,7 @@ export const Signup = (props) => {
                     username: formik.values.userName,
                     password: formik.values.password,
                     phonenumber: user_info.phoneNumber,
+                    ranNum: user_info.ranNum,
                   })
                 )
               }}

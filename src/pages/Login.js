@@ -95,15 +95,21 @@ export const Login = (props) => {
             >
               로그인
             </Buttons>
-            <Buttons _onClick={() => history.push("/phoneAuth")}>
+            <Buttons
+              margin="10px 0"
+              _onClick={() => history.push("/phoneAuth")}
+            >
               회원가입
             </Buttons>
+
+            {/* 카카오로그인 */}
+            <SocialLogin />
           </Form>
         )}
       </Formik>
 
       {/* 다른 방법 로그인 */}
-      <div onClick={() => setLoginOther(!loginOther)}>
+      {/* <div onClick={() => setLoginOther(!loginOther)}>
         {loginOther ? (
           ""
         ) : (
@@ -112,10 +118,10 @@ export const Login = (props) => {
             <MdKeyboardArrowDown />
           </Text>
         )}
-      </div>
+      </div> */}
 
       {/* 소셜로그인 */}
-      {loginOther ? <SocialLogin /> : null}
+      {/* {loginOther ? <SocialLogin /> : null} */}
     </Container>
   )
 }

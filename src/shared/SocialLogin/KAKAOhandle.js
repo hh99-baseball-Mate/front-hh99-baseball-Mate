@@ -9,11 +9,11 @@ const KAKAOhandle = (props) => {
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code")
 
-  // console.log(code)
   useEffect(() => {
-    console.log("야되냐?")
-    dispatch(userActions.kakaoLogin(code))
-  }, [])
+    if (code) {
+      return dispatch(userActions.kakaoLogin(code))
+    }
+  }, [code])
 
   return (
     <>
