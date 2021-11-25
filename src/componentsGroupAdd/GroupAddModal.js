@@ -14,6 +14,9 @@ export const GroupAddModal = ({
   return (
     <Modal bottom height="480px" margin="0 -20px">
       {/* 내부 영역 지정 */}
+      <CloseBtn>
+        <Btn onClick={() => setShowModal(false)}>취소</Btn>
+      </CloseBtn>
       <Container>
         {selectTeam_list && selectTeam_list.length > 0 ? (
           selectTeam_list.map((list) => (
@@ -146,4 +149,27 @@ const NotGame = styled.div`
   height: 300px;
   flex-direction: column;
   font-size: 30px;
+`
+
+const CloseBtn = styled.div`
+  position: absolute;
+  z-index: 99;
+  top: 17px;
+  background-color: transparent;
+  border: none;
+  opacity: 0.8;
+  right: 10px;
+`
+
+const Btn = styled.div`
+  box-sizing: border-box;
+  /* width: 100%; */
+  border-radius: 80px;
+  padding: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  :hover {
+    background-color: #ff001eba;
+    color: white;
+  }
 `
