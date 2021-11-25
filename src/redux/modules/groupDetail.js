@@ -12,6 +12,9 @@ const LIKE_POST = "LIKE_POST"
 const GROUP_APPLY = "GROUP_APPLY"
 const DELETE_APPLY = "DELETE_APPLY"
 
+// 방장이 모임확정/취소
+const GROUP_CONFIRM = "GROUP_CONFIRM"
+
 // 댓글기능
 const ADD_COMMENT = "ADD_COMMENT"
 const EDIT_COMMENT = "EDIT_COMMENT"
@@ -34,6 +37,9 @@ const del_apply = createAction(DELETE_APPLY, (groupId, userid) => ({
   groupId,
   userid,
 }))
+
+// 그룹 확정/취소
+const group_confirm = createAction(GROUP_CONFIRM, (allowtype) => ({ allowtype }))
 
 const add_comment = createAction(ADD_COMMENT, (groupId, comment) => ({
   groupId,
@@ -121,7 +127,7 @@ const likePostMW = (groupId, like) => {
     instance
       .post(`/groups/${groupId}/like`, isLiked)
       .then((res) => {
-        // console.log("모임찜", res)
+        console.log("모임찜", res.data)
         dispatch(like_post(groupId, isLiked))
       })
       .catch((err) => {
@@ -244,8 +250,8 @@ const mylistMW = () => {
   }
 }
 
-// 모임확정하기
-const confirmMW = (groupId) => {
+// 모임확정/취소하기
+const confirmMW = (groupId, allowtype) => {
   return function (dispatch, getState, { history }) {
     // const isLiked = { isLiked: like }
     instance
@@ -255,6 +261,7 @@ const confirmMW = (groupId) => {
         const msg = res.data.message
         // window.location.reload()
         window.alert(msg)
+        dispatch(group_confirm(allowtype))
       })
       .catch((err) => {
         console.log(err)
@@ -262,20 +269,6 @@ const confirmMW = (groupId) => {
   }
 }
 
-//채팅
-const chatMW = (groupId) => {
-  return function (dispatch, getState, { history }) {
-    instance
-      .post(`/chat/${groupId}`)
-      .then((res) => {
-        console.log(res)
-        window.alert("채팅방이 생성되었습니다.")
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-}
 
 //reducer
 export default handleActions(
@@ -290,7 +283,7 @@ export default handleActions(
 		// 	}
 		// }),
 		[LIKE_POST]: (state, action) => produce(state, (draft) => {
-			// console.log("찜받기",action.payload.like.isLiked)
+			// console.log("찜받기",action.payload.groupId,action.payload.like.isLiked)
 			if(action.payload.like.isLiked) {
 				draft.mylist.myGroupLikesList.push(action.payload.groupId);
 			} else {
@@ -311,6 +304,10 @@ export default handleActions(
 				draft.groupPage.appliedUserInfo.splice(idx, 1);
 			}
 		}),
+    // 모임 확정/취소
+    [GROUP_CONFIRM]: (state, action) => produce(state, (draft) => {
+      draft.groupPage.allowtype = action.payload.allowtype
+    }),
 		[ADD_COMMENT]: (state, action) => produce(state, (draft) => {
 			draft.groupPage.groupCommentList.push(action.payload.comment)
 		}),
@@ -356,7 +353,6 @@ const groupDetailCreators = {
 	likegroupCommentMW,
 	mylistMW,
   confirmMW,
-  // chatMW
 }
 
 export {groupDetailCreators};

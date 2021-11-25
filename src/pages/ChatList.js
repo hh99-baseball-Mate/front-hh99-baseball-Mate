@@ -8,56 +8,59 @@ import ChatCard from "../componentsChat/ChatCard";
 import { chatCreators } from "../redux/modules/chat";
 
 const ChatList = (props) => {
-  const history = useHistory()
-  const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(chatCreators.loadChatListMW())
-  }, [])
+	const history = useHistory();
+	const dispatch = useDispatch()
 
-  const chatList = useSelector((state) => state.chat?.chatList)
+	const chatList = useSelector((state) => state.chat?.chatList)
 
-  console.log("chatList", chatList.length)
+	useEffect(() => {
+		dispatch(chatCreators.loadChatListMW())
+	},[chatList.newMessage])
 
-  return (
-    <React.Fragment>
-      <ArrowBack>채팅</ArrowBack>
-      <Rectangle />
-      <Box background="#fff">
-        {
-          //채팅방 리스트
-          chatList.map((list) => {
-            return <ChatCard key={list.groupId} {...list} />
-          })
-        }
-      </Box>
-      {
-        // 채팅방이 없으면 나옴
-        chatList.length === 0 && (
-          <Container position="absolute" top="50%" trans="translateY(-50%)">
-            <Warp direction="column">
-              <Text margin="auto">채팅 내역이 없습니다.</Text>
-              <Button
-                margin="auto"
-                onClick={() => {
-                  history.push("/mygroup")
-                }}
-              >
-                나의 모임으로 이동하기
-              </Button>
-            </Warp>
-          </Container>
-        )
-      }
-      {/* <Box>
+
+
+
+	console.log("chatList", chatList.length)
+
+	return (
+		<React.Fragment>
+			<ArrowBack background="background" fixed="fixed" margin="margin">채팅</ArrowBack>
+			<Rectangle/>
+
+			<Box>
+				{ //채팅방 리스트
+					chatList.map((list) => {
+						return <ChatCard key={list.groupId} {...list} />
+					})
+				}
+			</Box>
+			
+			{ // 채팅방이 없으면 나옴
+				chatList.length === 0 &&
+				<Container  position="absolute" top="50%" trans="translateY(-50%)">
+					<Warp direction="column">
+						<Text margin="auto">
+							채팅 내역이 없습니다.
+						</Text>	
+						<Button margin="auto" onClick={()=>{history.push("/mygroup")}}>
+							나의 모임으로 이동하기
+						</Button>
+					</Warp>
+				</Container>
+			}
+
+			
+			{/* <Box>
 				<TimelineBtn onClick={()=>{history.push("/timeline")}}>
 					채팅이 없으면 다른 사람들과 한 줄 생각을 나눠보세요
 				</TimelineBtn>
 			</Box> */}
-      <MarginBottom />
-      <NaviBar />
-    </React.Fragment>
-  )
+
+			<MarginBottom/>
+			<NaviBar chat/>
+		</React.Fragment>
+	)
 }
 
 export default ChatList

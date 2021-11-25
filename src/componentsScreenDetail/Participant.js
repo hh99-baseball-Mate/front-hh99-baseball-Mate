@@ -13,7 +13,7 @@ const Participant = memo((props) => {
   const groupId = params.screenId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  console.log("참여자컴포", props)
+  // console.log("참여자컴포", props)
   // const {shape, src, size, pointer} = props;
   // flex="felx" justify="space-around"
   const dispatch = useDispatch()
@@ -77,17 +77,17 @@ const Participant = memo((props) => {
   // 참석 확정/취소 버튼
   const confirm = () => {
     // setOk(true)
-    dispatch(screenDetailCreators.confirmMW(groupId))
+    dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
     // dispatch(screenDetailCreators.chatMW())
   }
 
-  // 채팅방 생성 버튼
-  const chat = () => {
-    dispatch(screenDetailCreators.chatMW(id))
-  }
+  // // 채팅방 생성 버튼
+  // const chat = () => {
+  //   dispatch(screenDetailCreators.chatMW(id))
+  // }
 
   const me = props.createdUserId === props.userid
-  console.log("나다", me, props.allowtype) 
+  // console.log("나다", me, props.allowtype) 
 
   return (
     <React.Fragment>
@@ -112,61 +112,47 @@ const Participant = memo((props) => {
           })}
         </Warp>
         <Warp flex="flex" direction="column" align="center" justify="center" >
-          
 
-            
 
-          { // 글작성자가 본인일 때 모임확정
-            (me && props.allowtype === true) &&             
-            <ConfirmBtn onClick={()=>{confirm()}}>
-             모임확정하기
+        { me ?
+            // 방장일 때 모임확정/취소, 내가 아니면 null
+            props.allowtype ? 
+              <ConfirmBtn onClick={confirm} background="#F25343">
+                모임 확정하기
+              </ConfirmBtn>
+              : 
+              <ConfirmBtn onClick={confirm} background="#ff8787">
+                모임 확정 취소하기
+              </ConfirmBtn>
+              :
+              null  
+          }
+
+          {
+            (!me && myJoin === -1 && props.allowtype) &&
+            // 방장이 아닐 때
+            <ConfirmBtn onClick={() => {apply()}} background="#F25343">
+              모임 참여하기
             </ConfirmBtn>
           }
 
-          { // 글작성자가 본인일 때 채팅방 생성
-            (me && props.allowtype === false) &&
-            <ConfirmBtn onClick={()=>{chat()}}>
-              채팅방 생성
-            </ConfirmBtn>
+          {
+            (!me && myJoin !== -1) &&
+            // 방장이 아닐 때
+            (<ConfirmBtn onClick={() => {delapply()}} background="#ff8787">
+              모임 나가기
+            </ConfirmBtn>)
           }
 
-          { // 모집완료 되었을 때 모집마감
-            (props.allowtype === false) &&
-            <DisableBtn disabled> 모집 마감 </DisableBtn>
+
+
+          { 
+            (!me && myJoin === -1 && !props.allowtype ) &&
+            //방장아니고, 참가자 아니고, 모집마감일 때
+            (<ConfirmBtn disabled background="#e9ecef">
+              모집이 마감되었습니다.
+            </ConfirmBtn>)
           } 
-
-          { // 참여 안했을 때 참여버튼
-            (!me && !props.join && props.allowtype === true) && 
-              <ConfirmBtn onClick={() => {apply()}} join={props.join}>
-                모임 참여하기
-              </ConfirmBtn>
-          }
-
-          { // 참여 했을 때 참여 취소버튼
-           (!me && props.join && props.allowtype === true) && 
-              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
-                참여 취소하기
-              </ConfirmBtn>
-          }  
-
-
-          {/* {
-            // 글작성자랑 내아이디랑 같으면 버튼 안보임
-            props.createdUserId === props.userid ? null : // 모집완료되면 모집마감
-            props.close ? (
-              <DisableBtn disabled> 모집 마감 </DisableBtn>
-            ) : // 참여 했을 때 참여 취소버튼
-            props.join ? (
-              <ConfirmBtn onClick={() => {delapply()}} join={props.join}>
-                참여 취소하기
-              </ConfirmBtn>
-            ) : (
-              // 참여 안했을 때 참여버튼
-              <ConfirmBtn onClick={() => {apply()}} join={props.join}>
-                모임 참여하기
-              </ConfirmBtn>
-            )
-          } */}
 
 
         </Warp>
@@ -287,16 +273,11 @@ const ConfirmBtn = styled.button`
 	height: 50px;
 	margin: 10px 10px;
 	/* margin-top: 10px; */
-	background: #F25343;
+	background: ${(props) => props.background};
 	border-radius: 80px;
 	border: none;
 	color: #fff;
 
-	${(props) =>
-    props.join ?
-    `background: #ff8787;`
-		: `background: #F25343;`
-	}
 `;
 
 const DisableBtn = styled.button`
