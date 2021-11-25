@@ -205,7 +205,7 @@ const ChatRoom = memo((props) => {
 				message: new_message,
 			};
 			waitForConnection(ws, () => {
-				// ws.debug = null;
+				ws.debug = null;
 
 				ws.send("/pub/message", { token: token }, JSON.stringify(data));
 				// logger("메세지보내기 상태", ws.ws.readyState);
@@ -273,7 +273,7 @@ const ChatRoom = memo((props) => {
 				}
 				
 
-				<Box padding="20px">
+				<Box padding="20px 18px">
 
 					{
 						messages.map(messages => {
