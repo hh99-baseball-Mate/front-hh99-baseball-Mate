@@ -26,7 +26,7 @@ const Community = (props) => {
 
   return (
     <div>
-      <Header timeline />
+      <Header community />
       <TimelineBanner />
       <Container MainContainer>
         <Text bold size="16px">
@@ -39,14 +39,14 @@ const Community = (props) => {
               key={e.communityId}
               {...e}
             />
-          );
+          )
         })}
       </Container>
 
       <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </div>
-  );
+  )
 };
 
 export default Community;

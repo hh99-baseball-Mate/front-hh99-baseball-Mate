@@ -5,7 +5,6 @@ import { useHistory, useParams } from "react-router";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Progress from "../components/Progress";
-import { ArrowBack } from "../components";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -37,25 +36,25 @@ const Info = memo((props) => {
 
 
   // 게시글 좋아요 누른것 표시
-  useEffect(() => {
-    if (props.likePost !== -1) {
-      props.setHeart(true)
-      return
-    } else {
-      props.setHeart(false)
-    }
-  }, [props.likePost])
+  // useEffect(() => {
+  //   if (props.likePost !== -1) {
+  //     props.setHeart(true)
+  //     return
+  //   } else {
+  //     props.setHeart(false)
+  //   }
+  // }, [props.likePost])
 
   // console.log("찜", props.heart, myScreenLikesList)
 
   // 모집마감 표시
-  useEffect(() => {
-    if (props.dday < 1) {
-      props.setClose(true)
-    } else {
-      props.setClose(false)
-    }
-  }, [props])
+  // useEffect(() => {
+  //   if (props.dday < 1) {
+  //     props.setClose(true)
+  //   } else {
+  //     props.setClose(false)
+  //   }
+  // }, [props])
 
   // 찜(하트) 버튼
   const heartBtn = () => {
@@ -82,15 +81,10 @@ const Info = memo((props) => {
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <Img url={imageUrl}> 
-          <ArrowBack />        
-        </Img>
+        <Img url={imageUrl}/> 
+
         {/* 찜버튼 */}
-        <JoinCircle
-          onClick={() => {
-            heartBtn()
-          }}
-        >
+        <JoinCircle onClick={heartBtn}>
           {props.heart ? (
             <img src={heart_join} alt="Heart" />
           ) : (
@@ -103,7 +97,7 @@ const Info = memo((props) => {
       <TitleBox>
         <Warp margin="0 0 11px 0" justify="space-between">
           <Warp>
-            {props.close ? (
+            {!props.allowtype || props.canApplyNum === 0 ? (
               <Ellipse
                 borderColor="#C4C4C4"
                 background="#C4C4C4"
@@ -275,7 +269,7 @@ const Img = styled.div`
   height: 375px;
   background-color: #c4c4c4;
   background: url(${(props) => props.url});
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `;

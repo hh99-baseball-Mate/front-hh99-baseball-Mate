@@ -20,7 +20,7 @@ const ChatCard = (props) => {
 
 			<Warp>
 
-			<ImgBox url={ip + props.chatRoomIamge} />
+			<ImgBox url={ip + props.chatRoomImage} />
 
 			<Box>
 				<Warp justify="space-between">
@@ -29,7 +29,21 @@ const ChatCard = (props) => {
 							<Text size="14px" marginR="7px">
 								{
 									props.chatRoomtype === "group" ?
-									"경기모임" : "스야모임"
+									<Ellipse               
+										borderColor="#F25343"
+										background="#F25343"
+										color="#FFFFFF"
+									>
+										경기모임
+									</Ellipse> 
+									: 
+									<Ellipse               
+										borderColor="#F25343"
+										background="#FFF"
+										color="#F25343"
+									>
+										스야모임
+									</Ellipse>
 								}
 							</Text >
 							<img src={users} alt="user"/>
@@ -38,11 +52,11 @@ const ChatCard = (props) => {
 							</Text>
 						</Warp>
 					{/* </Warp> */}
-					<Text color="#C4C4C4" size="10px">11:24</Text>
+					{/* <Text color="#C4C4C4" size="10px">11:24</Text> */}
 				</Warp>
 
 				<Warp margin="7px 0 0 0" justify="space-between">
-					<Text size="13px" width="280px" lineHeight="19px">
+					<Text size="16px" weight="bold" width="280px" lineHeight="19px">
 						{props.title}
 						{/* 안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다 */}
 					</Text>
@@ -61,18 +75,21 @@ const ChatCard = (props) => {
 	)
 }
 
-export default ChatCard;
+export default ChatCard
 
 const Container = styled.div`
   width: 425px;
-	height: 90px;
+  height: 90px;
   /* background-size: cover; */
   /* height: auto; */
   /* margin: 0 auto; */
   position: relative;
-	padding: 15px 20px;
-	border-bottom: 1px solid #E7E7E7;
-`;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e7e7e7;
+  :hover {
+    background-color: rgba(255, 249, 233, 1);
+  }
+`
 
 const ImgBox = styled.div`
   width: 60px;
@@ -137,4 +154,20 @@ const NumCircle = styled.div`
 	border-radius: 50px;
 	background: #F25343;
 	color: #fff;
+`;
+
+const Ellipse = styled.div`
+  width: 55px;
+  height: 24px;
+  background: ${(props) => props.background};
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1px;
+  margin-left: ${(props) => props.marginLeft};
+  font-weight: bold;
+  font-size: 12px;
+  color: ${(props) => props.color};
 `;

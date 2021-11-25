@@ -64,7 +64,7 @@ export const ScreenEdit = (props) => {
   // console.log(location)
 
   // 이미지 미리보기 state
-  const [preview, setPreview] = useState("")
+  const [preview, setPreview] = useState(img)
 
   // 모달 보기 state
   const [showModal, setShowModal] = useState(false)
@@ -283,11 +283,26 @@ export const ScreenEdit = (props) => {
           </Picture>
 
           {/* 업로드 이미지 미리보기 */}
-          <Preview
+          {/* <Preview
             src={preview ? URL.createObjectURL(preview) : props.defaultImg}
             name="preview"
             onClick={deletePreview}
+          /> */}
+
+          <Preview
+            src={
+              // 이미지가 받아온 이미지와 같으면 받아온 이미지
+              preview === img
+                ? preview
+                : // 프리뷰가 빈값이면 빈이미지, 아니면 새로운 이미지
+                preview === ""
+                ? props.defaultImg
+                : URL.createObjectURL(preview)
+            }
+            name="preview"
+            onClick={deletePreview}
           />
+
         </ImgBox>
       </div>
 

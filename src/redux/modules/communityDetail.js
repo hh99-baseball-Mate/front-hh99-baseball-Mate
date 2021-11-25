@@ -1,5 +1,6 @@
-import { createAction } from "redux-actions";
+import { createAction, handleActions } from "redux-actions";
 import { instance } from "../../lib/axios";
+import { produce } from "immer";
 
 //액션
 //댓글 기능
@@ -92,3 +93,7 @@ const getCommunDetailAPI = (communityId) => {
       });
   };
 };
+
+export default handleActions({
+  [GET_COMMUN_DETAIL]: (state, action) => produce(state, (draft) => {}),
+});

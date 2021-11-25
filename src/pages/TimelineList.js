@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Header } from "../components";
-import TimelineBanner from "../componentsTimeline/TimelineBanner";
-import Timeline from "../componentsTimeline/Timeline";
-import TimelimeWrite from "../componentsTimeline/TimelineWrite";
-import { MarginBottom, NaviBar } from "../components";
-import { timelineCreators } from "../redux/modules/timeline";
-import { Banner } from "../components/Banner"
-import eventBanner from "../shared/icon/banner/eventBanner.png"
+import { Header } from "../components"
+import Timeline from "../componentsTimeline/Timeline"
+import TimelimeWrite from "../componentsTimeline/TimelineWrite"
+import { MarginBottom, NaviBar } from "../components"
+import { timelineCreators } from "../redux/modules/timeline"
+import eventBanner from "../shared/icon/logo/timeLineBanner.png"
 
 const TimelineList = React.memo((props) => {
   const dispatch = useDispatch()
@@ -33,7 +31,7 @@ const TimelineList = React.memo((props) => {
 
         {/* 배너 */}
         {/* <TimelineBanner /> */}
-        <img src={eventBanner} alt="" />
+        <Banner src={eventBanner} alt="" />
 
         <Warp padding="0 20px">
           {/* 타임라인 작성 & 응원갯수 */}
@@ -63,65 +61,69 @@ const TimelineList = React.memo((props) => {
   )
 })
 
-export default TimelineList;
+export default TimelineList
 
 const Container = styled.div`
-	width: 425px; 
-	/* height: 177px; */
-	margin: auto;
-`;
+  width: 425px;
+  /* height: 177px; */
+  margin: auto;
+`
 
 const Box = styled.div`
-	width: 100%;
-	height: ${(props) => props.height};
-	background: ${(props) => props.background};
-	padding: ${(props) => props.padding};
-	margin: ${(props) => props.margin};
-	margin-bottom: ${(props) => props.bottom};
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	position: ${(props) => props.position};
-`;
+  width: 100%;
+  height: ${(props) => props.height};
+  background: ${(props) => props.background};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.bottom};
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  position: ${(props) => props.position};
+`
 
 const Warp = styled.div`
-	/* width: 100%; */
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	margin-left: ${(props) => props.marginLeft};
-	margin-bottom: ${(props) => props.bottom};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
-`;
+  /* width: 100%; */
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  margin-left: ${(props) => props.marginLeft};
+  margin-bottom: ${(props) => props.bottom};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
+`
 
 const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
-	margin-bottom: ${(props) => props.bottom};
-`;
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  letter-spacing: ${(props) => props.spacing};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.bottom};
+`
 
 const Circle = styled.div`
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	background: #FFFFFF;
-	border: 1px solid #E7E7E7;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
   display: flex;
   justify-content: center;
   align-items: center;
-	margin-left: 8px;
-`;
+  margin-left: 8px;
+`
 
 const List = styled.div`
- 	height: 550px;
-	overflow: auto;
-	/* NaviBar안겹치게 */
-	/* margin-bottom: 94px; */
-`;
+  height: 550px;
+  overflow: auto;
+  /* NaviBar안겹치게 */
+  /* margin-bottom: 94px; */
+`
+
+const Banner = styled.img`
+  width: 425px;
+`

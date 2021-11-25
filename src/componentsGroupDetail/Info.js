@@ -6,7 +6,6 @@ import { useHistory, useParams } from "react-router";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
-import { ArrowBack } from "../components";
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -59,14 +58,14 @@ const Info = memo((props) => {
   // }, [heartJoin])
 
   // 게시글 좋아요 누른것 표시
-  useEffect(() => {
-    if (props.likePost !== -1) {
-      props.setHeart(true)
-    } else {
-      props.setHeart(false)
-    }
-    console.log("props.likePost", props.likePost, props.heart)
-  }, [props.likePost])
+  // useEffect(() => {
+  //   if (props.likePost !== -1) {
+  //     props.setHeart(true)
+  //   } else {
+  //     props.setHeart(false)
+  //   }
+  //   console.log("props.likePost", props.likePost, props.heart)
+  // }, [])
 
   // 모집마감 표시
   // useEffect(() => {
@@ -92,17 +91,21 @@ const Info = memo((props) => {
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
       dispatch(groupDetailCreators.delGroupPageMW(props.groupId))
-      history.push("/grouplist")
+      // history.push("/grouplist")
     }
   }
 
   console.log("info")
-  // console.log("받아오기", props)
+  console.log("받아오기", props)
 
   return (
     <Container>
       <Box position="relative">
+
+        {/* 배경사진 */}
         <Img url={imageUrl} />
+
+        {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
           {props.heart ? (
             <img src={heart_join} alt="Heart" />
@@ -110,13 +113,14 @@ const Info = memo((props) => {
             <img src={heart_null} alt="nullHeart" />
           )}
         </JoinCircle>
+
       </Box>
 
       {/* 타이틀 */}
       <TitleBox>
         <Warp margin="0 0 11px 0" justify="space-between">
           <Warp>
-            {!props.allowtype && !props.close ? (
+            {!props.allowtype || props.canApplyNum === 0 ? (
               <Ellipse
                 borderColor="#C4C4C4"
                 background="#C4C4C4"

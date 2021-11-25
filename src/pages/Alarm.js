@@ -23,8 +23,10 @@ const Alarm = (props) => {
 	// 스크린야구 (참여자기준) 대기중인 신청 목록
 	const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-	console.log("alarm", requestList)
-	console.log("ScreenAlarm", requestScreenList)
+	console.log("alarm", alarm)
+	// console.log("ScreenAlarm", requestScreenList)
+	console.log("awaitScreenList", awaitScreenList)
+	console.log("awaitList", awaitList)
 
 	useEffect(() => {
 		dispatch(alarmCreators.load_alarmMW())
@@ -39,11 +41,13 @@ const Alarm = (props) => {
 	return (
 		<React.Fragment>
 			<Container>
-				<ArrowBack bg="true">알림</ArrowBack>
+				<ArrowBack bg="true" fixed="fixed" margin="margin">알림</ArrowBack>
 
-				<Rectangle marginT="35px"/>
 
-				{ 
+				{/* <Rectangle marginT="30px"/> */}
+
+
+				{ props.is_login ?
 					alarm.map((alarm) => {
 						return (
 						<Alert key={alarm.id} {...alarm} 
@@ -51,18 +55,21 @@ const Alarm = (props) => {
 							requestScreenList={requestScreenList}
 						/>)
 					})
+					:
+					<Container position="absolute" top="50%" right="-50%" trans="translateY(-50%)">
+						<Warp flex="flex">
+							<Text margin="auto">
+								로그인 후 이용해주세요
+							</Text>	
+						</Warp>
+					</Container>
 				}
 
-				{props.is_login ? (
-					<p>내 알림</p>
-					) : (
-						<p>로그인 후 이용해주세요</p>
-					)
-				}
+
 				
 			</Container>
 			<MarginBottom/>
-			<NaviBar rec/>
+			<NaviBar/>
 		</React.Fragment>
 	)
 }
@@ -73,7 +80,7 @@ export default Alarm;
 const Alert = (props) => {
 
 	const dispatch = useDispatch();
-	console.log("props", props)
+	// console.log("props", props)
 
 
 	// 경기모임 누가 요청했는지 찾기
@@ -85,31 +92,44 @@ const Alert = (props) => {
 	const requestScreenList = props.requestScreenList[screenNum]
 
 	
-
-
-
 	// 그룹참가 허용
 	const allow = () => {
-		dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
-		setShowModal(false)
+
+		if(window.confirm("정말 허용하시겠습니까?")) {
+			dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
+			setShowModal(false)
+			delAlert()
+		}
 	}
 
 	// 그룹참가 거절
 	const refuse = () => {
-		dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
-		setShowModal(false)
+
+		if(window.confirm("정말 거절하시겠습니까?")) {
+			dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
+			setShowModal(false)
+			delAlert()
+		}
 	}
 
 	// 스크린야구 그룹참가 허용
 	const allowScreen = () => {
-		dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, true))
-		setShowModal(false)
+
+		if(window.confirm("정말 허용하시겠습니까?")) {
+			dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, true))
+			setShowModal(false)
+			delAlert()
+		}
 	}
 
 	// 스크린야구 그룹참가 거절
 	const refuseScreen = () => {
-		dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, false))
-		setShowModal(false)
+
+		if(window.confirm("정말 거절하시겠습니까?")) {
+			dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, false))
+			setShowModal(false)
+			delAlert()
+		}
 	}
 
 	// 모달
@@ -123,29 +143,63 @@ const Alert = (props) => {
     btnUpdate: "거절",
   }
 
+	// 알람삭제
 	const delAlert = () => {
 		dispatch(alarmCreators.del_alarmMW(props.id))
 		setShowModal(false)
 	}
 
-	const day = props.modifiedAt.split(" ")[0]
-	const time = props.modifiedAt.split(" ")[1]
+	// 일반 알림 삭제
+	const delNormalAlert = () => {
+
+		if(window.confirm("정말 삭제하시겠습니까?")) {
+			dispatch(alarmCreators.del_alarmMW(props.id))
+		}
+	}
+
+	const dayAndTime = props.modifiedAt.split(" ")
+	const day = dayAndTime[0]
+	const time = dayAndTime.slice(1,3).join(" ")
+	// console.log(time)
+
+	const contents = props.contents.split("*")
+	// console.log(contents)
 
 	return (
-		<React.Fragment>
+		<Container position="relative">
 			<AlertCard onClick={() => setShowModal(true)}>
 				<div >
 					{/* <Circle/> */}🔔
 				</div>
-				<Warp margin="0 21px">
-					{/* <Text size="14px" weight="500" bottom="3px">
-						🔔 알람이 왔어요! 🔔
-					</Text> */}
-					<Text size="14px" height="17px">
-						{props.contents}
+				<Warp padding="0 10px">
+
+					<Text size="15px" width="313px">
+						<Warp flex="flex" direction="column" align="flex-start" justify="flex-start"  >
+						<div>{contents[0]}</div>
+						<div>{contents[1]}{contents[2]}</div>
+						{/* {
+							contents.map((list, idx) => {
+								return <div key={idx}>{list}</div> 
+							})
+						} */}
+						</Warp>
 					</Text>
+					
 				</Warp>
-				<Text size="10px" color="#777777">
+
+				{ props.alarmType === "Normal" ?
+					<Warp onClick={() => {delNormalAlert()}}
+						position="absolute"
+						right="10px"
+						top ="5px"
+					>
+						<Text size="10px">❌</Text>
+					</Warp>
+					: null
+				}		
+				
+
+				<Text size="10px" color="#777777" >
 					<Warp flex="flex" direction="column" align="center">
 						<div style={{marginBottom:"3px"}}>{day}</div>
 						<div>{time}</div>
@@ -176,7 +230,7 @@ const Alert = (props) => {
         ></Modal>
       )}
 
-		</React.Fragment>
+		</Container>
 	)
 }
 
@@ -185,6 +239,11 @@ const Container = styled.div`
 	width: 425px; 
 	/* height: 177px; */
 	/* margin: auto; */
+	/* position: relative; */
+	position: ${(props) => props.position};
+	top: ${(props) => props.top};
+	left: ${(props) => props.left};
+	transform: ${(props) => props.trans};
 `;
 
 const AlertCard = styled.div`
@@ -192,8 +251,9 @@ const AlertCard = styled.div`
 	height: 72px;
 	padding: 8px 10px 8px 10px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
+	/* position: relative; */
 `;
 
 const Box = styled.div`
@@ -221,16 +281,19 @@ const Warp = styled.div`
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
+	top: ${(props) => props.top};
+	right: ${(props) => props.right};
 `;
 
 const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	line-height: ${(props) => props.height};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
-	margin-bottom: ${(props) => props.bottom};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin};
+  line-height: ${(props) => props.lineHeight};
+	cursor: pointer;
 `;
 
 const Circle = styled.div`

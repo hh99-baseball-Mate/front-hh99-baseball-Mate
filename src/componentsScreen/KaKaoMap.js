@@ -20,7 +20,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
 
     function resizeMap() {
       var mapContainer = document.getElementById("map")
-      mapContainer.style.width = "650px"
+      mapContainer.style.width = "425px"
       mapContainer.style.height = "650px"
     }
     function relayout() {
@@ -93,11 +93,8 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
   }, [])
 
   return (
-    <Container>
-      <div
-        style={{ width: "425px", height: "650px", margin: "0px -20px 0" }}
-        id="map"
-      ></div>
-    </Container>
+    // <Container>
+    <div style={{ width: "425px", height: "650px" }} id="map"></div>
+    // </Container>
   )
 }
