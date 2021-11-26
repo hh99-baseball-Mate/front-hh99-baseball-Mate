@@ -56,10 +56,12 @@ const Info = memo((props) => {
   //   }
   // }, [props])
 
+  console.log("props.heart", props?.heart)
+
   // 찜(하트) 버튼
   const heartBtn = () => {
-    props.setHeart(!props.heart)
-    dispatch(screenDetailCreators.likePostMW(props.id, props.heart))
+    props.setHeart(!props?.heart)
+    dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))
   }
 
   // 수정버튼
@@ -85,7 +87,7 @@ const Info = memo((props) => {
 
         {/* 찜버튼 */}
         <JoinCircle onClick={heartBtn}>
-          {props.heart ? (
+          {props?.heart ? (
             <img src={heart_join} alt="Heart" />
           ) : (
             <img src={heart_null} alt="nullHeart" />

@@ -63,9 +63,13 @@ const Participant = memo((props) => {
 
   // 모임 확정/취소 버튼
   const confirm = () => {
-    dispatch(groupDetailCreators.confirmMW(groupId, !props.allowtype))
-    // dispatch(groupDetailCreators.chatMW(id))
-    // setClose(false)
+    if(props.allowtype) {
+      if(window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?")) {
+          dispatch(groupDetailCreators.confirmMW(groupId, !props.allowtype))
+      }
+    } else {
+      dispatch(groupDetailCreators.confirmMW(groupId, !props.allowtype))
+    }
   }
  
 
@@ -127,7 +131,7 @@ const Participant = memo((props) => {
             (!me && myJoin === -1 && props.allowtype) &&
             // 방장이 아닐 때
             <ConfirmBtn onClick={() => {apply()}} background="#F25343">
-              모임 참여하기
+              모임 참여 신청하기
             </ConfirmBtn>
           }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { timelineCreators } from "../redux/modules/timeline"
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 const Timeline = React.memo((props) => {
   const dispatch = useDispatch()
@@ -82,7 +83,7 @@ const Timeline = React.memo((props) => {
                 likeToggle()
               }}
             >
-              {like ? `🧡` : `🤍`}
+              {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
             </Text>
             <Text size="12px" marginL="5px">
               {props.likecount}
@@ -147,11 +148,12 @@ const Text = styled.p`
 	/* text-align: center; */
 `;
 
-const Circle = styled.div`
-	width: 29px;
-	height: 29px;
-	border-radius: 50%;
-	background: #C4C4C4;
-	margin-top: ${(props) => props.marginT};
-	margin-right: 10px;
+const PostLike = styled(FcLike)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const PostNoLike = styled(FcLikePlaceholder)`
+  margin: 0 5px 0;
+  cursor: pointer;
 `;

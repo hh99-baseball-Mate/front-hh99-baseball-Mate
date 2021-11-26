@@ -34,18 +34,41 @@ const ChatRoom = memo((props) => {
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
   const messages = useSelector((state) => state.chat.messages)
- 
+  const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
   // const [messages, setMessages] = useState("") 
-  console.log("메세지", dispatch(chatCreators.load_msg))
 
-  useEffect(() => {
-    dispatch(chatCreators.loadChatListMW())
-  }, [])
-  const chatList = useSelector((state) => state.chat?.chatList)
+  // useEffect(() => {
+  //   dispatch(chatCreators.loadChatListMW())
+  // }, [])
+ 
   const roomInfo = chatList.find((list) => list.roomId == roomId)
   console.log("챗리스트", chatList)
+
+
+
+  // const getChatMessagesAX = (roomId) => {
+  //   return function (dispatch, getState, { history }) {
+  //     instance
+  //       .get(`/chat/${roomId}/messages`)
+  //       .then((res) => {
+  //         console.log(res)
+  //         const msg = res.data.content
+  //         console.log("mgs",res.data.content)
+  //         dispatch(load_msg(msg));
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //   } 
+  // }
+
+
+
+
+
+
 
   // 모달창 정보
   // const chatList = useSelector((state) => state.chat?.chatList)
@@ -96,6 +119,8 @@ const ChatRoom = memo((props) => {
     dispatch(chatCreators.getChatMessagesAX(room_id))
     // 현재 채팅방 참여 사용자 정보 불러오기
     dispatch(chatCreators.getChatUserAX(room_id))
+
+    dispatch(chatCreators.loadChatListMW())
     // }
   }, [])
 
