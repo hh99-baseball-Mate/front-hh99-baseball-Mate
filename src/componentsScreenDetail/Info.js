@@ -88,9 +88,9 @@ const Info = memo((props) => {
         {/* 찜버튼 */}
         <JoinCircle onClick={heartBtn}>
           {props?.heart ? (
-            <img src={heart_join} alt="Heart" />
+            <img src={heart_join} alt="Heart" style={{cursor: "pointer"}} />
           ) : (
-            <img src={heart_null} alt="nullHeart" />
+            <img src={heart_null} alt="nullHeart" style={{cursor: "pointer"}} />
           )}
         </JoinCircle>
       </Box>
@@ -128,14 +128,14 @@ const Info = memo((props) => {
           <Warp>
             {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
             {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn}>📝</p>
+              <p onClick={editBtn} style={{cursor: "pointer"}}>📝</p>
             ) : (
               ""
             )}
 
             {/* 마감되더라도 삭제 가능 */}
             {props.createdUserId === props.userid ? (
-              <p onClick={delBtn} style={{ marginLeft: "5px" }}>
+              <p onClick={delBtn} style={{ marginLeft: "5px", cursor: "pointer" }}>
                 ❌
               </p>
             ) : (
