@@ -424,7 +424,7 @@ const Text = styled.p`
 
 const TextArea = styled.textarea`
   width: 310px;
-  height: 70px;
+  height: 60px;
   border: none;
   padding: 5px 5px 5px 5px;
   margin-left: 12px;

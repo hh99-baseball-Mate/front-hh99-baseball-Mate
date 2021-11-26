@@ -55,8 +55,8 @@ const TimelimeWrite = (props) => {
       </Warp>
 
       <Warp position="relative">
-        <Input type="text" maxLength="100"
-          placeholder="내용을 입력하세요(최대 100자)" 
+        <Input type="text" maxlength="200"
+          placeholder="내용을 입력하세요(최대 200자)" 
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);

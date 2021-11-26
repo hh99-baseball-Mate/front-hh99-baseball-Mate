@@ -242,7 +242,7 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box height="121px" background="#F2FAFC" padding="20px 30px">
+      <Box minHeight="121px" maxHeight="auto" background="#F2FAFC" padding="20px 30px">
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>
@@ -275,6 +275,8 @@ const Container = styled.div`
 const Box = styled.div`
   width: 100%;
   height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
   display: ${(props) => props.flex};
@@ -359,12 +361,12 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
   /* white-space: nowrap; */
-  text-overflow: ellipsis;
-  overflow: hidden;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
 `;
 
 const Circle = styled.div`
