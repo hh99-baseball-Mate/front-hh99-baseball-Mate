@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { Container } from "../components"
 
 export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
   const { kakao } = window
@@ -43,13 +42,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       if (status === kakao.maps.services.Status.OK) {
         for (var i = 0; i < data.length; i++) {
           displayMarker(data[i])
-          // bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x))
         }
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        // map.setBounds(bounds)
-        // })
-        // console.log(data, "ㅇㅇ")
       }
     }
 
@@ -71,6 +64,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
         image: markerImage,
+        content: "ㅇㅇㅇ",
       })
 
       // 마커에 클릭이벤트를 등록합니다
@@ -92,9 +86,5 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
     map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT)
   }, [])
 
-  return (
-    // <Container>
-    <div style={{ width: "425px", height: "650px" }} id="map"></div>
-    // </Container>
-  )
+  return <div style={{ width: "425px", height: "650px" }} id="map"></div>
 }
