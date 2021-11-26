@@ -88,9 +88,6 @@ const GroupList = (props) => {
     // dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
 
-    return () => {
-      console.log("난언제실행됨?")
-    }
   }, [team, date])
 
   return (

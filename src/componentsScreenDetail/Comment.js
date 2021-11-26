@@ -30,10 +30,10 @@ const Comment = memo((props) => {
   // const groupPage = useSelector((state) => state.groupDetail.groupPage);
 
   // console.log("groupPage야야", groupPage)
-  console.log("코멘트컴포넌트", props)
+  // console.log("코멘트컴포넌트", props)
 
   const id = props.id
-   console.log("페이지아이디",id)
+  // console.log("페이지아이디", id)
   const [message, setMessage] = useState("")
 
   const addComment = () => {
@@ -55,7 +55,6 @@ const Comment = memo((props) => {
   // 	dispatch(screenDetailCreators.loadScreenPageMW(props.id))
   // 	dispatch(screenDetailCreators.mylistMW())
   // },[])
-
 
   return (
     <React.Fragment>
@@ -230,12 +229,7 @@ const CommentList = memo((props) => {
                   likeBtn()
                 }}
               >
-                {
-                  like ? 
-                    <PostLike size="20px" /> 
-                    : 
-                    <PostNoLike size="20px" />
-                }
+                {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
               </p>
               <Text size="14px" marginL="7px">
                 {props.screencommentlikeCount}
@@ -271,69 +265,89 @@ const CommentList = memo((props) => {
   )
 })
 
-
 // 모달 컴포넌트
 const Modal = (props) => {
+  const dispatch = useDispatch()
 
-	const dispatch = useDispatch();
-
-	const delComment = () => {
-		if (window.confirm("정말 삭제하시겠습니까?") === true) {
-			dispatch(screenDetailCreators.delCommentMW(props.id, props.screenCommentId));
-		}
-  };
-	// edit={edit}
-	return (
-		<React.Fragment>
-			{/* <Box background="#fff"> */}
-				<MWarp direction="column" border="1px solid" radius="10px" >	
-					<ModalButton onClick={()=>{ props.setEdit(true) }}>
-						수정
-					</ModalButton>
-					<ModalButton onClick={()=>{ delComment() }} >
-						삭제
-					</ModalButton>
-				</MWarp>	
-			{/* </Box> */}
-		</React.Fragment>	
-	)
+  const delComment = () => {
+    if (window.confirm("정말 삭제하시겠습니까?") === true) {
+      dispatch(
+        screenDetailCreators.delCommentMW(props.id, props.screenCommentId)
+      )
+    }
+  }
+  // edit={edit}
+  return (
+    <React.Fragment>
+      {/* <Box background="#fff"> */}
+      <MWarp direction="column" border="1px solid" radius="10px">
+        <ModalButton
+          onClick={() => {
+            props.setEdit(true)
+          }}
+        >
+          수정
+        </ModalButton>
+        <ModalButton
+          onClick={() => {
+            delComment()
+          }}
+        >
+          삭제
+        </ModalButton>
+      </MWarp>
+      {/* </Box> */}
+    </React.Fragment>
+  )
 }
-
 
 // 수정 컴포넌트
 const EditComment = (props) => {
+  const dispatch = useDispatch()
 
-	const dispatch = useDispatch();
+  const [message, setMessage] = useState(props.comment)
+  // console.log(message, props.id, props.screenCommentId)
 
-	const [message, setMessage] = useState(props.comment);
-	console.log(message, props.id, props.screenCommentId,)
+  const editComment = () => {
+    if (message === "") {
+      return window.alert("댓글을 입력해주세요.")
+    }
+    dispatch(
+      screenDetailCreators.editCommentMW(
+        props.id,
+        props.screenCommentId,
+        message
+      )
+    )
+    props.setEdit(false)
+  }
 
-	const editComment = () => {
-		if (message === "") {
-		 	return window.alert("댓글을 입력해주세요.")
-		}
-		dispatch(screenDetailCreators.editCommentMW(props.id, props.screenCommentId, message))
-		props.setEdit(false)
-	}
-
-	return (
-		<React.Fragment>
-			<EditText 
-				value={message}
-				onChange={(e) => {
-					setMessage(e.target.value);
-				}}
-			/>
+  return (
+    <React.Fragment>
+      <EditText
+        value={message}
+        onChange={(e) => {
+          setMessage(e.target.value)
+        }}
+      />
       <Warp justify="flex-end" marginR="32px">
-        <Button onClick={()=>{ editComment() }}>
+        <Button
+          onClick={() => {
+            editComment()
+          }}
+        >
           수정완료
         </Button>
-        <Button onClick={()=>{ props.setEdit(false) }} >
+        <Button
+          onClick={() => {
+            props.setEdit(false)
+          }}
+        >
           취소
         </Button>
       </Warp>
-		</React.Fragment>
-	)
+    </React.Fragment>
+  )
 }
 
 const EditText = styled.textarea`

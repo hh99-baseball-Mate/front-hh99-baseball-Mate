@@ -67,11 +67,10 @@ const getParticipationAPI = () => {
     instance
       .get(`/my/groups/applications`)
       .then((res) => {
-        // console.log(res, "참가모임")
         dispatch(getGroupParticipation(res.data))
       })
       .catch((err) => {
-        console.log(err, "참여에러")
+        // console.log(err, "참여에러")
       })
   }
 }
@@ -82,11 +81,10 @@ const getWriteAPI = () => {
     instance
       .get(`/my/groups/write`)
       .then((res) => {
-        // console.log(res, "작성")
         dispatch(getGroupWrite(res.data))
       })
       .catch((err) => {
-        console.log(err, "작성에러")
+        // console.log(err, "작성에러")
       })
   }
 }
@@ -97,11 +95,10 @@ const getLikeAPi = () => {
     instance
       .get(`/my/groups/like`)
       .then((res) => {
-        console.log(res, "찜모임")
         dispatch(getGroupLike(res.data))
       })
       .catch((err) => {
-        console.log(err, "참여에러")
+        // console.log(err, "참여에러")
       })
   }
 }
@@ -112,11 +109,10 @@ const getScreenAPI = () => {
     instance
       .get(`my/screen/applications`)
       .then((res) => {
-        console.log(res)
         dispatch(getScreen(res.data))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -127,10 +123,11 @@ const getScreenWriteAPI = (props) => {
     instance
       .get(`my/screen/write`)
       .then((res) => {
-        console.log(res)
         dispatch(screenWrite(res.data))
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        // console.log(err))
+      })
   }
 }
 
@@ -140,10 +137,11 @@ const getScreenLikeAPI = (props) => {
     instance
       .get(`/my/screen/like`)
       .then((res) => {
-        console.log(res, "스크린찜모임")
         dispatch(getScreenLike(res.data))
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        // console.log(err)
+      })
   }
 }
 

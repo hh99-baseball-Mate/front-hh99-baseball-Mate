@@ -33,10 +33,10 @@ const Header = (props) => {
         <Community
           community={community}
           onClick={() => {
-            history.push("/community")
+            // history.push("/community")
+            window.alert("준비중입니다.")
           }}
         >
-          {" "}
           커뮤니티
         </Community>
 

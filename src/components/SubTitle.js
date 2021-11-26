@@ -9,22 +9,11 @@ export const SubTitle = ({
   sort,
   children,
   more,
-  moreBtn,
+  HotList,
+  DateList,
+  sortDate,
+  sortItem,
 }) => {
-  const [sortDate, setSortDate] = useState(false)
-  const [sortItem, setSortItem] = useState(false)
-
-  const DateList = () => {
-    setSortDate(!sortDate)
-    setSortItem(false)
-  }
-
-  // 인기순
-  const HotList = () => {
-    setSortItem(!sortItem)
-    setSortDate(false)
-  }
-
   if (filter) {
     return (
       <MoreContainer>
@@ -63,7 +52,6 @@ export const SubTitle = ({
         <Text size="16px" bold>
           {children}
         </Text>
-        {/* <MoreBtn onClick={moreBtn}>+ More</MoreBtn> */}
       </MoreContainer>
     )
   }

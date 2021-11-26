@@ -29,7 +29,7 @@ const ChatRoom = memo((props) => {
   const [modal, setModal] = useState(false)
 
   const token = getCookie("is_login")
-  console.log("roomId", roomId)
+  // console.log("roomId", roomId)
 
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
@@ -37,16 +37,14 @@ const ChatRoom = memo((props) => {
   const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
-  // const [messages, setMessages] = useState("") 
+  // const [messages, setMessages] = useState("")
 
   // useEffect(() => {
   //   dispatch(chatCreators.loadChatListMW())
   // }, [])
- 
+
   const roomInfo = chatList.find((list) => list.roomId == roomId)
-  console.log("챗리스트", chatList)
-
-
+  // console.log("챗리스트", chatList)
 
   // const getChatMessagesAX = (roomId) => {
   //   return function (dispatch, getState, { history }) {
@@ -61,14 +59,8 @@ const ChatRoom = memo((props) => {
   //       .catch((err) => {
   //         console.log(err)
   //       })
-  //   } 
+  //   }
   // }
-
-
-
-
-
-
 
   // 모달창 정보
   // const chatList = useSelector((state) => state.chat?.chatList)
@@ -78,7 +70,7 @@ const ChatRoom = memo((props) => {
   //   dispatch(chatCreators.getChatUserAX(room_id))
   //  },[])
 
-  console.log("sender_id", messages)
+  // console.log("sender_id", messages)
 
   const modalInfo = () => {
     setModal(true)
@@ -95,7 +87,7 @@ const ChatRoom = memo((props) => {
   const sock = new SockJS(BASE_URL)
   const ws = Stomp.over(sock)
 
-  console.log("sock", sock)
+  // console.log("sock", sock)
 
   // 새로고침될때 방 정보 날아가지 않도록 함
   useEffect(() => {
@@ -140,182 +132,171 @@ const ChatRoom = memo((props) => {
     }
     wsConnectSubscribe()
     return () => {
-      wsDisConnectUnsubscribe();
-    };
-  }, [room_id ? room_id : null]);
+      wsDisConnectUnsubscribe()
+    }
+  }, [room_id ? room_id : null])
 
-
-	// 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
-	const wsConnectSubscribe = useCallback(() => {
-	  try {
-	    ws.debug = null;
-	    ws.connect(
-	      {
-	        token: token,
-	      },
-	      () => {
-	        ws.subscribe(
-	          `/sub/api/chat/rooms/${room_id}`,
-	          (data) => {
-	            const newMessage = JSON.parse(data.body);
-	            // logger("구독후 새로운 메세지 data", newMessage);
-	            console.log("구독후 새로운 메세지 data", newMessage);
+  // 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
+  const wsConnectSubscribe = useCallback(() => {
+    try {
+      ws.debug = null
+      ws.connect(
+        {
+          token: token,
+        },
+        () => {
+          ws.subscribe(
+            `/sub/api/chat/rooms/${room_id}`,
+            (data) => {
+              const newMessage = JSON.parse(data.body)
+              // logger("구독후 새로운 메세지 data", newMessage);
+              // console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
-							dispatch(chatCreators.getChatMessagesAX(room_id));
+              dispatch(chatCreators.getChatMessagesAX(room_id))
 
-	            // 실시간 채팅 시간 넣어주는 부분
-	            // const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
-	            // dispatch(
-	            //   chatCreators.getMessages({ ...newMessage,  })
-	            // );
-	          },
-	          {
-	            token: token,
-	          }
-	        );
-	      }
-	    );
-	  } catch (err) {
-			console.log(err);
-	    // logger("소켓 커넥트 에러", e);
-			console.log(err)
-	  }
-	}, [ws, dispatch]);
+              // 실시간 채팅 시간 넣어주는 부분
+              // const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
+              // dispatch(
+              //   chatCreators.getMessages({ ...newMessage,  })
+              // );
+            },
+            {
+              token: token,
+            }
+          )
+        }
+      )
+    } catch (err) {
+      // console.log(err)
+      // logger("소켓 커넥트 에러", e);
+      // console.log(err)
+    }
+  }, [ws, dispatch])
 
+  // 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
+  const wsDisConnectUnsubscribe = () => {
+    try {
+      ws.debug = null
+      ws.disconnect(
+        () => {
+          ws.unsubscribe("sub-0")
+          clearTimeout(waitForConnection)
+        },
+        { token: token }
+      )
+    } catch (e) {
+      logger("연결 구독 해체 에러", e)
+    }
+  }
 
-	// 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
-	const wsDisConnectUnsubscribe = () => {
-		try {
-			ws.debug = null;
-			ws.disconnect(
-				() => {
-					ws.unsubscribe("sub-0");
-					clearTimeout(waitForConnection);
-				},
-				{ token: token }
-			);
-		} catch (e) {
-			logger("연결 구독 해체 에러", e);
-		}
-	};
+  // 웹소켓이 연결될 때 까지 실행하는 함수
+  const waitForConnection = (ws, callback) => {
+    setTimeout(() => {
+      if (ws.ws.readyState === 1) {
+        callback()
+      } else {
+        waitForConnection(ws, callback)
+      }
+    }, 0.1)
+  }
 
+  const sendMessage = (new_message) => {
+    try {
+      // 토큰없으면 다시 로그인 시키기
+      // if (!token) {
+      // 	customAlert.sweetNeedLogin();
+      // }
 
-	// 웹소켓이 연결될 때 까지 실행하는 함수
-	const waitForConnection = (ws, callback) => {
-		setTimeout(() => {
-			if (ws.ws.readyState === 1) {
-				callback();
-			} else {
-				waitForConnection(ws, callback);
-			}
-		}, 0.1);
-	};
+      //   빈문자열이면 리턴
+      if (new_message === "") {
+        return
+      }
 
+      // send할 데이터
+      const data = {
+        type: "TALK",
+        roomId: room_id,
+        sender: sender_nick,
+        // senderImg: sender_profile,
+        senderId: sender_id,
+        message: new_message,
+      }
+      waitForConnection(ws, () => {
+        ws.debug = null
 
-	const sendMessage = (new_message) => {
-		try {
-			// 토큰없으면 다시 로그인 시키기
-			// if (!token) {
-			// 	customAlert.sweetNeedLogin();
-			// }
+        ws.send("/pub/message", { token: token }, JSON.stringify(data))
+        // logger("메세지보내기 상태", ws.ws.readyState);
+        // console.log(JSON.stringify(data))
+        // console.log("ws", ws)
+      })
+    } catch (e) {
+      // console.log(e)
+      logger("message 소켓 함수 에러", e)
+      logger("메세지보내기 상태", ws.ws.readyState)
+    }
+  }
 
-			//   빈문자열이면 리턴
-			if (new_message === '') {
-				return;
-			}
+  // 메세지가 변할 때마다 스크롤 이동시켜주기
+  // const messages = useSelector((state) => state.chat.messages);
+  // const messages = useSelector((state) => state.chat.messages)
 
-			// send할 데이터
-			const data = {
-				type: "TALK",
-				roomId: room_id,
-				sender: sender_nick,
-				// senderImg: sender_profile,
-				senderId: sender_id,
-				message: new_message,
-			};
-			waitForConnection(ws, () => {
-				ws.debug = null;
+  // 스크롤 대상
+  const messageEndRef = useRef()
 
-				ws.send("/pub/message", { token: token }, JSON.stringify(data));
-				// logger("메세지보내기 상태", ws.ws.readyState);
-				console.log(JSON.stringify(data))
-				console.log("ws",ws);
-			});
-		} catch (e) {
-			console.log(e)
-			logger("message 소켓 함수 에러", e);
-			logger("메세지보내기 상태", ws.ws.readyState);
-		}
-	};
+  const scrollTomBottom = () => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight
+    }
+  }
+  // 렌더링시 이동
+  useEffect(() => {
+    scrollTomBottom()
+    // console.log("tell me you are moving now", messageEndRef)
+  }, [messages.length])
 
+  // console.log("C")
 
-	// 메세지가 변할 때마다 스크롤 이동시켜주기
-	// const messages = useSelector((state) => state.chat.messages);
-	// const messages = useSelector((state) => state.chat.messages)
+  return (
+    // <React.Fragment>
+    <Container ref={messageEndRef}>
+      {/* <Container > */}
+      <ArrowBack background="background" fixed="fixed" margin="margin">
+        {roomInfo?.title}
+        <Warp flex="flex" align="center">
+          <ModalBtn
+            src={more2}
+            alt=""
+            onClick={() => {
+              modalInfo()
+            }}
+          />
+        </Warp>
+      </ArrowBack>
+      <Rectangle />
 
-	// 스크롤 대상
-	const messageEndRef = useRef();
+      {/* 모달 */}
+      {modal ? (
+        <ChatRoomModal
+          modal={modal}
+          setModal={setModal}
+          room_id={room_id}
+          chatUser={chatUser}
+          id={sender_id}
+          roomInfo={roomInfo}
+          // chatList={chatList}
+        />
+      ) : null}
 
-	const scrollTomBottom = () => {
-		if (messageEndRef.current) {
-			messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
-		}
-	};
-	// 렌더링시 이동
-	useEffect(() => {
-		scrollTomBottom();
-		console.log("tell me you are moving now", messageEndRef);
-	}, [messages.length]);
-
-	console.log("C")
-
-	return (
-		// <React.Fragment>
-		<Container ref={messageEndRef}>
-		{/* <Container > */}
-			<ArrowBack background="background" fixed="fixed" margin="margin">
-				{roomInfo?.title}
-				<Warp flex="flex" align="center">
-					<ModalBtn src={more2} alt="" 
-						onClick={()=>{modalInfo()}}
-					/>
-				</Warp>
-			</ArrowBack>
-			<Rectangle/>
-
-
-
-
-		
-
-				{/* 모달 */}
-				{
-					modal ? 
-						<ChatRoomModal 
-							modal={modal} setModal={setModal} 
-							room_id={room_id} chatUser={chatUser}
-							id={sender_id}
-							roomInfo={roomInfo}
-							// chatList={chatList}
-						/> 
-						: null
-				}
-				
-
-				<Box padding="20px 18px">
-
-					{
-						messages.map(messages => {
-							return <MessageBox key={messages.id} {...messages}/>
-						})
-					}		
-
-				</Box>
-				<MarginBottom chat/>
-				<ChatWrite sendMessage={sendMessage}/>
-			</Container>
-		// </React.Fragment>
-	)
+      <Box padding="20px 18px">
+        {messages.map((messages) => {
+          return <MessageBox key={messages.id} {...messages} />
+        })}
+      </Box>
+      <MarginBottom chat />
+      <ChatWrite sendMessage={sendMessage} />
+    </Container>
+    // </React.Fragment>
+  )
 })
 
 export default ChatRoom

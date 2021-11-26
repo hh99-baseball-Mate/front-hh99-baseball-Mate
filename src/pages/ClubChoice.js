@@ -4,8 +4,6 @@ import { Text, ArrowBack, Container } from "../components"
 import styled from "styled-components"
 
 export const ClubChoice = (props) => {
-  
-  console.log(props)
   return (
     <>
       <Container>

@@ -55,7 +55,6 @@ export const Post = memo((props) => {
   // 좋아요 중복 검사
 
   const likeCheckList = goodsLikesList.map((e) => {
-    console.log(e, e.userIdGoods, useridx, "검사하자")
     if (useridx === e.userIdGoods) {
       return true
     }
@@ -75,8 +74,8 @@ export const Post = memo((props) => {
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false)
 
-  // 댓글 1개 미리보기
-  const comment_preview = goodsCommentList[0]
+  // 가장 맨뒤에 댓글 1개 미리보기
+  const comment_preview = goodsCommentList[goodsCommentList.length - 1]
 
   // 삭제/수정 모달내용
   const modalData = {

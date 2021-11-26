@@ -79,7 +79,7 @@ export const ScreenAdd = (props) => {
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
     if (emptyValue.includes(false) || !location || !startDate) {
-      console.log(peopleLimit)
+      // console.log(peopleLimit)
       window.alert("빈란이 있습니다")
       return
     } else {

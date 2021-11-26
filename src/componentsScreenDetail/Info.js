@@ -34,7 +34,6 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
@@ -56,7 +55,7 @@ const Info = memo((props) => {
   //   }
   // }, [props])
 
-  console.log("props.heart", props?.heart)
+  // console.log("props.heart", props?.heart)
 
   // 찜(하트) 버튼
   const heartBtn = () => {
@@ -76,14 +75,13 @@ const Info = memo((props) => {
     }
   }
 
-  console.log("받아오기", props)
-
+  // console.log("받아오기", props)
 
   return (
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <Img url={imageUrl}/> 
+        <Img url={imageUrl} />
 
         {/* 찜버튼 */}
         <JoinCircle onClick={heartBtn}>
@@ -190,8 +188,10 @@ const Info = memo((props) => {
           </Text>
           <Slice> &ensp;|&ensp; </Slice>
           <img src={location} alt="location" />
-					<Text color="#777777" size="12px">{props.placeInfomation}</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
+          <Text color="#777777" size="12px">
+            {props.placeInfomation}
+          </Text>
+          <Slice> &ensp;|&ensp; </Slice>
           <img src={users} alt="users" />
           <Text color="#777777" size="12px">
             최대 {props.peopleLimit}명

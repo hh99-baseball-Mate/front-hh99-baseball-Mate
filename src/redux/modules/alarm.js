@@ -38,75 +38,74 @@ const initialState = {
 
 // 알람 읽기
 const load_alarmMW = () => {
-	return (dispatch) => {
-		instance
-			.get("/alarm")
-			.then((res) => {
-				const alarm = res.data;
-				dispatch(load_alarm(alarm))
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+  return (dispatch) => {
+    instance
+      .get("/alarm")
+      .then((res) => {
+        const alarm = res.data
+        dispatch(load_alarm(alarm))
+      })
+      .catch((err) => {
+        // // console.log(err)
+      })
+  }
 }
 
-// 알람삭제 
+// 알람삭제
 const del_alarmMW = (alarmId) => {
-	return (dispatch) => {
-		instance
-			.delete(`/alarm/${alarmId}`)
-			.then((res) => {
-				console.log(res)
-				dispatch(delete_alarm(alarmId))
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+  return (dispatch) => {
+    instance
+      .delete(`/alarm/${alarmId}`)
+      .then((res) => {
+        // // console.log(res)
+        dispatch(delete_alarm(alarmId))
+      })
+      .catch((err) => {
+        // // console.log(err)
+      })
+  }
 }
 
 // 방장의 알림창에서 신청들어온 데이터조회하기(경기모임)
 const requestChatListMW = () => {
-	return (dispatch) => {
-		instance
-			.get("/groups/join/request/list")
-			.then((res) => {
-				console.log(res.data)
-				const request_list = res.data
-				// let request_list = [];
-				// res.data.forEach((req) => {
-				// 	let one_req = {
-				// 		join_id: req.joinRequestId,
-				// 		user_id: req.userId,
-				// 		username: req.username,
-				// 		user_img: req.profileImg,
-				// 		title: req.postTitle,
-				// 	};
-				// 	request_list.push(one_req);
-				// });
+  return (dispatch) => {
+    instance
+      .get("/groups/join/request/list")
+      .then((res) => {
+        // // console.log(res.data)
+        const request_list = res.data
+        // let request_list = [];
+        // res.data.forEach((req) => {
+        // 	let one_req = {
+        // 		join_id: req.joinRequestId,
+        // 		user_id: req.userId,
+        // 		username: req.username,
+        // 		user_img: req.profileImg,
+        // 		title: req.postTitle,
+        // 	};
+        // 	request_list.push(one_req);
+        // });
 
-				dispatch(setRequestList(request_list));
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+        dispatch(setRequestList(request_list))
+      })
+      .catch((err) => {
+        // // console.log(err)
+      })
+  }
 }
-
 
 // 경기모임 (방장이 참여자들을)참여승인하기 / 거절하기
 const alarmComfirmMW = (joinRequestId, join) => {
-	return (dispatch) => {
-		instance
-			.get(`/groups/join/request/accept/${joinRequestId}?accept=${join}`)
-			.then((res) => {
-				console.log(res)
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+  return (dispatch) => {
+    instance
+      .get(`/groups/join/request/accept/${joinRequestId}?accept=${join}`)
+      .then((res) => {
+        // // console.log(res)
+      })
+      .catch((err) => {
+        // // console.log(err)
+      })
+  }
 }
 
 // 경기모임 (참여자기준) 대기중인 신청 목록
@@ -115,7 +114,7 @@ const awaitChatListMW = () => {
     instance
       .get("/groups/join/request/await")
       .then((res) => {
-        const await_list = res.data;
+        const await_list = res.data
 
         // res.data.forEach((l) => {
         //   let one_list = {
@@ -125,60 +124,56 @@ const awaitChatListMW = () => {
         //   await_list.push(one_list);
         // });
 
-        dispatch(setAwaitList(await_list));
+        dispatch(setAwaitList(await_list))
       })
       .catch((err) => {
-				console.log(err)
+        // // console.log(err)
       })
   }
 }
 
-
-
 // 방장의 알림창에서 신청들어온 데이터조회하기(스크린야구)
 const requestScreenChatListMW = () => {
-	return (dispatch) => {
-		instance
-			.get("/screen/join/request/list")
-			.then((res) => {
-				console.log(res.data)
-				const request_list = res.data
+  return (dispatch) => {
+    instance
+      .get("/screen/join/request/list")
+      .then((res) => {
+        // // console.log(res.data)
+        const request_list = res.data
 
-				// let request_list = [];
-				// res.data.forEach((req) => {
-				// 	let one_req = {
-				// 		join_id: req.joinRequestId,
-				// 		user_id: req.userId,
-				// 		username: req.username,
-				// 		user_img: req.profileImg,
-				// 		title: req.postTitle,
-				// 	};
-				// 	request_list.push(one_req);
-				// });
+        // let request_list = [];
+        // res.data.forEach((req) => {
+        // 	let one_req = {
+        // 		join_id: req.joinRequestId,
+        // 		user_id: req.userId,
+        // 		username: req.username,
+        // 		user_img: req.profileImg,
+        // 		title: req.postTitle,
+        // 	};
+        // 	request_list.push(one_req);
+        // });
 
-				dispatch(setScreenRequestList(request_list));
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+        dispatch(setScreenRequestList(request_list))
+      })
+      .catch((err) => {
+        // // console.log(err)
+      })
+  }
 }
-
 
 // (방장이 참여자들을)참여승인하기 / 거절하기(스크린야구)
 const alarmScreenComfirmMW = (joinRequestId, join) => {
-	return (dispatch) => {
-		instance
-			.get(`/screen/join/request/accept/${joinRequestId}?accept=${join}`)
-			.then((res) => {
-				console.log(res)
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	}
+  return (dispatch) => {
+    instance
+      .get(`/screen/join/request/accept/${joinRequestId}?accept=${join}`)
+      .then((res) => {
+        // console.log(res)
+      })
+      .catch((err) => {
+        // console.log(err)
+      })
+  }
 }
-
 
 // 스크린모임 (참여자기준) 대기중인 신청 목록
 const awaitScreenChatListMW = () => {
@@ -186,8 +181,7 @@ const awaitScreenChatListMW = () => {
     instance
       .get("/screen/join/request/await")
       .then((res) => {
-
-				const await_ScreenList = res.data;
+        const await_ScreenList = res.data
         // logger("대기 목록", res);
         // let await_list = [];
         // res.data.forEach((l) => {
@@ -198,10 +192,10 @@ const awaitScreenChatListMW = () => {
         //   await_list.push(one_list);
         // });
 
-        dispatch(setAwaitList(await_ScreenList));
+        dispatch(setAwaitList(await_ScreenList))
       })
       .catch((err) => {
-				console.log(err)
+        // console.log(err)
       })
   }
 }

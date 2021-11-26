@@ -4,77 +4,71 @@ import styled from "styled-components";
 
 
 const MessageBox = memo((props) => {
+  // console.log("메세지박스", props)
+  const sender_id = useSelector((state) => state.user.user_info?.useridx)
 
-	console.log("메세지박스",props)
-	const sender_id = useSelector((state) => state.user.user_info?.useridx);
+  // 사진 ip주소 + 사진이름 조합
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
+  const img = props.filePath
+  const imageUrl = ip + img
 
-	  // 사진 ip주소 + 사진이름 조합
-		const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-		const ip = IMAGES_BASE_URL
-		const img = props.filePath
-		const imageUrl = ip + img
-	
-		// 기본 로그인일 때 프로필 사진
-		const profileImg = ip + props.senderImage
-	
-		// kakaocdn (카카오 프사인지 확인)
-		const kakaoCheck = props.senderImage?.split(".")[1]
-		const kakaoImg = props.senderImage
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.senderImage
 
-	const dayAndTime = props.modifiedAt.split(" ")
-	const day = dayAndTime[0]
-	const time = dayAndTime.slice(1,3).join(" ")
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.senderImage?.split(".")[1]
+  const kakaoImg = props.senderImage
 
-	// 내가 보낸 메세지가 아닐 때
-	if(props.senderId !== sender_id) {
-		return (
+  const dayAndTime = props.modifiedAt.split(" ")
+  const day = dayAndTime[0]
+  const time = dayAndTime.slice(1, 3).join(" ")
 
-			<Container>
+  // 내가 보낸 메세지가 아닐 때
+  if (props.senderId !== sender_id) {
+    return (
+      <Container>
+        <Warp>
+          <ImgCircle
+            marginR="10px"
+            url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+          />
+          <Warp direction="column">
+            <Text>{props.senderName}</Text>
 
-				<Warp >	
+            <Warp align="flex-end">
+              <Talk>{props.message}</Talk>
+              <Time margin="0 0 0 5px">
+                {/* 오전 10:34 */}
+                <Warp direction="column" align="center">
+                  <div>{day}</div>
+                  <div>{time}</div>
+                </Warp>
+              </Time>
+            </Warp>
+          </Warp>
+        </Warp>
+      </Container>
+    )
+  }
 
-					<ImgCircle marginR="10px" url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}/>
-					<Warp direction="column">	
-						<Text>{props.senderName}</Text>
-
-						<Warp align="flex-end" >
-							<Talk>
-								{props.message}
-							</Talk>	
-							<Time margin="0 0 0 5px">
-								{/* 오전 10:34 */}
-								<Warp direction="column" align="center" >
-									<div>{day}</div>
-									<div>{time}</div>
-								</Warp>
-							</Time>
-						</Warp>
-					</Warp>
-					
-				</Warp>	
-			</Container>
-		)	
-	}			
-
-		// 내가 보낸 메세지 일 때
-	if(props.senderId === sender_id) {
-		return (
-			<Container>
-				<Warp align="flex-end" direction="row-reverse"  >
-					<MyTalk>
-						{props.message}
-					</MyTalk>
-					<MyTime margin="0 6px 0 0">
-						{/* {props.modifiedAt} */}
-						<Warp direction="column" align="center" >
-							<div>{day}</div>
-							<div>{time}</div>
-						</Warp>
-					</MyTime>
-				</Warp>	
-			</Container>
-		)
-	}
+  // 내가 보낸 메세지 일 때
+  if (props.senderId === sender_id) {
+    return (
+      <Container>
+        <Warp align="flex-end" direction="row-reverse">
+          <MyTalk>{props.message}</MyTalk>
+          <MyTime margin="0 6px 0 0">
+            {/* {props.modifiedAt} */}
+            <Warp direction="column" align="center">
+              <div>{day}</div>
+              <div>{time}</div>
+            </Warp>
+          </MyTime>
+        </Warp>
+      </Container>
+    )
+  }
 })
 export default React.memo(MessageBox);
 
