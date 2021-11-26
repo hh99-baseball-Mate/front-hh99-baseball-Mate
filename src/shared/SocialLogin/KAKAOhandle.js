@@ -9,7 +9,7 @@ const KAKAOhandle = (props) => {
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code")
 
-  console.log(code, "인가코드")
+  // console.log(code, "인가코드")
   useEffect(() => {
     if (code) {
       return dispatch(userActions.kakaoLogin(code))

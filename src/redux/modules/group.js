@@ -54,27 +54,26 @@ const initialState = {
 
 const hotGroupMW = (team) => {
   return (dispatch) => {
-    console.log(team)
     if (!team) {
       instance
         .get(`groups/hotgroup`)
         .then((res) => {
           dispatch(load_hotgroup(res.data))
         })
-        .catch((err) => console.log(err, "핫그룹에러"))
+        .catch((err) => {
+          // // console.log(err, "핫그룹에러"))
+        })
       return
     }
 
     instance
       .get(`groups/hotgroup?team=${encodeURIComponent(team)}`)
       .then((res) => {
-        // console.log("핫그룹",res)
         const list = res.data
-        // console.log(res)
         dispatch(load_hotgroup(list))
       })
       .catch((err) => {
-        console.log(err, "핫 그룹 그룹선택 에러")
+        // // console.log(err, "핫 그룹 그룹선택 에러")
       })
   }
 }
@@ -90,7 +89,7 @@ const getPlayAPI = (team) => {
         dispatch(getPlay(res.data))
       })
       .catch((err) => {
-        console.log(err, "경기일정err")
+        // console.log(err, "경기일정err")
       })
   }
 }
@@ -102,11 +101,9 @@ const getTeamAPI = (teamname) => {
         .get("/groups")
         .then((res) => {
           dispatch(getTeam(res.data))
-          // console.log(res)
-          console.log("겟팀")
         })
         .catch((err) => {
-          console.log(err, "전체 모임 불러오기")
+          // console.log(err, "전체 모임 불러오기")
         })
       return
     }
@@ -114,12 +111,10 @@ const getTeamAPI = (teamname) => {
     instance
       .get(`/groups?team=${encodeURIComponent(teamname)}`)
       .then((res) => {
-        console.log(res.data, "구단 선택")
         dispatch(getTeam(res.data))
-        console.log("구단선택")
       })
       .catch((err) => {
-        console.log("팀별조회에러", err)
+        // console.log("팀별조회에러", err)
       })
   }
 }
@@ -138,7 +133,9 @@ const selectTeamMD = (myteam) => {
 
         dispatch(selectTeam(team))
       })
-      .catch((err) => console.log(err, "팀선택 err입니다."))
+      .catch((err) => {
+        // console.log(err, "팀선택 err입니다.")
+      })
   }
 }
 
@@ -148,10 +145,11 @@ const addGroupMD = (formData) => {
     img
       .post("/groups", formData)
       .then((res) => {
-        // console.log(res.data);
         history.replace("/")
       })
-      .catch((err) => console.log(err, "모임생성 err입니다."))
+      .catch((err) => {
+        // console.log(err, "모임생성 err입니다."))
+      })
   }
 }
 

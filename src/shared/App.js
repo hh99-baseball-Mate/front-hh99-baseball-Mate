@@ -91,8 +91,8 @@ function App() {
             <Route path="/timeline" exact component={TimelineList} />
             <Route path="/goods" exact component={Goods} />
             <Route path="/mygroup" exact component={MyGroup} />
-            <Route path="/community" exact component={Community} />
-            <Route path="/communityadd" exact component={CommunityAdd} />
+            {/* <Route path="/community" exact component={Community} />
+            <Route path="/communityadd" exact component={CommunityAdd} /> */}
             <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
             <Route
               path="/mypage/:useridx"
@@ -141,9 +141,9 @@ function App() {
             <Route path="/loading" exact component={Loading} />
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
-            <Route path="/community" exact component={Community} />
+            {/* <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
-            <Route path="/communityadd" exact component={CommunityAdd} />
+            <Route path="/communityadd" exact component={CommunityAdd} /> */}
             <Route path="/notice" component={Notice} />
             <Route path="/event" component={Event} />
             {/* 임시 */}

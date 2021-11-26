@@ -29,7 +29,7 @@ export const Login = (props) => {
     password: Yup.string()
       .matches(
         regPassword,
-        "영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 설정해주세요."
+        "영문 + 특수문자 + 숫자 포함 8글자 이상의 비밀번호를 입력해주세요."
       )
       .required(""),
   })

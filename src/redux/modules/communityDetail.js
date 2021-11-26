@@ -38,14 +38,14 @@ const postCommunCommentABI = (communityId, getComment) => {
     instance
       .post(`/community/${communityId}/comment`, { comment: getComment })
       .then((res) => {
-        console.log(res);
-        dispatch(postCommunComment(communityId));
+        // console.log(res)
+        dispatch(postCommunComment(communityId))
       })
       .catch((err) => {
-        console.log(err, "커뮤댯글등록");
-      });
-  };
-};
+        // console.log(err, "커뮤댯글등록")
+      })
+  }
+}
 
 //댓글 수정
 const updateCommunCommentAPI = (communityId, commentId, comment) => {
@@ -55,14 +55,14 @@ const updateCommunCommentAPI = (communityId, commentId, comment) => {
         comment: comment,
       })
       .then((res) => {
-        console.log(res);
-        dispatch(updateCommunComment(communityId, commentId, comment));
+        // console.log(res)
+        dispatch(updateCommunComment(communityId, commentId, comment))
       })
       .catch((err) => {
-        console.log(err, "커뮤댓글수정");
-      });
-  };
-};
+        // console.log(err, "커뮤댓글수정")
+      })
+  }
+}
 
 //댓글 삭제
 const deleteCommunCommrntAPI = (communityId, commentId) => {
@@ -70,14 +70,14 @@ const deleteCommunCommrntAPI = (communityId, commentId) => {
     instance
       .delete(`/community/${communityId}/comment/${commentId}`)
       .then((res) => {
-        console.log(res);
-        dispatch(deleteCommunCommrnt(communityId, commentId));
+        // console.log(res)
+        dispatch(deleteCommunCommrnt(communityId, commentId))
       })
       .catch((err) => {
-        console.log(err, "댓글삭제에러");
-      });
-  };
-};
+        // console.log(err, "댓글삭제에러")
+      })
+  }
+}
 
 //디테일 불러오기
 const getCommunDetailAPI = (communityId) => {
@@ -85,14 +85,14 @@ const getCommunDetailAPI = (communityId) => {
     instance
       .get(`/community/{communityId}`)
       .then((res) => {
-        console.log(res);
-        dispatch(getCommunDetail(res.data));
+        // console.log(res)
+        dispatch(getCommunDetail(res.data))
       })
       .catch((err) => {
-        console.log(err, "디테일 페이지 오류");
-      });
-  };
-};
+        // console.log(err, "디테일 페이지 오류")
+      })
+  }
+}
 
 export default handleActions({
   [GET_COMMUN_DETAIL]: (state, action) => produce(state, (draft) => {}),

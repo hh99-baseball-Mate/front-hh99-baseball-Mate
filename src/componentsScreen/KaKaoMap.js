@@ -46,6 +46,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       }
     }
 
+    var iwRemoveable = true
     // 지도에 마커를 표시하는 함수입니다
     function displayMarker(place) {
       var imageSrc =
@@ -59,29 +60,35 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
         imageSize,
         imageOption
       )
+
       // 마커를 생성하고 지도에 표시합니다
       var marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
         image: markerImage,
-        content: "ㅇㅇㅇ",
+        removable: iwRemoveable,
       })
 
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, "click", function (mouseEvent) {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
-          '<div style="padding:5px;font-size:12px;">' +
+          '<div class="wrap" style="width: 188px;height: 50px; padding:10px; text-align: center;font-size: 12px;">' +
             place.place_name +
             "</div>",
           setLocation(place.place_name),
           setRoadAddress(place.road_address_name),
           setShowModal(false)
         )
+
         infowindow.open(map, marker)
       })
+      // function closeInfo() {
+      //   infowindow.close()
+      // }
     }
 
+   
     var zoomControl = new kakao.maps.ZoomControl()
     map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT)
   }, [])

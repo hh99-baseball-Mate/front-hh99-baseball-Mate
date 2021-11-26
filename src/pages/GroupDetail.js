@@ -27,7 +27,6 @@ const GroupDetail = memo((props) => {
   const myGroupLikesList = mylist?.myGroupLikesList
   const likePost = myGroupLikesList?.indexOf(Number(groupId))
 
-
   useEffect(() => {
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
@@ -41,7 +40,6 @@ const GroupDetail = memo((props) => {
 
   // console.log("heart", heart)
 
-  
   // const commentBtn = () => {
   //   const myJoin = loadDetail.appliedUserInfo.findIndex(
   //     (list) => list.UserId === mylist.userid
@@ -80,7 +78,10 @@ const GroupDetail = memo((props) => {
             참여자
           </ParticipantBtn>
 
-          <CommentBtn onClick={() => setSelectPage(false)} selectPage={selectPage}>
+          <CommentBtn
+            onClick={() => setSelectPage(false)}
+            selectPage={selectPage}
+          >
             방명록
           </CommentBtn>
         </Warp>

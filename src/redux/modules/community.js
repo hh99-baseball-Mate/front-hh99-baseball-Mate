@@ -21,31 +21,31 @@ const getCardAPI = () => {
     instance
       .get(`/community`)
       .then((res) => {
-        console.log(res);
-        dispatch(getCard(res.data));
+        // console.log(res)
+        dispatch(getCard(res.data))
       })
       .catch((err) => {
-        console.log(err, "커뮤니티카드 조회 에러");
-      });
-  };
-};
+        // console.log(err, "커뮤니티카드 조회 에러")
+      })
+  }
+}
 
 //커뮤니티 글작성
 const postAddAPI = (contents) => {
   return function (dispatch, getState, { history }) {
-    console.log("배고파");
+    // console.log("배고파")
     instance
       .post("/community", { content: contents })
       .then((res) => {
-        console.log(res, "커뮤티니");
-        dispatch(postAdd(res.data));
-        history.replace("/community");
+        // console.log(res, "커뮤티니")
+        dispatch(postAdd(res.data))
+        history.replace("/community")
       })
       .catch((err) => {
-        console.log(err, "모임 만들기 에러");
-      });
-  };
-};
+        // console.log(err, "모임 만들기 에러")
+      })
+  }
+}
 //리듀서
 export default handleActions(
   {

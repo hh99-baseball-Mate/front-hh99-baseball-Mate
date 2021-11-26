@@ -34,7 +34,7 @@ const GroupComment = memo((props) => {
 
   // console.log("groupPage야야", groupPage)
   // console.log("코멘트컴포넌트", props)
-  console.log("댓글")
+  // console.log("댓글")
 
   const id = props.groupId
   //  console.log("페이지아이디",id)
@@ -161,8 +161,8 @@ const CommentList = memo((props) => {
   const [like, setLike] = useState(false)
 
   useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(props.id));
-  }, []);
+    dispatch(groupDetailCreators.loadGroupPageMW(props.id))
+  }, [])
 
   // 댓글 좋아요 누른거 아이콘 표시하기
   useEffect(() => {
@@ -228,12 +228,7 @@ const CommentList = memo((props) => {
                   likeBtn()
                 }}
               >
-                {
-                  like ?  
-                    <PostLike size="20px" /> 
-                    : 
-                    <PostNoLike size="20px" />
-                }
+                {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
               </p>
               <Text size="14px" marginL="7px">
                 {props.groupcommentlikeCount}
@@ -273,15 +268,13 @@ const CommentList = memo((props) => {
 
 // 모달 컴포넌트
 const Modal = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const delComment = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(
-        groupDetailCreators.delCommentMW(props.id, props.groupCommentId)
-      );
+      dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId))
     }
-  };
+  }
   // edit={edit}
   return (
     <React.Fragment>
@@ -289,14 +282,14 @@ const Modal = (props) => {
       <MWarp direction="column" border="1px solid" radius="10px">
         <ModalButton
           onClick={() => {
-            props.setEdit(true);
+            props.setEdit(true)
           }}
         >
           수정
         </ModalButton>
         <ModalButton
           onClick={() => {
-            delComment();
+            delComment()
           }}
         >
           삭제
@@ -304,53 +297,53 @@ const Modal = (props) => {
       </MWarp>
       {/* </Box> */}
     </React.Fragment>
-  );
-};
+  )
+}
 
 // 수정 컴포넌트
 const EditComment = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [message, setMessage] = useState(props.comment);
+  const [message, setMessage] = useState(props.comment)
   // console.log(message, props.id, props.groupCommentId,)
 
   const editComment = () => {
     if (message === "") {
-      return window.alert("댓글을 입력해주세요.");
+      return window.alert("댓글을 입력해주세요.")
     }
     dispatch(
       groupDetailCreators.editCommentMW(props.id, props.groupCommentId, message)
-    );
-    props.setEdit(false);
-  };
+    )
+    props.setEdit(false)
+  }
 
   return (
     <React.Fragment>
       <EditText
         value={message}
         onChange={(e) => {
-          setMessage(e.target.value);
+          setMessage(e.target.value)
         }}
       />
       <Warp justify="flex-end" marginR="32px">
         <Button
           onClick={() => {
-            editComment();
+            editComment()
           }}
         >
           수정완료
         </Button>
         <Button
           onClick={() => {
-            props.setEdit(false);
+            props.setEdit(false)
           }}
         >
           취소
         </Button>
       </Warp>
     </React.Fragment>
-  );
-};
+  )
+}
 
 const EditText = styled.textarea`
   width: 310px;

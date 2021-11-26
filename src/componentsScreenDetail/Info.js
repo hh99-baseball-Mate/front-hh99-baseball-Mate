@@ -34,7 +34,6 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
@@ -56,7 +55,7 @@ const Info = memo((props) => {
   //   }
   // }, [props])
 
-  console.log("props.heart", props?.heart)
+  // console.log("props.heart", props?.heart)
 
   // 찜(하트) 버튼
   const heartBtn = () => {
@@ -76,28 +75,24 @@ const Info = memo((props) => {
     }
   }
 
-  // 댓글 더보기
-  const [showMore, setShowMore] = useState(false)
-
-  const moreBtn = () => {
-    setShowMore(!showMore)
-  }
-
-  console.log("받아오기", props)
-
+  // console.log("받아오기", props)
 
   return (
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <Img url={imageUrl}/> 
+        <Img url={imageUrl} />
 
         {/* 찜버튼 */}
         <JoinCircle onClick={heartBtn}>
           {props?.heart ? (
-            <img src={heart_join} alt="Heart" style={{cursor: "pointer"}} />
+            <img src={heart_join} alt="Heart" style={{ cursor: "pointer" }} />
           ) : (
-            <img src={heart_null} alt="nullHeart" style={{cursor: "pointer"}} />
+            <img
+              src={heart_null}
+              alt="nullHeart"
+              style={{ cursor: "pointer" }}
+            />
           )}
         </JoinCircle>
       </Box>
@@ -135,14 +130,19 @@ const Info = memo((props) => {
           <Warp>
             {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
             {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn} style={{cursor: "pointer"}}>📝</p>
+              <p onClick={editBtn} style={{ cursor: "pointer" }}>
+                📝
+              </p>
             ) : (
               ""
             )}
 
             {/* 마감되더라도 삭제 가능 */}
             {props.createdUserId === props.userid ? (
-              <p onClick={delBtn} style={{ marginLeft: "5px", cursor: "pointer" }}>
+              <p
+                onClick={delBtn}
+                style={{ marginLeft: "5px", cursor: "pointer" }}
+              >
                 ❌
               </p>
             ) : (
@@ -197,8 +197,10 @@ const Info = memo((props) => {
           </Text>
           <Slice> &ensp;|&ensp; </Slice>
           <img src={location} alt="location" />
-					<Text color="#777777" size="12px">{props.placeInfomation}</Text>
-					<Slice> &ensp;|&ensp; </Slice> 
+          <Text color="#777777" size="12px">
+            {props.placeInfomation}
+          </Text>
+          <Slice> &ensp;|&ensp; </Slice>
           <img src={users} alt="users" />
           <Text color="#777777" size="12px">
             최대 {props.peopleLimit}명
@@ -229,7 +231,12 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box minHeight="121px" maxHeight="auto" background="#F2FAFC" padding="20px 30px">
+      <Box
+        minHeight="121px"
+        maxHeight="auto"
+        background="#F2FAFC"
+        padding="20px 30px"
+      >
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>

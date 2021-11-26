@@ -7,60 +7,60 @@ import send from "../shared/icon/send.svg"
 import upload from "../shared/icon/upload.svg"
 
 const ChatWrite = (props) => {
-
-	const { sendMessage } = props;  // 메세지 보내기 stomp 함수
+  const { sendMessage } = props // 메세지 보내기 stomp 함수
 
   // 보낼 메세지 텍스트
-  const now_message = useRef();
-  const msg = now_message.current;
+  const now_message = useRef()
+  const msg = now_message.current
 
-	// console.log("msg",msg)
+  // console.log("msg",msg)
 
-	const [new_message, setMessage] = useState("");
-	// const changeMessage = (e) => {
+  const [new_message, setMessage] = useState("")
+  // const changeMessage = (e) => {
   //   setMessage(e.target.value);
   // };
 
-	// 메세지 보내기 버튼 클릭 시 실행 될 함수
-	const sendMessageBtn = () => {
-		logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue);
-		sendMessage(msg.defaultValue);  //메세지 실제로 보내기
-		setMessage("");  // input 비우기
-	};
+  // 메세지 보내기 버튼 클릭 시 실행 될 함수
+  const sendMessageBtn = () => {
+    logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue)
+    sendMessage(msg.defaultValue) //메세지 실제로 보내기
+    setMessage("") // input 비우기
+  }
 
-	console.log("G")
+  // console.log("G")
 
-	return (
-			<Container>
+  return (
+    <Container>
+      <Box>
+        <Warp position="relative">
+          <Input
+            type="text"
+            placeholder="메시지를 입력하세요"
+            value={new_message}
+            ref={now_message}
+            onChange={(e) => {
+              setMessage(e.target.value)
+            }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                sendMessageBtn(e)
+              }
+            }}
+          />
 
-				<Box>
-					<Warp position="relative">
-						<Input type="text"
-							placeholder="메시지를 입력하세요" 
-							value={new_message}
-							ref={now_message}
-							onChange={(e) => {
-								setMessage(e.target.value);
-							}}
-							onKeyPress={(e) => {
-								if(e.key === "Enter"){
-									sendMessageBtn(e);
-								}
-							}}
-						/>
-
-						{
-							new_message &&
-							<SendImg src={upload} alt="send"
-								onClick={() => {sendMessageBtn()}}
-							/>
-						}
-
-					</Warp>
-				</Box>
-
-			</Container>
-	)
+          {new_message && (
+            <SendImg
+              src={upload}
+              alt="send"
+              onClick={() => {
+                sendMessageBtn()
+              }}
+            />
+          )}
+        </Warp>
+      </Box>
+    </Container>
+  )
 }
 
 export default ChatWrite;

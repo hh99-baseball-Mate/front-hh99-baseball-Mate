@@ -24,20 +24,19 @@ const ScreenDetail = memo((props) => {
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myScreenLikesList = mylist?.myScreenLikesList;
+  const myScreenLikesList = mylist?.myScreenLikesList
   const likePost = myScreenLikesList?.indexOf(Number(screenId))
   console.log(likePost)
   useEffect(() => {
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-  
+
     if (likePost !== -1) {
       return setHeart(true)
     } else {
       setHeart(false)
     }
   }, [screenId, join, likePost])
-
 
   // console.log("스크린상세페이지", loadDetail)
   // console.log("슼린내꺼야", mylist)

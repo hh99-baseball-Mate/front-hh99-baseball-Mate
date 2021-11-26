@@ -38,17 +38,17 @@ const CommunityAdd = (props) => {
   //입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true;
-    });
+      return !e ? false : true
+    })
 
     if (inputValue === null) {
-      window.alert("빈란을 채워주세요");
+      window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
-      return;
+      return
     }
 
     if (inputValue !== null) {
-      window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.");
+      window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.")
     }
 
     // const formData = new FormData();
@@ -56,9 +56,9 @@ const CommunityAdd = (props) => {
     // formData.append("content", content);
     // formData.append("file", preview);
 
-    dispatch(actionCr.postAddAPI(content));
-    e.target.disabled = true;
-    for (const keyValue of content) console.log(keyValue);
+    dispatch(actionCr.postAddAPI(content))
+    e.target.disabled = true
+    // for (const keyValue of content) console.log(keyValue);
   };
 
   return (

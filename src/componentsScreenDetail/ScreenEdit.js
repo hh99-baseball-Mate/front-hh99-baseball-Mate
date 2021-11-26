@@ -302,7 +302,6 @@ export const ScreenEdit = (props) => {
             name="preview"
             onClick={deletePreview}
           />
-
         </ImgBox>
       </div>
 

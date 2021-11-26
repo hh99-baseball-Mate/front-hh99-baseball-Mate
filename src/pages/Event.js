@@ -31,7 +31,8 @@ const Container = styled.div`
 `;
 
 const EventLogo = styled.img`
-width:425px`
+  width: 425px;
+`
   ;
 
 const Button1 = styled.button`

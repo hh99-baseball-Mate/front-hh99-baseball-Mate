@@ -100,7 +100,6 @@ const Info = memo((props) => {
   return (
     <Container>
       <Box position="relative">
-
         {/* 배경사진 */}
         <Img url={imageUrl} />
 
@@ -112,7 +111,6 @@ const Info = memo((props) => {
             <img src={heart_null} alt="nullHeart" style={{cursor: "pointer"}} />
           )}
         </JoinCircle>
-
       </Box>
 
       {/* 타이틀 */}

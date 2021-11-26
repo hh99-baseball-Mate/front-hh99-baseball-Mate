@@ -52,7 +52,7 @@ export const GoodsAdd = (props) => {
 
     dispatch(goodsActions.addGoodsMD(formData))
     e.target.disabled = true
-    for (const keyValue of formData) console.log(keyValue)
+    // for (const keyValue of formData) console.log(keyValue)
   }
 
   return (
