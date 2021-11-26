@@ -63,7 +63,7 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
                     history.push(`/groupdetail/${e.groupId}`)
                   }
                   if (e.screenId) {
-                    history.push(`/screendetail/${e.screenId}`)
+                    history.push(`/screen/screendetail/${e.screenId}`)
                   }
                 }}
                 key={idx}
