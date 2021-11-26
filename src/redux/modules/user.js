@@ -156,9 +156,12 @@ const choiceClubMD = (club) => {
     instance
       .post("/user/myteam", { myteam: club })
       .then((res) => {
-        // console.log(res)
-        dispatch(choiceClub(club))
-        history.replace("/")
+        const myteam = res.data.myteam
+
+        dispatch(choiceClub(myteam))
+        window.alert(`${myteam}을 선택하셨습니다.`)
+
+        history.goBack()
         // console.log(club)
       })
       .catch((err) => console.log(err, "클럽선택 err입니다."))
@@ -184,12 +187,18 @@ const kakaoLogin = (key) => {
         // 멀티 헤더 토큰 재설정
         img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
-        window.alert("로그인 완료")
-        history.push("/")
+        window.alert("카카오 로그인 완료")
+        history.replace("/")
 
         dispatch(logInCheckMD())
       })
-      .catch((err) => console.log(err, "카카오 로그인 실패"))
+      .catch((err) => {
+        window.alert(
+          "가입한 이메일이 존재합니다. 저희 서비스에서 가입하셨던 이메일과 카카오톡 이메일이 중복되면 가입이 안됩니다."
+        )
+        history.goBack()
+        console.log(err, "카카오 로그인 실패")
+      })
   }
 }
 
@@ -200,6 +209,7 @@ const PhoneAuthSubmitMD = (phoneNumber) => {
     instance
       .post("/checkPhone", { phoneNumber })
       .then((res) => {
+        window.alert("인증번호가 전송되었습니다")
         // console.log(res, "번호인증")
       })
       .catch((err) => {
@@ -227,7 +237,7 @@ const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
           // 인증 여부
           dispatch(is_auth(true))
 
-          window.alert("번호인증 완료")
+          window.alert("번호인증 완료되었습니다.")
           history.push("/signup")
         }
       })

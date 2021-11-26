@@ -70,7 +70,7 @@ export const Post = memo((props) => {
   const [showModal, setShowModal] = useState(false)
 
   // 게시글 내용 더보기
-  const [showContents, setShowContents] = useState(false)
+  // const [showContents, setShowContents] = useState(false)
 
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false)
@@ -146,16 +146,7 @@ export const Post = memo((props) => {
           {/* 굿즈 제목 */}
           <Text margin="8px 0"> {goodsName}</Text>
 
-          {/* 굿즈 내용 */}
-          {showContents ? (
-            <P>{goodsContent}</P>
-          ) : (
-            <PostContents>{goodsContent}</PostContents>
-          )}
-          <P onClick={() => setShowContents(!showContents)}>...더보기</P>
-          {/* 게시물 내용 더 보기 */}
-
-          {/* 해쉬태그 버류*/}
+          <PostContents>{goodsContent}</PostContents>
 
           {/* 댓글 전체 보기 */}
           <P onClick={moreBtn}>

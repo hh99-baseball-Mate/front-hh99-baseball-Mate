@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { Children, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import { Text } from "."
 
@@ -105,6 +105,8 @@ export const Modal = (props) => {
       </ModalCenter>
     )
   }
+
+  return <ModalCenter>{children}</ModalCenter>
 }
 
 Modal.defaultProps = {

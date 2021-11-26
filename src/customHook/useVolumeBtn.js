@@ -9,16 +9,16 @@ export const useVolumeBtn = (people) => {
     if (peopleLimit < 8) {
       setPeopleLimit(peopleLimit + 1)
     } else {
-      window.alert("8명 이상은 안됩니다")
+      window.alert("최대 8명 입니다.")
       return
     }
   }
   // 인원수 - 버튼
   const minusBtn = () => {
-    if (peopleLimit !== 0) {
+    if (peopleLimit !== 1) {
       setPeopleLimit(peopleLimit - 1)
     } else {
-      window.alert("0이하는 선택불가")
+      window.alert("1명이하는 선택할 수 없습니다.")
     }
   }
 

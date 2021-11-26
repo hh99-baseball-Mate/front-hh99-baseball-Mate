@@ -57,6 +57,10 @@ export const Comments = (props) => {
 
   // 업데이트 버튼
   const updateSubmitBtn = () => {
+    if (!updateComment) {
+      window.alert("수정 할 내용을 입력해주세요")
+      return
+    }
     dispatch(
       goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
     )
@@ -92,7 +96,7 @@ export const Comments = (props) => {
                 <CommentInput
                   value={updateComment}
                   onChange={(e) => setUpdateComment(e.target.value)}
-                  placeholder="수정할 내용을 입력해주세요"
+                  placeholder={comment}
                 />
                 <TiTick size="20" onClick={updateSubmitBtn} />
               </UpdateInputBox>
@@ -107,8 +111,7 @@ export const Comments = (props) => {
           </CommentBox>
 
           {/* 수정 버튼을 눌렀을 때는 삭제/수정 아이콘 숨김 */}
-          {!updateCommentBtn &&
-          (            useridx === commentUserIndex) ? (
+          {!updateCommentBtn && useridx === commentUserIndex ? (
             <IconBox>
               {/* 댓글 수정 버튼 */}
               <IconsUpdate size="22px" onClick={updateBtn} />

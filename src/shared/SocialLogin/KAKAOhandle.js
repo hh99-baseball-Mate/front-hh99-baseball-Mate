@@ -11,7 +11,6 @@ const KAKAOhandle = (props) => {
 
   console.log(code, "인가코드")
   useEffect(() => {
-    console.log("ㅇㅇㅇ")
     if (code) {
       return dispatch(userActions.kakaoLogin(code))
     }
