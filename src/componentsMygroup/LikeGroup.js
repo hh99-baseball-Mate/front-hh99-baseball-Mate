@@ -89,7 +89,7 @@ export const LikeGroup = ({ showModal, setShowModal }) => {
           screen && screen_like_list && screen_like_list.length > 0
             ? screen_like_list.map((e) => (
                 <GroupCard
-                  onClick={() => history.push(`/screendetail/${e.screenId}`)}
+                  onClick={() => history.push(`/screen/screendetail/${e.screenId}`)}
                   key={e.screenId}
                   {...e}
                 />

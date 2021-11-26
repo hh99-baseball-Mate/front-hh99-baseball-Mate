@@ -17,7 +17,7 @@ import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
   const dispatch = useDispatch();
-
+  const { page, addPost } = useSelector((state) => state.community);
   const user_list = useSelector((state) => state.user.user_info.myteam);
   //이미지 미리보기 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
@@ -51,14 +51,14 @@ const CommunityAdd = (props) => {
       window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.");
     }
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append("content", content);
-    formData.append("file", preview);
+    // formData.append("content", content);
+    // formData.append("file", preview);
 
-    dispatch(actionCr.postAddAPI(formData));
+    dispatch(actionCr.postAddAPI(content));
     e.target.disabled = true;
-    for (const keyValue of formData) console.log(keyValue);
+    for (const keyValue of content) console.log(keyValue);
   };
 
   return (
@@ -74,6 +74,8 @@ const CommunityAdd = (props) => {
         placeholder="내용을 입력해주세요."
         height="400px"
         onChange={onChange}
+        page={page}
+        addPost={addPost}
       >
         {/* 안에 내용 */}
         {content && <InputCheck />}

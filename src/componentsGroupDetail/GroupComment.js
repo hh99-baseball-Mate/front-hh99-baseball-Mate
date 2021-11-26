@@ -10,6 +10,7 @@ import smail from "../shared/icon/smail.svg";
 import unSmail from "../shared/icon/unSmail.svg";
 import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 const GroupComment = memo((props) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
@@ -159,9 +160,9 @@ const CommentList = memo((props) => {
   const [modal, setModal] = useState(false)
   const [like, setLike] = useState(false)
 
-  // useEffect(() => {
-  //   dispatch(groupDetailCreators.loadGroupPageMW(props.id));
-  // }, []);
+  useEffect(() => {
+    dispatch(groupDetailCreators.loadGroupPageMW(props.id));
+  }, []);
 
   // 댓글 좋아요 누른거 아이콘 표시하기
   useEffect(() => {
@@ -228,9 +229,10 @@ const CommentList = memo((props) => {
                 }}
               >
                 {
-                  like ? `🧡` : `🤍`
-                  // <Icon src={smail} alt="smail" marginR="7px" />
-                  // : <Icon src={unSmail} alt="smail" marginR="7px" />
+                  like ?  
+                    <PostLike size="20px" /> 
+                    : 
+                    <PostNoLike size="20px" />
                 }
               </p>
               <Text size="14px" marginL="7px">
@@ -330,26 +332,28 @@ const EditComment = (props) => {
           setMessage(e.target.value);
         }}
       />
-      <button
-        onClick={() => {
-          editComment();
-        }}
-      >
-        수정완료
-      </button>
-      <button
-        onClick={() => {
-          props.setEdit(false);
-        }}
-      >
-        취소
-      </button>
+      <Warp justify="flex-end" marginR="32px">
+        <Button
+          onClick={() => {
+            editComment();
+          }}
+        >
+          수정완료
+        </Button>
+        <Button
+          onClick={() => {
+            props.setEdit(false);
+          }}
+        >
+          취소
+        </Button>
+      </Warp>
     </React.Fragment>
   );
 };
 
 const EditText = styled.textarea`
-  width: 285px;
+  width: 310px;
   height: 70px;
   /* border: none; */
   padding: 5px 5px 5px 5px;
@@ -396,6 +400,7 @@ const Warp = styled.div`
   align-items: ${(props) => props.align};
   align-content: ${(props) => props.start};
   margin-left: ${(props) => props.marginLeft};
+  margin-right: ${(props) => props.marginR};
   margin-top: ${(props) => props.marginT};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
@@ -486,9 +491,29 @@ const ModalButton = styled.button`
 `;
 
 const MWarp = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
+  /* box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px; */
   height: 50px;
   position: absolute;
   right: 10px;
   top: 30px;
+`;
+
+const PostLike = styled(FcLike)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const PostNoLike = styled(FcLikePlaceholder)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const Button = styled.button`
+  border: none;
+  padding: 5px;
+  margin-left: 10px;
+  background-color: #ffa8a8;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
 `;

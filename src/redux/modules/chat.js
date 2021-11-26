@@ -153,7 +153,8 @@ const chatCreators = {
   getChatUserAX,
   getMessages,
   leaveChatAX,
-  leaveScreenChatAX
+  leaveScreenChatAX,
+  load_msg
 }
 
 export {chatCreators};

@@ -28,7 +28,7 @@ const ChatWrite = (props) => {
 		setMessage("");  // input 비우기
 	};
 
-
+	console.log("G")
 
 	return (
 			<Container>

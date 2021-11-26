@@ -6,10 +6,9 @@ import { useHistory } from "react-router-dom";
 import { getCookie } from '../shared/Cookie';
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 
-import smail from "../shared/icon/smail.svg"
-import unSmail from "../shared/icon/unSmail.svg"
 import more from "../shared/icon/more.svg"
 import send from "../shared/icon/send.svg"
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 
 const Comment = memo((props) => {
@@ -231,7 +230,12 @@ const CommentList = memo((props) => {
                   likeBtn()
                 }}
               >
-                {like ? `🧡` : `🤍`}
+                {
+                  like ? 
+                    <PostLike size="20px" /> 
+                    : 
+                    <PostNoLike size="20px" />
+                }
               </p>
               <Text size="14px" marginL="7px">
                 {props.screencommentlikeCount}
@@ -320,18 +324,20 @@ const EditComment = (props) => {
 					setMessage(e.target.value);
 				}}
 			/>
-			<button onClick={()=>{ editComment() }}>
-				수정완료
-			</button>
-			<button onClick={()=>{ props.setEdit(false) }} >
-				취소
-			</button>
+      <Warp justify="flex-end" marginR="32px">
+        <Button onClick={()=>{ editComment() }}>
+          수정완료
+        </Button>
+        <Button onClick={()=>{ props.setEdit(false) }} >
+          취소
+        </Button>
+      </Warp>
 		</React.Fragment>
 	)
 }
 
 const EditText = styled.textarea`
-  width: 285px;
+  width: 310px;
   height: 70px;
 	/* border: none; */
   padding: 5px 5px 5px 5px;
@@ -376,6 +382,7 @@ const Warp = styled.div`
 	align-items: ${(props) => props.align};
 	align-content: ${(props) => props.start};
 	margin-left: ${(props) => props.marginLeft};
+  margin-right: ${(props) => props.marginR};
 	margin-top: ${(props) => props.marginT};
 	margin: ${(props) => props.margin};
 	padding: ${(props) => props.padding};
@@ -473,4 +480,24 @@ const MWarp = styled.div`
 	position: absolute;
 	right: 10px; 
 	top: 30px
+`;
+
+const PostLike = styled(FcLike)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const PostNoLike = styled(FcLikePlaceholder)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const Button = styled.button`
+  border: none;
+  padding: 5px;
+  margin-left: 10px;
+  background-color: #ffa8a8;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
 `;

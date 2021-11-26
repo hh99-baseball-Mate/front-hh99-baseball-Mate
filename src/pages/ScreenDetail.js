@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,7 @@ import Comment from "../componentsScreenDetail/Comment";
 import { ArrowBack } from "../components"
 
 
-const ScreenDetail = (props) => {
+const ScreenDetail = memo((props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const screenId = params.screenId
@@ -24,21 +24,19 @@ const ScreenDetail = (props) => {
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myScreenLikesList = mylist.myScreenLikesList;
-  const likePost = myScreenLikesList.indexOf(Number(screenId))
-
+  const myScreenLikesList = mylist?.myScreenLikesList;
+  const likePost = myScreenLikesList?.indexOf(Number(screenId))
+  console.log(likePost)
   useEffect(() => {
-
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
-
+  
     if (likePost !== -1) {
-      setHeart(true)
+      return setHeart(true)
     } else {
       setHeart(false)
     }
-
-  }, [screenId, join])
+  }, [screenId, join, likePost])
 
 
   // console.log("스크린상세페이지", loadDetail)
@@ -112,7 +110,7 @@ const ScreenDetail = (props) => {
       </Box>
     </Container>
   )
-}
+})
 
 
 export default ScreenDetail;

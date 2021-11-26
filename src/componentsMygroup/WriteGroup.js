@@ -83,7 +83,7 @@ export const WriteGroup = ({ showModal, setShowModal }) => {
         {screen && scrwrite_write_list && scrwrite_write_list.length > 0
           ? scrwrite_write_list.map((e) => (
               <GroupCard
-                onClick={() => history.push(`/screendetail/${e.screenId}`)}
+                onClick={() => history.push(`/screen/screendetail/${e.screenId}`)}
                 key={e.screenId}
                 {...e}
               />

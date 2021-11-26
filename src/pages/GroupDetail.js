@@ -24,22 +24,22 @@ const GroupDetail = memo((props) => {
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myGroupLikesList = mylist.myGroupLikesList
-  const likePost = myGroupLikesList.indexOf(Number(groupId))
+  const myGroupLikesList = mylist?.myGroupLikesList
+  const likePost = myGroupLikesList?.indexOf(Number(groupId))
 
 
   useEffect(() => {
-
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
 
     if (likePost !== -1) {
-      setHeart(true)
+      return setHeart(true)
     } else {
       setHeart(false)
     }
+  }, [groupId, join, likePost])
 
-  }, [groupId, join,])
+  // console.log("heart", heart)
 
   
   // const commentBtn = () => {

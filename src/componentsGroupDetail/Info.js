@@ -60,7 +60,7 @@ const Info = memo((props) => {
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
-  //     props.setHeart(true)
+  //     return props.setHeart(true)
   //   } else {
   //     props.setHeart(false)
   //   }
@@ -78,8 +78,8 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const HeartBtn = () => {
-    props.setHeart(!props.heart)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heart))
+    props.setHeart(!props?.heart)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart))
   }
 
   // 수정버튼
@@ -95,8 +95,7 @@ const Info = memo((props) => {
     }
   }
 
-  console.log("info")
-  console.log("받아오기", props)
+  // console.log("받아오기", props)
 
   return (
     <Container>
@@ -107,7 +106,7 @@ const Info = memo((props) => {
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
-          {props.heart ? (
+          {props?.heart ? (
             <img src={heart_join} alt="Heart" />
           ) : (
             <img src={heart_null} alt="nullHeart" />

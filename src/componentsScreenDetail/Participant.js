@@ -76,10 +76,20 @@ const Participant = memo((props) => {
 
   // 참석 확정/취소 버튼
   const confirm = () => {
-    // setOk(true)
-    dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
-    // dispatch(screenDetailCreators.chatMW())
+    if(props.allowtype) {
+      if(window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?")) {
+        dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
+      }     
+    } else {
+      dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
+    }
   }
+
+  // const confirm = () => {
+  //   if(window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.")) {
+  //     dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
+  //   }  
+  // }
 
   // // 채팅방 생성 버튼
   // const chat = () => {
@@ -114,7 +124,7 @@ const Participant = memo((props) => {
         <Warp flex="flex" direction="column" align="center" justify="center" >
 
 
-        { me ?
+          { me ?
             // 방장일 때 모임확정/취소, 내가 아니면 null
             props.allowtype ? 
               <ConfirmBtn onClick={confirm} background="#F25343">
@@ -132,7 +142,7 @@ const Participant = memo((props) => {
             (!me && myJoin === -1 && props.allowtype) &&
             // 방장이 아닐 때
             <ConfirmBtn onClick={() => {apply()}} background="#F25343">
-              모임 참여하기
+              모임 참여 신청하기
             </ConfirmBtn>
           }
 
