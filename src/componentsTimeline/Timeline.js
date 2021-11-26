@@ -60,6 +60,7 @@ const Timeline = React.memo((props) => {
               {Me === props.userName ? (
                 <Text
                   size="10px"
+                  pointer="pointer"
                   onClick={() => {
                     delTimeline()
                   }}
