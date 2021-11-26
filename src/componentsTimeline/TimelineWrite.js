@@ -119,11 +119,11 @@ const Circle = styled.div`
 `;
 
 const Input = styled.input`
-  width: 335px;
+  width: 340px;
   height: 44px;
   border: 1px solid #E7E7E7;
   border-radius: 5px;
-  padding: 14px 40px 14px 14px;
+  padding: 14px 14px 14px 14px;
   ::placeholder {
     font-size: 14px;
     color: #C4C4C4;
