@@ -34,14 +34,41 @@ const ChatRoom = memo((props) => {
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
   const messages = useSelector((state) => state.chat.messages)
+  const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
-  useEffect(() => {
-    dispatch(chatCreators.loadChatListMW())
-  }, [])
-  const chatList = useSelector((state) => state.chat?.chatList)
+  // const [messages, setMessages] = useState("") 
+
+  // useEffect(() => {
+  //   dispatch(chatCreators.loadChatListMW())
+  // }, [])
+ 
   const roomInfo = chatList.find((list) => list.roomId == roomId)
   console.log("챗리스트", chatList)
+
+
+
+  // const getChatMessagesAX = (roomId) => {
+  //   return function (dispatch, getState, { history }) {
+  //     instance
+  //       .get(`/chat/${roomId}/messages`)
+  //       .then((res) => {
+  //         console.log(res)
+  //         const msg = res.data.content
+  //         console.log("mgs",res.data.content)
+  //         dispatch(load_msg(msg));
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //       })
+  //   } 
+  // }
+
+
+
+
+
+
 
   // 모달창 정보
   // const chatList = useSelector((state) => state.chat?.chatList)
@@ -92,6 +119,8 @@ const ChatRoom = memo((props) => {
     dispatch(chatCreators.getChatMessagesAX(room_id))
     // 현재 채팅방 참여 사용자 정보 불러오기
     dispatch(chatCreators.getChatUserAX(room_id))
+
+    dispatch(chatCreators.loadChatListMW())
     // }
   }, [])
 
@@ -129,9 +158,9 @@ const ChatRoom = memo((props) => {
 	          `/sub/api/chat/rooms/${room_id}`,
 	          (data) => {
 	            const newMessage = JSON.parse(data.body);
-	            logger("구독후 새로운 메세지 data", newMessage);
+	            // logger("구독후 새로운 메세지 data", newMessage);
 	            console.log("구독후 새로운 메세지 data", newMessage);
-
+              // setMessages(newMessage)
 							dispatch(chatCreators.getChatMessagesAX(room_id));
 
 	            // 실시간 채팅 시간 넣어주는 부분
@@ -205,7 +234,7 @@ const ChatRoom = memo((props) => {
 				message: new_message,
 			};
 			waitForConnection(ws, () => {
-				// ws.debug = null;
+				ws.debug = null;
 
 				ws.send("/pub/message", { token: token }, JSON.stringify(data));
 				// logger("메세지보내기 상태", ws.ws.readyState);
@@ -273,7 +302,7 @@ const ChatRoom = memo((props) => {
 				}
 				
 
-				<Box padding="20px">
+				<Box padding="20px 18px">
 
 					{
 						messages.map(messages => {

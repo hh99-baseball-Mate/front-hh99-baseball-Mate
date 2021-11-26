@@ -123,12 +123,15 @@ const delGroupPageMW = (groupId) => {
 const likePostMW = (groupId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // console.log("isLiked", isLiked)
+    // console.log("isLiked", like)
     instance
       .post(`/groups/${groupId}/like`, isLiked)
       .then((res) => {
         console.log("모임찜", res.data)
         dispatch(like_post(groupId, isLiked))
+        if(!like) {
+          window.alert("찜 되었습니다!")
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -220,7 +223,7 @@ const delCommentMW = (groupId, commentId) => {
 const likegroupCommentMW = (groupId, commentId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // console.log(groupId, commentId, isLiked)
+    console.log(isLiked)
     instance
       .post(`/groups/${groupId}/comment/${commentId}/like`, isLiked)
       .then((res) => {

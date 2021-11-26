@@ -140,7 +140,7 @@ const Alert = (props) => {
     descriptionOne: "알람을 확인/삭제 하시겠습니까?",
     btnClose: "취소",
     btnConfirm: "승인",
-    btnUpdate: "거절",
+    btnUpdate: "삭제",
   }
 
 	// 알람삭제
@@ -185,19 +185,7 @@ const Alert = (props) => {
 						</Warp>
 					</Text>
 					
-				</Warp>
-
-				{ props.alarmType === "Normal" ?
-					<Warp onClick={() => {delNormalAlert()}}
-						position="absolute"
-						right="10px"
-						top ="5px"
-					>
-						<Text size="10px">❌</Text>
-					</Warp>
-					: null
-				}		
-				
+				</Warp>	
 
 				<Text size="10px" color="#777777" >
 					<Warp flex="flex" direction="column" align="center">
@@ -229,6 +217,16 @@ const Alert = (props) => {
           deleteBtn={refuseScreen}
         ></Modal>
       )}
+
+			{/* 일반 알람일 때 모달창 */}
+			{(props.alarmType === "Normal" && showModal) &&
+				<Modal
+					center
+					setShowModal={setShowModal}
+					modalData={modalData}
+					deleteBtn={delNormalAlert}
+				></Modal>
+			}
 
 		</Container>
 	)

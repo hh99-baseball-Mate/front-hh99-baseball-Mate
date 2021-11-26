@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const MessageBox = memo((props) => {
 
+	console.log("메세지박스",props)
 	const sender_id = useSelector((state) => state.user.user_info?.useridx);
 
 	  // 사진 ip주소 + 사진이름 조합
@@ -20,7 +21,9 @@ const MessageBox = memo((props) => {
 		const kakaoCheck = props.senderImage?.split(".")[1]
 		const kakaoImg = props.senderImage
 
-	console.log("A")
+	const dayAndTime = props.modifiedAt.split(" ")
+	const day = dayAndTime[0]
+	const time = dayAndTime.slice(1,3).join(" ")
 
 	// 내가 보낸 메세지가 아닐 때
 	if(props.senderId !== sender_id) {
@@ -30,17 +33,20 @@ const MessageBox = memo((props) => {
 
 				<Warp >	
 
-					<ImgCircle marginR="13px" url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}/>
+					<ImgCircle marginR="10px" url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}/>
 					<Warp direction="column">	
 						<Text>{props.senderName}</Text>
 
-						<Warp align="flex-end" margin="5px 5px 6px 0">
+						<Warp align="flex-end" >
 							<Talk>
 								{props.message}
 							</Talk>	
-							<Time position="relative">
+							<Time margin="0 0 0 5px">
 								{/* 오전 10:34 */}
-								{props.modifiedAt}
+								<Warp direction="column" align="center" >
+									<div>{day}</div>
+									<div>{time}</div>
+								</Warp>
 							</Time>
 						</Warp>
 					</Warp>
@@ -54,12 +60,16 @@ const MessageBox = memo((props) => {
 	if(props.senderId === sender_id) {
 		return (
 			<Container>
-				<Warp align="flex-end" direction="row-reverse"  margin="5px 0">
+				<Warp align="flex-end" direction="row-reverse"  >
 					<MyTalk>
 						{props.message}
 					</MyTalk>
 					<MyTime margin="0 6px 0 0">
-						{props.modifiedAt}
+						{/* {props.modifiedAt} */}
+						<Warp direction="column" align="center" >
+							<div>{day}</div>
+							<div>{time}</div>
+						</Warp>
 					</MyTime>
 				</Warp>	
 			</Container>
@@ -119,6 +129,7 @@ const Time = styled.div`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
+	width: 70px;
 	/* right: 10px;
 	top: 30px; */
 	/* padding: 12px 10px; */
@@ -151,7 +162,7 @@ const Talk = styled.div`
 	left: 60px;
 	top: 30px; */
 	
-	/* word-break: pre-line; */
+	word-break: break-all;
 `;
 
 const Input = styled.input`
@@ -187,7 +198,7 @@ const MyTalk = styled.div`
 	/* position: absolute;
 	right: 0px;
 	top: 30px; */
-	/* word-break: pre-line; */
+	word-break: break-all;
 `;
 
 const MyTime = styled.div`

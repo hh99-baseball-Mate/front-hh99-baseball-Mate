@@ -63,7 +63,7 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
                     history.push(`/groupdetail/${e.groupId}`)
                   }
                   if (e.screenId) {
-                    history.push(`/screendetail/${e.screenId}`)
+                    history.push(`/screen/screendetail/${e.screenId}`)
                   }
                 }}
                 key={idx}
@@ -89,7 +89,7 @@ export const PartiGroup = ({ showModal, setShowModal }) => {
         screen_participation_list.length > 0
           ? screen_participation_list.map((e) => (
               <GroupCard
-                onClick={() => history.push(`/screendetail/${e.screenId}`)}
+                onClick={() => history.push(`/screen/screendetail/${e.screenId}`)}
                 key={e.screenId}
                 {...e}
               />

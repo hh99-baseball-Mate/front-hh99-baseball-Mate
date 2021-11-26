@@ -129,6 +129,9 @@ const likePostMW = (screenId, like) => {
       .then((res) => {
         console.log("모임찜", res)
         dispatch(like_post(screenId, isLiked))
+        if(!like) {
+          window.alert("찜 되었습니다!")
+        }
       })
       .catch((err) => {
         console.log(err)
