@@ -86,9 +86,13 @@ const Info = memo((props) => {
         {/* 찜버튼 */}
         <JoinCircle onClick={heartBtn}>
           {props?.heart ? (
-            <img src={heart_join} alt="Heart" />
+            <img src={heart_join} alt="Heart" style={{ cursor: "pointer" }} />
           ) : (
-            <img src={heart_null} alt="nullHeart" />
+            <img
+              src={heart_null}
+              alt="nullHeart"
+              style={{ cursor: "pointer" }}
+            />
           )}
         </JoinCircle>
       </Box>
@@ -126,14 +130,19 @@ const Info = memo((props) => {
           <Warp>
             {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
             {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn}>📝</p>
+              <p onClick={editBtn} style={{ cursor: "pointer" }}>
+                📝
+              </p>
             ) : (
               ""
             )}
 
             {/* 마감되더라도 삭제 가능 */}
             {props.createdUserId === props.userid ? (
-              <p onClick={delBtn} style={{ marginLeft: "5px" }}>
+              <p
+                onClick={delBtn}
+                style={{ marginLeft: "5px", cursor: "pointer" }}
+              >
                 ❌
               </p>
             ) : (
@@ -222,13 +231,23 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box height="121px" background="#F2FAFC" padding="20px 30px">
+      <Box
+        minHeight="121px"
+        maxHeight="auto"
+        background="#F2FAFC"
+        padding="20px 30px"
+      >
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>
         <Text size="14px" color="#333333">
           {props.content}
         </Text>
+
+        {/* 댓글 전체 보기
+        <Text onClick={moreBtn} style={{cursor: "pointer"}} size="14px" color="#adb5bd" >
+          더보기 
+        </Text> */}
       </Box>
 
       <Rectangle />
@@ -257,6 +276,8 @@ const Container = styled.div`
 const Box = styled.div`
   width: 100%;
   height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
   display: ${(props) => props.flex};
@@ -341,12 +362,7 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  /* white-space: nowrap; */
-  text-overflow: ellipsis;
-  overflow: hidden;
+
 `;
 
 const Circle = styled.div`

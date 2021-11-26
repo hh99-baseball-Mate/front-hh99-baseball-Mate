@@ -179,7 +179,7 @@ const Alert = (props) => {
       <AlertCard onClick={() => setShowModal(true)}>
         <div>{/* <Circle/> */}🔔</div>
         <Warp padding="0 10px">
-          <Text size="15px" width="313px">
+          <Text size="14px" width="313px">
             <Warp
               flex="flex"
               direction="column"
@@ -191,6 +191,7 @@ const Alert = (props) => {
                 {contents[1]}
                 {contents[2]}
               </div>
+              <div>{contents[3]}</div>
               {/* {
 							contents.map((list, idx) => {
 								return <div key={idx}>{list}</div> 

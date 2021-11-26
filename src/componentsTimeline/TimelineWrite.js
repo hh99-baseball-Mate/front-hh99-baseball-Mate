@@ -55,8 +55,8 @@ const TimelimeWrite = (props) => {
       </Warp>
 
       <Warp position="relative">
-        <Input type="text" maxLength="100"
-          placeholder="내용을 입력하세요(최대 100자)" 
+        <Input type="text" maxlength="200"
+          placeholder="내용을 입력하세요(최대 200자)" 
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
@@ -119,11 +119,11 @@ const Circle = styled.div`
 `;
 
 const Input = styled.input`
-  width: 335px;
+  width: 340px;
   height: 44px;
   border: 1px solid #E7E7E7;
   border-radius: 5px;
-  padding: 14px 40px 14px 14px;
+  padding: 14px 14px 14px 14px;
   ::placeholder {
     font-size: 14px;
     color: #C4C4C4;
