@@ -125,6 +125,7 @@ Modal.defaultProps = {
 }
 
 const ModalBottom = styled.div`
+  max-width: 425px;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -134,6 +135,7 @@ const ModalBottom = styled.div`
   margin: ${(props) => props.margin};
 `
 const ModalCenter = styled.div`
+  max-width: 425px;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -153,6 +155,7 @@ const showModal = keyframes`
 `
 
 const ModalBottomContent = styled.div`
+  max-width: 425px;
   width: 100%;
   height: ${(props) => props.height};
   background-color: #ffffff;
