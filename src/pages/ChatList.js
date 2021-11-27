@@ -21,12 +21,13 @@ const ChatList = (props) => {
 
   return (
     <React.Fragment>
-      <ArrowBack background="background" fixed="fixed" margin="margin">
+      <ArrowBack background="background" fixed="fixed">
         채팅
       </ArrowBack>
-      <Rectangle />
 
-      <Box>
+      <Box padding="59px 0 0 0">
+         <Rectangle />
+         
         {
           //채팅방 리스트
           chatList.map((list) => {
@@ -69,7 +70,8 @@ const ChatList = (props) => {
 export default ChatList
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   /* margin: auto; */

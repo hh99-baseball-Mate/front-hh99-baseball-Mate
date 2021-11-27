@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Progress from "../components/Progress";
+import { getCookie } from '../shared/Cookie';
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -34,6 +35,8 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
+
+  const cookie = getCookie("is_login");
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
@@ -59,6 +62,10 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const heartBtn = () => {
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      return;
+    }
     props.setHeart(!props?.heart)
     dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))
   }
@@ -154,7 +161,7 @@ const Info = memo((props) => {
         <Text
           size="16px"
           weight="bold"
-          width="295px"
+          width="100%"
           height="46px"
           lineHeight="23px"
         >
@@ -265,7 +272,8 @@ Info.defaultProps = {
 export default Info;
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
@@ -303,7 +311,7 @@ const JoinCircle = styled.div`
   height: 28px;
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.5);
-  left: 360px;
+  right: 10%;
   top: 298px;
   display: flex;
   justify-content: center;
@@ -315,7 +323,8 @@ const TitleBox = styled.div`
   left: 50%;
   top: 345px;
   transform: translateX(-50%);
-  width: 335px;
+  max-width: 335px;
+  width: 80%;
   height: 139px;
   background: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
@@ -362,6 +371,7 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
+  /* word-break: break-all; */
 
 `;
 

@@ -57,57 +57,60 @@ const ScreenDetail = memo((props) => {
   // }
 
   return (
-    <Container>
+    <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
-      {/* 글 정보 */}
-      <Info
-        {...loadDetail}
-        {...mylist}
-        // close={close}
-        // setClose={setClose}
-        heart={heart}
-        setHeart={setHeart}
-        // likePost={likePost}
-      />
+      <Container>
+        
+        {/* 글 정보 */}
+        <Info
+          {...loadDetail}
+          {...mylist}
+          // close={close}
+          // setClose={setClose}
+          heart={heart}
+          setHeart={setHeart}
+          // likePost={likePost}
+        />
 
-      {/* 참여자 & 방명록 */}
-      <Box height="65px">
-        <Warp padding="20px 0 0 0">
-          <ParticipantBtn
-            {...loadDetail}
-            onClick={() => {
-              setSelectPage(true)
-            }}
-            selectPage={selectPage}
-          >
-            참여자
-          </ParticipantBtn>
+        {/* 참여자 & 방명록 */}
+        <Box height="65px">
+          <Warp padding="20px 0 0 0">
+            <ParticipantBtn
+              {...loadDetail}
+              onClick={() => {
+                setSelectPage(true)
+              }}
+              selectPage={selectPage}
+            >
+              참여자
+            </ParticipantBtn>
 
-          <CommentBtn
-            onClick={() => {
-              setSelectPage(false)
-            }}
-            selectPage={selectPage}
-          >
-            방명록
-          </CommentBtn>
-        </Warp>
+            <CommentBtn
+              onClick={() => {
+                setSelectPage(false)
+              }}
+              selectPage={selectPage}
+            >
+              방명록
+            </CommentBtn>
+          </Warp>
 
-        <Rectangle />
+          <Rectangle />
 
-        {selectPage === true ? (
-          <Participant
-            {...loadDetail}
-            {...mylist}
-            // close={close}
-            join={join}
-            setJoin={setJoin}
-          />
-        ) : (
-          <Comment {...loadDetail} {...mylist} />
-        )}
-      </Box>
-    </Container>
+          {selectPage === true ? (
+            <Participant
+              {...loadDetail}
+              {...mylist}
+              // close={close}
+              join={join}
+              setJoin={setJoin}
+            />
+          ) : (
+            <Comment {...loadDetail} {...mylist} />
+          )}
+        </Box>
+      </Container>
+    </React.Fragment>
   )
 })
 
@@ -115,7 +118,8 @@ const ScreenDetail = memo((props) => {
 export default ScreenDetail;
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
