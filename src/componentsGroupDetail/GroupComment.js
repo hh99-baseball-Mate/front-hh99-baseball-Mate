@@ -86,23 +86,26 @@ const GroupComment = memo((props) => {
 
       {/* 댓글작성 */}
       <Box
-        height="69px"
+        height="80px"
         position="relative"
         flex="flex"
         align="center"
         justify="center"
         background="#fff"
+
       >
         <Warp align="center">
           <div>
             <Circle
+              // marginL="20px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
           </div>
 
-          <div style={{width:"310px", position:"relative"}}>
+          <div style={{width:"300px", position:"relative", marginRight:"10px"}}>
             <TextArea
-              placeholder="&#13;&#10;댓글을 입력해 주세요..."
+              type="text"
+              placeholder="댓글을 입력해 주세요..."
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value)
@@ -117,6 +120,7 @@ const GroupComment = memo((props) => {
               }}
             />
           </div>
+          
 
         </Warp>
 
@@ -383,7 +387,7 @@ const Rectangle = styled.div`
 `;
 
 const Box = styled.div`
-  max-width: 425px;
+  /* max-width: 425px; */
   width: 100%;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
@@ -429,16 +433,23 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 90%;
-  height: 60px;
+  /* max-width: 360px; */
+  width: 100%;
+  display: block;
+  /* min-width: 280px; */
+  height: 70px;
   /* border: none; */
-  padding: 5px 5px 5px 5px;
+  padding: 5px 25px 5px 5px;
   margin-left: 12px;
   resize: none;
   :required ::placeholder {
     font-weight: 500;
     font-size: 14px;
     color: #c4c4c4;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

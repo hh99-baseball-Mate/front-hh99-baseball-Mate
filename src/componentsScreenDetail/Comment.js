@@ -90,7 +90,7 @@ const Comment = memo((props) => {
 
       {/* 댓글작성 */}
       <Box
-        height="69px"
+        height="80px"
         position="relative"
         flex="flex"
         align="center"
@@ -104,9 +104,10 @@ const Comment = memo((props) => {
             />
           </div>
 
-          <div style={{width:"310px", position:"relative"}}>
+          <div style={{width:"300px", position:"relative", marginRight:"10px"}}>
             <TextArea
-              placeholder="&#13;&#10;댓글을 입력해 주세요..."
+              type="text"
+              placeholder="댓글을 입력해 주세요..."
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value)
@@ -425,10 +426,10 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 90%;
-  height: 60px;
-	border: none;
-  padding: 5px 5px 5px 5px;
+  width: 100%;
+  height: 70px;
+	/* border: none; */
+  padding: 5px 25px 5px 5px;
   margin-left: 12px;
 	resize: none;
 	:required
@@ -436,6 +437,10 @@ const TextArea = styled.textarea`
     font-weight: 500;
     font-size: 14px;
     color: #C4C4C4;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
