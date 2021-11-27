@@ -75,7 +75,7 @@ export const GroupCard = memo((props) => {
           </Warp>
 
           <Warp flex="flex" marginB="4px">
-            <Text size="12px" color="#777777">
+            <Text size="10px" color="#777777">
               {groupDate}
             </Text>
             <Slice> &ensp;|&ensp; </Slice>
@@ -83,14 +83,14 @@ export const GroupCard = memo((props) => {
             {/* 지점명 */}
             {selectPlace && (
               <>
-                <Text size="12px" color="#777777">
+                <Text size="10px" color="#777777">
                   {selectPlace}
                 </Text>
                 <Slice> &ensp;| &ensp; </Slice>
               </>
             )}
 
-            <Text size="12px" color="#777777">
+            <Text size="10px" color="#777777">
               최대 {peopleLimit}명
             </Text>
           </Warp>

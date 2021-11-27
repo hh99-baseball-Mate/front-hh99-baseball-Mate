@@ -19,7 +19,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
 
     function resizeMap() {
       var mapContainer = document.getElementById("map")
-      mapContainer.style.width = "425px"
+      mapContainer.style.width = "600px"
       mapContainer.style.height = "650px"
     }
     function relayout() {
@@ -88,10 +88,14 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       // }
     }
 
-   
     var zoomControl = new kakao.maps.ZoomControl()
     map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT)
   }, [])
 
-  return <div style={{ width: "425px", height: "650px" }} id="map"></div>
+  return (
+    <div
+      style={{ width: "100%", maxWidth: "425px", height: "650px" }}
+      id="map"
+    ></div>
+  )
 }
