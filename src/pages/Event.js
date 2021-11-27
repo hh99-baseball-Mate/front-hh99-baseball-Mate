@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { ArrowBack } from "../components"
 import event from "../shared/icon/banner/event.png"
+import { history } from "../redux/configStore"
 
 export const Event = () => {
 
@@ -12,16 +13,14 @@ export const Event = () => {
       <ArrowBack bg="true">이벤트</ArrowBack>
       <EventLogo src={event} alt="이벤트" />
 
-      <a href="https://forms.gle/nVuVJ7xpLTB5mUBi8" target="_blank" >
-        <Button1>
-        </Button1>
+      <a href="https://forms.gle/nVuVJ7xpLTB5mUBi8" target="_blank">
+        <Button1></Button1>
       </a>
 
-      <a href="/timeline" target="_blank" >
-        <Button2>
-        </Button2>
-      </a>
-  </Container>
+      <div onClick={() => history.push("/timeline")}>
+        <Button2></Button2>
+      </div>
+    </Container>
   )
 }
 

@@ -1,12 +1,10 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
-import { Text } from "."
-import { number } from "yup";
+import { history } from "../redux/configStore"
 
 export const ArrowBack = (props) => {
-  const { children, onClick, bg, background, fixed, margin, } = props
+  const { children, onClick, bg, background, fixed, margin } = props
 
   const styles = { onClick, bg, background }
 
@@ -16,7 +14,7 @@ export const ArrowBack = (props) => {
         <Icon {...styles} onClick={() => history.goBack()} />
         {children}
       </Headers>
-      <MarginBottom margin={margin}/>
+      <MarginBottom margin={margin} />
     </React.Fragment>
   )
 }
@@ -27,7 +25,7 @@ ArrowBack.defaultProps = {
   bg: null,
   background: null,
   fixed: null,
-  margin: null
+  margin: null,
 }
 
 const Headers = styled.div`
@@ -39,26 +37,24 @@ const Headers = styled.div`
   font-size: 16px;
   font-weight: bold;
 
-  ${(props) => 
-    props.background
-    ? "background-color: #FFF;"
-    : null } 
+  ${(props) => (props.background ? "background-color: #FFF;" : null)}
 
   ${(props) =>
     props.bg
-      ? "background-color:#EC5E4F; color:white; width:425px;  margin: 0 auto;"
+      ? "background-color:#EC5E4F; color:white; width:100%;  margin: 0 auto;"
       : null}
 
-  ${(props) => 
-  props.fixed ? `
+  ${(props) =>
+    props.fixed
+      ? `
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 425px;
     z-index : 1;
-  ` : `position: relative;`
-  }
+  `
+      : `position: relative;`}
 `
 
 const Icon = styled(IoIosArrowBack)`

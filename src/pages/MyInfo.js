@@ -35,6 +35,17 @@ export const MyInfo = (props) => {
     dispatch(userActions.userUpdateMD(formdata, useridx))
   }
 
+  const goBack = () => {
+    if (!sessionStorage.getItem("introduce")) {
+      sessionStorage.setItem("introduce", introduce)
+    }
+
+    if (!sessionStorage.getItem("region")) {
+      sessionStorage.setItem("region", region)
+    }
+    history.push("/login/clubchoice")
+  }
+
   const srcChange = () => {
     if (preview) {
       return URL.createObjectURL(preview)
@@ -46,6 +57,17 @@ export const MyInfo = (props) => {
       return picture
     }
   }
+
+  useEffect(() => {
+    if (sessionStorage.getItem("introduce")) {
+      setIntroduce(sessionStorage.getItem("introduce"))
+      sessionStorage.removeItem("introduce")
+    }
+    if (sessionStorage.getItem("region")) {
+      setRegion(sessionStorage.getItem("region"))
+      sessionStorage.removeItem("region")
+    }
+  }, [])
 
   return (
     <>
@@ -77,16 +99,14 @@ export const MyInfo = (props) => {
                 textarea
                 margin="20px"
                 height="100px"
-                placeholder="자기소개를 해주세요"
+                placeholder={introduce ? introduce : "자기소개를 입력해주세요"}
                 onChange={(e) => setIntroduce(e.target.value)}
               >
                 자기소개
               </Inputs>
             </div>
 
-            <TextLine onClick={() => history.push("/login/clubchoice")}>
-              구단변경
-            </TextLine>
+            <TextLine onClick={goBack}>구단변경</TextLine>
 
             <TextLine onClick={() => setShowModal(true)}>주소변경</TextLine>
 

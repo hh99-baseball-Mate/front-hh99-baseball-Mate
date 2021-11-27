@@ -6,18 +6,11 @@ import { Text } from "../components"
 import { actionCreators as userActions } from "../redux/modules/user"
 import { clubImageSrc, baseUrl } from "../shared/clubImage"
 
-export const ClubImage = (props) => {
+export const ClubImage = ({ historyPage }) => {
   const dispatch = useDispatch()
 
   const choiceClub = (e) => {
-    // const formdata = new FormData()
-
-    // formdata.append("myteam", e.target.className)
-
-    // for (const keyValue of formdata) console.log(keyValue)
-    dispatch(userActions.choiceClubMD(e.target.name))
-    // console.log(e.target.className)
-    // history.replace("/")
+    dispatch(userActions.choiceClubMD(e.target.name, historyPage))
   }
 
   return (

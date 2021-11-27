@@ -87,7 +87,7 @@ Header.defaultProps = {
 export default Header
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
   margin: auto;
   padding: 0;
   position: relative;

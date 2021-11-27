@@ -70,7 +70,7 @@ Inputs.defaultProps = {
   placeholder: "입력",
   // value: "",
   margin: "10px 0",
-  autoComplete: "off",
+  autoComplete: "on",
   dropdown: false,
   textarea: false,
   label: "",

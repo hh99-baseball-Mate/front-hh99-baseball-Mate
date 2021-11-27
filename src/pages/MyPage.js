@@ -109,7 +109,9 @@ export const MyPage = ({ is_login }) => {
         {/* <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine> */}
         <TextLine onClick={() => history.push("/event")}>이벤트</TextLine>
 
-        <TextLine onClick={() => history.push("/notice")}>공지사항</TextLine>
+        <TextLine onClick={() => window.alert("준비중입니다")}>
+          공지사항
+        </TextLine>
       </Container>
 
       {/* 하단네비바 */}
@@ -128,7 +130,6 @@ const Container = styled.div`
 const UserInfo = styled.div`
   position: relative;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   box-sizing: border-box;
   height: 90px;
@@ -136,20 +137,12 @@ const UserInfo = styled.div`
 const ProfileImg = styled.img`
   width: 48px;
   height: 48px;
-  /* background-color: #e7e7e7; */
   margin: 20px;
   border-radius: 50%;
-  :hover {
-    cursor: pointer;
-  }
-`
-const TextBox = styled.div`
-  position: relative;
-  padding: 20px 0;
-  display: flex;
-  border-bottom: 1px solid #e7e7e7;
+
   cursor: pointer;
 `
+
 const Line = styled.div`
   background-color: #e7e7e7;
   height: 6px;
