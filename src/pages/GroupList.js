@@ -183,11 +183,7 @@ const GroupList = (props) => {
 export default GroupList
 
 const Box = styled.div`
-  /* width: 405px; */
-  /* height: 177px; */
-  /* margin: 15px auto; */
-  /* display: ${(props) => props.flex}; */
-  /* border: 1px solid; */
+
 `
 
 const ClubBox = styled.div`

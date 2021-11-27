@@ -142,7 +142,7 @@ const userUpdateMD = (formdata, id) => {
   }
 }
 
-const choiceClubMD = (club) => {
+const choiceClubMD = (club, historyPage) => {
   return function (dispatch, getState, { history }) {
     instance
       .post("/user/myteam", { myteam: club })
@@ -152,7 +152,17 @@ const choiceClubMD = (club) => {
         dispatch(choiceClub(myteam))
         window.alert(`${myteam}을 선택하셨습니다.`)
 
-        history.replace("/")
+        // 로그인하고 구단선택페이지로 바로 온 이용자는 구단선택 후 메인으로 보내고
+        if (historyPage === "REPLACE") {
+          history.replace("/")
+          return
+        }
+
+        // 마이페이지에서 구단변경으로 들어온 이용자는 다시 마이페이지로 보냄
+        if (historyPage === "PUSH") {
+          history.goBack()
+          return
+        }
       })
       .catch((err) => {
         // console.log(err, "클럽선택 err입니다."))
@@ -183,9 +193,7 @@ const kakaoLogin = (key) => {
         dispatch(logInCheckMD())
       })
       .catch((err) => {
-        window.alert(
-          "가입한 이메일이 존재합니다. 저희 서비스에서 가입하셨던 이메일과 카카오톡 이메일이 중복되면 가입이 안됩니다."
-        )
+        window.alert("로그인이 불가능합니다. 서버에 문의하세요.")
         history.goBack()
         // console.log(err, "카카오 로그인 실패")
       })

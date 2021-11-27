@@ -39,7 +39,7 @@ const Participant = memo((props) => {
     Username: mylist.username,
   }
 
-  console.log("참여자")
+  // console.log("참여자")
 
   // useEffect(() => {
   //   dispatch(groupDetailCreators.loadGroupPageMW(groupId))

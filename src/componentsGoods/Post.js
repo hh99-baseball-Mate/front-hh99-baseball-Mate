@@ -69,7 +69,7 @@ export const Post = memo((props) => {
   const [showModal, setShowModal] = useState(false)
 
   // 게시글 내용 더보기
-  // const [showContents, setShowContents] = useState(false)
+  const [showContents, setShowContents] = useState(false)
 
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false)
@@ -127,6 +127,8 @@ export const Post = memo((props) => {
             ""
           )}
         </PostHeader>
+
+        {/* 게시물이미지 */}
         <PostImg url={postImage ? postImage : ""} />
 
         <Container>
@@ -141,17 +143,22 @@ export const Post = memo((props) => {
             </LikeBtn>
             <Text size="12px">{goodsLikesList.length}</Text>
           </PostIcons>
-
           {/* 굿즈 제목 */}
           <Text margin="8px 0"> {goodsName}</Text>
 
-          <PostContents>{goodsContent}</PostContents>
+          {/* 굿즈 내용 */}
 
+          {showContents ? (
+            <ShowPostContents>{goodsContent}</ShowPostContents>
+          ) : (
+            <PostContents>{goodsContent}</PostContents>
+          )}
+
+          <P onClick={() => setShowContents(!showContents)}>...더보기</P>
           {/* 댓글 전체 보기 */}
           <P onClick={moreBtn}>
             댓글 {goodsCommentList ? goodsCommentList.length : "0"} 더보기
           </P>
-
           {/* 게시글 시간 */}
           <P>{dayBefore}</P>
         </Container>
@@ -252,6 +259,15 @@ const PostContents = styled.div`
   font-size: 12px;
   margin: 5px 0;
   /* -webkit-line-clamp: 2; */
+`
+
+const ShowPostContents = styled.p`
+  max-width: 385px;
+  line-height: 1.2;
+  color: #c4c4c4;
+  font-size: 12px;
+  margin: 5px 0;
+  word-break: break-all;
 `
 
 const P = styled.p`

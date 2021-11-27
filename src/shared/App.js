@@ -77,8 +77,6 @@ function App() {
         <GlobalStyles />
         {!is_login ? (
           <Switch>
-            {/* 구별문자를 달아놓고 조건문으로 해서 걸러낸다 */}
-
             <Route exact path="/phoneAuth" component={PhoneAuth} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -105,7 +103,7 @@ function App() {
               exact
               component={ScreenDetail}
             />
-            <Route path="/notice" component={Notice} />
+            {/* <Route path="/notice" component={Notice} /> */}
             <Route path="/event" component={Event} />
             {/* 임시 */}
             <Route component={NotFound} />
@@ -144,7 +142,7 @@ function App() {
             {/* <Route path="/community" exact component={Community} />
             <Route path="/communitydetail" exact component={CommunityDetail} />
             <Route path="/communityadd" exact component={CommunityAdd} /> */}
-            <Route path="/notice" component={Notice} />
+            {/* <Route path="/notice" component={Notice} /> */}
             <Route path="/event" component={Event} />
             {/* 임시 */}
             {/* <Redirect */}
@@ -157,12 +155,10 @@ function App() {
   )
 }
 
-export default App;
+export default App
 
 const Container = styled.div`
   max-width: 425px;
   min-height: 100vh;
-  /* margin: auto; */
   background: #fff;
-  /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
-`;
+`

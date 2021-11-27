@@ -17,7 +17,7 @@ const ChatList = (props) => {
     dispatch(chatCreators.loadChatListMW())
   }, [chatList.newMessage])
 
-  console.log("chatList", chatList.length)
+  // console.log("chatList", chatList.length)
 
   return (
     <React.Fragment>

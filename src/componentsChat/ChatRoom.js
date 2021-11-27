@@ -251,94 +251,68 @@ const ChatRoom = memo((props) => {
   // 렌더링시 이동
   useEffect(() => {
     scrollTomBottom()
-    console.log("tell me you are moving now", messageEndRef)
+    // console.log("tell me you are moving now", messageEndRef)
   }, [messages.length])
 
   // console.log("C")
 
   return (
-    <Fragment ref={messageEndRef}>
+    // <React.Fragment>
+    <Container ref={messageEndRef}>
+      {/* <Container > */}
+      <ArrowBack background="background" fixed="fixed" margin="margin">
+        {roomInfo?.title}
+        <Warp flex="flex" align="center">
+          <ModalBtn
+            src={more2}
+            alt=""
+            onClick={() => {
+              modalInfo()
+            }}
+          />
+        </Warp>
+      </ArrowBack>
+      <Rectangle />
 
-			<ArrowBack background="background" fixed="fixed" >
-				{roomInfo?.title}
-				<Warp flex="flex" align="center">
-					<ModalBtn
-						src={more2}
-						alt=""
-						onClick={() => {
-							modalInfo()
-						}}
-					/>
-				</Warp>
-			</ArrowBack>
-			<Rectangle />
+      {/* 모달 */}
+      {modal ? (
+        <ChatRoomModal
+          modal={modal}
+          setModal={setModal}
+          room_id={room_id}
+          chatUser={chatUser}
+          id={sender_id}
+          roomInfo={roomInfo}
+          // chatList={chatList}
+        />
+      ) : null}
 
-			{/* 모달 */}
-			{modal ? (
-				<ChatRoomModal
-					modal={modal}
-					setModal={setModal}
-					room_id={room_id}
-					chatUser={chatUser}
-					id={sender_id}
-					roomInfo={roomInfo}
-					// chatList={chatList}
-				/>
-			) : null}
-
-			<Container ref={messageEndRef} >
-				{/* <Container > */}
-
-
-				{/* <Box height="100vh" > */}
-					{messages.map((messages) => {
-						return <MessageBox key={messages.id} {...messages} />
-					})}
-				{/* </Box> */}
-
-				
-			</Container>
-			{/* <MarginBottom chat /> */}
+      <Box padding="62px 8px 3px 8px">
+        {messages.map((messages) => {
+          return <MessageBox key={messages.id} {...messages} />
+        })}
+      </Box>
+      <MarginBottom chat />
       <ChatWrite sendMessage={sendMessage} />
-			
-    </Fragment>
+    </Container>
+    // </React.Fragment>
   )
 })
 
 export default ChatRoom
 
-const Fragment = styled.div`
-	/* min-height: 100%;
-	max-height: 500vh; */
-	/* padding: 65px 18px 74px 18px; */
-	/* height: 100vh;
-	max-width: 425px;
-	min-width: 375px;
-
-	overflow: auto;
-
-&::-webkit-scrollbar {
-	display: none; */
-}
-`;
-
 const Container = styled.div`
   /* margin-bottom: 10px; */
-	padding: 65px 18px 74px 18px;
-	max-width: 425px;
-	min-width: 375px;
-	/* position: relative; */
-	background: #FFF0EE;
-	/* background: green; */
-	/* height: calc(100vh-(74px+58px)); */
-	/* height: 100vh; */
-	/* max-height: 500vh; */
-	/* overflow: scroll;
-
-	&::-webkit-scrollbar {
+  max-width: 425px;
+  width: 100%;
+  position: relative;
+  background: #fff0ee;
+  height: 100vh;
+  overflow: scroll;
+  &::-webkit-scrollbar {
     display: none;
-  } */
-`;
+  }
+`
 
 const ModalBtn = styled.img`
   padding: 10px;

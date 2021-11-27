@@ -24,7 +24,7 @@ const Alarm = (props) => {
   // 스크린야구 (참여자기준) 대기중인 신청 목록
   const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-  console.log("alarm", alarm)
+  // console.log("alarm", alarm)
   // console.log("ScreenAlarm", requestScreenList)
   // console.log("awaitScreenList", awaitScreenList)
   // console.log("awaitList", awaitList)
@@ -43,11 +43,11 @@ const Alarm = (props) => {
 
   return (
     <>
+
+    <Container>
     <ArrowBack bg="true" fixed="fixed">
     알림
     </ArrowBack>
-    <Container>
-
 
 
       <Container padding="58.39px 0 0 0">
