@@ -20,10 +20,18 @@ export const PhoneAuth = (props) => {
     setPhoneAuth(e.target.value)
   }
 
-  const authNumber = () => {
-    phoneNumber && regPhone.test(phoneNumber) && phoneNumber.length === 11
-      ? dispatch(userActions.PhoneAuthSubmitMD(phoneNumber))
-      : window.alert("입력하신 휴대번호를 확인 해주세요")
+  const authNumber = (e) => {
+    if (
+      phoneNumber &&
+      regPhone.test(phoneNumber) &&
+      phoneNumber.length === 11
+    ) {
+      dispatch(userActions.PhoneAuthSubmitMD(phoneNumber))
+      e.target.disabled = true
+      return
+    }
+
+    window.alert("입력하신 휴대번호를 확인 해주세요")
   }
 
   const phoneSubmit = () => {
