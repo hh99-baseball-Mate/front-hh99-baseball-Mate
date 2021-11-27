@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Progress from "../components/Progress";
+import { getCookie } from '../shared/Cookie';
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -34,6 +35,8 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
+
+  const cookie = getCookie("is_login");
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
@@ -59,6 +62,10 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const heartBtn = () => {
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      return;
+    }
     props.setHeart(!props?.heart)
     dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))
   }

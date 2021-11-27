@@ -160,7 +160,7 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
   min-height: 100vh;
   /* margin: auto; */
   background: #fff;

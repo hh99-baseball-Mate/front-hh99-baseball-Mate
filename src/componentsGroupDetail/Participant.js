@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
+import { getCookie } from '../shared/Cookie';
 
 import host from "../shared/icon/groupDetail/host.svg"
 
@@ -27,6 +28,7 @@ const Participant = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
+  const cookie = getCookie("is_login");
   const id = props.groupId
 
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -45,6 +47,10 @@ const Participant = memo((props) => {
 
   // 참석버튼
   const apply = () => {
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      return;
+    }
     props.setJoin(true)
     dispatch(groupDetailCreators.groupApplyMW(id, my))
   }

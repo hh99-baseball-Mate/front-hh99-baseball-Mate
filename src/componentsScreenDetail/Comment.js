@@ -39,7 +39,6 @@ const Comment = memo((props) => {
   const addComment = () => {
     if (!cookie) {
       window.alert("로그인 후 이용해주세요")
-      history.push("/login")
       return
     } else if (message !== "") {
       dispatch(screenDetailCreators.addCommentMW(id, message))

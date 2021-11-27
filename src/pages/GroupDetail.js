@@ -55,8 +55,10 @@ const GroupDetail = memo((props) => {
   // }
 
   return (
+    <>
+    <ArrowBack>상세 페이지</ArrowBack>
     <Container>
-      <ArrowBack>상세 페이지</ArrowBack>
+
       {/* 글 정보 */}
       <Info
         {...loadDetail}
@@ -102,13 +104,15 @@ const GroupDetail = memo((props) => {
         )}
       </Box>
     </Container>
+    </>
   )
 })
 
 export default GroupDetail
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;

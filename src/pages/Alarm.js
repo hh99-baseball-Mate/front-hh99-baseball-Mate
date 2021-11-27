@@ -38,14 +38,56 @@ const Alarm = (props) => {
     dispatch(alarmCreators.awaitScreenChatListMW())
   }, [])
 
+
+  const [selectPage, setSelectPage] = useState(true)
+
   return (
     <React.Fragment>
-      <Container>
-        <ArrowBack bg="true" fixed="fixed" margin="margin">
-          알림
-        </ArrowBack>
 
-        {/* <Rectangle marginT="30px"/> */}
+      <ArrowBack bg="true" fixed="fixed">
+        알림
+      </ArrowBack>
+
+      <Container padding="58.39px 0 0 0">
+
+      {/* 일반 & 승인요청 버튼 */}
+      <Box height="65px">
+        <Warp padding="10px 0 0 0">
+          <ParticipantBtn
+            onClick={() => setSelectPage(true)}
+            selectPage={selectPage}
+          >
+            일반
+          </ParticipantBtn>
+
+          <CommentBtn
+            onClick={() => setSelectPage(false)}
+            selectPage={selectPage}
+          >
+            승인요청
+          </CommentBtn>
+        </Warp>
+
+        <Rectangle />
+
+        {/* {selectPage === true ? (
+          <Participant
+            {...loadDetail}
+            {...mylist}
+            // close={close}
+            // setClose={setClose}
+            join={join}
+            setJoin={setJoin}
+          />
+        ) : (
+          <Comment {...loadDetail} {...mylist} />
+        )} */}
+      </Box>      
+
+
+
+
+
 
         {props.is_login ? (
           alarm.map((alarm) => {
@@ -71,6 +113,7 @@ const Alarm = (props) => {
           </Container>
         )}
       </Container>
+
       <MarginBottom />
       <NaviBar />
     </React.Fragment>
@@ -78,6 +121,8 @@ const Alarm = (props) => {
 }
 
 export default Alarm
+
+
 
 // 개별 알람 컴포넌트
 const Alert = (props) => {
@@ -177,7 +222,9 @@ const Alert = (props) => {
   return (
     <Container position="relative">
       <AlertCard onClick={() => setShowModal(true)}>
-        <div>{/* <Circle/> */}🔔</div>
+        <div>🔔</div>
+        {/* <div>🔔</div>
+        <div>🔔</div> */}
         <Warp padding="0 10px">
           <Text size="14px" width="313px">
             <Warp
@@ -251,6 +298,7 @@ const Container = styled.div`
 	/* height: 177px; */
 	/* margin: auto; */
 	/* position: relative; */
+  padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
 	top: ${(props) => props.top};
 	left: ${(props) => props.left};
@@ -330,3 +378,44 @@ const Rectangle = styled.div`
 	border: 1px solid #E7E7E7;
 	margin-top: ${(props) => props.marginT};
 `;
+
+
+
+
+
+const ParticipantBtn = styled.button`
+  width: 50%;
+  height: 45px;
+  background: none;
+  padding-bottom: 10px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  ${(props) =>
+    props.selectPage
+      ? ` 
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+      : `border: none;`}
+`
+
+const CommentBtn = styled.button`
+  width: 50%;
+  height: 45px;
+  background: none;
+  padding-bottom: 10px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  /* margin-right: 0; */
+  ${(props) =>
+    !props.selectPage
+      ? `
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+      : `border: none;`}
+`
