@@ -53,24 +53,28 @@ const TimelimeWrite = (props) => {
         </Circle>
       </Warp>
 
-      <Warp position="relative">
-        <Input type="text" maxlength="200"
-          placeholder="내용을 입력하세요(최대 200자)" 
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-          onKeyPress={(e) => {
-            if(e.key === "Enter"){
-              addTimeline(e);
-            }
-          }}
-        />
+      <div style={{maxWidth:"385px"}}>
+        <Warp position="relative">
+          {/* <div style={{maxWidth:"340px"}}> */}
+            <Input type="text" maxlength="200"
+              placeholder="내용을 입력하세요(최대 200자)" 
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if(e.key === "Enter"){
+                  addTimeline(e);
+                }
+              }}
+            />
+          {/* </div> */}
 
-        <SendImg src={send} alt="send"
-          onClick={() => {addTimeline()}}
-        />
-      </Warp>
+          <SendImg src={send} alt="send"
+            onClick={() => {addTimeline()}}
+          />
+        </Warp>
+      </div>
 
     </Container>
 
@@ -118,11 +122,13 @@ const Circle = styled.div`
 `;
 
 const Input = styled.input`
-  width: 340px;
+  /* max-width: 340px;
+  min-width: 290px; */
+  width: 100%;
   height: 44px;
   border: 1px solid #E7E7E7;
   border-radius: 5px;
-  padding: 14px 14px 14px 14px;
+  padding: 14px 35px 14px 14px;
   ::placeholder {
     font-size: 14px;
     color: #C4C4C4;
