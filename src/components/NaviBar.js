@@ -97,7 +97,8 @@ NaviBar.defaultProps = {
 
 const Container = styled.div`
   background: #fff;
-  width: 425px;
+  width: 100%;
+  max-width: 425px;
   height: 64px;
   border-top: 1px solid #e7e7e7;
   padding: 10px 30px 15px 30px;
@@ -106,7 +107,7 @@ const Container = styled.div`
   left: 50%;
   transform: translateX(-50%);
   /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
-`;
+`
 
 const Warp = styled.div`
   display: flex;

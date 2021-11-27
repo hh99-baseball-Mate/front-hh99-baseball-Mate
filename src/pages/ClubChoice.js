@@ -4,11 +4,11 @@ import { Text, ArrowBack, Container } from "../components"
 import styled from "styled-components"
 
 export const ClubChoice = (props) => {
+  const historyPage = props.history.action
   return (
     <>
+      <ArrowBack>구단선택</ArrowBack>
       <Container>
-        <ArrowBack>구단선택</ArrowBack>
-
         {/* 선택 메세지 로그인 사용자 */}
         <TextBox>
           <Text size="20px" bold>
@@ -20,7 +20,7 @@ export const ClubChoice = (props) => {
         {/* 구단선택 */}
         <Grid>
           {/* 클럽 이미지 */}
-          <ClubImage />
+          <ClubImage historyPage={historyPage} />
         </Grid>
       </Container>
     </>
@@ -41,5 +41,6 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   place-items: center;
   gap: 15px;
-  margin: 0 0 50px;
+  margin: 0 auto;
+  width: 100%;
 `

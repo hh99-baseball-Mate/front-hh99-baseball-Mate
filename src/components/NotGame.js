@@ -20,7 +20,6 @@ const NotGames = styled.div`
   margin: 0 auto;
   width: ${(props) => props.width};
   min-height: 350px;
-  /* background-color: red; */
   display: flex;
   justify-content: center;
   align-items: center;

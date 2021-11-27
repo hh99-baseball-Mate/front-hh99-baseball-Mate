@@ -103,7 +103,7 @@ export const Login = (props) => {
             </Buttons>
 
             {/* 카카오로그인 */}
-            <SocialLogin />
+            {/* <SocialLogin /> */}
           </Form>
         )}
       </Formik>

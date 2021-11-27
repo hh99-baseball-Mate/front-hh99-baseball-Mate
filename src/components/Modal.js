@@ -125,7 +125,7 @@ Modal.defaultProps = {
 }
 
 const ModalBottom = styled.div`
-  width: 425px;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 99;
@@ -134,7 +134,7 @@ const ModalBottom = styled.div`
   margin: ${(props) => props.margin};
 `
 const ModalCenter = styled.div`
-  width: 425px;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 99;
@@ -153,7 +153,7 @@ const showModal = keyframes`
 `
 
 const ModalBottomContent = styled.div`
-  width: 425px;
+  width: 100%;
   height: ${(props) => props.height};
   background-color: #ffffff;
   position: absolute;

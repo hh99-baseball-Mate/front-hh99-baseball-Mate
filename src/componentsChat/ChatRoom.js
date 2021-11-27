@@ -303,16 +303,16 @@ export default ChatRoom
 
 const Container = styled.div`
   /* margin-bottom: 10px; */
-	width: 425px;
-	position: relative;
-	background: #FFF0EE;
-	height: 100vh;
-	overflow: scroll;
+  max-width: 425px;
+  position: relative;
+  background: #fff0ee;
+  height: 100vh;
+  overflow: scroll;
 
-	&::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
-`;
+`
 
 const ModalBtn = styled.img`
   padding: 10px;
