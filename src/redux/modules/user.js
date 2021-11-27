@@ -31,6 +31,7 @@ const initialState = {
   user_info: [],
   is_login: false,
   is_auth: false,
+  is_sendNuM: false,
 }
 
 // 미들웨어
