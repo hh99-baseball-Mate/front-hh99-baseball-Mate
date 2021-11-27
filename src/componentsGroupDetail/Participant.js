@@ -100,24 +100,31 @@ const Participant = memo((props) => {
   return (
     <React.Fragment>
       <Box padding="28px 20px 40px 20px" background="#fff">
-        <Warp wrap="wrap" align="center" start="space-around">
-          {/* 방장 프사 */}
-          <CircleBox>
-            {/* 기본프사 & 카카오프사 */}
-            <HostCircle
-              name={props.createdUserName}
-              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
-            />
 
-            <Text>
-              <img src={host} alt="host" /> {props.createdUserName}
-            </Text>
-          </CircleBox>
+        <div style={{width:"335px", margin:"auto" }}>
+          <Warp wrap="wrap" align="center">
+            {/* 방장 프사 */}
 
-          {props.appliedUserInfo?.map((list) => {
-            return <PartyList key={list.UserInx} {...list} />
-          })}
-        </Warp>
+            <CircleBox>
+              {/* 기본프사 & 카카오프사 */}
+              <HostCircle
+                name={props.createdUserName}
+                url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+              />
+              <Text>
+                <img src={host} alt="host" /> {props.createdUserName}
+              </Text>
+            </CircleBox>
+
+            {/* 참여자 프사 */}
+            {props.appliedUserInfo?.map((list) => {
+              return <PartyList key={list.UserInx} {...list} />
+            })}
+
+          </Warp>
+        </div>
+     
+
         <Warp flex="flex" direction="column" align="center" justify="center">
           {me ? (
             // 방장일 때 모임확정/취소, 내가 아니면 null
@@ -215,6 +222,7 @@ const Box = styled.div`
 
 const Warp = styled.div`
 	display: flex;
+  /* min-width: 300px; */
 	width: ${(props) => props.width};
 	flex-direction: ${(props) => props.direction};
 	flex-wrap: ${(props) => props.wrap};
@@ -239,12 +247,12 @@ const Text = styled.div`
 `;
 
 const CircleBox = styled.div`
-	margin: 0 15px 20px 15px;
+	margin: 0 6px 20px 6px;
 `;
 
 const HostCircle = styled.div`
-	width: 98px;
-	height: 98px;
+	width: 95px;
+	height: 95px;
 	border: 2px solid #F25343;
 	border-radius: 50%;
 	background: #FFFFFF;
@@ -256,8 +264,8 @@ const HostCircle = styled.div`
 `;
 
 const Circle = styled.div`
-	width: 98px;
-	height: 98px;
+	width: 95px;
+	height: 95px;
 	border: 1px solid #E7E7E7;
 	border-radius: 50%;
 	background: #FFFFFF;

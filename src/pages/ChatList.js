@@ -70,7 +70,8 @@ const ChatList = (props) => {
 export default ChatList
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   /* margin: auto; */

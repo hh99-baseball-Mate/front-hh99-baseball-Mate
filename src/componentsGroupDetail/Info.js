@@ -14,6 +14,7 @@ import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
 import users from "../shared/icon/users.svg"
+import { width } from "dom-helpers";
 
 
 
@@ -167,16 +168,17 @@ const Info = memo((props) => {
             )}
           </Warp>
         </Warp>
-
+        {/* <div style={{width:"295px"}}> */}
         <Text
           size="16px"
           weight="bold"
-          width="295px"
+          width="100%"
           height="46px"
           lineHeight="23px"
         >
           {props.title}
         </Text>
+        {/* </div> */}
 
         <Warp justify="space-between" align="center" marginT="11px">
           {/* 인원 상태바 */}

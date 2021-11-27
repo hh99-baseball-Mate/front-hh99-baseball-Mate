@@ -42,16 +42,18 @@ const Alarm = (props) => {
   const [selectPage, setSelectPage] = useState(true)
 
   return (
-    <React.Fragment>
+    <>
+    <ArrowBack bg="true" fixed="fixed">
+    알림
+    </ArrowBack>
+    <Container>
 
-      <ArrowBack bg="true" fixed="fixed">
-        알림
-      </ArrowBack>
+
 
       <Container padding="58.39px 0 0 0">
 
       {/* 일반 & 승인요청 버튼 */}
-      <Box height="65px">
+      {/* <Box height="65px">
         <Warp padding="10px 0 0 0">
           <ParticipantBtn
             onClick={() => setSelectPage(true)}
@@ -70,7 +72,7 @@ const Alarm = (props) => {
 
         <Rectangle />
 
-        {/* {selectPage === true ? (
+        {selectPage === true ? (
           <Participant
             {...loadDetail}
             {...mylist}
@@ -81,8 +83,8 @@ const Alarm = (props) => {
           />
         ) : (
           <Comment {...loadDetail} {...mylist} />
-        )} */}
-      </Box>      
+        )}
+      </Box>       */}
 
 
 
@@ -116,7 +118,8 @@ const Alarm = (props) => {
 
       <MarginBottom />
       <NaviBar />
-    </React.Fragment>
+    </Container>
+    </>
   )
 }
 
@@ -225,8 +228,8 @@ const Alert = (props) => {
         <div>🔔</div>
         {/* <div>🔔</div>
         <div>🔔</div> */}
-        <Warp padding="0 10px">
-          <Text size="14px" width="313px">
+
+          <Text size="12px" width="70%">
             <Warp
               flex="flex"
               direction="column"
@@ -246,7 +249,7 @@ const Alert = (props) => {
 						} */}
             </Warp>
           </Text>
-        </Warp>
+ 
 
         <Text size="10px" color="#777777">
           <Warp flex="flex" direction="column" align="center">
@@ -294,7 +297,8 @@ const Alert = (props) => {
 
 
 const Container = styled.div`
-	width: 425px; 
+  max-width: 425px;
+	width: 100%; 
 	/* height: 177px; */
 	/* margin: auto; */
 	/* position: relative; */
@@ -306,6 +310,7 @@ const Container = styled.div`
 `;
 
 const AlertCard = styled.div`
+ max-width: 425px;
 	width: 100%;
 	height: 72px;
 	padding: 8px 10px 8px 10px;

@@ -73,7 +73,8 @@ const ChatCard = (props) => {
 export default ChatCard
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   height: 90px;
   /* background-size: cover; */
   /* height: auto; */

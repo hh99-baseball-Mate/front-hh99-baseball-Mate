@@ -94,30 +94,36 @@ const Comment = memo((props) => {
         position="relative"
         flex="flex"
         align="center"
+        justify="center"
         background="#fff"
       >
-        <Warp>
+        <Warp align="center">
           <div>
             <Circle
-              marginT="17px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
           </div>
-          <TextArea
-            placeholder="&#13;&#10;댓글을 입력해 주세요..."
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
-          />
+
+          <div style={{width:"310px", position:"relative"}}>
+            <TextArea
+              placeholder="&#13;&#10;댓글을 입력해 주세요..."
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value)
+              }}
+            />
+
+              <SendImg
+                src={send}
+                alt="send"
+                onClick={() => {
+                  addComment()
+                }}
+              />
+            </div>
+
         </Warp>
-        <SendImg
-          src={send}
-          alt="send"
-          onClick={() => {
-            addComment()
-          }}
-        />
+
       </Box>
 
       <Rectangle />
@@ -197,6 +203,7 @@ const CommentList = memo((props) => {
         <Warp>
           <div>
             <Circle
+              marginL="20px"
               marginT="26px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
@@ -418,8 +425,8 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 310px;
-  height: 70px;
+  width: 90%;
+  height: 60px;
 	border: none;
   padding: 5px 5px 5px 5px;
   margin-left: 12px;
@@ -434,7 +441,7 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: 20px;
+  right: -10px;
   bottom: 0%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -447,7 +454,7 @@ const Circle = styled.div`
 	background: #C4C4C4;
 	border: 1px solid #E7E7E7;
 	margin-top: ${(props) => props.marginT};
-	margin-left: 20px;
+	margin-left: ${(props) => props.marginL};
 	background-image: url(${(props) => props.url});
   background-repeat: no-repeat;
   background-position: center;

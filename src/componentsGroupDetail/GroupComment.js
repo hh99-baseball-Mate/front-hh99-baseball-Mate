@@ -11,6 +11,7 @@ import unSmail from "../shared/icon/unSmail.svg";
 import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
+// import { Container } from "../components";
 
 const GroupComment = memo((props) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
@@ -60,7 +61,7 @@ const GroupComment = memo((props) => {
   // }, [])
 
   return (
-    <React.Fragment>
+    <Container>
       <Box padding="13px 30px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
@@ -89,30 +90,36 @@ const GroupComment = memo((props) => {
         position="relative"
         flex="flex"
         align="center"
+        justify="center"
         background="#fff"
       >
-        <Warp>
+        <Warp align="center">
           <div>
             <Circle
-              marginT="17px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
           </div>
-          <TextArea
-            placeholder="&#13;&#10;댓글을 입력해 주세요..."
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
-          />
+
+          <div style={{width:"310px", position:"relative"}}>
+            <TextArea
+              placeholder="&#13;&#10;댓글을 입력해 주세요..."
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value)
+              }}
+            />
+
+            <SendImg
+              src={send}
+              alt="send"
+              onClick={() => {
+                addComment()
+              }}
+            />
+          </div>
+
         </Warp>
-        <SendImg
-          src={send}
-          alt="send"
-          onClick={() => {
-            addComment()
-          }}
-        />
+
       </Box>
 
       <Rectangle />
@@ -128,7 +135,7 @@ const GroupComment = memo((props) => {
           />
         )
       })}
-    </React.Fragment>
+    </Container>
   )
 })
 
@@ -196,6 +203,7 @@ const CommentList = memo((props) => {
         <Warp>
           <div>
             <Circle
+              marginL="20px"
               marginT="26px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
@@ -344,6 +352,11 @@ const EditComment = (props) => {
   )
 }
 
+const Container = styled.div`
+  max-width: 425px;
+  width: 100%;
+`
+
 const EditText = styled.textarea`
   width: 310px;
   height: 70px;
@@ -370,6 +383,7 @@ const Rectangle = styled.div`
 `;
 
 const Box = styled.div`
+  max-width: 425px;
   width: 100%;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
@@ -415,9 +429,9 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 310px;
+  width: 90%;
   height: 60px;
-  border: none;
+  /* border: none; */
   padding: 5px 5px 5px 5px;
   margin-left: 12px;
   resize: none;
@@ -430,7 +444,7 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: 20px;
+  right: -10px;
   bottom: 0%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -443,7 +457,7 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #e7e7e7;
   margin-top: ${(props) => props.marginT};
-  margin-left: 20px;
+  margin-left: ${(props) => props.marginL};
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-repeat: no-repeat;
