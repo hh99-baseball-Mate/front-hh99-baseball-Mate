@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { PancilBtn } from ".";
 
 import home from "../shared/icon/navbar/home.svg";
 import home_select from "../shared/icon/navbar/home_select.svg";
@@ -10,16 +12,16 @@ import chat from "../shared/icon/navbar/chat.svg";
 import chat_select from "../shared/icon/navbar/chat_select.svg";
 import my from "../shared/icon/navbar/my.svg";
 import my_select from "../shared/icon/navbar/my_select.svg";
-import { useSelector } from "react-redux";
-import { PancilBtn } from ".";
 
 const NaviBar = (props) => {
   const user_info = useSelector((state) => state.user.user_info);
   const is_login = useSelector((state) => state.user.is_login);
 
+
   const { useridx } = user_info;
 
   const history = useHistory();
+
 
   return (
     <Container writeBtn={props.writeBtn}>

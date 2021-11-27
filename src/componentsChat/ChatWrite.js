@@ -66,14 +66,17 @@ const ChatWrite = (props) => {
 export default ChatWrite;
 
 const Container = styled.div`
-  margin-bottom: 10px;
-	width: 425px;
+	max-width: 425px;
+  width: 100%;
 	/* opacity: 0.5; */
+  position: fixed;
+	bottom:0;
 `;
 
 
 const Box = styled.div`
-  width: 425px;
+  max-width: 425;
+  width: 100%;
   height: 74px;
   background: #fff;
   padding: ${(props) => props.padding};
@@ -81,8 +84,6 @@ const Box = styled.div`
   flex-direction: ${(props) => props.direction};
   justify-content: center;
   align-items: center;
-  position: fixed;
-	bottom:0;
 `;
 
 const Warp = styled.div`
@@ -108,7 +109,7 @@ const Text = styled.div`
 `;
 
 const Input = styled.input`
-  width: 380px;
+  width: 350px;
   height: 44px;
   border: 1px solid #E7E7E7;
   border-radius: 50px;

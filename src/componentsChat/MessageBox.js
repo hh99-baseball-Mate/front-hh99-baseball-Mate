@@ -21,7 +21,7 @@ const MessageBox = memo((props) => {
   const kakaoImg = props.senderImage
 
   const dayAndTime = props.modifiedAt.split(" ")
-  const day = dayAndTime[0]
+  const day = dayAndTime[0].split("-").join(".")
   const time = dayAndTime.slice(1, 3).join(" ")
 
   // 내가 보낸 메세지가 아닐 때
@@ -29,16 +29,18 @@ const MessageBox = memo((props) => {
     return (
       <Container>
         <Warp>
-          <ImgCircle
-            marginR="10px"
-            url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
-          />
+          <div>
+            <ImgCircle
+              marginR="7px"
+              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+            />
+          </div>
           <Warp direction="column">
             <Text>{props.senderName}</Text>
 
             <Warp align="flex-end">
               <Talk>{props.message}</Talk>
-              <Time margin="0 0 0 5px">
+              <Time>
                 {/* 오전 10:34 */}
                 <Warp direction="column" align="center">
                   <div>{day}</div>
@@ -58,7 +60,7 @@ const MessageBox = memo((props) => {
       <Container>
         <Warp align="flex-end" direction="row-reverse">
           <MyTalk>{props.message}</MyTalk>
-          <MyTime margin="0 6px 0 0">
+          <MyTime margin="0 3px 0 0">
             {/* {props.modifiedAt} */}
             <Warp direction="column" align="center">
               <div>{day}</div>
@@ -75,7 +77,7 @@ export default React.memo(MessageBox);
 
 const Container = styled.div`
   margin-bottom: 10px;
-  width: 385px;
+  max-width: 390px;
   position: relative;
 `
 
@@ -117,7 +119,7 @@ const Text = styled.div`
 `;
 
 const Time = styled.div`
-	font-size: 11px;
+	font-size: 8px;
 	font-weight: ${(props) => props.weight};
 	color: #777777;
 	letter-spacing: ${(props) => props.spacing};
@@ -130,8 +132,8 @@ const Time = styled.div`
 `;
 
 const ImgCircle = styled.div`
-	width: 45px;
-	height: 45px;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 	background: #FFFFFF;
 	background-image: url(${(props) => props.url});
@@ -147,11 +149,11 @@ const ImgCircle = styled.div`
 `;
 
 const Talk = styled.div`
-	max-width: 270px;
+	max-width: 290px;
 	min-width: 10px;
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;
-	padding: 12px 10px;
+	padding: 10px 10px;
 	/* position: absolute;
 	left: 60px;
 	top: 30px; */
@@ -196,7 +198,7 @@ const MyTalk = styled.div`
 `;
 
 const MyTime = styled.div`
-	font-size: 11px;
+	font-size: 8px;
 	font-weight: ${(props) => props.weight};
 	color: #777777;
 	letter-spacing: ${(props) => props.spacing};

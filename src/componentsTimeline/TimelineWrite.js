@@ -25,7 +25,6 @@ const TimelimeWrite = (props) => {
   const addTimeline = () => {
     if (!cookie) {
       window.alert("로그인 후 이용해주세요");
-      history.push("/login")
       return;
     }
     else if (message !== "") {

@@ -287,7 +287,7 @@ const ChatRoom = memo((props) => {
         />
       ) : null}
 
-      <Box padding="20px 18px">
+      <Box padding="62px 8px 3px 8px">
         {messages.map((messages) => {
           return <MessageBox key={messages.id} {...messages} />
         })}
@@ -304,11 +304,11 @@ export default ChatRoom
 const Container = styled.div`
   /* margin-bottom: 10px; */
   max-width: 425px;
+  width: 100%;
   position: relative;
   background: #fff0ee;
   height: 100vh;
   overflow: scroll;
-
   &::-webkit-scrollbar {
     display: none;
   }
