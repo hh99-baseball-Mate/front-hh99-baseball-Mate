@@ -2,8 +2,6 @@ import React, { memo, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import logger from "../shared/Console";
 
-import { ArrowBack, MarginBottom, NaviBar } from "../components";
-import send from "../shared/icon/send.svg"
 import upload from "../shared/icon/upload.svg"
 
 const ChatWrite = (props) => {
@@ -16,15 +14,21 @@ const ChatWrite = (props) => {
   // console.log("msg",msg)
 
   const [new_message, setMessage] = useState("")
-  // const changeMessage = (e) => {
-  //   setMessage(e.target.value);
-  // };
+  const changeMessage = (e) => {
+    setMessage(e.target.value);
+  };
 
   // 메세지 보내기 버튼 클릭 시 실행 될 함수
   const sendMessageBtn = () => {
-    logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue)
+    // logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue)
     sendMessage(msg.defaultValue) //메세지 실제로 보내기
     setMessage("") // input 비우기
+  }
+
+  const enterBtn = (e) => {
+    if (e.key === "Enter") {
+      sendMessageBtn(e)
+    }
   }
 
   // console.log("G")
@@ -38,17 +42,11 @@ const ChatWrite = (props) => {
             placeholder="메시지를 입력하세요"
             value={new_message}
             ref={now_message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                sendMessageBtn(e)
-              }
-            }}
+            onChange={changeMessage}
+            onKeyPress={enterBtn}
           />
 
-          {new_message && (
+          {msg && (
             <SendImg
               src={upload}
               alt="send"
