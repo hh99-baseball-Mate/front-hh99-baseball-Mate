@@ -43,13 +43,8 @@ const postCommunCommentAPI = (communityId, message) => {
     instance
       .post(`/community/${communityId}/comment`, comment)
       .then((res) => {
-<<<<<<< HEAD
-        console.log(res);
-        dispatch(postCommunComment(communityId, comment));
-=======
         // console.log(res)
         dispatch(postCommunComment(communityId))
->>>>>>> master
       })
       .catch((err) => {
         // console.log(err, "커뮤댯글등록")
