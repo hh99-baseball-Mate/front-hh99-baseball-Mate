@@ -10,7 +10,6 @@ const Community = (props) => {
 
   //카드 조회
   const card_list = useSelector((state) => state.community.card_list);
-  console.log(card_list);
   const is_login = useSelector((state) => state.user.is_login);
   const newPeople = (e) => {
     !is_login

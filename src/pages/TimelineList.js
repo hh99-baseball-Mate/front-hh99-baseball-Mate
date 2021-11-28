@@ -16,7 +16,7 @@ const TimelineList = React.memo((props) => {
   const user = useSelector((state) => state.user.user_info)
   const likelist = useSelector((state) => state.timeline.likelist)
 
-  console.log(timeline)
+  // console.log(timeline)
   // console.log("likelist", likelist)
   useEffect(() => {
     dispatch(timelineCreators.loadTimelineMW())
@@ -37,20 +37,23 @@ const TimelineList = React.memo((props) => {
           {/* 타임라인 작성 & 응원갯수 */}
           <TimelimeWrite />
 
-          {/* 타임라인 리스트 */}
-          <List>
-            {timeline.map((timeline, idx) => {
-              return (
-                <Timeline
-                  key={timeline.timelineId}
-                  {...timeline}
-                  user={user}
-                  likelist={likelist}
-                  idx={idx}
-                ></Timeline>
-              )
-            })}
-          </List>
+          <Box>
+            {/* 타임라인 리스트 */}
+            <List>
+              {timeline.map((timeline, idx) => {
+                return (
+                  <Timeline
+                    key={timeline.timelineId}
+                    {...timeline}
+                    user={user}
+                    likelist={likelist}
+                    idx={idx}
+                  ></Timeline>
+                )
+              })}
+            </List>
+          </Box>
+
         </Warp>
       </Container>
 
@@ -64,13 +67,16 @@ const TimelineList = React.memo((props) => {
 export default TimelineList
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* height: 177px; */
   margin: auto;
 `
 
 const Box = styled.div`
   width: 100%;
+  max-height: 594px;
+  overflow: auto;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
@@ -118,12 +124,12 @@ const Circle = styled.div`
 `
 
 const List = styled.div`
-  height: 550px;
-  overflow: auto;
+  max-height: 100%;
+  /* overflow: auto; */
   /* NaviBar안겹치게 */
   /* margin-bottom: 94px; */
 `
 
 const Banner = styled.img`
-  width: 425px;
+  width: 100%;
 `

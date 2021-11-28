@@ -36,7 +36,7 @@ export const GroupCard = memo((props) => {
     <Container onClick={onClick}>
       <Card flex="flex">
         <ImgBox url={img} />
-        <Warp flex="flex" direction="column" width="250px" marginLeft="20px">
+        <Warp flex="flex" direction="column" width="250px" marginLeft="10px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
               <Ellipse
@@ -75,7 +75,7 @@ export const GroupCard = memo((props) => {
           </Warp>
 
           <Warp flex="flex" marginB="4px">
-            <Text size="12px" color="#777777">
+            <Text size="10px" color="#777777">
               {groupDate}
             </Text>
             <Slice> &ensp;|&ensp; </Slice>
@@ -83,14 +83,14 @@ export const GroupCard = memo((props) => {
             {/* 지점명 */}
             {selectPlace && (
               <>
-                <Text size="12px" color="#777777">
+                <Text size="10px" color="#777777">
                   {selectPlace}
                 </Text>
                 <Slice> &ensp;| &ensp; </Slice>
               </>
             )}
 
-            <Text size="12px" color="#777777">
+            <Text size="10px" color="#777777">
               최대 {peopleLimit}명
             </Text>
           </Warp>
@@ -135,12 +135,10 @@ export const GroupCard = memo((props) => {
 })
 
 const Container = styled.div`
-  width: 385px;
-  /* height: 177px; */
+  width: 100%;
   margin: 10px 0;
   display: ${(props) => props.flex};
   cursor: pointer;
-  /* border: 1px solid; */
 `
 
 const Warp = styled.div`
@@ -177,20 +175,13 @@ const Text = styled.div`
 `
 
 const Card = styled.div`
-  width: 385px;
-  /* height: 110px; */
+  max-width: 385px;
   display: ${(props) => props.flex};
   flex-direction: ${(props) => props.direction};
   background: #ffffff;
   position: relative;
-  padding: 10px;
   border-radius: 10px;
   box-sizing: border-box;
-  :hover {
-    padding: 8px;
-    border: 2px solid #ff00007d;
-    /* background-color: #fff7e8; */
-  }
 `
 
 const Ellipse = styled.div`
@@ -213,18 +204,9 @@ const ImgBox = styled.div`
   width: 110px;
   height: 110px;
   border-radius: 4px;
-  /* background: #c4c4c4; */
-  /* border: 1px solid #e7e7e7; */
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-  /* position: absolute;
-  left: 78.51%;
-  right: 7.16%;
-  top: 12%;
-  bottom: 61.02%; */
   background-image: url(${(props) => props.url});
   background-repeat: no-repeat;
   background-position: center;
-  /* background-size: contain; */
   background-size: cover;
 `
 

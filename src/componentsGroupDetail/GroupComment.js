@@ -10,6 +10,8 @@ import smail from "../shared/icon/smail.svg";
 import unSmail from "../shared/icon/unSmail.svg";
 import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
+// import { Container } from "../components";
 
 const GroupComment = memo((props) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
@@ -33,7 +35,7 @@ const GroupComment = memo((props) => {
 
   // console.log("groupPage야야", groupPage)
   // console.log("코멘트컴포넌트", props)
-  console.log("댓글")
+  // console.log("댓글")
 
   const id = props.groupId
   //  console.log("페이지아이디",id)
@@ -42,7 +44,6 @@ const GroupComment = memo((props) => {
   const addComment = () => {
     if (!cookie) {
       window.alert("로그인 후 이용해주세요")
-      history.push("/login")
       return
     } else if (message !== "") {
       dispatch(groupDetailCreators.addCommentMW(id, message))
@@ -60,7 +61,7 @@ const GroupComment = memo((props) => {
   // }, [])
 
   return (
-    <React.Fragment>
+    <Container>
       <Box padding="13px 30px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
@@ -85,34 +86,44 @@ const GroupComment = memo((props) => {
 
       {/* 댓글작성 */}
       <Box
-        height="69px"
+        height="80px"
         position="relative"
         flex="flex"
         align="center"
+        justify="center"
         background="#fff"
+
       >
-        <Warp>
+        <Warp align="center">
           <div>
             <Circle
-              marginT="17px"
+              // marginL="20px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
           </div>
-          <TextArea
-            placeholder="&#13;&#10;댓글을 입력해 주세요..."
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
-          />
+
+          <div style={{width:"300px", position:"relative", marginRight:"10px"}}>
+            <TextArea
+              type="text"
+              placeholder="댓글을 입력해 주세요..."
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value)
+              }}
+            />
+
+            <SendImg
+              src={send}
+              alt="send"
+              onClick={() => {
+                addComment()
+              }}
+            />
+          </div>
+          
+
         </Warp>
-        <SendImg
-          src={send}
-          alt="send"
-          onClick={() => {
-            addComment()
-          }}
-        />
+
       </Box>
 
       <Rectangle />
@@ -128,7 +139,7 @@ const GroupComment = memo((props) => {
           />
         )
       })}
-    </React.Fragment>
+    </Container>
   )
 })
 
@@ -159,9 +170,9 @@ const CommentList = memo((props) => {
   const [modal, setModal] = useState(false)
   const [like, setLike] = useState(false)
 
-  // useEffect(() => {
-  //   dispatch(groupDetailCreators.loadGroupPageMW(props.id));
-  // }, []);
+  useEffect(() => {
+    dispatch(groupDetailCreators.loadGroupPageMW(props.id))
+  }, [])
 
   // 댓글 좋아요 누른거 아이콘 표시하기
   useEffect(() => {
@@ -196,6 +207,7 @@ const CommentList = memo((props) => {
         <Warp>
           <div>
             <Circle
+              marginL="20px"
               marginT="26px"
               url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
             />
@@ -227,11 +239,7 @@ const CommentList = memo((props) => {
                   likeBtn()
                 }}
               >
-                {
-                  like ? `🧡` : `🤍`
-                  // <Icon src={smail} alt="smail" marginR="7px" />
-                  // : <Icon src={unSmail} alt="smail" marginR="7px" />
-                }
+                {like ? <PostLike size="20px" /> : <PostNoLike size="20px" />}
               </p>
               <Text size="14px" marginL="7px">
                 {props.groupcommentlikeCount}
@@ -271,15 +279,13 @@ const CommentList = memo((props) => {
 
 // 모달 컴포넌트
 const Modal = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const delComment = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(
-        groupDetailCreators.delCommentMW(props.id, props.groupCommentId)
-      );
+      dispatch(groupDetailCreators.delCommentMW(props.id, props.groupCommentId))
     }
-  };
+  }
   // edit={edit}
   return (
     <React.Fragment>
@@ -287,14 +293,14 @@ const Modal = (props) => {
       <MWarp direction="column" border="1px solid" radius="10px">
         <ModalButton
           onClick={() => {
-            props.setEdit(true);
+            props.setEdit(true)
           }}
         >
           수정
         </ModalButton>
         <ModalButton
           onClick={() => {
-            delComment();
+            delComment()
           }}
         >
           삭제
@@ -302,54 +308,61 @@ const Modal = (props) => {
       </MWarp>
       {/* </Box> */}
     </React.Fragment>
-  );
-};
+  )
+}
 
 // 수정 컴포넌트
 const EditComment = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [message, setMessage] = useState(props.comment);
+  const [message, setMessage] = useState(props.comment)
   // console.log(message, props.id, props.groupCommentId,)
 
   const editComment = () => {
     if (message === "") {
-      return window.alert("댓글을 입력해주세요.");
+      return window.alert("댓글을 입력해주세요.")
     }
     dispatch(
       groupDetailCreators.editCommentMW(props.id, props.groupCommentId, message)
-    );
-    props.setEdit(false);
-  };
+    )
+    props.setEdit(false)
+  }
 
   return (
     <React.Fragment>
       <EditText
         value={message}
         onChange={(e) => {
-          setMessage(e.target.value);
+          setMessage(e.target.value)
         }}
       />
-      <button
-        onClick={() => {
-          editComment();
-        }}
-      >
-        수정완료
-      </button>
-      <button
-        onClick={() => {
-          props.setEdit(false);
-        }}
-      >
-        취소
-      </button>
+      <Warp justify="flex-end" marginR="32px">
+        <Button
+          onClick={() => {
+            editComment()
+          }}
+        >
+          수정완료
+        </Button>
+        <Button
+          onClick={() => {
+            props.setEdit(false)
+          }}
+        >
+          취소
+        </Button>
+      </Warp>
     </React.Fragment>
-  );
-};
+  )
+}
+
+const Container = styled.div`
+  max-width: 425px;
+  width: 100%;
+`
 
 const EditText = styled.textarea`
-  width: 285px;
+  width: 310px;
   height: 70px;
   /* border: none; */
   padding: 5px 5px 5px 5px;
@@ -374,6 +387,7 @@ const Rectangle = styled.div`
 `;
 
 const Box = styled.div`
+  /* max-width: 425px; */
   width: 100%;
   height: ${(props) => props.height};
   background: ${(props) => props.background};
@@ -396,6 +410,7 @@ const Warp = styled.div`
   align-items: ${(props) => props.align};
   align-content: ${(props) => props.start};
   margin-left: ${(props) => props.marginLeft};
+  margin-right: ${(props) => props.marginR};
   margin-top: ${(props) => props.marginT};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
@@ -418,10 +433,13 @@ const Text = styled.p`
 `;
 
 const TextArea = styled.textarea`
-  width: 310px;
+  /* max-width: 360px; */
+  width: 100%;
+  display: block;
+  /* min-width: 280px; */
   height: 70px;
-  border: none;
-  padding: 5px 5px 5px 5px;
+  /* border: none; */
+  padding: 5px 25px 5px 5px;
   margin-left: 12px;
   resize: none;
   :required ::placeholder {
@@ -429,11 +447,15 @@ const TextArea = styled.textarea`
     font-size: 14px;
     color: #c4c4c4;
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SendImg = styled.img`
   position: absolute;
-  right: 20px;
+  right: -10px;
   bottom: 0%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -446,7 +468,7 @@ const Circle = styled.div`
   background: #c4c4c4;
   border: 1px solid #e7e7e7;
   margin-top: ${(props) => props.marginT};
-  margin-left: 20px;
+  margin-left: ${(props) => props.marginL};
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-repeat: no-repeat;
@@ -486,9 +508,29 @@ const ModalButton = styled.button`
 `;
 
 const MWarp = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
+  /* box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px; */
   height: 50px;
   position: absolute;
   right: 10px;
   top: 30px;
+`;
+
+const PostLike = styled(FcLike)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const PostNoLike = styled(FcLikePlaceholder)`
+  margin: 0 5px 0;
+  cursor: pointer;
+`;
+
+const Button = styled.button`
+  border: none;
+  padding: 5px;
+  margin-left: 10px;
+  background-color: #ffa8a8;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
 `;

@@ -4,16 +4,15 @@ import styled from "styled-components";
 import { chatCreators } from "../redux/modules/chat";
 
 const ChatRoomModal = (props) => {
-  
-  console.log("유저", props)
-  const dispatch = useDispatch();
+  // console.log("유저", props)
+  const dispatch = useDispatch()
 
   // 유저 리스트 중에 나만 골라내기
-  const me = props.chatUser.find(users => users.id === props.id)
+  const me = props.chatUser.find((users) => users.id === props.id)
 
   // 나를 제외한 다른 유저
-  const otherUsers =  props.chatUser.filter(users => users.id !== props.id)
-  console.log("다른사람",otherUsers)
+  const otherUsers = props.chatUser.filter((users) => users.id !== props.id)
+  // console.log("다른사람", otherUsers)
 
   // 사진 ip주소 + 사진이름 조합
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
@@ -27,9 +26,9 @@ const ChatRoomModal = (props) => {
   const kakaoImg = me.picture
 
   const chatList = useSelector((state) => state.chat?.chatList)
-  console.log("chatList",chatList, props.room_id)
+  // console.log("chatList", chatList, props.room_id)
   // const chatInfo = chatList.find(list => list.roomId == props.room_id)
-  // console.log("groupId", chatInfo.groupId) 
+  // console.log("groupId", chatInfo.groupId)
 
   //  useEffect (() => {
   //   // dispatch(chatCreators.getChatUserAX(props.room_id))
@@ -39,83 +38,76 @@ const ChatRoomModal = (props) => {
   // //   dispatch(chatCreators.getChatUserAX(props.postId))
   // // }
 
-
   // 모달 오버레이에서 스크롤 방지
   React.useEffect(() => {
     document.body.style.cssText = `
         position: fixed; 
         top: -${window.scrollY}px;
         overflow-y: scroll;
-        width: 100%;`;
+        width: 100%;`
     return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    };
-  }, []);
-
+      const scrollY = document.body.style.top
+      document.body.style.cssText = ""
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1)
+    }
+  }, [])
 
   // 채팅방 나가기
   const leaveChat = () => {
     dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
   }
 
-  // 스크린야구 채팅방 나가기 
+  // 스크린야구 채팅방 나가기
   const leaveScreenChat = () => {
     dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
   }
 
-  console.log("B")
+  // console.log("B")
 
-	return(
-		<React.Fragment>
-
+  return (
+    <React.Fragment>
       {/* 바깥여백 */}
       <Background
-        onClick={()=>{props.setModal(false)}}
+        onClick={() => {
+          props.setModal(false)
+        }}
       />
 
       {/* 모달창 */}
-			<Container>
+      <Container>
         <Text size="16px" weight="bold" marginB="20px">
-          대화상대 
+          대화상대
         </Text>
 
         <Warp marginB="10px" align="center">
-          <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} /> 
+          <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
           <Circle>
             <Text color="#fff" size="10px">
               나
             </Text>
           </Circle>
-          <Text>
-            {me.username}
-          </Text>
+          <Text>{me.username}</Text>
         </Warp>
 
-        {
-          otherUsers.map((list) => {
-            return <Profile key={list.id} {...list}/>
-          })
-        }
-        
+        {otherUsers.map((list) => {
+          return <Profile key={list.id} {...list} />
+        })}
 
         {/* 하단고정 */}
         <Footer position="fixed">
-          <Text onClick={()=>
-            {
-              props.roomInfo.chatRoomtype === "screen" ?
-              leaveScreenChat() :
-              leaveChat()
+          <Text
+            onClick={() => {
+              props.roomInfo.chatRoomtype === "screen"
+                ? leaveScreenChat()
+                : leaveChat()
             }}
           >
             채팅방 나가기🔚
           </Text>
         </Footer>
-
       </Container>
-		 </React.Fragment>
-	)
+    </React.Fragment>
+  )
 }
   
 // 다른사람 프로필 컴포넌트

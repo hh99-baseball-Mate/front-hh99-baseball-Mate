@@ -87,110 +87,108 @@ const GroupList = (props) => {
     // 해당날짜와 일치하는 경기들의 배열을 넣음
     // dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
-
-    return () => {
-      console.log("난언제실행됨?")
-    }
   }, [team, date])
 
   return (
-    <Box>
-      <Banner />
-      <Header game />
+    <>
+      <Box>
+        <Banner />
+        <Header game />
 
-      <Container>
-        {/* overFlow 로 커스텀 한 Swipers */}
-        <Swipers>
-          {/* 기본 전체 */}
-          <ClubBox>
-            <ClubIcon onClick={allTeam} roundedCircle src={KBOIcon}></ClubIcon>
-            <Text size="11px" center>
-              전체
-            </Text>
-          </ClubBox>
-
-          {clubImageSrc.map((e) => (
-            //  구단 별 swipers
-            <ClubBox
-              key={e.id}
-              onClick={() => {
-                dispatch(groupCr.datePage(""))
-                setTeam(e.name)
-              }}
-            >
-              <ClubIcon src={baseUrl + e.img} roundedCircle />
+        <Container>
+          {/* overFlow 로 커스텀 한 Swipers */}
+          <Swipers>
+            {/* 기본 전체 */}
+            <ClubBox>
+              <ClubIcon
+                onClick={allTeam}
+                roundedCircle
+                src={KBOIcon}
+              ></ClubIcon>
               <Text size="11px" center>
-                {e.name}
+                전체
               </Text>
             </ClubBox>
-          ))}
-        </Swipers>
 
-        <SubTitle more>
-          {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한 모임
-          🔥
-        </SubTitle>
-        {/* 핫 한모임 */}
-        <Swipers height="350px">
-          {hotGroup && hotGroup.length > 0 ? (
-            hotGroup.map((e) => {
-              return (
-                <HotCard
-                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
-                  key={e.groupId}
-                  {...e}
-                />
-              )
-            })
-          ) : (
-            <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
+            {clubImageSrc.map((e) => (
+              //  구단 별 swipers
+              <ClubBox
+                key={e.id}
+                onClick={() => {
+                  dispatch(groupCr.datePage(""))
+                  setTeam(e.name)
+                }}
+              >
+                <ClubIcon src={baseUrl + e.img} roundedCircle />
+                <Text size="11px" center>
+                  {e.name}
+                </Text>
+              </ClubBox>
+            ))}
+          </Swipers>
+
+          <SubTitle more>
+            {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한
+            모임 🔥
+          </SubTitle>
+          {/* 핫 한모임 */}
+          <Swipers height="350px">
+            {hotGroup && hotGroup.length > 0 ? (
+              hotGroup.map((e) => {
+                return (
+                  <HotCard
+                    onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                    key={e.groupId}
+                    {...e}
+                  />
+                )
+              })
+            ) : (
+              <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
+            )}
+          </Swipers>
+          <SelectIcon enlargement moreBtn={datePageBtn}>
+            {day ? day : "원하는 경기 일정을 선택해주세요"}
+          </SelectIcon>
+          {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
+          {!day
+            ? team_list.map((e) => {
+                return (
+                  <GroupCard
+                    onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                    key={e.groupId}
+                    {...e}
+                  />
+                )
+              })
+            : date_list.map((e) => {
+                return (
+                  <GroupCard
+                    onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                    key={e.groupId}
+                    {...e}
+                  />
+                )
+              })}
+
+          {(team_list.length === 0 || date_list.length.length === 0) && (
+            <NotGame>해당 팀 경기는 모임이 없습니다</NotGame>
           )}
-        </Swipers>
-        <SelectIcon enlargement moreBtn={datePageBtn}>
-          {day ? day : "원하는 경기 일정을 선택해주세요"}
-        </SelectIcon>
-        {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
-        {!day
-          ? team_list.map((e) => {
-              return (
-                <GroupCard
-                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
-                  key={e.groupId}
-                  {...e}
-                />
-              )
-            })
-          : date_list.map((e) => {
-              return (
-                <GroupCard
-                  onClick={() => history.push(`/groupdetail/${e.groupId}`)}
-                  key={e.groupId}
-                  {...e}
-                />
-              )
-            })}
 
-        {(team_list.length === 0 || date_list.length.length === 0) && (
-          <NotGame>해당 팀 경기는 모임이 없습니다</NotGame>
-        )}
-
-        {/* {console.log(team_list.length, "team")}
+          {/* {console.log(team_list.length, "team")}
         {console.log(date_list.length, "date")} */}
-      </Container>
+        </Container>
 
-      <MarginBottom />
-      <NaviBar home writeBtn onClick={newPeople} />
-    </Box>
+        <MarginBottom />
+        <NaviBar home writeBtn onClick={newPeople} />
+      </Box>
+    </>
   )
 }
 export default GroupList
 
 const Box = styled.div`
-  /* width: 405px; */
-  /* height: 177px; */
-  /* margin: 15px auto; */
-  /* display: ${(props) => props.flex}; */
-  /* border: 1px solid; */
+
 `
 
 const ClubBox = styled.div`

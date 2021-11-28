@@ -39,12 +39,12 @@ const loadChatListMW = () => {
     instance
       .get("/chat/rooms/mine")
       .then((res) => {
-        console.log(res.data)
-				const list = res.data
-				dispatch(load_chatList(list))
+        // console.log(res.data)
+        const list = res.data
+        dispatch(load_chatList(list))
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err)
       })
   }
 }
@@ -55,27 +55,25 @@ const getChatMessagesAX = (roomId) => {
     instance
       .get(`/chat/${roomId}/messages`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         const msg = res.data.content
-        console.log("mgs",res.data.content)
-        dispatch(load_msg(msg));
+        // console.log("mgs", res.data.content)
+        dispatch(load_msg(msg))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
-  } 
+  }
 }
 
 // 채팅방 유저목록조회
 const getChatUserAX = (roomId) => {
   return (dispatch) => {
-    instance
-      .get(`/chat/user/${roomId}`)
-      .then((res) => {
-        console.log("유저목록조회",res.data)
-        const chatUser = res.data
-        dispatch(load_chatUser(chatUser))
-      })
+    instance.get(`/chat/user/${roomId}`).then((res) => {
+      // console.log("유저목록조회", res.data)
+      const chatUser = res.data
+      dispatch(load_chatUser(chatUser))
+    })
   }
 }
 
@@ -85,15 +83,14 @@ const leaveChatAX = (groupId) => {
     instance
       .delete(`/chat/quit/${groupId}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         history.replace("/chatlist")
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
-
 
 // 스크린야구 모임 채팅방 나가기
 const leaveScreenChatAX = (groupId) => {
@@ -101,32 +98,35 @@ const leaveScreenChatAX = (groupId) => {
     instance
       .delete(`/chat/screen/quit/${groupId}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         history.replace("/chatlist")
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
 
-
-
 //reducer
 export default handleActions(
-	{
-		[LOAD_CHAT_LIST]: (state, action) => produce(state, (draft) => {
-			draft.chatList = action.payload.list;
-		}),
-    [LOAD_MSG]: (state, action) => produce(state, (draft) => {
-      // 이전 메세지 내역중 유형이 대화인 내용만 리덕스에 저장
-      // console.log("msg",action.payload.msg)
-      const messegeList = action.payload.msg.filter(list => list.type === "TALK");
-      draft.messages = messegeList
-    }),
-    [LOAD_CHAT_USER]: (state, action) => produce(state, (draft) => {
-      draft.chatUser = action.payload.chatUser
-    }),
+  {
+    [LOAD_CHAT_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatList = action.payload.list
+      }),
+    [LOAD_MSG]: (state, action) =>
+      produce(state, (draft) => {
+        // 이전 메세지 내역중 유형이 대화인 내용만 리덕스에 저장
+        // // console.log("msg",action.payload.msg)
+        const messegeList = action.payload.msg.filter(
+          (list) => list.type === "TALK"
+        )
+        draft.messages = messegeList
+      }),
+    [LOAD_CHAT_USER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatUser = action.payload.chatUser
+      }),
     // getMessages - 새로운 메세지 정보를 메세지 리스트에 추가
     // [GET_MSG]: (state, action) => produce(state, (draft) => {
     //   const msg = action.payload.newMessage;
@@ -143,8 +143,8 @@ export default handleActions(
     //   }
     //   draft.messages.push(new_msg)
     // })
-	},
-	initialState
+  },
+  initialState
 )
 
 const chatCreators = {
@@ -153,7 +153,8 @@ const chatCreators = {
   getChatUserAX,
   getMessages,
   leaveChatAX,
-  leaveScreenChatAX
+  leaveScreenChatAX,
+  load_msg
 }
 
 export {chatCreators};

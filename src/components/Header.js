@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { VscBell } from "react-icons/vsc";
 import bell from "../shared/icon/bell.svg"
+import { useDispatch, useSelector } from "react-redux";
+import { alarmCreators } from "../redux/modules/alarm";
 
 const Header = (props) => {
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const { game, screen, timeline, goods, community } = props
+
+  const alarm = useSelector((state) => state.alarm.alarmList)
+
+  useEffect(() => {
+    dispatch(alarmCreators.load_alarmMW())
+  }, [])
 
   return (
     <Container minWidth="370px">
@@ -33,10 +42,10 @@ const Header = (props) => {
         <Community
           community={community}
           onClick={() => {
-            history.push("/community")
+            // history.push("/community")
+            window.alert("준비중입니다.")
           }}
         >
-          {" "}
           커뮤니티
         </Community>
 
@@ -66,7 +75,9 @@ const Header = (props) => {
             history.push("/alarm")
           }}
         />
-        <RedDot />
+        { alarm.length === 0 ?
+          null : <RedDot />
+        }
       </Box>
 
       {/* 구분선 */}
@@ -87,7 +98,7 @@ Header.defaultProps = {
 export default Header
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
   margin: auto;
   padding: 0;
   position: relative;

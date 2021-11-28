@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,7 @@ import Comment from "../componentsScreenDetail/Comment";
 import { ArrowBack } from "../components"
 
 
-const ScreenDetail = (props) => {
+const ScreenDetail = memo((props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const screenId = params.screenId
@@ -24,22 +24,19 @@ const ScreenDetail = (props) => {
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myScreenLikesList = mylist.myScreenLikesList;
-  const likePost = myScreenLikesList.indexOf(Number(screenId))
-
+  const myScreenLikesList = mylist?.myScreenLikesList
+  const likePost = myScreenLikesList?.indexOf(Number(screenId))
+  // console.log(likePost)
   useEffect(() => {
-
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
 
     if (likePost !== -1) {
-      setHeart(true)
+      return setHeart(true)
     } else {
       setHeart(false)
     }
-
-  }, [screenId, join])
-
+  }, [screenId, join, likePost])
 
   // console.log("스크린상세페이지", loadDetail)
   // console.log("슼린내꺼야", mylist)
@@ -60,65 +57,68 @@ const ScreenDetail = (props) => {
   // }
 
   return (
-    <Container>
+    <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
-      {/* 글 정보 */}
-      <Info
-        {...loadDetail}
-        {...mylist}
-        // close={close}
-        // setClose={setClose}
-        heart={heart}
-        setHeart={setHeart}
-        // likePost={likePost}
-      />
+      <Container>
+        {/* 글 정보 */}
+        <Info
+          {...loadDetail}
+          {...mylist}
+          // close={close}
+          // setClose={setClose}
+          heart={heart}
+          setHeart={setHeart}
+          // likePost={likePost}
+        />
 
-      {/* 참여자 & 방명록 */}
-      <Box height="65px">
-        <Warp padding="20px 0 0 0">
-          <ParticipantBtn
-            {...loadDetail}
-            onClick={() => {
-              setSelectPage(true)
-            }}
-            selectPage={selectPage}
-          >
-            참여자
-          </ParticipantBtn>
+        {/* 참여자 & 방명록 */}
+        <Box height="65px">
+          <Warp padding="20px 0 0 0">
+            <ParticipantBtn
+              {...loadDetail}
+              onClick={() => {
+                setSelectPage(true)
+              }}
+              selectPage={selectPage}
+            >
+              참여자
+            </ParticipantBtn>
 
-          <CommentBtn
-            onClick={() => {
-              setSelectPage(false)
-            }}
-            selectPage={selectPage}
-          >
-            방명록
-          </CommentBtn>
-        </Warp>
+            <CommentBtn
+              onClick={() => {
+                setSelectPage(false)
+              }}
+              selectPage={selectPage}
+            >
+              방명록
+            </CommentBtn>
+          </Warp>
 
-        <Rectangle />
+          <Rectangle />
 
-        {selectPage === true ? (
-          <Participant
-            {...loadDetail}
-            {...mylist}
-            // close={close}
-            join={join}
-            setJoin={setJoin}
-          />
-        ) : (
-          <Comment {...loadDetail} {...mylist} />
-        )}
-      </Box>
-    </Container>
+          {selectPage === true ? (
+            <Participant
+              {...loadDetail}
+              {...mylist}
+              // close={close}
+              join={join}
+              setJoin={setJoin}
+            />
+          ) : (
+            <Comment {...loadDetail} {...mylist} />
+          )}
+        </Box>
+      </Container>
+    </React.Fragment>
   )
-}
+})
 
 
 export default ScreenDetail;
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;

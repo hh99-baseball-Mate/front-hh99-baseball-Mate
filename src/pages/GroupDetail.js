@@ -24,24 +24,22 @@ const GroupDetail = memo((props) => {
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
-  const myGroupLikesList = mylist.myGroupLikesList
-  const likePost = myGroupLikesList.indexOf(Number(groupId))
-
+  const myGroupLikesList = mylist?.myGroupLikesList
+  const likePost = myGroupLikesList?.indexOf(Number(groupId))
 
   useEffect(() => {
-
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
 
     if (likePost !== -1) {
-      setHeart(true)
+      return setHeart(true)
     } else {
       setHeart(false)
     }
+  }, [groupId, join, likePost])
 
-  }, [groupId, join,])
+  // console.log("heart", heart)
 
-  
   // const commentBtn = () => {
   //   const myJoin = loadDetail.appliedUserInfo.findIndex(
   //     (list) => list.UserId === mylist.userid
@@ -57,57 +55,64 @@ const GroupDetail = memo((props) => {
   // }
 
   return (
-    <Container>
+    <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
-      {/* 글 정보 */}
-      <Info
-        {...loadDetail}
-        {...mylist}
-        // close={close}
-        // setClose={setClose}
-        heart={heart}
-        setHeart={setHeart}
-        // likePost={likePost}
-      />
+      <Container>
 
-      {/* 참여자 & 방명록 */}
-      <Box height="65px">
-        <Warp padding="20px 0 0 0">
-          <ParticipantBtn
-            onClick={() => setSelectPage(true)}
-            selectPage={selectPage}
-          >
-            참여자
-          </ParticipantBtn>
+        {/* 글 정보 */}
+        <Info
+          {...loadDetail}
+          {...mylist}
+          // close={close}
+          // setClose={setClose}
+          heart={heart}
+          setHeart={setHeart}
+          // likePost={likePost}
+        />
 
-          <CommentBtn onClick={() => setSelectPage(false)} selectPage={selectPage}>
-            방명록
-          </CommentBtn>
-        </Warp>
+        {/* 참여자 & 방명록 */}
+        <Box height="65px">
+          <Warp padding="20px 0 0 0">
+            <ParticipantBtn
+              onClick={() => setSelectPage(true)}
+              selectPage={selectPage}
+            >
+              참여자
+            </ParticipantBtn>
 
-        <Rectangle />
+            <CommentBtn
+              onClick={() => setSelectPage(false)}
+              selectPage={selectPage}
+            >
+              방명록
+            </CommentBtn>
+          </Warp>
 
-        {selectPage === true ? (
-          <Participant
-            {...loadDetail}
-            {...mylist}
-            // close={close}
-            // setClose={setClose}
-            join={join}
-            setJoin={setJoin}
-          />
-        ) : (
-          <Comment {...loadDetail} {...mylist} />
-        )}
-      </Box>
-    </Container>
+          <Rectangle />
+
+          {selectPage === true ? (
+            <Participant
+              {...loadDetail}
+              {...mylist}
+              // close={close}
+              // setClose={setClose}
+              join={join}
+              setJoin={setJoin}
+            />
+          ) : (
+            <Comment {...loadDetail} {...mylist} />
+          )}
+        </Box>
+      </Container>
+    </React.Fragment>
   )
 })
 
 export default GroupDetail
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;

@@ -90,7 +90,9 @@ const getGoodsMD = ({ start, next }) => {
 
         dispatch(getGoods(goods_list, goods_list_length))
       })
-      .catch((err) => console.log(err, "굿즈 가져오기 에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 가져오기 에러"))
+      })
   }
 }
 
@@ -104,7 +106,7 @@ const addGoodsMD = (formData) => {
         history.replace("/goods")
       })
       .catch((err) => {
-        console.log(err, "굿즈 생성 오류")
+        // console.log(err, "굿즈 생성 오류")
       })
   }
 }
@@ -117,9 +119,10 @@ const deleteGoodsMD = (goodsId) => {
       .delete(`/goods/${goodsId}`)
       .then((res) => {
         dispatch(deleteGoods(goodsId))
-        // console.log(res, "삭제")
       })
-      .catch((err) => console.log(err, "굿즈 삭제에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 삭제에러"))
+      })
   }
 }
 
@@ -130,11 +133,11 @@ const addGoodsCommentMD = (goodsId, getComment) => {
     instance
       .post(`/goods/${goodsId}/comment`, { comment: getComment })
       .then((res) => {
-        // console.log(res, "댓글추가")
-        // dispatch(addGoodsComment(goodsId, addComment))
         dispatch(getGoodsCommentMD(goodsId))
       })
-      .catch((err) => console.log(err, "굿즈 댓글 추가 에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 댓글 추가 에러"))
+      })
   }
 }
 
@@ -153,7 +156,9 @@ const getGoodsCommentMD = (goodsId) => {
 
         dispatch(getGoodsComment(goodsId, goodsCommentList))
       })
-      .catch((err) => console.log(err, "굿즈 가져오기 에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 가져오기 에러"))
+      })
   }
 }
 
@@ -161,27 +166,28 @@ const getGoodsCommentMD = (goodsId) => {
 
 const deleteGoodsCommentMD = (goodsId, commentId) => {
   return function (dispatch, getState, { history }) {
-    // console.log(goodsId, commentId)
     instance
       .delete(`/goods/${goodsId}/comment/${commentId}`)
       .then((res) => {
         dispatch(deleteGoodsComment(goodsId, commentId))
       })
-      .catch((err) => console.log(err, "굿즈 댓글삭제 에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 댓글삭제 에러"))
+      })
   }
 }
 
 // 댓글 수정
 const updateGoodsCommentMD = (goodsId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
-    // console.log(goodsId, commentId)
     instance
       .put(`/goods/${goodsId}/comment/${commentId}`, { comment: comment })
       .then((res) => {
-        console.log(res)
         dispatch(updateGoodsComment(goodsId, commentId, comment))
       })
-      .catch((err) => console.log(err, "댓글수정 에러입니다."))
+      .catch((err) => {
+        // console.log(err, "댓글수정 에러입니다."))
+      })
   }
 }
 
@@ -203,7 +209,9 @@ const addGoodsLikeMD = (goodsId, useridx, likeCheck) => {
           return
         }
       })
-      .catch((err) => console.log(err, "굿즈 좋아요 에러"))
+      .catch((err) => {
+        // console.log(err, "굿즈 좋아요 에러"))
+      })
   }
 }
 
@@ -233,9 +241,7 @@ export default handleActions(
         const idx = draft.goods_list.findIndex((e) => {
           return e.goodsId === action.payload.goodsId
         })
-        draft.goods_list[idx].goodsCommentList.unshift(
-          action.payload.addComment
-        )
+        draft.goods_list[idx].goodsCommentList.push(action.payload.addComment)
       }),
     [GET_GOODS_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -304,8 +310,6 @@ export default handleActions(
             return e.userIdGoods === action.payload.useridx
           }
         )
-
-        console.log(userIdx, "리듀스")
         draft.goods_list[goodsIdx].goodsLikesList.splice(userIdx, 1)
       }),
     [LOADING]: (state, action) =>

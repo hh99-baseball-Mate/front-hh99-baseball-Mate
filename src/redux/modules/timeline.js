@@ -29,12 +29,12 @@ const loadTimelineMW = () => {
     instance
       .get("/timelines")
       .then((res) => {
-        // console.log("timeline", res)
+        // // console.log("timeline", res)
         const timeline = res.data
         dispatch(load_timeline(timeline))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -45,62 +45,62 @@ const loadTimelineNumMW = (number) => {
     instance
       .get("/timelines", number)
       .then((res) => {
-        // console.log("timeline", res)
+        // // console.log("timeline", res)
         const timeline = res.data
         dispatch(load_timeline(timeline))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
 
 const addTimelineMW = (message) => {
   return (dispatch, getState, { history }) => {
-    // console.log("addTimeline", message)
+    // // console.log("addTimeline", message)
     const content = { content: message }
     instance
       .post("/timelines", content)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(add_timeline(content))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
 
 const deleteTimelineMW = (id) => {
   return (dispatch, getState, { history }) => {
-    // console.log("deleteTimeline", id, typeof id)
+    // // console.log("deleteTimeline", id, typeof id)
     const timeLineId = id
     instance
       .delete(`/timelines/${timeLineId}`)
       .then((res) => {
-        // console.log(res)
+        // // console.log(res)
         dispatch(delete_timeline(id))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
 
 const likeTimelineMW = (id, like) => {
   return (dispatch, getState, { history }) => {
-    // console.log("likeTimeline", id, like)
+    // // console.log("likeTimeline", id, like)
     const timeLineId = id
-    // console.log("timeLineId", timeLineId)
+    // // console.log("timeLineId", timeLineId)
     const isLiked = { isLiked: like }
     instance
       .post(`/timelines/${timeLineId}/like`, isLiked)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         dispatch(like_timeline(timeLineId, isLiked))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -111,11 +111,11 @@ const likeListMW = () => {
       .post("/user/logincheck")
       .then((res) => {
         const likelist = res.data.myTimeLineLikesList
-        // console.log("likelist체크", likelist)
+        // // console.log("likelist체크", likelist)
         dispatch(load_likelist(likelist))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -125,50 +125,57 @@ const likeListMW = () => {
 // 		apis
 // 			.getMainTimeline(number)
 // 			.then((res) => {
-// 				// console.log("메인타임라인", res)
+// 				// // ("메인타임라인", res)
 // 				const mainTimeline = res.data;
 // 				dispatch(load_mainTimeline(mainTimeline))
 // 			})
 // 			.catch((err) => {
-// 				console.log(err);
+// 				// console.log(err);
 // 			})
 // 	}
 // }
 
-
-
 //reducer
 export default handleActions(
-	{
-		[LOAD_TIMELINE]: (state, action) => produce(state, (draft) => {
-			draft.timeline = action.payload.timeline;
-		}),
-		[ADD_TIMELINE]: (state, action) => produce(state, (draft) => {
-			draft.timeline.unshift(action.payload.content)
-		}),
-		[DELETE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			const idx = draft.timeline.findIndex((p) => p.timelineId === action.payload.id);
-			if (idx !== -1) {
-				draft.timeline.splice(idx, 1);
-			}
-		}),
-		[LIKE_TIMELINE]: (state, action) => produce(state, (draft) => {
-			const idx = draft.timeline.findIndex((p) => p.timelineId === action.payload.id);
-			// console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-			if (action.payload.like.isLiked) {
-				draft.timeline[idx].likecount -= 1;
-			} else {
-				draft.timeline[idx].likecount += 1;
-			}
-		}),
-		[LOAD_LIKELIST]: (state, action) => produce(state, (draft) => {
-			draft.likelist = action.payload.likelist;
-		}),
-		// [LOAD_MAIN_TIMELINE]: (state, action) => produce(state, (draft) => {
-		// 	draft.mainTimeline = action.payload.mainTimeline;
-		// }),
-	},
-	initialState
+  {
+    [LOAD_TIMELINE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.timeline = action.payload.timeline
+      }),
+    [ADD_TIMELINE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.timeline.unshift(action.payload.content)
+      }),
+    [DELETE_TIMELINE]: (state, action) =>
+      produce(state, (draft) => {
+        const idx = draft.timeline.findIndex(
+          (p) => p.timelineId === action.payload.id
+        )
+        if (idx !== -1) {
+          draft.timeline.splice(idx, 1)
+        }
+      }),
+    [LIKE_TIMELINE]: (state, action) =>
+      produce(state, (draft) => {
+        const idx = draft.timeline.findIndex(
+          (p) => p.timelineId === action.payload.id
+        )
+        // // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+        if (action.payload.like.isLiked) {
+          draft.timeline[idx].likecount -= 1
+        } else {
+          draft.timeline[idx].likecount += 1
+        }
+      }),
+    [LOAD_LIKELIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.likelist = action.payload.likelist
+      }),
+    // [LOAD_MAIN_TIMELINE]: (state, action) => produce(state, (draft) => {
+    // 	draft.mainTimeline = action.payload.mainTimeline;
+    // }),
+  },
+  initialState
 )
 
 

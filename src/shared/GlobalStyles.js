@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 		max-width: 425px;
 		background-color: #fafafa;
 		margin: auto;
-		box-shadow: 0px 1px 4px 9999px rgba(0, 0, 0, 0.01); 
+		box-shadow: 0px 1px 4px 9999px rgba(0, 0, 0, 0.01);
 	}
 	/* #root {
 		background-color: #fff;

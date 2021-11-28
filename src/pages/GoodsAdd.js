@@ -52,7 +52,7 @@ export const GoodsAdd = (props) => {
 
     dispatch(goodsActions.addGoodsMD(formData))
     e.target.disabled = true
-    for (const keyValue of formData) console.log(keyValue)
+    // for (const keyValue of formData) console.log(keyValue)
   }
 
   return (
@@ -96,6 +96,7 @@ export const GoodsAdd = (props) => {
         <Inputs
           name="goodsContent"
           textarea
+          maxLength="500"
           placeholder="내 굿즈를 마음껏 소개해 주세요(최대500자)"
           value={goodsContent}
           onChange={onChange}

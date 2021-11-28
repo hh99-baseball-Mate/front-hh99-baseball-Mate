@@ -39,7 +39,7 @@ export const GroupAdd = (props) => {
   const { content, title, selectTeam } = inputValue;
 
   // + - 버튼 커스텀 훅
-  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(0);
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
   // 이미지 미리보기/ 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
@@ -58,27 +58,27 @@ export const GroupAdd = (props) => {
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true;
-    });
+      return !e ? false : true
+    })
 
     if (emptyValue.includes(false) || !groupDate) {
-      window.alert("빈란을 채워주세요");
+      window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
-      return;
+      return
     }
 
-    const formData = new FormData();
+    const formData = new FormData()
 
-    formData.append("title", title);
-    formData.append("groupDate", groupDate);
-    formData.append("content", content);
-    formData.append("peopleLimit", peopleLimit);
-    formData.append("selectTeam", selectTeam);
-    formData.append("file", preview);
+    formData.append("title", title)
+    formData.append("groupDate", groupDate)
+    formData.append("content", content)
+    formData.append("peopleLimit", peopleLimit)
+    formData.append("selectTeam", selectTeam)
+    formData.append("file", preview)
 
-    dispatch(groupActions.addGroupMD(formData));
-    e.target.disabled = true;
-    for (const keyValue of formData) console.log(keyValue);
+    dispatch(groupActions.addGroupMD(formData))
+    e.target.disabled = true
+    // for (const keyValue of formData) console.log(keyValue);
   };
 
   useEffect(() => {

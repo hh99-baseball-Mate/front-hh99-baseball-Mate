@@ -6,6 +6,7 @@ import { useHistory, useParams } from "react-router";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
+import { getCookie } from '../shared/Cookie';
 
 import heart_join from "../shared/icon/groupDetail/heart_join.svg"
 import heart_null from "../shared/icon/groupDetail/heart_null.svg"
@@ -13,6 +14,7 @@ import calendar from "../shared/icon/calendar.svg"
 import location from "../shared/icon/location.svg"
 import colorUsers from "../shared/icon/colorUsers.svg"
 import users from "../shared/icon/users.svg"
+import { width } from "dom-helpers";
 
 
 
@@ -52,6 +54,7 @@ const Info = memo((props) => {
   const myGroupLikesList = props.myGroupLikesList
   const id = props.groupId
 
+  const cookie = getCookie("is_login");
   // useEffect(() => {
   // 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
   // 	dispatch(groupDetailCreators.mylistMW())
@@ -60,7 +63,7 @@ const Info = memo((props) => {
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
-  //     props.setHeart(true)
+  //     return props.setHeart(true)
   //   } else {
   //     props.setHeart(false)
   //   }
@@ -78,8 +81,12 @@ const Info = memo((props) => {
 
   // 찜(하트) 버튼
   const HeartBtn = () => {
-    props.setHeart(!props.heart)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props.heart))
+    if (!cookie) {
+      window.alert("로그인 후 이용해주세요");
+      return;
+    }
+    props.setHeart(!props?.heart)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart))
   }
 
   // 수정버튼
@@ -95,25 +102,22 @@ const Info = memo((props) => {
     }
   }
 
-  console.log("info")
-  console.log("받아오기", props)
+  // console.log("받아오기", props)
 
   return (
     <Container>
       <Box position="relative">
-
         {/* 배경사진 */}
         <Img url={imageUrl} />
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
-          {props.heart ? (
-            <img src={heart_join} alt="Heart" />
+          {props?.heart ? (
+            <img src={heart_join} alt="Heart" style={{cursor: "pointer"}} />
           ) : (
-            <img src={heart_null} alt="nullHeart" />
+            <img src={heart_null} alt="nullHeart" style={{cursor: "pointer"}} />
           )}
         </JoinCircle>
-
       </Box>
 
       {/* 타이틀 */}
@@ -149,14 +153,14 @@ const Info = memo((props) => {
           <Warp>
             {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
             {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn}>📝</p>
+              <p onClick={editBtn} style={{cursor: "pointer"}} >📝</p>
             ) : (
               ""
             )}
 
             {/* 마감되더라도 삭제 가능 */}
             {props.createdUserId === props.userid ? (
-              <p onClick={delBtn} style={{ marginLeft: "5px" }}>
+              <p onClick={delBtn} style={{ marginLeft: "5px", cursor: "pointer" }}>
                 ❌
               </p>
             ) : (
@@ -164,16 +168,17 @@ const Info = memo((props) => {
             )}
           </Warp>
         </Warp>
-
+        {/* <div style={{width:"295px"}}> */}
         <Text
           size="16px"
           weight="bold"
-          width="295px"
+          width="100%"
           height="46px"
           lineHeight="23px"
         >
           {props.title}
         </Text>
+        {/* </div> */}
 
         <Warp justify="space-between" align="center" marginT="11px">
           {/* 인원 상태바 */}
@@ -243,7 +248,7 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box height="121px" background="#F2FAFC" padding="20px 30px">
+      <Box minHeight="121px" maxHeight="auto" background="#F2FAFC" padding="20px 30px">
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>
@@ -266,7 +271,8 @@ Info.defaultProps = {
 export default Info
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   /* background-size: cover; */
   /* height: auto; */
   margin: 0 auto;
@@ -276,6 +282,8 @@ const Container = styled.div`
 const Box = styled.div`
   width: 100%;
   height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   background: ${(props) => props.background};
   padding: ${(props) => props.padding};
   display: ${(props) => props.flex};
@@ -301,7 +309,7 @@ const JoinCircle = styled.div`
   height: 28px;
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.5);
-  left: 360px;
+  right: 10%;
   top: 298px;
   display: flex;
   justify-content: center;
@@ -313,7 +321,8 @@ const TitleBox = styled.div`
   left: 50%;
   top: 345px;
   transform: translateX(-50%);
-  width: 335px;
+  max-width: 335px;
+  width: 80%;
   height: 139px;
   background: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
@@ -360,12 +369,12 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
   /* white-space: nowrap; */
-  text-overflow: ellipsis;
-  overflow: hidden;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
 `;
 
 const Circle = styled.div`

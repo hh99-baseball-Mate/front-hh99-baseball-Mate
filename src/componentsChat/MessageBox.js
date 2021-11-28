@@ -4,74 +4,80 @@ import styled from "styled-components";
 
 
 const MessageBox = memo((props) => {
+  // console.log("메세지박스", props)
+  const sender_id = useSelector((state) => state.user.user_info?.useridx)
 
-	const sender_id = useSelector((state) => state.user.user_info?.useridx);
+  // 사진 ip주소 + 사진이름 조합
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = IMAGES_BASE_URL
+  const img = props.filePath
+  const imageUrl = ip + img
 
-	  // 사진 ip주소 + 사진이름 조합
-		const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-		const ip = IMAGES_BASE_URL
-		const img = props.filePath
-		const imageUrl = ip + img
-	
-		// 기본 로그인일 때 프로필 사진
-		const profileImg = ip + props.senderImage
-	
-		// kakaocdn (카카오 프사인지 확인)
-		const kakaoCheck = props.senderImage?.split(".")[1]
-		const kakaoImg = props.senderImage
+  // 기본 로그인일 때 프로필 사진
+  const profileImg = ip + props.senderImage
 
-	console.log("A")
+  // kakaocdn (카카오 프사인지 확인)
+  const kakaoCheck = props.senderImage?.split(".")[1]
+  const kakaoImg = props.senderImage
 
-	// 내가 보낸 메세지가 아닐 때
-	if(props.senderId !== sender_id) {
-		return (
+  const dayAndTime = props.modifiedAt.split(" ")
+  const day = dayAndTime[0].split("-").join(".")
+  const time = dayAndTime.slice(1, 3).join(" ")
 
-			<Container>
+  // 내가 보낸 메세지가 아닐 때
+  if (props.senderId !== sender_id) {
+    return (
+      <Container>
+        <Warp>
+          <div>
+            <ImgCircle
+              marginR="7px"
+              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+            />
+          </div>
+          <Warp direction="column">
+            <Text>{props.senderName}</Text>
 
-				<Warp >	
+            <Warp align="flex-end">
+              <Talk>{props.message}</Talk>
+              <Time>
+                {/* 오전 10:34 */}
+                <Warp direction="column" align="center">
+                  <div>{day}</div>
+                  <div>{time}</div>
+                </Warp>
+              </Time>
+            </Warp>
+          </Warp>
+        </Warp>
+      </Container>
+    )
+  }
 
-					<ImgCircle marginR="13px" url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}/>
-					<Warp direction="column">	
-						<Text>{props.senderName}</Text>
-
-						<Warp align="flex-end" margin="5px 5px 6px 0">
-							<Talk>
-								{props.message}
-							</Talk>	
-							<Time position="relative">
-								{/* 오전 10:34 */}
-								{props.modifiedAt}
-							</Time>
-						</Warp>
-					</Warp>
-					
-				</Warp>	
-			</Container>
-		)	
-	}			
-
-		// 내가 보낸 메세지 일 때
-	if(props.senderId === sender_id) {
-		return (
-			<Container>
-				<Warp align="flex-end" direction="row-reverse"  margin="5px 0">
-					<MyTalk>
-						{props.message}
-					</MyTalk>
-					<MyTime margin="0 6px 0 0">
-						{props.modifiedAt}
-					</MyTime>
-				</Warp>	
-			</Container>
-		)
-	}
+  // 내가 보낸 메세지 일 때
+  if (props.senderId === sender_id) {
+    return (
+      <Container>
+        <Warp align="flex-end" direction="row-reverse">
+          <MyTalk>{props.message}</MyTalk>
+          <MyTime margin="0 3px 0 0">
+            {/* {props.modifiedAt} */}
+            <Warp direction="column" align="center">
+              <div>{day}</div>
+              <div>{time}</div>
+            </Warp>
+          </MyTime>
+        </Warp>
+      </Container>
+    )
+  }
 })
 export default React.memo(MessageBox);
 
 
 const Container = styled.div`
   margin-bottom: 10px;
-  width: 385px;
+  max-width: 390px;
   position: relative;
 `
 
@@ -113,20 +119,21 @@ const Text = styled.div`
 `;
 
 const Time = styled.div`
-	font-size: 11px;
+	font-size: 8px;
 	font-weight: ${(props) => props.weight};
 	color: #777777;
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
+	width: 70px;
 	/* right: 10px;
 	top: 30px; */
 	/* padding: 12px 10px; */
 `;
 
 const ImgCircle = styled.div`
-	width: 45px;
-	height: 45px;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 	background: #FFFFFF;
 	background-image: url(${(props) => props.url});
@@ -142,16 +149,16 @@ const ImgCircle = styled.div`
 `;
 
 const Talk = styled.div`
-	max-width: 270px;
+	max-width: 290px;
 	min-width: 10px;
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;
-	padding: 12px 10px;
+	padding: 10px 10px;
 	/* position: absolute;
 	left: 60px;
 	top: 30px; */
 	
-	/* word-break: pre-line; */
+	word-break: break-all;
 `;
 
 const Input = styled.input`
@@ -187,11 +194,11 @@ const MyTalk = styled.div`
 	/* position: absolute;
 	right: 0px;
 	top: 30px; */
-	/* word-break: pre-line; */
+	word-break: break-all;
 `;
 
 const MyTime = styled.div`
-	font-size: 11px;
+	font-size: 8px;
 	font-weight: ${(props) => props.weight};
 	color: #777777;
 	letter-spacing: ${(props) => props.spacing};

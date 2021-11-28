@@ -19,11 +19,11 @@ const getCardAPI = () => {
     instance
       .get(`/community`)
       .then((res) => {
-        console.log(res);
+        // console.log(res)
         dispatch(getCard(res.data));
       })
       .catch((err) => {
-        console.log(err, "커뮤니티카드 조회 에러");
+        // console.log(err, "커뮤니티카드 조회 에러")
       });
   };
 };
@@ -38,7 +38,7 @@ const postAddAPI = (formData) => {
         history.replace("/community");
       })
       .catch((err) => {
-        console.log(err, "모임 만들기 에러");
+        // console.log(err, "모임 만들기 에러")
       });
   };
 };

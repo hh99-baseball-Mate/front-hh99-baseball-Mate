@@ -6,240 +6,297 @@ import { ArrowBack } from "../components";
 import { MarginBottom, NaviBar } from "../components";
 import { alarmCreators } from "../redux/modules/alarm";
 import { Modal } from "../components/Modal"
+import RequestAlarm from "../componentAlarm/RequestAlarm";
+import NormalAlarm from "../componentAlarm/NormalAlarm";
 
 
 const Alarm = (props) => {
+  const dispatch = useDispatch()
 
-	const dispatch = useDispatch();
+  const alarm = useSelector((state) => state.alarm.alarmList)
+  // (방장이 참여자들을)승인 요청 목록
+  const requestList = useSelector((state) => state.alarm?.requestList)
+  // (참여자기준) 대기중인 신청 목록
+  const awaitList = useSelector((state) => state.alarm?.awaitList)
 
-	const alarm = useSelector(state => state.alarm.alarmList)
-	// (방장이 참여자들을)승인 요청 목록
-	const requestList = useSelector((state) => state.alarm?.requestList);
-	// (참여자기준) 대기중인 신청 목록
-	const awaitList = useSelector((state) => state.alarm?.awaitList);
+  // 스크린야구 (방장이 참여자들을)승인 요청 목록
+  const requestScreenList = useSelector(
+    (state) => state.alarm.requestScreenList
+  )
+  // 스크린야구 (참여자기준) 대기중인 신청 목록
+  const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-	// 스크린야구 (방장이 참여자들을)승인 요청 목록
-	const requestScreenList = useSelector((state) => state.alarm.requestScreenList)
-	// 스크린야구 (참여자기준) 대기중인 신청 목록
-	const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
+  console.log("alarm", alarm)
+  // console.log("requestList", requestList)
+  // console.log("ScreenAlarm", requestScreenList)
+  console.log("awaitList", awaitList)
+  console.log("awaitScreenList", awaitScreenList)
+  
 
-	console.log("alarm", alarm)
-	// console.log("ScreenAlarm", requestScreenList)
-	console.log("awaitScreenList", awaitScreenList)
-	console.log("awaitList", awaitList)
+  useEffect(() => {
+    dispatch(alarmCreators.load_alarmMW())
 
-	useEffect(() => {
-		dispatch(alarmCreators.load_alarmMW())
-		dispatch(alarmCreators.requestChatListMW())
-		dispatch(alarmCreators.awaitChatListMW())
+    dispatch(alarmCreators.requestChatListMW())
+    dispatch(alarmCreators.awaitChatListMW())
 
-		dispatch(alarmCreators.requestScreenChatListMW())
-		dispatch(alarmCreators.awaitScreenChatListMW())
-	}, [])
-
-
-	return (
-		<React.Fragment>
-			<Container>
-				<ArrowBack bg="true" fixed="fixed" margin="margin">알림</ArrowBack>
+    dispatch(alarmCreators.requestScreenChatListMW())
+    dispatch(alarmCreators.awaitScreenChatListMW())
+  }, [])
 
 
-				{/* <Rectangle marginT="30px"/> */}
+  const [selectPage, setSelectPage] = useState(true)
 
+  return (
+    <React.Fragment>
 
-				{ props.is_login ?
-					alarm.map((alarm) => {
-						return (
-						<Alert key={alarm.id} {...alarm} 
-							requestList={requestList} 
-							requestScreenList={requestScreenList}
-						/>)
-					})
-					:
-					<Container position="absolute" top="50%" right="-50%" trans="translateY(-50%)">
-						<Warp flex="flex">
-							<Text margin="auto">
-								로그인 후 이용해주세요
-							</Text>	
-						</Warp>
-					</Container>
-				}
+      <Container>
 
+        <ArrowBack bg="true" fixed="fixed">
+          알림
+        </ArrowBack>
 
-				
-			</Container>
-			<MarginBottom/>
-			<NaviBar/>
-		</React.Fragment>
-	)
+        <Container padding="58.39px 0 0 0">
+
+          {/* 일반 & 승인요청 버튼 */}
+          <Box height="50px" position="fixed" background="#fff">
+            <Warp padding="10px 0 0 0">
+              <NormalBtn
+                onClick={() => setSelectPage(true)}
+                selectPage={selectPage}
+              >
+                일반
+              </NormalBtn>
+
+              <RequestBtn
+                onClick={() => setSelectPage(false)}
+                selectPage={selectPage}
+              >
+                승인요청
+              </RequestBtn>
+            </Warp>
+
+            <Rectangle />
+          </Box> 
+
+          <Scroll>
+            {selectPage === true ? (
+              <NormalAlarm
+                alarm={alarm}
+                awaitList={awaitList}
+                awaitScreenList={awaitScreenList}
+              />
+            ) : (
+              <RequestAlarm 
+                alarm={alarm}
+                requestList={requestList}
+                requestScreenList={requestScreenList}
+              />
+            )}
+          </Scroll>     
+
+          {!props.is_login && (
+            <Container
+              position="absolute"
+              top="50%"
+              right="-50%"
+              trans="translateY(-50%)"
+            >
+              <Warp flex="flex">
+                <Text margin="auto">로그인 후 이용해주세요</Text>
+              </Warp>
+            </Container>
+          )}
+
+        </Container>
+
+        
+      </Container>
+      {/* <MarginBottom /> */}
+      <NaviBar />
+    </React.Fragment>
+  )
 }
 
-export default Alarm;
+export default Alarm
+
+
 
 // 개별 알람 컴포넌트
-const Alert = (props) => {
+// const Alert = (props) => {
+//   const dispatch = useDispatch()
+//   // console.log("props", props)
 
-	const dispatch = useDispatch();
-	// console.log("props", props)
+//   // 경기모임 누가 요청했는지 찾기
+//   const num = props.requestList.findIndex(
+//     (list) => list.joinRequestId === props.joinRequestId
+//   )
+//   const requestList = props.requestList[num]
 
+//   // 스야모임 누가 요청했는지 찾기
+//   const screenNum = props.requestScreenList.findIndex(
+//     (list) => list.joinRequestId === props.joinRequestId
+//   )
+//   const requestScreenList = props.requestScreenList[screenNum]
 
-	// 경기모임 누가 요청했는지 찾기
-	const num = props.requestList.findIndex(list => list.joinRequestId === props.joinRequestId)
-	const requestList = props.requestList[num]
+//   // 그룹참가 허용
+//   const allow = () => {
+//     if (window.confirm("정말 허용하시겠습니까?")) {
+//       dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-	// 스야모임 누가 요청했는지 찾기
-	const screenNum = props.requestScreenList.findIndex(list => list.joinRequestId === props.joinRequestId)
-	const requestScreenList = props.requestScreenList[screenNum]
+//   // 그룹참가 거절
+//   const refuse = () => {
+//     if (window.confirm("정말 거절하시겠습니까?")) {
+//       dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-	
-	// 그룹참가 허용
-	const allow = () => {
+//   // 스크린야구 그룹참가 허용
+//   const allowScreen = () => {
+//     if (window.confirm("정말 허용하시겠습니까?")) {
+//       dispatch(
+//         alarmCreators.alarmScreenComfirmMW(
+//           requestScreenList?.joinRequestId,
+//           true
+//         )
+//       )
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-		if(window.confirm("정말 허용하시겠습니까?")) {
-			dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
-			setShowModal(false)
-			delAlert()
-		}
-	}
+//   // 스크린야구 그룹참가 거절
+//   const refuseScreen = () => {
+//     if (window.confirm("정말 거절하시겠습니까?")) {
+//       dispatch(
+//         alarmCreators.alarmScreenComfirmMW(
+//           requestScreenList?.joinRequestId,
+//           false
+//         )
+//       )
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-	// 그룹참가 거절
-	const refuse = () => {
+//   // 모달
+//   const [showModal, setShowModal] = useState(false)
 
-		if(window.confirm("정말 거절하시겠습니까?")) {
-			dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
-			setShowModal(false)
-			delAlert()
-		}
-	}
+//   const modalData = {
+//     title: "알람 에디터",
+//     descriptionOne: "알람을 확인/삭제 하시겠습니까?",
+//     btnClose: "취소",
+//     btnConfirm: "승인",
+//     btnUpdate: "삭제",
+//   }
 
-	// 스크린야구 그룹참가 허용
-	const allowScreen = () => {
+//   // 알람삭제
+//   const delAlert = () => {
+//     dispatch(alarmCreators.del_alarmMW(props.id))
+//     setShowModal(false)
+//   }
 
-		if(window.confirm("정말 허용하시겠습니까?")) {
-			dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, true))
-			setShowModal(false)
-			delAlert()
-		}
-	}
+//   // 일반 알림 삭제
+//   const delNormalAlert = () => {
+//     if (window.confirm("정말 삭제하시겠습니까?")) {
+//       dispatch(alarmCreators.del_alarmMW(props.id))
+//     }
+//   }
 
-	// 스크린야구 그룹참가 거절
-	const refuseScreen = () => {
+//   const dayAndTime = props.modifiedAt.split(" ")
+//   const day = dayAndTime[0]
+//   const time = dayAndTime.slice(1, 3).join(" ")
+//   // console.log(time)
 
-		if(window.confirm("정말 거절하시겠습니까?")) {
-			dispatch(alarmCreators.alarmScreenComfirmMW(requestScreenList?.joinRequestId, false))
-			setShowModal(false)
-			delAlert()
-		}
-	}
+//   const contents = props.contents.split("*")
+//   // console.log(contents)
 
-	// 모달
-	const [showModal, setShowModal] = useState(false)
+//   return (
+//     <Container position="relative">
+//       <AlertCard onClick={() => setShowModal(true)}>
+//         <div>🔔</div>
+//         {/* <div>🔔</div>
+//         <div>🔔</div> */}
 
-	const modalData = {
-    title: "알람 에디터",
-    descriptionOne: "알람을 확인/삭제 하시겠습니까?",
-    btnClose: "취소",
-    btnConfirm: "승인",
-    btnUpdate: "거절",
-  }
+//           <Text size="12px" width="70%">
+//             <Warp
+//               flex="flex"
+//               direction="column"
+//               align="flex-start"
+//               justify="flex-start"
+//             >
+//               <div>{contents[0]}</div>
+//               <div>
+//                 {contents[1]}
+//                 {contents[2]}
+//               </div>
+//               <div>{contents[3]}</div>
+//               {/* {
+// 							contents.map((list, idx) => {
+// 								return <div key={idx}>{list}</div> 
+// 							})
+// 						} */}
+//             </Warp>
+//           </Text>
+ 
 
-	// 알람삭제
-	const delAlert = () => {
-		dispatch(alarmCreators.del_alarmMW(props.id))
-		setShowModal(false)
-	}
+//         <Text size="10px" color="#777777">
+//           <Warp flex="flex" direction="column" align="center">
+//             <div style={{ marginBottom: "3px" }}>{day}</div>
+//             <div>{time}</div>
+//           </Warp>
+//         </Text>
+//       </AlertCard>
+//       <Rectangle />
 
-	// 일반 알림 삭제
-	const delNormalAlert = () => {
+//       {/* 경기모임일 때 모달창 */}
+//       {num !== -1 && showModal && (
+//         <Modal
+//           three
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           updataBtn={allow}
+//           deleteBtn={refuse}
+//         ></Modal>
+//       )}
 
-		if(window.confirm("정말 삭제하시겠습니까?")) {
-			dispatch(alarmCreators.del_alarmMW(props.id))
-		}
-	}
+//       {/* 스크린야구 모임일 때 모달창 */}
+//       {screenNum !== -1 && showModal && (
+//         <Modal
+//           three
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           updataBtn={allowScreen}
+//           deleteBtn={refuseScreen}
+//         ></Modal>
+//       )}
 
-	const dayAndTime = props.modifiedAt.split(" ")
-	const day = dayAndTime[0]
-	const time = dayAndTime.slice(1,3).join(" ")
-	// console.log(time)
-
-	const contents = props.contents.split("*")
-	// console.log(contents)
-
-	return (
-		<Container position="relative">
-			<AlertCard onClick={() => setShowModal(true)}>
-				<div >
-					{/* <Circle/> */}🔔
-				</div>
-				<Warp padding="0 10px">
-
-					<Text size="15px" width="313px">
-						<Warp flex="flex" direction="column" align="flex-start" justify="flex-start"  >
-						<div>{contents[0]}</div>
-						<div>{contents[1]}{contents[2]}</div>
-						{/* {
-							contents.map((list, idx) => {
-								return <div key={idx}>{list}</div> 
-							})
-						} */}
-						</Warp>
-					</Text>
-					
-				</Warp>
-
-				{ props.alarmType === "Normal" ?
-					<Warp onClick={() => {delNormalAlert()}}
-						position="absolute"
-						right="10px"
-						top ="5px"
-					>
-						<Text size="10px">❌</Text>
-					</Warp>
-					: null
-				}		
-				
-
-				<Text size="10px" color="#777777" >
-					<Warp flex="flex" direction="column" align="center">
-						<div style={{marginBottom:"3px"}}>{day}</div>
-						<div>{time}</div>
-					</Warp>
-				</Text>
-			</AlertCard>
-			<Rectangle/>
-
-			{/* 경기모임일 때 모달창 */}
-			{(num !== -1 && showModal) && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-					updataBtn = {allow}
-          deleteBtn={refuse}
-        ></Modal>
-      )}
-
-			{/* 스크린야구 모임일 때 모달창 */}
-			{(screenNum !== -1 && showModal) && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-					updataBtn = {allowScreen}
-          deleteBtn={refuseScreen}
-        ></Modal>
-      )}
-
-		</Container>
-	)
-}
+//       {/* 일반 알람일 때 모달창 */}
+//       {props.alarmType === "Normal" && showModal && (
+//         <Modal
+//           center
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           deleteBtn={delNormalAlert}
+//         ></Modal>
+//       )}
+//     </Container>
+//   )
+// }
 
 
 const Container = styled.div`
-	width: 425px; 
+  max-width: 425px;
+	width: 100%; 
 	/* height: 177px; */
 	/* margin: auto; */
 	/* position: relative; */
+  padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
 	top: ${(props) => props.top};
 	left: ${(props) => props.left};
@@ -247,6 +304,7 @@ const Container = styled.div`
 `;
 
 const AlertCard = styled.div`
+ max-width: 425px;
 	width: 100%;
 	height: 72px;
 	padding: 8px 10px 8px 10px;
@@ -257,6 +315,7 @@ const AlertCard = styled.div`
 `;
 
 const Box = styled.div`
+  max-width: 425px;
 	width: 100%;
 	height: ${(props) => props.height};
 	background: ${(props) => props.background};
@@ -268,6 +327,7 @@ const Box = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	position: ${(props) => props.position};
+  z-index: 1;
 `;
 
 const Warp = styled.div`
@@ -318,4 +378,52 @@ const Rectangle = styled.div`
 	width: 100%;
 	border: 1px solid #E7E7E7;
 	margin-top: ${(props) => props.marginT};
+`;
+
+
+
+
+
+const NormalBtn = styled.button`
+  width: 50%;
+  height: 40px;
+  background-color: #fff;
+  padding-bottom: 10px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  ${(props) =>
+    props.selectPage
+      ? ` 
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+      : `border: none;`}
+`
+
+const RequestBtn = styled.button`
+  width: 50%;
+  height: 40px;
+  background-color: #fff;
+  padding-bottom: 10px;
+  border: none;
+  font-size: 16px;
+  color: #777777;
+  /* margin-right: 0; */
+  ${(props) =>
+    !props.selectPage
+      ? `
+		border-bottom: 3px solid #F25343;
+		font-size: 16px;
+		color: #F25343; 
+		font-weight: bold;`
+      : `border: none;`}
+`
+
+const Scroll = styled.div`
+  padding: 51.5px 0 64px 0;
+  /* &::-webkit-scrollbar {
+    display: none;
+  } */
 `;

@@ -55,7 +55,6 @@ export const Post = memo((props) => {
   // 좋아요 중복 검사
 
   const likeCheckList = goodsLikesList.map((e) => {
-    console.log(e, e.userIdGoods, useridx, "검사하자");
     if (useridx === e.userIdGoods) {
       return true;
     }
@@ -75,8 +74,8 @@ export const Post = memo((props) => {
   // 댓글 더보기
   const [showComments, setShowComments] = useState(false);
 
-  // 댓글 1개 미리보기
-  const comment_preview = goodsCommentList[0];
+  // 가장 맨뒤에 댓글 1개 미리보기
+  const comment_preview = goodsCommentList[goodsCommentList.length - 1];
 
   // 삭제/수정 모달내용
   const modalData = {
@@ -87,21 +86,34 @@ export const Post = memo((props) => {
     btnUpdate: "삭제",
   };
 
+  // 게시글 더보기
   const moreBtn = () => {
     setShowComments(!showComments);
   };
 
+  // 게시글 삭제버튼
   const deleteBtn = () => {
     dispatch(goodsActions.deleteGoodsMD(goodsId));
     setShowModal(false);
   };
 
-  // console.log(props)
-
+  // 좋아요
   const memoLike = () => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
       : dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, likeCheck));
+  };
+
+  // 댓글 삭제버튼
+  const deleteCommentBtn = (commentId) => {
+    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId));
+  };
+
+  // 댓글 수정디스패치
+  const updateCommentDispatch = (commentId, updateComment) => {
+    dispatch(
+      goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
+    );
   };
 
   return (
@@ -128,6 +140,8 @@ export const Post = memo((props) => {
             ""
           )}
         </PostHeader>
+
+        {/* 게시물이미지 */}
         <PostImg url={postImage ? postImage : ""} />
 
         <Container>
@@ -142,26 +156,22 @@ export const Post = memo((props) => {
             </LikeBtn>
             <Text size="12px">{goodsLikesList.length}</Text>
           </PostIcons>
-
           {/* 굿즈 제목 */}
           <Text margin="8px 0"> {goodsName}</Text>
 
           {/* 굿즈 내용 */}
+
           {showContents ? (
-            <P>{goodsContent}</P>
+            <ShowPostContents>{goodsContent}</ShowPostContents>
           ) : (
             <PostContents>{goodsContent}</PostContents>
           )}
+
           <P onClick={() => setShowContents(!showContents)}>...더보기</P>
-          {/* 게시물 내용 더 보기 */}
-
-          {/* 해쉬태그 버류*/}
-
           {/* 댓글 전체 보기 */}
           <P onClick={moreBtn}>
             댓글 {goodsCommentList ? goodsCommentList.length : "0"} 더보기
           </P>
-
           {/* 게시글 시간 */}
           <P>{dayBefore}</P>
         </Container>
@@ -174,7 +184,9 @@ export const Post = memo((props) => {
               {...e}
               useridx={useridx}
               goodsId={goodsId}
-            ></Comments>
+              deleteCommentBtn={deleteCommentBtn}
+              updateCommentDispatch={updateCommentDispatch}
+            />
           ))
         ) : (
           <Comments
@@ -262,6 +274,15 @@ const PostContents = styled.div`
   font-size: 12px;
   margin: 5px 0;
   /* -webkit-line-clamp: 2; */
+`;
+
+const ShowPostContents = styled.p`
+  max-width: 385px;
+  line-height: 1.2;
+  color: #c4c4c4;
+  font-size: 12px;
+  margin: 5px 0;
+  word-break: break-all;
 `;
 
 const P = styled.p`

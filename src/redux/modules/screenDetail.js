@@ -78,12 +78,12 @@ const loadScreenPageMW = (screenId) => {
     instance
       .get(`/screen/${screenId}`)
       .then((res) => {
-        // console.log("loadScreenPageMW", res.data)
+        // // console.log("loadScreenPageMW", res.data)
         const screenPage = res.data
         dispatch(load_screenPage(screenPage))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -94,11 +94,11 @@ const editGroupPageMW = (screenId, formData) => {
     img
       .patch(`/screen/${screenId}`, formData)
       .then((res) => {
-        // console.log(res)
+        // // console.log(res)
         history.replace(`/screen/screendetail/${screenId}`)
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -109,12 +109,12 @@ const delScreenPageMW = (screenId) => {
     instance
       .delete(`/screen/${screenId}`)
       .then((res) => {
-        // console.log(res)
+        // // console.log(res)
         // dispatch(del_groupPage(groupId));
         history.replace("/screen")
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -123,15 +123,18 @@ const delScreenPageMW = (screenId) => {
 const likePostMW = (screenId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // console.log("isLiked", isLiked)
+    // // console.log("isLiked", isLiked)
     instance
       .post(`/screen/${screenId}/like`, isLiked)
       .then((res) => {
-        console.log("모임찜", res)
+        // console.log("모임찜", res)
         dispatch(like_post(screenId, isLiked))
+        if (!like) {
+          window.alert("찜 되었습니다!")
+        }
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -142,12 +145,12 @@ const screenApplyMW = (screenId, my) => {
     instance
       .get(`/screen/join/request/${screenId}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         // dispatch(screen_apply(my))
         window.alert(res.data)
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         window.alert("재참가 할 수 없습니다.")
       })
   }
@@ -159,12 +162,12 @@ const delApplyMW = (screenId, userid) => {
     instance
       .delete(`/screen/join/request/${screenId}`)
       .then((res) => {
-        // console.log("참석취소", res)
+        // // console.log("참석취소", res)
         dispatch(del_apply(screenId, userid))
         window.alert("모임참여가 취소되었습니다.")
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -176,11 +179,11 @@ const addCommentMW = (screenId, message) => {
     instance
       .post(`/screen/${screenId}/comment`, comment)
       .then((res) => {
-        // console.log("댓글추가", res)
+        // // console.log("댓글추가", res)
         dispatch(add_comment(screenId, comment))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -192,11 +195,11 @@ const editCommentMW = (screenId, commentId, message) => {
     instance
       .put(`/screen/${screenId}/comment/${commentId}`, comment)
       .then((res) => {
-        // console.log("댓글수정", res)
+        // // console.log("댓글수정", res)
         dispatch(edit_comment(screenId, commentId, comment))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -207,11 +210,11 @@ const delCommentMW = (screenId, commentId) => {
     instance
       .delete(`/screen/${screenId}/comment/${commentId}`)
       .then((res) => {
-        // console.log("댓글삭제", res)
+        // // console.log("댓글삭제", res)
         dispatch(del_comment(screenId, commentId))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -220,15 +223,15 @@ const delCommentMW = (screenId, commentId) => {
 const likeCommentMW = (screenId, commentId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // console.log(screenId, commentId, isLiked)
+    // // console.log(screenId, commentId, isLiked)
     instance
       .post(`/screen/${screenId}/comment/${commentId}/like`, isLiked)
       .then((res) => {
-        // console.log(res)
+        // // console.log(res)
         dispatch(like_comment(screenId, commentId, like))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -239,13 +242,13 @@ const mylistMW = () => {
     instance
       .post("/user/logincheck")
       .then((res) => {
-        // console.log("좋아요리스트", res.data)
+        // // console.log("좋아요리스트", res.data)
         const mylist = res.data
-        // console.log("likelist체크", likelist)
+        // // console.log("likelist체크", likelist)
         dispatch(load_mylist(mylist))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
   }
 }
@@ -257,18 +260,17 @@ const confirmMW = (screenId, allowtype) => {
     instance
       .patch(`/screen/${screenId}/applications`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         const msg = res.data.message
         window.alert(msg)
         dispatch(screen_confirm(allowtype))
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         window.alert(err)
       })
   }
 }
-
 
 //reducer
 export default handleActions(
@@ -279,12 +281,14 @@ export default handleActions(
       }),
     [SCREEN_LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
-        // console.log("찜받기",action.payload.like.isLiked)
+        // // console.log("찜받기",action.payload.like.isLiked)
         if (action.payload.like.isLiked) {
           draft.screenMylist.myScreenLikesList.push(action.payload.screenId)
           return
         } else {
-          const idx = draft.screenMylist.myScreenLikesList.indexOf(action.payload.screenId)
+          const idx = draft.screenMylist.myScreenLikesList.indexOf(
+            action.payload.screenId
+          )
           if (idx !== -1) {
             draft.screenMylist.myScreenLikesList.splice(idx, 1)
           }
@@ -292,7 +296,7 @@ export default handleActions(
       }),
     // [SCREEN_APPLY]: (state, action) =>
     //   produce(state, (draft) => {
-    //     // console.log("페이로드", action.payload.my)
+    //     // // console.log("페이로드", action.payload.my)
     //     draft.screenPage.appliedUserInfo.push(action.payload.my)
     //   }),
     [SCREEN_DELETE_APPLY]: (state, action) =>
@@ -300,15 +304,16 @@ export default handleActions(
         const idx = draft.screenPage.appliedUserInfo.findIndex(
           (p) => p.UserId === action.payload.userid
         )
-        // console.log("리덕스모임삭제", idx)
+        // // console.log("리덕스모임삭제", idx)
         if (idx !== -1) {
           draft.screenPage.appliedUserInfo.splice(idx, 1)
         }
       }),
     // 모임 확정/취소
-    [SCREEN_CONFIRM]: (state, action) => produce(state, (draft) => {
-      draft.screenPage.allowtype = action.payload.allowtype
-    }),
+    [SCREEN_CONFIRM]: (state, action) =>
+      produce(state, (draft) => {
+        draft.screenPage.allowtype = action.payload.allowtype
+      }),
     [SCREEN_ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage.screenCommentList.push(action.payload.comment)
@@ -337,8 +342,8 @@ export default handleActions(
         const idx = draft.screenPage.screenCommentList.findIndex(
           (p) => p.screenCommentId === action.payload.commentId
         )
-        // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-        console.log("액션좋아요",action.payload.like)
+        // // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
+        // console.log("액션좋아요", action.payload.like)
         if (action.payload.like) {
           draft.screenPage.screenCommentList[idx].screencommentlikeCount -= 1
           return
