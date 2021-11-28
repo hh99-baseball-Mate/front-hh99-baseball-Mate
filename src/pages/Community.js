@@ -6,22 +6,22 @@ import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const Community = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //카드 조회
-  const card_list = useSelector((state) => state.community.card_list)
-  const is_login = useSelector((state) => state.user.is_login)
+  const card_list = useSelector((state) => state.community.card_list);
+  const is_login = useSelector((state) => state.user.is_login);
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/communityadd")
-    e.target.disabled = true
-  }
+      : history.push("/community/communityadd");
+    e.target.disabled = true;
+  };
 
   //카드 조회
   useEffect(() => {
-    dispatch(actionCr.getCardAPI())
-  }, [])
+    dispatch(actionCr.getCardAPI());
+  }, []);
 
   return (
     <div>
@@ -34,18 +34,20 @@ const Community = (props) => {
         {card_list.map((e) => {
           return (
             <CommunityCard
-              onClick={() => history.push(`/communitydetail/${e.communityId}`)}
+              onClick={() =>
+                history.push(`/community/communitydetail/${e.communityId}`)
+              }
               key={e.communityId}
               {...e}
             />
-          )
+          );
         })}
       </Container>
 
       <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </div>
-  )
+  );
 };
 
 export default Community;

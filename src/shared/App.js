@@ -39,126 +39,151 @@ import Community from "../pages/Community";
 import { CommunityDetail } from "../pages/CommunityDetail";
 import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
-import { Notice } from "../pages/Notice"
-import { Event } from "../pages/Event"
+import { Notice } from "../pages/Notice";
+import { Event } from "../pages/Event";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
-  }, [])
+  }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
   // 어스 라우트 콤포넌트 쿠키 유무를 판단하고 그걸로
   return (
-    <Container>
-      <ConnectedRouter history={history}>
-        <Helmet>
-          <title>미트 볼</title>
-          <link rel="icon" href={favicon} />
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content="#000000" />
+    <>
+      <Helmet>
+        <title>미트 볼</title>
+        <link rel="icon" href={favicon} />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="미트 볼" />
-          <meta property="og:image" content={img} />
-          <meta property="og:locale" content="ko_KR" />
-          <meta property="og:description" content="우리 같이 직관가자!" />
-        </Helmet>
-        <GlobalStyles />
-        {!is_login ? (
-          <Switch>
-            <Route exact path="/phoneAuth" component={PhoneAuth} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route path="/user/kakao/callback" component={KAKAOhandle} />
-            <Route exact path="/login/clubchoice" component={ClubChoice} />
-            <Route path="/" exact component={GroupList} />
-            <Route path="/groupdate" exact component={GroupDate} />
-            <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
-            <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
-            <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
-            <Route path="/mygroup" exact component={MyGroup} />
-            {/* <Route path="/community" exact component={Community} />
-            <Route path="/communityadd" exact component={CommunityAdd} /> */}
-            <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
-            <Route
-              path="/mypage/:useridx"
-              exact
-              render={() => <MyPage is_login={is_login} />}
-            />
-            <Route path="/screen" exact component={ScreenList} />
-            <Route
-              path="/screen/screendetail/:screenId"
-              exact
-              component={ScreenDetail}
-            />
-            {/* <Route path="/notice" component={Notice} /> */}
-            <Route path="/event" component={Event} />
-            {/* 임시 */}
-            <Route component={NotFound} />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/login/clubchoice" component={ClubChoice} />
-            <Route path="/" exact component={GroupList} />
-            <Route path="/groupdate" exact component={GroupDate} />
-            <Route path="/grouplist/groupadd" exact component={GroupAdd} />
-            <Route path="/groupdetail/:groupId" exact component={GroupDetail} />
-            <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
-            <Route path="/timeline" exact component={TimelineList} />
-            <Route path="/goods" exact component={Goods} />
-            <Route path="/goods/goodsadd" exact component={GoodsAdd} />
-            <Route path="/mygroup" exact component={MyGroup} />
-            <Route path="/alarm" render={() => <Alarm is_login={is_login} />} />
-            <Route
-              path="/mypage/:useridx"
-              exact
-              render={() => <MyPage is_login={is_login} />}
-            />
-            <Route path="/mypage/:useridx/update" exact component={MyInfo} />
-            <Route path="/screen" exact component={ScreenList} />
-            <Route path="/screen/screenadd" exact component={ScreenAdd} />
-            <Route
-              path="/screen/screendetail/:screenId"
-              exact
-              component={ScreenDetail}
-            />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:title" content="page one" />
+        <meta property="og:description" content="우리 같이 직관가자!" />
+        <meta property="og:image" content={img} />
 
-            <Route path="/screenedit/:screenId" exact component={ScreenEdit} />
-            <Route path="/loading" exact component={Loading} />
-            <Route path="/chatlist" exact component={ChatList} />
-            <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
-            {/* <Route path="/community" exact component={Community} />
-            <Route path="/communitydetail" exact component={CommunityDetail} />
-            <Route path="/communityadd" exact component={CommunityAdd} /> */}
-            {/* <Route path="/notice" component={Notice} /> */}
-            <Route path="/event" component={Event} />
-            {/* 임시 */}
-            {/* <Redirect */}
-            <Route component={NotFound} />
-          </Switch>
-        )}
-      </ConnectedRouter>
-      {/* </div> */}
-    </Container>
-  )
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="미트 볼" />
+      </Helmet>
+      <Container>
+        <ConnectedRouter history={history}>
+          <GlobalStyles />
+          {!is_login ? (
+            <Switch>
+              <Route exact path="/phoneAuth" component={PhoneAuth} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route path="/user/kakao/callback" component={KAKAOhandle} />
+              <Route exact path="/login/clubchoice" component={ClubChoice} />
+              <Route path="/" exact component={GroupList} />
+              <Route path="/groupdate" exact component={GroupDate} />
+              <Route
+                path="/groupdetail/:groupId"
+                exact
+                component={GroupDetail}
+              />
+              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/timeline" exact component={TimelineList} />
+              <Route path="/goods" exact component={Goods} />
+              <Route path="/mygroup" exact component={MyGroup} />
+              <Route path="/community" exact component={Community} />
+              <Route path="/communityadd" exact component={CommunityAdd} />
+              <Route
+                path="/alarm"
+                render={() => <Alarm is_login={is_login} />}
+              />
+              <Route
+                path="/mypage/:useridx"
+                exact
+                render={() => <MyPage is_login={is_login} />}
+              />
+              <Route path="/screen" exact component={ScreenList} />
+              <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
+              {/* <Route path="/notice" component={Notice} /> */}
+              <Route path="/event" component={Event} />
+              {/* 임시 */}
+              <Route component={NotFound} />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/login/clubchoice" component={ClubChoice} />
+              <Route path="/" exact component={GroupList} />
+              <Route path="/groupdate" exact component={GroupDate} />
+              <Route path="/grouplist/groupadd" exact component={GroupAdd} />
+              <Route
+                path="/groupdetail/:groupId"
+                exact
+                component={GroupDetail}
+              />
+              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/timeline" exact component={TimelineList} />
+              <Route path="/goods" exact component={Goods} />
+              <Route path="/goods/goodsadd" exact component={GoodsAdd} />
+              <Route path="/mygroup" exact component={MyGroup} />
+              <Route
+                path="/alarm"
+                render={() => <Alarm is_login={is_login} />}
+              />
+              <Route
+                path="/mypage/:useridx"
+                exact
+                render={() => <MyPage is_login={is_login} />}
+              />
+              <Route path="/mypage/:useridx/update" exact component={MyInfo} />
+              <Route path="/screen" exact component={ScreenList} />
+              <Route path="/screen/screenadd" exact component={ScreenAdd} />
+              <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
+
+              <Route
+                path="/screenedit/:screenId"
+                exact
+                component={ScreenEdit}
+              />
+              <Route path="/loading" exact component={Loading} />
+              <Route path="/chatlist" exact component={ChatList} />
+              <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
+              <Route path="/community" exact component={Community} />
+              <Route
+                path="/communitydetail"
+                exact
+                component={CommunityDetail}
+              />
+              <Route path="/communityadd" exact component={CommunityAdd} />
+              {/* <Route path="/notice" component={Notice} /> */}
+              <Route path="/event" component={Event} />
+              {/* 임시 */}
+              {/* <Redirect */}
+              <Route component={NotFound} />
+            </Switch>
+          )}
+        </ConnectedRouter>
+        {/* </div> */}
+      </Container>
+    </>
+  );
 }
 
-export default App
+export default App;
 
 const Container = styled.div`
   max-width: 425px;
   min-height: 100vh;
   background: #fff;
-`
+`;

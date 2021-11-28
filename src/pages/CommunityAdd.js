@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -11,54 +11,33 @@ import {
 } from "../components";
 import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
-import { useInputs } from "../customHook/useInputs";
 import { usePreview } from "../customHook/usePreview";
-import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
   const dispatch = useDispatch();
-  const { page, addPost } = useSelector((state) => state.community);
-  const user_list = useSelector((state) => state.user.user_info.myteam);
   //이미지 미리보기 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
 
   // 입력창
-  const [inputValue, onChange] = useInputs({
-    content: "",
-    title: null,
-    filePath: "",
-    myTeam: "",
-    userName: "",
-    communityUserPicture: "",
-  });
-
-  const { content, title, filePath, myTeam, userName, communityUserPicture } =
-    inputValue;
+  const [content, setCotent] = useState("");
 
   //입력체크
   const submitBtn = (e) => {
-    const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true
-    })
-
-    if (inputValue === null) {
-      window.alert("빈란을 채워주세요")
+    if (!content) {
+      window.alert("빈란을 채워주세요");
       // console.log("빈값있음")
-      return
+      return;
     }
 
-    if (inputValue !== null) {
-      window.alert("작성하신 게시글은 커뮤니티에 올라갑니다.")
-    }
+    const formData = new FormData();
 
-    // const formData = new FormData();
+    formData.append("content", content);
+    formData.append("file", preview);
+    formData.append("myTeam", null);
 
-    // formData.append("content", content);
-    // formData.append("file", preview);
-
-    dispatch(actionCr.postAddAPI(content))
-    e.target.disabled = true
-    // for (const keyValue of content) console.log(keyValue);
+    for (const keyValue of formData) console.log(keyValue);
+    dispatch(actionCr.postAddAPI(formData));
+    e.target.disabled = true;
   };
 
   return (
@@ -73,9 +52,7 @@ const CommunityAdd = (props) => {
         value={content}
         placeholder="내용을 입력해주세요."
         height="400px"
-        onChange={onChange}
-        page={page}
-        addPost={addPost}
+        onChange={(e) => setCotent(e.target.value)}
       >
         {/* 안에 내용 */}
         {content && <InputCheck />}
