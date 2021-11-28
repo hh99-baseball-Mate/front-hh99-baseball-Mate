@@ -6,6 +6,8 @@ import { ArrowBack } from "../components";
 import { MarginBottom, NaviBar } from "../components";
 import { alarmCreators } from "../redux/modules/alarm";
 import { Modal } from "../components/Modal"
+import RequestAlarm from "../componentAlarm/RequestAlarm";
+import NormalAlarm from "../componentAlarm/NormalAlarm";
 
 
 const Alarm = (props) => {
@@ -24,13 +26,16 @@ const Alarm = (props) => {
   // 스크린야구 (참여자기준) 대기중인 신청 목록
   const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-  // console.log("alarm", alarm)
+  console.log("alarm", alarm)
+  // console.log("requestList", requestList)
   // console.log("ScreenAlarm", requestScreenList)
-  // console.log("awaitScreenList", awaitScreenList)
-  // console.log("awaitList", awaitList)
+  console.log("awaitList", awaitList)
+  console.log("awaitScreenList", awaitScreenList)
+  
 
   useEffect(() => {
     dispatch(alarmCreators.load_alarmMW())
+
     dispatch(alarmCreators.requestChatListMW())
     dispatch(alarmCreators.awaitChatListMW())
 
@@ -42,84 +47,73 @@ const Alarm = (props) => {
   const [selectPage, setSelectPage] = useState(true)
 
   return (
-    <>
+    <React.Fragment>
 
-    <Container>
-    <ArrowBack bg="true" fixed="fixed">
-    알림
-    </ArrowBack>
+      <Container>
 
+        <ArrowBack bg="true" fixed="fixed">
+          알림
+        </ArrowBack>
 
-      <Container padding="58.39px 0 0 0">
+        <Container padding="58.39px 0 0 0">
 
-      {/* 일반 & 승인요청 버튼 */}
-      {/* <Box height="65px">
-        <Warp padding="10px 0 0 0">
-          <ParticipantBtn
-            onClick={() => setSelectPage(true)}
-            selectPage={selectPage}
-          >
-            일반
-          </ParticipantBtn>
+          {/* 일반 & 승인요청 버튼 */}
+          <Box height="50px" position="fixed" background="#fff">
+            <Warp padding="10px 0 0 0">
+              <NormalBtn
+                onClick={() => setSelectPage(true)}
+                selectPage={selectPage}
+              >
+                일반
+              </NormalBtn>
 
-          <CommentBtn
-            onClick={() => setSelectPage(false)}
-            selectPage={selectPage}
-          >
-            승인요청
-          </CommentBtn>
-        </Warp>
+              <RequestBtn
+                onClick={() => setSelectPage(false)}
+                selectPage={selectPage}
+              >
+                승인요청
+              </RequestBtn>
+            </Warp>
 
-        <Rectangle />
+            <Rectangle />
+          </Box> 
 
-        {selectPage === true ? (
-          <Participant
-            {...loadDetail}
-            {...mylist}
-            // close={close}
-            // setClose={setClose}
-            join={join}
-            setJoin={setJoin}
-          />
-        ) : (
-          <Comment {...loadDetail} {...mylist} />
-        )}
-      </Box>       */}
-
-
-
-
-
-
-        {props.is_login ? (
-          alarm.map((alarm) => {
-            return (
-              <Alert
-                key={alarm.id}
-                {...alarm}
+          <Scroll>
+            {selectPage === true ? (
+              <NormalAlarm
+                alarm={alarm}
+                awaitList={awaitList}
+                awaitScreenList={awaitScreenList}
+              />
+            ) : (
+              <RequestAlarm 
+                alarm={alarm}
                 requestList={requestList}
                 requestScreenList={requestScreenList}
               />
-            )
-          })
-        ) : (
-          <Container
-            position="absolute"
-            top="50%"
-            right="-50%"
-            trans="translateY(-50%)"
-          >
-            <Warp flex="flex">
-              <Text margin="auto">로그인 후 이용해주세요</Text>
-            </Warp>
-          </Container>
-        )}
-      </Container>
+            )}
+          </Scroll>     
 
-      <MarginBottom />
+          {!props.is_login && (
+            <Container
+              position="absolute"
+              top="50%"
+              right="-50%"
+              trans="translateY(-50%)"
+            >
+              <Warp flex="flex">
+                <Text margin="auto">로그인 후 이용해주세요</Text>
+              </Warp>
+            </Container>
+          )}
+
+        </Container>
+
+        
+      </Container>
+      {/* <MarginBottom /> */}
       <NaviBar />
-    </Container>
-    </>
+    </React.Fragment>
   )
 }
 
@@ -128,172 +122,172 @@ export default Alarm
 
 
 // 개별 알람 컴포넌트
-const Alert = (props) => {
-  const dispatch = useDispatch()
-  // console.log("props", props)
+// const Alert = (props) => {
+//   const dispatch = useDispatch()
+//   // console.log("props", props)
 
-  // 경기모임 누가 요청했는지 찾기
-  const num = props.requestList.findIndex(
-    (list) => list.joinRequestId === props.joinRequestId
-  )
-  const requestList = props.requestList[num]
+//   // 경기모임 누가 요청했는지 찾기
+//   const num = props.requestList.findIndex(
+//     (list) => list.joinRequestId === props.joinRequestId
+//   )
+//   const requestList = props.requestList[num]
 
-  // 스야모임 누가 요청했는지 찾기
-  const screenNum = props.requestScreenList.findIndex(
-    (list) => list.joinRequestId === props.joinRequestId
-  )
-  const requestScreenList = props.requestScreenList[screenNum]
+//   // 스야모임 누가 요청했는지 찾기
+//   const screenNum = props.requestScreenList.findIndex(
+//     (list) => list.joinRequestId === props.joinRequestId
+//   )
+//   const requestScreenList = props.requestScreenList[screenNum]
 
-  // 그룹참가 허용
-  const allow = () => {
-    if (window.confirm("정말 허용하시겠습니까?")) {
-      dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
-      setShowModal(false)
-      delAlert()
-    }
-  }
+//   // 그룹참가 허용
+//   const allow = () => {
+//     if (window.confirm("정말 허용하시겠습니까?")) {
+//       dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, true))
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-  // 그룹참가 거절
-  const refuse = () => {
-    if (window.confirm("정말 거절하시겠습니까?")) {
-      dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
-      setShowModal(false)
-      delAlert()
-    }
-  }
+//   // 그룹참가 거절
+//   const refuse = () => {
+//     if (window.confirm("정말 거절하시겠습니까?")) {
+//       dispatch(alarmCreators.alarmComfirmMW(requestList?.joinRequestId, false))
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-  // 스크린야구 그룹참가 허용
-  const allowScreen = () => {
-    if (window.confirm("정말 허용하시겠습니까?")) {
-      dispatch(
-        alarmCreators.alarmScreenComfirmMW(
-          requestScreenList?.joinRequestId,
-          true
-        )
-      )
-      setShowModal(false)
-      delAlert()
-    }
-  }
+//   // 스크린야구 그룹참가 허용
+//   const allowScreen = () => {
+//     if (window.confirm("정말 허용하시겠습니까?")) {
+//       dispatch(
+//         alarmCreators.alarmScreenComfirmMW(
+//           requestScreenList?.joinRequestId,
+//           true
+//         )
+//       )
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-  // 스크린야구 그룹참가 거절
-  const refuseScreen = () => {
-    if (window.confirm("정말 거절하시겠습니까?")) {
-      dispatch(
-        alarmCreators.alarmScreenComfirmMW(
-          requestScreenList?.joinRequestId,
-          false
-        )
-      )
-      setShowModal(false)
-      delAlert()
-    }
-  }
+//   // 스크린야구 그룹참가 거절
+//   const refuseScreen = () => {
+//     if (window.confirm("정말 거절하시겠습니까?")) {
+//       dispatch(
+//         alarmCreators.alarmScreenComfirmMW(
+//           requestScreenList?.joinRequestId,
+//           false
+//         )
+//       )
+//       setShowModal(false)
+//       delAlert()
+//     }
+//   }
 
-  // 모달
-  const [showModal, setShowModal] = useState(false)
+//   // 모달
+//   const [showModal, setShowModal] = useState(false)
 
-  const modalData = {
-    title: "알람 에디터",
-    descriptionOne: "알람을 확인/삭제 하시겠습니까?",
-    btnClose: "취소",
-    btnConfirm: "승인",
-    btnUpdate: "삭제",
-  }
+//   const modalData = {
+//     title: "알람 에디터",
+//     descriptionOne: "알람을 확인/삭제 하시겠습니까?",
+//     btnClose: "취소",
+//     btnConfirm: "승인",
+//     btnUpdate: "삭제",
+//   }
 
-  // 알람삭제
-  const delAlert = () => {
-    dispatch(alarmCreators.del_alarmMW(props.id))
-    setShowModal(false)
-  }
+//   // 알람삭제
+//   const delAlert = () => {
+//     dispatch(alarmCreators.del_alarmMW(props.id))
+//     setShowModal(false)
+//   }
 
-  // 일반 알림 삭제
-  const delNormalAlert = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      dispatch(alarmCreators.del_alarmMW(props.id))
-    }
-  }
+//   // 일반 알림 삭제
+//   const delNormalAlert = () => {
+//     if (window.confirm("정말 삭제하시겠습니까?")) {
+//       dispatch(alarmCreators.del_alarmMW(props.id))
+//     }
+//   }
 
-  const dayAndTime = props.modifiedAt.split(" ")
-  const day = dayAndTime[0]
-  const time = dayAndTime.slice(1, 3).join(" ")
-  // console.log(time)
+//   const dayAndTime = props.modifiedAt.split(" ")
+//   const day = dayAndTime[0]
+//   const time = dayAndTime.slice(1, 3).join(" ")
+//   // console.log(time)
 
-  const contents = props.contents.split("*")
-  // console.log(contents)
+//   const contents = props.contents.split("*")
+//   // console.log(contents)
 
-  return (
-    <Container position="relative">
-      <AlertCard onClick={() => setShowModal(true)}>
-        <div>🔔</div>
-        {/* <div>🔔</div>
-        <div>🔔</div> */}
+//   return (
+//     <Container position="relative">
+//       <AlertCard onClick={() => setShowModal(true)}>
+//         <div>🔔</div>
+//         {/* <div>🔔</div>
+//         <div>🔔</div> */}
 
-          <Text size="12px" width="70%">
-            <Warp
-              flex="flex"
-              direction="column"
-              align="flex-start"
-              justify="flex-start"
-            >
-              <div>{contents[0]}</div>
-              <div>
-                {contents[1]}
-                {contents[2]}
-              </div>
-              <div>{contents[3]}</div>
-              {/* {
-							contents.map((list, idx) => {
-								return <div key={idx}>{list}</div> 
-							})
-						} */}
-            </Warp>
-          </Text>
+//           <Text size="12px" width="70%">
+//             <Warp
+//               flex="flex"
+//               direction="column"
+//               align="flex-start"
+//               justify="flex-start"
+//             >
+//               <div>{contents[0]}</div>
+//               <div>
+//                 {contents[1]}
+//                 {contents[2]}
+//               </div>
+//               <div>{contents[3]}</div>
+//               {/* {
+// 							contents.map((list, idx) => {
+// 								return <div key={idx}>{list}</div> 
+// 							})
+// 						} */}
+//             </Warp>
+//           </Text>
  
 
-        <Text size="10px" color="#777777">
-          <Warp flex="flex" direction="column" align="center">
-            <div style={{ marginBottom: "3px" }}>{day}</div>
-            <div>{time}</div>
-          </Warp>
-        </Text>
-      </AlertCard>
-      <Rectangle />
+//         <Text size="10px" color="#777777">
+//           <Warp flex="flex" direction="column" align="center">
+//             <div style={{ marginBottom: "3px" }}>{day}</div>
+//             <div>{time}</div>
+//           </Warp>
+//         </Text>
+//       </AlertCard>
+//       <Rectangle />
 
-      {/* 경기모임일 때 모달창 */}
-      {num !== -1 && showModal && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-          updataBtn={allow}
-          deleteBtn={refuse}
-        ></Modal>
-      )}
+//       {/* 경기모임일 때 모달창 */}
+//       {num !== -1 && showModal && (
+//         <Modal
+//           three
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           updataBtn={allow}
+//           deleteBtn={refuse}
+//         ></Modal>
+//       )}
 
-      {/* 스크린야구 모임일 때 모달창 */}
-      {screenNum !== -1 && showModal && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-          updataBtn={allowScreen}
-          deleteBtn={refuseScreen}
-        ></Modal>
-      )}
+//       {/* 스크린야구 모임일 때 모달창 */}
+//       {screenNum !== -1 && showModal && (
+//         <Modal
+//           three
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           updataBtn={allowScreen}
+//           deleteBtn={refuseScreen}
+//         ></Modal>
+//       )}
 
-      {/* 일반 알람일 때 모달창 */}
-      {props.alarmType === "Normal" && showModal && (
-        <Modal
-          center
-          setShowModal={setShowModal}
-          modalData={modalData}
-          deleteBtn={delNormalAlert}
-        ></Modal>
-      )}
-    </Container>
-  )
-}
+//       {/* 일반 알람일 때 모달창 */}
+//       {props.alarmType === "Normal" && showModal && (
+//         <Modal
+//           center
+//           setShowModal={setShowModal}
+//           modalData={modalData}
+//           deleteBtn={delNormalAlert}
+//         ></Modal>
+//       )}
+//     </Container>
+//   )
+// }
 
 
 const Container = styled.div`
@@ -321,6 +315,7 @@ const AlertCard = styled.div`
 `;
 
 const Box = styled.div`
+  max-width: 425px;
 	width: 100%;
 	height: ${(props) => props.height};
 	background: ${(props) => props.background};
@@ -332,6 +327,7 @@ const Box = styled.div`
 	justify-content: ${(props) => props.justify};
 	align-items: ${(props) => props.align};
 	position: ${(props) => props.position};
+  z-index: 1;
 `;
 
 const Warp = styled.div`
@@ -388,10 +384,10 @@ const Rectangle = styled.div`
 
 
 
-const ParticipantBtn = styled.button`
+const NormalBtn = styled.button`
   width: 50%;
-  height: 45px;
-  background: none;
+  height: 40px;
+  background-color: #fff;
   padding-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -406,10 +402,10 @@ const ParticipantBtn = styled.button`
       : `border: none;`}
 `
 
-const CommentBtn = styled.button`
+const RequestBtn = styled.button`
   width: 50%;
-  height: 45px;
-  background: none;
+  height: 40px;
+  background-color: #fff;
   padding-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -424,3 +420,10 @@ const CommentBtn = styled.button`
 		font-weight: bold;`
       : `border: none;`}
 `
+
+const Scroll = styled.div`
+  padding: 51.5px 0 64px 0;
+  /* &::-webkit-scrollbar {
+    display: none;
+  } */
+`;
