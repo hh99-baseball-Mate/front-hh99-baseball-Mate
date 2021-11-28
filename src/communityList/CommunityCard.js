@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { BsTranslate } from "react-icons/bs";
 import styled from "styled-components";
 import { Text } from "../components";
 import Question from "../shared/icon/Question.png";
 import Progress from "../components/Progress";
 const CommunityCard = (props) => {
-  const { filePath, myTeam, content, userName, communityUserPicture, onClick } =
-    props;
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
+  const { myTeam, content, userName, communityUserPicture, onClick } = props;
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
   return (
     <Card onClick={onClick}>
       <UserInfo>
-        <UserImg src={communityUserPicture} />
+        <UserImg src={img} />
         <InfoBox>
-          <Text>{userName}</Text>
+          <Text bold>{userName}</Text>
           <Time>
-            <Text margin="0 10px 0 0">{myTeam}</Text>
-            <Text>시간</Text>
+            <Text size="12px" color="#F25343" margin="0 10px 0 0">
+              {myTeam}
+            </Text>
+            <Text size="12px" color="#C4C4C4">
+              시간
+            </Text>
           </Time>
         </InfoBox>
       </UserInfo>

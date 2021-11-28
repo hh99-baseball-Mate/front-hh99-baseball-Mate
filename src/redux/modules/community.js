@@ -4,11 +4,9 @@ import { img, instance } from "../../lib/axios";
 
 //액션
 const GET_CARD = "GET_CARD";
-const POST_ADD = "POST ADD";
 
 //액션함수
 const getCard = createAction(GET_CARD, (cardList) => ({ cardList }));
-const postAdd = createAction(POST_ADD, (addList) => ({ addList }));
 
 //초기값
 const initialState = {
@@ -22,40 +20,34 @@ const getCardAPI = () => {
       .get(`/community`)
       .then((res) => {
         // console.log(res)
-        dispatch(getCard(res.data))
+        dispatch(getCard(res.data));
       })
       .catch((err) => {
         // console.log(err, "커뮤니티카드 조회 에러")
-      })
-  }
-}
+      });
+  };
+};
 
 //커뮤니티 글작성
-const postAddAPI = (contents) => {
+const postAddAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    // console.log("배고파")
-    instance
-      .post("/community", { content: contents })
+    img
+      .post("/community", formData)
       .then((res) => {
-        // console.log(res, "커뮤티니")
-        dispatch(postAdd(res.data))
-        history.replace("/community")
+        console.log(res, "커뮤티니");
+        history.replace("/community");
       })
       .catch((err) => {
         // console.log(err, "모임 만들기 에러")
-      })
-  }
-}
+      });
+  };
+};
 //리듀서
 export default handleActions(
   {
     [GET_CARD]: (state, action) =>
       produce(state, (draft) => {
         draft.card_list = action.payload.cardList;
-      }),
-    [POST_ADD]: (state, action) =>
-      produce(state, (draft) => {
-        draft.card_list.unshift(action.payload.addList);
       }),
   },
   initialState
