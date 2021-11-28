@@ -14,10 +14,10 @@ const TimelineBanner = React.memo((props) => {
 export default TimelineBanner;
 
 const Container = styled.div`
-  width: 425px;
+  width: 100%;
   /* height: 177px; */
   margin: auto;
-`;
+`
 
 const Box = styled.div`
   width: 100%;

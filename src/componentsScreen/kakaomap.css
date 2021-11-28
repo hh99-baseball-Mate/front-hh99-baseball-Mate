@@ -1,0 +1,14 @@
+body{
+  
+  margin: 0px;
+}
+
+.maps {
+  background-color:#386ccbe8;
+  box-shadow: 3px 4px #2a368bbd;
+  border-radius:20px;
+  padding:10px; 
+  font-size: 10px;
+  text-align: center;
+  color: white;
+}
