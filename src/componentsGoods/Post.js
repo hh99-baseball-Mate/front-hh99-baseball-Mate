@@ -86,21 +86,35 @@ export const Post = memo((props) => {
     btnUpdate: "삭제",
   }
 
+  // 게시글 더보기
   const moreBtn = () => {
     setShowComments(!showComments)
   }
 
+  // 게시글 삭제버튼
   const deleteBtn = () => {
     dispatch(goodsActions.deleteGoodsMD(goodsId))
     setShowModal(false)
   }
 
-  // console.log(props)
-
+  // 좋아요
   const memoLike = () => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
       : dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, likeCheck))
+  }
+
+
+  // 댓글 삭제버튼
+  const deleteCommentBtn = (commentId) => {
+    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
+  }
+
+  // 댓글 수정디스패치
+  const updateCommentDispatch = (commentId, updateComment) => {
+    dispatch(
+      goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
+    )
   }
 
   return (
@@ -171,7 +185,9 @@ export const Post = memo((props) => {
               {...e}
               useridx={useridx}
               goodsId={goodsId}
-            ></Comments>
+              deleteCommentBtn={deleteCommentBtn}
+              updateCommentDispatch={updateCommentDispatch}
+            />
           ))
         ) : (
           <Comments
