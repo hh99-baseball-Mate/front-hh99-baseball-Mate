@@ -10,9 +10,13 @@ const DELETE_COMMUN_COMMENT = "DELETE_COMMUN_COMMENT";
 const GET_COMMUN_DETAIL = "GET_COMMUN_DETAIL";
 
 //액션함수
-const postCommunComment = createAction(POST_COMMUN_COMMENT, (commentList) => ({
-  commentList,
-}));
+const postCommunComment = createAction(
+  POST_COMMUN_COMMENT,
+  (communityId, comment) => ({
+    communityId,
+    comment,
+  })
+);
 const updateCommunComment = createAction(
   UPDATE_COMMUN_COMMENT,
   (communityId, commentId, comment) => ({ communityId, commentId, comment })
@@ -33,13 +37,14 @@ const initialState = {
 
 //미들웨어
 //댓글등록
-const postCommunCommentABI = (communityId, getComment) => {
+const postCommunCommentAPI = (communityId, message) => {
   return function (dispatch, getState, { history }) {
+    const comment = { comment: message };
     instance
-      .post(`/community/${communityId}/comment`, { comment: getComment })
+      .post(`/community/${communityId}/comment`, comment)
       .then((res) => {
         console.log(res);
-        dispatch(postCommunComment(communityId));
+        dispatch(postCommunComment(communityId, comment));
       })
       .catch((err) => {
         console.log(err, "커뮤댯글등록");
@@ -83,7 +88,7 @@ const deleteCommunCommrntAPI = (communityId, commentId) => {
 const getCommunDetailAPI = (communityId) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/community/{communityId}`)
+      .get(`/community/${communityId}`)
       .then((res) => {
         console.log(res);
         dispatch(getCommunDetail(res.data));
@@ -94,6 +99,26 @@ const getCommunDetailAPI = (communityId) => {
   };
 };
 
-export default handleActions({
-  [GET_COMMUN_DETAIL]: (state, action) => produce(state, (draft) => {}),
-});
+export default handleActions(
+  {
+    [GET_COMMUN_DETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detail_list = action.payload.detailList;
+      }),
+    [POST_COMMUN_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.detail_list.communityCommentList.push(action.payload.comment);
+      }),
+    [UPDATE_COMMUN_COMMENT]: (state, action) => produce(state, (draft) => {}),
+  },
+  initialState
+);
+
+const actionCreators = {
+  postCommunCommentAPI,
+  updateCommunCommentAPI,
+  deleteCommunCommrntAPI,
+  getCommunDetailAPI,
+};
+
+export { actionCreators };

@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { useProfile } from "../customHook/useProfile"
-import { UserProfile } from "./UserProfile"
-import { TiTimes, TiSpanner, TiTick } from "react-icons/ti"
-import { useDispatch } from "react-redux"
-import { actionCreators as goodsActions } from "../redux/modules/goods"
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useProfile } from "../customHook/useProfile";
+import { UserProfile } from "./UserProfile";
+import { TiTimes, TiSpanner, TiTick } from "react-icons/ti";
+import { useDispatch } from "react-redux";
+import { actionCreators as goodsActions } from "../redux/modules/goods";
+import { actionCreators as communCr } from "../redux/modules/communityDetail";
 export const Comments = (props) => {
   const {
     comment,
@@ -18,51 +18,54 @@ export const Comments = (props) => {
     id,
     usertype,
     commentUserPicture,
-  } = props
+  } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
+  console.log(useridx, commentUserIndex);
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userImage = comment_preview?.commentUserPicture
     ? comment_preview?.commentUserPicture
-    : commentUserPicture
+    : commentUserPicture;
 
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userType = comment_preview?.usertype
     ? comment_preview?.usertype
-    : usertype
+    : usertype;
 
-  const [userImg] = useProfile(userType, userImage)
+  const [userImg] = useProfile(userType, userImage);
 
   // const [commentMore, setCommentMore] = useState(false)
 
   // 업데이트 인풋창 보이기/숨기기
-  const [updateCommentBtn, setUpdateCommentBtn] = useState(false)
+  const [updateCommentBtn, setUpdateCommentBtn] = useState(false);
+
+  //커뮤티니 업테이느
 
   // 업데이트 내용 담는 state
-  const [updateComment, setUpdateComment] = useState("")
+  const [updateComment, setUpdateComment] = useState("");
 
   // 댓글 삭제 시 보낼 코맨트아이디 정하기 // 미리보기 아이디 또는 그냥 아이디
-  const commentId = comment_preview?.id ? comment_preview?.id : id
+  const commentId = comment_preview?.id ? comment_preview?.id : id;
 
   // 댓글 삭제
   const deleteCommentBtn = () => {
-    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
-  }
+    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId));
+  };
 
   // 업데이트 인풋창 보이기 버튼
   const updateBtn = () => {
-    setUpdateCommentBtn(true)
-  }
+    setUpdateCommentBtn(true);
+  };
 
   // 업데이트 버튼
   const updateSubmitBtn = () => {
     dispatch(
       goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
-    )
-    setUpdateComment("")
-    setUpdateCommentBtn(false)
-  }
+    );
+    setUpdateComment("");
+    setUpdateCommentBtn(false);
+  };
 
   return (
     // 1개의 댓글만 미리보기 comment_preview
@@ -94,7 +97,7 @@ export const Comments = (props) => {
                   onChange={(e) => setUpdateComment(e.target.value)}
                   placeholder="수정할 내용을 입력해주세요"
                 />
-                <TiTick size="20" onClick={updateSubmitBtn} />
+                <TiTick size="20" />
               </UpdateInputBox>
             ) : (
               // 댓글 보이기
@@ -107,8 +110,7 @@ export const Comments = (props) => {
           </CommentBox>
 
           {/* 수정 버튼을 눌렀을 때는 삭제/수정 아이콘 숨김 */}
-          {!updateCommentBtn &&
-          (            useridx === commentUserIndex) ? (
+          {!updateCommentBtn && useridx === commentUserIndex ? (
             <IconBox>
               {/* 댓글 수정 버튼 */}
               <IconsUpdate size="22px" onClick={updateBtn} />
@@ -123,34 +125,38 @@ export const Comments = (props) => {
         <NoComment>댓글을작성해주세요</NoComment>
       )}
     </CommentList>
-  )
-}
+  );
+};
+
+Comments.defaultProps = {
+  _onclick: () => {},
+};
 
 const P = styled.p`
   font-size: 12px;
   color: #c4c4c4;
   margin: 5px 0;
-`
+`;
 const CommentList = styled.div`
   max-width: 385px;
   display: flex;
   margin: 20px 20px 20px;
-`
+`;
 const CommentUserName = styled.p`
   font-size: 14px;
   margin-right: 5px;
-`
+`;
 const CommentBox = styled.div`
   width: 250px;
   display: flex;
   flex-direction: column;
   margin-left: 15px;
-`
+`;
 
 const CommentInfo = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 const Comment = styled.p`
   max-height: 40px;
   white-space: nowrap;
@@ -159,23 +165,23 @@ const Comment = styled.p`
   /* color: #c4c4c4; */
   font-size: 12px;
   /* -webkit-line-clamp: 2; */
-`
+`;
 const MoreComment = styled.p`
   /* max-height: 40px; */
   font-size: 12px;
-`
+`;
 
 const NoComment = styled.div`
   margin: 0 auto;
   cursor: pointer;
   font-weight: bold;
   color: #005eb6;
-`
+`;
 
 const IconBox = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const IconsDelete = styled(TiTimes)`
   color: #000;
@@ -183,7 +189,7 @@ const IconsDelete = styled(TiTimes)`
   :hover {
     color: #f04949;
   }
-`
+`;
 
 const IconsUpdate = styled(TiSpanner)`
   color: #000;
@@ -191,7 +197,7 @@ const IconsUpdate = styled(TiSpanner)`
   :hover {
     color: #005ad3;
   }
-`
+`;
 
 const CommentInput = styled.input`
   padding: 5px;
@@ -202,9 +208,9 @@ const CommentInput = styled.input`
   :focus {
     outline: none;
   }
-`
+`;
 
 const UpdateInputBox = styled.div`
   display: flex;
   align-items: center;
-`
+`;

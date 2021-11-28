@@ -39,21 +39,21 @@ import Community from "../pages/Community";
 import { CommunityDetail } from "../pages/CommunityDetail";
 import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
-import { Notice } from "../pages/Notice"
-import { Event } from "../pages/Event"
+import { Notice } from "../pages/Notice";
+import { Event } from "../pages/Event";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
-  }, [])
+  }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -142,8 +142,16 @@ function App() {
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
             <Route path="/community" exact component={Community} />
-            <Route path="/communitydetail" exact component={CommunityDetail} />
-            <Route path="/communityadd" exact component={CommunityAdd} />
+            <Route
+              path="/community/communitydetail/:communityId"
+              exact
+              component={CommunityDetail}
+            />
+            <Route
+              path="/community/communityadd"
+              exact
+              component={CommunityAdd}
+            />
             <Route path="/notice" component={Notice} />
             <Route path="/event" component={Event} />
             {/* 임시 */}
@@ -154,7 +162,7 @@ function App() {
       </ConnectedRouter>
       {/* </div> */}
     </Container>
-  )
+  );
 }
 
 export default App;

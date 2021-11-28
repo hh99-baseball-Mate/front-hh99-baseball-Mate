@@ -15,7 +15,7 @@ const Community = (props) => {
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/communityadd");
+      : history.push("/community/communityadd");
     e.target.disabled = true;
   };
 
@@ -35,18 +35,20 @@ const Community = (props) => {
         {card_list.map((e) => {
           return (
             <CommunityCard
-              onClick={() => history.push(`/communitydetail/${e.communityId}`)}
+              onClick={() =>
+                history.push(`/community/communitydetail/${e.communityId}`)
+              }
               key={e.communityId}
               {...e}
             />
-          )
+          );
         })}
       </Container>
 
       <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </div>
-  )
+  );
 };
 
 export default Community;
