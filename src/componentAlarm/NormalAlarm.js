@@ -6,7 +6,7 @@ const NormalAlarm = (props) => {
 
 	// 일반 알람 찾기
 	const normalAlarm = props.alarm.filter(list => list.alarmType === "Normal")
-	console.log(normalAlarm)
+	// console.log(normalAlarm)
 
 
 
