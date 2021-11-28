@@ -26,7 +26,7 @@ const ScreenDetail = memo((props) => {
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myScreenLikesList = mylist?.myScreenLikesList
   const likePost = myScreenLikesList?.indexOf(Number(screenId))
-  console.log(likePost)
+  // console.log(likePost)
   useEffect(() => {
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
@@ -60,7 +60,6 @@ const ScreenDetail = memo((props) => {
     <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
-        
         {/* 글 정보 */}
         <Info
           {...loadDetail}

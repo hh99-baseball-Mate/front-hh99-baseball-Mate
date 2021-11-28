@@ -143,7 +143,7 @@ export const ScreenAdd = (props) => {
 
         {/* 카카오지도 모달 */}
         {showModal ? (
-          <Modal bottom height="650px" margin="0 -20px">
+          <Modal bottom height="80%" margin="0 -20px">
             <CloseBtn onClick={() => setShowModal(false)}>
               <Buttons>닫기</Buttons>
             </CloseBtn>

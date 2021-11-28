@@ -18,6 +18,8 @@ export const Comments = (props) => {
     id,
     usertype,
     commentUserPicture,
+    deleteCommentBtn,
+    updateCommentDispatch,
   } = props
 
   const dispatch = useDispatch()
@@ -46,9 +48,6 @@ export const Comments = (props) => {
   const commentId = comment_preview?.id ? comment_preview?.id : id
 
   // 댓글 삭제
-  const deleteCommentBtn = () => {
-    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
-  }
 
   // 업데이트 인풋창 보이기 버튼
   const updateBtn = () => {
@@ -61,9 +60,7 @@ export const Comments = (props) => {
       window.alert("수정 할 내용을 입력해주세요")
       return
     }
-    dispatch(
-      goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
-    )
+    updateCommentDispatch(commentId, updateComment)
     setUpdateComment("")
     setUpdateCommentBtn(false)
   }
@@ -116,7 +113,12 @@ export const Comments = (props) => {
               {/* 댓글 수정 버튼 */}
               <IconsUpdate size="22px" onClick={updateBtn} />
               {/* 댓글 삭제버튼 */}
-              <IconsDelete size="22px" onClick={deleteCommentBtn} />
+              <IconsDelete
+                size="22px"
+                onClick={() => {
+                  deleteCommentBtn(commentId)
+                }}
+              />
             </IconBox>
           ) : (
             ""

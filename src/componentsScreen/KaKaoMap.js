@@ -56,7 +56,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
     function displayMarker(place) {
       var imageSrc =
           "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 마커이미지의 주소입니다
-        imageSize = new kakao.maps.Size(34, 34), // 마커이미지의 크기입니다
+        imageSize = new kakao.maps.Size(24, 24), // 마커이미지의 크기입니다
         imageOption = { offset: new kakao.maps.Point(27, 69) }
 
       // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -73,8 +73,6 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
         image: markerImage,
       })
 
-      marker.setMap(map)
-
       var iwContent = '<div class="maps">' + place.place_name + "</div>", // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(place.y, place.x) //인포윈도우 표시 위치입니다
 
@@ -83,10 +81,11 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
         map: map, // 인포윈도우가 표시될 지도
         position: iwPosition,
         content: iwContent,
-        // image: markerImage,
-        zIndex: 1,
+        image: markerImage,
+        zIndex: 5,
       })
 
+      marker.setMap(map)
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, "click", function (mouseEvent) {
         customOverlay.setContent(
@@ -104,7 +103,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
 
   return (
     <div
-      style={{ width: "100%", maxWidth: "425px", height: "650px" }}
+      style={{ width: "100%", maxWidth: "425px", height: "100%" }}
       id="map"
     ></div>
   )
