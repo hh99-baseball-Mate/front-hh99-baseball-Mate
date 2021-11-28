@@ -43,19 +43,14 @@ const postCommunCommentAPI = (communityId, message) => {
     instance
       .post(`/community/${communityId}/comment`, comment)
       .then((res) => {
-<<<<<<< HEAD
         console.log(res);
         dispatch(postCommunComment(communityId, comment));
-=======
-        // console.log(res)
-        dispatch(postCommunComment(communityId))
->>>>>>> master
       })
       .catch((err) => {
         // console.log(err, "커뮤댯글등록")
-      })
-  }
-}
+      });
+  };
+};
 
 //댓글 수정
 const updateCommunCommentAPI = (communityId, commentId, comment) => {
@@ -66,13 +61,13 @@ const updateCommunCommentAPI = (communityId, commentId, comment) => {
       })
       .then((res) => {
         // console.log(res)
-        dispatch(updateCommunComment(communityId, commentId, comment))
+        dispatch(updateCommunComment(communityId, commentId, comment));
       })
       .catch((err) => {
         // console.log(err, "커뮤댓글수정")
-      })
-  }
-}
+      });
+  };
+};
 
 //댓글 삭제
 const deleteCommunCommrntAPI = (communityId, commentId) => {
@@ -81,13 +76,13 @@ const deleteCommunCommrntAPI = (communityId, commentId) => {
       .delete(`/community/${communityId}/comment/${commentId}`)
       .then((res) => {
         // console.log(res)
-        dispatch(deleteCommunCommrnt(communityId, commentId))
+        dispatch(deleteCommunCommrnt(communityId, commentId));
       })
       .catch((err) => {
         // console.log(err, "댓글삭제에러")
-      })
-  }
-}
+      });
+  };
+};
 
 //디테일 불러오기
 const getCommunDetailAPI = (communityId) => {
@@ -96,13 +91,13 @@ const getCommunDetailAPI = (communityId) => {
       .get(`/community/${communityId}`)
       .then((res) => {
         // console.log(res)
-        dispatch(getCommunDetail(res.data))
+        dispatch(getCommunDetail(res.data));
       })
       .catch((err) => {
         // console.log(err, "디테일 페이지 오류")
-      })
-  }
-}
+      });
+  };
+};
 
 export default handleActions(
   {
