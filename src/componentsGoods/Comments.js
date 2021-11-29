@@ -3,8 +3,6 @@ import styled from "styled-components"
 import { useProfile } from "../customHook/useProfile"
 import { UserProfile } from "./UserProfile"
 import { TiTimes, TiSpanner, TiTick } from "react-icons/ti"
-import { useDispatch } from "react-redux"
-import { actionCreators as goodsActions } from "../redux/modules/goods"
 
 export const Comments = (props) => {
   const {
@@ -14,15 +12,12 @@ export const Comments = (props) => {
     createdAt,
     commentUserIndex,
     useridx,
-    goodsId,
     id,
     usertype,
     commentUserPicture,
     deleteCommentBtn,
     updateCommentDispatch,
   } = props
-
-  const dispatch = useDispatch()
 
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userImage = comment_preview?.commentUserPicture

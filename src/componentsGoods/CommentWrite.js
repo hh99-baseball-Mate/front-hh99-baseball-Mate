@@ -1,14 +1,13 @@
-import React, { useMemo, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import submit from "../shared/icon/submit.png"
 import { UserProfile } from "./UserProfile"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 // import dayjs from "dayjs"
-import { useProfile } from "../customHook/useProfile"
 
 export const CommentWrite = (props) => {
-  const { picture, username, useridx, goodsId, usertype } = props
+  const { picture, goodsId, usertype } = props
 
   const dispatch = useDispatch()
 
