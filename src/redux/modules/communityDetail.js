@@ -23,7 +23,7 @@ const updateCommunComment = createAction(
 );
 const deleteCommunCommrnt = createAction(
   DELETE_COMMUN_COMMENT,
-  (communityId) => ({ communityId })
+  (communityId, commentId) => ({ communityId, commentId })
 );
 const getCommunDetail = createAction(GET_COMMUN_DETAIL, (detailList) => ({
   detailList,
@@ -55,6 +55,7 @@ const postCommunCommentAPI = (communityId, message) => {
 //댓글 수정
 const updateCommunCommentAPI = (communityId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
+    console.log(communityId, commentId, comment, "무서워");
     instance
       .put(`/community/${communityId}/comment/${commentId}`, {
         comment: comment,
@@ -109,7 +110,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.detail_list.communityCommentList.push(action.payload.comment);
       }),
-    [UPDATE_COMMUN_COMMENT]: (state, action) => produce(state, (draft) => {}),
+    [UPDATE_COMMUN_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        const commentIdx = draft.detail_list.communityCommentList.findIndex(
+          (e) => {
+            return e.commentId === action.payload.commentId;
+          }
+        );
+
+        draft.detail_list.communityCommentList[commentIdx] = {
+          ...draft.detail_list.communityCommentList[commentIdx],
+          comment: action.payload.comment,
+        };
+      }),
+    [DELETE_COMMUN_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        const commentIdx = draft.detail_list.communityCommentList.findIndex(
+          (e) => {
+            return e.commentId === action.payload.commentId;
+          }
+        );
+        // console.log(commentIdx);
+        draft.detail_list.communityCommentList.splice(commentIdx, 1);
+      }),
   },
   initialState
 );

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 
-const MessageBox = memo((props) => {
+const MessageBox = (props) => {
   // console.log("메세지박스", props)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
 
@@ -71,7 +71,7 @@ const MessageBox = memo((props) => {
       </Container>
     )
   }
-})
+}
 export default React.memo(MessageBox);
 
 
