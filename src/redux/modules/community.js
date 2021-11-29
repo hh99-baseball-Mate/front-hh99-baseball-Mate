@@ -4,12 +4,12 @@ import { img, instance } from "../../lib/axios";
 
 //액션
 const GET_CARD = "GET_CARD";
-const POST_ADD = "POST ADD";
-
+const DELETE_COMMUNITY = "DELETE_COMMUNITY";
 //액션함수
 const getCard = createAction(GET_CARD, (cardList) => ({ cardList }));
-const postAdd = createAction(POST_ADD, (addList) => ({ addList }));
-
+const deleteCommunity = createAction(DELETE_COMMUNITY, (communityId) => ({
+  communityId,
+}));
 //초기값
 const initialState = {
   card_list: [],
@@ -22,30 +22,44 @@ const getCardAPI = () => {
       .get(`/community`)
       .then((res) => {
         // console.log(res)
-        dispatch(getCard(res.data))
+        dispatch(getCard(res.data));
       })
       .catch((err) => {
         // console.log(err, "커뮤니티카드 조회 에러")
-      })
-  }
-}
+      });
+  };
+};
 
 //커뮤니티 글작성
-const postAddAPI = (contents) => {
+const postAddAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    // console.log("배고파")
-    instance
-      .post("/community", { content: contents })
+    img
+      .post("/community", formData)
       .then((res) => {
-        // console.log(res, "커뮤티니")
-        dispatch(postAdd(res.data))
-        history.replace("/community")
+        console.log(res, "커뮤티니");
+        history.replace("/community");
       })
       .catch((err) => {
         // console.log(err, "모임 만들기 에러")
+      });
+  };
+};
+
+//게시글 삭제
+const deleteCommunityAPI = (communityId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/community/${communityId}`)
+      .then((res) => {
+        console.log(res, "ㅇㅇㅇ");
+        dispatch(deleteCommunity(communityId));
       })
-  }
-}
+      .catch((err) => {
+        console.log(err, "게시글 삭제 에러");
+      });
+  };
+};
+
 //리듀서
 export default handleActions(
   {
@@ -53,9 +67,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.card_list = action.payload.cardList;
       }),
-    [POST_ADD]: (state, action) =>
+    [DELETE_COMMUNITY]: (state, action) =>
       produce(state, (draft) => {
-        draft.card_list.unshift(action.payload.addList);
+        const idx = draft.card_list.findIndex((e) => {
+          return e.communityId === action.payload.communityId;
+        });
+        console.log(idx, "궁금");
+        if (idx !== -1) {
+          draft.card_list.splice(idx, 1);
+        }
       }),
   },
   initialState
@@ -64,6 +84,7 @@ export default handleActions(
 const actionCreators = {
   getCardAPI,
   postAddAPI,
+  deleteCommunityAPI,
 };
 
 export { actionCreators };

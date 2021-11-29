@@ -1,46 +1,47 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import submit from "../shared/icon/submit.png"
-import { UserProfile } from "./UserProfile"
-import { useDispatch, useSelector } from "react-redux"
-import { actionCreators as goodsActions } from "../redux/modules/goods"
+import React, { useMemo, useState } from "react";
+import styled from "styled-components";
+import submit from "../shared/icon/submit.png";
+import { UserProfile } from "./UserProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as goodsActions } from "../redux/modules/goods";
 // import dayjs from "dayjs"
+import { useProfile } from "../customHook/useProfile";
 
 export const CommentWrite = (props) => {
-  const { picture, goodsId, usertype } = props
+  const { picture, username, useridx, goodsId, usertype } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // 댓글 작성을 위한 로그인 체크
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_login = useSelector((state) => state.user.is_login);
 
   // 댓글 내용 저장 state
-  const [getComment, setGetComment] = useState("")
+  const [getComment, setGetComment] = useState("");
 
   // 댓글작성시 보내줄  날짜 세팅
   // const day = dayjs().format("YYYY-MM-DD :HH:mm:ss")
 
   const onChange = (e) => {
-    setGetComment(e.target.value)
-  }
+    setGetComment(e.target.value);
+  };
 
   // 유저 프로필
   const userImg = () => {
     if (usertype === "kakao") {
-      return picture
+      return picture;
     }
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + picture
+      return process.env.REACT_APP_IMAGES_BASE_URL + picture;
     }
-    return
-  }
+    return;
+  };
 
   const submitBtn = () => {
     !getComment
       ? window.alert("댓글을 입력해주세요")
-      : dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment))
-    setGetComment("")
-  }
+      : dispatch(goodsActions.addGoodsCommentMD(goodsId, getComment));
+    setGetComment("");
+  };
 
   return (
     <CommentInputContainer>
@@ -61,8 +62,8 @@ export const CommentWrite = (props) => {
         )}
       </CommentInputBox>
     </CommentInputContainer>
-  )
-}
+  );
+};
 
 const CommentInputContainer = styled.div`
   height: 95px;
@@ -70,7 +71,7 @@ const CommentInputContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const CommentInputBox = styled.div`
   width: 385px;
@@ -81,7 +82,7 @@ const CommentInputBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const CommentInput = styled.input`
   width: 260px;
@@ -94,7 +95,7 @@ const CommentInput = styled.input`
   :focus {
     outline: none;
   }
-`
+`;
 
 const CommentWritIcons = styled.img`
   width: 16px;
@@ -102,4 +103,4 @@ const CommentWritIcons = styled.img`
   cursor: pointer;
   :hover {
   }
-`
+`;

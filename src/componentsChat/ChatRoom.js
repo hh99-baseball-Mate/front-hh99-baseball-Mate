@@ -6,6 +6,8 @@ import { useHistory, useParams } from "react-router";
 import { getCookie } from "../shared/Cookie";
 import logger from "../shared/Console"
 
+import { instance } from "../lib/axios";
+
 // 소켓통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
@@ -16,7 +18,6 @@ import ChatWrite from "./ChatWrite";
 import MessageBox from "./MessageBox";
 import ChatRoomModal from "./ChatRoomModal";
 
-import more from "../shared/icon/more.svg"
 import more2 from "../shared/icon/more2.svg"
 
 
@@ -37,14 +38,11 @@ const ChatRoom = memo((props) => {
   const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
-  // const [messages, setMessages] = useState("")
+  // const [messagesi, setMessagesi] = useState("")
 
-  // useEffect(() => {
-  //   dispatch(chatCreators.loadChatListMW())
-  // }, [])
 
   const roomInfo = chatList.find((list) => list.roomId == roomId)
-  // console.log("챗리스트", chatList)
+  // console.log("챗리스트", messages)
 
   // const getChatMessagesAX = (roomId) => {
   //   return function (dispatch, getState, { history }) {
@@ -53,8 +51,10 @@ const ChatRoom = memo((props) => {
   //       .then((res) => {
   //         console.log(res)
   //         const msg = res.data.content
-  //         console.log("mgs",res.data.content)
-  //         dispatch(load_msg(msg));
+  //         console.log("메세지",msg)
+  //         // setMessagesi(msg)
+  //         // console.log("mgs",res.data.content)
+  //         // dispatch(load_msg(msg));
   //       })
   //       .catch((err) => {
   //         console.log(err)
@@ -62,13 +62,14 @@ const ChatRoom = memo((props) => {
   //   }
   // }
 
+
+
+
   // 모달창 정보
   // const chatList = useSelector((state) => state.chat?.chatList)
   const chatUser = useSelector((state) => state.chat?.chatUser)
 
-  //  useEffect (() => {
-  //   dispatch(chatCreators.getChatUserAX(room_id))
-  //  },[])
+
 
   // console.log("sender_id", messages)
 
@@ -77,7 +78,6 @@ const ChatRoom = memo((props) => {
   }
 
   // 배포, 개발 환경 채팅 주소 관리
-  // const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
   const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting"
 
   // const env = process.env.NODE_ENV;
@@ -109,12 +109,11 @@ const ChatRoom = memo((props) => {
     // 	);
     // 이전 대화 기록 불러오기
     dispatch(chatCreators.getChatMessagesAX(room_id))
+    dispatch(chatCreators.loadChatListMW())
     // 현재 채팅방 참여 사용자 정보 불러오기
     dispatch(chatCreators.getChatUserAX(room_id))
-
-    dispatch(chatCreators.loadChatListMW())
-    // }
-  }, [])
+    return
+  }, [room_id])
 
   // 방 정보가 바뀌면 소켓 연결 구독, 구독해제
   useEffect(() => {
@@ -148,7 +147,7 @@ const ChatRoom = memo((props) => {
           ws.subscribe(
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
-              const newMessage = JSON.parse(data.body)
+              // const newMessage = JSON.parse(data.body)
               // logger("구독후 새로운 메세지 data", newMessage);
               // console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
@@ -254,7 +253,6 @@ const ChatRoom = memo((props) => {
     // console.log("tell me you are moving now", messageEndRef)
   }, [messages.length])
 
-  // console.log("C")
 
   return (
     // <React.Fragment>
@@ -282,8 +280,6 @@ const ChatRoom = memo((props) => {
           room_id={room_id}
           chatUser={chatUser}
           id={sender_id}
-          roomInfo={roomInfo}
-          // chatList={chatList}
         />
       ) : null}
 
