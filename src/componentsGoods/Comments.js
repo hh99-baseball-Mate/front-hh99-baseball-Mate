@@ -15,7 +15,7 @@ export const Comments = (props) => {
     commentUserIndex,
     useridx,
     goodsId,
-    id: id, //
+    id, //
     usertype,
     commentUserPicture,
     deleteCommentBtn,
