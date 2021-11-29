@@ -130,7 +130,7 @@ export default handleActions(
             return e.commentId === action.payload.commentId;
           }
         );
-        console.log(commentIdx);
+        // console.log(commentIdx);
         draft.detail_list.communityCommentList.splice(commentIdx, 1);
       }),
   },

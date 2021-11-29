@@ -57,7 +57,7 @@ const getChatMessagesAX = (roomId) => {
       .then((res) => {
         // console.log(res)
         const msg = res.data.content
-        // console.log("mgs", res.data.content)
+        // console.log("mgs", msg)
         dispatch(load_msg(msg))
       })
       .catch((err) => {
@@ -117,11 +117,12 @@ export default handleActions(
     [LOAD_MSG]: (state, action) =>
       produce(state, (draft) => {
         // 이전 메세지 내역중 유형이 대화인 내용만 리덕스에 저장
-        // // console.log("msg",action.payload.msg)
-        const messegeList = action.payload.msg.filter(
-          (list) => list.type === "TALK"
-        )
-        draft.messages = messegeList
+        // const messegeList = action.payload.msg.filter(
+        //   (list) => list.type === "TALK"
+        // )
+        // draft.messages = messegeList
+
+        draft.messages = action.payload.msg
       }),
     [LOAD_CHAT_USER]: (state, action) =>
       produce(state, (draft) => {

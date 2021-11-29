@@ -26,11 +26,11 @@ const Alarm = (props) => {
   // 스크린야구 (참여자기준) 대기중인 신청 목록
   const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-  console.log("alarm", alarm)
+  // console.log("alarm", alarm)
   // console.log("requestList", requestList)
   // console.log("ScreenAlarm", requestScreenList)
-  console.log("awaitList", awaitList)
-  console.log("awaitScreenList", awaitScreenList)
+  // console.log("awaitList", awaitList)
+  // console.log("awaitScreenList", awaitScreenList)
   
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const Alarm = (props) => {
         <Container padding="58.39px 0 0 0">
 
           {/* 일반 & 승인요청 버튼 */}
-          <Box height="50px" position="fixed" background="#fff">
+          <Box position="fixed" background="#fff">
             <Warp padding="10px 0 0 0">
               <NormalBtn
                 onClick={() => setSelectPage(true)}
