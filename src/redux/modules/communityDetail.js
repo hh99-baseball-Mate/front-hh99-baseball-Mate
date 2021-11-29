@@ -23,7 +23,7 @@ const updateCommunComment = createAction(
 );
 const deleteCommunCommrnt = createAction(
   DELETE_COMMUN_COMMENT,
-  (communityId) => ({ communityId })
+  (communityId, commentId) => ({ communityId, commentId })
 );
 const getCommunDetail = createAction(GET_COMMUN_DETAIL, (detailList) => ({
   detailList,
@@ -43,31 +43,32 @@ const postCommunCommentAPI = (communityId, message) => {
     instance
       .post(`/community/${communityId}/comment`, comment)
       .then((res) => {
-        // console.log(res)
-        dispatch(postCommunComment(communityId))
+        console.log(res);
+        dispatch(postCommunComment(communityId, comment));
       })
       .catch((err) => {
         // console.log(err, "커뮤댯글등록")
-      })
-  }
-}
+      });
+  };
+};
 
 //댓글 수정
 const updateCommunCommentAPI = (communityId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
+    console.log(communityId, commentId, comment, "무서워");
     instance
       .put(`/community/${communityId}/comment/${commentId}`, {
         comment: comment,
       })
       .then((res) => {
         // console.log(res)
-        dispatch(updateCommunComment(communityId, commentId, comment))
+        dispatch(updateCommunComment(communityId, commentId, comment));
       })
       .catch((err) => {
         // console.log(err, "커뮤댓글수정")
-      })
-  }
-}
+      });
+  };
+};
 
 //댓글 삭제
 const deleteCommunCommrntAPI = (communityId, commentId) => {
@@ -76,13 +77,13 @@ const deleteCommunCommrntAPI = (communityId, commentId) => {
       .delete(`/community/${communityId}/comment/${commentId}`)
       .then((res) => {
         // console.log(res)
-        dispatch(deleteCommunCommrnt(communityId, commentId))
+        dispatch(deleteCommunCommrnt(communityId, commentId));
       })
       .catch((err) => {
         // console.log(err, "댓글삭제에러")
-      })
-  }
-}
+      });
+  };
+};
 
 //디테일 불러오기
 const getCommunDetailAPI = (communityId) => {
@@ -91,13 +92,13 @@ const getCommunDetailAPI = (communityId) => {
       .get(`/community/${communityId}`)
       .then((res) => {
         // console.log(res)
-        dispatch(getCommunDetail(res.data))
+        dispatch(getCommunDetail(res.data));
       })
       .catch((err) => {
         // console.log(err, "디테일 페이지 오류")
-      })
-  }
-}
+      });
+  };
+};
 
 export default handleActions(
   {
@@ -109,7 +110,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.detail_list.communityCommentList.push(action.payload.comment);
       }),
-    [UPDATE_COMMUN_COMMENT]: (state, action) => produce(state, (draft) => {}),
+    [UPDATE_COMMUN_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        const commentIdx = draft.detail_list.communityCommentList.findIndex(
+          (e) => {
+            return e.commentId === action.payload.commentId;
+          }
+        );
+
+        draft.detail_list.communityCommentList[commentIdx] = {
+          ...draft.detail_list.communityCommentList[commentIdx],
+          comment: action.payload.comment,
+        };
+      }),
+    [DELETE_COMMUN_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        const commentIdx = draft.detail_list.communityCommentList.findIndex(
+          (e) => {
+            return e.commentId === action.payload.commentId;
+          }
+        );
+        // console.log(commentIdx);
+        draft.detail_list.communityCommentList.splice(commentIdx, 1);
+      }),
   },
   initialState
 );

@@ -3,36 +3,87 @@ import styled from "styled-components";
 import { Text } from "../components";
 import Question from "../shared/icon/Question.png";
 import Progress from "../components/Progress";
+import { useDispatch, useSelector } from "react-redux";
+import { BsThreeDots } from "react-icons/bs";
+import { Modal } from "../components/Modal";
+import { actionCreators as communityCr } from "../redux/modules/community";
+import { history } from "../redux/configStore";
 const CommunityCard = (props) => {
-  const { myTeam, content, userName, communityUserPicture, onClick } = props;
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
-  return (
-    <Card onClick={onClick}>
-      <UserInfo>
-        <UserImg src={img} />
-        <InfoBox>
-          <Text bold>{userName}</Text>
-          <Time>
-            <Text size="12px" color="#F25343" margin="0 10px 0 0">
-              {myTeam}
-            </Text>
-            <Text size="12px" color="#C4C4C4">
-              시간
-            </Text>
-          </Time>
-        </InfoBox>
-      </UserInfo>
-      <TextBox>{content}</TextBox>
-      <Border />
-      <Good>
-        <img src={Question} alt="말풍선" />
-        <Text size="12px" margin="0 0 0 7px">
-          숫자
-        </Text>
-      </Good>
+  const dispatch = useDispatch();
 
-      <Boundary />
-    </Card>
+  const {
+    myTeam,
+    content,
+    userName,
+    communityUserPicture,
+    onClick,
+    dayBefore,
+    communityId,
+  } = props;
+
+  //게시글 이미지
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+
+  // 모달 보여주기/숨기기
+  const [showModal, setShowModal] = useState(false);
+
+  // 삭제/수정 모달내용
+  const modalData = {
+    title: "굿즈 에디터",
+    descriptionOne: "선택하신 굿즈를 삭제 하시겠습니까?",
+    descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
+    btnClose: "취소",
+    btnUpdate: "삭제",
+  };
+
+  const deleteBtn = () => {
+    console.log("놀러");
+    dispatch(communityCr.deleteCommunityAPI(communityId));
+    setShowModal(false);
+    // history.push("/community");
+  };
+  const detail_list = useSelector((state) => state.communityDetail.detail_list);
+  return (
+    <div>
+      <MoreIcons onClick={() => setShowModal(true)} />
+      <Card onClick={onClick}>
+        <UserInfo>
+          <UserImg src={img} />
+          <InfoBox>
+            <Text bold>{userName}</Text>
+            <Time>
+              <Text size="12px" color="#F25343" margin="0 10px 0 0">
+                {myTeam}
+              </Text>
+              <Text size="12px" color="#C4C4C4">
+                {dayBefore}
+              </Text>
+            </Time>
+          </InfoBox>
+        </UserInfo>
+        <TextBox>{content}</TextBox>
+        <Border />
+        <Good>
+          <img src={Question} alt="말풍선" />
+          <Text size="12px" margin="0 0 0 7px">
+            {detail_list.communityCommentList
+              ? detail_list.communityCommentList.length
+              : "0"}
+          </Text>
+        </Good>
+
+        <Boundary />
+
+        {showModal && (
+          <Modal
+            center
+            setShowModal={setShowModal}
+            modalData={modalData}
+            deleteBtn={deleteBtn}
+          ></Modal>
+        )}
+      </Card>
+    </div>
   );
 };
 
@@ -89,4 +140,10 @@ const Boundary = styled.div`
 const Good = styled.div`
   display: flex;
   margin: 15px;
+`;
+
+const MoreIcons = styled(BsThreeDots)`
+  align-items: center;
+  margin: 7.5px 0;
+  cursor: pointer;
 `;
