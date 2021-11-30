@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance, img } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
 // const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";
@@ -78,6 +79,7 @@ const loadScreenPageMW = (screenId) => {
     instance
       .get(`/screen/${screenId}`)
       .then((res) => {
+        dispatch(is_loaded(true))
         // // console.log("loadScreenPageMW", res.data)
         const screenPage = res.data
         dispatch(load_screenPage(screenPage))
@@ -85,6 +87,7 @@ const loadScreenPageMW = (screenId) => {
       .catch((err) => {
         // console.log(err)
       })
+      dispatch(is_loaded(false)) 
   }
 }
 
