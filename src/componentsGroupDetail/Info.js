@@ -17,11 +17,10 @@ import users from "../shared/icon/users.svg";
 import { width } from "dom-helpers";
 
 const Info = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const params = useParams();
-  const groupId = params.groupId;
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const params = useParams()
+  const groupId = params.groupId
 
   // const srcChange = () => {
   //   if (preview) {
@@ -36,23 +35,23 @@ const Info = memo((props) => {
   // }
 
   // 사진 ip주소 + 사진이름 조합
-  const ip = IMAGES_BASE_URL;
-  const img = props.filePath;
+  const ip = process.env.REACT_APP_IMAGES_BASE_URL
+  const img = props.filePath
 
   // 배경사진
-  const imageUrl = ip + img;
+  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.createdUserProfileImg;
+  const profileImg = ip + props.createdUserProfileImg
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.createdUserProfileImg?.split(".")[1];
-  const kakaoImg = props.createdUserProfileImg;
+  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
+  const kakaoImg = props.createdUserProfileImg
 
-  const myGroupLikesList = props.myGroupLikesList;
-  const id = props.groupId;
+  const myGroupLikesList = props.myGroupLikesList
+  const id = props.groupId
 
-  const cookie = getCookie("is_login");
+  const cookie = getCookie("is_login")
   // useEffect(() => {
   // 	dispatch(groupDetailCreators.loadGroupPageMW(groupId))
   // 	dispatch(groupDetailCreators.mylistMW())
@@ -80,25 +79,25 @@ const Info = memo((props) => {
   // 찜(하트) 버튼
   const HeartBtn = () => {
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요");
-      return;
+      window.alert("로그인 후 이용해주세요")
+      return
     }
-    props.setHeart(!props?.heart);
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart));
-  };
+    props.setHeart(!props?.heart)
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart))
+  }
 
   // 수정버튼
   const editBtn = () => {
-    history.push(`/groupdedit/${groupId}`);
-  };
+    history.push(`/groupdedit/${groupId}`)
+  }
 
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupDetailCreators.delGroupPageMW(props.groupId));
+      dispatch(groupDetailCreators.delGroupPageMW(props.groupId))
       // history.push("/grouplist")
     }
-  };
+  }
 
   // console.log("받아오기", props)
 
@@ -271,8 +270,8 @@ const Info = memo((props) => {
 
       <Rectangle />
     </Container>
-  );
-});
+  )
+})
 
 Info.defaultProps = {
   myGroupLikesList: [],

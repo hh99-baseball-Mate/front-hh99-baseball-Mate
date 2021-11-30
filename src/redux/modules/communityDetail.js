@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { img, instance } from "../../lib/axios";
+import {  instance } from "../../lib/axios";
 import { produce } from "immer";
 
 //액션
@@ -101,19 +101,21 @@ const getCommunDetailAPI = (communityId) => {
 };
 
 //게시글 수정
-const updateCommunityAPI = (communityId, formData) => {
+const updateCommunityAPI = (communityId, commuEditInfo) => {
   return function (dispatch, getState, { history }) {
-    img
-      .put(`/community/${communityId}`, formData)
+
+    console.log(commuEditInfo)
+    
+    instance
+      .put(`/community/${communityId}`, commuEditInfo)
       .then((res) => {
-        console.log(res, "res다 하하하");
-        history.replace(`/community/communityId/${communityId}`);
+        history.replace(`/community/communitydetail/${communityId}`)
       })
       .catch((err) => {
-        console.log(err, "게시글 수정 에러");
-      });
-  };
-};
+        console.log(err, "게시글 수정 에러")
+      })
+  }
+}
 export default handleActions(
   {
     [GET_COMMUN_DETAIL]: (state, action) =>

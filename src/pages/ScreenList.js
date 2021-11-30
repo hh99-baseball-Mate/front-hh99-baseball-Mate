@@ -85,6 +85,7 @@ export const ScreenList = (props) => {
                 }
                 key={e.screenId}
                 {...e}
+                path="screen"
               />
             ))
           ) : (

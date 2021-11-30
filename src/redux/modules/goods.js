@@ -107,6 +107,7 @@ const addGoodsMD = (goodInfo) => {
       .post("/goods", goodInfo)
       .then((res) => {
         history.replace("/goods")
+        console.log("됨")
       })
       .catch((err) => {
         // console.log(err, "굿즈 생성 오류")

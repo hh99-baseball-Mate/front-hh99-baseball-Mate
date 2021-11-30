@@ -28,7 +28,6 @@ import { ko } from "date-fns/esm/locale"
 import "react-datepicker/dist/react-datepicker.css"
 import { useInputs } from "../customHook/useInputs"
 import { useVolumeBtn } from "../customHook/useVolumeBtn"
-import { usePreview } from "../customHook/usePreview"
 import { useS3Upload } from "../customHook/useS3Upload"
 
 export const ScreenAdd = (props) => {
@@ -75,7 +74,6 @@ export const ScreenAdd = (props) => {
   const { content, title } = inputValue
 
   // 장소 설정 state
-
   const [location, setLocation] = useState("")
   const [roadAddress, setRoadAddress] = useState("")
 
@@ -110,27 +108,10 @@ export const ScreenAdd = (props) => {
         peopleLimit,
         selectPlace: location,
         placeInfomation,
-        filePath: fileName,
+        filePath: preview ? fileName : "",
       }
 
-      // console.log(placeInfomation)
       dispatch(screenAction.screenAddMD(screenInfo))
-
-      // formData.append("title", title)
-      // formData.append("groupDate", groupDate)
-      // formData.append("content", content)
-      // formData.append("peopleLimit", peopleLimit)
-
-      // // 스야 지점 지점명
-      // formData.append("selectPlace", location)
-      // // 스야지점 지번주소
-      // formData.append("placeInfomation", placeInfomation)
-      // formData.append("file", preview)
-
-      // e.target.disabled = true
-
-      // 폼데이터 console
-      // for (const keyValue of formData) console.log(keyValue)
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -12,33 +12,53 @@ import {
 import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
 import { usePreview } from "../customHook/usePreview";
+import { useS3Upload } from "../customHook/useS3Upload";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   //이미지 미리보기 삭제 커스텀훅
-  const [imgPreview, deletePreview, preview] = usePreview("");
 
+  const card_list = useSelector((state) => state.community.card_list);
+  console.log(card_list.filePath, "라면");
   // 입력창
-  const [content, setCotent] = useState("");
+  const [content, setCotent] = useState("")
+  const [preview, setPreview] = useState("")
+
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0])
+  }
+
+  // 이미지 미리보기 삭제
+  const deletePreview = () => {
+    if (!preview) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+    setPreview("")
+  }
+
+  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "commu")
 
   //입력체크
   const submitBtn = (e) => {
     if (!content) {
-      window.alert("빈란을 채워주세요");
+      window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
-      return;
+      return
     }
 
-    const formData = new FormData();
+    uploadFile(preview)
 
-    formData.append("content", content);
-    formData.append("file", preview);
-    formData.append("myTeam", null);
+    const communityInfo = {
+      content,
+      myTeam: null,
+      filePath: preview ? fileName : "",
+    }
 
-    for (const keyValue of formData) console.log(keyValue);
-    dispatch(actionCr.postAddAPI(formData));
-    e.target.disabled = true;
-  };
+    dispatch(actionCr.postAddAPI(communityInfo))
+    e.target.disabled = true
+  }
 
   return (
     <div>
@@ -80,7 +100,11 @@ const CommunityAdd = (props) => {
         <Buttons _onClick={submitBtn}>글 등록</Buttons>
       </Container>
     </div>
-  );
+  )
+};
+CommunityAdd.defaultProps = {
+  defaultImg:
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
 };
 
 export default CommunityAdd;

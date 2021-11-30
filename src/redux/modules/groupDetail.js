@@ -91,10 +91,10 @@ const loadGroupPageMW = (groupId) => {
 }
 
 // 수정하기
-const editGroupPageMW = (groupId, formData) => {
+const editGroupPageMW = (groupId, groupEditData) => {
   return (dispatch, getState, { history }) => {
-    img
-      .patch(`/groups/${groupId}`, formData)
+    instance
+      .put(`/groups/${groupId}`, groupEditData)
       .then((res) => {
         history.replace(`/groupdetail/${groupId}`)
       })

@@ -79,11 +79,9 @@ function App() {
                 component={GroupDetail}
               />
               <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
-              <Route path="/timeline" exact component={TimelineList} />
               <Route path="/goods" exact component={Goods} />
               <Route path="/mygroup" exact component={MyGroup} />
               <Route path="/community" exact component={Community} />
-              <Route path="/communityadd" exact component={CommunityAdd} />
               <Route
                 path="/alarm"
                 render={() => <Alarm is_login={is_login} />}
@@ -94,16 +92,6 @@ function App() {
                 render={() => <MyPage is_login={is_login} />}
               />
               <Route path="/screen" exact component={ScreenList} />
-              <Route
-                path="/screen/screendetail/:screenId"
-                exact
-                component={ScreenDetail}
-              />
-              <Route
-                path="/community/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
               <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
               {/* 임시 */}
@@ -148,7 +136,11 @@ function App() {
                 exact
                 component={EditCommunComment}
               />
-
+              <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
               <Route
                 path="/screenedit/:screenId"
                 exact

@@ -33,19 +33,19 @@ const getCardAPI = () => {
 };
 
 //커뮤니티 글작성
-const postAddAPI = (formData) => {
+const postAddAPI = (communityInfo) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post("/community/legacy", formData)
+      .post("/community", communityInfo)
       .then((res) => {
-        console.log(res, "커뮤티니");
-        history.replace("/community");
+        console.log(res, "커뮤티니")
+        history.replace("/community")
       })
       .catch((err) => {
         // console.log(err, "모임 만들기 에러")
-      });
-  };
-};
+      })
+  }
+}
 
 //게시글 삭제
 const deleteCommunityAPI = (communityId) => {
