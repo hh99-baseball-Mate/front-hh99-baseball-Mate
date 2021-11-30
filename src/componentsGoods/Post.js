@@ -37,7 +37,7 @@ export const Post = memo((props) => {
 
   // S3에서 가져온 게시글 이미지
 
-  const postImage = process.env.REACT_APP_S3_URL + filePath
+  const postImage = process.env.REACT_APP_S3_GOODS_URL + filePath
 
   // 유저 프로필사진
   const userImg = () => {
