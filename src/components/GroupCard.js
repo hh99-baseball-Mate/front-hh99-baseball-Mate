@@ -16,14 +16,17 @@ export const GroupCard = memo((props) => {
     title,
     hotPercent,
     allowtype,
+    path,
   } = props
 
   const [close, setClose] = useState(false)
 
-  const img =
-    process.env.REACT_APP_S3_GROUP_URL + filePath
-      ? process.env.REACT_APP_S3_GROUP_URL + filePath
-      : process.env.REACT_APP_S3_SCREEN_URL + filePath
+  const img = () => {
+    if (path === "screen") {
+      return process.env.REACT_APP_S3_SCREEN_URL + filePath
+    }
+    return process.env.REACT_APP_S3_GROUP_URL + filePath
+  }
 
   // 모집중, 마감중 표시
   useEffect(() => {
@@ -37,7 +40,7 @@ export const GroupCard = memo((props) => {
   return (
     <Container onClick={onClick}>
       <Card flex="flex">
-        <ImgBox url={img} />
+        <ImgBox url={img()} />
         <Warp flex="flex" direction="column" width="250px" marginLeft="10px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (

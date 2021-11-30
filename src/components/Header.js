@@ -42,8 +42,7 @@ const Header = (props) => {
           <Community
             community={community}
             onClick={() => {
-              // history.push("/community");
-              window.alert("준비 중입니다.")
+              history.push("/community")
             }}
           >
             커뮤니티

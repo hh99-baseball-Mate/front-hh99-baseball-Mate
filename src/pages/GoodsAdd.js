@@ -52,8 +52,8 @@ export const GoodsAdd = (props) => {
     const emptyValue = Object.values(inputValue).map((e) => {
       return !e ? false : true
     })
-    if (emptyValue.includes(false)) {
-      window.alert("빈란을 채워주세요")
+    if (emptyValue.includes(false) || !preview) {
+      window.alert("굿즈는 사진이 필수입니다")
       // console.log("빈값있음")
       return
     }
@@ -64,20 +64,12 @@ export const GoodsAdd = (props) => {
       goodsName,
       goodsContent,
       goodsPrice: null,
-      filePath: fileName,
+      filePath: preview ? fileName : "",
     }
 
     dispatch(goodsActions.addGoodsMD(goodInfo))
-
-    // const formData = new FormData()
-    // formData.append("goodsName", goodsName)
-    // formData.append("goodsContent", goodsContent)
-    // formData.append("goodsPrice", null)
-    // formData.append("file", fileName)
-    // e.target.disabled = true
-    // for (const keyValue of formData) console.log(keyValue)
   }
-
+  
   return (
     <>
       <Container>

@@ -28,12 +28,16 @@ import DatePicker, { registerLocale } from "react-datepicker"
 import { ko } from "date-fns/esm/locale"
 import "react-datepicker/dist/react-datepicker.css"
 import { useParams } from "react-router"
+import { useS3Upload } from "../customHook/useS3Upload"
+import { useVolumeBtn } from "../customHook/useVolumeBtn"
+import { useInputs } from "../customHook/useInputs"
 
 export const ScreenEdit = (props) => {
   const params = useParams()
   const screenId = params.screenId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+
   const ip = IMAGES_BASE_URL
   const dispatch = useDispatch()
 
@@ -44,44 +48,32 @@ export const ScreenEdit = (props) => {
   // console.log("스야수정",loadDetail)
   // 날짜 datePicker 라이브러리
 
+  // 날짜 datePicker 라이브러리
   const [startDate, setStartDate] = useState("")
+  const [preview, setPreview] = useState("")
 
   // datePicker 한글버전
   registerLocale("ko", ko)
   dayjs.locale("ko")
 
-  const [inputValue, setInputValue] = useState({
+  // 사용자가 날짜 선택시 최소날짜 ~ 최대날짜 2주를 주기 위함
+  const minDate = dayjs().add(1, "day").format("YYYY-MM-DD")
+  const maxDate = dayjs().add(15, "day").format("YYYY-MM-DD")
+
+  // 커스텀 훅 인풋
+  const [inputValue, onChange] = useInputs({
     title: loadDetail.title,
-    peopleLimit: loadDetail.peopleLimit,
     content: loadDetail.content,
   })
 
-  // 장소 설정 state
+  // + - 버튼 커스텀 훅
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
-  const [location, setLocation] = useState("")
-  const [roadAddress, setRoadAddress] = useState("")
-  // console.log(roadAddress, "주소")
-  // console.log(location)
-
-  // 이미지 미리보기 state
-  const [preview, setPreview] = useState(img)
-
-  // 모달 보기 state
-  const [showModal, setShowModal] = useState(false)
-
-  const { content, peopleLimit, title } = inputValue
-
-  useEffect(() => {
-    dispatch(screenDetailCreators.loadScreenPageMW(screenId))
-  }, [])
-
-  // 이미지 업로드 / 미리보기
+  // 이미지 미리보기 /삭제하기 커스텀 훅
 
   const imgPreview = (e) => {
     setPreview(e.target.files[0])
   }
-
-  // 미리보기 삭제,
 
   const deletePreview = () => {
     if (!preview) {
@@ -91,39 +83,17 @@ export const ScreenEdit = (props) => {
     setPreview("")
   }
 
-  // 인풋 입력 값 추적 e.target.value 대행
+  // 이미지 S3 저장 커스텀 훅 이미지 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "screen")
 
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    })
-  }
-  //  인원수 + 버튼
-  const plusBtn = () => {
-    if (peopleLimit < 8) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit + 1,
-      })
-    } else {
-      window.alert("8명 이상은 안됩니다")
-      return
-    }
-  }
+  const { content, title } = inputValue
 
-  // 인원수 - 버튼
-  const minusBtn = () => {
-    if (peopleLimit !== 0) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit - 1,
-      })
-    } else {
-      window.alert("0이하는 선택불가")
-    }
-  }
+  // 장소 설정 state
+  const [location, setLocation] = useState("")
+  const [roadAddress, setRoadAddress] = useState("")
+
+  // 모달 보기 state
+  const [showModal, setShowModal] = useState(false)
 
   // 입력체크
   const submitBtn = (e) => {
@@ -133,10 +103,6 @@ export const ScreenEdit = (props) => {
     })
 
     const groupDate = dayjs(startDate).format("MM.DD (dd)")
-    // const groupDate =
-    // console.log(groupDate)
-
-    // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
     if (emptyValue.includes(false) || !location || !startDate) {
       window.alert("빈란이 있습니다")
@@ -148,24 +114,21 @@ export const ScreenEdit = (props) => {
 
       const placeInfomation = roadAddress.substring(0, 2)
 
-      // console.log(placeInfomation)
+      uploadFile(preview)
 
-      formData.append("title", inputValue.title)
-      formData.append("groupDate", groupDate)
-      formData.append("content", inputValue.content)
-      formData.append("peopleLimit", inputValue.peopleLimit)
+      const screenEditInfo = {
+        title,
+        groupDate,
+        content,
+        peopleLimit: loadDetail.peopleLimit,
+        selectPlace: location,
+        placeInfomation,
+        filePath: preview ? fileName : "",
+      }
 
-      // 스야 지점 지점명
-      formData.append("selectPlace", location)
-      // 스야지점 지번주소
-      formData.append("placeInfomation", placeInfomation)
-      formData.append("file", preview)
-
-      dispatch(screenDetailCreators.editGroupPageMW(screenId, formData))
       e.target.disabled = true
 
-      // 폼데이터 console
-      // for (const keyValue of formData) console.log(keyValue)
+      dispatch(screenDetailCreators.editGroupPageMW(screenId, screenEditInfo))
     }
   }
 
@@ -226,7 +189,8 @@ export const ScreenEdit = (props) => {
             <div style={{ width: "100px" }}>
               <SDatePicker
                 locale="ko"
-                minDate={new Date()}
+                minDate={new Date(minDate)}
+                maxDate={new Date(maxDate)}
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 // showTimeSelect
@@ -248,7 +212,12 @@ export const ScreenEdit = (props) => {
           <PeopleSelect>
             <AiOutlineMinusCircle color="#498C9A" onClick={minusBtn} />
             <PeopleCount>
-              <Text center size="18px" name="peopleLimit" onChange={onChange}>
+              <Text
+                center
+                size="18px"
+                name="peopleLimit"
+                onChange={onChangeBtn}
+              >
                 {peopleLimit}
               </Text>
             </PeopleCount>

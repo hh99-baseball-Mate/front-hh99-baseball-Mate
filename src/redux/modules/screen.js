@@ -38,6 +38,8 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (screenInfo) => {
   return function (dispatch, getState, { history }) {
+
+    console.log(screenInfo)
     instance
       .post("/screen", screenInfo)
       .then((res) => {

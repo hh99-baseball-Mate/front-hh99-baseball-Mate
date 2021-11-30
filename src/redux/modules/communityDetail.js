@@ -103,15 +103,15 @@ const getCommunDetailAPI = (communityId) => {
 //게시글 수정
 const updateCommunityAPI = (communityId, formData) => {
   return function (dispatch, getState, { history }) {
-    img
+    instance
       .put(`/community/${communityId}`, formData)
       .then((res) => {
-        console.log(res, "res다 하하하");
-        history.replace(`/community/communityId/${communityId}`);
+        console.log(res, "res다 하하하")
+        history.replace(`/community/communityId/${communityId}`)
       })
       .catch((err) => {
-        console.log(err, "게시글 수정 에러");
-      });
+        console.log(err, "게시글 수정 에러")
+      })
   };
 };
 export default handleActions(

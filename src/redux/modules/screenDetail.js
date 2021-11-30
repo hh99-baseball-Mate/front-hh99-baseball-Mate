@@ -89,10 +89,10 @@ const loadScreenPageMW = (screenId) => {
 }
 
 // 수정하기
-const editGroupPageMW = (screenId, formData) => {
+const editGroupPageMW = (screenId, screenEditInfo) => {
   return (dispatch, getState, { history }) => {
-    img
-      .patch(`/screen/${screenId}`, formData)
+    instance
+      .put(`/screen/${screenId}`, screenEditInfo)
       .then((res) => {
         // // console.log(res)
         history.replace(`/screen/screendetail/${screenId}`)
