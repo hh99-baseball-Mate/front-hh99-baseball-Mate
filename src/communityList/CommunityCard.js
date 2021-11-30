@@ -45,7 +45,7 @@ const CommunityCard = (props) => {
 
   return (
     <div>
-      <MoreIcons onClick={() => setShowModal(true)} />
+      {/* <MoreIcons onClick={() => setShowModal(true)} /> */}
       <Card
         onClick={() => {
           console.log("제발");

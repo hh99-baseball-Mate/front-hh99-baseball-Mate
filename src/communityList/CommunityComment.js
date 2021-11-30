@@ -3,22 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Text } from "../components";
 import { Comments } from "../componentsGoods/Comments";
+import { UserProfile } from "../componentsGoods/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {
   const dispatch = useDispatch();
   console.log(props, "새끼야");
   const [message, setMessage] = useState("");
-  const [updateComment, setUpdateComment] = useState("");
-  const user_info = useSelector((state) => state.user.user_info);
+  //유저 타입가져오기
+  const { usertype, communityUserPicture } = props;
 
+  // 댓글 작성시 유저정보를 기입하기 위해 불러옴
+  const user_info = useSelector((state) => state.user.user_info);
   const id = props.communCommentId;
   const commentList = props?.communityCommentList;
 
   //수정버튼
   const updateCommentDispatch = (commentId, comment) => {
     dispatch(detailCr.updateCommunCommentAPI(id, commentId, comment));
-    // console.log(commentId, comment, "실행됐냐도");
   };
 
   //삭제버튼
@@ -38,7 +40,15 @@ const CommunityComment = (props) => {
     }
   };
 
-  //업데이트 버튼
+  //유저이미지
+  const userImg = () => {
+    if (usertype === "kakao") {
+      return communityUserPicture;
+    }
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+    }
+  };
 
   return (
     <div>
@@ -48,6 +58,7 @@ const CommunityComment = (props) => {
         commentList.map((e, i) => {
           return (
             <Comments
+              usertype={usertype}
               deleteCommentBtn={deleteCommentBtn}
               updateCommentDispatch={updateCommentDispatch}
               key={e.communityCommentId}
@@ -65,7 +76,7 @@ const CommunityComment = (props) => {
       >
         <Wrap>
           <div>
-            <Circle marginTop="17px"></Circle>
+            <UserProfile size="32" url={userImg} />
           </div>
           <TextArea
             placeholder="&#13;&#10;댓글을 입력해 주세요..."
@@ -118,20 +129,6 @@ const Wrap = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
-`;
-
-const Circle = styled.div`
-  width: 29px;
-  height: 29px;
-  border-radius: 50%;
-  background: #c4c4c4;
-  border: 1px solid #e7e7e7;
-  margin-top: ${(props) => props.marginTop};
-  margin-left: 20px;
-  background-image: url(${(props) => props.url});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
 `;
 
 const TextArea = styled.textarea`
