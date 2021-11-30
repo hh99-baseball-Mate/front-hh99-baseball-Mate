@@ -32,6 +32,7 @@ export const useS3Upload = (preview, path) => {
 
   const uploadFile = (preview) => {
     if (!preview) {
+      console.log("안됨업로드")
       return
     }
 
