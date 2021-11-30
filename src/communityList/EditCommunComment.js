@@ -20,23 +20,27 @@ export const EditCommunComment = (props) => {
   const dispatch = useDispatch();
   console.log(props.match.params.communityId, "개구리");
   const card_list = useSelector((state) => state.community.card_list);
-  console.log(card_list, "z");
+  // console.log(card_list, "z");
   const ip = process.env.REACT_APP_IMAGES_BASE_URL;
-  const img = ip + detail_list.filePath;
   //상세페이지 정보 가져오기
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
+  const img = ip + detail_list.filePath;
   console.log(detail_list, "치킨");
   const communityId = props.match.params.communityId;
-  //이미지 미리보기 삭제 커스텀훅
-  // const [imgPreview, deletePreview, preview] = usePreview("");
+
   const [preview, setPreview] = useState(img);
   // //인풋값 state
   const [inputValue, setInputValue] = useState({
-    //   content:detail_list?.content,
+    content: detail_list?.content,
     src: detail_list ? ip + detail_list.filePath : props.defaultImg,
   });
 
   const { content, src } = inputValue;
+
+  //디테일 정보 가져오기
+  useEffect(() => {
+    dispatch(communityDetailCr.getCommunDetailAPI(communityId));
+  }, [inputValue]);
 
   //이미지 업로드
   const imgPreview = (e) => {
@@ -106,9 +110,16 @@ export const EditCommunComment = (props) => {
           {/* 업로드 이미지 미리 */}
           <Preview
             //이미지가 받아온 이미지롸 같으면 받아온 이미지
-
-            src={preview ? URL.createObjectURL(preview) : props.defaultImg}
+            src={
+              preview === img
+                ? preview
+                : //프리뷰가 빈값이면 빈이미지 또는 새로운 이미지
+                preview === ""
+                ? props.defaultImg
+                : URL.createObjectURL(preview)
+            }
             name="preview"
+            onClick={deletePreview}
           />
         </ImgBox>
         <Buttons _onClick={submitBtn}>글 등록</Buttons>

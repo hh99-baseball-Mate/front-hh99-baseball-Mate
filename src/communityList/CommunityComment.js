@@ -79,7 +79,7 @@ const CommunityComment = (props) => {
             <UserProfile size="32" url={userImg} />
           </div>
           <TextArea
-            placeholder="&#13;&#10;댓글을 입력해 주세요..."
+            placeholder="댓글을 입력해 주세요..."
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);
@@ -132,24 +132,25 @@ const Wrap = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  width: 310px;
-  height: 52px;
-  border: none;
+  width: 260px;
+  margin: 0 20px;
   padding: 5px;
-  resize: none;
-  :required ::placeholder {
-    font-weight: 500;
-    font-size: 14px;
+  border: none;
+  ::placeholder {
+    font-size: 13px;
     color: #c4c4c4;
+  }
+  :focus {
+    outline: none;
   }
 `;
 
 const SendImg = styled.img`
-  position: absolute;
-  right: 20px;
-  bottom: 0%;
-  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
   cursor: pointer;
+  :hover {
+  }
 `;
 
 const Rectangle = styled.div`
