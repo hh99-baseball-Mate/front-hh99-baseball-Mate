@@ -20,18 +20,10 @@ export const GroupCard = memo((props) => {
 
   const [close, setClose] = useState(false)
 
-  const img = () => {
-    if (process.env.REACT_APP_IMAGES_BASE_URL) {
-      return process.env.REACT_APP_IMAGES_BASE_URL + filePath
-    }
-    if (process.env.REACT_APP_S3_GROUP_URL) {
-      return process.env.REACT_APP_S3_URL + filePath
-    }
-    if (process.env.REACT_APP_S3_SCREEN_URL) {
-      return process.env.REACT_APP_S3_SCREEN_URL + filePath
-    }
-  }
-
+  const img =
+    process.env.REACT_APP_S3_GROUP_URL + filePath
+      ? process.env.REACT_APP_S3_GROUP_URL + filePath
+      : process.env.REACT_APP_S3_SCREEN_URL + filePath
 
   // 모집중, 마감중 표시
   useEffect(() => {

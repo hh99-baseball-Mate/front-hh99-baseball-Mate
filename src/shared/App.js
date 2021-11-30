@@ -38,7 +38,7 @@ import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
-import EditCommunComment from "../communityList/EditCommunComment"
+import { EditCommunComment } from "../communityList/EditCommunComment"
 
 function App() {
   const dispatch = useDispatch()
