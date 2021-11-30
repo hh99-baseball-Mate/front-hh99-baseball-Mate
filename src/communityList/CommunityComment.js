@@ -7,7 +7,6 @@ import { actionCreators as actionCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 import { actionCreators as communCr } from "../redux/modules/communityDetail";
 const CommunityComment = (props) => {
-  // const { communCommentId, commentId } = props;
   const dispatch = useDispatch();
   console.log(props, "새끼야");
   const [message, setMessage] = useState("");
