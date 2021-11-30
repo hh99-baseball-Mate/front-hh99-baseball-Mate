@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -12,32 +12,63 @@ import {
 import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
 import { usePreview } from "../customHook/usePreview";
+import Community from "../pages/Community";
 import { actionCreators as actionCr } from "../redux/modules/community";
+import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
 
-const EditCommunComment = (props) => {
+export const EditCommunComment = (props) => {
   const dispatch = useDispatch();
+  console.log(props.match.params.communityId, "개구리");
+  const card_list = useSelector((state) => state.community.card_list);
+  console.log(card_list, "z");
+  const ip = process.env.REACT_APP_IMAGES_BASE_URL;
+  const img = ip + detail_list.filePath;
+  //상세페이지 정보 가져오기
+  const detail_list = useSelector((state) => state.communityDetail.detail_list);
+  console.log(detail_list, "치킨");
+  const communityId = props.match.params.communityId;
   //이미지 미리보기 삭제 커스텀훅
-  const [imgPreview, deletePreview, preview] = usePreview("");
+  // const [imgPreview, deletePreview, preview] = usePreview("");
+  const [preview, setPreview] = useState(img);
+  // //인풋값 state
+  const [inputValue, setInputValue] = useState({
+    //   content:detail_list?.content,
+    src: detail_list ? ip + detail_list.filePath : props.defaultImg,
+  });
 
-  // 입력창
-  const [content, setCotent] = useState("");
+  const { content, src } = inputValue;
 
-  //입력체크
-  const submitBtn = (e) => {
-    if (!content) {
-      window.alert("빈란을 채워주세요");
-      // console.log("빈값있음")
+  //이미지 업로드
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0]);
+  };
+
+  //미리보기 삭제
+  const deletePreview = () => {
+    if (!preview) {
+      window.alert("삭제할 사진이 없습니다.");
       return;
     }
+    setPreview("");
+  };
 
+  //인풋 값 추적
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+  //입력체크
+  const submitBtn = (e) => {
     const formData = new FormData();
 
-    formData.append("content", content);
+    formData.append("content", inputValue.content);
     formData.append("file", preview);
     formData.append("myTeam", null);
 
-    for (const keyValue of formData) console.log(keyValue);
-    dispatch(actionCr.postAddAPI(formData));
+    dispatch(communityDetailCr.updateCommunityAPI(communityId, formData));
     e.target.disabled = true;
   };
 
@@ -51,9 +82,10 @@ const EditCommunComment = (props) => {
         width="100%"
         name="content"
         value={content}
+        onChange={onChange}
         placeholder="내용을 입력해주세요."
         height="400px"
-        onChange={(e) => setCotent(e.target.value)}
+        // onChange={(e) => setCotent(e.target.value)}
       >
         {/* 안에 내용 */}
         {content && <InputCheck />}
@@ -73,18 +105,22 @@ const EditCommunComment = (props) => {
           </Picture>
           {/* 업로드 이미지 미리 */}
           <Preview
+            //이미지가 받아온 이미지롸 같으면 받아온 이미지
+
             src={preview ? URL.createObjectURL(preview) : props.defaultImg}
             name="preview"
-            onClick={deletePreview}
           />
         </ImgBox>
-        <Buttons _onClick={submitBtn}>모임 수정</Buttons>
+        <Buttons _onClick={submitBtn}>글 등록</Buttons>
       </Container>
     </div>
   );
 };
 
-export default EditCommunComment;
+EditCommunComment.defaultProps = {
+  defaultImg:
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
+};
 
 const Border = styled.div`
   width: 100%;
