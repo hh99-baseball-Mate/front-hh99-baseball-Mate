@@ -1,6 +1,12 @@
 import axios from "axios";
 import { getCookie } from "../shared/Cookie";
 
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import { is_loaded } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
+
+// const dispatch = useDispatch();
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const instance = axios.create({
@@ -28,6 +34,7 @@ instance.interceptors.request.use((config) => {
   return config
 });
 
+
 // 멀티 폼 이미지 넘길 시 사용
 
 export const img = axios.create({
@@ -37,8 +44,7 @@ export const img = axios.create({
     "Content-Type": "multipart/form-data",
     accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
 
 img.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login");

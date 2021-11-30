@@ -5,11 +5,7 @@ export const useMygroupBtn = (setShowModal) => {
   const [game, setGame] = useState(false)
   const [screen, setScreen] = useState(false)
 
-  // const [listBtn, setListBtn] = useState({
-  //   allList: true,
-  //   game: false,
-  //   screen:false
-  // })
+  // 내모임에서 모달필터 커스텀 훅
 
   // 전체보기 버튼
   const allListBtn = () => {

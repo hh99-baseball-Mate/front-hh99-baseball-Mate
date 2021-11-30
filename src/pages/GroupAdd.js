@@ -21,39 +21,55 @@ import { actionCreators as groupActions } from "../redux/modules/group";
 import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal";
 import { useVolumeBtn } from "../customHook/useVolumeBtn";
 import { useInputs } from "../customHook/useInputs";
-import { usePreview } from "../customHook/usePreview";
+import { useS3Upload } from "../customHook/useS3Upload"
 
 export const GroupAdd = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // 선택한 구단에 대한 경기일정 리스트 state
-  const selectTeam_list = useSelector((state) => state.group.selectTeam_list);
+  const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
+
+  const [preview, setPreview] = useState("")
 
   // 커스텀 훅 인풋
   const [inputValue, onChange] = useInputs({
     title: "",
     selectTeam: "",
     content: "",
-  });
+  })
 
-  const { content, title, selectTeam } = inputValue;
+  // 이미지 미리보기
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0])
+  }
+
+  // 이미지 미리보기 삭제
+  const deletePreview = () => {
+    if (!preview) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+    setPreview("")
+  }
+
+  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "group")
+
+  const { content, title, selectTeam } = inputValue
 
   // + - 버튼 커스텀 훅
   const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
-  // 이미지 미리보기/ 삭제 커스텀훅
-  const [imgPreview, deletePreview, preview] = usePreview("");
-
   // 모달 보기 state
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   // 경기일정 state
-  const [groupDate, setGroupDate] = useState("");
+  const [groupDate, setGroupDate] = useState("")
 
   const showModalBtn = () => {
-    if (selectTeam) setShowModal(!showModal);
-    else window.alert("직관하고싶은 구단을 먼저 선택해주세요");
-  };
+    if (selectTeam) setShowModal(!showModal)
+    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
+  }
 
   // 입력체크
   const submitBtn = (e) => {
@@ -67,24 +83,35 @@ export const GroupAdd = (props) => {
       return
     }
 
-    const formData = new FormData()
+    uploadFile(preview)
 
-    formData.append("title", title)
-    formData.append("groupDate", groupDate)
-    formData.append("content", content)
-    formData.append("peopleLimit", peopleLimit)
-    formData.append("selectTeam", selectTeam)
-    formData.append("file", preview)
+    const groupInfo = {
+      title,
+      groupDate,
+      content,
+      peopleLimit,
+      selectTeam,
+      filePath: fileName,
+    }
 
-    dispatch(groupActions.addGroupMD(formData))
-    e.target.disabled = true
+    dispatch(groupActions.addGroupMD(groupInfo))
+    // const formData = new FormData()
+
+    // formData.append("title", title)
+    // formData.append("groupDate", groupDate)
+    // formData.append("content", content)
+    // formData.append("peopleLimit", peopleLimit)
+    // formData.append("selectTeam", selectTeam)
+    // formData.append("file", preview)
+
+    // e.target.disabled = true
     // for (const keyValue of formData) console.log(keyValue);
-  };
+  }
 
   useEffect(() => {
     // 선택한 구단을 파라미터로 넘겨서 get 요청
-    dispatch(groupActions.selectTeamMD(selectTeam));
-  }, [selectTeam]);
+    dispatch(groupActions.selectTeamMD(selectTeam))
+  }, [selectTeam])
 
   return (
     <Container>
@@ -206,7 +233,7 @@ export const GroupAdd = (props) => {
 
       <Buttons _onClick={submitBtn}>모임생성</Buttons>
     </Container>
-  );
+  )
 };
 
 GroupAdd.defaultProps = {

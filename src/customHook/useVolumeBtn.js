@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 export const useVolumeBtn = (people) => {
-  //  인원수 + 버튼
+  //  인원수 + - 버튼 커스텀훅
 
   const [peopleLimit, setPeopleLimit] = useState(people)
 
@@ -26,7 +26,5 @@ export const useVolumeBtn = (people) => {
     setPeopleLimit(e.target.vlaue)
   }
 
-  // console.log(peopleLimit)
-  // console.log(inputValue)
   return [plusBtn, minusBtn, onChangeBtn, peopleLimit]
 }

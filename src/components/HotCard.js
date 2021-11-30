@@ -9,7 +9,11 @@ export const HotCard = (props) => {
   const { canApplyNum, filePath, groupDate, peopleLimit, title, onClick } =
     props
 
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath
+  const img =
+    process.env.REACT_APP_S3_GROUP_URL + filePath
+      ? process.env.REACT_APP_S3_GROUP_URL + filePath
+      : process.env.REACT_APP_S3_SCREEN_URL + filePath
+
   return (
     <CardBox onClick={onClick}>
       <CardContent>
@@ -19,10 +23,7 @@ export const HotCard = (props) => {
             {groupDate}
           </Text>
           <Slice> &ensp;|&ensp; </Slice>
-          {/* <Text size="12px" color="#777777">
-            {selectTeam}
-          </Text> */}
-          {/* <Slice> &ensp;|&ensp; </Slice> */}
+
           <Text size="12px" color="#777777">
             최대{peopleLimit}명
           </Text>

@@ -10,6 +10,9 @@ import Participant from "../componentsGroupDetail/Participant"
 import Comment from "../componentsGroupDetail/GroupComment"
 import { ArrowBack } from "../components"
 
+import { actionCreators as userActions } from "../redux/modules/user";
+import Loader from "../components/Loader"
+
 const GroupDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
@@ -31,8 +34,10 @@ const GroupDetail = (props) => {
   // console.log("awaitList", awaitList)
   const myWait = awaitList.findIndex(list => list.postId == groupId)
 
+  // const is_loaded = useSelector((state) => state.user.is_loaded)
 
   useEffect(() => {
+    // dispatch(userActions.isLoaded(false))
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitChatListMW())
@@ -47,6 +52,7 @@ const GroupDetail = (props) => {
 
   return (
     <React.Fragment>
+      {/* {!is_loaded && <Loader type="bars" color="#F25343"/>} */}
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
 

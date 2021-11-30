@@ -5,7 +5,8 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
 const Swipers = (props) => {
-  const { children, height } = props;
+  // 커스텀 스와이퍼
+  const { children, height } = props
   return (
     <>
       <Sw height={height}>{children}</Sw>

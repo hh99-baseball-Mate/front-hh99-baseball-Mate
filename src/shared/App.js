@@ -30,9 +30,6 @@ import styled from "styled-components";
 import ScreenDetail from "../pages/ScreenDetail";
 import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
 import { Loading } from "../components/Loading";
-import { Helmet } from "react-helmet";
-import favicon from "../shared/icon/logo/favicon.ico";
-import img from "../shared/icon/image.jpg";
 import ChatList from "../pages/ChatList";
 import ChatRoom from "../componentsChat/ChatRoom";
 import Community from "../pages/Community";
@@ -41,40 +38,29 @@ import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
-import { EditCommunComment } from "../communityList/EditCommunComment";
+import { EditCommunComment } from "../communityList/EditCommunComment"
+import Loader from "../components/Loader"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_loaded = useSelector((state) => state.user.is_loaded)
+  const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
+    dispatch(userActions.isLoaded(false))
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
+      dispatch(userActions.logInCheckMD())
     } else {
-      getCookie("is_login");
+      getCookie("is_login")
     }
-  }, []);
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
   // 어스 라우트 콤포넌트 쿠키 유무를 판단하고 그걸로
   return (
     <>
-      <Helmet>
-        <title>미트 볼</title>
-        <link rel="icon" href={favicon} />
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta property="og:locale" content="ko_KR" />
-        <meta property="og:title" content="page one" />
-        <meta property="og:description" content="우리 같이 직관가자!" />
-        <meta property="og:image" content={img} />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="미트 볼" />
-      </Helmet>
       <Container>
         <ConnectedRouter history={history}>
           <GlobalStyles />
@@ -113,16 +99,16 @@ function App() {
                 exact
                 component={ScreenDetail}
               />
-
-              {/* <Route path="/notice" component={Notice} /> */}
+              <Route
+                path="/community/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
+              />
+              <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
               {/* 임시 */}
               <Route component={NotFound} />
-              <Route
-                path="/screen/screendetail/:screenId"
-                exact
-                component={ScreenDetail}
-              />
+              <Redirect from="*" to="/" />
             </Switch>
           ) : (
             <Switch>
@@ -153,6 +139,11 @@ function App() {
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
+              <Route
                 path="/community/communitydetail/editcommuncomment/:communityId"
                 exact
                 component={EditCommunComment}
@@ -177,13 +168,7 @@ function App() {
                 exact
                 component={CommunityAdd}
               />
-              <Route
-                path="/community/communitydetail/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
-
-              {/* <Route path="/notice" component={Notice} /> */}
+              <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
               {/* 임시 */}
               {/* <Redirect */}
@@ -192,9 +177,12 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
+        {
+          !is_loaded && <Loader type="bars" color="#F25343"/>
+        }
       </Container>
     </>
-  );
+  )
 }
 
 export default App;

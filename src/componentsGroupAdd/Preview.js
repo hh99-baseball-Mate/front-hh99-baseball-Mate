@@ -1,10 +1,11 @@
-import React from "react"
+import React, { memo } from "react"
 import { Image } from "react-bootstrap"
 import { TiDelete } from "react-icons/ti"
 import styled from "styled-components"
 
-export const Preview = (props) => {
+export const Preview = memo((props) => {
   return (
+    // 미리보기 사진
     <>
       <PreviewBox>
         <Image
@@ -23,7 +24,7 @@ export const Preview = (props) => {
       </PreviewBox>
     </>
   )
-}
+})
 
 Preview.defaultProps = {
   children: null,

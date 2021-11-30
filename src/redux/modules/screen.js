@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { img, instance } from "../../lib/axios"
+import { is_loaded } from "./user";
 
 // const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP"
@@ -36,10 +37,10 @@ const initialState = {
 }
 
 // 스야 모임만들기
-const screenAddMD = (formData) => {
+const screenAddMD = (screenInfo) => {
   return function (dispatch, getState, { history }) {
-    img
-      .post("/screen", formData)
+    instance
+      .post("/screen", screenInfo)
       .then((res) => {
         history.replace("/screen")
       })
@@ -59,6 +60,8 @@ const screenGetMD = (regoin, infinity) => {
       instance
         .get("/screen")
         .then((res) => {
+          dispatch(is_loaded(true))
+
           const screenLength = res.data.length
 
           const infinityView = res.data.slice(start, next)
@@ -68,6 +71,7 @@ const screenGetMD = (regoin, infinity) => {
         .catch((err) => {
           // console.log(err, "스야 모임 전체 불러오기 오류"))
         })
+        dispatch(is_loaded(false))
       return
     }
 
