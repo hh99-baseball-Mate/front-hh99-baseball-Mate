@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { memo, useState } from "react"
 
 export const usePreview = (initialPreview = "") => {
   const [preview, setPreview] = useState(initialPreview)

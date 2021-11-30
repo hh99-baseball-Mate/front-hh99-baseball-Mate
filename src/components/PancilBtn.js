@@ -1,18 +1,20 @@
 import Pancil from "../shared/icon/Pancil.png";
 import styled from "styled-components";
+import { memo } from "react"
 
-const PancilBtn = (props) => {
-  const { onClick } = props;
+const PancilBtn = memo((props) => {
+  // 글작성 연필 아이콘
+  const { onClick } = props
 
-  const styles = { onClick };
+  const styles = { onClick }
   return (
     <>
       <Btn {...styles}>
         <img src={Pancil} alt="위치" />
       </Btn>
     </>
-  );
-};
+  )
+})
 
 export default PancilBtn;
 

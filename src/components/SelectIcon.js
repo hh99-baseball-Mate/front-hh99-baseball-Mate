@@ -10,6 +10,7 @@ export const SelectIcon = ({
   enlargement,
   moreBtn,
 }) => {
+  // 음영 필터창 ex) 원하는 지역을 선택해주세요
   if (enlargement) {
     return (
       <Container onClick={moreBtn}>

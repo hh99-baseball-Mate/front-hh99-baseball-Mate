@@ -13,9 +13,6 @@ import { Banner } from "../components/Banner"
 import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
 import { HotCard } from "../components/HotCard"
-import { Helmet } from "react-helmet"
-import favicon from "../shared/icon/logo/favicon.ico"
-import img from "../shared/icon/image.jpg"
 
 const GroupList = (props) => {
   const dispatch = useDispatch()
@@ -89,11 +86,6 @@ const GroupList = (props) => {
 
   return (
     <>
-      <Helmet>
-        <title> 미트볼</title>
-        <meta property="og:title" content="미트볼 || 경기모임" />
-        <meta property="og:description" content="우리 같이 직관가자!" />
-      </Helmet>
       <Box>
         <Banner />
         <Header game />

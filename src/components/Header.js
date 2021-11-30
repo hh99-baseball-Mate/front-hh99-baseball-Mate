@@ -1,22 +1,21 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { VscBell } from "react-icons/vsc";
-import bell from "../shared/icon/bell.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { alarmCreators } from "../redux/modules/alarm";
+import { useHistory } from "react-router-dom"
+import bell from "../shared/icon/bell.svg"
+import { useDispatch, useSelector } from "react-redux"
+import { alarmCreators } from "../redux/modules/alarm"
 
 const Header = (props) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const history = useHistory()
+  const dispatch = useDispatch()
 
-  const { game, screen, timeline, goods, community } = props;
+  const { game, screen, timeline, goods, community } = props
 
-  const alarm = useSelector((state) => state.alarm.alarmList);
+  const alarm = useSelector((state) => state.alarm.alarmList)
 
   useEffect(() => {
-    dispatch(alarmCreators.load_alarmMW());
-  }, []);
+    dispatch(alarmCreators.load_alarmMW())
+  }, [])
 
   return (
     <Container minWidth="370px">
@@ -24,7 +23,7 @@ const Header = (props) => {
         <Game
           game={game}
           onClick={() => {
-            history.push("/");
+            history.push("/")
           }}
         >
           경기모임
@@ -33,7 +32,7 @@ const Header = (props) => {
         <Screen
           screen={screen}
           onClick={() => {
-            history.push("/screen");
+            history.push("/screen")
           }}
         >
           스야모임
@@ -42,7 +41,8 @@ const Header = (props) => {
         <Community
           community={community}
           onClick={() => {
-            history.push("/community");
+            // history.push("/community");
+            window.alert("준비 중입니다.")
           }}
         >
           커뮤니티
@@ -51,7 +51,7 @@ const Header = (props) => {
         <Timeline
           timeline={timeline}
           onClick={() => {
-            history.push("/timeline");
+            history.push("/timeline")
           }}
         >
           타임라인
@@ -60,7 +60,7 @@ const Header = (props) => {
         <Goods
           goods={goods}
           onClick={() => {
-            history.push("/goods");
+            history.push("/goods")
           }}
         >
           굿즈자랑
@@ -71,7 +71,7 @@ const Header = (props) => {
           src={bell}
           alt="alert"
           onClick={() => {
-            history.push("/alarm");
+            history.push("/alarm")
           }}
         />
         {alarm.length === 0 ? null : <RedDot />}
@@ -80,8 +80,8 @@ const Header = (props) => {
       {/* 구분선 */}
       <Rectangle />
     </Container>
-  );
-};
+  )
+}
 
 Header.defaultProps = {
   _onClick: () => {},

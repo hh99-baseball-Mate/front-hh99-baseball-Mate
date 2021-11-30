@@ -30,7 +30,6 @@ export const GroupCard = memo((props) => {
       setClose(false)
     }
   }, [close])
-  // console.log("props.close", close)
 
   return (
     <Container onClick={onClick}>

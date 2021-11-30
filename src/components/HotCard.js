@@ -19,10 +19,7 @@ export const HotCard = (props) => {
             {groupDate}
           </Text>
           <Slice> &ensp;|&ensp; </Slice>
-          {/* <Text size="12px" color="#777777">
-            {selectTeam}
-          </Text> */}
-          {/* <Slice> &ensp;|&ensp; </Slice> */}
+
           <Text size="12px" color="#777777">
             최대{peopleLimit}명
           </Text>

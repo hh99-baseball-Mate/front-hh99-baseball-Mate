@@ -1,4 +1,4 @@
-import React, { Children, useEffect } from "react"
+import React, { memo, useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import { Text } from "."
 

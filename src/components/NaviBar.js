@@ -1,27 +1,36 @@
-import React from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
-import { PancilBtn } from ".";
+import React, { memo } from "react"
+import styled from "styled-components"
+import { useHistory } from "react-router"
+import { useSelector } from "react-redux"
+import { PancilBtn } from "."
 
-import home from "../shared/icon/navbar/home.svg";
-import home_select from "../shared/icon/navbar/home_select.svg";
-import sch from "../shared/icon/navbar/sch.svg";
-import sch_select from "../shared/icon/navbar/sch_select.svg";
-import chat from "../shared/icon/navbar/chat.svg";
-import chat_select from "../shared/icon/navbar/chat_select.svg";
-import my from "../shared/icon/navbar/my.svg";
-import my_select from "../shared/icon/navbar/my_select.svg";
+import home from "../shared/icon/navbar/home.svg"
+import home_select from "../shared/icon/navbar/home_select.svg"
+import sch from "../shared/icon/navbar/sch.svg"
+import sch_select from "../shared/icon/navbar/sch_select.svg"
+import chat from "../shared/icon/navbar/chat.svg"
+import chat_select from "../shared/icon/navbar/chat_select.svg"
+import my from "../shared/icon/navbar/my.svg"
+import my_select from "../shared/icon/navbar/my_select.svg"
 
-const NaviBar = (props) => {
-  const user_info = useSelector((state) => state.user.user_info);
-  const is_login = useSelector((state) => state.user.is_login);
+const NaviBar = memo((props) => {
+  // 하단 네비바
+  const user_info = useSelector((state) => state.user.user_info)
+  const is_login = useSelector((state) => state.user.is_login)
 
+  const { useridx } = user_info
 
-  const { useridx } = user_info;
+  const history = useHistory()
 
-  const history = useHistory();
-
+  const login_handle = (e) => {
+    if (!is_login) {
+      window.alert("로그인 후 이용해주세요")
+      history.push("/login")
+    } else {
+      history.push("/mygroup")
+    }
+    e.target.disabled = true
+  }
 
   return (
     <Container writeBtn={props.writeBtn}>
@@ -40,14 +49,7 @@ const NaviBar = (props) => {
         </Icon>
 
         {/* 내 모임 */}
-        <Icon
-          onClick={(e) => {
-            is_login
-              ? history.push("/mygroup")
-              : window.alert("로그인 후 이용해주세요")
-            e.target.disabled = true
-          }}
-        >
+        <Icon onClick={login_handle}>
           {props.sch ? (
             <img src={sch_select} alt="sch_col" />
           ) : (
@@ -56,14 +58,7 @@ const NaviBar = (props) => {
         </Icon>
 
         {/* 채팅 */}
-        <Icon
-          onClick={(e) => {
-            is_login
-              ? history.push("/chatlist")
-              : window.alert("로그인 후 이용해주세요")
-            e.target.disabled = true
-          }}
-        >
+        <Icon onClick={login_handle}>
           {props.chat ? (
             <img src={chat_select} alt="rec_col" />
           ) : (
@@ -74,7 +69,7 @@ const NaviBar = (props) => {
         {/* 마이페이지 */}
         <Icon
           onClick={() => {
-            history.push(`/mypage/${useridx}`)
+            history.push(`/mypage/${useridx ? useridx : "userid"}`)
           }}
         >
           {props.my ? (
@@ -89,13 +84,13 @@ const NaviBar = (props) => {
       ) : null}
     </Container>
   )
-};
+})
 
-export default NaviBar;
+export default NaviBar
 
 NaviBar.defaultProps = {
   writeBtn: false,
-};
+}
 
 const Container = styled.div`
   background: #fff;
@@ -124,7 +119,7 @@ const Warp = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
-`;
+`
 
 const Icon = styled.button`
   display: flex;
@@ -133,13 +128,13 @@ const Icon = styled.button`
   align-items: center;
   background: none;
   border: none;
-`;
+`
 
 const Box = styled.div`
   width: 335px;
   /* height: 177px; */
   margin: 20px auto;
-`;
+`
 
 const Text = styled.div`
   font-size: 12px;
@@ -147,4 +142,4 @@ const Text = styled.div`
   color: #c4c4c4;
   letter-spacing: -0.01em;
   margin-top: 3.5px;
-`;
+`

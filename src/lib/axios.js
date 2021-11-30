@@ -37,8 +37,7 @@ export const img = axios.create({
     "Content-Type": "multipart/form-data",
     accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    // "X-AUTH-TOKEN": getCookie("is_login"),
   },
-});
+})
 
 img.defaults.headers.common["X-AUTH-TOKEN"] = getCookie("is_login");

@@ -1,7 +1,9 @@
-import React, { useState } from "react"
+import React, { memo, useState } from "react"
 
 export const useInputs = (initialValue) => {
   const [inputValue, setInputValue] = useState(initialValue)
+
+  // 인풋 커스텀훅
 
   const onChange = (e) => {
     const { name, value } = e.target

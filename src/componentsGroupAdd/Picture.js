@@ -1,13 +1,14 @@
-import React from "react"
+import React, { memo } from "react"
 import { Text } from "../components"
 import { AiOutlineCamera } from "react-icons/ai"
 import styled from "styled-components"
 
-export const Picture = (props) => {
+export const Picture = memo((props) => {
   const { children, basic, onChange } = props
 
   const styles = { onChange, basic }
 
+  // 기본사진 사진 셀렉터 항목
   if (basic) {
     return (
       <>
@@ -31,12 +32,17 @@ export const Picture = (props) => {
   }
 
   return (
+    // 사진 올리기
     <>
       <LabelBox for="picture"></LabelBox>
-      <Inputs id="picture" type="file" accept="image/png, image/jpeg" />
+      <Inputs
+        id="picture"
+        type="file"
+        accept="image/png, image/jpeg, image/jpg"
+      />
     </>
   )
-}
+})
 
 Picture.defaultProps = {
   children: null,

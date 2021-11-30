@@ -49,13 +49,11 @@ export const Buttons = (props) => {
   }
 
   return (
-    // <ButtonBox>
     <DefaultButton onClick={_onClick} {...styles}>
       <Text color="#F25343" bold>
         {children}
       </Text>
     </DefaultButton>
-    // </ButtonBox>
   )
 }
 

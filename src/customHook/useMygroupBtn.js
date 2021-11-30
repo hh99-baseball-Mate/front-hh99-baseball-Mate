@@ -1,15 +1,11 @@
-import React, { useState } from "react"
+import React, { memo, useState } from "react"
 
 export const useMygroupBtn = (setShowModal) => {
   const [allList, setAllList] = useState(true)
   const [game, setGame] = useState(false)
   const [screen, setScreen] = useState(false)
 
-  // const [listBtn, setListBtn] = useState({
-  //   allList: true,
-  //   game: false,
-  //   screen:false
-  // })
+  // 내모임에서 모달필터 커스텀 훅
 
   // 전체보기 버튼
   const allListBtn = () => {
