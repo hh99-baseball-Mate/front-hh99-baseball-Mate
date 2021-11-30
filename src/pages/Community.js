@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import CommunityCard from "../communityList/CommunityCard";
 import { Container, Header, MarginBottom, NaviBar, Text } from "../components";
-import TimelineBanner from "../componentsTimeline/TimelineBanner";
 import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
+import eventBanner from "../shared/icon/logo/timeLineBanner.png";
 const Community = (props) => {
   const dispatch = useDispatch();
 
@@ -26,21 +27,14 @@ const Community = (props) => {
   return (
     <div>
       <Header community />
-      <TimelineBanner />
+      <Banner src={eventBanner} alt="" />
       <Container MainContainer>
         <Text bold size="16px">
           우리 같이 이야기 해봐요!
         </Text>
         {card_list.map((e) => {
-          return (
-            <CommunityCard
-              onClick={() =>
-                history.push(`/community/communitydetail/${e.communityId}`)
-              }
-              key={e.communityId}
-              {...e}
-            />
-          );
+          console.log(e, "dl");
+          return <CommunityCard key={e.communityId} {...e} />;
         })}
       </Container>
 
@@ -51,3 +45,7 @@ const Community = (props) => {
 };
 
 export default Community;
+
+const Banner = styled.img`
+  width: 100%;
+`;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ArrowBack, Container, Text } from "../components";
@@ -6,7 +6,9 @@ import Question from "../shared/icon/Question.png";
 import { actionCreators as actionCr } from "../redux/modules/communityDetail";
 import { useParams } from "react-router";
 import CommunityComment from "../communityList/CommunityComment";
-
+import { BsThreeDots } from "react-icons/bs";
+import { history } from "../redux/configStore";
+import { Modal } from "../components/Modal";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -14,8 +16,14 @@ export const CommunityDetail = (props) => {
 
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
 
-  const { communityUserPicture, content, filePath, myTeam, userName } =
-    detail_list;
+  const {
+    communityUserPicture,
+    content,
+    filePath,
+    myTeam,
+    userName,
+    communityCommentList,
+  } = detail_list;
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
   const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
   console.log(detail_list.communityCommentList?.length, "디테일");
@@ -26,11 +34,27 @@ export const CommunityDetail = (props) => {
     dispatch(actionCr.getCommunDetailAPI(communityId));
   }, [detail_list.communityCommentList?.length]);
 
+  // 모달 보여주기/숨기기
+  const [showModal, setShowModal] = useState(false);
+
+  // 삭제/수정 모달내용
+  const modalData = {
+    title: "커뮤니티 에디터",
+    descriptionOne: "선택하신 게시글을 수정하시겠습니까?",
+    btnClose: "취소",
+    btnUpdate: "수정",
+  };
+
+  //커뮤니티 수정 버튼
+  const deleteBtn = () => {
+    history.push(`/community/editcommuncomment/${communityId}`);
+  };
   return (
     <>
       <ArrowBack>커뮤니티</ArrowBack>
       <Border />
       <Container>
+        <MoreIcons onClick={() => setShowModal(true)} />
         <Card {...detail_list}>
           <UserInfo>
             <UserImg src={user_img} />
@@ -40,9 +64,9 @@ export const CommunityDetail = (props) => {
                 <Text size="12px" color="#F25343" margin="0 10px 0 0">
                   {myTeam}
                 </Text>
-                <Text size="12px" color="#C4C4C4">
+                {/* <Text size="12px" color="#C4C4C4">
                   시간
-                </Text>
+                </Text> */}
               </Time>
             </InfoBox>
           </UserInfo>
@@ -52,7 +76,7 @@ export const CommunityDetail = (props) => {
           <Good>
             <img src={Question} alt="말풍선" />
             <Text size="12px" margin="0 0 0 7px">
-              숫자
+              {communityCommentList ? communityCommentList.length : "0"}
             </Text>
           </Good>
 
@@ -61,6 +85,14 @@ export const CommunityDetail = (props) => {
 
         <CommunityComment {...detail_list} communCommentId={communCommentId} />
       </Container>
+      {showModal && (
+        <Modal
+          center
+          setShowModal={setShowModal}
+          modalData={modalData}
+          deleteBtn={deleteBtn}
+        ></Modal>
+      )}
     </>
   );
 };
@@ -119,4 +151,12 @@ const Good = styled.div`
 
 const FileImg = styled.img`
   max-width: 335px;
+`;
+
+const MoreIcons = styled(BsThreeDots)`
+  align-items: center;
+  margin: 7.5px 0;
+  cursor: pointer;
+  position: absolute;
+  right: 70px;
 `;

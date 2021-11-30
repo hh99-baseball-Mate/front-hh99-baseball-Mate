@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
-//swiper
+import { history } from "../redux/configStore"
 import Swipers from "../components/Swipers"
 import { GroupCard } from "../components/GroupCard"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../redux/modules/group"
 import { baseUrl, clubImageSrc } from "../shared/clubImage"
 import { Container, Header, Text, MarginBottom, NaviBar } from "../components"
-// import { InfinityScroll } from "../components/InfinityScroll"
 import { NotGame } from "../components/NotGame"
 import { Banner } from "../components/Banner"
 import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
 import { HotCard } from "../components/HotCard"
+import { Helmet } from "react-helmet"
+import favicon from "../shared/icon/logo/favicon.ico"
+import img from "../shared/icon/image.jpg"
 
 const GroupList = (props) => {
   const dispatch = useDispatch()
@@ -45,11 +46,8 @@ const GroupList = (props) => {
   // 자른 날짜와 일치하는 값 필터로 array로 반환
   const dateList = team_list.filter((e) => {
     const timeCut = e.groupDate.split(" ")[0]
-    // console.log(timeCut);
     return timeCut === date
   })
-
-  // const team = user_info.
 
   const newPeople = (e) => {
     !is_login
@@ -91,6 +89,11 @@ const GroupList = (props) => {
 
   return (
     <>
+      <Helmet>
+        <title> 미트볼</title>
+        <meta property="og:title" content="미트볼 || 경기모임" />
+        <meta property="og:description" content="우리 같이 직관가자!" />
+      </Helmet>
       <Box>
         <Banner />
         <Header game />

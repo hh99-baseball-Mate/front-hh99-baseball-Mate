@@ -1,6 +1,6 @@
-import React, { Children, useEffect } from "react"
-import styled, { keyframes } from "styled-components"
-import { Text } from "."
+import React, { Children, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import { Text } from ".";
 
 export const Modal = (props) => {
   const {
@@ -15,7 +15,7 @@ export const Modal = (props) => {
     modalData,
     updataBtn,
     deleteBtn,
-  } = props
+  } = props;
 
   // 모달 오버레이에서 스크롤 방지
   useEffect(() => {
@@ -23,13 +23,13 @@ export const Modal = (props) => {
       position: fixed; 
       top: -${window.scrollY}px;
       overflow-y: scroll;
-      width: 100%;`
+      width: 100%;`;
     return () => {
-      const scrollY = document.body.style.top
-      document.body.style.cssText = ""
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1)
-    }
-  }, [])
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
 
   // const styles = { margin }
 
@@ -38,7 +38,7 @@ export const Modal = (props) => {
       <ModalBottom margin={margin}>
         <ModalBottomContent height={height}>{children}</ModalBottomContent>
       </ModalBottom>
-    )
+    );
   }
 
   if (center) {
@@ -69,7 +69,7 @@ export const Modal = (props) => {
           </BtnBox>
         </ModalContent>
       </ModalCenter>
-    )
+    );
   }
 
   if (three) {
@@ -103,11 +103,11 @@ export const Modal = (props) => {
           </BtnBox>
         </ModalContent>
       </ModalCenter>
-    )
+    );
   }
 
-  return <ModalCenter>{children}</ModalCenter>
-}
+  return <ModalCenter>{children}</ModalCenter>;
+};
 
 Modal.defaultProps = {
   children: null,
@@ -122,7 +122,7 @@ Modal.defaultProps = {
   btnUpdate: "수정",
   height: "",
   margin: "",
-}
+};
 
 const ModalBottom = styled.div`
   max-width: 425px;
@@ -133,7 +133,7 @@ const ModalBottom = styled.div`
   position: fixed;
   bottom: 0;
   margin: ${(props) => props.margin};
-`
+`;
 const ModalCenter = styled.div`
   max-width: 425px;
   width: 100%;
@@ -144,7 +144,7 @@ const ModalCenter = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`
+`;
 
 const showModal = keyframes`
   0%{
@@ -152,7 +152,7 @@ const showModal = keyframes`
   }50%{
     transform: translateY(0%);
   }
-`
+`;
 
 const ModalBottomContent = styled.div`
   max-width: 425px;
@@ -164,7 +164,7 @@ const ModalBottomContent = styled.div`
   border-radius: 10px 10px 0px 0px;
   animation: ${showModal} 1.2s ease-out;
   overflow-y: auto;
-`
+`;
 
 const ModalContent = styled.div`
   width: 275px;
@@ -175,32 +175,32 @@ const ModalContent = styled.div`
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 10px;
-`
+`;
 const Title = styled.div`
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #e7e7e7;
-`
+`;
 
 const Discription = styled.div`
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const DiscriptionText = styled.div`
   font-size: 14px;
   text-align: center;
   color: #c4c4c4;
   line-height: 1.5;
-`
+`;
 
 const BtnBox = styled.div`
   display: flex;
-`
+`;
 
 const ModalCloseeBtn = styled.button`
   background: #c4c4c4;
@@ -209,7 +209,7 @@ const ModalCloseeBtn = styled.button`
   height: 46px;
   border: none;
   cursor: pointer;
-`
+`;
 
 const ModalUpdataBtn = styled.button`
   border-radius: 0px 0px 0px 0px;
@@ -218,7 +218,7 @@ const ModalUpdataBtn = styled.button`
   background-color: #140c2d;
   border: none;
   cursor: pointer;
-`
+`;
 
 const ModalConfirmBtn = styled.button`
   border-radius: 0px 0px 10px 0px;
@@ -227,9 +227,9 @@ const ModalConfirmBtn = styled.button`
   background-color: #f25343;
   border: none;
   cursor: pointer;
-`
+`;
 
 const P = styled.p`
   font-size: 14px;
   color: #fff;
-`
+`;

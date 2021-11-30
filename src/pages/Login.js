@@ -51,8 +51,8 @@ export const Login = (props) => {
               label="이메일"
               name="email"
               type="email"
-              placeholder="아이디로 사용 할 이메일을 입력해주세요(최대 20자)"
-              maxLength="20"
+              placeholder="아이디로 사용 할 이메일을 입력해주세요"
+              maxLength="100"
             />
 
             <div style={{ position: "relative" }}>

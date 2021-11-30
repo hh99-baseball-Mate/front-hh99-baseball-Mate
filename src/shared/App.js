@@ -41,6 +41,7 @@ import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
+import EditCommunComment from "../communityList/EditCommunComment";
 
 function App() {
   const dispatch = useDispatch();
@@ -112,6 +113,11 @@ function App() {
                 exact
                 component={ScreenDetail}
               />
+              <Route
+                path="/community/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
+              />
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
               {/* 임시 */}
@@ -161,16 +167,25 @@ function App() {
               <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
               <Route path="/community" exact component={Community} />
               <Route
-                path="/communitydetail"
+                path="/community/communitydetail/:communityId"
                 exact
                 component={CommunityDetail}
               />
-              <Route path="/communityadd" exact component={CommunityAdd} />
+              <Route
+                path="/community/communityadd"
+                exact
+                component={CommunityAdd}
+              />
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
               {/* 임시 */}
               {/* <Redirect */}
               <Route component={NotFound} />
+              <Route
+                path="/community/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
+              />
             </Switch>
           )}
         </ConnectedRouter>
