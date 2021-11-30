@@ -48,8 +48,8 @@ export const Post = memo((props) => {
       return goodsUserPicture;
     }
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture;
     }
+    return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture;
   };
 
   // 좋아요 중복 검사

@@ -41,7 +41,7 @@ import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
-import EditCommunComment from "../communityList/EditCommunComment";
+import { EditCommunComment } from "../communityList/EditCommunComment";
 
 function App() {
   const dispatch = useDispatch();
@@ -113,15 +113,16 @@ function App() {
                 exact
                 component={ScreenDetail}
               />
-              <Route
-                path="/community/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
+
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
               {/* 임시 */}
               <Route component={NotFound} />
+              <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
             </Switch>
           ) : (
             <Switch>
@@ -152,9 +153,9 @@ function App() {
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/community/communitydetail/editcommuncomment/:communityId"
                 exact
-                component={ScreenDetail}
+                component={EditCommunComment}
               />
 
               <Route
@@ -176,16 +177,17 @@ function App() {
                 exact
                 component={CommunityAdd}
               />
+              <Route
+                path="/community/communitydetail/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
+              />
+
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
               {/* 임시 */}
               {/* <Redirect */}
               <Route component={NotFound} />
-              <Route
-                path="/community/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
             </Switch>
           )}
         </ConnectedRouter>

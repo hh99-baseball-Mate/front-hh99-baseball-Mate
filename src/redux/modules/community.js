@@ -35,8 +35,8 @@ const getCardAPI = () => {
 //커뮤니티 글작성
 const postAddAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    img
-      .post("/community", formData)
+    instance
+      .post("/community/legacy", formData)
       .then((res) => {
         console.log(res, "커뮤티니");
         history.replace("/community");
@@ -55,6 +55,7 @@ const deleteCommunityAPI = (communityId) => {
       .then((res) => {
         console.log(res, "ㅇㅇㅇ");
         dispatch(deleteCommunity(communityId));
+        history.replace(`/community`);
       })
       .catch((err) => {
         console.log(err, "게시글 삭제 에러");
