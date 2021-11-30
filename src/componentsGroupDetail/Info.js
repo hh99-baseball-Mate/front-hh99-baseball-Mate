@@ -6,24 +6,22 @@ import { useHistory, useParams } from "react-router";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { actionCreators as groupListCreators } from "../redux/modules/group";
 import Progress from "../components/Progress";
-import { getCookie } from '../shared/Cookie';
+import { getCookie } from "../shared/Cookie";
 
-import heart_join from "../shared/icon/groupDetail/heart_join.svg"
-import heart_null from "../shared/icon/groupDetail/heart_null.svg"
-import calendar from "../shared/icon/calendar.svg"
-import location from "../shared/icon/location.svg"
-import colorUsers from "../shared/icon/colorUsers.svg"
-import users from "../shared/icon/users.svg"
+import heart_join from "../shared/icon/groupDetail/heart_join.svg";
+import heart_null from "../shared/icon/groupDetail/heart_null.svg";
+import calendar from "../shared/icon/calendar.svg";
+import location from "../shared/icon/location.svg";
+import colorUsers from "../shared/icon/colorUsers.svg";
+import users from "../shared/icon/users.svg";
 import { width } from "dom-helpers";
 
-
-
 const Info = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const params = useParams()
-  const groupId = params.groupId
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL;
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const params = useParams();
+  const groupId = params.groupId;
 
   // const srcChange = () => {
   //   if (preview) {
@@ -38,21 +36,21 @@ const Info = memo((props) => {
   // }
 
   // 사진 ip주소 + 사진이름 조합
-  const ip = IMAGES_BASE_URL
-  const img = props.filePath
+  const ip = IMAGES_BASE_URL;
+  const img = props.filePath;
 
   // 배경사진
-  const imageUrl = ip + img
+  const imageUrl = ip + img;
 
   // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.createdUserProfileImg
+  const profileImg = ip + props.createdUserProfileImg;
 
   // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
-  const kakaoImg = props.createdUserProfileImg
+  const kakaoCheck = props.createdUserProfileImg?.split(".")[1];
+  const kakaoImg = props.createdUserProfileImg;
 
-  const myGroupLikesList = props.myGroupLikesList
-  const id = props.groupId
+  const myGroupLikesList = props.myGroupLikesList;
+  const id = props.groupId;
 
   const cookie = getCookie("is_login");
   // useEffect(() => {
@@ -85,22 +83,22 @@ const Info = memo((props) => {
       window.alert("로그인 후 이용해주세요");
       return;
     }
-    props.setHeart(!props?.heart)
-    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart))
-  }
+    props.setHeart(!props?.heart);
+    dispatch(groupDetailCreators.likePostMW(props.groupId, props?.heart));
+  };
 
   // 수정버튼
   const editBtn = () => {
-    history.push(`/groupdedit/${groupId}`)
-  }
+    history.push(`/groupdedit/${groupId}`);
+  };
 
   // 삭제버튼
   const delBtn = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(groupDetailCreators.delGroupPageMW(props.groupId))
+      dispatch(groupDetailCreators.delGroupPageMW(props.groupId));
       // history.push("/grouplist")
     }
-  }
+  };
 
   // console.log("받아오기", props)
 
@@ -113,9 +111,13 @@ const Info = memo((props) => {
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
           {props?.heart ? (
-            <img src={heart_join} alt="Heart" style={{cursor: "pointer"}} />
+            <img src={heart_join} alt="Heart" style={{ cursor: "pointer" }} />
           ) : (
-            <img src={heart_null} alt="nullHeart" style={{cursor: "pointer"}} />
+            <img
+              src={heart_null}
+              alt="nullHeart"
+              style={{ cursor: "pointer" }}
+            />
           )}
         </JoinCircle>
       </Box>
@@ -153,14 +155,19 @@ const Info = memo((props) => {
           <Warp>
             {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
             {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn} style={{cursor: "pointer"}} >📝</p>
+              <p onClick={editBtn} style={{ cursor: "pointer" }}>
+                📝
+              </p>
             ) : (
               ""
             )}
 
             {/* 마감되더라도 삭제 가능 */}
             {props.createdUserId === props.userid ? (
-              <p onClick={delBtn} style={{ marginLeft: "5px", cursor: "pointer" }}>
+              <p
+                onClick={delBtn}
+                style={{ marginLeft: "5px", cursor: "pointer" }}
+              >
                 ❌
               </p>
             ) : (
@@ -248,7 +255,12 @@ const Info = memo((props) => {
       </Box>
 
       {/* 모임소개 */}
-      <Box minHeight="121px" maxHeight="auto" background="#F2FAFC" padding="20px 30px">
+      <Box
+        minHeight="121px"
+        maxHeight="auto"
+        background="#F2FAFC"
+        padding="20px 30px"
+      >
         <Text size="16px" weight="bold" margin="0 0 15px 0 ">
           모임소개
         </Text>
@@ -259,16 +271,16 @@ const Info = memo((props) => {
 
       <Rectangle />
     </Container>
-  )
-})
+  );
+});
 
 Info.defaultProps = {
   myGroupLikesList: [],
   // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
   UserImage: "sample.png",
-}
+};
 
-export default Info
+export default Info;
 
 const Container = styled.div`
   max-width: 425px;
@@ -277,7 +289,7 @@ const Container = styled.div`
   /* height: auto; */
   margin: 0 auto;
   position: relative;
-`
+`;
 
 const Box = styled.div`
   width: 100%;
@@ -291,7 +303,7 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`
+`;
 
 const Img = styled.div`
   width: 100%;
@@ -301,7 +313,7 @@ const Img = styled.div`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-`
+`;
 
 const JoinCircle = styled.div`
   position: absolute;
@@ -382,7 +394,7 @@ const Circle = styled.div`
   height: 48px;
   border-radius: 50%;
   background: #c4c4c4;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-repeat: no-repeat;
@@ -395,7 +407,7 @@ const Slice = styled.div`
 `;
 
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 6px;
+  background: #e7e7e7;
+  width: 100%;
+  height: 6px;
 `;

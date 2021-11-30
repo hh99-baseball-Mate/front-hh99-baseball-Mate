@@ -30,15 +30,15 @@ import styled from "styled-components";
 import ScreenDetail from "../pages/ScreenDetail";
 import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
 import { Loading } from "../components/Loading";
-import { Helmet } from "react-helmet"
-import ChatList from "../pages/ChatList"
-import ChatRoom from "../componentsChat/ChatRoom"
-import Community from "../pages/Community"
-import { CommunityDetail } from "../pages/CommunityDetail"
-import CommunityAdd from "../pages/CommunityAdd"
-import { Goods } from "../pages/Goods"
-import { Notice } from "../pages/Notice"
-import { Event } from "../pages/Event"
+import ChatList from "../pages/ChatList";
+import ChatRoom from "../componentsChat/ChatRoom";
+import Community from "../pages/Community";
+import { CommunityDetail } from "../pages/CommunityDetail";
+import CommunityAdd from "../pages/CommunityAdd";
+import { Goods } from "../pages/Goods";
+import { Notice } from "../pages/Notice";
+import { Event } from "../pages/Event";
+import EditCommunComment from "../communityList/EditCommunComment";
 
 function App() {
   const dispatch = useDispatch()
@@ -95,6 +95,11 @@ function App() {
                 path="/screen/screendetail/:screenId"
                 exact
                 component={ScreenDetail}
+              />
+              <Route
+                path="/community/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
               />
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
@@ -160,6 +165,11 @@ function App() {
               {/* 임시 */}
               {/* <Redirect */}
               <Route component={NotFound} />
+              <Route
+                path="/community/editcommuncomment/:communityId"
+                exact
+                component={EditCommunComment}
+              />
             </Switch>
           )}
         </ConnectedRouter>

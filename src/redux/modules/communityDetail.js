@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import { instance } from "../../lib/axios";
+import { img, instance } from "../../lib/axios";
 import { produce } from "immer";
 
 //액션
@@ -100,6 +100,20 @@ const getCommunDetailAPI = (communityId) => {
   };
 };
 
+//게시글 수정
+const updateCommunityAPI = (communityId, formData) => {
+  return function (dispatch, getState, { history }) {
+    img
+      .put(`/community/${communityId}`, formData)
+      .then((res) => {
+        console.log(res, "res다 하하하");
+        history.replace(`/community/communityId/${communityId}`);
+      })
+      .catch((err) => {
+        console.log(err, "게시글 수정 에러");
+      });
+  };
+};
 export default handleActions(
   {
     [GET_COMMUN_DETAIL]: (state, action) =>
@@ -142,6 +156,7 @@ const actionCreators = {
   updateCommunCommentAPI,
   deleteCommunCommrntAPI,
   getCommunDetailAPI,
+  updateCommunityAPI,
 };
 
 export { actionCreators };
