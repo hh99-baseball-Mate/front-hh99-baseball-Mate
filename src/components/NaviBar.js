@@ -49,7 +49,16 @@ const NaviBar = memo((props) => {
         </Icon>
 
         {/* 내 모임 */}
-        <Icon onClick={login_handle}>
+        <Icon
+          onClick={() => {
+            if (!is_login) {
+              window.alert("로그인 후 이용해주세요")
+              history.push("/login")
+            } else {
+              history.push("/mygroup")
+            }
+          }}
+        >
           {props.sch ? (
             <img src={sch_select} alt="sch_col" />
           ) : (
@@ -58,7 +67,16 @@ const NaviBar = memo((props) => {
         </Icon>
 
         {/* 채팅 */}
-        <Icon onClick={login_handle}>
+        <Icon
+          onClick={() => {
+            if (!is_login) {
+              window.alert("로그인 후 이용해주세요")
+              history.push("/login")
+            } else {
+              history.push("/chatlist")
+            }
+          }}
+        >
           {props.chat ? (
             <img src={chat_select} alt="rec_col" />
           ) : (
