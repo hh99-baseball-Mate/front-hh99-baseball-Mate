@@ -182,6 +182,7 @@ const awaitScreenChatListMW = () => {
       .get("/screen/join/request/await")
       .then((res) => {
         const await_ScreenList = res.data
+        console.log("스크린이야",await_ScreenList)
         // logger("대기 목록", res);
         // let await_list = [];
         // res.data.forEach((l) => {
@@ -192,7 +193,7 @@ const awaitScreenChatListMW = () => {
         //   await_list.push(one_list);
         // });
 
-        dispatch(setAwaitList(await_ScreenList))
+        dispatch(setScreenAwaitList(await_ScreenList))
       })
       .catch((err) => {
         // console.log(err)

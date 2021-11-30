@@ -1,15 +1,16 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 
 import { groupDetailCreators } from "../redux/modules/groupDetail"
+import { alarmCreators } from "../redux/modules/alarm";
 import Info from "../componentsGroupDetail/Info"
 import Participant from "../componentsGroupDetail/Participant"
 import Comment from "../componentsGroupDetail/GroupComment"
 import { ArrowBack } from "../components"
 
-const GroupDetail = memo((props) => {
+const GroupDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const groupId = params.groupId
@@ -18,8 +19,6 @@ const GroupDetail = memo((props) => {
   const mylist = useSelector((state) => state.groupDetail.mylist)
 
   const [selectPage, setSelectPage] = useState(true)
-  // close가 false일때 모집완료, true일때 모집중
-  // const [close, setClose] = useState(false)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
@@ -27,32 +26,24 @@ const GroupDetail = memo((props) => {
   const myGroupLikesList = mylist?.myGroupLikesList
   const likePost = myGroupLikesList?.indexOf(Number(groupId))
 
+  // 승인요청 신청자 찾기
+  const awaitList = useSelector((state) => state.alarm?.awaitList)
+  // console.log("awaitList", awaitList)
+  const myWait = awaitList.findIndex(list => list.postId == groupId)
+
+
   useEffect(() => {
     dispatch(groupDetailCreators.loadGroupPageMW(groupId))
     dispatch(groupDetailCreators.mylistMW())
+    dispatch(alarmCreators.awaitChatListMW())
 
     if (likePost !== -1) {
       return setHeart(true)
     } else {
       setHeart(false)
     }
-  }, [groupId, join, likePost])
+  }, [groupId, join, likePost, myWait])
 
-  // console.log("heart", heart)
-
-  // const commentBtn = () => {
-  //   const myJoin = loadDetail.appliedUserInfo.findIndex(
-  //     (list) => list.UserId === mylist.userid
-  //   )
-  //   // console.log("myJoin",myJoin)
-  //   if (loadDetail.createdUserName === mylist.username) {
-  //     return setSelectPage(false)
-  //   } else if (myJoin >= 0) {
-  //     return setSelectPage(false)
-  //   } else {
-  //     window.alert("모임 참여자만 이용 가능합니다.")
-  //   }
-  // }
 
   return (
     <React.Fragment>
@@ -63,11 +54,8 @@ const GroupDetail = memo((props) => {
         <Info
           {...loadDetail}
           {...mylist}
-          // close={close}
-          // setClose={setClose}
           heart={heart}
           setHeart={setHeart}
-          // likePost={likePost}
         />
 
         {/* 참여자 & 방명록 */}
@@ -94,8 +82,7 @@ const GroupDetail = memo((props) => {
             <Participant
               {...loadDetail}
               {...mylist}
-              // close={close}
-              // setClose={setClose}
+              myWait={myWait}
               join={join}
               setJoin={setJoin}
             />
@@ -106,15 +93,13 @@ const GroupDetail = memo((props) => {
       </Container>
     </React.Fragment>
   )
-})
+}
 
-export default GroupDetail
+export default React.memo(GroupDetail);
 
 const Container = styled.div`
   max-width: 425px;
   width: 100%;
-  /* background-size: cover; */
-  /* height: auto; */
   margin: 0 auto;
   position: relative;
 `

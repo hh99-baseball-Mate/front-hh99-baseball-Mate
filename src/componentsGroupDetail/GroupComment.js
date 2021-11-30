@@ -6,8 +6,6 @@ import { useHistory } from "react-router-dom";
 import { getCookie } from "../shared/Cookie";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 
-import smail from "../shared/icon/smail.svg";
-import unSmail from "../shared/icon/unSmail.svg";
 import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
@@ -33,12 +31,10 @@ const GroupComment = memo((props) => {
   )
   const groupPage = useSelector((state) => state.groupDetail.groupPage)
 
-  // console.log("groupPage야야", groupPage)
-  // console.log("코멘트컴포넌트", props)
-  // console.log("댓글")
+
 
   const id = props.groupId
-  //  console.log("페이지아이디",id)
+
   const [message, setMessage] = useState("")
 
   const addComment = () => {
@@ -55,10 +51,6 @@ const GroupComment = memo((props) => {
     }
   }
 
-  // useEffect(() => {
-  //   dispatch(groupDetailCreators.loadGroupPageMW(props.groupId))
-  //   dispatch(groupDetailCreators.mylistMW())
-  // }, [])
 
   return (
     <Container>
