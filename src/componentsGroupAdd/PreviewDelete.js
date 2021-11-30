@@ -1,8 +1,9 @@
-import React from "react"
+import React, { memo } from "react"
 import { TiDelete } from "react-icons/ti"
 
-export const PreviewDelete = () => {
+export const PreviewDelete = memo((props) => {
   return (
+    // 미리보기 삭제 icon
     <>
       <TiDelete
         size="16"
@@ -14,4 +15,4 @@ export const PreviewDelete = () => {
       ></TiDelete>
     </>
   )
-}
+})

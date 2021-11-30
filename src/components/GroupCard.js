@@ -20,7 +20,10 @@ export const GroupCard = memo((props) => {
 
   const [close, setClose] = useState(false)
 
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath
+  const img =
+    process.env.REACT_APP_S3_GROUP_URL + filePath
+      ? process.env.REACT_APP_S3_GROUP_URL + filePath
+      : process.env.REACT_APP_S3_SCREEN_URL + filePath
 
   // 모집중, 마감중 표시
   useEffect(() => {
@@ -30,7 +33,6 @@ export const GroupCard = memo((props) => {
       setClose(false)
     }
   }, [close])
-  // console.log("props.close", close)
 
   return (
     <Container onClick={onClick}>

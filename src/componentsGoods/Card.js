@@ -1,9 +1,9 @@
-import React from "react"
+import React, { memo } from "react"
 import styled from "styled-components"
 import { Text } from "../components"
 import { FaRegSmileBeam } from "react-icons/fa"
 
-export const Card = (props) => {
+export const Card = memo((props) => {
   const {
     goodsImg,
     goodsName,
@@ -51,7 +51,7 @@ export const Card = (props) => {
       </CardContent>
     </CardBox>
   )
-}
+})
 
 Card.defaultProps = {}
 

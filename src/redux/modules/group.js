@@ -143,10 +143,10 @@ const selectTeamMD = (myteam) => {
 }
 
 // 직관 모임만들기
-const addGroupMD = (formData) => {
+const addGroupMD = (groupInfo) => {
   return function (dispatch, getState, { history }) {
-    img
-      .post("/groups", formData)
+    instance
+      .post("/groups", groupInfo)
       .then((res) => {
         history.replace("/")
       })

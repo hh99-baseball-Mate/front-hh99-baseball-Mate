@@ -76,7 +76,7 @@ export const KaKaoMap = ({ setLocation, setShowModal, setRoadAddress }) => {
       var iwContent = '<div class="maps">' + place.place_name + "</div>", // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(place.y, place.x) //인포윈도우 표시 위치입니다
 
-      // 인포윈도우를 생성하고 지도에 표시합니다
+      // 생성하고 지도에 표시합니다
       var customOverlay = new kakao.maps.CustomOverlay({
         map: map, // 인포윈도우가 표시될 지도
         position: iwPosition,

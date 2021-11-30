@@ -11,9 +11,8 @@ import { InfinityScroll } from "../components/InfinityScroll"
 import { NotGame } from "../components/NotGame"
 import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
-import { Helmet } from "react-helmet"
 
-export const ScreenList = () => {
+export const ScreenList = (props) => {
   const dispatch = useDispatch()
 
   const [infinity, setinfinity] = useState({
@@ -45,11 +44,6 @@ export const ScreenList = () => {
 
   return (
     <>
-      <Helmet>
-        <title> 미트볼 || 스야모임</title>
-        <meta property="og:title" content="미트볼 || 경기모임" />
-        <meta property="og:description" content="우리 같이 직관가자!" />
-      </Helmet>
       <InfinityScroll
         callNext={() => {
           setinfinity({
@@ -70,7 +64,7 @@ export const ScreenList = () => {
           {/* 지역 선택 모달 Btn Icon */}
 
           <SelectIcon setShowModal={setShowModal}>
-            원하는 지역을 선택해주세요!{" "}
+            원하는 지역을 선택해주세요!
           </SelectIcon>
           {/* 지역선택 모달 */}
 

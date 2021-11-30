@@ -31,8 +31,7 @@ export const CommunityDetail = (props) => {
     usertype,
   } = detail_list;
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
-  const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
-  console.log(detail_list.communityCommentList?.length, "디테일");
+  const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
 
   // console.log(props.match.params.communityId, "프롤스다");
   const communCommentId = props.match.params.communityId;

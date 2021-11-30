@@ -1,8 +1,7 @@
 import React from "react"
-import { useSelector } from "react-redux"
 
 export const useProfile = (usertype, userImage) => {
-  // const = useSelector((state) => state.user.user_info)
+  // 유저타입에 따른 사진 커스텀훅
 
   const userImg = () => {
     if (usertype === "normal") {

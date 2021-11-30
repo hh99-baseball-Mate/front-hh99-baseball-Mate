@@ -37,10 +37,10 @@ const initialState = {
 }
 
 // 스야 모임만들기
-const screenAddMD = (formData) => {
+const screenAddMD = (screenInfo) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post("/screen", formData)
+      .post("/screen", screenInfo)
       .then((res) => {
         history.replace("/screen")
       })

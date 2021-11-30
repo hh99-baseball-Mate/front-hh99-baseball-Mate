@@ -1,6 +1,7 @@
 export const baseUrl = "https://www.thesportsdb.com/images/media/team/badge/";
 
 export const clubImageSrc = [
+  // 클럽 이미지 row Date
   {
     id: 1,
     name: "롯데 자이언츠",
@@ -41,4 +42,4 @@ export const clubImageSrc = [
     img: "u5t0x01589709824.png",
     short_name: "한화",
   },
-];
+]
