@@ -136,9 +136,9 @@ function App() {
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/community/communitydetail/editcommuncomment/:communityId"
                 exact
-                component={ScreenDetail}
+                component={EditCommunComment}
               />
 
               <Route
@@ -165,11 +165,6 @@ function App() {
               {/* 임시 */}
               {/* <Redirect */}
               <Route component={NotFound} />
-              <Route
-                path="/community/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
             </Switch>
           )}
         </ConnectedRouter>

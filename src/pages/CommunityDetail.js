@@ -9,13 +9,18 @@ import CommunityComment from "../communityList/CommunityComment";
 import { BsThreeDots } from "react-icons/bs";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
+import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
+import { actionCreators as communityCr } from "../redux/modules/community";
+import { findIndex } from "lodash";
+import { UserProfile } from "../componentsGoods/UserProfile";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
   const communityId = params.communityId;
-
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
-
+  console.log(detail_list, "프롤");
+  //댓글 사진
+  // const usertype = detail_list.usertype;
   const {
     communityUserPicture,
     content,
@@ -23,6 +28,7 @@ export const CommunityDetail = (props) => {
     myTeam,
     userName,
     communityCommentList,
+    usertype,
   } = detail_list;
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
   const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
@@ -36,27 +42,57 @@ export const CommunityDetail = (props) => {
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false);
 
-  // 삭제/수정 모달내용
   const modalData = {
     title: "커뮤니티 에디터",
-    descriptionOne: "선택하신 게시글을 수정하시겠습니까?",
+    descriptionOne: "선택하신 게시글을 삭제 하시겠습니까?",
+    descriptionTwo: " 게시글을 수정하시겠습니까?",
     btnClose: "취소",
-    btnUpdate: "수정",
+    btnUpdate: "삭제",
+    btnConfirm: "수정",
   };
 
-  //커뮤니티 수정 버튼
+  //삭제 버튼
   const deleteBtn = () => {
-    history.push(`/community/editcommuncomment/${communityId}`);
+    console.log("놀러");
+    dispatch(communityCr.deleteCommunityAPI(communityId));
+    setShowModal(false);
+  };
+
+  //수정 버튼
+  const updataBtn = () => {
+    history.push(`/community/communitydetail/editcommuncomment/${communityId}`);
+  };
+
+  // 유저정보= 게시글 쓴 사람 정보 확인용
+  const user_info = useSelector((state) => state.user.user_info);
+  const writer = useSelector((state) => state.communityDetail?.detail_list);
+
+  const user_info_id = user_info.useridx;
+  const writer_id = writer.userId;
+
+  //댓글 사진
+  const userImg = () => {
+    if (usertype === "kakao") {
+      return communityUserPicture;
+    }
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+    }
   };
   return (
     <>
       <ArrowBack>커뮤니티</ArrowBack>
       <Border />
       <Container>
-        <MoreIcons onClick={() => setShowModal(true)} />
         <Card {...detail_list}>
+          {user_info_id === writer_id ? (
+            <MoreIcons onClick={() => setShowModal(true)} />
+          ) : (
+            ""
+          )}
+
           <UserInfo>
-            <UserImg src={user_img} />
+            <UserProfile size="32" url={userImg} />
             <InfoBox>
               <Text bold>{userName}</Text>
               <Time>
@@ -86,10 +122,11 @@ export const CommunityDetail = (props) => {
       </Container>
       {showModal && (
         <Modal
-          center
+          three
           setShowModal={setShowModal}
           modalData={modalData}
           deleteBtn={deleteBtn}
+          updataBtn={updataBtn}
         ></Modal>
       )}
     </>
@@ -105,6 +142,7 @@ const Border = styled.div`
 const Card = styled.div`
   width: 100%;
   margin-top: 20px;
+  position: relative;
 `;
 
 const UserImg = styled.img`
@@ -157,5 +195,5 @@ const MoreIcons = styled(BsThreeDots)`
   margin: 7.5px 0;
   cursor: pointer;
   position: absolute;
-  right: 70px;
+  right: 20px;
 `;
