@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -18,6 +18,8 @@ const CommunityAdd = (props) => {
   //이미지 미리보기 삭제 커스텀훅
   const [imgPreview, deletePreview, preview] = usePreview("");
 
+  const card_list = useSelector((state) => state.community.card_list);
+  console.log(card_list.filePath, "라면");
   // 입력창
   const [content, setCotent] = useState("");
 
@@ -81,6 +83,10 @@ const CommunityAdd = (props) => {
       </Container>
     </div>
   );
+};
+CommunityAdd.defaultProps = {
+  defaultImg:
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
 };
 
 export default CommunityAdd;

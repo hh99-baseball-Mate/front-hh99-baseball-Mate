@@ -107,7 +107,7 @@ const updateCommunityAPI = (communityId, formData) => {
       .put(`/community/${communityId}`, formData)
       .then((res) => {
         console.log(res, "res다 하하하");
-        history.replace(`/community/communityId/${communityId}`);
+        history.replace(`/community/communitydetail/${communityId}`);
       })
       .catch((err) => {
         console.log(err, "게시글 수정 에러");
