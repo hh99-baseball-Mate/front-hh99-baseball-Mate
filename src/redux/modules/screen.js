@@ -61,6 +61,7 @@ const screenGetMD = (regoin, infinity) => {
         .get("/screen")
         .then((res) => {
           dispatch(is_loaded(true))
+
           const screenLength = res.data.length
 
           const infinityView = res.data.slice(start, next)

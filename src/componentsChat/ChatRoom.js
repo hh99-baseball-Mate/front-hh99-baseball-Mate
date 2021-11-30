@@ -22,7 +22,7 @@ import more2 from "../shared/icon/more2.svg"
 
 
 
-const ChatRoom = memo((props) => {
+const ChatRoom = (props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
@@ -38,18 +38,8 @@ const ChatRoom = memo((props) => {
   const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
-  // const [talk, setTalk] = useState("")
-
 
   const roomInfo = chatList.find((list) => list.roomId == roomId)
-  // console.log("챗리스트", messages)
-
-//   useEffect(() => {
-//     dispatch(chatCreators.getChatMessagesAX(room_id))
-//     setTalk()
-//   },[])
-
-// console.log("챗리스트", talk)
 
 
 
@@ -281,9 +271,9 @@ const ChatRoom = memo((props) => {
     </Container>
     // </React.Fragment>
   )
-})
+}
 
-export default ChatRoom
+export default React.memo(ChatRoom)
 
 const Container = styled.div`
   /* margin-bottom: 10px; */

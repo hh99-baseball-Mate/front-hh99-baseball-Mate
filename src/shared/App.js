@@ -139,6 +139,11 @@ function App() {
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
+              <Route
                 path="/community/communitydetail/editcommuncomment/:communityId"
                 exact
                 component={EditCommunComment}

@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance, img } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 const LOAD_ALARM = "LOAD_ALARM"
 const DELETE_ALARM = "DELETE_ALARM"
@@ -42,12 +43,14 @@ const load_alarmMW = () => {
     instance
       .get("/alarm")
       .then((res) => {
+        dispatch(is_loaded(true))
         const alarm = res.data
         dispatch(load_alarm(alarm))
       })
       .catch((err) => {
         // // console.log(err)
       })
+      dispatch(is_loaded(false)) 
   }
 }
 
