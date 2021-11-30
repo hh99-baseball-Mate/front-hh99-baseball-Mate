@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -18,6 +18,8 @@ const CommunityAdd = (props) => {
   const dispatch = useDispatch()
   //이미지 미리보기 삭제 커스텀훅
 
+  const card_list = useSelector((state) => state.community.card_list);
+  console.log(card_list.filePath, "라면");
   // 입력창
   const [content, setCotent] = useState("")
   const [preview, setPreview] = useState("")
@@ -36,7 +38,7 @@ const CommunityAdd = (props) => {
   }
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "goods")
+  const [uploadFile, fileName] = useS3Upload(preview, "commu")
 
   //입력체크
   const submitBtn = (e) => {
@@ -46,10 +48,11 @@ const CommunityAdd = (props) => {
       return
     }
 
-    
+    uploadFile(preview)
+
     const communityInfo = {
       content,
-      myTeam :null,
+      myTeam: null,
       filePath: preview ? fileName : "",
     }
 
@@ -98,6 +101,10 @@ const CommunityAdd = (props) => {
       </Container>
     </div>
   )
+};
+CommunityAdd.defaultProps = {
+  defaultImg:
+    "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
 };
 
 export default CommunityAdd;

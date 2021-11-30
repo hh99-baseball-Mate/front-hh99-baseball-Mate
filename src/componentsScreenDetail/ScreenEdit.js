@@ -36,9 +36,7 @@ export const ScreenEdit = (props) => {
   const params = useParams()
   const screenId = params.screenId
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-
-  const ip = IMAGES_BASE_URL
+  const ip = process.env.REACT_APP_S3_SCREEN_URL
   const dispatch = useDispatch()
 
   const loadDetail = useSelector((state) => state.screenDetail.screenPage)
@@ -50,7 +48,7 @@ export const ScreenEdit = (props) => {
 
   // 날짜 datePicker 라이브러리
   const [startDate, setStartDate] = useState("")
-  const [preview, setPreview] = useState("")
+  const [preview, setPreview] = useState(img)
 
   // datePicker 한글버전
   registerLocale("ko", ko)

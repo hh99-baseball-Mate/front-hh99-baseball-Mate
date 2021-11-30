@@ -15,6 +15,8 @@ const PHONE_AUTH = "PHONE_AUTH";
 const IS_AUTH = "IS_AUTH";
 const CHOICE_CLUB = "CHOICE_CLUB";
 
+const IS_LOADED = "IS_LOADED"
+
 // 액션 함수
 
 const logIn = createAction(LOGIN, (user_info) => ({ user_info }));
@@ -27,7 +29,10 @@ const phone_auth = createAction(PHONE_AUTH, (phoneNumber, phoneAuth) => ({
 }))
 const is_auth = createAction(IS_AUTH, (auth) => ({ auth }))
 
+export const is_loaded = createAction(IS_LOADED, (loaded) => ({ loaded }))
+
 const initialState = {
+  is_loaded: false,
   user_info: [],
   is_login: false,
   is_auth: false,
@@ -244,6 +249,12 @@ const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
   }
 }
 
+const isLoaded = (loaded) => {
+  return function (dispatch, getState, { history }) {
+    dispatch(is_loaded(loaded))
+  }
+}
+
 //  리듀서
 
 export default handleActions(
@@ -280,6 +291,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_auth = action.payload.auth
       }),
+    [IS_LOADED]: (state, action) => produce(state, (draft) => {
+      draft.is_loaded = action.payload.loaded
+    }),
   },
   initialState
 )
@@ -296,6 +310,7 @@ const actionCreators = {
   PhoneAuthSubmitMD,
   PhoneAuthConfirmMD,
   // userUpdate,
+  isLoaded
 };
 
 export { actionCreators };

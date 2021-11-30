@@ -25,14 +25,15 @@ export const Event = () => {
 }
 
 const Container = styled.div`
-  width: 425px;
+  max-width: 425px;
+  width: 100%;
   position: relative;
 `;
 
 const EventLogo = styled.img`
-  width: 425px;
-`
-  ;
+  max-width: 425px;
+  width: 100%;
+`;
 
 const Button1 = styled.button`
   position: absolute;

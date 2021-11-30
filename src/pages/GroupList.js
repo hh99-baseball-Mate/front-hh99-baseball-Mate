@@ -14,6 +14,9 @@ import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
 import { HotCard } from "../components/HotCard"
 
+import { actionCreators as userActions } from "../redux/modules/user";
+import Loader from "../components/Loader"
+
 const GroupList = (props) => {
   const dispatch = useDispatch()
 
@@ -63,6 +66,11 @@ const GroupList = (props) => {
     dispatch(groupCr.datePage(""))
     setTeam("전체")
   }
+
+  // const is_loaded = useSelector((state) => state.user.is_loaded)
+  // useEffect(() => {
+  //   dispatch(userActions.isLoaded(false))
+  // },[])
 
   // 구단별 중 전체 이미지
   const KBOIcon =

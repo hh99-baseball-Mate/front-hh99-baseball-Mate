@@ -12,7 +12,7 @@ import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 // import { Container } from "../components";
 
 const GroupComment = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진

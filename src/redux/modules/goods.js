@@ -3,6 +3,7 @@
 import produce from "immer"
 import { createAction, handleActions } from "redux-actions"
 import { img, instance } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 // 액션타입 굿즈 게시글
 const GET_GOODS = "GET_GOODS"
@@ -84,6 +85,7 @@ const getGoodsMD = ({ start, next }) => {
     instance
       .get("/goods")
       .then((res) => {
+        dispatch(is_loaded(true))
         const goods_list_length = res.data.length
 
         const goods_list = res.data.slice(start, next)
@@ -93,6 +95,7 @@ const getGoodsMD = ({ start, next }) => {
       .catch((err) => {
         // console.log(err, "굿즈 가져오기 에러"))
       })
+      dispatch(is_loaded(false)) 
   }
 }
 

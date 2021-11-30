@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance, img } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 // 채팅방 리스트
 const LOAD_CHAT_LIST = "LOAD_CHAT_LIST"
@@ -39,6 +40,7 @@ const loadChatListMW = () => {
     instance
       .get("/chat/rooms/mine")
       .then((res) => {
+        dispatch(is_loaded(true))
         // console.log(res.data)
         const list = res.data
         dispatch(load_chatList(list))
@@ -46,6 +48,7 @@ const loadChatListMW = () => {
       .catch((err) => {
         // console.log(err)
       })
+      dispatch(is_loaded(false)) 
   }
 }
 

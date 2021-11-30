@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance, img } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
 // const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
@@ -78,19 +79,20 @@ const loadGroupPageMW = (groupId) => {
     instance
       .get(`/groups/${groupId}`)
       .then((res) => {
+        dispatch(is_loaded(true))
         const groupPage = res.data
         dispatch(load_groupPage(groupPage))
       })
       .catch((err) => {
         // console.log(err)
       })
+      dispatch(is_loaded(false)) 
   }
 }
 
 // 수정하기
 const editGroupPageMW = (groupId, groupEditData) => {
   return (dispatch, getState, { history }) => {
-    console.log(groupEditData)
     instance
       .put(`/groups/${groupId}`, groupEditData)
       .then((res) => {
@@ -263,6 +265,7 @@ export default handleActions(
     [LOAD_GROUP_PAGE]: (state, action) =>
       produce(state, (draft) => {
         draft.groupPage = action.payload.groupPage
+        draft.is_loaded = true
       }),
     // [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
     // 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);

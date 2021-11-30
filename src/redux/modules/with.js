@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
 import { instance } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 //액션
 const GET_GROUP_PARTICIPATION = "GET_GROUP_PARTICIPATION"
@@ -67,11 +68,13 @@ const getParticipationAPI = () => {
     instance
       .get(`/my/groups/applications`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(getGroupParticipation(res.data))
       })
       .catch((err) => {
         // console.log(err, "참여에러")
       })
+      dispatch(is_loaded(false))
   }
 }
 
@@ -81,11 +84,13 @@ const getWriteAPI = () => {
     instance
       .get(`/my/groups/write`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(getGroupWrite(res.data))
       })
       .catch((err) => {
         // console.log(err, "작성에러")
       })
+      dispatch(is_loaded(false)) 
   }
 }
 
@@ -95,11 +100,13 @@ const getLikeAPi = () => {
     instance
       .get(`/my/groups/like`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(getGroupLike(res.data))
       })
       .catch((err) => {
         // console.log(err, "참여에러")
       })
+      dispatch(is_loaded(false)) 
   }
 }
 
@@ -109,11 +116,13 @@ const getScreenAPI = () => {
     instance
       .get(`my/screen/applications`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(getScreen(res.data))
       })
       .catch((err) => {
         // console.log(err)
       })
+      dispatch(is_loaded(false))
   }
 }
 
@@ -123,11 +132,13 @@ const getScreenWriteAPI = (props) => {
     instance
       .get(`my/screen/write`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(screenWrite(res.data))
       })
       .catch((err) => {
         // console.log(err))
       })
+      dispatch(is_loaded(false))
   }
 }
 
@@ -137,11 +148,13 @@ const getScreenLikeAPI = (props) => {
     instance
       .get(`/my/screen/like`)
       .then((res) => {
+        dispatch(is_loaded(true))
         dispatch(getScreenLike(res.data))
       })
       .catch((err) => {
         // console.log(err)
       })
+      dispatch(is_loaded(false))
   }
 }
 

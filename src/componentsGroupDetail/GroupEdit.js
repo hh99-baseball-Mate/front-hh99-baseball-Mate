@@ -29,7 +29,7 @@ export const GroupEdit = (props) => {
   const params = useParams()
   const groupId = params.groupId
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
   const dispatch = useDispatch()
 
@@ -43,10 +43,10 @@ export const GroupEdit = (props) => {
   // loadDetail ? ip + loadDetail.filePath : props.defaultImg
 
   // 구단선택
-  const team = loadDetail.groupDate.split("vs")[1]
+  const team = loadDetail.groupDate?.split("vs")[1]
 
   // 모달 보기 state
-  const [preview, setPreview] = useState("")
+  const [preview, setPreview] = useState(img)
 
   // 인풋 커스텀훅
   const [inputValue, onChange] = useInputs({
