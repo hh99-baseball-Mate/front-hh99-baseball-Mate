@@ -1,16 +1,17 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
+import { alarmCreators } from "../redux/modules/alarm";
 import Info from "../componentsScreenDetail/Info";
 import Participant from "../componentsScreenDetail/Participant";
 import Comment from "../componentsScreenDetail/Comment";
 import { ArrowBack } from "../components"
 
 
-const ScreenDetail = memo((props) => {
+const ScreenDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const screenId = params.screenId
@@ -19,42 +20,32 @@ const ScreenDetail = memo((props) => {
   const mylist = useSelector((state) => state.screenDetail.screenMylist)
 
   const [selectPage, setSelectPage] = useState(true)
-  // const [close, setClose] = useState(loadDetail?.allowtype)
   const [heart, setHeart] = useState(false)
   const [join, setJoin] = useState(false)
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myScreenLikesList = mylist?.myScreenLikesList
   const likePost = myScreenLikesList?.indexOf(Number(screenId))
-  // console.log(likePost)
+
+  // 승인요청 신청자 찾기
+  const awaitScreenList = useSelector((state) => state.alarm?.awaitScreenList)
+  // console.log("awaitList", awaitList)
+  const myScreenWait = awaitScreenList.findIndex(list => list.postId == screenId)
+  
+
   useEffect(() => {
     dispatch(screenDetailCreators.loadScreenPageMW(screenId))
     dispatch(screenDetailCreators.mylistMW())
+    dispatch(alarmCreators.awaitScreenChatListMW())
 
     if (likePost !== -1) {
       return setHeart(true)
     } else {
       setHeart(false)
     }
-  }, [screenId, join, likePost])
+  }, [dispatch, screenId, join, likePost, myScreenWait])
 
-  // console.log("스크린상세페이지", loadDetail)
-  // console.log("슼린내꺼야", mylist)
-  // console.log("내꺼내꺼", allmylist)
 
-  // const commentBtn = () => {
-  //   const myJoin = loadDetail.appliedUserInfo.findIndex(
-  //     (list) => list.UserId === mylist.userid
-  //   )
-  //   // console.log("myJoin",myJoin)
-  //   if (loadDetail.createdUserName === mylist.username) {
-  //     return setSelectPage(false)
-  //   } else if (myJoin >= 0) {
-  //     return setSelectPage(false)
-  //   } else {
-  //     window.alert("모임 참여자만 이용 가능합니다.")
-  //   }
-  // }
 
   return (
     <React.Fragment>
@@ -64,11 +55,8 @@ const ScreenDetail = memo((props) => {
         <Info
           {...loadDetail}
           {...mylist}
-          // close={close}
-          // setClose={setClose}
           heart={heart}
           setHeart={setHeart}
-          // likePost={likePost}
         />
 
         {/* 참여자 & 방명록 */}
@@ -100,7 +88,7 @@ const ScreenDetail = memo((props) => {
             <Participant
               {...loadDetail}
               {...mylist}
-              // close={close}
+              myScreenWait={myScreenWait}
               join={join}
               setJoin={setJoin}
             />
@@ -111,10 +99,10 @@ const ScreenDetail = memo((props) => {
       </Container>
     </React.Fragment>
   )
-})
+}
 
 
-export default ScreenDetail;
+export default React.memo(ScreenDetail);
 
 const Container = styled.div`
   max-width: 425px;

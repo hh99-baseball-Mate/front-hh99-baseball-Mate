@@ -3,22 +3,38 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { alarmCreators } from "../redux/modules/alarm";
 import { Modal } from "../components/Modal"
+import { useHistory } from "react-router";
 
 const AlarmCard = (props) => {
 
+  const history = useHistory()
 	const dispatch = useDispatch()
-  // console.log("AlarmCard", props)
+  console.log("AlarmCard", props)
 
   // 모달
 	const [showModal, setShowModal] = useState(false)
 
-  const modalData = {
-    title: "알람 에디터",
-    descriptionOne: "알람을 확인/삭제 하시겠습니까?",
-    btnClose: "취소",
-    btnConfirm: "승인",
-    btnUpdate: "삭제",
+  let modalData = {}
+  if (props.alarmType === "Normal") {
+
+    modalData = {
+      title: "알람 에디터",
+      descriptionOne: "알람을 확인/삭제 하시겠습니까?",
+      btnClose: "취소",
+      btnConfirm: "보기",
+      btnUpdate: "삭제",
+    }
+
+  } else {
+    modalData = {
+      title: "알람 에디터",
+      descriptionOne: "알람을 확인/삭제 하시겠습니까?",
+      btnClose: "취소",
+      btnConfirm: "승인",
+      btnUpdate: "삭제",
+    }
   }
+
 
 
   
@@ -114,6 +130,18 @@ const AlarmCard = (props) => {
   }
 
 
+  // 게시글이동
+  const movePost = () => {
+    if(props.normalType === "group") {
+      return history.push(`/groupdetail/${props.postId}`)
+    } else if(props.normalType === "screen") {
+      return history.push(`/screen/screendetail/${props.postId}`)
+    } else if(props.normalType === "community") {
+      return history.push(`/community/communitydetail/${props.postId}`)
+    } else if(props.normalType === "goods") {
+      return history.push(`/goods/`)
+    }
+  }
 
 
 
@@ -159,6 +187,28 @@ const AlarmCard = (props) => {
               align="flex-start"
               justify="flex-start"
             >
+              { //경기모임 표시
+                (props.request && num !== -1) &&
+                <Ellipse
+                  borderColor="#F25343"
+                  background="#F25343"
+                  color="#FFFFFF"
+                >
+                  경기모임
+                </Ellipse>
+              }
+
+              { //스야모임 표시
+                (props.request && screenNum !== -1) &&
+                <Ellipse
+                  borderColor="#F25343"
+                  background="#FFF"
+                  color="#F25343"
+                >
+                  스야모임
+                </Ellipse>
+              }
+
               <div>{contents[0]}</div>
               <div>
                 {contents[1]}
@@ -179,7 +229,7 @@ const AlarmCard = (props) => {
       <Rectangle />
 
       {/* 경기모임일 때 모달창 */}
-      {num !== -1 && showModal && (
+      {props.alarmType === "Group" && showModal && (
         <Modal
           three
           setShowModal={setShowModal}
@@ -190,7 +240,7 @@ const AlarmCard = (props) => {
       )}
 
       {/* 스크린야구 모임일 때 모달창 */}
-      {screenNum !== -1 && showModal && (
+      {props.alarmType === "Screen" && showModal && (
         <Modal
           three
           setShowModal={setShowModal}
@@ -203,9 +253,10 @@ const AlarmCard = (props) => {
       {/* 일반 알람일 때 모달창 */}
       {props.alarmType === "Normal" && showModal && (
         <Modal
-          center
+          three
           setShowModal={setShowModal}
           modalData={modalData}
+          updataBtn={movePost}
           deleteBtn={delNormalAlert}
         ></Modal>
       )}
@@ -297,6 +348,23 @@ const Img = styled.div`
   background-repeat: no-repeat;
 `;
 
+
+const Ellipse = styled.div`
+  width: 50px;
+  height: 20px;
+  background: ${(props) => props.background};
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1px;
+  margin-left: ${(props) => props.marginLeft};
+  font-weight: bold;
+  font-size: 10px;
+  color: ${(props) => props.color};
+`
+
 const List = styled.div`
  	height: 62vh;
 	overflow: auto;
@@ -311,41 +379,3 @@ const Rectangle = styled.div`
 
 
 
-
-
-const ParticipantBtn = styled.button`
-  width: 50%;
-  height: 45px;
-  background: none;
-  padding-bottom: 10px;
-  border: none;
-  font-size: 16px;
-  color: #777777;
-  ${(props) =>
-    props.selectPage
-      ? ` 
-		border-bottom: 3px solid #F25343;
-		font-size: 16px;
-		color: #F25343; 
-		font-weight: bold;`
-      : `border: none;`}
-`
-
-const CommentBtn = styled.button`
-  width: 50%;
-  height: 45px;
-  background: none;
-  padding-bottom: 10px;
-  border: none;
-  font-size: 16px;
-  color: #777777;
-  /* margin-right: 0; */
-  ${(props) =>
-    !props.selectPage
-      ? `
-		border-bottom: 3px solid #F25343;
-		font-size: 16px;
-		color: #F25343; 
-		font-weight: bold;`
-      : `border: none;`}
-`

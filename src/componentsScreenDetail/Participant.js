@@ -1,8 +1,9 @@
 import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import { screenDetailCreators } from "../redux/modules/screenDetail";
+import { alarmCreators } from "../redux/modules/alarm";
 import { getCookie } from '../shared/Cookie';
 
 import host from "../shared/icon/groupDetail/host.svg"
@@ -10,14 +11,10 @@ import host from "../shared/icon/groupDetail/host.svg"
 
 const Participant = memo((props) => {
   const params = useParams()
-  const history = useHistory()
+  const dispatch = useDispatch()
   const groupId = params.screenId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  // console.log("참여자컴포", props)
-  // const {shape, src, size, pointer} = props;
-  // flex="felx" justify="space-around"
-  const dispatch = useDispatch()
 
   const ip = IMAGES_BASE_URL
 
@@ -38,9 +35,6 @@ const Participant = memo((props) => {
     UserInx: mylist.useridx,
     Username: mylist.username,
   }
-  // const [join, setJoin] = useState(false);
-
-  // console.log("나는",my)
 
   // 참석버튼
   const apply = () => {
@@ -54,11 +48,17 @@ const Participant = memo((props) => {
 
   // 참석취소버튼
   const delapply = () => {
-    if (
-      window.confirm(
-        "모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다."
-      ) === true
-    ) {
+
+    if (props.myScreenWait !== -1) {
+      if (window.confirm("모임을 나가시겠습니까?") === true) {
+        props.setJoin(false)
+        dispatch(screenDetailCreators.delApplyMW(groupId, props.userid))
+      }
+      return
+    }
+
+    if (window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
+
       props.setJoin(false)
       dispatch(screenDetailCreators.delApplyMW(groupId, props.userid))
     }
@@ -67,17 +67,17 @@ const Participant = memo((props) => {
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
   )
-  // console.log("myJoin",myJoin)
+
   // 참석버튼 표시
   useEffect(() => {
+
     if (myJoin !== -1) {
       return props.setJoin(true)
     } else {
       return props.setJoin(false)
     }
-  }, [props, props.join, myJoin])
+  }, [props.appliedUserInfo])
 
-  // const [ok, setOk] = useState(false);
 
   // 참석 확정/취소 버튼
   const confirm = () => {
@@ -94,19 +94,7 @@ const Participant = memo((props) => {
     }
   }
 
-  // const confirm = () => {
-  //   if(window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.")) {
-  //     dispatch(screenDetailCreators.confirmMW(groupId, !props.allowtype))
-  //   }
-  // }
-
-  // // 채팅방 생성 버튼
-  // const chat = () => {
-  //   dispatch(screenDetailCreators.chatMW(id))
-  // }
-
   const me = props.createdUserId === props.userid
-  // console.log("나다", me, props.allowtype)
 
   return (
     <React.Fragment>
@@ -149,17 +137,33 @@ const Participant = memo((props) => {
             )
           ) : null}
 
-          {!me && myJoin === -1 && props.allowtype && (
-            // 방장이 아닐 때
+          {
+            (!me && myJoin === -1 && props.myScreenWait === -1 && props.allowtype) && 
+              // 방장이 아닐 때
+              <ConfirmBtn
+                onClick={() => {
+                  apply()
+                }}
+                background="#F25343"
+              >
+                모임 참여 신청하기
+              </ConfirmBtn>
+          }
+
+
+          { // 방장 승인 전 취소
+            (props.myScreenWait !== -1) && 
             <ConfirmBtn
-              onClick={() => {
-                apply()
-              }}
-              background="#F25343"
+              disabled
+              // onClick={() => {
+              //   delapply()
+              // }}
+              background="#ff8787"
             >
-              모임 참여 신청하기
+              방장의 승인을 기다리는 중입니다.
             </ConfirmBtn>
-          )}
+          }
+
 
           {!me && myJoin !== -1 && (
             // 방장이 아닐 때
@@ -198,10 +202,6 @@ function PartyList(props) {
 	const kakaoCheck = props.UserImage?.split(".")[1]
 	const kakaoImg = props.UserImage;
 
-
-	// useEffect(() => {
-	// 	dispatch(groupDetailCreators.mylistMW())
-	// },[props])
 
 	return (
 		<CircleBox>

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { getCookie } from '../shared/Cookie';
@@ -10,14 +10,10 @@ import host from "../shared/icon/groupDetail/host.svg"
 
 const Participant = memo((props) => {
   const params = useParams()
-  const history = useHistory()
+  const dispatch = useDispatch()
   const groupId = params.groupId
 
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  // console.log("참여자컴포", props)
-  // const {shape, src, size, pointer} = props;
-  // flex="felx" justify="space-around"
-  const dispatch = useDispatch()
 
   const ip = IMAGES_BASE_URL
 
@@ -39,11 +35,6 @@ const Participant = memo((props) => {
     Username: mylist.username,
   }
 
-  // console.log("참여자")
-
-  // useEffect(() => {
-  //   dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-  // },[])
 
   // 참석버튼
   const apply = () => {
@@ -55,15 +46,16 @@ const Participant = memo((props) => {
     dispatch(groupDetailCreators.groupApplyMW(id, my))
   }
 
+
   // 참석취소버튼
   const delapply = () => {
-    if (
+    if ( 
       window.confirm(
         "모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다."
-      ) === true
-    ) {
-      props.setJoin(false)
-      dispatch(groupDetailCreators.delApplyMW(groupId, props.userid))
+        ) === true
+      ) {
+        props.setJoin(false)
+        dispatch(groupDetailCreators.delApplyMW(groupId, props.userid))
     }
   }
 
@@ -85,7 +77,7 @@ const Participant = memo((props) => {
   const myJoin = props.appliedUserInfo?.findIndex(
     (list) => list.UserId === props.userid
   )
-  // console.log("myJoin",myJoin)
+
   // 참석버튼 표시
   useEffect(() => {
     if (myJoin !== -1) {
@@ -138,18 +130,35 @@ const Participant = memo((props) => {
               </ConfirmBtn>
             )
           ) : null}
+          
 
-          {!me && myJoin === -1 && props.allowtype && (
-            // 방장이 아닐 때
+          {
+            (!me && myJoin === -1 && props.myWait === -1 && props.allowtype) && 
+              // 방장이 아닐 때
+              <ConfirmBtn
+                onClick={() => {
+                  apply()
+                }}
+                background="#F25343"
+              >
+                모임 참여 신청하기
+              </ConfirmBtn>
+          }
+
+
+          { // 방장 승인 전 취소
+            (props.myWait !== -1) && 
             <ConfirmBtn
-              onClick={() => {
-                apply()
-              }}
-              background="#F25343"
+              disabled
+              // onClick={() => {
+              //   delapply()
+              // }}
+              background="#ff8787"
             >
-              모임 참여 신청하기
+              방장의 승인을 기다리는 중입니다.
             </ConfirmBtn>
-          )}
+          }
+            
 
           {!me && myJoin !== -1 && (
             // 방장이 아닐 때
@@ -189,9 +198,6 @@ function PartyList(props) {
   const kakaoCheck = props.UserImage?.split(".")[1]
   const kakaoImg = props.UserImage
 
-  // useEffect(() => {
-  // 	dispatch(groupDetailCreators.mylistMW())
-  // },[props])
 
   return (
     <CircleBox>
@@ -202,7 +208,7 @@ function PartyList(props) {
 }
 
 Participant.defaultProps = {
-	UserImage: ""
+	createdUserProfileImg: "sample.png"
 }
 
 export default Participant;
