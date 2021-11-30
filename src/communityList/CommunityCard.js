@@ -19,6 +19,7 @@ const CommunityCard = (props) => {
     onClick,
     dayBefore,
     communityId,
+    communityCommentList,
   } = props;
 
   //게시글 이미지
@@ -29,8 +30,8 @@ const CommunityCard = (props) => {
 
   // 삭제/수정 모달내용
   const modalData = {
-    title: "굿즈 에디터",
-    descriptionOne: "선택하신 굿즈를 삭제 하시겠습니까?",
+    title: "커뮤니티 에디터",
+    descriptionOne: "선택하신 게시글을 삭제 하시겠습니까?",
     descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
     btnUpdate: "삭제",
@@ -40,13 +41,17 @@ const CommunityCard = (props) => {
     console.log("놀러");
     dispatch(communityCr.deleteCommunityAPI(communityId));
     setShowModal(false);
-    // history.push("/community");
   };
-  const detail_list = useSelector((state) => state.communityDetail.detail_list);
+
   return (
     <div>
       <MoreIcons onClick={() => setShowModal(true)} />
-      <Card onClick={onClick}>
+      <Card
+        onClick={() => {
+          console.log("제발");
+          history.push(`/community/communitydetail/${communityId}`);
+        }}
+      >
         <UserInfo>
           <UserImg src={img} />
           <InfoBox>
@@ -66,23 +71,20 @@ const CommunityCard = (props) => {
         <Good>
           <img src={Question} alt="말풍선" />
           <Text size="12px" margin="0 0 0 7px">
-            {detail_list.communityCommentList
-              ? detail_list.communityCommentList.length
-              : "0"}
+            {communityCommentList ? communityCommentList.length : "0"}
           </Text>
         </Good>
 
         <Boundary />
-
-        {showModal && (
-          <Modal
-            center
-            setShowModal={setShowModal}
-            modalData={modalData}
-            deleteBtn={deleteBtn}
-          ></Modal>
-        )}
       </Card>
+      {showModal && (
+        <Modal
+          center
+          setShowModal={setShowModal}
+          modalData={modalData}
+          deleteBtn={deleteBtn}
+        ></Modal>
+      )}
     </div>
   );
 };
@@ -146,4 +148,6 @@ const MoreIcons = styled(BsThreeDots)`
   align-items: center;
   margin: 7.5px 0;
   cursor: pointer;
+  position: absolute;
+  right: 70px;
 `;
