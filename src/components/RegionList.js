@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components"
 
 export const RegionList = ({ setRegoin, setShowModal }) => {
+  // 지역선택 필터에 사용되는 row Date
+
   const regionList = [
     { id: "1", region: "전국" },
     { id: "2", region: "서울" },

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { regPassword } from "../shared/Reg"
 
-import { Buttons, Text } from "../components"
+import { Buttons } from "../components"
 import { Container } from "../components/Container"
 import { TextField } from "../componentsLogin/TextField"
 import { SocialLogin } from "../componentsLogin/SocialLogin"
@@ -14,7 +14,6 @@ import { history } from "../redux/configStore"
 import LogoImg from "../shared/icon/logo/logo.png"
 
 import { IoEyeSharp } from "react-icons/io5"
-import { MdKeyboardArrowDown } from "react-icons/md"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 
@@ -36,7 +35,7 @@ export const Login = (props) => {
 
   return (
     <Container>
-      <Logo />
+      <Logo onClick={() => history.push("/")} />
       <Formik
         initialValues={{
           email: "",

@@ -1,10 +1,11 @@
-import React from "react"
+import React, { memo } from "react"
 import styled from "styled-components"
 import { AiOutlineClose } from "react-icons/ai"
 import { Text } from "../components"
 import { RegionList } from "../components/RegionList"
 
-export const Region = ({ setShowModal, setRegoin }) => {
+export const Region = memo(({ setShowModal, setRegoin }) => {
+  // 지역 필터
   return (
     <Container>
       {/* 닫기버튼 */}
@@ -19,7 +20,7 @@ export const Region = ({ setShowModal, setRegoin }) => {
       ></RegionList>
     </Container>
   )
-}
+})
 
 const Container = styled.div`
   height: 100%;

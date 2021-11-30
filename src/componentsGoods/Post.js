@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as goodsActions } from "../redux/modules/goods";
 
 export const Post = memo((props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const {
     // 유저 info
     user_info: { useridx },
@@ -33,49 +33,46 @@ export const Post = memo((props) => {
     goodsLikesList,
     userId,
     usertype,
-  } = props;
+  } = props
 
-  // 게시글 이미지
+  // S3에서 가져온 게시글 이미지
 
-  // const like_list = useSelector((state) => state.goods.goods_list)
+  const postImage = process.env.REACT_APP_S3_URL + filePath
 
-  // const likeCnt = like_list.map()
-
-  const postImage = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
-
+  // 유저 프로필사진
   const userImg = () => {
     if (usertype === "kakao") {
-      return goodsUserPicture;
+      return goodsUserPicture
     }
     if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture
     }
-    return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture;
-  };
+  }
 
   // 좋아요 중복 검사
 
   const likeCheckList = goodsLikesList.map((e) => {
     if (useridx === e.userIdGoods) {
-      return true;
+      return true
     }
-    return false;
-  });
+    return false
+  })
 
   // 같은 아이디로 좋아요를 누른 적이 있는지 중복 값을 포함하고있음을 검사
 
-  const likeCheck = likeCheckList.includes(true);
+  const likeCheck = likeCheckList.includes(true)
 
   // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   // 게시글 내용 더보기
-  const [showContents, setShowContents] = useState(false);
+  const [showContents, setShowContents] = useState(false)
 
   // 댓글 더보기
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(false)
 
   // 가장 맨뒤에 댓글 1개 미리보기
-  const comment_preview = goodsCommentList[goodsCommentList.length - 1];
+  const comment_preview = goodsCommentList[goodsCommentList.length - 1]
 
   // 삭제/수정 모달내용
   const modalData = {
@@ -84,37 +81,37 @@ export const Post = memo((props) => {
     descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
     btnUpdate: "삭제",
-  };
+  }
 
   // 게시글 더보기
   const moreBtn = () => {
-    setShowComments(!showComments);
-  };
+    setShowComments(!showComments)
+  }
 
   // 게시글 삭제버튼
   const deleteBtn = () => {
-    dispatch(goodsActions.deleteGoodsMD(goodsId));
-    setShowModal(false);
-  };
+    dispatch(goodsActions.deleteGoodsMD(goodsId))
+    setShowModal(false)
+  }
 
   // 좋아요
   const memoLike = () => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, likeCheck));
-  };
+      : dispatch(goodsActions.addGoodsLikeMD(goodsId, useridx, likeCheck))
+  }
 
   // 댓글 삭제버튼
   const deleteCommentBtn = (commentId) => {
-    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId));
-  };
+    dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
+  }
 
   // 댓글 수정디스패치
   const updateCommentDispatch = (commentId, updateComment) => {
     dispatch(
       goodsActions.updateGoodsCommentMD(goodsId, commentId, updateComment)
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -208,7 +205,7 @@ export const Post = memo((props) => {
         ></Modal>
       )}
     </>
-  );
+  )
 });
 
 Post.defaultProps = {};

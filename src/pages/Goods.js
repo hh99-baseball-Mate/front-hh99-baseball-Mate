@@ -6,7 +6,7 @@ import { history } from "../redux/configStore"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
 import { NotGame } from "../components/NotGame"
 import { InfinityScroll } from "../components/InfinityScroll"
-import { Helmet } from "react-helmet"
+
 export const Goods = () => {
   const dispatch = useDispatch()
 
@@ -38,11 +38,6 @@ export const Goods = () => {
 
   return (
     <>
-      <Helmet>
-        <title> 미트볼</title>
-        <meta property="og:title" content="미트볼 || 경기모임" />
-        <meta property="og:description" content="우리 같이 직관가자!" />
-      </Helmet>
       <Header goods />
 
       {/* 무한스크롤 컴포넌트 */}
