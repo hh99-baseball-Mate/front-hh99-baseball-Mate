@@ -42,13 +42,15 @@ import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
 import EditCommunComment from "../communityList/EditCommunComment";
+import Loader from "../components/Loader"
 
 function App() {
   const dispatch = useDispatch();
-
+  const is_loaded = useSelector((state) => state.user.is_loaded)
   const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
+    dispatch(userActions.isLoaded(false))
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD());
     } else {
@@ -190,6 +192,9 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
+        {
+          !is_loaded && <Loader type="bars" color="#F25343"/>
+        }
       </Container>
     </>
   );

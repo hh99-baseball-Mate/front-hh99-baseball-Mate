@@ -38,30 +38,18 @@ const ChatRoom = memo((props) => {
   const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
 
-  // const [messagesi, setMessagesi] = useState("")
+  // const [talk, setTalk] = useState("")
 
 
   const roomInfo = chatList.find((list) => list.roomId == roomId)
   // console.log("챗리스트", messages)
 
-  // const getChatMessagesAX = (roomId) => {
-  //   return function (dispatch, getState, { history }) {
-  //     instance
-  //       .get(`/chat/${roomId}/messages`)
-  //       .then((res) => {
-  //         console.log(res)
-  //         const msg = res.data.content
-  //         console.log("메세지",msg)
-  //         // setMessagesi(msg)
-  //         // console.log("mgs",res.data.content)
-  //         // dispatch(load_msg(msg));
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
-  //   }
-  // }
+//   useEffect(() => {
+//     dispatch(chatCreators.getChatMessagesAX(room_id))
+//     setTalk()
+//   },[])
 
+// console.log("챗리스트", talk)
 
 
 
@@ -147,9 +135,9 @@ const ChatRoom = memo((props) => {
           ws.subscribe(
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
-              // const newMessage = JSON.parse(data.body)
+              const newMessage = JSON.parse(data.body)
               // logger("구독후 새로운 메세지 data", newMessage);
-              // console.log("구독후 새로운 메세지 data", newMessage)
+              console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
               dispatch(chatCreators.getChatMessagesAX(room_id))
 

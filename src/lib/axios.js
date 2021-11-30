@@ -1,6 +1,12 @@
 import axios from "axios";
 import { getCookie } from "../shared/Cookie";
 
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import { is_loaded } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
+
+// const dispatch = useDispatch();
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const instance = axios.create({
@@ -27,6 +33,51 @@ instance.interceptors.request.use((config) => {
   // console.log("인터셉터", token)
   return config
 });
+
+
+// instance.interceptors.response.use(function (response) {
+
+//   // spinning hide
+//   // UPDATE: Add this code to hide global loading indicator
+//   document.body.classList.remove('loading-indicator');
+
+//   return response;
+// }, function (error) {
+//   return Promise.reject(error);
+// });
+
+// 요청 인터셉터 추가
+// instance.interceptors.request.use(
+//   function (config) {
+//     // 요청을 보내기 전에 수행할 일
+//     // ...
+//     useDispatch(is_loaded(false))
+//     return config;
+//   },
+//   function (error) {
+//     // 오류 요청을 보내기전 수행할 일
+//     // ...
+//     return Promise.reject(error);
+//   });
+
+// 응답 인터셉터 추가
+// instance.interceptors.response.use(
+//   function (response) {
+//     // 응답 데이터를 가공
+//     // ...
+//     useDispatch(is_loaded(false))
+//     return response;
+//   },
+//   function (error) {
+//     // 오류 응답을 처리
+//     // ...
+//     return Promise.reject(error);
+//   });
+
+
+
+
+
 
 // 멀티 폼 이미지 넘길 시 사용
 

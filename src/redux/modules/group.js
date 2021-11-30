@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { img, instance } from "../../lib/axios";
+import { is_loaded } from "./user";
 
 // 핫 그룹
 const LOAD_HOTGROUP = "LOAD_HOTGROUP";
@@ -100,11 +101,13 @@ const getTeamAPI = (teamname) => {
       instance
         .get("/groups")
         .then((res) => {
+          dispatch(is_loaded(true))
           dispatch(getTeam(res.data))
         })
         .catch((err) => {
           // console.log(err, "전체 모임 불러오기")
         })
+        dispatch(is_loaded(false))  
       return
     }
 

@@ -17,6 +17,9 @@ import { Helmet } from "react-helmet"
 import favicon from "../shared/icon/logo/favicon.ico"
 import img from "../shared/icon/image.jpg"
 
+import { actionCreators as userActions } from "../redux/modules/user";
+import Loader from "../components/Loader"
+
 const GroupList = (props) => {
   const dispatch = useDispatch()
 
@@ -67,6 +70,11 @@ const GroupList = (props) => {
     setTeam("전체")
   }
 
+  // const is_loaded = useSelector((state) => state.user.is_loaded)
+  // useEffect(() => {
+  //   dispatch(userActions.isLoaded(false))
+  // },[])
+
   // 구단별 중 전체 이미지
   const KBOIcon =
     "https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
@@ -89,6 +97,7 @@ const GroupList = (props) => {
 
   return (
     <>
+      {/* {!is_loaded && <Loader type="bars" color="#F25343"/>} */}
       <Helmet>
         <title> 미트볼</title>
         <meta property="og:title" content="미트볼 || 경기모임" />
