@@ -109,7 +109,12 @@ export const MyPage = ({ is_login }) => {
         {/* <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine> */}
         <TextLine onClick={() => history.push("/event")}>이벤트</TextLine>
 
-        <TextLine onClick={() => window.alert("준비중입니다")}>
+        <TextLine
+          onClick={() =>
+            // window.alert("준비중입니다")
+            history.push("/notice")
+          }
+        >
           공지사항
         </TextLine>
       </Container>

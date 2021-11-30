@@ -1,6 +1,6 @@
-import React, { memo, useState } from "react"
+import React, { useState } from "react"
 
-export const useVolumeBtn = memo((people) => {
+export const useVolumeBtn = (people) => {
   //  인원수 + - 버튼 커스텀훅
 
   const [peopleLimit, setPeopleLimit] = useState(people)
@@ -27,4 +27,4 @@ export const useVolumeBtn = memo((people) => {
   }
 
   return [plusBtn, minusBtn, onChangeBtn, peopleLimit]
-})
+}

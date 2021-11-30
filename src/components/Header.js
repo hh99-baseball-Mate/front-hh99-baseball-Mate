@@ -20,61 +20,67 @@ const Header = (props) => {
   return (
     <Container minWidth="370px">
       <Box>
-        <Game
-          game={game}
-          onClick={() => {
-            history.push("/")
-          }}
-        >
-          경기모임
-        </Game>
+        <Ul>
+          <Game
+            game={game}
+            onClick={() => {
+              history.push("/")
+            }}
+          >
+            경기모임
+          </Game>
 
-        <Screen
-          screen={screen}
-          onClick={() => {
-            history.push("/screen")
-          }}
-        >
-          스야모임
-        </Screen>
+          <Screen
+            screen={screen}
+            onClick={() => {
+              history.push("/screen")
+            }}
+          >
+            스야모임
+          </Screen>
 
-        <Community
-          community={community}
-          onClick={() => {
-            // history.push("/community");
-            window.alert("준비 중입니다.")
-          }}
-        >
-          커뮤니티
-        </Community>
+          <Community
+            community={community}
+            onClick={() => {
+              // history.push("/community");
+              window.alert("준비 중입니다.")
+            }}
+          >
+            커뮤니티
+          </Community>
 
-        <Timeline
-          timeline={timeline}
-          onClick={() => {
-            history.push("/timeline")
-          }}
-        >
-          타임라인
-        </Timeline>
+          {/* <Timeline
+            timeline={timeline}
+            onClick={() => {
+              history.push("/timeline")
+            }}
+          >
+            타임라인
+          </Timeline> */}
 
-        <Goods
-          goods={goods}
-          onClick={() => {
-            history.push("/goods")
-          }}
-        >
-          굿즈자랑
-        </Goods>
+          <Goods
+            goods={goods}
+            onClick={() => {
+              history.push("/goods")
+            }}
+          >
+            굿즈자랑
+          </Goods>
+        </Ul>
 
-        {/* 알림 */}
-        <Icon
-          src={bell}
-          alt="alert"
-          onClick={() => {
-            history.push("/alarm")
-          }}
-        />
-        {alarm.length === 0 ? null : <RedDot />}
+        <LoginIcon>
+          <LoginBtn onClick={() => history.push("/login")}>로그인</LoginBtn>
+
+          {/* 알림 */}
+          <AlarmIcon
+            src={bell}
+            alt="alert"
+            onClick={() => {
+              history.push("/alarm")
+            }}
+          />
+          {alarm.length === 0 ? null : <RedDot />}
+        </LoginIcon>
       </Box>
 
       {/* 구분선 */}
@@ -90,41 +96,39 @@ Header.defaultProps = {
   screen: false,
   timeline: false,
   goods: false,
-};
+}
 
-export default Header;
+export default Header
 
 const Container = styled.div`
   max-width: 425px;
   margin: auto;
   padding: 0;
   position: relative;
-`;
+`
 
-const Img = styled.img`
-  margin-left: 26px;
-  padding-top: 20px;
-`;
+const Ul = styled.ul`
+  display: flex;
+`
 
 const Box = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 280px;
-  /* margin-bottom: 11px; */
-  margin-left: 26px;
-  padding-top: 20px;
-`;
+  width: 90%;
+  margin: 0 auto;
+  height: 60px;
+  align-items: center;
+`
 
-const Game = styled.button`
+const Game = styled.li`
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
   margin-right: 0;
-  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
+  margin-right: 8px;
 
   ${(props) =>
     props.game &&
@@ -133,17 +137,16 @@ const Game = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
-const Screen = styled.button`
+const Screen = styled.li`
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  margin-right: 0;
-  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
+  margin-right: 8px;
 
   ${(props) =>
     props.screen &&
@@ -152,17 +155,16 @@ const Screen = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
-const Timeline = styled.button`
+const Timeline = styled.li`
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  margin-right: 0;
-  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
+  margin-right: 8px;
 
   ${(props) =>
     props.timeline &&
@@ -171,17 +173,16 @@ const Timeline = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
-const Community = styled.button`
+const Community = styled.li`
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  margin-right: 0;
-  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
+  margin-right: 8px;
 
   ${(props) =>
     props.community &&
@@ -190,17 +191,16 @@ const Community = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
-const Goods = styled.button`
+const Goods = styled.li`
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  margin-right: 0;
-  padding-bottom: 18px;
   background: none;
   color: rgba(0, 0, 0, 0.5);
+  margin-right: 8px;
 
   ${(props) =>
     props.goods &&
@@ -209,23 +209,32 @@ const Goods = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`;
+`
 
 const Rectangle = styled.div`
   background: #e7e7e7;
   width: 100%;
   height: 1px;
-`;
+`
 
-// const Icon = styled(VscBell)`
-//   position: absolute;
-//   right: 20px;
-// `;
+const LoginIcon = styled.div`
+  display: flex;
+`
 
-const Icon = styled.img`
-  position: absolute;
-  right: 20px;
-`;
+const LoginBtn = styled.div`
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 10px;
+`
+
+const AlarmIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+`
 
 const RedDot = styled.div`
   width: 4px;

@@ -12,13 +12,15 @@ import {
 import { Picture } from "../componentsGroupAdd/Picture"
 import { Preview } from "../componentsGroupAdd/Preview"
 import { useInputs } from "../customHook/useInputs"
-import { usePreview } from "../customHook/usePreview"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
+import { useS3Upload } from "../customHook/useS3Upload"
 
 export const GoodsAdd = (props) => {
   const { defaultImg } = props
 
   const dispatch = useDispatch()
+
+  const [preview, setPreview] = useState("")
 
   // 인풋 커스텀훅
   const [inputValue, onChange] = useInputs({
@@ -28,30 +30,51 @@ export const GoodsAdd = (props) => {
 
   const { goodsName, goodsContent } = inputValue
 
-  // 이미지 미리보기 /삭제 커스텀훅
-  const [imgPreview, deletePreview, preview] = usePreview("")
+  // 이미지 미리보기
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0])
+  }
+
+  // 이미지 미리보기 삭제
+  const deletePreview = () => {
+    if (!preview) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+    setPreview("")
+  }
+
+  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "goods")
 
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
       return !e ? false : true
     })
-
-    if (emptyValue.includes(false) || !preview) {
+    if (emptyValue.includes(false)) {
       window.alert("빈란을 채워주세요")
       // console.log("빈값있음")
       return
     }
 
-    const formData = new FormData()
+    uploadFile(preview)
 
-    formData.append("goodsName", goodsName)
-    formData.append("goodsContent", goodsContent)
-    formData.append("goodsPrice", null)
-    formData.append("file", preview)
+    const goodInfo = {
+      goodsName,
+      goodsContent,
+      goodsPrice: null,
+      filePath: fileName,
+    }
 
-    dispatch(goodsActions.addGoodsMD(formData))
-    e.target.disabled = true
+    dispatch(goodsActions.addGoodsMD(goodInfo))
+
+    // const formData = new FormData()
+    // formData.append("goodsName", goodsName)
+    // formData.append("goodsContent", goodsContent)
+    // formData.append("goodsPrice", null)
+    // formData.append("file", fileName)
+    // e.target.disabled = true
     // for (const keyValue of formData) console.log(keyValue)
   }
 
@@ -63,7 +86,6 @@ export const GoodsAdd = (props) => {
             굿즈 등록
           </Text>
         </ArrowBack>
-
         <Text margin="30px 0 7px 0">
           대표 이미지
           {preview && <InputCheck />}
@@ -80,7 +102,6 @@ export const GoodsAdd = (props) => {
             onClick={deletePreview}
           ></Preview>
         </ImgBox>
-
         {/* 굿즈 타이틀 */}
         <Inputs
           name="goodsName"
@@ -91,7 +112,6 @@ export const GoodsAdd = (props) => {
           굿즈 이름
           {goodsName && <InputCheck />}
         </Inputs>
-
         {/* 굿즈 내용 */}
         <Inputs
           name="goodsContent"
@@ -105,7 +125,6 @@ export const GoodsAdd = (props) => {
           굿즈 내용
           {goodsContent && <InputCheck />}
         </Inputs>
-
         <Buttons _onClick={submitBtn}>굿즈 등록</Buttons>
       </Container>
     </>

@@ -1,8 +1,7 @@
 import Pancil from "../shared/icon/Pancil.png";
-import styled from "styled-components";
-import { memo } from "react"
+import styled from "styled-components"
 
-const PancilBtn = memo((props) => {
+const PancilBtn = (props) => {
   // 글작성 연필 아이콘
   const { onClick } = props
 
@@ -14,7 +13,7 @@ const PancilBtn = memo((props) => {
       </Btn>
     </>
   )
-})
+}
 
 export default PancilBtn;
 

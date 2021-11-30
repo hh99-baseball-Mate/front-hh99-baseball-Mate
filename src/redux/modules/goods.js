@@ -98,10 +98,10 @@ const getGoodsMD = ({ start, next }) => {
 
 // 굿즈 추가
 
-const addGoodsMD = (formData) => {
+const addGoodsMD = (goodInfo) => {
   return function (dispatch, getState, { history }) {
-    img
-      .post("/goods", formData)
+    instance
+      .post("/goods", goodInfo)
       .then((res) => {
         history.replace("/goods")
       })

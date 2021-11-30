@@ -29,12 +29,14 @@ import "react-datepicker/dist/react-datepicker.css"
 import { useInputs } from "../customHook/useInputs"
 import { useVolumeBtn } from "../customHook/useVolumeBtn"
 import { usePreview } from "../customHook/usePreview"
+import { useS3Upload } from "../customHook/useS3Upload"
 
 export const ScreenAdd = (props) => {
   const dispatch = useDispatch()
 
   // 날짜 datePicker 라이브러리
   const [startDate, setStartDate] = useState("")
+  const [preview, setPreview] = useState("")
 
   // datePicker 한글버전
   registerLocale("ko", ko)
@@ -54,7 +56,21 @@ export const ScreenAdd = (props) => {
   const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
 
   // 이미지 미리보기 /삭제하기 커스텀 훅
-  const [imgPreview, deletePreview, preview] = usePreview("")
+
+  const imgPreview = (e) => {
+    setPreview(e.target.files[0])
+  }
+
+  const deletePreview = () => {
+    if (!preview) {
+      window.alert("삭제 할 사진이 없어요")
+      return
+    }
+    setPreview("")
+  }
+
+  // 이미지 S3 저장 커스텀 훅 이미지 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "screen")
 
   const { content, title } = inputValue
 
@@ -74,36 +90,44 @@ export const ScreenAdd = (props) => {
     })
 
     const groupDate = dayjs(startDate).format("MM.DD (dd)")
-    // console.log(groupDate)
 
     // 나머지 입력값 장소 / 시간에 대해서도 false를 포함하고 있다면 빈란이 있습니다 공지//
 
     if (emptyValue.includes(false) || !location || !startDate) {
-      // console.log(peopleLimit)
       window.alert("빈란이 있습니다")
       return
     } else {
       // 아니면 폼데이터 post 디스패치
 
-      const formData = new FormData()
-
       const placeInfomation = roadAddress.substring(0, 2)
 
+      uploadFile(preview)
+
+      const screenInfo = {
+        title,
+        groupDate,
+        content,
+        peopleLimit,
+        selectPlace: location,
+        placeInfomation,
+        filePath: fileName,
+      }
+
       // console.log(placeInfomation)
+      dispatch(screenAction.screenAddMD(screenInfo))
 
-      formData.append("title", title)
-      formData.append("groupDate", groupDate)
-      formData.append("content", content)
-      formData.append("peopleLimit", peopleLimit)
+      // formData.append("title", title)
+      // formData.append("groupDate", groupDate)
+      // formData.append("content", content)
+      // formData.append("peopleLimit", peopleLimit)
 
-      // 스야 지점 지점명
-      formData.append("selectPlace", location)
-      // 스야지점 지번주소
-      formData.append("placeInfomation", placeInfomation)
-      formData.append("file", preview)
+      // // 스야 지점 지점명
+      // formData.append("selectPlace", location)
+      // // 스야지점 지번주소
+      // formData.append("placeInfomation", placeInfomation)
+      // formData.append("file", preview)
 
-      dispatch(screenAction.screenAddMD(formData))
-      e.target.disabled = true
+      // e.target.disabled = true
 
       // 폼데이터 console
       // for (const keyValue of formData) console.log(keyValue)
