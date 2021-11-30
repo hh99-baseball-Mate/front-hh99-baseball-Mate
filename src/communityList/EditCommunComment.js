@@ -17,18 +17,18 @@ import { actionCreators as actionCr } from "../redux/modules/community"
 import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail"
 
 export const EditCommunComment = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const card_list = useSelector((state) => state.community.card_list);
+  const card_list = useSelector((state) => state.community.card_list)
 
   const ip = process.env.REACT_APP_S3_COMMU_URL
   //상세페이지 정보 가져오기
-  const detail_list = useSelector((state) => state.communityDetail.detail_list);
-  const img = ip + detail_list.filePath;
+  const detail_list = useSelector((state) => state.communityDetail.detail_list)
+  const img = ip + detail_list.filePath
 
-  const communityId = props.match.params.communityId;
+  const communityId = props.match.params.communityId
 
-  const [preview, setPreview] = useState(img);
+  const [preview, setPreview] = useState(img)
   // //인풋값 state
   const [inputValue, setInputValue] = useState({
     content: detail_list?.content,
@@ -38,9 +38,9 @@ export const EditCommunComment = (props) => {
   const { content, src } = inputValue
 
   //디테일 정보 가져오기
-  useEffect(() => {
-    dispatch(communityDetailCr.getCommunDetailAPI(communityId));
-  }, [inputValue]);
+  // useEffect(() => {
+  //   dispatch(communityDetailCr.getCommunDetailAPI(communityId));
+  // }, [inputValue]);
 
   //이미지 업로드
   const imgPreview = (e) => {
@@ -56,7 +56,7 @@ export const EditCommunComment = (props) => {
     setPreview("")
   }
 
-  const [uploadFile, fileName] = useS3Upload(preview, "group")
+  const [uploadFile, fileName] = useS3Upload(preview, "commu")
 
   //인풋 값 추적
   const onChange = (e) => {
@@ -67,18 +67,16 @@ export const EditCommunComment = (props) => {
     })
   }
 
-
   //입력체크
   const submitBtn = (e) => {
-
     uploadFile(preview)
 
     const commuEditInfo = {
       content: inputValue.content,
-      myTeam : null,
+      myTeam: null,
       filePath: preview ? fileName : "",
     }
-    
+
     console.log(commuEditInfo)
 
     dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo))
