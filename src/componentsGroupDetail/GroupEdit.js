@@ -21,12 +21,15 @@ import { actionCreators as groupActions } from "../redux/modules/group"
 import { GroupAddModal } from "../componentsGroupAdd/GroupAddModal"
 import { groupDetailCreators } from "../redux/modules/groupDetail"
 import { useParams } from "react-router"
+import { useInputs } from "../customHook/useInputs"
+import { useS3Upload } from "../customHook/useS3Upload"
+import { useVolumeBtn } from "../customHook/useVolumeBtn"
 
 export const GroupEdit = (props) => {
   const params = useParams()
   const groupId = params.groupId
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
   const dispatch = useDispatch()
 
@@ -38,68 +41,75 @@ export const GroupEdit = (props) => {
   const img = ip + loadDetail.filePath
 
   // loadDetail ? ip + loadDetail.filePath : props.defaultImg
-  // console.log("모임수정",loadDetail)
 
   // 구단선택
-  const team = loadDetail.groupDate.split("vs")[1]
-  // console.log("팀",team);
+  const team = loadDetail.groupDate?.split("vs")[1]
 
-  // console.log(selectTeam_list)
-  // 인풋 값 state
-  const [inputValue, setInputValue] = useState({
+  // 모달 보기 state
+  const [preview, setPreview] = useState(img)
+
+  // 인풋 커스텀훅
+  const [inputValue, onChange] = useInputs({
     title: loadDetail?.title,
-    // selectTeam: team,
-    peopleLimit: loadDetail?.peopleLimit,
     content: loadDetail?.content,
     src: loadDetail ? ip + loadDetail.filePath : props.defaultImg,
   })
 
-  // 이미지 미리보기 state
-  const [preview, setPreview] = useState(img)
+  const { content, title, selectTeam } = inputValue
 
-  // 모달 보기 state
-  const [showModal, setShowModal] = useState(false)
-
-  const [groupDate, setGroupDate] = useState(loadDetail.groupDate)
-
-  const { content, peopleLimit, title, selectTeam, src } = inputValue
-
-  useEffect(() => {
-    dispatch(groupDetailCreators.loadGroupPageMW(groupId))
-  }, [inputValue])
-
-  // 이미지 업로드 / 미리보기
-
+  // 이미지 미리보기
   const imgPreview = (e) => {
-    // console.log("이미지업로드",e.target.files[0])
     setPreview(e.target.files[0])
   }
 
-  // 미리보기 삭제,
-
+  // 이미지 미리보기 삭제
   const deletePreview = () => {
     if (!preview) {
       window.alert("삭제 할 사진이 없어요")
       return
     }
-
     setPreview("")
-    // console.log("삭제를 해야되는데..")
   }
+
+  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "group")
+
+  // + - 버튼 커스텀 훅
+  const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
+
+  // 모달 보기 state
+  const [showModal, setShowModal] = useState(false)
+
+  // 경기일정 state
+  const [groupDate, setGroupDate] = useState(loadDetail.groupDate)
 
   const showModalBtn = () => {
-    // if (selectTeam) setShowModal(!showModal)
-    window.alert("수정에서는 변경할 수 없습니다.")
+    if (selectTeam) setShowModal(!showModal)
+    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
   }
 
-  // 인풋 입력 값 추적 e.target.value 대행
-
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
+  // 입력체크
+  const submitBtn = (e) => {
+    const emptyValue = Object.values(inputValue).map((e) => {
+      return !e ? false : true
     })
+    if (emptyValue.includes(false) || !preview) {
+      window.alert("빈 란을 채워주세요")
+      // console.log("빈값있음")
+      return
+    }
+
+    uploadFile(preview)
+
+    const groupEditData = {
+      title,
+      groupDate,
+      content,
+      peopleLimit,
+      filePath: preview ? fileName : "",
+    }
+
+    dispatch(groupDetailCreators.editGroupPageMW(groupId, groupEditData))
   }
 
   useEffect(() => {
@@ -108,61 +118,6 @@ export const GroupEdit = (props) => {
       dispatch(groupActions.selectTeamMD(selectTeam))
     }
   }, [selectTeam])
-
-  //  인원수 + 버튼
-  const plusBtn = () => {
-    if (peopleLimit < 8) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit + 1,
-      })
-    } else {
-      window.alert("8명 이상은 안됩니다")
-      return
-    }
-  }
-
-  // 인원수 - 버튼
-  const minusBtn = () => {
-    if (peopleLimit !== 0) {
-      setInputValue({
-        ...inputValue,
-        peopleLimit: peopleLimit - 1,
-      })
-    } else {
-      window.alert("0이하는 선택불가")
-    }
-  }
-
-  // 입력체크
-  const submitBtn = (e) => {
-    // const _emptyValue = Object.values(inputValue).map((e) => {
-    //   if (!e) {
-    //     return false
-    //   }
-    // })
-
-    // const emptyValue = _emptyValue.includes(false)
-
-    // if (emptyValue) {
-    //   window.alert("빈란을 채워주세요")
-    //   console.log("빈값있음")
-    //   return
-    // }
-
-    const formData = new FormData()
-
-    formData.append("title", inputValue.title)
-    formData.append("groupDate", groupDate)
-    formData.append("content", inputValue.content)
-    formData.append("peopleLimit", inputValue.peopleLimit)
-    // formData.append("selectTeam", inputValue.selectTeam)
-    formData.append("file", preview)
-
-    dispatch(groupDetailCreators.editGroupPageMW(groupId, formData))
-    e.target.disabled = true
-    // for (const keyValue of formData) console.log(keyValue)
-  }
 
   return (
     <Container>
@@ -239,7 +194,12 @@ export const GroupEdit = (props) => {
           <PeopleSelect>
             <AiOutlineMinusCircle color="#498C9A" onClick={minusBtn} />
             <PeopleCount>
-              <Text center size="18px" name="peopleLimit" onChange={onChange}>
+              <Text
+                center
+                size="18px"
+                name="peopleLimit"
+                onChange={onChangeBtn}
+              >
                 {peopleLimit}
               </Text>
             </PeopleCount>

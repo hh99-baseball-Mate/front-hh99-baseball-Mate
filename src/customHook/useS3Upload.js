@@ -11,15 +11,6 @@ export const useS3Upload = (preview, path) => {
 
   const [progress, setProgress] = useState(0)
 
-  console.log(preview, path)
-
-  // 고유 id 값으로 파일 중복을 제거
-
-  const id = nanoid()
-  const date = new Date().getTime()
-  const random = Math.random()
-  const fileName = date + id + random
-
   AWS.config.update({
     accessKeyId: _accessKey,
     secretAccessKey: _secretAccessKey,
@@ -32,14 +23,21 @@ export const useS3Upload = (preview, path) => {
     region: region,
   })
 
-  const uploadFile = (file) => {
-    if (!file) {
+  // 고유 id 값으로 파일 중복을 제거
+
+  const id = nanoid()
+  const date = new Date().getTime()
+  const random = Math.random()
+  const fileName = date + id + random
+
+  const uploadFile = (preview) => {
+    if (!preview) {
       return
     }
 
     const params = {
       ACL: "public-read",
-      Body: file,
+      Body: preview,
       Bucket: S3_BUCKET,
       Key: `images/${path}/` + fileName,
     }
@@ -54,7 +52,7 @@ export const useS3Upload = (preview, path) => {
         if (err) console.log(err, "s3업로드 에러")
       })
   }
-  console.log(preview)
+
   // return <div>AWS 업로드</div>
   return [uploadFile, fileName]
 }

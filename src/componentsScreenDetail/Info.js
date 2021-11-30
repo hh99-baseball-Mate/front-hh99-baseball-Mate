@@ -17,16 +17,15 @@ import users from "../shared/icon/users.svg"
 
 
 const Info = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
   const screenId = params.screenId
 
   // 사진 ip주소 + 사진이름 조합
-  const ip = IMAGES_BASE_URL
+  const ip = process.env.REACT_APP_IMAGES_BASE_URL
   const img = props.filePath
-  const imageUrl = ip + img
+  const imageUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 기본 로그인일 때 프로필 사진
   const profileImg = ip + props.createdUserProfileImg
@@ -35,8 +34,7 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-
-  const cookie = getCookie("is_login");
+  const cookie = getCookie("is_login")
   // 게시글 좋아요 누른것 표시
   // useEffect(() => {
   //   if (props.likePost !== -1) {
@@ -63,8 +61,8 @@ const Info = memo((props) => {
   // 찜(하트) 버튼
   const heartBtn = () => {
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요");
-      return;
+      window.alert("로그인 후 이용해주세요")
+      return
     }
     props.setHeart(!props?.heart)
     dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))

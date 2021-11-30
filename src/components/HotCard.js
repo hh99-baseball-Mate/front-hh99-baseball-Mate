@@ -9,10 +9,7 @@ export const HotCard = (props) => {
   const { canApplyNum, filePath, groupDate, peopleLimit, title, onClick } =
     props
 
-  const img =
-    process.env.REACT_APP_S3_GROUP_URL + filePath
-      ? process.env.REACT_APP_S3_GROUP_URL + filePath
-      : process.env.REACT_APP_S3_SCREEN_URL + filePath
+  const img = process.env.REACT_APP_S3_GROUP_URL + filePath
 
   return (
     <CardBox onClick={onClick}>

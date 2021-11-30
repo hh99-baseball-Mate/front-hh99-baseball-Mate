@@ -38,6 +38,8 @@ export const GroupAdd = (props) => {
     content: "",
   })
 
+  const { content, title, selectTeam } = inputValue
+
   // 이미지 미리보기
   const imgPreview = (e) => {
     setPreview(e.target.files[0])
@@ -54,8 +56,6 @@ export const GroupAdd = (props) => {
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
   const [uploadFile, fileName] = useS3Upload(preview, "group")
-
-  const { content, title, selectTeam } = inputValue
 
   // + - 버튼 커스텀 훅
   const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
@@ -91,21 +91,10 @@ export const GroupAdd = (props) => {
       content,
       peopleLimit,
       selectTeam,
-      filePath: fileName,
+      filePath: preview ? fileName : "",
     }
 
     dispatch(groupActions.addGroupMD(groupInfo))
-    // const formData = new FormData()
-
-    // formData.append("title", title)
-    // formData.append("groupDate", groupDate)
-    // formData.append("content", content)
-    // formData.append("peopleLimit", peopleLimit)
-    // formData.append("selectTeam", selectTeam)
-    // formData.append("file", preview)
-
-    // e.target.disabled = true
-    // for (const keyValue of formData) console.log(keyValue);
   }
 
   useEffect(() => {
