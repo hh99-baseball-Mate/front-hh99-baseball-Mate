@@ -8,7 +8,7 @@ import AlarmCard from "./AlarmCard";
 const RequestAlarm = (props) => {
 
 	const dispatch = useDispatch()
-  // console.log("RequestAlarm", props)
+  console.log("RequestAlarm", props)
 
 
 	// 직관,스야 알람 찾기
