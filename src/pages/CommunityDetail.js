@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ArrowBack, Container, Text } from "../components";
@@ -6,7 +6,9 @@ import Question from "../shared/icon/Question.png";
 import { actionCreators as actionCr } from "../redux/modules/communityDetail";
 import { useParams } from "react-router";
 import CommunityComment from "../communityList/CommunityComment";
-
+import { BsThreeDots } from "react-icons/bs";
+import { history } from "../redux/configStore";
+import { Modal } from "../components/Modal";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -32,11 +34,27 @@ export const CommunityDetail = (props) => {
     dispatch(actionCr.getCommunDetailAPI(communityId));
   }, [detail_list.communityCommentList?.length]);
 
+  // 모달 보여주기/숨기기
+  const [showModal, setShowModal] = useState(false);
+
+  // 삭제/수정 모달내용
+  const modalData = {
+    title: "커뮤니티 에디터",
+    descriptionOne: "선택하신 게시글을 수정하시겠습니까?",
+    btnClose: "취소",
+    btnUpdate: "수정",
+  };
+
+  //커뮤니티 수정 버튼
+  const deleteBtn = () => {
+    history.push(`/community/editcommuncomment/${communityId}`);
+  };
   return (
     <>
       <ArrowBack>커뮤니티</ArrowBack>
       <Border />
       <Container>
+        <MoreIcons onClick={() => setShowModal(true)} />
         <Card {...detail_list}>
           <UserInfo>
             <UserImg src={user_img} />
@@ -67,6 +85,14 @@ export const CommunityDetail = (props) => {
 
         <CommunityComment {...detail_list} communCommentId={communCommentId} />
       </Container>
+      {showModal && (
+        <Modal
+          center
+          setShowModal={setShowModal}
+          modalData={modalData}
+          deleteBtn={deleteBtn}
+        ></Modal>
+      )}
     </>
   );
 };
@@ -125,4 +151,12 @@ const Good = styled.div`
 
 const FileImg = styled.img`
   max-width: 335px;
+`;
+
+const MoreIcons = styled(BsThreeDots)`
+  align-items: center;
+  margin: 7.5px 0;
+  cursor: pointer;
+  position: absolute;
+  right: 70px;
 `;

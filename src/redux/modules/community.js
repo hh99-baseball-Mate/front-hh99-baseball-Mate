@@ -5,11 +5,13 @@ import { img, instance } from "../../lib/axios";
 //액션
 const GET_CARD = "GET_CARD";
 const DELETE_COMMUNITY = "DELETE_COMMUNITY";
+
 //액션함수
 const getCard = createAction(GET_CARD, (cardList) => ({ cardList }));
 const deleteCommunity = createAction(DELETE_COMMUNITY, (communityId) => ({
   communityId,
 }));
+
 //초기값
 const initialState = {
   card_list: [],
