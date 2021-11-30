@@ -41,7 +41,7 @@ const loadChatListMW = () => {
       .get("/chat/rooms/mine")
       .then((res) => {
         dispatch(is_loaded(true))
-        // console.log(res.data)
+        console.log(res.data)
         const list = res.data
         dispatch(load_chatList(list))
       })
