@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { VscBell } from "react-icons/vsc";
-import bell from "../shared/icon/bell.svg"
+import bell from "../shared/icon/bell.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { alarmCreators } from "../redux/modules/alarm";
 
 const Header = (props) => {
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const { game, screen, timeline, goods, community } = props
+  const { game, screen, timeline, goods, community } = props;
 
-  const alarm = useSelector((state) => state.alarm.alarmList)
+  const alarm = useSelector((state) => state.alarm.alarmList);
 
   useEffect(() => {
-    dispatch(alarmCreators.load_alarmMW())
-  }, [])
+    dispatch(alarmCreators.load_alarmMW());
+  }, []);
 
   return (
     <Container minWidth="370px">
@@ -24,7 +24,7 @@ const Header = (props) => {
         <Game
           game={game}
           onClick={() => {
-            history.push("/")
+            history.push("/");
           }}
         >
           경기모임
@@ -33,7 +33,7 @@ const Header = (props) => {
         <Screen
           screen={screen}
           onClick={() => {
-            history.push("/screen")
+            history.push("/screen");
           }}
         >
           스야모임
@@ -42,8 +42,7 @@ const Header = (props) => {
         <Community
           community={community}
           onClick={() => {
-            // history.push("/community")
-            window.alert("준비중입니다.")
+            history.push("/community");
           }}
         >
           커뮤니티
@@ -52,7 +51,7 @@ const Header = (props) => {
         <Timeline
           timeline={timeline}
           onClick={() => {
-            history.push("/timeline")
+            history.push("/timeline");
           }}
         >
           타임라인
@@ -61,7 +60,7 @@ const Header = (props) => {
         <Goods
           goods={goods}
           onClick={() => {
-            history.push("/goods")
+            history.push("/goods");
           }}
         >
           굿즈자랑
@@ -72,19 +71,17 @@ const Header = (props) => {
           src={bell}
           alt="alert"
           onClick={() => {
-            history.push("/alarm")
+            history.push("/alarm");
           }}
         />
-        { alarm.length === 0 ?
-          null : <RedDot />
-        }
+        {alarm.length === 0 ? null : <RedDot />}
       </Box>
 
       {/* 구분선 */}
       <Rectangle />
     </Container>
-  )
-}
+  );
+};
 
 Header.defaultProps = {
   _onClick: () => {},
@@ -93,21 +90,21 @@ Header.defaultProps = {
   screen: false,
   timeline: false,
   goods: false,
-}
+};
 
-export default Header
+export default Header;
 
 const Container = styled.div`
   max-width: 425px;
   margin: auto;
   padding: 0;
   position: relative;
-`
+`;
 
 const Img = styled.img`
   margin-left: 26px;
   padding-top: 20px;
-`
+`;
 
 const Box = styled.div`
   display: flex;
@@ -117,7 +114,7 @@ const Box = styled.div`
   /* margin-bottom: 11px; */
   margin-left: 26px;
   padding-top: 20px;
-`
+`;
 
 const Game = styled.button`
   background: none;
@@ -136,7 +133,7 @@ const Game = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`
+`;
 
 const Screen = styled.button`
   background: none;
@@ -155,7 +152,7 @@ const Screen = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`
+`;
 
 const Timeline = styled.button`
   background: none;
@@ -174,7 +171,7 @@ const Timeline = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`
+`;
 
 const Community = styled.button`
   background: none;
@@ -193,8 +190,7 @@ const Community = styled.button`
     font-weight: bold;
     color: #F25343;
   `}
-`
-
+`;
 
 const Goods = styled.button`
   background: none;
@@ -235,9 +231,7 @@ const RedDot = styled.div`
   width: 4px;
   height: 4px;
   border-radius: 50px;
-  background: #F25343;
+  background: #f25343;
   position: absolute;
   right: 20px;
 `;
-
-

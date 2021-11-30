@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Text } from "../components";
 import { Comments } from "../componentsGoods/Comments";
-import { actionCreators as actionCr } from "../redux/modules/communityDetail";
+import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
-import { actionCreators as communCr } from "../redux/modules/communityDetail";
 const CommunityComment = (props) => {
   const dispatch = useDispatch();
   console.log(props, "새끼야");
@@ -15,10 +14,22 @@ const CommunityComment = (props) => {
 
   const id = props.communCommentId;
   const commentList = props?.communityCommentList;
+
+  //수정버튼
+  const updateCommentDispatch = (commentId, comment) => {
+    dispatch(detailCr.updateCommunCommentAPI(id, commentId, comment));
+    // console.log(commentId, comment, "실행됐냐도");
+  };
+
+  //삭제버튼
+  const deleteCommentBtn = (commentId) => {
+    dispatch(detailCr.deleteCommunCommrntAPI(id, commentId));
+  };
+
   //추가멘트
   const addComment = () => {
     if (message !== "") {
-      dispatch(actionCr.postCommunCommentAPI(id, message));
+      dispatch(detailCr.postCommunCommentAPI(id, message));
       setMessage("");
       return;
     } else {
@@ -26,6 +37,8 @@ const CommunityComment = (props) => {
       return;
     }
   };
+
+  //업데이트 버튼
 
   return (
     <div>
@@ -35,6 +48,8 @@ const CommunityComment = (props) => {
         commentList.map((e, i) => {
           return (
             <Comments
+              deleteCommentBtn={deleteCommentBtn}
+              updateCommentDispatch={updateCommentDispatch}
               key={e.communityCommentId}
               useridx={user_info.useridx}
               {...e}

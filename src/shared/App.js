@@ -161,11 +161,15 @@ function App() {
               <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
               <Route path="/community" exact component={Community} />
               <Route
-                path="/communitydetail"
+                path="/community/communitydetail/:communityId"
                 exact
                 component={CommunityDetail}
               />
-              <Route path="/communityadd" exact component={CommunityAdd} />
+              <Route
+                path="/community/communityadd"
+                exact
+                component={CommunityAdd}
+              />
               {/* <Route path="/notice" component={Notice} /> */}
               <Route path="/event" component={Event} />
               {/* 임시 */}

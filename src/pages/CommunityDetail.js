@@ -14,8 +14,14 @@ export const CommunityDetail = (props) => {
 
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
 
-  const { communityUserPicture, content, filePath, myTeam, userName } =
-    detail_list;
+  const {
+    communityUserPicture,
+    content,
+    filePath,
+    myTeam,
+    userName,
+    communityCommentList,
+  } = detail_list;
   const img = process.env.REACT_APP_IMAGES_BASE_URL + filePath;
   const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
   console.log(detail_list.communityCommentList?.length, "디테일");
@@ -40,9 +46,9 @@ export const CommunityDetail = (props) => {
                 <Text size="12px" color="#F25343" margin="0 10px 0 0">
                   {myTeam}
                 </Text>
-                <Text size="12px" color="#C4C4C4">
+                {/* <Text size="12px" color="#C4C4C4">
                   시간
-                </Text>
+                </Text> */}
               </Time>
             </InfoBox>
           </UserInfo>
@@ -52,7 +58,7 @@ export const CommunityDetail = (props) => {
           <Good>
             <img src={Question} alt="말풍선" />
             <Text size="12px" margin="0 0 0 7px">
-              숫자
+              {communityCommentList ? communityCommentList.length : "0"}
             </Text>
           </Good>
 

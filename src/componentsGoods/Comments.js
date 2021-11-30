@@ -15,15 +15,16 @@ export const Comments = (props) => {
     commentUserIndex,
     useridx,
     goodsId,
-    id,
+    id, //
     usertype,
     commentUserPicture,
     deleteCommentBtn,
     updateCommentDispatch,
+    commentId,
   } = props;
 
   const dispatch = useDispatch();
-
+  console.log(props, "날파리");
   console.log(useridx, commentUserIndex);
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userImage = comment_preview?.commentUserPicture
@@ -48,7 +49,20 @@ export const Comments = (props) => {
   const [updateComment, setUpdateComment] = useState("");
 
   // 댓글 삭제 시 보낼 코맨트아이디 정하기 // 미리보기 아이디 또는 그냥 아이디
-  const commentId = comment_preview?.id ? comment_preview?.id : id;
+
+  const commentID = () => {
+    if (comment_preview?.id) {
+      return comment_preview?.id;
+    }
+    if (id) {
+      return id;
+    }
+    if (commentId) {
+      return commentId;
+    }
+  };
+
+  // const commentID = comment_preview?.id ? comment_preview?.id : id;
 
   // 댓글 삭제
 
@@ -63,7 +77,7 @@ export const Comments = (props) => {
       window.alert("수정 할 내용을 입력해주세요");
       return;
     }
-    updateCommentDispatch(commentId, updateComment);
+    updateCommentDispatch(commentID(), updateComment);
     setUpdateComment("");
     setUpdateCommentBtn(false);
   };
@@ -98,7 +112,7 @@ export const Comments = (props) => {
                   onChange={(e) => setUpdateComment(e.target.value)}
                   placeholder={comment}
                 />
-                <TiTick size="20" />
+                <TiTick size="20" onClick={updateSubmitBtn} />
               </UpdateInputBox>
             ) : (
               // 댓글 보이기
@@ -119,7 +133,7 @@ export const Comments = (props) => {
               <IconsDelete
                 size="22px"
                 onClick={() => {
-                  deleteCommentBtn(commentId);
+                  deleteCommentBtn(commentID());
                 }}
               />
             </IconBox>

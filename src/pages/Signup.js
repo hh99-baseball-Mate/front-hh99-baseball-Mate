@@ -79,7 +79,7 @@ export const Signup = (props) => {
               name="email"
               type="email"
               placeholder="이메일을 입력해주세요"
-              maxLength="99"
+              maxLength="100"
             ></TextField>
 
             <TextField
