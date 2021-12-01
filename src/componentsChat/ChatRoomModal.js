@@ -26,17 +26,7 @@ const ChatRoomModal = (props) => {
   const kakaoImg = me.picture
 
   const chatList = useSelector((state) => state.chat?.chatList)
-  // console.log("chatList", chatList, props.room_id)
-  // const chatInfo = chatList.find(list => list.roomId == props.room_id)
-  // console.log("groupId", chatInfo.groupId)
 
-  //  useEffect (() => {
-  //   // dispatch(chatCreators.getChatUserAX(props.room_id))
-  //   dispatch(chatCreators.loadChatListMW())
-  //  },[])
-  // // const chatUser = () => {
-  // //   dispatch(chatCreators.getChatUserAX(props.postId))
-  // // }
 
   // 모달 오버레이에서 스크롤 방지
   React.useEffect(() => {
@@ -54,12 +44,16 @@ const ChatRoomModal = (props) => {
 
   // 채팅방 나가기
   const leaveChat = () => {
-    dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
+    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+      dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
+    }
   }
 
   // 스크린야구 채팅방 나가기
   const leaveScreenChat = () => {
-    dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
+    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+      dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
+    }
   }
 
   // console.log("B")
@@ -94,7 +88,7 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Text
+        <Footer positio="fixed" 
           onClick={() => {
             props.roomInfo.chatRoomtype === "screen"
               ? leaveScreenChat()
@@ -102,7 +96,7 @@ const ChatRoomModal = (props) => {
           }}
         >
           채팅방 나가기🔚
-        </Text>
+        </Footer>
       </Container>
     </React.Fragment>
   )
@@ -211,4 +205,15 @@ const Circle = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 6px;
+`
+
+const Footer = styled.div`
+  position: fixed;
+  background-color: #fff2f2; /*임의색상*/
+  width: inherit;
+  padding: 20px;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  cursor: pointer;
 `

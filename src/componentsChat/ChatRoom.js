@@ -6,8 +6,6 @@ import { useHistory, useParams } from "react-router";
 import { getCookie } from "../shared/Cookie";
 import logger from "../shared/Console"
 
-import { instance } from "../lib/axios";
-
 // 소켓통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
@@ -237,8 +235,10 @@ const ChatRoom = (props) => {
     <Container ref={messageEndRef}>
       {/* <Container > */}
       <ArrowBack background="background" fixed="fixed" margin="margin">
-        {roomInfo?.title}
+
+        
         <Warp flex="flex" align="center">
+        <Text>{roomInfo?.title}</Text>
           <ModalBtn
             src={more2}
             alt=""
@@ -258,6 +258,7 @@ const ChatRoom = (props) => {
           room_id={room_id}
           chatUser={chatUser}
           id={sender_id}
+          roomInfo={roomInfo}
         />
       ) : null}
 
@@ -315,7 +316,8 @@ const Box = styled.div`
 `
 
 const Warp = styled.div`
-	/* width: 100%; */
+  /* max-width: 425px; */
+	width: 90%;
 	display: ${(props) => props.flex};
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
@@ -334,6 +336,8 @@ const Text = styled.div`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
+  width: 90%;
+  margin: 0 auto;
 `;
 
 const Circle = styled.div`

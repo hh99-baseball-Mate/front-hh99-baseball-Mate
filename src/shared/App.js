@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { ClubChoice } from "../pages/ClubChoice";
 import { Signup } from "../pages/Signup";
@@ -48,7 +48,6 @@ function App() {
   const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
-    dispatch(userActions.isLoaded(false))
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD())
     } else {
@@ -179,9 +178,7 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
-        {
-          !is_loaded && <Loader type="bars" color="#F25343"/>
-        }
+        { !is_loaded && <Loader type="bars" color="#F25343"/> }
       </Container>
     </>
   )
