@@ -1,6 +1,7 @@
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
 import { img, instance } from "../../lib/axios";
+import { is_loaded } from "./user";
 
 //액션
 const GET_CARD = "GET_CARD";
@@ -23,12 +24,15 @@ const getCardAPI = () => {
     instance
       .get(`/community`)
       .then((res) => {
+        dispatch(is_loaded(true))
         // console.log(res)
         dispatch(getCard(res.data));
       })
       .catch((err) => {
+        dispatch(is_loaded(false)) 
         // console.log(err, "커뮤니티카드 조회 에러")
       });
+      dispatch(is_loaded(false)) 
   };
 };
 
