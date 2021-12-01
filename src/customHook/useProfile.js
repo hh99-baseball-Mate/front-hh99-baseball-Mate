@@ -1,14 +1,14 @@
 import React from "react"
 
-export const useProfile = (usertype, userImage) => {
-  // 유저타입에 따른 사진 커스텀훅
+export const useProfile = (usertype, imgPath) => {
+  // 로그인 타입(카카오, 일반)에 따라 유저 프로필사진 경로설정
 
   const userImg = () => {
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + userImage
+      return process.env.REACT_APP_IMAGES_BASE_URL + imgPath
     }
     if (usertype === "kakao") {
-      return userImage
+      return imgPath
     }
     return
   }

@@ -1,9 +1,10 @@
 import React, { memo, useState } from "react"
 import styled from "styled-components"
 import submit from "../shared/icon/submit.png"
-import { UserProfile } from "./UserProfile"
+import { UserProfile } from "../components/UserProfile"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as goodsActions } from "../redux/modules/goods"
+import { useProfile } from "../customHook/useProfile"
 
 export const CommentWrite = memo((props) => {
   const { picture, goodsId, usertype } = props
@@ -16,23 +17,13 @@ export const CommentWrite = memo((props) => {
   // 댓글 내용 저장 state
   const [getComment, setGetComment] = useState("")
 
-  // 댓글작성시 보내줄  날짜 세팅
-  // const day = dayjs().format("YYYY-MM-DD :HH:mm:ss")
-
+  // 댓글 내용 담은 state
   const onChange = (e) => {
     setGetComment(e.target.value)
   }
 
-  // 유저 프로필
-  const userImg = () => {
-    if (usertype === "kakao") {
-      return picture
-    }
-    if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + picture
-    }
-    return
-  }
+  // 유저 프로필 커스텀훅
+  const [userImg] = useProfile(usertype, picture)
 
   const submitBtn = () => {
     !getComment

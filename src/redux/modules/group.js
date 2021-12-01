@@ -1,33 +1,31 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { img, instance } from "../../lib/axios";
-import { is_loaded } from "./user";
+import { instance } from "../../lib/axios"
+import { is_loaded } from "./user"
 
 // 핫 그룹
-const LOAD_HOTGROUP = "LOAD_HOTGROUP";
+const LOAD_HOTGROUP = "LOAD_HOTGROUP"
 
 //액션
-
-const GET_PLAY = "GET_PLAY";
-const GET_TEAM = "GET_TEAM";
-const SELECT_TEAM = "SELECT_TEAM";
+const GET_PLAY = "GET_PLAY"
+const GET_TEAM = "GET_TEAM"
+const SELECT_TEAM = "SELECT_TEAM"
 
 //일정선택
-const DATE = "DATE";
-const GET_DATE_LIST = "GET_DATE_LIST";
+const DATE = "DATE"
+const GET_DATE_LIST = "GET_DATE_LIST"
 
 // 팀선택
-const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }));
+const selectTeam = createAction(SELECT_TEAM, (team) => ({ team }))
 
 //액션함수
-
-const getPlay = createAction(GET_PLAY, (play_list) => ({ play_list }));
-const getTeam = createAction(GET_TEAM, (team_list) => ({ team_list }));
-const datePage = createAction(DATE, (date) => ({ date }));
-const load_hotgroup = createAction(LOAD_HOTGROUP, (hotGroup) => ({ hotGroup }));
+const getPlay = createAction(GET_PLAY, (play_list) => ({ play_list }))
+const getTeam = createAction(GET_TEAM, (team_list) => ({ team_list }))
+const datePage = createAction(DATE, (date) => ({ date }))
+const load_hotgroup = createAction(LOAD_HOTGROUP, (hotGroup) => ({ hotGroup }))
 const getDateList = createAction(GET_DATE_LIST, (date_list) => ({
   date_list,
-}));
+}))
 
 //초기값
 const initialState = {
@@ -49,7 +47,7 @@ const initialState = {
   // 핫 그룹
   hotGroup: [],
   is_loading: false,
-};
+}
 
 //미들웨어
 
@@ -82,8 +80,6 @@ const hotGroupMW = (team) => {
 //경기일정 페이지
 const getPlayAPI = (team) => {
   return function (dispatch, getState, { history }) {
-    // const team = 103
-
     instance
       .get(`/kbodatas`)
       .then((res) => {
@@ -133,6 +129,7 @@ const selectTeamMD = (myteam) => {
       .then((res) => {
         const _team = res.data
 
+        // 해당 구단 경기리스트에서 가장 최근 경기 5개를 가져옴
         const team = _team.slice(-5)
 
         dispatch(selectTeam(team))

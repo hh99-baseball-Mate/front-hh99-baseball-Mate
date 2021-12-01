@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react"
 import styled from "styled-components"
 import { useProfile } from "../customHook/useProfile"
-import { UserProfile } from "./UserProfile"
+import { UserProfile } from "../components/UserProfile"
 import { TiTimes, TiSpanner, TiTick } from "react-icons/ti"
 
 export const Comments = memo((props) => {
@@ -19,6 +19,8 @@ export const Comments = memo((props) => {
     updateCommentDispatch,
     commentId,
   } = props
+
+  console.log(props)
 
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userImage = comment_preview?.commentUserPicture
@@ -167,17 +169,8 @@ const CommentInfo = styled.div`
   display: flex;
   align-items: center;
 `
-const Comment = styled.p`
-  max-height: 40px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* color: #c4c4c4; */
-  font-size: 12px;
-  /* -webkit-line-clamp: 2; */
-`
+
 const MoreComment = styled.p`
-  /* max-height: 40px; */
   font-size: 12px;
 `
 

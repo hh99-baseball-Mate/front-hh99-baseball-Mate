@@ -75,11 +75,11 @@ export const EditCommunComment = (props) => {
       content: inputValue.content,
       myTeam: null,
       filePath: preview ? fileName : "",
-    };
+    }
 
-    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo));
-    e.target.disabled = true;
-  };
+    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo))
+    e.target.disabled = true
+  }
 
   return (
     <div>

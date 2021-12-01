@@ -8,6 +8,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
 import { history } from "../redux/configStore";
+import { useProfile } from "../customHook/useProfile"
+
 const CommunityCard = (props) => {
   const dispatch = useDispatch()
 
@@ -24,6 +26,8 @@ const CommunityCard = (props) => {
 
   //게시글 이미지
   const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
+
+  // const [userImg] = useProfile()
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)

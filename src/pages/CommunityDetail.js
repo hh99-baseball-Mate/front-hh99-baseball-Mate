@@ -9,10 +9,8 @@ import CommunityComment from "../communityList/CommunityComment";
 import { BsThreeDots } from "react-icons/bs";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
-import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
 import { actionCreators as communityCr } from "../redux/modules/community";
-import { findIndex } from "lodash";
-import { UserProfile } from "../componentsGoods/UserProfile";
+import { UserProfile } from "../components/UserProfile"
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
