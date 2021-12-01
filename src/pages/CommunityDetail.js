@@ -28,11 +28,10 @@ export const CommunityDetail = (props) => {
     communityCommentList,
     usertype,
   } = detail_list;
-  
-  const img = process.env.REACT_APP_S3_COMMU_URL + filePath
-  const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
 
-  // console.log(props.match.params.communityId, "프롤스다");
+  const img = process.env.REACT_APP_S3_COMMU_URL + filePath;
+  const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+
   const communCommentId = props.match.params.communityId;
   useEffect(() => {
     dispatch(actionCr.getCommunDetailAPI(communityId));
@@ -108,7 +107,9 @@ export const CommunityDetail = (props) => {
           <FileImg src={img} alt="커뮤니티 이미지" />
           <Border />
           <Good>
+
             <CommentIcon src={Question} alt="말풍선" />
+
             <Text size="12px" margin="0 0 0 7px">
               {communityCommentList ? communityCommentList.length : "0"}
             </Text>

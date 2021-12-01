@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as userActions } from "../redux/modules/user"
-import { regPassword } from "../shared/Reg"
+import { regPassword } from "../shared/reg"
 
 import { Buttons, Text, Container, ArrowBack } from "../components"
 

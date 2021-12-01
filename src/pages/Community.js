@@ -7,25 +7,25 @@ import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 import eventBanner from "../shared/icon/logo/timeLineBanner.png";
 const Community = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //카드 조회
-  const card_list = useSelector((state) => state.community.card_list)
-  const is_login = useSelector((state) => state.user.is_login)
+  const card_list = useSelector((state) => state.community.card_list);
+  const is_login = useSelector((state) => state.user.is_login);
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
-      : history.push("/community/communityadd")
-    e.target.disabled = true
-  }
+      : history.push("/community/communityadd");
+    e.target.disabled = true;
+  };
 
   //카드 조회
   useEffect(() => {
-    dispatch(actionCr.getCardAPI())
-  }, [])
+    dispatch(actionCr.getCardAPI());
+  }, []);
 
   // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   // 삭제/수정 모달내용
   const modalData = {
@@ -34,7 +34,7 @@ const Community = (props) => {
     descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
     btnUpdate: "삭제",
-  }
+  };
 
   return (
     <>
@@ -52,8 +52,8 @@ const Community = (props) => {
       <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </>
-  )
-}
+  );
+};
 
 export default Community;
 

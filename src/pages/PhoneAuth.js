@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { ArrowBack, Buttons, Container, Inputs } from "../components"
 import { history } from "../redux/configStore"
 import { actionCreators as userActions } from "../redux/modules/user"
-import { regPhone } from "../shared/Reg"
+import { regPhone } from "../shared/reg"
 
 export const PhoneAuth = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("")

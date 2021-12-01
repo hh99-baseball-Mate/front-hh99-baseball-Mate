@@ -34,39 +34,22 @@ const Header = (props) => {
     <Container minWidth="370px">
       <Box>
         <Ul>
-          <Game
-            game={game}
-            onClick={() => {
-              history.push("/")
-            }}
-          >
+          <Game game={game} onClick={() => history.push("/")}>
             경기모임
           </Game>
 
-          <Screen
-            screen={screen}
-            onClick={() => {
-              history.push("/screen")
-            }}
-          >
+          <Screen screen={screen} onClick={() => history.push("/screen")}>
             스야모임
           </Screen>
 
           <Community
             community={community}
-            onClick={() => {
-              history.push("/community")
-            }}
+            onClick={() => history.push("/community")}
           >
             커뮤니티
           </Community>
 
-          <Goods
-            goods={goods}
-            onClick={() => {
-              history.push("/goods")
-            }}
-          >
+          <Goods goods={goods} onClick={() => history.push("/goods")}>
             굿즈자랑
           </Goods>
         </Ul>
