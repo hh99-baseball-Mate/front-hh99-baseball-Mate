@@ -15,7 +15,7 @@ const ChatList = (props) => {
 
   useEffect(() => {
     dispatch(chatCreators.loadChatListMW())
-  }, [chatList.newMessage])
+  }, [])
 
   // console.log("chatList", chatList.length)
 

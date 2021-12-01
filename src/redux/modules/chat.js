@@ -46,6 +46,7 @@ const loadChatListMW = () => {
         dispatch(load_chatList(list))
       })
       .catch((err) => {
+        dispatch(is_loaded(false)) 
         // console.log(err)
       })
       dispatch(is_loaded(false)) 

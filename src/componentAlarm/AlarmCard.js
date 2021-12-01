@@ -9,7 +9,7 @@ const AlarmCard = (props) => {
 
   const history = useHistory()
 	const dispatch = useDispatch()
-  console.log("AlarmCard", props)
+  // console.log("AlarmCard", props)
 
   // 모달
 	const [showModal, setShowModal] = useState(false)

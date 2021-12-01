@@ -7,7 +7,6 @@ import { InputCheck } from "./InputCheck"
 import PancilBtn from "./PancilBtn"
 import Progress from "./Progress"
 import Swipers from "./Swipers"
-import Footer from "./Footer"
 import NaviBar from "./NaviBar"
 import MarginBottom from "./MarginBottom"
 
@@ -24,7 +23,6 @@ export {
   PancilBtn,
   Progress,
   Swipers,
-  Footer,
   NaviBar,
   MarginBottom,
 }

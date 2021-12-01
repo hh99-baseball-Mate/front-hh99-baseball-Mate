@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import {  instance } from "../../lib/axios";
 import { produce } from "immer";
+import { is_loaded } from "./user";
 
 //액션
 //댓글 기능
@@ -91,12 +92,15 @@ const getCommunDetailAPI = (communityId) => {
     instance
       .get(`/community/${communityId}`)
       .then((res) => {
+        dispatch(is_loaded(true))
         // console.log(res)
         dispatch(getCommunDetail(res.data));
       })
       .catch((err) => {
+        dispatch(is_loaded(false)) 
         // console.log(err, "디테일 페이지 오류")
       });
+      dispatch(is_loaded(false)) 
   };
 };
 

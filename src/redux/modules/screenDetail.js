@@ -85,6 +85,7 @@ const loadScreenPageMW = (screenId) => {
         dispatch(load_screenPage(screenPage))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err)
       })
       dispatch(is_loaded(false)) 

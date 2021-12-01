@@ -8,7 +8,6 @@ import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {
   const dispatch = useDispatch();
-  console.log(props, "새끼야");
   const [message, setMessage] = useState("");
   //유저 타입가져오기
   const { usertype, communityUserPicture } = props;
