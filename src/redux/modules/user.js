@@ -4,7 +4,6 @@ import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 import axios from "axios";
 import { img, instance } from "../../lib/axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 // 액션타입
 

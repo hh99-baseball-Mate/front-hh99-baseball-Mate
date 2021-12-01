@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { history } from "../redux/configStore"
 
 export const ArrowBack = (props) => {
+  // 뒤로가기 아이콘
+
   const { children, onClick, bg, background, fixed } = props
 
   const styles = { onClick, bg, background }

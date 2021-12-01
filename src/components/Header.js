@@ -13,6 +13,9 @@ const Header = (props) => {
 
   const is_login = useSelector((state) => state.user.is_login)
   const alarm = useSelector((state) => state.alarm.alarmList)
+  const user_info = useSelector((state) => state.user.user_info)
+
+  const { useridx, username } = user_info
 
   useEffect(() => {
     dispatch(alarmCreators.load_alarmMW())
@@ -79,7 +82,13 @@ const Header = (props) => {
         </Ul>
 
         <LoginIcon>
-          <LoginBtn onClick={() => history.push("/login")}>로그인</LoginBtn>
+          {is_login ? (
+            <P onClick={() => history.push(`/mypage/${useridx}`)}>
+              {username}님
+            </P>
+          ) : (
+            <LoginBtn onClick={() => history.push("/login")}>로그인</LoginBtn>
+          )}
 
           {/* 알림 */}
           <AlarmIcon
@@ -227,6 +236,7 @@ const Rectangle = styled.div`
 
 const LoginIcon = styled.div`
   display: flex;
+  align-items: center;
 `
 
 const LoginBtn = styled.div`
@@ -251,4 +261,13 @@ const RedDot = styled.div`
   background: #f25343;
   position: absolute;
   right: 20px;
-`;
+`
+
+const P = styled.p`
+  font-size: 12px;
+  text-align: center;
+  color: #3d4abcab;
+  font-weight: 700px;
+  margin-right: 5px;
+  cursor: pointer;
+`

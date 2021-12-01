@@ -18,8 +18,8 @@ const CommunityAdd = (props) => {
   const dispatch = useDispatch()
   //이미지 미리보기 삭제 커스텀훅
 
-  const card_list = useSelector((state) => state.community.card_list);
-  console.log(card_list.filePath, "라면");
+  const card_list = useSelector((state) => state.community.card_list)
+
   // 입력창
   const [content, setCotent] = useState("")
   const [preview, setPreview] = useState("")
@@ -72,6 +72,7 @@ const CommunityAdd = (props) => {
         value={content}
         placeholder="내용을 입력해주세요."
         height="400px"
+        maxLength="500"
         onChange={(e) => setCotent(e.target.value)}
       >
         {/* 안에 내용 */}
