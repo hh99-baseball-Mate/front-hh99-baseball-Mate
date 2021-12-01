@@ -49,7 +49,6 @@ const CardBox = styled.div`
   margin: 10px 20px 10px 0;
   background: #ffffff;
   height: 300px;
-  /* min-width: 240px; */
   cursor: pointer;
 `
 const PostInfo = styled.div`
@@ -62,7 +61,6 @@ const CardContent = styled.div``
 const MainImg = styled.img`
   width: 240px;
   height: 210px;
-  /* background-color: #c4c4c4; */
   border-radius: 4px;
 `
 const Slice = styled.div`

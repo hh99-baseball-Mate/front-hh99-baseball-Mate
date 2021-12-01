@@ -94,25 +94,22 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Footer position="fixed">
-          <Text
-            onClick={() => {
-              props.roomInfo.chatRoomtype === "screen"
-                ? leaveScreenChat()
-                : leaveChat()
-            }}
-          >
-            채팅방 나가기🔚
-          </Text>
-        </Footer>
+        <Text
+          onClick={() => {
+            props.roomInfo.chatRoomtype === "screen"
+              ? leaveScreenChat()
+              : leaveChat()
+          }}
+        >
+          채팅방 나가기🔚
+        </Text>
       </Container>
     </React.Fragment>
   )
 }
-  
+
 // 다른사람 프로필 컴포넌트
 const Profile = (props) => {
-  
   // 사진 ip주소 + 사진이름 조합
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
   const ip = IMAGES_BASE_URL
@@ -124,22 +121,15 @@ const Profile = (props) => {
   const kakaoCheck = props.picture?.split(".")[1]
   const kakaoImg = props.picture
 
-
-
-
-  return(
-    
+  return (
     <Warp marginB="10px" align="center">
-      <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} /> 
-      <Text>
-        {props.username}
-      </Text>
+      <ImgCircle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
+      <Text>{props.username}</Text>
     </Warp>
-    
   )
 }
 
-export default React.memo(ChatRoomModal);
+export default React.memo(ChatRoomModal)
 
 const Background = styled.div`
   /* width: calc(100vw - 200px); */
@@ -153,7 +143,7 @@ const Background = styled.div`
   justify-content: flex-end;
   /* align-items: center; */
   z-index: 1;
-`;
+`
 
 const Container = styled.div`
   width: 296px;
@@ -161,10 +151,10 @@ const Container = styled.div`
   background-color: white;
   padding: 26px 20px;
   position: fixed;
-  top:0;
+  top: 0;
   right: 0;
   z-index: 2;
-`;
+`
 
 const Warp = styled.div`
   display: flex;
@@ -178,8 +168,7 @@ const Warp = styled.div`
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
   margin-bottom: ${(props) => props.marginB};
-`;
-
+`
 
 const Text = styled.div`
   width: ${(props) => props.width};
@@ -191,27 +180,27 @@ const Text = styled.div`
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginB};
   line-height: ${(props) => props.lineHeight};
-  
+
   /* display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden; */
-`;
+`
 
 const ImgCircle = styled.div`
   width: 45px;
   height: 45px;
   border-radius: 50%;
   background: #c4c4c4;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   background-image: url(${(props) => props.url});
   /* background-size: contain; */
   background-repeat: no-repeat;
   background-position: center;
-	background-size: cover;
+  background-size: cover;
   margin-right: 13px;
-`;
+`
 
 const Circle = styled.div`
   width: 18px;
@@ -222,14 +211,4 @@ const Circle = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 6px;
-`;
-
-const Footer = styled.div`
-  position: fixed;
-  background-color: #fff2f2; /*임의색상*/
-  width: inherit;
-  padding: 20px;
-  right: 0;
-  bottom: 0;
-  height: 60px;
-`;
+`
