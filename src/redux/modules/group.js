@@ -105,6 +105,7 @@ const getTeamAPI = (teamname) => {
           dispatch(getTeam(res.data))
         })
         .catch((err) => {
+          dispatch(is_loaded(false))
           // console.log(err, "전체 모임 불러오기")
         })
         dispatch(is_loaded(false))  

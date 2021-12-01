@@ -71,6 +71,7 @@ const screenGetMD = (regoin, infinity) => {
           dispatch(screenGetGroup(infinityView, screenLength))
         })
         .catch((err) => {
+          dispatch(is_loaded(false))
           // console.log(err, "스야 모임 전체 불러오기 오류"))
         })
         dispatch(is_loaded(false))

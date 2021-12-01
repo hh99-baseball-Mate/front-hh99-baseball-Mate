@@ -84,6 +84,7 @@ const loadGroupPageMW = (groupId) => {
         dispatch(load_groupPage(groupPage))
       })
       .catch((err) => {
+        dispatch(is_loaded(false)) 
         // console.log(err)
       })
       dispatch(is_loaded(false)) 

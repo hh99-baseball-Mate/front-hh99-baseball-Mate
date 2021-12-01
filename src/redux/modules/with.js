@@ -72,6 +72,7 @@ const getParticipationAPI = () => {
         dispatch(getGroupParticipation(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err, "참여에러")
       })
       dispatch(is_loaded(false))
@@ -88,6 +89,7 @@ const getWriteAPI = () => {
         dispatch(getGroupWrite(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err, "작성에러")
       })
       dispatch(is_loaded(false)) 
@@ -104,6 +106,7 @@ const getLikeAPi = () => {
         dispatch(getGroupLike(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err, "참여에러")
       })
       dispatch(is_loaded(false)) 
@@ -120,6 +123,7 @@ const getScreenAPI = () => {
         dispatch(getScreen(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err)
       })
       dispatch(is_loaded(false))
@@ -136,6 +140,7 @@ const getScreenWriteAPI = (props) => {
         dispatch(screenWrite(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err))
       })
       dispatch(is_loaded(false))
@@ -152,6 +157,7 @@ const getScreenLikeAPI = (props) => {
         dispatch(getScreenLike(res.data))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err)
       })
       dispatch(is_loaded(false))
