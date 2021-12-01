@@ -10,32 +10,32 @@ import {
   Text,
 } from "../components";
 import { Picture } from "../componentsGroupAdd/Picture";
-import { Preview } from "../componentsGroupAdd/Preview"
+import { Preview } from "../componentsGroupAdd/Preview";
 import { useS3Upload } from "../customHook/useS3Upload";
-import Community from "../pages/Community"
-import { actionCreators as actionCr } from "../redux/modules/community"
-import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail"
+import Community from "../pages/Community";
+import { actionCreators as actionCr } from "../redux/modules/community";
+import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
 
 export const EditCommunComment = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const card_list = useSelector((state) => state.community.card_list)
+  const card_list = useSelector((state) => state.community.card_list);
 
-  const ip = process.env.REACT_APP_S3_COMMU_URL
+  const ip = process.env.REACT_APP_S3_COMMU_URL;
   //상세페이지 정보 가져오기
-  const detail_list = useSelector((state) => state.communityDetail.detail_list)
-  const img = ip + detail_list.filePath
+  const detail_list = useSelector((state) => state.communityDetail.detail_list);
+  const img = ip + detail_list.filePath;
 
-  const communityId = props.match.params.communityId
+  const communityId = props.match.params.communityId;
 
-  const [preview, setPreview] = useState(img)
+  const [preview, setPreview] = useState(img);
   // //인풋값 state
   const [inputValue, setInputValue] = useState({
     content: detail_list?.content,
     src: detail_list ? ip + detail_list.filePath : props.defaultImg,
-  })
+  });
 
-  const { content, src } = inputValue
+  const { content, src } = inputValue;
 
   //디테일 정보 가져오기
   // useEffect(() => {
@@ -44,44 +44,44 @@ export const EditCommunComment = (props) => {
 
   //이미지 업로드
   const imgPreview = (e) => {
-    setPreview(e.target.files[0])
-  }
+    setPreview(e.target.files[0]);
+  };
 
   //미리보기 삭제
   const deletePreview = () => {
     if (!preview) {
-      window.alert("삭제할 사진이 없습니다.")
-      return
+      window.alert("삭제할 사진이 없습니다.");
+      return;
     }
-    setPreview("")
-  }
+    setPreview("");
+  };
 
-  const [uploadFile, fileName] = useS3Upload(preview, "commu")
+  const [uploadFile, fileName] = useS3Upload(preview, "commu");
 
   //인풋 값 추적
   const onChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValue({
       ...inputValue,
       [name]: value,
-    })
-  }
+    });
+  };
 
   //입력체크
   const submitBtn = (e) => {
-    uploadFile(preview)
+    uploadFile(preview);
 
     const commuEditInfo = {
       content: inputValue.content,
       myTeam: null,
       filePath: preview ? fileName : "",
-    }
+    };
 
-    console.log(commuEditInfo)
+    console.log(commuEditInfo);
 
-    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo))
-    e.target.disabled = true
-  }
+    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo));
+    e.target.disabled = true;
+  };
 
   return (
     <div>
@@ -93,6 +93,7 @@ export const EditCommunComment = (props) => {
         width="100%"
         name="content"
         value={content}
+        maxLength="500"
         onChange={onChange}
         placeholder="내용을 입력해주세요."
         height="400px"
@@ -132,8 +133,8 @@ export const EditCommunComment = (props) => {
         <Buttons _onClick={submitBtn}>글 등록</Buttons>
       </Container>
     </div>
-  )
-}
+  );
+};
 
 EditCommunComment.defaultProps = {
   defaultImg:
