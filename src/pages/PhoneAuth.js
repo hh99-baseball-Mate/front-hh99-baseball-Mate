@@ -1,24 +1,23 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
-import { ArrowBack, Buttons, Container, Inputs } from "../components"
-import { history } from "../redux/configStore"
-import { actionCreators as userActions } from "../redux/modules/user"
-import { regPhone } from "../shared/reg"
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { ArrowBack, Buttons, Container, Inputs } from "../components";
+import { history } from "../redux/configStore";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { regPhone } from "../shared/reg";
 
 export const PhoneAuth = (props) => {
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [phoneAuth, setPhoneAuth] = useState("")
-  const dispatch = useDispatch()
-
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneAuth, setPhoneAuth] = useState("");
+  const dispatch = useDispatch();
 
   const PhoneAuthNum = (e) => {
-    setPhoneNumber(e.target.value)
-  }
+    setPhoneNumber(e.target.value);
+  };
 
   const PhoneAuthSubmit = (e) => {
-    setPhoneAuth(e.target.value)
-  }
+    setPhoneAuth(e.target.value);
+  };
 
   const authNumber = (e) => {
     if (
@@ -26,19 +25,19 @@ export const PhoneAuth = (props) => {
       regPhone.test(phoneNumber) &&
       phoneNumber.length === 11
     ) {
-      dispatch(userActions.PhoneAuthSubmitMD(phoneNumber))
-      e.target.disabled = true
-      return
+      dispatch(userActions.PhoneAuthSubmitMD(phoneNumber));
+      e.target.disabled = true;
+      return;
     }
 
-    window.alert("입력하신 휴대번호를 확인 해주세요")
-  }
+    window.alert("입력하신 휴대번호를 확인 해주세요");
+  };
 
   const phoneSubmit = () => {
     phoneAuth.length === 5
       ? dispatch(userActions.PhoneAuthConfirmMD({ phoneNumber, phoneAuth }))
-      : window.alert("인증번호를 입력해주세요")
-  }
+      : window.alert("인증번호를 입력해주세요");
+  };
 
   return (
     <>
@@ -80,19 +79,19 @@ export const PhoneAuth = (props) => {
         </BtnGroup>
       </Container>
     </>
-  )
-}
+  );
+};
 
 const AuthBox = styled.div`
   margin-top: 30px;
   display: flex;
   position: relative;
-`
+`;
 
 const BtnGroup = styled.div`
   margin-top: 30px;
   display: flex;
-`
+`;
 
 const Btn = styled.button`
   border: 1px solid #c4c4c4;
@@ -110,4 +109,4 @@ const Btn = styled.button`
   bottom: 10px;
   background-color: #333333;
   color: #fff;
-`
+`;

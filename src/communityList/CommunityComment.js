@@ -1,49 +1,53 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components"
-import { Comments } from "../componentsGoods/Comments"
-import { UserProfile } from "../components/UserProfile"
-import { actionCreators as detailCr } from "../redux/modules/communityDetail"
-import send from "../shared/icon/send.svg"
-import { useProfile } from "../customHook/useProfile"
+import styled from "styled-components";
+import { Text } from "../components";
+import { Comments } from "../componentsGoods/Comments";
+import { UserProfile } from "../components/UserProfile";
+import { actionCreators as detailCr } from "../redux/modules/communityDetail";
+import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {
-  const dispatch = useDispatch()
-
-  const [message, setMessage] = useState("")
-  //유저 타입가져오기
-  const { usertype, communityUserPicture } = props
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState("");
 
   // 댓글 작성시 유저정보를 기입하기 위해 불러옴
-  const user_info = useSelector((state) => state.user.user_info)
-  const id = props.communCommentId
-  const commentList = props?.communityCommentList
+  const user_info = useSelector((state) => state.user.user_info);
+  const id = props.communCommentId;
+  const commentList = props?.communityCommentList;
+  // 유저타입 가져오기
+  const { usertype, picture } = user_info;
 
   //수정버튼
   const updateCommentDispatch = (commentId, comment) => {
-    dispatch(detailCr.updateCommunCommentAPI(id, commentId, comment))
-  }
+    dispatch(detailCr.updateCommunCommentAPI(id, commentId, comment));
+  };
 
   //삭제버튼
   const deleteCommentBtn = (commentId) => {
-    dispatch(detailCr.deleteCommunCommrntAPI(id, commentId))
-  }
-
-  // 유저사진가져오기 커스텀훅
-    const [userImg] = useProfile(usertype, communityUserPicture)
+    dispatch(detailCr.deleteCommunCommrntAPI(id, commentId));
+  };
 
   //추가멘트
   const addComment = () => {
     if (message !== "") {
-      dispatch(detailCr.postCommunCommentAPI(id, message))
-      setMessage("")
-      return
+      dispatch(detailCr.postCommunCommentAPI(id, message));
+      setMessage("");
+      return;
     } else {
-      window.alert("내용을 입력하세요.")
-      return
+      window.alert("내용을 입력하세요.");
+      return;
     }
-  }
+  };
 
-
+  //유저이미지
+  const userImg = () => {
+    if (usertype === "kakao") {
+      return picture;
+    }
+    if (usertype === "normal") {
+      return process.env.REACT_APP_IMAGES_BASE_URL + picture;
+    }
+  };
 
   return (
     <div>
@@ -60,7 +64,7 @@ const CommunityComment = (props) => {
               useridx={user_info.useridx}
               {...e}
             />
-          )
+          );
         })}
       <Box
         height="84px"
@@ -77,7 +81,7 @@ const CommunityComment = (props) => {
             placeholder="댓글을 입력해 주세요..."
             value={message}
             onChange={(e) => {
-              setMessage(e.target.value)
+              setMessage(e.target.value);
             }}
           />
         </Wrap>
@@ -85,14 +89,14 @@ const CommunityComment = (props) => {
           src={send}
           alt="보내기"
           onClick={() => {
-            addComment()
+            addComment();
           }}
         />
       </Box>
       <Rectangle />
     </div>
-  )
-}
+  );
+};
 
 export default CommunityComment;
 
@@ -130,7 +134,6 @@ const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;
-  white-space: normal;
   border: none;
   ::placeholder {
     font-size: 13px;
@@ -139,7 +142,7 @@ const TextArea = styled.input`
   :focus {
     outline: none;
   }
-`
+`;
 
 const SendImg = styled.img`
   width: 16px;
