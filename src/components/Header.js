@@ -11,9 +11,11 @@ const Header = (props) => {
 
   const { game, screen, timeline, goods, community } = props;
 
-  const is_login = useSelector((state) => state.user.is_login);
-  const alarm = useSelector((state) => state.alarm.alarmList);
-  const user_info = useSelector((state) => state.user.user_info);
+
+  const is_login = useSelector((state) => state.user.is_login)
+  const alarm = useSelector((state) => state.alarm.alarmList)
+  const user_info = useSelector((state) => state.user.user_info)
+
 
   const { useridx, username } = user_info;
 
@@ -29,6 +31,16 @@ const Header = (props) => {
       history.push("/alarm");
     }
   };
+
+  const alramBtn = () => {
+    if (!is_login) {
+      window.alert("로그인 후 이용해주세요")
+      history.push("/login")
+    } else {
+      history.push("/alarm")
+    }
+  }
+
 
   return (
     <Container minWidth="370px">
@@ -90,7 +102,13 @@ const Header = (props) => {
           )}
 
           {/* 알림 */}
-          <AlarmIcon src={bell} alt="alert" onClick={alramBtn} />
+
+          <AlarmIcon
+            src={bell}
+            alt="alert"
+            onClick={alramBtn}
+          />
+
           {alarm.length === 0 ? null : <RedDot />}
         </LoginIcon>
       </Box>
