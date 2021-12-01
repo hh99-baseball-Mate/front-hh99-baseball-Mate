@@ -93,6 +93,7 @@ const getGoodsMD = ({ start, next }) => {
         dispatch(getGoods(goods_list, goods_list_length))
       })
       .catch((err) => {
+        dispatch(is_loaded(false))
         // console.log(err, "굿즈 가져오기 에러"))
       })
       dispatch(is_loaded(false)) 
