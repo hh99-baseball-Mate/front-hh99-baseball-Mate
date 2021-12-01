@@ -77,7 +77,6 @@ export const EditCommunComment = (props) => {
       filePath: preview ? fileName : "",
     }
 
-    console.log(commuEditInfo)
 
     dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo))
     e.target.disabled = true

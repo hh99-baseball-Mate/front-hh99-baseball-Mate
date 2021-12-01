@@ -38,18 +38,15 @@ const CommunityCard = (props) => {
   };
 
   const deleteBtn = () => {
-    console.log("놀러");
-    dispatch(communityCr.deleteCommunityAPI(communityId));
-    setShowModal(false);
-  };
+    dispatch(communityCr.deleteCommunityAPI(communityId))
+    setShowModal(false)
+  }
 
   return (
     <div>
-      {/* <MoreIcons onClick={() => setShowModal(true)} /> */}
       <Card
         onClick={() => {
-          console.log("제발");
-          history.push(`/community/communitydetail/${communityId}`);
+          history.push(`/community/communitydetail/${communityId}`)
         }}
       >
         <UserInfo>
@@ -86,7 +83,7 @@ const CommunityCard = (props) => {
         ></Modal>
       )}
     </div>
-  );
+  )
 };
 
 export default CommunityCard;
