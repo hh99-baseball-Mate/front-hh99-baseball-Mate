@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { Text } from "../components";
 
 const CommentList = (props) => {
-  const [edit, setEdit] = useState(false);
-  const [modal, setModal] = useState(false);
   return (
     <div>
       <Box position="relative" background="#ffffff">
@@ -23,7 +21,7 @@ const CommentList = (props) => {
         </Wrap>
       </Box>
     </div>
-  );
+  )
 };
 
 export default CommentList;

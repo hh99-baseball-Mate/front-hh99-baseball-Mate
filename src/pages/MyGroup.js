@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react"
 import styled from "styled-components"
 import { ArrowBack, Container, NaviBar, MarginBottom } from "../components"
 import { PartiGroup } from "../componentsMygroup/PartiGroup"
@@ -15,6 +15,7 @@ const MyGroup = (props) => {
   const [allWrite, setAllWrite] = useState(false)
   const [allLike, setAllLike] = useState(false)
 
+  // css 입히기 위해서 useRef 를 씀
   const partiBtnRef = useRef()
   const wirteBtnRef = useRef()
   const LikeBtnRef = useRef()
@@ -42,13 +43,14 @@ const MyGroup = (props) => {
 
   // useRef 를 통해서 css 제어 (참가모임, 작성모임, 찜한모임 선택 시 css 변경)
 
+  // useCallback 사용해보기
+
   if (partiBtnRef.current && allParticipation) {
     partiBtnRef.current.style =
       "border-bottom: 2px solid;font-weight: bold;color: red;"
   } else if (partiBtnRef.current) {
     partiBtnRef.current.style = null
   }
-
   if (wirteBtnRef.current && allWrite) {
     wirteBtnRef.current.style =
       "border-bottom: 2px solid;font-weight: bold;color: red;"

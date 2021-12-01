@@ -14,9 +14,6 @@ import { SubTitle } from "../components/SubTitle"
 import { SelectIcon } from "../components/SelectIcon"
 import { HotCard } from "../components/HotCard"
 
-import { actionCreators as userActions } from "../redux/modules/user";
-import Loader from "../components/Loader"
-
 const GroupList = (props) => {
   const dispatch = useDispatch()
 
@@ -67,11 +64,6 @@ const GroupList = (props) => {
     setTeam("전체")
   }
 
-  // const is_loaded = useSelector((state) => state.user.is_loaded)
-  // useEffect(() => {
-  //   dispatch(userActions.isLoaded(false))
-  // },[])
-
   // 구단별 중 전체 이미지
   const KBOIcon =
     "https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
@@ -88,7 +80,6 @@ const GroupList = (props) => {
     }
 
     // 해당날짜와 일치하는 경기들의 배열을 넣음
-    // dispatch(groupCr.getTeamAPI(""))
     dispatch(groupCr.getDateList(dateList))
   }, [team, date])
 
@@ -177,9 +168,6 @@ const GroupList = (props) => {
           {(team_list.length === 0 || date_list.length.length === 0) && (
             <NotGame>해당 팀 경기는 모임이 없습니다</NotGame>
           )}
-
-          {/* {console.log(team_list.length, "team")}
-        {console.log(date_list.length, "date")} */}
         </Container>
 
         <MarginBottom />

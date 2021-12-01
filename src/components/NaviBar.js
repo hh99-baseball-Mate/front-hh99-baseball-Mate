@@ -12,6 +12,8 @@ import chat from "../shared/icon/navbar/chat.svg"
 import chat_select from "../shared/icon/navbar/chat_select.svg"
 import my from "../shared/icon/navbar/my.svg"
 import my_select from "../shared/icon/navbar/my_select.svg"
+import { history } from "../redux/configStore"
+import { useLoginCheck } from "../customHook/useLoginCheck"
 
 const NaviBar = memo((props) => {
   // 하단 네비바
@@ -20,26 +22,15 @@ const NaviBar = memo((props) => {
 
   const { useridx } = user_info
 
-  const history = useHistory()
-
-  const login_handle = (e) => {
-    if (!is_login) {
-      window.alert("로그인 후 이용해주세요")
-      history.push("/login")
-    } else {
-      history.push("/mygroup")
-    }
-    e.target.disabled = true
-  }
+  // 로그인 유무로 보낼 사이트 경로 설정 커스텀훅
+  const [pathHandle] = useLoginCheck()
 
   return (
     <Container writeBtn={props.writeBtn}>
       <Warp justify="space-between">
         {/* 메인 */}
         <Icon
-          onClick={() => {
-            history.push("/")
-          }}
+          onClick={() =>history.push("/")}
         >
           {props.home ? (
             <img src={home_select} alt="home_col" />
@@ -49,16 +40,7 @@ const NaviBar = memo((props) => {
         </Icon>
 
         {/* 내 모임 */}
-        <Icon
-          onClick={() => {
-            if (!is_login) {
-              window.alert("로그인 후 이용해주세요")
-              history.push("/login")
-            } else {
-              history.push("/mygroup")
-            }
-          }}
-        >
+        <Icon onClick={() => pathHandle("login", "mygroup")}>
           {props.sch ? (
             <img src={sch_select} alt="sch_col" />
           ) : (
@@ -67,16 +49,7 @@ const NaviBar = memo((props) => {
         </Icon>
 
         {/* 채팅 */}
-        <Icon
-          onClick={() => {
-            if (!is_login) {
-              window.alert("로그인 후 이용해주세요")
-              history.push("/login")
-            } else {
-              history.push("/chatlist")
-            }
-          }}
-        >
+        <Icon onClick={() => pathHandle("login", "chatlist")}>
           {props.chat ? (
             <img src={chat_select} alt="rec_col" />
           ) : (

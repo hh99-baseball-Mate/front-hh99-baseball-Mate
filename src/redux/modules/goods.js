@@ -2,7 +2,7 @@
 
 import produce from "immer"
 import { createAction, handleActions } from "redux-actions"
-import { img, instance } from "../../lib/axios"
+import { instance } from "../../lib/axios"
 import { is_loaded } from "./user"
 
 // 액션타입 굿즈 게시글
@@ -96,7 +96,7 @@ const getGoodsMD = ({ start, next }) => {
         dispatch(is_loaded(false))
         // console.log(err, "굿즈 가져오기 에러"))
       })
-      dispatch(is_loaded(false)) 
+    dispatch(is_loaded(false))
   }
 }
 
@@ -108,7 +108,6 @@ const addGoodsMD = (goodInfo) => {
       .post("/goods", goodInfo)
       .then((res) => {
         history.replace("/goods")
-        console.log("됨")
       })
       .catch((err) => {
         // console.log(err, "굿즈 생성 오류")
@@ -205,10 +204,12 @@ const addGoodsLikeMD = (goodsId, useridx, likeCheck) => {
         userIdGoods: useridx,
       })
       .then((res) => {
+        // 좋아요 중복이 false 이고, 서버에서 +1 (true) 줬을 경우
         if (likeCheck === false && res.data === true) {
           dispatch(addGoodsLike(goodsId, useridx, likeCheck))
           return
         }
+        // 좋아요 중복이 있거나, 서버에서 -1 (false) 줬을 경우
         if (likeCheck || res.data === false) {
           dispatch(deleteGoodsLike(goodsId, useridx, likeCheck))
           return

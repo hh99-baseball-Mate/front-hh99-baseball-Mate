@@ -1,13 +1,10 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { img, instance } from "../../lib/axios"
-import { is_loaded } from "./user";
+import { instance } from "../../lib/axios"
+import { is_loaded } from "./user"
 
-// const SCREEN_ADD_GROUP = "SCREEN_ADD_GROUP"
 const SCREEN_GET_GROUP = "SCREEN_GET_GROUP"
-const SCREEN_HOT_GROUP = "SCREEN_HOT_GROUP"
-const SCREEN_SORT_GROUP = "SCREEN_SORT_GROUP"
-const LOADING = "LOADING" //스크린 참가
+const LOADING = "LOADING"
 
 const screenGetGroup = createAction(
   SCREEN_GET_GROUP,
@@ -16,20 +13,10 @@ const screenGetGroup = createAction(
     list_length,
   })
 )
-const screenHotGroup = createAction(SCREEN_HOT_GROUP, (screen_hot_list) => ({
-  screen_hot_list,
-}))
-const screenDateGroup = createAction(SCREEN_SORT_GROUP, (screen_date_list) => ({
-  screen_date_list,
-}))
 
 const initialState = {
   // 일반 리스트
   screen_list: [],
-  // 인기순
-  screen_hot_list: [],
-  // 최신순
-  screen_date_list: [],
 
   // 무한스크롤에 사용// 총 데이터 길이
   list_length: 0,
@@ -39,8 +26,6 @@ const initialState = {
 // 스야 모임만들기
 const screenAddMD = (screenInfo) => {
   return function (dispatch, getState, { history }) {
-
-    console.log(screenInfo)
     instance
       .post("/screen", screenInfo)
       .then((res) => {
@@ -64,8 +49,10 @@ const screenGetMD = (regoin, infinity) => {
         .then((res) => {
           dispatch(is_loaded(true))
 
+          // 무한스크롤 마지막 단 체크를 위해 데이터 총 길이를 가져옴 // 마지막 길이까지 스크롤 이벤트
           const screenLength = res.data.length
 
+          // 무한스크롤 보여줄 갯수 next가 2라면 (0, 2~4~6) 0부터 next 값 만큼 증가
           const infinityView = res.data.slice(start, next)
 
           dispatch(screenGetGroup(infinityView, screenLength))
@@ -74,7 +61,6 @@ const screenGetMD = (regoin, infinity) => {
           dispatch(is_loaded(false))
           // console.log(err, "스야 모임 전체 불러오기 오류"))
         })
-        dispatch(is_loaded(false))
       return
     }
 
@@ -84,8 +70,10 @@ const screenGetMD = (regoin, infinity) => {
       .then((res) => {
         const screenLength = res.data.length
 
+        // 무한스크롤 마지막 단 체크를 위해 데이터 총 길이를 가져옴 // 마지막 길이까지 스크롤 이벤트
         const infinityView = res.data.slice(start, next)
 
+        // 무한스크롤 보여줄 갯수 next가 2라면 (0, 2~4~6) 0부터 next 값 만큼 증가
         dispatch(screenGetGroup(infinityView, screenLength))
       })
       .catch((err) => {
@@ -94,34 +82,6 @@ const screenGetMD = (regoin, infinity) => {
   }
 }
 
-// //  스크린 인기순
-// const screenHotGroupMD = () => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .get("/groups/hotscreen")
-//       .then((res) => {
-//         const screenHotGroupList = res.data
-//         dispatch(screenHotGroup(screenHotGroupList))
-//       })
-//       .catch((err) => {
-//         console.log(err, "스크린 인기순 에러"))
-//   })
-//   }
-// }
-
-// // 최신순
-// const screenDateGroupMd = (number) => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .get(`/screen?count=5`)
-//       .then((res) => {
-//         const screenDateGroupList = res.data
-//         dispatch(screenDateGroup(screenDateGroupList))
-//       })
-//       .catch((err) => console.log(err, "스크린 최신순 에러"))
-//   }
-// }
-
 //리듀서
 export default handleActions(
   {
@@ -129,16 +89,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screen_list = action.payload.screen_list
         draft.list_length = action.payload.list_length
-        draft.is_loading = true
-      }),
-    [SCREEN_HOT_GROUP]: (state, action) =>
-      produce(state, (draft) => {
-        draft.screen_hot_list = action.payload.screen_hot_list
-        draft.is_loading = true
-      }),
-    [SCREEN_SORT_GROUP]: (state, action) =>
-      produce(state, (draft) => {
-        draft.screen_date_list = action.payload.screen_date_list
         draft.is_loading = true
       }),
     [LOADING]: (state, action) =>
@@ -153,8 +103,6 @@ const actionCreators = {
   screenAddMD,
   screenGetMD,
   screenGetGroup,
-  // screenHotGroupMD,
-  // screenDateGroupMd,
 }
 
 export { actionCreators };
