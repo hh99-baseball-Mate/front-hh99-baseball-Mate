@@ -134,6 +134,7 @@ const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;
+  white-space: normal;
   border: none;
   ::placeholder {
     font-size: 13px;

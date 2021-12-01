@@ -18,7 +18,7 @@ const CommunityAdd = (props) => {
   const dispatch = useDispatch();
   //이미지 미리보기 삭제 커스텀훅
 
-  const card_list = useSelector((state) => state.community.card_list)
+  const card_list = useSelector((state) => state.community.card_list);
 
   // 입력창
   const [content, setCotent] = useState("");
