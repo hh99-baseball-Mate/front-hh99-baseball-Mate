@@ -21,14 +21,16 @@ export const ScreenList = (props) => {
   })
 
   const [showModal, setShowModal] = useState(false)
+  // 지역 담을 state
   const [regoin, setRegoin] = useState("")
 
   const is_login = useSelector((state) => state.user.is_login)
 
   // 무한스크롤
+  // 리스트 총 길이만큼 스크롤 이벤트하기 위해 list_length를 가져옴
   const screen_list = useSelector((state) => state.screen.screen_list)
-  const is_loading = useSelector((state) => state.screen.is_loading)
   const list_length = useSelector((state) => state.screen.list_length)
+  const is_loading = useSelector((state) => state.screen.is_loading)
 
   const onSubmitBtn = (e) => {
     !is_login

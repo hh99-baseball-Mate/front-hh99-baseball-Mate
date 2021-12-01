@@ -69,6 +69,7 @@ const CommunityAdd = (props) => {
         textarea
         width="100%"
         name="content"
+        maxLength="500"
         value={content}
         placeholder="내용을 입력해주세요."
         height="400px"

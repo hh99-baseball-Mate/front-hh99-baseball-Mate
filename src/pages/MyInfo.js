@@ -7,6 +7,7 @@ import { TextLine } from "../components/TextLine"
 import { Modal } from "../components/Modal"
 import { Region } from "../componentsScreen/Region"
 import { actionCreators as userActions } from "../redux/modules/user"
+import { useProfile } from "../customHook/useProfile"
 
 export const MyInfo = (props) => {
   const dispatch = useDispatch()
@@ -16,8 +17,6 @@ export const MyInfo = (props) => {
 
   const { picture, userid, username, usertype, useridx, address, myteam } =
     user_info
-
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
   const [showModal, setShowModal] = useState(false)
   const [region, setRegion] = useState(address)
@@ -46,17 +45,16 @@ export const MyInfo = (props) => {
     history.push("/login/clubchoice")
   }
 
+  const [userImg] = useProfile(usertype, picture)
+
   const srcChange = () => {
     if (preview) {
       return URL.createObjectURL(preview)
-    } else if (usertype === "normal") {
-      return IMAGES_BASE_URL + picture
-    } else if (usertype === "kakao") {
-      return picture
-    } else {
-      return picture
     }
+    return userImg
   }
+
+  // 자기소개글, 지역변경 하다가 페이지 이동시 작성하던 글 임시저장 (세션스토리지)
 
   useEffect(() => {
     if (sessionStorage.getItem("introduce")) {
@@ -84,33 +82,46 @@ export const MyInfo = (props) => {
                 style={{ display: "none" }}
                 accept="image/png, image/jpeg image/jpg"
               />
-              <ProfileSrc src={srcChange()} alt="dd" />
+              {/* 유저 사진 */}
+              <ProfileSrc url={srcChange} alt="dd" />
+
+              {/* 유저 이름 */}
               <Text margin="10px 0 0">{username}</Text>
+
+              {/* 유저 이메일 */}
               <Text color="#777777" size="10px" margin="10px 0 0">
                 {userid ? userid : "나는유저아이디?"}
               </Text>
+
+              {/* 유저 선호 팀 */}
               <Text margin="10px 0">{myteam}</Text>
+
+              {/* 유저 지역 */}
               <Text>{region}</Text>
             </UserInfo>
 
+            {/* 자기소개 */}
             <div style={{ margin: "0 20px 20px" }}>
               <Inputs
                 maxLength="100"
                 textarea
                 margin="20px"
                 height="100px"
-                placeholder={introduce ? introduce : "자기소개를 입력해주세요"}
+                placeholder={
+                  introduce ? introduce : "자기소개를 입력해주세요(100자 제한)"
+                }
                 onChange={(e) => setIntroduce(e.target.value)}
               >
                 자기소개
               </Inputs>
             </div>
 
+            {/* 탭 */}
             <TextLine onClick={goBack}>구단변경</TextLine>
 
             <TextLine onClick={() => setShowModal(true)}>주소변경</TextLine>
 
-            {/* 주소변경 모달 */}
+            {/* 주소변경 선택 모달창 */}
             {showModal && (
               <Modal bottom>
                 <Region setShowModal={setShowModal} setRegoin={setRegion} />
@@ -151,11 +162,15 @@ const ProfileImg = styled.label`
     cursor: pointer;
   }
 `
-const ProfileSrc = styled.img`
+const ProfileSrc = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
   position: absolute;
+  background-image: url(${(props) => props.url});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   :hover {
     cursor: pointer;
   }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { Loading } from "../../components/Loading"
+import Loader from "../../components/Loader"
 import { actionCreators as userActions } from "../../redux/modules/user"
 
 const KAKAOhandle = (props) => {
@@ -17,7 +17,7 @@ const KAKAOhandle = (props) => {
 
   return (
     <>
-      <Loading />
+      <Loader />
     </>
   )
 }

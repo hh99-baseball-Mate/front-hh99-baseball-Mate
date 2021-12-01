@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Text } from "../components";
 import { Comments } from "../componentsGoods/Comments";
-import { UserProfile } from "../componentsGoods/UserProfile";
+import { UserProfile } from "../components/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {

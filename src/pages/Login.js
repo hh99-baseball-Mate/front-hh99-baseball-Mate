@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { regPassword } from "../shared/Reg"
+import { regPassword } from "../shared/reg"
 
 import { Buttons } from "../components"
 import { Container } from "../components/Container"
@@ -18,7 +18,6 @@ import { Formik, Form } from "formik"
 import * as Yup from "yup"
 
 export const Login = (props) => {
-  const [loginOther, setLoginOther] = useState(false)
   const [showPwd, setShowPwd] = useState(false)
 
   const dispatch = useDispatch()
@@ -106,21 +105,6 @@ export const Login = (props) => {
           </Form>
         )}
       </Formik>
-
-      {/* 다른 방법 로그인 */}
-      {/* <div onClick={() => setLoginOther(!loginOther)}>
-        {loginOther ? (
-          ""
-        ) : (
-          <Text center color="#777777" margin="14px 0 0 0">
-            다른 방법으로 로그인 {loginOther ? "숨기기" : "보기"}{" "}
-            <MdKeyboardArrowDown />
-          </Text>
-        )}
-      </div> */}
-
-      {/* 소셜로그인 */}
-      {/* {loginOther ? <SocialLogin /> : null} */}
     </Container>
   )
 }

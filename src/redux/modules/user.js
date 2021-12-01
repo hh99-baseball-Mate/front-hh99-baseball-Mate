@@ -26,12 +26,13 @@ const phone_auth = createAction(PHONE_AUTH, (phoneNumber, phoneAuth) => ({
   phoneNumber,
   phoneAuth,
 }))
+
 const is_auth = createAction(IS_AUTH, (auth) => ({ auth }))
 
 export const is_loaded = createAction(IS_LOADED, (loaded) => ({ loaded }))
 
 const initialState = {
-  is_loaded: false,
+  is_loaded: true,
   user_info: [],
   is_login: false,
   is_auth: false,
@@ -133,8 +134,7 @@ const logInCheckMD = () => {
 
 const userUpdateMD = (formdata, id) => {
   return function (dispatch, getState, { history }) {
-    // const user_info = getState().user.user_info
-
+    // 유저 프로필 업데이트
     img
       .patch(`/users/${id}`, formdata)
       .then((res) => {
@@ -198,7 +198,7 @@ const kakaoLogin = (key) => {
         dispatch(logInCheckMD())
       })
       .catch((err) => {
-        window.alert("로그인이 불가능합니다. 서버에 문의하세요.")
+        window.alert("로그인이 실패하였습니다. 일반로그인으로 진행해주세요.")
         history.goBack()
         // console.log(err, "카카오 로그인 실패")
       })
@@ -209,6 +209,7 @@ const kakaoLogin = (key) => {
 
 const PhoneAuthSubmitMD = (phoneNumber) => {
   return function (dispatch, getState, { history }) {
+    // 회원가입 핸드폰 인증시 폰 번호를 서버에 보냄
     instance
       .post("/checkPhone", { phoneNumber })
       .then((res) => {
@@ -227,6 +228,7 @@ const PhoneAuthConfirmMD = ({ phoneNumber, phoneAuth }) => {
   return function (dispatch, getState, { history }) {
     const auth = getState().user.is_auth
 
+    // 인증번호와 폰번호를 서버에 보내서 인증을 함
     instance
       .post("/confirmNumChk", { phoneNumber, ranNum: phoneAuth })
       .then((res) => {
@@ -290,17 +292,16 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_auth = action.payload.auth
       }),
-    [IS_LOADED]: (state, action) => produce(state, (draft) => {
-      draft.is_loaded = action.payload.loaded
-    }),
+    [IS_LOADED]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loaded = action.payload.loaded
+      }),
   },
   initialState
 )
 
 const actionCreators = {
-  logIn,
   logInMD,
-  logOut,
   signUpMD,
   kakaoLogin,
   logInCheckMD,
@@ -308,8 +309,7 @@ const actionCreators = {
   choiceClubMD,
   PhoneAuthSubmitMD,
   PhoneAuthConfirmMD,
-  // userUpdate,
-  isLoaded
-};
+  isLoaded,
+}
 
 export { actionCreators };

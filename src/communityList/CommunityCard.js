@@ -8,6 +8,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
 import { history } from "../redux/configStore";
+import { useProfile } from "../customHook/useProfile"
+
 const CommunityCard = (props) => {
   const dispatch = useDispatch()
 
@@ -24,6 +26,8 @@ const CommunityCard = (props) => {
 
   //게시글 이미지
   const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
+
+  // const [userImg] = useProfile()
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)
@@ -66,7 +70,9 @@ const CommunityCard = (props) => {
         <TextBox>{content}</TextBox>
         <Border />
         <Good>
+
           <CommentIcon src={Question} alt="말풍선" />
+
           <Text size="12px" margin="0 0 0 7px">
             {communityCommentList ? communityCommentList.length : "0"}
           </Text>
@@ -93,6 +99,7 @@ const Card = styled.div`
   cursor: pointer;
   margin-top: 20px;
 `
+
 
 const UserImg = styled.img`
   width: 48px;
@@ -124,12 +131,15 @@ const TextBox = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 20px 0;
-`
+
+`;
+
 
 const Border = styled.div`
   border: 1px solid #e7e7e7;
   width: 100%;
-`
+
+`;
 
 const Boundary = styled.div`
   background: #f8f8f8;
@@ -154,3 +164,4 @@ const CommentIcon = styled.img`
   width: 12px;
   height: 12px;
 `
+

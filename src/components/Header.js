@@ -9,7 +9,7 @@ const Header = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const { game, screen, timeline, goods, community } = props
+  const { game, screen, goods, community } = props
 
   const is_login = useSelector((state) => state.user.is_login)
   const alarm = useSelector((state) => state.alarm.alarmList)
@@ -30,53 +30,26 @@ const Header = (props) => {
     }
   }
 
-
   return (
     <Container minWidth="370px">
       <Box>
         <Ul>
-          <Game
-            game={game}
-            onClick={() => {
-              history.push("/")
-            }}
-          >
+          <Game game={game} onClick={() => history.push("/")}>
             경기모임
           </Game>
 
-          <Screen
-            screen={screen}
-            onClick={() => {
-              history.push("/screen")
-            }}
-          >
+          <Screen screen={screen} onClick={() => history.push("/screen")}>
             스야모임
           </Screen>
 
           <Community
             community={community}
-            onClick={() => {
-              history.push("/community")
-            }}
+            onClick={() => history.push("/community")}
           >
             커뮤니티
           </Community>
 
-          {/* <Timeline
-            timeline={timeline}
-            onClick={() => {
-              history.push("/timeline")
-            }}
-          >
-            타임라인
-          </Timeline> */}
-
-          <Goods
-            goods={goods}
-            onClick={() => {
-              history.push("/goods")
-            }}
-          >
+          <Goods goods={goods} onClick={() => history.push("/goods")}>
             굿즈자랑
           </Goods>
         </Ul>
@@ -91,11 +64,7 @@ const Header = (props) => {
           )}
 
           {/* 알림 */}
-          <AlarmIcon
-            src={bell}
-            alt="alert"
-            onClick={alramBtn}
-          />
+          <AlarmIcon src={bell} alt="alert" onClick={alramBtn} />
           {alarm.length === 0 ? null : <RedDot />}
         </LoginIcon>
       </Box>

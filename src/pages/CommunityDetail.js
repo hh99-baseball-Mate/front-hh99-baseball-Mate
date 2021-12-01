@@ -10,8 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
-import { UserProfile } from "../componentsGoods/UserProfile";
-
+import { UserProfile } from "../components/UserProfile";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
   //params의 값 가져오기
@@ -128,7 +127,7 @@ export const CommunityDetail = (props) => {
         {/*댓글에서 디테일 data가져오기 */}
         <CommunityComment {...detail_list} communCommentId={communCommentId} />
       </Container>
-      {/* 모달 */}
+      {/* 모달ㄴ */}
       {showModal && (
         <Modal
           three
