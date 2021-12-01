@@ -38,23 +38,23 @@ import CommunityAdd from "../pages/CommunityAdd";
 import { Goods } from "../pages/Goods";
 import { Notice } from "../pages/Notice";
 import { Event } from "../pages/Event";
-import { EditCommunComment } from "../communityList/EditCommunComment"
-import Loader from "../components/Loader"
+import { EditCommunComment } from "../communityList/EditCommunComment";
+import Loader from "../components/Loader";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const is_loaded = useSelector((state) => state.user.is_loaded)
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_loaded = useSelector((state) => state.user.is_loaded);
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
-    dispatch(userActions.isLoaded(false))
+    dispatch(userActions.isLoaded(false));
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
-  }, [])
+  }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
@@ -104,6 +104,11 @@ function App() {
               />
               <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
+              <Route
+                path="/community/communitydetail/:communityId"
+                exact
+                component={CommunityDetail}
+              />
               {/* 임시 */}
               <Route component={NotFound} />
               <Redirect from="*" to="/" />
@@ -179,12 +184,10 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
-        {
-          !is_loaded && <Loader type="bars" color="#F25343"/>
-        }
+        {!is_loaded && <Loader type="bars" color="#F25343" />}
       </Container>
     </>
-  )
+  );
 }
 
 export default App;

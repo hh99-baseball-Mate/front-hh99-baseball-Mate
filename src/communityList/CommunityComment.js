@@ -6,8 +6,9 @@ import { Comments } from "../componentsGoods/Comments";
 import { UserProfile } from "../componentsGoods/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
+import { history } from "../redux/configStore";
 const CommunityComment = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   //유저 타입가져오기
   const { usertype, communityUserPicture } = props;
@@ -134,6 +135,7 @@ const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;
+  white-space: normal;
   border: none;
   ::placeholder {
     font-size: 13px;

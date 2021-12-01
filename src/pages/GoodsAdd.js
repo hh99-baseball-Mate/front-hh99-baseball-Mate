@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import {
   ArrowBack,
   Buttons,
@@ -8,68 +8,68 @@ import {
   InputCheck,
   Inputs,
   Text,
-} from "../components"
-import { Picture } from "../componentsGroupAdd/Picture"
-import { Preview } from "../componentsGroupAdd/Preview"
-import { useInputs } from "../customHook/useInputs"
-import { actionCreators as goodsActions } from "../redux/modules/goods"
-import { useS3Upload } from "../customHook/useS3Upload"
+} from "../components";
+import { Picture } from "../componentsGroupAdd/Picture";
+import { Preview } from "../componentsGroupAdd/Preview";
+import { useInputs } from "../customHook/useInputs";
+import { actionCreators as goodsActions } from "../redux/modules/goods";
+import { useS3Upload } from "../customHook/useS3Upload";
 
 export const GoodsAdd = (props) => {
-  const { defaultImg } = props
+  const { defaultImg } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [preview, setPreview] = useState("")
+  const [preview, setPreview] = useState("");
 
   // 인풋 커스텀훅
   const [inputValue, onChange] = useInputs({
     goodsName: "",
     goodsContent: "",
-  })
+  });
 
-  const { goodsName, goodsContent } = inputValue
+  const { goodsName, goodsContent } = inputValue;
 
   // 이미지 미리보기
   const imgPreview = (e) => {
-    setPreview(e.target.files[0])
-  }
+    setPreview(e.target.files[0]);
+  };
 
   // 이미지 미리보기 삭제
   const deletePreview = () => {
     if (!preview) {
-      window.alert("삭제 할 사진이 없어요")
-      return
+      window.alert("삭제 할 사진이 없어요");
+      return;
     }
-    setPreview("")
-  }
+    setPreview("");
+  };
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "goods")
+  const [uploadFile, fileName] = useS3Upload(preview, "goods");
 
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true
-    })
+      return !e ? false : true;
+    });
     if (emptyValue.includes(false) || !preview) {
-      window.alert("굿즈는 사진이 필수입니다")
+      window.alert("굿즈는 사진이 필수입니다");
       // console.log("빈값있음")
-      return
+      return;
     }
 
-    uploadFile(preview)
+    uploadFile(preview);
 
     const goodInfo = {
       goodsName,
       goodsContent,
       goodsPrice: null,
       filePath: preview ? fileName : "",
-    }
+    };
 
-    dispatch(goodsActions.addGoodsMD(goodInfo))
-  }
-  
+    dispatch(goodsActions.addGoodsMD(goodInfo));
+  };
+
   return (
     <>
       <Container>
@@ -120,15 +120,15 @@ export const GoodsAdd = (props) => {
         <Buttons _onClick={submitBtn}>굿즈 등록</Buttons>
       </Container>
     </>
-  )
-}
+  );
+};
 
 GoodsAdd.defaultProps = {
   defaultImg:
     "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",
-}
+};
 
 const ImgBox = styled.div`
   display: flex;
   gap: 10px;
-`
+`;
