@@ -48,6 +48,7 @@ const load_alarmMW = () => {
         dispatch(load_alarm(alarm))
       })
       .catch((err) => {
+        dispatch(is_loaded(false)) 
         // // console.log(err)
       })
       dispatch(is_loaded(false)) 
