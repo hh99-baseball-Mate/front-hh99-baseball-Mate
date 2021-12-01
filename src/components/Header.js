@@ -11,6 +11,7 @@ const Header = (props) => {
 
   const { game, screen, timeline, goods, community } = props
 
+  const is_login = useSelector((state) => state.user.is_login)
   const alarm = useSelector((state) => state.alarm.alarmList)
   const is_login = useSelector((state) => state.user.is_login)
   const user_info = useSelector((state) => state.user.user_info)
@@ -20,6 +21,16 @@ const Header = (props) => {
   useEffect(() => {
     dispatch(alarmCreators.load_alarmMW())
   }, [])
+
+  const alramBtn = () => {
+    if (!is_login) {
+      window.alert("로그인 후 이용해주세요")
+      history.push("/login")
+    } else {
+      history.push("/alarm")
+    }
+  }
+
 
   return (
     <Container minWidth="370px">
@@ -84,9 +95,7 @@ const Header = (props) => {
           <AlarmIcon
             src={bell}
             alt="alert"
-            onClick={() => {
-              history.push("/alarm")
-            }}
+            onClick={alramBtn}
           />
           {alarm.length === 0 ? null : <RedDot />}
         </LoginIcon>
