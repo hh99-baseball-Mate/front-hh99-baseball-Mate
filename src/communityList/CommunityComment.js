@@ -144,7 +144,7 @@ const TextArea = styled.input`
   :focus {
     outline: none;
   }
-`;
+`
 
 const SendImg = styled.img`
   width: 16px;

@@ -83,6 +83,11 @@ function App() {
               <Route path="/mygroup" exact component={MyGroup} />
               <Route path="/community" exact component={Community} />
               <Route
+                path="/community/communitydetail/:communityId"
+                exact
+                component={CommunityDetail}
+              />
+              <Route
                 path="/alarm"
                 render={() => <Alarm is_login={is_login} />}
               />
@@ -92,6 +97,11 @@ function App() {
                 render={() => <MyPage is_login={is_login} />}
               />
               <Route path="/screen" exact component={ScreenList} />
+              <Route
+                path="/screen/screendetail/:screenId"
+                exact
+                component={ScreenDetail}
+              />
               <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
               <Route
