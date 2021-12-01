@@ -34,6 +34,7 @@ export const MyPage = ({ is_login }) => {
       window.alert("로그아웃 하셨습니다.")
       history.replace("/")
     } catch (error) {
+      console.log(error)
       window.alert("로그아웃을 실패했습니다.")
     }
   }
@@ -68,6 +69,7 @@ export const MyPage = ({ is_login }) => {
               />
             </UserInfo>
 
+            {/* 자기소개글 */}
             <div style={{ margin: "0 20px 20px" }}>
               <Inputs
                 textarea
