@@ -7,7 +7,7 @@ import { UserProfile } from "../componentsGoods/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [message, setMessage] = useState("");
   //유저 타입가져오기
   const { usertype, communityUserPicture } = props;
@@ -130,7 +130,7 @@ const Wrap = styled.div`
   position: ${(props) => props.position};
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;

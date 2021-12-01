@@ -66,7 +66,11 @@ const CommunityCard = (props) => {
         <TextBox>{content}</TextBox>
         <Border />
         <Good>
-          <img src={Question} alt="말풍선" />
+          <img
+            src={Question}
+            alt="말풍선"
+            style={{ width: "12px", height: " 12px" }}
+          />
           <Text size="12px" margin="0 0 0 7px">
             {communityCommentList ? communityCommentList.length : "0"}
           </Text>
@@ -90,8 +94,8 @@ export default CommunityCard;
 
 const Card = styled.div`
   width: 100%;
-  height: 225px;
   margin-top: 20px;
+  cursor: pointer;
 `;
 
 const UserImg = styled.img`
@@ -119,15 +123,16 @@ const Time = styled.div`
 
 const TextBox = styled.div`
   width: 100%;
-  height: 60px;
   font-size: 14px;
-  margin-top: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 20px 0;
 `;
 
 const Border = styled.div`
   border: 1px solid #e7e7e7;
   width: 100%;
-  margin-top: 55px;
 `;
 
 const Boundary = styled.div`
@@ -138,13 +143,5 @@ const Boundary = styled.div`
 
 const Good = styled.div`
   display: flex;
-  margin: 15px;
-`;
-
-const MoreIcons = styled(BsThreeDots)`
-  align-items: center;
-  margin: 7.5px 0;
-  cursor: pointer;
-  position: absolute;
-  right: 70px;
+  margin: 10px 0;
 `;
