@@ -31,7 +31,7 @@ const is_auth = createAction(IS_AUTH, (auth) => ({ auth }))
 export const is_loaded = createAction(IS_LOADED, (loaded) => ({ loaded }))
 
 const initialState = {
-  is_loaded: false,
+  is_loaded: true,
   user_info: [],
   is_login: false,
   is_auth: false,

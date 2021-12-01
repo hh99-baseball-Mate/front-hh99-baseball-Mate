@@ -48,7 +48,6 @@ function App() {
   const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
-    dispatch(userActions.isLoaded(false));
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD());
     } else {
@@ -184,7 +183,7 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
-        {!is_loaded && <Loader type="bars" color="#F25343" />}
+        { !is_loaded && <Loader type="bars" color="#F25343"/> }
       </Container>
     </>
   );
