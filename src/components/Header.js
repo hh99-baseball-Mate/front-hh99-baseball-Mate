@@ -13,7 +13,6 @@ const Header = (props) => {
 
   const is_login = useSelector((state) => state.user.is_login)
   const alarm = useSelector((state) => state.alarm.alarmList)
-  const is_login = useSelector((state) => state.user.is_login)
   const user_info = useSelector((state) => state.user.user_info)
 
   const { useridx, username } = user_info
