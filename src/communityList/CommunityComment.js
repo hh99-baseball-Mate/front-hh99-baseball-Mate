@@ -130,7 +130,7 @@ const Wrap = styled.div`
   position: ${(props) => props.position};
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;
@@ -142,7 +142,7 @@ const TextArea = styled.textarea`
   :focus {
     outline: none;
   }
-`;
+`
 
 const SendImg = styled.img`
   width: 16px;

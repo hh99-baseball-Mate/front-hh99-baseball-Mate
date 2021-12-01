@@ -110,7 +110,7 @@ export const CommunityDetail = (props) => {
           <FileImg src={img} alt="커뮤니티 이미지" />
           <Border />
           <Good>
-            <img src={Question} alt="말풍선" />
+            <CommentIcon src={Question} alt="말풍선" />
             <Text size="12px" margin="0 0 0 7px">
               {communityCommentList ? communityCommentList.length : "0"}
             </Text>
@@ -131,7 +131,7 @@ export const CommunityDetail = (props) => {
         ></Modal>
       )}
     </>
-  );
+  )
 };
 
 const Border = styled.div`
@@ -197,4 +197,10 @@ const MoreIcons = styled(BsThreeDots)`
   cursor: pointer;
   position: absolute;
   right: 20px;
+`;
+
+
+const CommentIcon = styled.img`
+  width: 12px;
+  height: 12px;
 `;
