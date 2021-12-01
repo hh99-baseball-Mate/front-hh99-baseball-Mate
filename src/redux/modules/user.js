@@ -304,6 +304,7 @@ const actionCreators = {
   logInMD,
   signUpMD,
   kakaoLogin,
+  logOut,
   logInCheckMD,
   userUpdateMD,
   choiceClubMD,
