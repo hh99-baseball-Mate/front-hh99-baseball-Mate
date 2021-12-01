@@ -1,0 +1,15 @@
+/* 카카오맵 커스텀오버레이 커스텀 css */
+
+body{
+  margin: 0px;
+}
+
+.maps {
+  background-color:#386ccbe8;
+  box-shadow: 3px 4px #2a368bbd;
+  border-radius:20px;
+  padding:10px; 
+  font-size: 10px;
+  text-align: center;
+  color: white;
+}
