@@ -5,7 +5,8 @@
  <h2>같이 야구보러 가지 않을래?</h2>
 
 <br/>
-![image](https://user-images.githubusercontent.com/85838870/144510359-54deded6-1bab-4fe3-b080-95b03b3a124b.jpg)
+
+<img width="100%" src="https://user-images.githubusercontent.com/85838870/144510359-54deded6-1bab-4fe3-b080-95b03b3a124b.jpg" alt="meetball">
 
 [사이트 링크 바로가기](https://meetball.shop/)
 
