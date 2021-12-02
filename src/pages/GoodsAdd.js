@@ -50,24 +50,26 @@ export const GoodsAdd = (props) => {
   // 입력체크
   const submitBtn = (e) => {
     const emptyValue = Object.values(inputValue).map((e) => {
-      return !e ? false : true;
-    });
+      return !e ? false : true
+    })
     if (emptyValue.includes(false) || !preview) {
-      window.alert("굿즈는 사진이 필수입니다");
+      window.alert("굿즈는 사진이 필수입니다")
       // console.log("빈값있음")
-      return;
+      return
     }
 
-    uploadFile(preview);
+    uploadFile(preview)
 
     const goodInfo = {
       goodsName,
       goodsContent,
       goodsPrice: null,
       filePath: preview ? fileName : "",
-    };
+    }
 
-    dispatch(goodsActions.addGoodsMD(goodInfo));
+    // 트랜잭션 하기
+
+    dispatch(goodsActions.addGoodsMD(goodInfo))
   };
 
   return (

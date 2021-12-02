@@ -53,12 +53,6 @@ const logInMD = (user_info) => {
         const accessToken = res.data.token
 
         setCookie("is_login", `${accessToken}`)
-        const token = getCookie("is_login")
-
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
         dispatch(logInCheckMD())
 
@@ -114,11 +108,6 @@ const logInCheckMD = () => {
 
         const login_user = { ...res.data }
 
-        const token = getCookie("is_login")
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
         dispatch(loginCheck(login_user))
 
         if (myteam === null) {
@@ -180,17 +169,11 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {서버주소/콜백}?code={AUTHORIZE_CODE}
-      .get(`http://54.180.148.132:8080/user/kakao/callback?code=${key}`)
+      .get(`https://hoae.shop/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 
         setCookie("is_login", access_token)
-
-        const token = getCookie("is_login")
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
         window.alert("카카오 로그인 완료")
         history.replace("/")
