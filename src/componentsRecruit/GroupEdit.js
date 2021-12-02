@@ -27,7 +27,7 @@ import { useVolumeBtn } from "../customHook/useVolumeBtn"
 
 export const GroupEdit = (props) => {
   const params = useParams()
-  const groupId = params.groupId
+  const groupId = params.id
 
   const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
@@ -36,11 +36,10 @@ export const GroupEdit = (props) => {
   const selectTeam_list = useSelector((state) => state.group.selectTeam_list)
 
   const loadDetail = useSelector((state) => state.groupDetail.groupPage)
-  const mylist = useSelector((state) => state.groupDetail.mylist)
 
   const img = ip + loadDetail.filePath
 
-  // loadDetail ? ip + loadDetail.filePath : props.defaultImg
+
 
   // 구단선택
   const team = loadDetail.groupDate?.split("vs")[1]

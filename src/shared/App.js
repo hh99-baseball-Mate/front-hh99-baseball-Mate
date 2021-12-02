@@ -13,7 +13,7 @@ import TimelineList from "../pages/TimelineList";
 import GroupList from "../pages/GroupList";
 import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
-import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
+import { GroupEdit } from "../componentsRecruit/GroupEdit";
 import { GroupAdd } from "../pages/GroupAdd";
 import { GoodsAdd } from "../pages/GoodsAdd";
 import MyGroup from "../pages/MyGroup";
@@ -28,7 +28,7 @@ import { ScreenList } from "../pages/ScreenList";
 import { ScreenAdd } from "../pages/ScreenAdd";
 import styled from "styled-components";
 import ScreenDetail from "../pages/ScreenDetail";
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
+import { ScreenEdit } from "../componentsRecruit/ScreenEdit"
 import ChatList from "../pages/ChatList"
 import ChatRoom from "../componentsChat/ChatRoom"
 import Community from "../pages/Community"
@@ -71,13 +71,13 @@ function App() {
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
               <Route
-                path="/groupdetail/:groupId"
+                path="/groupdetail/:id"
                 exact
                 component={GroupDetail}
               />
               <Route path="/screen" exact component={ScreenList} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
@@ -115,21 +115,21 @@ function App() {
               <Route path="/groupdate" exact component={GroupDate} />
               <Route path="/grouplist/groupadd" exact component={GroupAdd} />
               <Route
-                path="/groupdetail/:groupId"
+                path="/groupdetail/:id"
                 exact
                 component={GroupDetail}
               />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/groupdedit/:id" exact component={GroupEdit} />
 
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
               <Route
-                path="/screenedit/:screenId"
+                path="/screenedit/:id"
                 exact
                 component={ScreenEdit}
               />

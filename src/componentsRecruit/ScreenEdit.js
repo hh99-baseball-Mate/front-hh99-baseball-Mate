@@ -34,7 +34,7 @@ import { useInputs } from "../customHook/useInputs"
 
 export const ScreenEdit = (props) => {
   const params = useParams()
-  const screenId = params.screenId
+  const screenId = params.id
 
   const ip = process.env.REACT_APP_S3_SCREEN_URL
   const dispatch = useDispatch()
