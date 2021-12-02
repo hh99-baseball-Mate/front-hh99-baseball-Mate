@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Text } from "../components";
 import { Comments } from "../componentsGoods/Comments";
 import { UserProfile } from "../components/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
 const CommunityComment = (props) => {
   const dispatch = useDispatch();
+  //댓글작성내용
   const [message, setMessage] = useState("");
 
   // 댓글 작성시 유저정보를 기입하기 위해 불러옴
   const user_info = useSelector((state) => state.user.user_info);
-  const id = props.communCommentId;
+
+  //커뮤니티 값 가져오기
+  const id = props.communityId;
+
+  // communityCommentList값 가져오기
   const commentList = props?.communityCommentList;
+
   // 유저타입 가져오기
   const { usertype, picture } = user_info;
 
@@ -27,7 +32,7 @@ const CommunityComment = (props) => {
     dispatch(detailCr.deleteCommunCommrntAPI(id, commentId));
   };
 
-  //추가멘트
+  //추가버튼
   const addComment = () => {
     if (message !== "") {
       dispatch(detailCr.postCommunCommentAPI(id, message));

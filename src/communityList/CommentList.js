@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { Text } from "../components";
 
@@ -21,7 +20,7 @@ const CommentList = (props) => {
         </Wrap>
       </Box>
     </div>
-  )
+  );
 };
 
 export default CommentList;
