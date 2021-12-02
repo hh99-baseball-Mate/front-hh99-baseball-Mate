@@ -122,10 +122,15 @@ const getTeamAPI = (teamname) => {
 // 모임추가 시 구단 선택 했을 시 해당 구단의 경기 일정을 보여주기
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-    const teamname = myteam.split(" ")
+    // 요청을 보낼 때 롯데 자이언츠이면 롯데만 보내야해서 문자를 자름
+    const teamname = myteam.split(" ")[0]
 
+    console.log(teamname)
+
+    // 이벤트 경기가 아닐때의 요청
+    // if (!teamname === "이벤트") {
     instance
-      .get(`/kbodatas?team=${encodeURIComponent(teamname[0])}`)
+      .get(`/kbodatas?team=${encodeURIComponent(teamname)}`)
       .then((res) => {
         const _team = res.data
 
@@ -137,6 +142,27 @@ const selectTeamMD = (myteam) => {
       .catch((err) => {
         // console.log(err, "팀선택 err입니다.")
       })
+    // return
+    // }
+
+    // 이벤트 경기가 아닐때의 요청
+    // if (teamname === "이벤트") {
+    //   // 현재는 자선야구단 양신팀 vs 종범팀경기만 있기 때문에 양신팀으로 특정해서 보냄
+    //   instance
+    //     .get(`/kbodatas?team=${encodeURIComponent("양신팀")}`)
+    //     .then((res) => {
+    //       const _team = res.data
+
+    //       // 해당 구단 경기리스트에서 가장 최근 경기 5개를 가져옴
+    //       const team = _team.slice(-5)
+
+    //       dispatch(selectTeam(team))
+    //     })
+    //     .catch((err) => {
+    //       // console.log(err, "팀선택 err입니다.")
+    //     })
+    //   return
+    // }
   }
 }
 

@@ -6,7 +6,7 @@ import Swipers from "../components/Swipers"
 import { GroupCard } from "../components/GroupCard"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../redux/modules/group"
-import { baseUrl, clubImageSrc } from "../shared/clubImage"
+import { clubImageSrc } from "../shared/clubImage"
 import { Container, Header, Text, MarginBottom, NaviBar } from "../components"
 import { NotGame } from "../components/NotGame"
 import { Banner } from "../components/Banner"
@@ -113,7 +113,7 @@ const GroupList = (props) => {
                   setTeam(e.name)
                 }}
               >
-                <ClubIcon src={baseUrl + e.img} roundedCircle />
+                <ClubIcon src={e.img} roundedCircle />
                 <Text size="11px" center>
                   {e.name}
                 </Text>
