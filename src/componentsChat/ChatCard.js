@@ -8,7 +8,7 @@ const ChatCard = (props) => {
   const history = useHistory()
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_CHAT_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
 
   // console.log("ss",props)

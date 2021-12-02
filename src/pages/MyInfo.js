@@ -8,6 +8,7 @@ import { Modal } from "../components/Modal"
 import { Region } from "../componentsScreen/Region"
 import { actionCreators as userActions } from "../redux/modules/user"
 import { useProfile } from "../customHook/useProfile"
+import { useS3Upload } from "../customHook/useS3Upload"
 
 export const MyInfo = (props) => {
   const dispatch = useDispatch()
@@ -19,19 +20,29 @@ export const MyInfo = (props) => {
     user_info
 
   const [showModal, setShowModal] = useState(false)
+
+  // 자기 지역 담을 state
   const [region, setRegion] = useState(address)
+
+  // 자기소개 담을 state
   const [introduce, setIntroduce] = useState("")
+
+  // 미리보기(파일) 담을 state
   const [preview, setPreview] = useState("")
 
+  // S3업로드 커스텀훅
+  const [uploadFile, fileName] = useS3Upload(preview, "userProfile")
+
   const updateProfile = () => {
-    const formdata = new FormData()
+    uploadFile(preview)
 
-    formdata.append("selfIntroduction", introduce)
-    formdata.append("address", region)
-    formdata.append("file", preview)
+    const updateProfileDate = {
+      selfIntroduction: introduce,
+      address: region,
+      filePath: preview ? fileName : "",
+    }
 
-    // for (const keyValue of formdata) console.log(keyValue)
-    dispatch(userActions.userUpdateMD(formdata, useridx))
+    dispatch(userActions.userUpdateMD(updateProfileDate, useridx))
   }
 
   const goBack = () => {

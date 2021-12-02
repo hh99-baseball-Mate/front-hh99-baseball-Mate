@@ -41,6 +41,7 @@ const initialState = {
 
 // 미들웨어
 
+// 로그인
 const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, password } = user_info
@@ -54,6 +55,9 @@ const logInMD = (user_info) => {
 
         setCookie("is_login", `${accessToken}`)
 
+        // 로그인 후 로그인 유저 정보를 다시 받아옴
+        // 여기서 받아오는 로그인정보와 로그인체크에서 받아오는 정보가 다름 
+        // (로그인체크 리스폰값이 좀 더 디테일 한 정보)
         dispatch(logInCheckMD())
 
         const userInfo = {
@@ -77,6 +81,8 @@ const logInMD = (user_info) => {
   }
 }
 
+
+// 회원가입
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password, phonenumber, ranNum } = user_info
@@ -99,6 +105,7 @@ const signUpMD = (user_info) => {
   }
 }
 
+// 로그인유지 // 로그인 유저 정보를 다시 받아옴
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     instance

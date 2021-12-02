@@ -26,11 +26,8 @@ const CommunityCard = (props) => {
   } = props
 
   //게시글 이미지
-  // const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
 
   const [userImg] = useProfile(usertype, communityUserPicture)
-
-  // console.log(userImg)
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)

@@ -41,18 +41,20 @@ import { EditCommunComment } from "../communityList/EditCommunComment"
 import Loader from "../components/Loader"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_loaded = useSelector((state) => state.user.is_loaded);
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_loaded = useSelector((state) => state.user.is_loaded)
+  const is_login = useSelector((state) => state.user.is_login)
 
-  useEffect(() => {
-    if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
-    } else {
-      getCookie("is_login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (getCookie("is_login")) {
+  //     console.log("실행?")
+  //     dispatch(userActions.logInCheckMD())
+  //   } else {
+  //     dispatch(userActions.is_loaded(false))
+  //   }
+
+  // }, []);
 
   // 로그인이 아닐때 보여지는 페이지들 구분 // 나머지는 notFound
   return (
