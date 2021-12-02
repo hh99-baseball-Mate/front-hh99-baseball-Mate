@@ -125,6 +125,7 @@ const Profile = (props) => {
 
 export default React.memo(ChatRoomModal)
 
+
 const Background = styled.div`
   /* width: calc(100vw - 200px); */
   width: 100vw;

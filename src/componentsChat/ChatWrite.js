@@ -71,7 +71,7 @@ const Container = styled.div`
 
 
 const Box = styled.div`
-  /* max-width: 425px; */
+  max-width: 425px;
 	width: 100%;
   height: 74px;
   background: #fff;

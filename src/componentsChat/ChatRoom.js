@@ -235,10 +235,10 @@ const ChatRoom = (props) => {
     <Container ref={messageEndRef}>
       {/* <Container > */}
       <ArrowBack background="background" fixed="fixed" margin="margin">
-
+        
         
         <Warp flex="flex" align="center">
-        <Text>{roomInfo?.title}</Text>
+          <Text>{roomInfo?.title}</Text>
           <ModalBtn
             src={more2}
             alt=""
@@ -337,6 +337,8 @@ const Text = styled.div`
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
   width: 90%;
+  display: flex;
+  justify-content: center;
   margin: 0 auto;
 `;
 

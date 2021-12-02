@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { useHistory } from "react-router-dom";
 
 import { getCookie } from "../shared/Cookie";
 import { groupDetailCreators } from "../redux/modules/groupDetail";
@@ -11,20 +10,11 @@ import { screenDetailCreators } from "../redux/modules/screenDetail";
 import more from "../shared/icon/more.svg";
 import send from "../shared/icon/send.svg";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
-import { IoPeopleSharp } from "react-icons/io5";
 
 const GroupComment = memo((props) => {
 
-  // const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
-  let IMAGES_BASE_URL = ""
-
-  if (props.screen) {
-    IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-  } else {
-    IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
-  }
-  
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
@@ -39,12 +29,9 @@ const GroupComment = memo((props) => {
   const dispatch = useDispatch()
   const cookie = getCookie("is_login")
 
-console.log(profileImg)
-
-
-
 
   const [message, setMessage] = useState("")
+
 
   const addComment = () => {
 
@@ -352,7 +339,7 @@ const Modal = (props) => {
       }
     }
   }
-  // edit={edit}
+
   return (
     <React.Fragment>
       {/* <Box background="#fff"> */}
@@ -383,7 +370,6 @@ const EditComment = (props) => {
   const dispatch = useDispatch()
 
   const [message, setMessage] = useState(props.comment)
-  // console.log(message, props.id, props.groupCommentId,)
 
   // 수정버튼
   const editComment = () => {

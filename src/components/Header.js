@@ -18,7 +18,9 @@ const Header = (props) => {
   const { useridx, username } = user_info
 
   useEffect(() => {
-    dispatch(alarmCreators.load_alarmMW())
+    if (is_login) {
+      dispatch(alarmCreators.load_alarmMW())
+    }
   }, [])
 
   const alramBtn = () => {

@@ -5,9 +5,6 @@ import { useParams } from "react-router-dom";
 
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import { alarmCreators } from "../redux/modules/alarm";
-import Info from "../componentsScreenDetail/Info";
-import Participant from "../componentsScreenDetail/Participant";
-import Comment from "../componentsScreenDetail/Comment";
 import RecruitInfo from "../componentsRecruit/RecruitInfo"
 import RecruitParticipant from "../componentsRecruit/RecruitParticipant";
 import RecruitComment from "../componentsRecruit/RecruitComment";

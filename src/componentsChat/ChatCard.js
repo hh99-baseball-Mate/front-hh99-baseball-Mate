@@ -56,7 +56,6 @@ const ChatCard = (props) => {
           <Warp margin="7px 0 0 0" justify="space-between">
             <Text size="16px" weight="bold" width="280px" lineHeight="19px">
               {props.title}
-              {/* 안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다 */}
             </Text>
 
             {
