@@ -86,7 +86,7 @@ const loadScreenPageMW = (screenId) => {
       })
       .catch((err) => {
         dispatch(is_loaded(false))
-        // console.log(err)
+        console.log(err)
       })
       dispatch(is_loaded(false)) 
   }
@@ -127,11 +127,9 @@ const delScreenPageMW = (screenId) => {
 const likePostMW = (screenId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // // console.log("isLiked", isLiked)
     instance
       .post(`/screen/${screenId}/like`, isLiked)
       .then((res) => {
-        // console.log("모임찜", res)
         dispatch(like_post(screenId, isLiked))
         if (!like) {
           window.alert("찜 되었습니다!")

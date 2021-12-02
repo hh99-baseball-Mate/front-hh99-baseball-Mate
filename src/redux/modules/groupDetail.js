@@ -266,7 +266,6 @@ export default handleActions(
     [LOAD_GROUP_PAGE]: (state, action) =>
       produce(state, (draft) => {
         draft.groupPage = action.payload.groupPage
-        draft.is_loaded = true
       }),
     // [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
     // 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);

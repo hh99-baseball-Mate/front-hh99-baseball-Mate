@@ -48,13 +48,14 @@ function App() {
   const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
+    // dispatch(userActions.isLoaded(true))
     if (getCookie("is_login")) {
       dispatch(userActions.logInCheckMD())
     } else {
       getCookie("is_login")
     }
   }, [])
-
+console.log("is_loaded",is_loaded)
   // 로그인이 아닐때 보여지는 페이지들 // 나머지는 notFound
 
   // 어스 라우트 콤포넌트 쿠키 유무를 판단하고 그걸로
@@ -73,11 +74,11 @@ function App() {
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
               <Route
-                path="/groupdetail/:groupId"
+                path="/groupdetail/:id"
                 exact
                 component={GroupDetail}
               />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/groupdedit/:id" exact component={GroupEdit} />
               <Route path="/goods" exact component={Goods} />
               <Route path="/mygroup" exact component={MyGroup} />
               <Route path="/community" exact component={Community} />
@@ -104,11 +105,11 @@ function App() {
               <Route path="/groupdate" exact component={GroupDate} />
               <Route path="/grouplist/groupadd" exact component={GroupAdd} />
               <Route
-                path="/groupdetail/:groupId"
+                path="/groupdetail/:id"
                 exact
                 component={GroupDetail}
               />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/groupdedit/:id" exact component={GroupEdit} />
               <Route path="/timeline" exact component={TimelineList} />
               <Route path="/goods" exact component={Goods} />
               <Route path="/goods/goodsadd" exact component={GoodsAdd} />
@@ -126,7 +127,7 @@ function App() {
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
@@ -136,12 +137,12 @@ function App() {
                 component={EditCommunComment}
               />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
               <Route
-                path="/screenedit/:screenId"
+                path="/screenedit/:id"
                 exact
                 component={ScreenEdit}
               />

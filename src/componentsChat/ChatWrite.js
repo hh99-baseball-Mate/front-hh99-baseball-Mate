@@ -33,7 +33,7 @@ const ChatWrite = (props) => {
 	return (
 			<Container>
 
-				<Box>
+				<Box >
 					<Warp position="relative">
 						<Input type="text"
 							placeholder="메시지를 입력하세요" 
@@ -64,14 +64,15 @@ const ChatWrite = (props) => {
 export default ChatWrite;
 
 const Container = styled.div`
-  margin-bottom: 10px;
-	width: 425px;
-	/* opacity: 0.5; */
+  /* margin-bottom: 10px; */
+	max-width: 425px;
+	width: 100%;
 `;
 
 
 const Box = styled.div`
-  width: 425px;
+  /* max-width: 425px; */
+	width: 100%;
   height: 74px;
   background: #fff;
   padding: ${(props) => props.padding};
@@ -106,7 +107,7 @@ const Text = styled.div`
 `;
 
 const Input = styled.input`
-  width: 380px;
+  width: 350px;
   height: 44px;
   border: 1px solid #E7E7E7;
   border-radius: 50px;

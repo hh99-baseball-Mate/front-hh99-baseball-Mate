@@ -8,13 +8,16 @@ import { alarmCreators } from "../redux/modules/alarm";
 import Info from "../componentsScreenDetail/Info";
 import Participant from "../componentsScreenDetail/Participant";
 import Comment from "../componentsScreenDetail/Comment";
+import RecruitInfo from "../componentsRecruit/RecruitInfo"
+import RecruitParticipant from "../componentsRecruit/RecruitParticipant";
+import RecruitComment from "../componentsRecruit/RecruitComment";
 import { ArrowBack } from "../components"
 
 
 const ScreenDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
-  const screenId = params.screenId
+  const id = params.id
 
   const loadDetail = useSelector((state) => state.screenDetail.screenPage)
   const mylist = useSelector((state) => state.screenDetail.screenMylist)
@@ -25,16 +28,16 @@ const ScreenDetail = (props) => {
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myScreenLikesList = mylist?.myScreenLikesList
-  const likePost = myScreenLikesList?.indexOf(Number(screenId))
+  const likePost = myScreenLikesList?.indexOf(Number(id))
 
   // 승인요청 신청자 찾기
   const awaitScreenList = useSelector((state) => state.alarm?.awaitScreenList)
   // console.log("awaitList", awaitList)
-  const myScreenWait = awaitScreenList.findIndex(list => list.postId == screenId)
+  const myScreenWait = awaitScreenList.findIndex(list => list.postId == id)
   
 
   useEffect(() => {
-    dispatch(screenDetailCreators.loadScreenPageMW(screenId))
+    dispatch(screenDetailCreators.loadScreenPageMW(id))
     dispatch(screenDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitScreenChatListMW())
 
@@ -43,7 +46,7 @@ const ScreenDetail = (props) => {
     } else {
       setHeart(false)
     }
-  }, [dispatch, screenId, join, likePost, myScreenWait])
+  }, [dispatch, id, join, likePost, myScreenWait])
 
 
 
@@ -52,14 +55,15 @@ const ScreenDetail = (props) => {
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
         {/* 글 정보 */}
-        <Info
+        <RecruitInfo
+          screen
           {...loadDetail}
           {...mylist}
           heart={heart}
           setHeart={setHeart}
         />
 
-        {/* 참여자 & 방명록 */}
+        {/* 참여자 & 방명록 선택 버튼 */}
         <Box height="65px">
           <Warp padding="20px 0 0 0">
             <ParticipantBtn
@@ -84,8 +88,10 @@ const ScreenDetail = (props) => {
 
           <Rectangle />
 
+          {/* 참여자 & 방명록 */}
           {selectPage === true ? (
-            <Participant
+            <RecruitParticipant
+              screen
               {...loadDetail}
               {...mylist}
               myScreenWait={myScreenWait}
@@ -93,7 +99,7 @@ const ScreenDetail = (props) => {
               setJoin={setJoin}
             />
           ) : (
-            <Comment {...loadDetail} {...mylist} />
+            <RecruitComment screen {...loadDetail} {...mylist} />
           )}
         </Box>
       </Container>
