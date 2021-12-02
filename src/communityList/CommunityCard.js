@@ -2,35 +2,30 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Text } from "../components";
 import Question from "../shared/icon/Question.png";
-import Progress from "../components/Progress";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
 import { history } from "../redux/configStore";
-import { useProfile } from "../customHook/useProfile"
 
 const CommunityCard = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const {
     myTeam,
     content,
     userName,
     communityUserPicture,
-    onClick,
     dayBefore,
     communityId,
     communityCommentList,
-  } = props
+  } = props;
 
   //게시글 이미지
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
-
-  // const [userImg] = useProfile()
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
 
   // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   // 삭제/수정 모달내용
   const modalData = {
@@ -39,18 +34,18 @@ const CommunityCard = (props) => {
     descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
     btnUpdate: "삭제",
-  }
-
+  };
+  //삭제 버튼
   const deleteBtn = () => {
-    dispatch(communityCr.deleteCommunityAPI(communityId))
-    setShowModal(false)
-  }
+    dispatch(communityCr.deleteCommunityAPI(communityId));
+    setShowModal(false);
+  };
 
   return (
     <div>
       <Card
         onClick={() => {
-          history.push(`/community/communitydetail/${communityId}`)
+          history.push(`/community/communitydetail/${communityId}`);
         }}
       >
         <UserInfo>
@@ -70,7 +65,6 @@ const CommunityCard = (props) => {
         <TextBox>{content}</TextBox>
         <Border />
         <Good>
-
           <CommentIcon src={Question} alt="말풍선" />
 
           <Text size="12px" margin="0 0 0 7px">
@@ -80,6 +74,7 @@ const CommunityCard = (props) => {
 
         <Boundary />
       </Card>
+      {/* 모달 */}
       {showModal && (
         <Modal
           center
@@ -89,17 +84,16 @@ const CommunityCard = (props) => {
         ></Modal>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CommunityCard
+export default CommunityCard;
 
 const Card = styled.div`
   width: 100%;
   cursor: pointer;
   margin-top: 20px;
-`
-
+`;
 
 const UserImg = styled.img`
   width: 48px;
@@ -107,22 +101,22 @@ const UserImg = styled.img`
   border-radius: 50%;
   background: aliceblue;
   border: 1px solid #e7e7e7;
-`
+`;
 
 const UserInfo = styled.div`
   display: flex;
-`
+`;
 
 const InfoBox = styled.div`
   flex-direction: column;
   display: "flex";
   margin-left: 12px;
-`
+`;
 
 const Time = styled.div`
   display: flex;
   margin-top: 5px;
-`
+`;
 
 const TextBox = styled.div`
   width: 100%;
@@ -131,26 +125,23 @@ const TextBox = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 20px 0;
-
 `;
-
 
 const Border = styled.div`
   border: 1px solid #e7e7e7;
   width: 100%;
-
 `;
 
 const Boundary = styled.div`
   background: #f8f8f8;
   width: 100%;
   height: 6px;
-`
+`;
 
 const Good = styled.div`
   display: flex;
   margin: 10px;
-`
+`;
 
 const MoreIcons = styled(BsThreeDots)`
   align-items: center;
@@ -158,10 +149,9 @@ const MoreIcons = styled(BsThreeDots)`
   cursor: pointer;
   position: absolute;
   right: 70px;
-`
+`;
 
 const CommentIcon = styled.img`
   width: 12px;
   height: 12px;
-`
-
+`;

@@ -13,11 +13,11 @@ import { actionCreators as communityCr } from "../redux/modules/community";
 import { UserProfile } from "../components/UserProfile";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
-  //params의 값 가져오기
-  // const params = useParams();
-  //커뮤니티 ID
-  // const communityId = params.communityId;
-  // console.log(communityId, "군고구마");
+  // params의 값 가져오기
+  const params = useParams();
+  // 커뮤니티 ID
+  const communityId = params.communityId;
+  console.log(communityId, "군고구마");
 
   //디테일페이지 data
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
@@ -34,13 +34,10 @@ export const CommunityDetail = (props) => {
 
   //커뮤니티 사진
   const img = process.env.REACT_APP_S3_COMMU_URL + filePath;
-  //커뮤니티 id값
-  const communCommentId = props.match.params.communityId;
-  console.log(communCommentId, "우유");
 
   //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {
-    dispatch(actionCr.getCommunDetailAPI(communCommentId));
+    dispatch(actionCr.getCommunDetailAPI(communityId));
   }, [detail_list.communityCommentList?.length]);
 
   // 모달 보여주기/숨기기
@@ -58,15 +55,13 @@ export const CommunityDetail = (props) => {
 
   //삭제 버튼
   const deleteBtn = () => {
-    dispatch(communityCr.deleteCommunityAPI(communCommentId));
+    dispatch(communityCr.deleteCommunityAPI(communityId));
     setShowModal(false);
   };
 
   //수정 버튼
   const updataBtn = () => {
-    history.push(
-      `/community/communitydetail/editcommuncomment/${communCommentId}`
-    );
+    history.push(`/community/communitydetail/editcommuncomment/${communityId}`);
   };
 
   // 유저정보= 게시글 쓴 사람 정보 확인용
@@ -125,7 +120,7 @@ export const CommunityDetail = (props) => {
           <Boundary />
         </Card>
         {/*댓글에서 디테일 data가져오기 */}
-        <CommunityComment {...detail_list} communCommentId={communCommentId} />
+        <CommunityComment {...detail_list} communityId={communityId} />
       </Container>
       {/* 모달ㄴ */}
       {showModal && (
