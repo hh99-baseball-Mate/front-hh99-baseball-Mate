@@ -56,7 +56,7 @@ const logInMD = (user_info) => {
         setCookie("is_login", `${accessToken}`)
 
         // 로그인 후 로그인 유저 정보를 다시 받아옴
-        // 여기서 받아오는 로그인정보와 로그인체크에서 받아오는 정보가 다름 
+        // 여기서 받아오는 로그인정보와 로그인체크에서 받아오는 정보가 다름
         // (로그인체크 리스폰값이 좀 더 디테일 한 정보)
         dispatch(logInCheckMD())
 
@@ -76,11 +76,11 @@ const logInMD = (user_info) => {
         history.push("/")
       })
       .catch((err) => {
+        console.log(err)
         window.alert("일치하는 회원정보가 없습니다.")
       })
   }
 }
-
 
 // 회원가입
 const signUpMD = (user_info) => {
@@ -131,8 +131,8 @@ const logInCheckMD = () => {
 const userUpdateMD = (formdata, id) => {
   return function (dispatch, getState, { history }) {
     // 유저 프로필 업데이트
-    img
-      .patch(`/users/${id}`, formdata)
+    instance
+      .put(`/users/${id}`, formdata)
       .then((res) => {
         dispatch(logInCheckMD())
         history.replace(`/mypage/${id}`)

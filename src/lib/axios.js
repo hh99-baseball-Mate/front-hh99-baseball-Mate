@@ -18,9 +18,9 @@ export const instance = axios.create({
 instance.interceptors.request.use((config) => {
   const token = getCookie("is_login")
   if (token) {
-    config.defaults.headers.common["X-AUTH-TOKEN"] = token
+    config.headers.common["X-AUTH-TOKEN"] = token
   } else {
-    config.defaults.headers.common["X-AUTH-TOKEN"] = null
+    config.headers.common["X-AUTH-TOKEN"] = null
   }
   return config
 })
