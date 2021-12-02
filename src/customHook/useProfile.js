@@ -5,7 +5,7 @@ export const useProfile = (usertype, imgPath) => {
 
   const userImg = () => {
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + imgPath
+      return process.env.REACT_APP_S3_USER_PROFILE_URL + imgPath
     }
     if (usertype === "kakao") {
       return imgPath

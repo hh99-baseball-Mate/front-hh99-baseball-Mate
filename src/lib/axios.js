@@ -3,7 +3,7 @@ import { getCookie } from "../shared/Cookie";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-const instance = axios.create({
+export const instance = axios.create({
   // 기본적으로 우리가 바라볼 서버의 주소
   baseURL: BASE_URL,
   headers: {
@@ -15,9 +15,8 @@ const instance = axios.create({
 
 // // 요청 then catch 전에 인터셉터(가로채기) 가로채서 토큰이 있을 경우 저장해줌
 
-instance.interceptors.request.use((config, error) => {
+instance.interceptors.request.use((config) => {
   const token = getCookie("is_login")
-  // config 를 매개변수로 사용해야함
   if (token) {
     config.headers.common["X-AUTH-TOKEN"] = token
   } else {
@@ -36,5 +35,3 @@ export const img = axios.create({
     "Access-Control-Allow-Origin": "*",
   },
 })
-
-export { instance }

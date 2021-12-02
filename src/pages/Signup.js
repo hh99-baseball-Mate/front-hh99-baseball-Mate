@@ -18,9 +18,6 @@ export const Signup = (props) => {
   const user_info = useSelector((state) => state.user.user_info);
   const is_auth = useSelector((state) => state.user.is_auth);
 
-  // console.log(is_auth, "asd")
-
-  // console.log(user_info)
   const dispatch = useDispatch();
 
   const validate = Yup.object({
