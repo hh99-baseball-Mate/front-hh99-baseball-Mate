@@ -1,11 +1,11 @@
-![logo](../front-hh99-baseball-Mate/src/shared/icon/image/사진.png)
+![image](../front-hh99-baseball-Mate/src/shared/icon/image/사진.png)
 <br/>
 
  <h2>같이 야구보러 가지 않을래?</h2>
 
 <br/>
 
-![logo](../front-hh99-baseball-Mate/src/shared/icon/image/Meetball%20main.jpg)
+![image](../front-hh99-baseball-Mate/src/shared/icon/image/Meetball%20main.jpg)
 [사이트 링크 바로가기](https://meetball.shop/)
 
 <br/>
