@@ -2,6 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import moment from "moment";
 
 import { getCookie } from "../shared/Cookie";
 import logger from "../shared/Console"
@@ -95,8 +96,7 @@ const ChatRoom = (props) => {
   useEffect(() => {
     // 방 정보가 없는 경우 홈으로 돌려보내기
     if (!room_id) {
-      return window
-        .alert(
+      window.alert(
           "잘못된 접근입니다.",
           "홈으로 돌아갑니다.",
           "채팅 신청 후 채팅탭을 이용해주세요."
@@ -127,13 +127,14 @@ const ChatRoom = (props) => {
               // logger("구독후 새로운 메세지 data", newMessage);
               // console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
-              dispatch(chatCreators.getChatMessagesAX(room_id))
+              // dispatch(chatCreators.getChatMessagesAX(room_id))
 
               // 실시간 채팅 시간 넣어주는 부분
-              // const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
-              // dispatch(
-              //   chatCreators.getMessages({ ...newMessage,  })
-              // );
+              const now_time = moment().format("YYYY-MM-DD HH:mm");
+              console.log("now_time", now_time)
+              dispatch(
+                chatCreators.getMessages({ ...newMessage, modifiedAt: now_time  })
+              );
             },
             {
               token: token,
