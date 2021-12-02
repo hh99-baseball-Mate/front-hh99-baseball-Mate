@@ -7,6 +7,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
 import { history } from "../redux/configStore";
+import { useProfile } from "../customHook/useProfile";
 
 const CommunityCard = (props) => {
   const dispatch = useDispatch();
@@ -19,10 +20,12 @@ const CommunityCard = (props) => {
     dayBefore,
     communityId,
     communityCommentList,
+    usertype,
   } = props;
 
   //게시글 이미지
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+
+  const [userImg] = useProfile(usertype, communityUserPicture);
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false);
@@ -49,7 +52,7 @@ const CommunityCard = (props) => {
         }}
       >
         <UserInfo>
-          <UserImg src={img} />
+          <UserImg url={userImg} />
           <InfoBox>
             <Text bold>{userName}</Text>
             <Time>
@@ -95,11 +98,14 @@ const Card = styled.div`
   margin-top: 20px;
 `;
 
-const UserImg = styled.img`
+const UserImg = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: aliceblue;
+  background-image: url(${(props) => props.url});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   border: 1px solid #e7e7e7;
 `;
 

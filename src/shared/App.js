@@ -13,7 +13,7 @@ import TimelineList from "../pages/TimelineList";
 import GroupList from "../pages/GroupList";
 import GroupDate from "../pages/GroupDate";
 import GroupDetail from "../pages/GroupDetail";
-import { GroupEdit } from "../componentsGroupDetail/GroupEdit";
+import { GroupEdit } from "../componentsRecruit/GroupEdit";
 import { GroupAdd } from "../pages/GroupAdd";
 import { GoodsAdd } from "../pages/GoodsAdd";
 import MyGroup from "../pages/MyGroup";
@@ -28,7 +28,7 @@ import { ScreenList } from "../pages/ScreenList";
 import { ScreenAdd } from "../pages/ScreenAdd";
 import styled from "styled-components";
 import ScreenDetail from "../pages/ScreenDetail";
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
+import { ScreenEdit } from "../componentsRecruit/ScreenEdit"
 import ChatList from "../pages/ChatList"
 import ChatRoom from "../componentsChat/ChatRoom"
 import Community from "../pages/Community"
@@ -41,18 +41,16 @@ import { EditCommunComment } from "../communityList/EditCommunComment"
 import Loader from "../components/Loader"
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const is_loaded = useSelector((state) => state.user.is_loaded);
-  const is_login = useSelector((state) => state.user.is_login);
+  const is_loaded = useSelector((state) => state.user.is_loaded)
+  const is_login = useSelector((state) => state.user.is_login)
 
   useEffect(() => {
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD());
-    } else {
-      getCookie("is_login");
+      dispatch(userActions.logInCheckMD())
     }
-  }, []);
+  }, [])
 
   // 로그인이 아닐때 보여지는 페이지들 구분 // 나머지는 notFound
   return (
@@ -70,14 +68,10 @@ function App() {
               <Route exact path="/login/clubchoice" component={ClubChoice} />
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
-              <Route
-                path="/groupdetail/:groupId"
-                exact
-                component={GroupDetail}
-              />
+              <Route path="/groupdetail/:id" exact component={GroupDetail} />
               <Route path="/screen" exact component={ScreenList} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
@@ -110,28 +104,21 @@ function App() {
             </Switch>
           ) : (
             <Switch>
+              <Route exact path="/login/clubchoice" component={ClubChoice} />
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
               <Route path="/grouplist/groupadd" exact component={GroupAdd} />
-              <Route
-                path="/groupdetail/:groupId"
-                exact
-                component={GroupDetail}
-              />
-              <Route path="/groupdedit/:groupId" exact component={GroupEdit} />
+              <Route path="/groupdetail/:id" exact component={GroupDetail} />
+              <Route path="/groupdedit/:id" exact component={GroupEdit} />
 
               <Route path="/screen" exact component={ScreenList} />
               <Route path="/screen/screenadd" exact component={ScreenAdd} />
               <Route
-                path="/screen/screendetail/:screenId"
+                path="/screen/screendetail/:id"
                 exact
                 component={ScreenDetail}
               />
-              <Route
-                path="/screenedit/:screenId"
-                exact
-                component={ScreenEdit}
-              />
+              <Route path="/screenedit/:id" exact component={ScreenEdit} />
 
               <Route path="/community" exact component={Community} />
               <Route
@@ -174,10 +161,10 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
-        { !is_loaded && <Loader type="bars" color="#F25343"/> }
+        {!is_loaded && <Loader type="bars" color="#F25343" />}
       </Container>
     </>
-  );
+  )
 }
 
 export default App;

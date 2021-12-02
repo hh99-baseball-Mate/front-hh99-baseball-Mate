@@ -8,7 +8,7 @@ const ChatCard = (props) => {
   const history = useHistory()
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
 
   // console.log("ss",props)
@@ -56,7 +56,6 @@ const ChatCard = (props) => {
           <Warp margin="7px 0 0 0" justify="space-between">
             <Text size="16px" weight="bold" width="280px" lineHeight="19px">
               {props.title}
-              {/* 안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다안녕하세요~ 다들 그때 열심히 응원합시다 */}
             </Text>
 
             {

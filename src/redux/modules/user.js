@@ -41,6 +41,7 @@ const initialState = {
 
 // 미들웨어
 
+// 로그인
 const logInMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, password } = user_info
@@ -53,13 +54,10 @@ const logInMD = (user_info) => {
         const accessToken = res.data.token
 
         setCookie("is_login", `${accessToken}`)
-        const token = getCookie("is_login")
 
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
-
+        // 로그인 후 로그인 유저 정보를 다시 받아옴
+        // 여기서 받아오는 로그인정보와 로그인체크에서 받아오는 정보가 다름
+        // (로그인체크 리스폰값이 좀 더 디테일 한 정보)
         dispatch(logInCheckMD())
 
         const userInfo = {
@@ -78,11 +76,13 @@ const logInMD = (user_info) => {
         history.push("/")
       })
       .catch((err) => {
+        console.log(err)
         window.alert("일치하는 회원정보가 없습니다.")
       })
   }
 }
 
+// 회원가입
 const signUpMD = (user_info) => {
   return function (dispatch, getState, { history }) {
     const { userid, username, password, phonenumber, ranNum } = user_info
@@ -105,6 +105,7 @@ const signUpMD = (user_info) => {
   }
 }
 
+// 로그인유지 // 로그인 유저 정보를 다시 받아옴
 const logInCheckMD = () => {
   return function (dispatch, getState, { history }) {
     instance
@@ -114,11 +115,6 @@ const logInCheckMD = () => {
 
         const login_user = { ...res.data }
 
-        const token = getCookie("is_login")
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
         dispatch(loginCheck(login_user))
 
         if (myteam === null) {
@@ -135,8 +131,8 @@ const logInCheckMD = () => {
 const userUpdateMD = (formdata, id) => {
   return function (dispatch, getState, { history }) {
     // 유저 프로필 업데이트
-    img
-      .patch(`/users/${id}`, formdata)
+    instance
+      .put(`/users/${id}`, formdata)
       .then((res) => {
         dispatch(logInCheckMD())
         history.replace(`/mypage/${id}`)
@@ -180,17 +176,11 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {서버주소/콜백}?code={AUTHORIZE_CODE}
-      .get(`http://54.180.148.132:8080/user/kakao/callback?code=${key}`)
+      .get(`https://hoae.shop/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 
         setCookie("is_login", access_token)
-
-        const token = getCookie("is_login")
-        // 기본 헤더 토큰 재설정
-        instance.defaults.headers.common["X-AUTH-TOKEN"] = token
-        // 멀티 헤더 토큰 재설정
-        img.defaults.headers.common["X-AUTH-TOKEN"] = token
 
         window.alert("카카오 로그인 완료")
         history.replace("/")
@@ -304,6 +294,7 @@ const actionCreators = {
   logInMD,
   signUpMD,
   kakaoLogin,
+  logOut,
   logInCheckMD,
   userUpdateMD,
   choiceClubMD,

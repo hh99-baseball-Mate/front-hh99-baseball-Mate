@@ -104,7 +104,6 @@ const getTeamAPI = (teamname) => {
           dispatch(is_loaded(false))
           // console.log(err, "전체 모임 불러오기")
         })
-        dispatch(is_loaded(false))  
       return
     }
 
@@ -122,10 +121,13 @@ const getTeamAPI = (teamname) => {
 // 모임추가 시 구단 선택 했을 시 해당 구단의 경기 일정을 보여주기
 const selectTeamMD = (myteam) => {
   return function (dispatch, getState, { history }) {
-    const teamname = myteam.split(" ")
+    // 요청을 보낼 때 롯데 자이언츠이면 롯데만 보내야해서 문자를 자름
+    const teamname = myteam.split(" ")[0]
+
+    console.log(teamname)
 
     instance
-      .get(`/kbodatas?team=${encodeURIComponent(teamname[0])}`)
+      .get(`/kbodatas?team=${encodeURIComponent(teamname)}`)
       .then((res) => {
         const _team = res.data
 

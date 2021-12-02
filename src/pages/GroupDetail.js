@@ -5,18 +5,16 @@ import { useParams } from "react-router-dom"
 
 import { groupDetailCreators } from "../redux/modules/groupDetail"
 import { alarmCreators } from "../redux/modules/alarm";
-import Info from "../componentsGroupDetail/Info"
-import Participant from "../componentsGroupDetail/Participant"
-import Comment from "../componentsGroupDetail/GroupComment"
+import RecruitInfo from "../componentsRecruit/RecruitInfo"
+import RecruitParticipant from "../componentsRecruit/RecruitParticipant";
+import RecruitComment from "../componentsRecruit/RecruitComment";
 import { ArrowBack } from "../components"
 
-import { actionCreators as userActions } from "../redux/modules/user";
-import Loader from "../components/Loader"
 
 const GroupDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
-  const groupId = params.groupId
+  const id = params.id
 
   const loadDetail = useSelector((state) => state.groupDetail?.groupPage)
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -27,18 +25,16 @@ const GroupDetail = (props) => {
 
   // 하트(찜) 한것 배열 몇번째인지 찾기
   const myGroupLikesList = mylist?.myGroupLikesList
-  const likePost = myGroupLikesList?.indexOf(Number(groupId))
+  const likePost = myGroupLikesList?.indexOf(Number(id))
 
   // 승인요청 신청자 찾기
   const awaitList = useSelector((state) => state.alarm?.awaitList)
-  // console.log("awaitList", awaitList)
-  const myWait = awaitList.findIndex(list => list.postId == groupId)
+  // console.log("loadDetail", loadDetail)
+  const myWait = awaitList.findIndex(list => list.postId == id)
 
-  // const is_loaded = useSelector((state) => state.user.is_loaded)
 
   useEffect(() => {
-    // dispatch(userActions.isLoaded(false))
-    dispatch(groupDetailCreators.loadGroupPageMW(groupId))
+    dispatch(groupDetailCreators.loadGroupPageMW(id))
     dispatch(groupDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitChatListMW())
 
@@ -47,24 +43,23 @@ const GroupDetail = (props) => {
     } else {
       setHeart(false)
     }
-  }, [groupId, join, likePost, myWait])
+  }, [id, join, likePost, myWait])
 
 
   return (
     <React.Fragment>
-      {/* {!is_loaded && <Loader type="bars" color="#F25343"/>} */}
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
 
         {/* 글 정보 */}
-        <Info
+        <RecruitInfo
           {...loadDetail}
           {...mylist}
           heart={heart}
           setHeart={setHeart}
         />
 
-        {/* 참여자 & 방명록 */}
+        {/* 참여자 & 방명록 선택 버튼 */}
         <Box height="65px">
           <Warp padding="20px 0 0 0">
             <ParticipantBtn
@@ -84,8 +79,9 @@ const GroupDetail = (props) => {
 
           <Rectangle />
 
+          {/* 참여자 & 방명록 */}
           {selectPage === true ? (
-            <Participant
+            <RecruitParticipant
               {...loadDetail}
               {...mylist}
               myWait={myWait}
@@ -93,7 +89,7 @@ const GroupDetail = (props) => {
               setJoin={setJoin}
             />
           ) : (
-            <Comment {...loadDetail} {...mylist} />
+            <RecruitComment {...loadDetail} {...mylist} />
           )}
         </Box>
       </Container>

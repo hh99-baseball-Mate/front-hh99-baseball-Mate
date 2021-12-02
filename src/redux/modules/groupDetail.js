@@ -163,7 +163,7 @@ const delApplyMW = (groupId, userid) => {
         window.alert("모임참여가 취소되었습니다.")
       })
       .catch((err) => {
-        console.log("에러확인",err)
+        // console.log("에러확인",err)
       })
   }
 }
@@ -266,7 +266,6 @@ export default handleActions(
     [LOAD_GROUP_PAGE]: (state, action) =>
       produce(state, (draft) => {
         draft.groupPage = action.payload.groupPage
-        draft.is_loaded = true
       }),
     // [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
     // 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);

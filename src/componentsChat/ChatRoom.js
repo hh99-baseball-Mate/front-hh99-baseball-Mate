@@ -125,7 +125,7 @@ const ChatRoom = (props) => {
             (data) => {
               const newMessage = JSON.parse(data.body)
               // logger("구독후 새로운 메세지 data", newMessage);
-              console.log("구독후 새로운 메세지 data", newMessage)
+              // console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
               dispatch(chatCreators.getChatMessagesAX(room_id))
 
@@ -236,7 +236,8 @@ const ChatRoom = (props) => {
       {/* <Container > */}
       <ArrowBack background="background" fixed="fixed" margin="margin">
         
-        <Warp flex="flex" align="center" justify="center">
+        
+        <Warp flex="flex" align="center">
           <Text>{roomInfo?.title}</Text>
           <ModalBtn
             src={more2}
@@ -315,7 +316,7 @@ const Box = styled.div`
 `
 
 const Warp = styled.div`
-  /* max-width: 425px;0 */
+  /* max-width: 425px; */
 	width: 90%;
 	display: ${(props) => props.flex};
 	flex-direction: ${(props) => props.direction};
@@ -338,6 +339,7 @@ const Text = styled.div`
   width: 90%;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
 `;
 
 const Circle = styled.div`

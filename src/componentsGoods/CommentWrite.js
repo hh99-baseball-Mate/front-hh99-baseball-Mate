@@ -63,7 +63,7 @@ const CommentInputContainer = styled.div`
 `
 
 const CommentInputBox = styled.div`
-  width: 385px;
+  width: 100%;
   border-radius: 100px;
   background-color: #ffffff;
   display: flex;
@@ -74,7 +74,7 @@ const CommentInputBox = styled.div`
 `
 
 const CommentInput = styled.input`
-  width: 260px;
+  width: 80%;
   margin: 0 20px;
   padding: 5px;
   border: none;

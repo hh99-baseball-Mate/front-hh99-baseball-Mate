@@ -25,3 +25,4 @@ yarn-error.log*
 #  소셜로그인 
 # src/shared/SocialLogin
 .env
+.env.production

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import AWS from "aws-sdk"
 import { nanoid } from "nanoid"
 
@@ -7,7 +7,7 @@ export const useS3Upload = (preview, path) => {
   const _secretAccessKey = process.env.REACT_APP_S3_SECRET_ACEESS_KEY
 
   const region = "ap-northeast-2"
-  const S3_BUCKET = "meetball.shop"
+  const S3_BUCKET = "meetballimg"
 
   const [progress, setProgress] = useState(0)
 
@@ -32,7 +32,6 @@ export const useS3Upload = (preview, path) => {
 
   const uploadFile = (preview) => {
     if (!preview) {
-      console.log("안됨업로드")
       return
     }
 
