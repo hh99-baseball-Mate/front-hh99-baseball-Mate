@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { ArrowBack } from "../components";
 import { MarginBottom, NaviBar } from "../components";
 import { alarmCreators } from "../redux/modules/alarm";
-import { Modal } from "../components/Modal"
 import RequestAlarm from "../componentAlarm/RequestAlarm";
 import NormalAlarm from "../componentAlarm/NormalAlarm";
 

@@ -8,6 +8,7 @@ import ChatCard from "../componentsChat/ChatCard";
 import { chatCreators } from "../redux/modules/chat";
 
 const ChatList = (props) => {
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -17,7 +18,7 @@ const ChatList = (props) => {
     dispatch(chatCreators.loadChatListMW())
   }, [])
 
-  // console.log("chatList", chatList.length)
+  console.log("chatList", chatList)
 
   return (
     <React.Fragment>
@@ -54,12 +55,6 @@ const ChatList = (props) => {
           </Container>
         )
       }
-
-      {/* <Box>
-				<TimelineBtn onClick={()=>{history.push("/timeline")}}>
-					채팅이 없으면 다른 사람들과 한 줄 생각을 나눠보세요
-				</TimelineBtn>
-			</Box> */}
 
       <MarginBottom />
       <NaviBar chat />

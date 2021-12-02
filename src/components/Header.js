@@ -18,7 +18,9 @@ const Header = (props) => {
   const { useridx, username } = user_info
 
   useEffect(() => {
-    dispatch(alarmCreators.load_alarmMW())
+    if (is_login) {
+      dispatch(alarmCreators.load_alarmMW())
+    }
   }, [])
 
   const alramBtn = () => {
@@ -115,7 +117,6 @@ const Game = styled.li`
   background: none;
   color: rgba(0, 0, 0, 0.5);
   margin-right: 8px;
-
   ${(props) =>
     props.game &&
     `
@@ -133,7 +134,6 @@ const Screen = styled.li`
   background: none;
   color: rgba(0, 0, 0, 0.5);
   margin-right: 8px;
-
   ${(props) =>
     props.screen &&
     `
@@ -151,7 +151,6 @@ const Timeline = styled.li`
   background: none;
   color: rgba(0, 0, 0, 0.5);
   margin-right: 8px;
-
   ${(props) =>
     props.timeline &&
     `
@@ -169,7 +168,6 @@ const Community = styled.li`
   background: none;
   color: rgba(0, 0, 0, 0.5);
   margin-right: 8px;
-
   ${(props) =>
     props.community &&
     `
@@ -187,7 +185,6 @@ const Goods = styled.li`
   background: none;
   color: rgba(0, 0, 0, 0.5);
   margin-right: 8px;
-
   ${(props) =>
     props.goods &&
     `

@@ -1,31 +1,46 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
+import { groupDetailCreators } from "../redux/modules/groupDetail";
 import { screenDetailCreators } from "../redux/modules/screenDetail";
 import Progress from "../components/Progress";
-import { getCookie } from '../shared/Cookie';
+import { getCookie } from "../shared/Cookie";
 
-import heart_join from "../shared/icon/groupDetail/heart_join.svg"
-import heart_null from "../shared/icon/groupDetail/heart_null.svg"
-import calendar from "../shared/icon/calendar.svg"
-import location from "../shared/icon/location.svg"
-import colorUsers from "../shared/icon/colorUsers.svg"
-import users from "../shared/icon/users.svg"
-
+import heart_join from "../shared/icon/groupDetail/heart_join.svg";
+import heart_null from "../shared/icon/groupDetail/heart_null.svg";
+import calendar from "../shared/icon/calendar.svg";
+import location from "../shared/icon/location.svg";
+import colorUsers from "../shared/icon/colorUsers.svg";
+import users from "../shared/icon/users.svg";
 
 
 const Info = memo((props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
-  const screenId = params.screenId
+  const id = params.id
+
+  // const srcChange = () => {
+  //   if (preview) {
+  //     return URL.createObjectURL(preview)
+  //   } else if (usertype === "normal") {
+  //     return IMAGES_BASE_URL + picture
+  //   } else if (usertype === "kakao") {
+  //     return picture
+  //   } else {
+  //     return picture
+  //   }
+  // }
 
   // 사진 ip주소 + 사진이름 조합
   const ip = process.env.REACT_APP_IMAGES_BASE_URL
   const img = props.filePath
-  const imageUrl = process.env.REACT_APP_S3_SCREEN_URL + img
+
+  // 배경사진
+  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
+  const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 기본 로그인일 때 프로필 사진
   const profileImg = ip + props.createdUserProfileImg
@@ -34,49 +49,54 @@ const Info = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
+  const myGroupLikesList = props.myGroupLikesList
+
+
   const cookie = getCookie("is_login")
-  // 게시글 좋아요 누른것 표시
-  // useEffect(() => {
-  //   if (props.likePost !== -1) {
-  //     props.setHeart(true)
-  //     return
-  //   } else {
-  //     props.setHeart(false)
-  //   }
-  // }, [props.likePost])
-
-  // console.log("찜", props.heart, myScreenLikesList)
-
-  // 모집마감 표시
-  // useEffect(() => {
-  //   if (props.dday < 1) {
-  //     props.setClose(true)
-  //   } else {
-  //     props.setClose(false)
-  //   }
-  // }, [props])
-
-  // console.log("props.heart", props?.heart)
 
   // 찜(하트) 버튼
-  const heartBtn = () => {
+  const HeartBtn = () => {
+
     if (!cookie) {
       window.alert("로그인 후 이용해주세요")
       return
     }
+
     props.setHeart(!props?.heart)
-    dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))
+
+    // 스야 컴포넌트일때
+    if (props.screen) {    
+      dispatch(screenDetailCreators.likePostMW(props.id, props?.heart))
+      return
+    }
+    // 직관 컴포넌트일때
+    dispatch(groupDetailCreators.likePostMW(id, props?.heart))
   }
 
   // 수정버튼
   const editBtn = () => {
-    history.push(`/screenedit/${screenId}`)
+    // 스야 컴포넌트일때
+    if (props.screen) {
+      history.push(`/screenedit/${id}`)
+      return
+    }
+    // 직관 컴포넌트일때
+    history.push(`/groupdedit/${id}`)
   }
 
   // 삭제버튼
   const delBtn = () => {
+
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
-      dispatch(screenDetailCreators.delScreenPageMW(props.id))
+
+      // 스야 컴포넌트일때
+      if (props.screen) {
+        dispatch(screenDetailCreators.delScreenPageMW(id))
+        return
+      }
+      // 직관 컴포넌트일때
+      dispatch(groupDetailCreators.delGroupPageMW(id))
+      // history.push("/grouplist")
     }
   }
 
@@ -86,10 +106,10 @@ const Info = memo((props) => {
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <Img url={imageUrl} />
+        <Img url={props.screen? imageScreenUrl : imageUrl} />
 
         {/* 찜버튼 */}
-        <JoinCircle onClick={heartBtn}>
+        <JoinCircle onClick={HeartBtn}>
           {props?.heart ? (
             <img src={heart_join} alt="Heart" style={{ cursor: "pointer" }} />
           ) : (
@@ -155,7 +175,7 @@ const Info = memo((props) => {
             )}
           </Warp>
         </Warp>
-
+        {/* <div style={{width:"295px"}}> */}
         <Text
           size="16px"
           weight="bold"
@@ -165,6 +185,7 @@ const Info = memo((props) => {
         >
           {props.title}
         </Text>
+        {/* </div> */}
 
         <Warp justify="space-between" align="center" marginT="11px">
           {/* 인원 상태바 */}
@@ -200,16 +221,27 @@ const Info = memo((props) => {
           <Text color="#777777" size="12px">
             {props.groupDate}
           </Text>
+
           <Slice> &ensp;|&ensp; </Slice>
-          <img src={location} alt="location" />
-          <Text color="#777777" size="12px">
-            {props.placeInfomation}
-          </Text>
-          <Slice> &ensp;|&ensp; </Slice>
+
+          { 
+            props.screen && (
+              <>
+                <img src={location} alt="location" />
+                <Text color="#777777" size="12px">
+                  {props.placeInfomation}
+                </Text>
+
+                <Slice> &ensp;|&ensp; </Slice> 
+              </>
+            )
+          }
+
           <img src={users} alt="users" />
           <Text color="#777777" size="12px">
             최대 {props.peopleLimit}명
           </Text>
+
         </Warp>
       </Box>
 
@@ -222,7 +254,7 @@ const Info = memo((props) => {
         padding="10px 30px"
       >
         <Warp width="55px" height="55px">
-          {/* 일반프사 & 카카오프사 */}
+          {/* 기본프사 & 카카오프사 */}
           <Circle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
         </Warp>
         <Warp direction="column" marginLeft="12px">
@@ -248,11 +280,6 @@ const Info = memo((props) => {
         <Text size="14px" color="#333333">
           {props.content}
         </Text>
-
-        {/* 댓글 전체 보기
-        <Text onClick={moreBtn} style={{cursor: "pointer"}} size="14px" color="#adb5bd" >
-          더보기 
-        </Text> */}
       </Box>
 
       <Rectangle />
@@ -261,11 +288,9 @@ const Info = memo((props) => {
 })
 
 Info.defaultProps = {
-  id: "",
-  myScreenLikesList: [],
-  // appliedUserInfo: [{UserImage: 'sample.png', Username: '', UserId: '', UserInx: ''}],
-  UserImage: "sample.png"
-}
+  myGroupLikesList: [],
+  UserImage: "sample.png",
+};
 
 export default Info;
 
@@ -276,7 +301,6 @@ const Container = styled.div`
   /* height: auto; */
   margin: 0 auto;
   position: relative;
-  z-index: 0;
 `;
 
 const Box = styled.div`
@@ -299,7 +323,7 @@ const Img = styled.div`
   background-color: #c4c4c4;
   background: url(${(props) => props.url});
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
 `;
 
@@ -369,8 +393,12 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
-  /* word-break: break-all; */
-
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; */
+  /* white-space: nowrap; */
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
 `;
 
 const Circle = styled.div`
@@ -378,11 +406,11 @@ const Circle = styled.div`
   height: 48px;
   border-radius: 50%;
   background: #c4c4c4;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   background-image: url(${(props) => props.url});
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
 `;
 
 const Slice = styled.div`
@@ -391,7 +419,7 @@ const Slice = styled.div`
 `;
 
 const Rectangle = styled.div`
-	background: #E7E7E7;
-	width: 100%;
-	height: 6px;
+  background: #e7e7e7;
+  width: 100%;
+  height: 6px;
 `;

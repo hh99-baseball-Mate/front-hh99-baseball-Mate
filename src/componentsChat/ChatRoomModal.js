@@ -26,17 +26,7 @@ const ChatRoomModal = (props) => {
   const kakaoImg = me.picture
 
   const chatList = useSelector((state) => state.chat?.chatList)
-  // console.log("chatList", chatList, props.room_id)
-  // const chatInfo = chatList.find(list => list.roomId == props.room_id)
-  // console.log("groupId", chatInfo.groupId)
 
-  //  useEffect (() => {
-  //   // dispatch(chatCreators.getChatUserAX(props.room_id))
-  //   dispatch(chatCreators.loadChatListMW())
-  //  },[])
-  // // const chatUser = () => {
-  // //   dispatch(chatCreators.getChatUserAX(props.postId))
-  // // }
 
   // 모달 오버레이에서 스크롤 방지
   React.useEffect(() => {
@@ -98,7 +88,7 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Footer
+        <Footer position="fixed" 
           onClick={() => {
             props.roomInfo.chatRoomtype === "screen"
               ? leaveScreenChat()
@@ -134,6 +124,7 @@ const Profile = (props) => {
 }
 
 export default React.memo(ChatRoomModal)
+
 
 const Background = styled.div`
   /* width: calc(100vw - 200px); */
