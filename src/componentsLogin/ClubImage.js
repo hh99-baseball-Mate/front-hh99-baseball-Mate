@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { Text } from "../components"
 import { actionCreators as userActions } from "../redux/modules/user"
-import { clubImageSrc, baseUrl } from "../shared/clubImage"
+import { clubImageSrc } from "../shared/clubImage"
 
 export const ClubImage = ({ historyPage }) => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ export const ClubImage = ({ historyPage }) => {
         <Choice key={src.id}>
           <Bg>
             <ClubImg
-              src={baseUrl + src.img}
+              src={src.img}
               style={{ width: "98px", padding: "10px" }}
               name={src.name}
               onClick={choiceClub}

@@ -35,8 +35,7 @@ export const CommunityDetail = (props) => {
   //커뮤니티 사진
   const img = process.env.REACT_APP_S3_COMMU_URL + filePath;
   //커뮤니티 id값
-  const communCommentId = props.match.params.communityId;
-  console.log(communCommentId, "우유");
+  const communCommentId = props.match.params.communityId
 
   //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {

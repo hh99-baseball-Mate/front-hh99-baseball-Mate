@@ -163,7 +163,7 @@ const delApplyMW = (groupId, userid) => {
         window.alert("모임참여가 취소되었습니다.")
       })
       .catch((err) => {
-        console.log("에러확인",err)
+        // console.log("에러확인",err)
       })
   }
 }

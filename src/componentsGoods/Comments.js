@@ -20,8 +20,6 @@ export const Comments = memo((props) => {
     commentId,
   } = props
 
-  console.log(props)
-
   // 미리보기 유저타입 구분하여 프로필 사진 커스텀 훅으로 넣어주기
   const userImage = comment_preview?.commentUserPicture
     ? comment_preview?.commentUserPicture

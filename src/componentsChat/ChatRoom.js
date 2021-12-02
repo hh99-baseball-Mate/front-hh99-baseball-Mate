@@ -125,7 +125,7 @@ const ChatRoom = (props) => {
             (data) => {
               const newMessage = JSON.parse(data.body)
               // logger("구독후 새로운 메세지 data", newMessage);
-              console.log("구독후 새로운 메세지 data", newMessage)
+              // console.log("구독후 새로운 메세지 data", newMessage)
               // setMessages(newMessage)
               dispatch(chatCreators.getChatMessagesAX(room_id))
 
