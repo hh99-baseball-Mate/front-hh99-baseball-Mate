@@ -6,17 +6,15 @@ import { Modal } from "../components/Modal"
 import { useHistory } from "react-router";
 
 const AlarmCard = (props) => {
-
   const history = useHistory()
-	const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // console.log("AlarmCard", props)
 
   // 모달
-	const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   let modalData = {}
   if (props.alarmType === "Normal") {
-
     modalData = {
       title: "알람 에디터",
       descriptionOne: "알람을 확인/삭제 하시겠습니까?",
@@ -24,7 +22,6 @@ const AlarmCard = (props) => {
       btnConfirm: "보기",
       btnUpdate: "삭제",
     }
-
   } else {
     modalData = {
       title: "알람 에디터",
@@ -35,39 +32,34 @@ const AlarmCard = (props) => {
     }
   }
 
-
-
-  
   let num = null
   let requestList = null
   let screenNum = null
   let requestScreenList = null
 
-  if(props.request) {
-
+  if (props.request) {
     // 경기모임 누가 요청했는지 찾기
     num = props.requestList.findIndex(
-      (list) => list.joinRequestId === props.joinRequestId)
+      (list) => list.joinRequestId === props.joinRequestId
+    )
     requestList = props.requestList[num]
 
     // 스야모임 누가 요청했는지 찾기
     screenNum = props.requestScreenList.findIndex(
-      (list) => list.joinRequestId === props.joinRequestId)
+      (list) => list.joinRequestId === props.joinRequestId
+    )
     requestScreenList = props.requestScreenList[screenNum]
   }
 
-  
   let userImg = ""
-  if(props.request) {
-
-    if(props.alarmType === "Group") {
+  if (props.request) {
+    if (props.alarmType === "Group") {
       userImg = requestList.profileImg
     } else {
-      userImg = requestScreenList.profileImg;
+      userImg = requestScreenList.profileImg
     }
   }
 
-  
   // 서버주소
   const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
 
@@ -77,11 +69,10 @@ const AlarmCard = (props) => {
 
   // 기본 로그인일 때 프로필 사진
   const profileImg = ip + userImg
-  
+
   // kakaocdn (카카오 프사인지 확인)
   const kakaoCheck = props.userImg?.split(".")[1]
   const kakaoImg = props.userImg
-
 
   // 그룹참가 허용
   const allow = () => {
@@ -129,21 +120,18 @@ const AlarmCard = (props) => {
     }
   }
 
-
   // 게시글이동
   const movePost = () => {
-    if(props.normalType === "group") {
+    if (props.normalType === "group") {
       return history.push(`/groupdetail/${props.postId}`)
-    } else if(props.normalType === "screen") {
+    } else if (props.normalType === "screen") {
       return history.push(`/screen/screendetail/${props.postId}`)
-    } else if(props.normalType === "community") {
+    } else if (props.normalType === "community") {
       return history.push(`/community/communitydetail/${props.postId}`)
-    } else if(props.normalType === "goods") {
+    } else if (props.normalType === "goods") {
       return history.push(`/goods/`)
     }
   }
-
-
 
   // 알람삭제
   const delAlert = () => {
@@ -166,19 +154,15 @@ const AlarmCard = (props) => {
   const contents = props.contents.split("*")
   // console.log(contents)
 
-	return (
+  return (
     <React.Fragment>
-
-		<Container position="relative">
-      <AlertCard onClick={() => setShowModal(true)}>
-        
-        {
-          props.request ?
-          <Img url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
-          :
-          <div>🔔</div>
-        }
-				
+      <Container position="relative">
+        <AlertCard onClick={() => setShowModal(true)}>
+          {props.request ? (
+            <Img url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
+          ) : (
+            <div>🔔</div>
+          )}
 
           <Text size="12px" width="70%">
             <Warp
@@ -187,26 +171,30 @@ const AlarmCard = (props) => {
               align="flex-start"
               justify="flex-start"
             >
-              { //경기모임 표시
-                (props.request && num !== -1) &&
-                <Ellipse
-                  borderColor="#F25343"
-                  background="#F25343"
-                  color="#FFFFFF"
-                >
-                  경기모임
-                </Ellipse>
+              {
+                //경기모임 표시
+                props.request && num !== -1 && (
+                  <Ellipse
+                    borderColor="#F25343"
+                    background="#F25343"
+                    color="#FFFFFF"
+                  >
+                    경기모임
+                  </Ellipse>
+                )
               }
 
-              { //스야모임 표시
-                (props.request && screenNum !== -1) &&
-                <Ellipse
-                  borderColor="#F25343"
-                  background="#FFF"
-                  color="#F25343"
-                >
-                  스야모임
-                </Ellipse>
+              {
+                //스야모임 표시
+                props.request && screenNum !== -1 && (
+                  <Ellipse
+                    borderColor="#F25343"
+                    background="#FFF"
+                    color="#F25343"
+                  >
+                    스야모임
+                  </Ellipse>
+                )
               }
 
               <div>{contents[0]}</div>
@@ -217,53 +205,51 @@ const AlarmCard = (props) => {
               <div>{contents[3]}</div>
             </Warp>
           </Text>
- 
 
-        <Text size="8px" color="#777777">
-          <Warp flex="flex" direction="column" align="center">
-            <div style={{ marginBottom: "3px" }}>{day}</div>
-            <div>{time}</div>
-          </Warp>
-        </Text>
-      </AlertCard>
-      <Rectangle />
+          <Text size="8px" color="#777777">
+            <Warp flex="flex" direction="column" align="center">
+              <div style={{ marginBottom: "3px" }}>{day}</div>
+              <div>{time}</div>
+            </Warp>
+          </Text>
+        </AlertCard>
+        <Rectangle />
 
-      {/* 경기모임일 때 모달창 */}
-      {props.alarmType === "Group" && showModal && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-          updataBtn={allow}
-          deleteBtn={refuse}
-        ></Modal>
-      )}
+        {/* 경기모임일 때 모달창 */}
+        {props.alarmType === "Group" && showModal && (
+          <Modal
+            three
+            setShowModal={setShowModal}
+            modalData={modalData}
+            updataBtn={allow}
+            deleteBtn={refuse}
+          ></Modal>
+        )}
 
-      {/* 스크린야구 모임일 때 모달창 */}
-      {props.alarmType === "Screen" && showModal && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-          updataBtn={allowScreen}
-          deleteBtn={refuseScreen}
-        ></Modal>
-      )}
+        {/* 스크린야구 모임일 때 모달창 */}
+        {props.alarmType === "Screen" && showModal && (
+          <Modal
+            three
+            setShowModal={setShowModal}
+            modalData={modalData}
+            updataBtn={allowScreen}
+            deleteBtn={refuseScreen}
+          ></Modal>
+        )}
 
-      {/* 일반 알람일 때 모달창 */}
-      {props.alarmType === "Normal" && showModal && (
-        <Modal
-          three
-          setShowModal={setShowModal}
-          modalData={modalData}
-          updataBtn={movePost}
-          deleteBtn={delNormalAlert}
-        ></Modal>
-      )}
-    </Container>
-
+        {/* 일반 알람일 때 모달창 */}
+        {props.alarmType === "Normal" && showModal && (
+          <Modal
+            three
+            setShowModal={setShowModal}
+            modalData={modalData}
+            updataBtn={movePost}
+            deleteBtn={delNormalAlert}
+          ></Modal>
+        )}
+      </Container>
     </React.Fragment>
-	)
+  )
 }
 
 export default AlarmCard;

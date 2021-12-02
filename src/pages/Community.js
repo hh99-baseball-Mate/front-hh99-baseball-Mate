@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import CommunityCard from "../communityList/CommunityCard";
@@ -11,7 +11,9 @@ const Community = (props) => {
 
   //카드 조회
   const card_list = useSelector((state) => state.community.card_list);
+  // 유저 정보
   const is_login = useSelector((state) => state.user.is_login);
+  //로그인 조회구별
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
@@ -23,18 +25,6 @@ const Community = (props) => {
   useEffect(() => {
     dispatch(actionCr.getCardAPI());
   }, []);
-
-  // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false);
-
-  // 삭제/수정 모달내용
-  const modalData = {
-    title: "굿즈 에디터",
-    descriptionOne: "선택하신 굿즈를 삭제 하시겠습니까?",
-    descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
-    btnClose: "취소",
-    btnUpdate: "삭제",
-  };
 
   return (
     <>

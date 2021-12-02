@@ -6,14 +6,11 @@ import { history } from "../redux/configStore"
 import { useDispatch, useSelector } from "react-redux"
 import { TextLine } from "../components/TextLine"
 import { actionCreators as userActions } from "../redux/modules/user"
+import { useProfile } from "../customHook/useProfile"
+import { UserProfile } from "../components/UserProfile"
 
 export const MyPage = ({ is_login }) => {
   const dispatch = useDispatch()
-
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
-
-  // const defaultUserProfile =
-  //   "http://kmvkf2hvhfn2vj9tl8e6ps7v-wpengine.netdna-ssl.com/wp-content/uploads/2017/10/default-img.png"
 
   const user_info = useSelector((state) => state.user.user_info)
   const {
@@ -27,15 +24,8 @@ export const MyPage = ({ is_login }) => {
     myteam,
   } = user_info
 
-  const srcChange = () => {
-    if (usertype === "normal") {
-      return IMAGES_BASE_URL + picture
-    } else if (usertype === "kakao") {
-      return picture
-    } else {
-      return picture
-    }
-  }
+  // 유저 프로필 사진 가져오기 커스텀훅
+  const [userImg] = useProfile(usertype, picture)
 
   const logOutBtn = () => {
     // 미들웨어를 안썼기 때문에 혹시 모를 err에 대비해서 try catch를 써봄
@@ -44,6 +34,7 @@ export const MyPage = ({ is_login }) => {
       window.alert("로그아웃 하셨습니다.")
       history.replace("/")
     } catch (error) {
+      console.log(error)
       window.alert("로그아웃을 실패했습니다.")
     }
   }
@@ -55,7 +46,12 @@ export const MyPage = ({ is_login }) => {
         {is_login ? (
           <>
             <UserInfo>
-              <ProfileImg src={srcChange()} />
+              {/* 유저사진 */}
+              <ProfileImg>
+                <UserProfile size="48" url={userImg} />
+              </ProfileImg>
+
+              {/* 아이디 이메일 팀, 주소 유저정보 모음 */}
               <UserId>
                 <Text size="14px">{username}</Text>
                 <Text color="#777777" size="12px" margin="5px 0 10px">
@@ -65,17 +61,15 @@ export const MyPage = ({ is_login }) => {
                   {myteam} {address}
                 </Text>
               </UserId>
-              <BsGear
+
+              {/* 수정하기 버튼 */}
+              <GearIcons
                 size="20px"
-                style={{
-                  position: "absolute",
-                  right: "20px",
-                  cursor: "pointer",
-                }}
                 onClick={() => history.push(`/mypage/${useridx}/update`)}
               />
             </UserInfo>
 
+            {/* 자기소개글 */}
             <div style={{ margin: "0 20px 20px" }}>
               <Inputs
                 textarea
@@ -92,6 +86,7 @@ export const MyPage = ({ is_login }) => {
 
         <Line />
 
+        {/* 로그인 / 로그아웃 */}
         {!is_login ? (
           <TextLine
             onClick={() =>
@@ -106,17 +101,9 @@ export const MyPage = ({ is_login }) => {
           <TextLine onClick={logOutBtn}>로그아웃</TextLine>
         )}
 
-        {/* <TextLine onClick={() => history.push("/mygroup")}>내모임</TextLine> */}
         <TextLine onClick={() => history.push("/event")}>이벤트</TextLine>
 
-        <TextLine
-          onClick={() =>
-            // window.alert("준비중입니다")
-            history.push("/notice")
-          }
-        >
-          공지사항
-        </TextLine>
+        <TextLine onClick={() => history.push("/notice")}>공지사항</TextLine>
       </Container>
 
       {/* 하단네비바 */}
@@ -133,18 +120,14 @@ const Container = styled.div`
 `
 
 const UserInfo = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
   height: 90px;
+  position: relative;
 `
-const ProfileImg = styled.img`
-  width: 48px;
-  height: 48px;
+const ProfileImg = styled.div`
   margin: 20px;
-  border-radius: 50%;
-
   cursor: pointer;
 `
 
@@ -160,4 +143,10 @@ const NotLogin = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+const GearIcons = styled(BsGear)`
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
 `

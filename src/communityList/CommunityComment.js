@@ -3,20 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Text } from "../components";
 import { Comments } from "../componentsGoods/Comments";
-import { UserProfile } from "../componentsGoods/UserProfile";
+import { UserProfile } from "../components/UserProfile";
 import { actionCreators as detailCr } from "../redux/modules/communityDetail";
 import send from "../shared/icon/send.svg";
-import { history } from "../redux/configStore";
 const CommunityComment = (props) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
-  //유저 타입가져오기
-  const { usertype, communityUserPicture } = props;
 
   // 댓글 작성시 유저정보를 기입하기 위해 불러옴
   const user_info = useSelector((state) => state.user.user_info);
   const id = props.communCommentId;
   const commentList = props?.communityCommentList;
+  // 유저타입 가져오기
+  const { usertype, picture } = user_info;
 
   //수정버튼
   const updateCommentDispatch = (commentId, comment) => {
@@ -43,10 +42,10 @@ const CommunityComment = (props) => {
   //유저이미지
   const userImg = () => {
     if (usertype === "kakao") {
-      return communityUserPicture;
+      return picture;
     }
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+      return process.env.REACT_APP_IMAGES_BASE_URL + picture;
     }
   };
 
@@ -135,7 +134,6 @@ const TextArea = styled.input`
   width: 260px;
   margin: 0 20px;
   padding: 5px;
-  white-space: normal;
   border: none;
   ::placeholder {
     font-size: 13px;
@@ -144,7 +142,7 @@ const TextArea = styled.input`
   :focus {
     outline: none;
   }
-`
+`;
 
 const SendImg = styled.img`
   width: 16px;

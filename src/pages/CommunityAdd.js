@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
   ArrowBack,
@@ -11,19 +11,20 @@ import {
 } from "../components";
 import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
-import { usePreview } from "../customHook/usePreview";
 import { useS3Upload } from "../customHook/useS3Upload";
 import { actionCreators as actionCr } from "../redux/modules/community";
 const CommunityAdd = (props) => {
   const dispatch = useDispatch();
-  //이미지 미리보기 삭제 커스텀훅
-
-  const card_list = useSelector((state) => state.community.card_list);
 
   // 입력창
   const [content, setCotent] = useState("");
+  //사진
   const [preview, setPreview] = useState("");
 
+  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
+  const [uploadFile, fileName] = useS3Upload(preview, "commu");
+
+  //이미지수정
   const imgPreview = (e) => {
     setPreview(e.target.files[0]);
   };
@@ -37,9 +38,6 @@ const CommunityAdd = (props) => {
     setPreview("");
   };
 
-  // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "commu");
-
   //입력체크
   const submitBtn = (e) => {
     if (!content) {
@@ -47,15 +45,17 @@ const CommunityAdd = (props) => {
       // console.log("빈값있음")
       return;
     }
-
-    uploadFile(preview);
-
+    //커뮤니티 수정될 정보
     const communityInfo = {
       content,
       myTeam: null,
       filePath: preview ? fileName : "",
     };
 
+    // S3 업로드
+    uploadFile(preview);
+
+    //커뮤니티 수정정보 불러오기
     dispatch(actionCr.postAddAPI(communityInfo));
     e.target.disabled = true;
   };

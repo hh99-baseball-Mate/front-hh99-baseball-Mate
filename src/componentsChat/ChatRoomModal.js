@@ -88,7 +88,7 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Footer positio="fixed" 
+        <Footer position="fixed" 
           onClick={() => {
             props.roomInfo.chatRoomtype === "screen"
               ? leaveScreenChat()
