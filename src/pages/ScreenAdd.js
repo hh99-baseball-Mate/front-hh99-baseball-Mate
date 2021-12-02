@@ -176,8 +176,6 @@ export const ScreenAdd = (props) => {
                 maxDate={new Date(maxDate)}
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
-                // showTimeSelect
-                // isClearable
                 popperPlacement="bottom"
                 placeholderText="시간 선택"
                 dateFormat="MM월 dd일 (eee)"

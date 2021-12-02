@@ -235,9 +235,10 @@ const ChatRoom = (props) => {
     <Container ref={messageEndRef}>
       {/* <Container > */}
       <ArrowBack background="background" fixed="fixed" margin="margin">
+
         
-        <Warp flex="flex" align="center" justify="center">
-          <Text>{roomInfo?.title}</Text>
+        <Warp flex="flex" align="center">
+        <Text>{roomInfo?.title}</Text>
           <ModalBtn
             src={more2}
             alt=""
@@ -315,7 +316,7 @@ const Box = styled.div`
 `
 
 const Warp = styled.div`
-  /* max-width: 425px;0 */
+  /* max-width: 425px; */
 	width: 90%;
 	display: ${(props) => props.flex};
 	flex-direction: ${(props) => props.direction};
@@ -336,8 +337,7 @@ const Text = styled.div`
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
   width: 90%;
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;
 `;
 
 const Circle = styled.div`

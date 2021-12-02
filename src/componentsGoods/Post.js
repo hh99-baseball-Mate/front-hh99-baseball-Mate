@@ -5,10 +5,11 @@ import { BsThreeDots } from "react-icons/bs";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { Comments } from "./Comments";
 import { CommentWrite } from "./CommentWrite";
-import { UserProfile } from "./UserProfile";
-import { Modal } from "../components/Modal";
-import { useDispatch } from "react-redux";
-import { actionCreators as goodsActions } from "../redux/modules/goods";
+import { useProfile } from "../customHook/useProfile"
+import { Modal } from "../components/Modal"
+import { useDispatch } from "react-redux"
+import { actionCreators as goodsActions } from "../redux/modules/goods"
+import { UserProfile } from "../components/UserProfile"
 
 export const Post = memo((props) => {
   const dispatch = useDispatch()
@@ -39,15 +40,8 @@ export const Post = memo((props) => {
 
   const postImage = process.env.REACT_APP_S3_GOODS_URL + filePath
 
-  // 유저 프로필사진
-  const userImg = () => {
-    if (usertype === "kakao") {
-      return goodsUserPicture
-    }
-    if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + goodsUserPicture
-    }
-  }
+  // 유저프로필사진 커스텀훅
+  const [userImg] = useProfile(usertype, goodsUserPicture)
 
   // 좋아요 중복 검사
 
@@ -206,7 +200,7 @@ export const Post = memo((props) => {
       )}
     </>
   )
-});
+})
 
 Post.defaultProps = {};
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { ClubChoice } from "../pages/ClubChoice";
 import { Signup } from "../pages/Signup";
@@ -28,31 +28,30 @@ import { ScreenList } from "../pages/ScreenList";
 import { ScreenAdd } from "../pages/ScreenAdd";
 import styled from "styled-components";
 import ScreenDetail from "../pages/ScreenDetail";
-import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit";
-import { Loading } from "../components/Loading";
-import ChatList from "../pages/ChatList";
-import ChatRoom from "../componentsChat/ChatRoom";
-import Community from "../pages/Community";
-import { CommunityDetail } from "../pages/CommunityDetail";
-import CommunityAdd from "../pages/CommunityAdd";
-import { Goods } from "../pages/Goods";
-import { Notice } from "../pages/Notice";
-import { Event } from "../pages/Event";
+import { ScreenEdit } from "../componentsScreenDetail/ScreenEdit"
+import ChatList from "../pages/ChatList"
+import ChatRoom from "../componentsChat/ChatRoom"
+import Community from "../pages/Community"
+import { CommunityDetail } from "../pages/CommunityDetail"
+import CommunityAdd from "../pages/CommunityAdd"
+import { Goods } from "../pages/Goods"
+import { Notice } from "../pages/Notice"
+import { Event } from "../pages/Event"
 import { EditCommunComment } from "../communityList/EditCommunComment"
 import Loader from "../components/Loader"
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const is_loaded = useSelector((state) => state.user.is_loaded)
-  const is_login = useSelector((state) => state.user.is_login)
+  const is_loaded = useSelector((state) => state.user.is_loaded);
+  const is_login = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     // dispatch(userActions.isLoaded(true))
     if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
+      dispatch(userActions.logInCheckMD());
     } else {
-      getCookie("is_login")
+      getCookie("is_login");
     }
   }, [])
 console.log("is_loaded",is_loaded)
@@ -69,6 +68,7 @@ console.log("is_loaded",is_loaded)
               <Route exact path="/phoneAuth" component={PhoneAuth} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
+              <Route path="/mygroup" exact component={MyGroup} />
               <Route path="/user/kakao/callback" component={KAKAOhandle} />
               <Route exact path="/login/clubchoice" component={ClubChoice} />
               <Route path="/" exact component={GroupList} />
@@ -83,6 +83,12 @@ console.log("is_loaded",is_loaded)
               <Route path="/mygroup" exact component={MyGroup} />
               <Route path="/community" exact component={Community} />
               <Route
+                path="/community/communitydetail/:communityId"
+                exact
+                component={CommunityDetail}
+              />
+              <Route path="/goods" exact component={Goods} />
+              <Route
                 path="/alarm"
                 render={() => <Alarm is_login={is_login} />}
               />
@@ -91,16 +97,19 @@ console.log("is_loaded",is_loaded)
                 exact
                 render={() => <MyPage is_login={is_login} />}
               />
-              <Route path="/screen" exact component={ScreenList} />
               <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
+              <Route
+                path="/community/communitydetail/:communityId"
+                exact
+                component={CommunityDetail}
+              />
               {/* 임시 */}
               <Route component={NotFound} />
               <Redirect from="*" to="/" />
             </Switch>
           ) : (
             <Switch>
-              <Route exact path="/login/clubchoice" component={ClubChoice} />
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
               <Route path="/grouplist/groupadd" exact component={GroupAdd} />
@@ -132,36 +141,45 @@ console.log("is_loaded",is_loaded)
                 component={ScreenDetail}
               />
               <Route
-                path="/community/communitydetail/editcommuncomment/:communityId"
-                exact
-                component={EditCommunComment}
-              />
-              <Route
-                path="/screen/screendetail/:id"
-                exact
-                component={ScreenDetail}
-              />
-              <Route
-                path="/screenedit/:id"
+                path="/screenedit/:screenId"
                 exact
                 component={ScreenEdit}
               />
-              <Route path="/loading" exact component={Loading} />
-              <Route path="/chatlist" exact component={ChatList} />
-              <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
+
               <Route path="/community" exact component={Community} />
+              <Route
+                path="/community/communityadd"
+                exact
+                component={CommunityAdd}
+              />
               <Route
                 path="/community/communitydetail/:communityId"
                 exact
                 component={CommunityDetail}
               />
               <Route
-                path="/community/communityadd"
+                path="/community/communitydetail/editcommuncomment/:communityId"
                 exact
-                component={CommunityAdd}
+                component={EditCommunComment}
               />
+              <Route path="/goods" exact component={Goods} />
+              <Route path="/goods/goodsadd" exact component={GoodsAdd} />
+              <Route path="/chatlist" exact component={ChatList} />
+              <Route path="/chatlist/chatroom/:id" exact component={ChatRoom} />
+              <Route
+                path="/alarm"
+                render={() => <Alarm is_login={is_login} />}
+              />
+              <Route path="/mygroup" exact component={MyGroup} />
+              <Route
+                path="/mypage/:useridx"
+                exact
+                render={() => <MyPage is_login={is_login} />}
+              />
+              <Route path="/mypage/:useridx/update" exact component={MyInfo} />
               <Route path="/notice" component={Notice} />
               <Route path="/event" component={Event} />
+
               {/* 임시 */}
               {/* <Redirect */}
               <Route component={NotFound} />
@@ -172,7 +190,7 @@ console.log("is_loaded",is_loaded)
         { !is_loaded && <Loader type="bars" color="#F25343"/> }
       </Container>
     </>
-  )
+  );
 }
 
 export default App;

@@ -8,8 +8,10 @@ import { BsThreeDots } from "react-icons/bs";
 import { Modal } from "../components/Modal";
 import { actionCreators as communityCr } from "../redux/modules/community";
 import { history } from "../redux/configStore";
+import { useProfile } from "../customHook/useProfile"
+
 const CommunityCard = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const {
     myTeam,
@@ -20,13 +22,15 @@ const CommunityCard = (props) => {
     dayBefore,
     communityId,
     communityCommentList,
-  } = props;
+  } = props
 
   //게시글 이미지
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
+
+  // const [userImg] = useProfile()
 
   // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   // 삭제/수정 모달내용
   const modalData = {
@@ -35,7 +39,7 @@ const CommunityCard = (props) => {
     descriptionTwo: "삭제되면 다시 복원할 수 없습니다.",
     btnClose: "취소",
     btnUpdate: "삭제",
-  };
+  }
 
   const deleteBtn = () => {
     dispatch(communityCr.deleteCommunityAPI(communityId))
@@ -66,11 +70,9 @@ const CommunityCard = (props) => {
         <TextBox>{content}</TextBox>
         <Border />
         <Good>
-          <img
-            src={Question}
-            alt="말풍선"
-            style={{ width: "12px", height: " 12px" }}
-          />
+
+          <CommentIcon src={Question} alt="말풍선" />
+
           <Text size="12px" margin="0 0 0 7px">
             {communityCommentList ? communityCommentList.length : "0"}
           </Text>
@@ -88,15 +90,16 @@ const CommunityCard = (props) => {
       )}
     </div>
   )
-};
+}
 
-export default CommunityCard;
+export default CommunityCard
 
 const Card = styled.div`
   width: 100%;
-  margin-top: 20px;
   cursor: pointer;
-`;
+  margin-top: 20px;
+`
+
 
 const UserImg = styled.img`
   width: 48px;
@@ -104,22 +107,22 @@ const UserImg = styled.img`
   border-radius: 50%;
   background: aliceblue;
   border: 1px solid #e7e7e7;
-`;
+`
 
 const UserInfo = styled.div`
   display: flex;
-`;
+`
 
 const InfoBox = styled.div`
   flex-direction: column;
   display: "flex";
   margin-left: 12px;
-`;
+`
 
 const Time = styled.div`
   display: flex;
   margin-top: 5px;
-`;
+`
 
 const TextBox = styled.div`
   width: 100%;
@@ -128,20 +131,37 @@ const TextBox = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 20px 0;
+
 `;
+
 
 const Border = styled.div`
   border: 1px solid #e7e7e7;
   width: 100%;
+
 `;
 
 const Boundary = styled.div`
   background: #f8f8f8;
   width: 100%;
   height: 6px;
-`;
+`
 
 const Good = styled.div`
   display: flex;
-  margin: 10px 0;
-`;
+  margin: 10px;
+`
+
+const MoreIcons = styled(BsThreeDots)`
+  align-items: center;
+  margin: 7.5px 0;
+  cursor: pointer;
+  position: absolute;
+  right: 70px;
+`
+
+const CommentIcon = styled.img`
+  width: 12px;
+  height: 12px;
+`
+

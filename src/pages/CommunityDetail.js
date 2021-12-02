@@ -9,18 +9,19 @@ import CommunityComment from "../communityList/CommunityComment";
 import { BsThreeDots } from "react-icons/bs";
 import { history } from "../redux/configStore";
 import { Modal } from "../components/Modal";
-import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
 import { actionCreators as communityCr } from "../redux/modules/community";
-import { findIndex } from "lodash";
-import { UserProfile } from "../componentsGoods/UserProfile";
+import { UserProfile } from "../components/UserProfile";
 export const CommunityDetail = (props) => {
   const dispatch = useDispatch();
-  const params = useParams();
-  const communityId = params.communityId;
+  //params의 값 가져오기
+  // const params = useParams();
+  //커뮤니티 ID
+  // const communityId = params.communityId;
+  // console.log(communityId, "군고구마");
+
+  //디테일페이지 data
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
-  console.log(detail_list, "프롤");
-  //댓글 사진
-  // const usertype = detail_list.usertype;
+
   const {
     communityUserPicture,
     content,
@@ -31,17 +32,21 @@ export const CommunityDetail = (props) => {
     usertype,
   } = detail_list;
 
+  //커뮤니티 사진
   const img = process.env.REACT_APP_S3_COMMU_URL + filePath;
-  const user_img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
-
+  //커뮤니티 id값
   const communCommentId = props.match.params.communityId;
+  console.log(communCommentId, "우유");
+
+  //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {
-    dispatch(actionCr.getCommunDetailAPI(communityId));
+    dispatch(actionCr.getCommunDetailAPI(communCommentId));
   }, [detail_list.communityCommentList?.length]);
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false);
 
+  //모달내용
   const modalData = {
     title: "커뮤니티 에디터",
     descriptionOne: "선택하신 게시글을 삭제 하시겠습니까?",
@@ -53,14 +58,15 @@ export const CommunityDetail = (props) => {
 
   //삭제 버튼
   const deleteBtn = () => {
-    console.log("놀러");
-    dispatch(communityCr.deleteCommunityAPI(communityId));
+    dispatch(communityCr.deleteCommunityAPI(communCommentId));
     setShowModal(false);
   };
 
   //수정 버튼
   const updataBtn = () => {
-    history.push(`/community/communitydetail/editcommuncomment/${communityId}`);
+    history.push(
+      `/community/communitydetail/editcommuncomment/${communCommentId}`
+    );
   };
 
   // 유저정보= 게시글 쓴 사람 정보 확인용
@@ -79,12 +85,15 @@ export const CommunityDetail = (props) => {
       return process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
     }
   };
+
   return (
     <>
       <ArrowBack>커뮤니티</ArrowBack>
       <Border />
       <Container>
+        {/* 디테일 data 받기 */}
         <Card {...detail_list}>
+          {/* 유저정보보고 삭제버튼 유무 */}
           {user_info_id === writer_id ? (
             <MoreIcons onClick={() => setShowModal(true)} />
           ) : (
@@ -99,9 +108,6 @@ export const CommunityDetail = (props) => {
                 <Text size="12px" color="#F25343" margin="0 10px 0 0">
                   {myTeam}
                 </Text>
-                {/* <Text size="12px" color="#C4C4C4">
-                  시간
-                </Text> */}
               </Time>
             </InfoBox>
           </UserInfo>
@@ -109,11 +115,8 @@ export const CommunityDetail = (props) => {
           <FileImg src={img} alt="커뮤니티 이미지" />
           <Border />
           <Good>
-            <img
-              src={Question}
-              alt="말풍선"
-              style={{ width: "12px", height: "12px" }}
-            />
+            <CommentIcon src={Question} alt="말풍선" />
+            {/* 댓글 수 */}
             <Text size="12px" margin="0 0 0 7px">
               {communityCommentList ? communityCommentList.length : "0"}
             </Text>
@@ -121,9 +124,10 @@ export const CommunityDetail = (props) => {
 
           <Boundary />
         </Card>
-
+        {/*댓글에서 디테일 data가져오기 */}
         <CommunityComment {...detail_list} communCommentId={communCommentId} />
       </Container>
+      {/* 모달ㄴ */}
       {showModal && (
         <Modal
           three
@@ -147,14 +151,6 @@ const Card = styled.div`
   width: 100%;
   margin-top: 20px;
   position: relative;
-`;
-
-const UserImg = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: aliceblue;
-  border: 1px solid #e7e7e7;
 `;
 
 const UserInfo = styled.div`
@@ -200,4 +196,9 @@ const MoreIcons = styled(BsThreeDots)`
   cursor: pointer;
   position: absolute;
   right: 20px;
+`;
+
+const CommentIcon = styled.img`
+  width: 12px;
+  height: 12px;
 `;
