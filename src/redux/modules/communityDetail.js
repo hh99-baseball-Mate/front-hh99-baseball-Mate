@@ -40,36 +40,35 @@ const initialState = {
 //댓글등록
 const postCommunCommentAPI = (communityId, message) => {
   return function (dispatch, getState, { history }) {
-    const comment = { comment: message };
+    const comment = { comment: message }
     instance
       .post(`/community/${communityId}/comment`, comment)
       .then((res) => {
-        console.log(res);
-        dispatch(postCommunComment(communityId, comment));
+        // console.log(res);
+        dispatch(postCommunComment(communityId, comment))
       })
       .catch((err) => {
         // console.log(err, "커뮤댯글등록")
-      });
-  };
-};
+      })
+  }
+}
 
 //댓글 수정
 const updateCommunCommentAPI = (communityId, commentId, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log(communityId, commentId, comment, "무서워");
     instance
       .put(`/community/${communityId}/comment/${commentId}`, {
         comment: comment,
       })
       .then((res) => {
         // console.log(res)
-        dispatch(updateCommunComment(communityId, commentId, comment));
+        dispatch(updateCommunComment(communityId, commentId, comment))
       })
       .catch((err) => {
         // console.log(err, "커뮤댓글수정")
-      });
-  };
-};
+      })
+  }
+}
 
 //댓글 삭제
 const deleteCommunCommrntAPI = (communityId, commentId) => {
@@ -78,13 +77,13 @@ const deleteCommunCommrntAPI = (communityId, commentId) => {
       .delete(`/community/${communityId}/comment/${commentId}`)
       .then((res) => {
         // console.log(res)
-        dispatch(deleteCommunCommrnt(communityId, commentId));
+        dispatch(deleteCommunCommrnt(communityId, commentId))
       })
       .catch((err) => {
         // console.log(err, "댓글삭제에러")
-      });
-  };
-};
+      })
+  }
+}
 
 //디테일 불러오기
 const getCommunDetailAPI = (communityId) => {
@@ -94,22 +93,21 @@ const getCommunDetailAPI = (communityId) => {
       .then((res) => {
         dispatch(is_loaded(true))
         // console.log(res)
-        dispatch(getCommunDetail(res.data));
+        dispatch(getCommunDetail(res.data))
       })
       .catch((err) => {
-        dispatch(is_loaded(false)) 
+        dispatch(is_loaded(false))
         // console.log(err, "디테일 페이지 오류")
-      });
-      dispatch(is_loaded(false)) 
-  };
-};
+      })
+    dispatch(is_loaded(false))
+  }
+}
 
 //게시글 수정
 const updateCommunityAPI = (communityId, commuEditInfo) => {
   return function (dispatch, getState, { history }) {
+    // console.log(commuEditInfo)
 
-    console.log(commuEditInfo)
-    
     instance
       .put(`/community/${communityId}`, commuEditInfo)
       .then((res) => {

@@ -42,7 +42,6 @@ const postAddAPI = (communityInfo) => {
     instance
       .post("/community", communityInfo)
       .then((res) => {
-        console.log(res, "커뮤티니")
         history.replace("/community")
       })
       .catch((err) => {
@@ -57,36 +56,34 @@ const deleteCommunityAPI = (communityId) => {
     instance
       .delete(`/community/${communityId}`)
       .then((res) => {
-        console.log(res, "ㅇㅇㅇ");
-        dispatch(deleteCommunity(communityId));
-        history.replace(`/community`);
+        dispatch(deleteCommunity(communityId))
+        history.replace(`/community`)
       })
       .catch((err) => {
-        console.log(err, "게시글 삭제 에러");
-      });
-  };
-};
+        // console.log(err, "게시글 삭제 에러");
+      })
+  }
+}
 
 //리듀서
 export default handleActions(
   {
     [GET_CARD]: (state, action) =>
       produce(state, (draft) => {
-        draft.card_list = action.payload.cardList;
+        draft.card_list = action.payload.cardList
       }),
     [DELETE_COMMUNITY]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.card_list.findIndex((e) => {
-          return e.communityId === action.payload.communityId;
-        });
-        console.log(idx, "궁금");
+          return e.communityId === action.payload.communityId
+        })
         if (idx !== -1) {
-          draft.card_list.splice(idx, 1);
+          draft.card_list.splice(idx, 1)
         }
       }),
   },
   initialState
-);
+)
 
 const actionCreators = {
   getCardAPI,

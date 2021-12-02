@@ -22,12 +22,15 @@ const CommunityCard = (props) => {
     dayBefore,
     communityId,
     communityCommentList,
+    usertype,
   } = props
 
   //게시글 이미지
-  const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
+  // const img = process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture
 
-  // const [userImg] = useProfile()
+  const [userImg] = useProfile(usertype, communityUserPicture)
+
+  // console.log(userImg)
 
   // 모달 보여주기/숨기기
   const [showModal, setShowModal] = useState(false)
@@ -54,7 +57,7 @@ const CommunityCard = (props) => {
         }}
       >
         <UserInfo>
-          <UserImg src={img} />
+          <UserImg url={userImg} />
           <InfoBox>
             <Text bold>{userName}</Text>
             <Time>
@@ -70,7 +73,6 @@ const CommunityCard = (props) => {
         <TextBox>{content}</TextBox>
         <Border />
         <Good>
-
           <CommentIcon src={Question} alt="말풍선" />
 
           <Text size="12px" margin="0 0 0 7px">
@@ -100,12 +102,14 @@ const Card = styled.div`
   margin-top: 20px;
 `
 
-
-const UserImg = styled.img`
+const UserImg = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: aliceblue;
+  background-image: url(${(props) => props.url});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   border: 1px solid #e7e7e7;
 `
 

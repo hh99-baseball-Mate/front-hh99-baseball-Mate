@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { normalize } from "react-style-reset";
-import reset from "styled-reset";
+import { normalize } from "react-style-reset"
 
 export const GlobalStyles = createGlobalStyle`
 	${normalize}

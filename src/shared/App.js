@@ -110,6 +110,7 @@ function App() {
             </Switch>
           ) : (
             <Switch>
+              <Route exact path="/login/clubchoice" component={ClubChoice} />
               <Route path="/" exact component={GroupList} />
               <Route path="/groupdate" exact component={GroupDate} />
               <Route path="/grouplist/groupadd" exact component={GroupAdd} />
@@ -174,10 +175,10 @@ function App() {
           )}
         </ConnectedRouter>
         {/* </div> */}
-        { !is_loaded && <Loader type="bars" color="#F25343"/> }
+        {!is_loaded && <Loader type="bars" color="#F25343" />}
       </Container>
     </>
-  );
+  )
 }
 
 export default App;
