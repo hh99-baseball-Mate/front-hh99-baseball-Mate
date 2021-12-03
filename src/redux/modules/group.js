@@ -124,8 +124,6 @@ const selectTeamMD = (myteam) => {
     // 요청을 보낼 때 롯데 자이언츠이면 롯데만 보내야해서 문자를 자름
     const teamname = myteam.split(" ")[0]
 
-    console.log(teamname)
-
     instance
       .get(`/kbodatas?team=${encodeURIComponent(teamname)}`)
       .then((res) => {
