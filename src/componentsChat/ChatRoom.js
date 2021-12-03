@@ -59,18 +59,6 @@ const ChatRoom = (props) => {
   // 새로고침될때 방 정보 날아가지 않도록 함
   useEffect(() => {
 
-    // 리덕스의 현재방 정보 변경
-    // if (token) {
-    // 	dispatch(
-    // 		chatActions.moveChatRoom(
-    // 			room_id,
-    // 			roomName,
-    // 			post_id,
-    // 			own_user_id,
-    // 			order_time
-    // 		)
-    // 	);
-
     if(token) {
       // 이전 대화 기록 불러오기
       dispatch(chatCreators.getChatMessagesAX(room_id))
@@ -116,7 +104,7 @@ const ChatRoom = (props) => {
               // console.log("구독후 새로운 메세지 data", newMessage)
 
               // 실시간 채팅 시간 넣어주는 부분
-              const now_time = moment().format("YYYY-MM-DD h:mm a");
+              const now_time = moment().format("YYYY-MM-DD h:mm A");
               // console.log("now_time", now_time)
               
               dispatch(
