@@ -61,7 +61,7 @@ const AlarmCard = (props) => {
   }
 
   // 서버주소
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
 
   // 사진 ip주소 + 사진이름 조합
   const ip = IMAGES_BASE_URL
