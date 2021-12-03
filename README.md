@@ -1,5 +1,5 @@
 <img width="30%" src="https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png" alt="meetball">
-![사진](https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png)
+
 <br/>
 
 
