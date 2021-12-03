@@ -1,12 +1,13 @@
-![image](../front-hh99-baseball-Mate/src/shared/icon/image/사진.png)
+<img width="30%" src="https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png" alt="meetball">
 <br/>
+
+![사진](https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png)
 
 
  <h2>같이 야구보러 가지 않을래?</h2>
 
 <br/>
 
-<img width="100%" src="https://user-images.githubusercontent.com/85838870/144510359-54deded6-1bab-4fe3-b080-95b03b3a124b.jpg" alt="meetball">
 
 [사이트 링크 바로가기](https://meetball.shop/)
 
@@ -58,10 +59,12 @@
 ## 📚 프로젝트 아키텍처
 
 
-<img width="100%" alt="패키지" src="..https://user-images.githubusercontent.com/85838870/144557507-05ad1b8a-1b57-4392-90d9-9f1db0a11f99.png">
+<img width="100%" alt="패키지" src="https://user-images.githubusercontent.com/85838870/144558214-511ba586-a01f-4284-893c-5b37406848dc.png">
+
+
 ## 🛠 Package
 
-<img width="100%" alt="패키지" src="../front-hh99-baseball-Mate/src/shared/icon/image/카카오톡.png">
+<img width="100%" alt="패키지" src="https://user-images.githubusercontent.com/85838870/144557723-042f65a7-7d2d-4228-af46-7a2d6986ec3b.png">
 
 <br/>
 
@@ -78,7 +81,7 @@
   지도에서 원하는 스크린 야구장을 선택할 수 있게 만들었고 스크린 야구를 즐기고 싶은 사용자들이 모임을 가질 수 있도록 모임을
   만드는 페이지를 들었습니다.
 
-<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557767-8b4bd549-fb92-4dc1-833a-4f399534a7a2.png">
+<img width="50%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557767-8b4bd549-fb92-4dc1-833a-4f399534a7a2.png">
 
 
 <br/>
@@ -87,7 +90,7 @@
 
 - 수정 전에는 페이지이동을 하면 데이터정보들이 초기화되지만 SESSION Storage를 사용하여 페이지에 데이터정보들을 담아 남아있게 수정하였습니다.
 
-<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557723-042f65a7-7d2d-4228-af46-7a2d6986ec3b.png">
+<img width="50%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557723-042f65a7-7d2d-4228-af46-7a2d6986ec3b.png">
 
 
 <br/>
@@ -97,7 +100,7 @@
 - 기존에는 모임 생성을 하는 디테일 페이지에서 방명록을 남겨 소통하는 방식이였으나 사용자들이 소통하는 데 더 원활한 환경을 제공하기 위해 실시간 채팅방을 구현하였습니다.
   프론트엔드에서 채팅구현은 백엔드가 spring이기 때문에 stompjs를 사용하여 채팅을 구현하였습니다.
 
-<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557677-8885e9bd-09d8-448a-88aa-0a2f39aa6eb8.png">
+<img width="50%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557677-8885e9bd-09d8-448a-88aa-0a2f39aa6eb8.png">
 
 **4. AWS S3**
 
