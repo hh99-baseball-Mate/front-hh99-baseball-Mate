@@ -133,21 +133,21 @@ export default handleActions(
         draft.chatUser = action.payload.chatUser
       }),
     // getMessages - 새로운 메세지 정보를 메세지 리스트에 추가
-    // [GET_MSG]: (state, action) => produce(state, (draft) => {
-    //   const msg = action.payload.newMessage;
-    //   const new_msg = {
-    //     createdAt: msg.createdAt,
-    //     id: msg.id,
-    //     message: msg.message,
-    //     modifiedAt: msg.modifiedAt,
-    //     roomId: msg.roomId,
-    //     senderId: msg.senderId,
-    //     senderImage: msg.senderImage,
-    //     senderName: msg.senderName,
-    //     type: msg.type,
-    //   }
-    //   draft.messages.push(new_msg)
-    // })
+    [GET_MSG]: (state, action) => produce(state, (draft) => {
+      const msg = action.payload.newMessage;
+      const new_msg = {
+        createdAt: msg.createdAt,
+        id: msg.id,
+        message: msg.message,
+        modifiedAt: msg.modifiedAt,
+        roomId: msg.roomId,
+        senderId: msg.senderId,
+        senderImage: msg.senderImage,
+        senderName: msg.senderName,
+        type: msg.type,
+      }
+      draft.messages.push(new_msg)
+    })
   },
   initialState
 )
