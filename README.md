@@ -1,6 +1,4 @@
-
-<img width="50%" src="https://user-images.githubusercontent.com/85838870/144556810-a3f4341e-162a-4081-bc48-9647fe677989.png" alt="meetball">
-
+![image](../front-hh99-baseball-Mate/src/shared/icon/image/사진.png)
 <br/>
 
 
@@ -57,15 +55,15 @@
 
 <br/>
 
-## 📚 프로젝트 아키텍처!
+## 📚 프로젝트 아키텍처
 
-<img width="100%" src="https://user-images.githubusercontent.com/85838870/144557033-05baecbf-e40a-4990-a7d5-d6c23b6cd4bd.png" alt="meetball">
+
+<img width="100%" alt="패키지" src="..https://user-images.githubusercontent.com/85838870/144557507-05ad1b8a-1b57-4392-90d9-9f1db0a11f99.png">
 ## 🛠 Package
 
-<img width="100%" src="https://user-images.githubusercontent.com/85838870/144557121-ac63ce11-2001-4737-8b2b-8b32312e5fb2.png">
+<img width="100%" alt="패키지" src="../front-hh99-baseball-Mate/src/shared/icon/image/카카오톡.png">
 
 <br/>
-
 
 ## 📌 유저 피드백 및 개선사항
 
@@ -80,7 +78,8 @@
   지도에서 원하는 스크린 야구장을 선택할 수 있게 만들었고 스크린 야구를 즐기고 싶은 사용자들이 모임을 가질 수 있도록 모임을
   만드는 페이지를 들었습니다.
 
-<img width="100%" alt="피드백" src="../front-hh99-baseball-Mate/src/shared/icon/image/그만.png">
+<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557767-8b4bd549-fb92-4dc1-833a-4f399534a7a2.png">
+
 
 <br/>
 
@@ -88,7 +87,8 @@
 
 - 수정 전에는 페이지이동을 하면 데이터정보들이 초기화되지만 SESSION Storage를 사용하여 페이지에 데이터정보들을 담아 남아있게 수정하였습니다.
 
-<img width="100%" alt="피드백" src="../front-hh99-baseball-Mate/src/shared/icon/image/로그인.png">
+<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557723-042f65a7-7d2d-4228-af46-7a2d6986ec3b.png">
+
 
 <br/>
 
@@ -97,13 +97,14 @@
 - 기존에는 모임 생성을 하는 디테일 페이지에서 방명록을 남겨 소통하는 방식이였으나 사용자들이 소통하는 데 더 원활한 환경을 제공하기 위해 실시간 채팅방을 구현하였습니다.
   프론트엔드에서 채팅구현은 백엔드가 spring이기 때문에 stompjs를 사용하여 채팅을 구현하였습니다.
 
-<img width="100%" alt="피드백" src="../front-hh99-baseball-Mate/src/shared/icon/image/디자인.png">
+<img width="100%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557677-8885e9bd-09d8-448a-88aa-0a2f39aa6eb8.png">
 
 **4. AWS S3**
 
 - 백엔드에서 이미지 파일을 저장하고 불러오는 방식을 사용했으나, 사용자가 많을 경우 백엔드 쪽 이미지를 저장 할 용량과 프론트에서 데이터를 받아오는 속도가 문제 될 경우를
   우려해서 이미지 파일을 s3 버켓에 저장하고 불러오는 방식으로 수정하였습니다. 수정을 한 뒤에는 통신을 통해 이미지를 받아오지 않고 버켓에 저장 된 이미지 url 만을 사용해서
   불러오므로 확실히 수정전보다 로딩속도가 빨라진 것을 확인할 수 있습니다.
+
 
 <br/>
 
@@ -119,11 +120,6 @@
 - 알람 페이지
 - 내모임 페이지
 
-### **페이지 소개📖**
-
-- 메인
-
-  다시 수정 예정
 
 <br/>
 
