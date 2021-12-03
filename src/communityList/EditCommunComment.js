@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
@@ -12,35 +12,28 @@ import {
 import { Picture } from "../componentsGroupAdd/Picture";
 import { Preview } from "../componentsGroupAdd/Preview";
 import { useS3Upload } from "../customHook/useS3Upload";
-import Community from "../pages/Community";
-import { actionCreators as actionCr } from "../redux/modules/community";
 import { actionCreators as communityDetailCr } from "../redux/modules/communityDetail";
 
 export const EditCommunComment = (props) => {
   const dispatch = useDispatch();
-
-  const card_list = useSelector((state) => state.community.card_list);
-
+  //사진
   const ip = process.env.REACT_APP_S3_COMMU_URL;
   //상세페이지 정보 가져오기
   const detail_list = useSelector((state) => state.communityDetail.detail_list);
+
+  //커뮤니티 사진
   const img = ip + detail_list.filePath;
-
+  //커뮤니티id
   const communityId = props.match.params.communityId;
-
+  //사진 값
   const [preview, setPreview] = useState(img);
-  // //인풋값 state
+  //인풋값 state
   const [inputValue, setInputValue] = useState({
     content: detail_list?.content,
     src: detail_list ? ip + detail_list.filePath : props.defaultImg,
   });
 
   const { content, src } = inputValue;
-
-  //디테일 정보 가져오기
-  // useEffect(() => {
-  //   dispatch(communityDetailCr.getCommunDetailAPI(communityId));
-  // }, [inputValue]);
 
   //이미지 업로드
   const imgPreview = (e) => {
@@ -55,7 +48,7 @@ export const EditCommunComment = (props) => {
     }
     setPreview("");
   };
-
+  //3S 사진
   const [uploadFile, fileName] = useS3Upload(preview, "commu");
 
   //인풋 값 추적
@@ -70,16 +63,16 @@ export const EditCommunComment = (props) => {
   //입력체크
   const submitBtn = (e) => {
     uploadFile(preview);
-
+    //편집 내용
     const commuEditInfo = {
       content: inputValue.content,
       myTeam: null,
       filePath: preview ? fileName : "",
-    }
-
-    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo))
-    e.target.disabled = true
-  }
+    };
+    // 업데이트 dispatch
+    dispatch(communityDetailCr.updateCommunityAPI(communityId, commuEditInfo));
+    e.target.disabled = true;
+  };
 
   return (
     <div>
@@ -133,7 +126,7 @@ export const EditCommunComment = (props) => {
     </div>
   );
 };
-
+//사진 빈값 기본이미지
 EditCommunComment.defaultProps = {
   defaultImg:
     "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",

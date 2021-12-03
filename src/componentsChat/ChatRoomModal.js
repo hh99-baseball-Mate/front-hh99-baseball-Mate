@@ -27,7 +27,6 @@ const ChatRoomModal = (props) => {
 
   const chatList = useSelector((state) => state.chat?.chatList)
 
-
   // 모달 오버레이에서 스크롤 방지
   React.useEffect(() => {
     document.body.style.cssText = `
@@ -44,14 +43,14 @@ const ChatRoomModal = (props) => {
 
   // 채팅방 나가기
   const leaveChat = () => {
-    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+    if (window.confirm("정말 채팅방을 나가겠습니까?")) {
       dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
     }
   }
 
   // 스크린야구 채팅방 나가기
   const leaveScreenChat = () => {
-    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+    if (window.confirm("정말 채팅방을 나가겠습니까?")) {
       dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
     }
   }
@@ -88,7 +87,8 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Footer position="fixed" 
+        <Footer
+          position="fixed"
           onClick={() => {
             props.roomInfo.chatRoomtype === "screen"
               ? leaveScreenChat()
