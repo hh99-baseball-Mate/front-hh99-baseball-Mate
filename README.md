@@ -57,15 +57,15 @@
 
 <br/>
 
-## 📚 프로젝트 아키텍처
+## 📚 프로젝트 아키텍처!
 
-![image](../front-hh99-baseball-Mate/src/shared/icon/image/아키.png)
-
+<img width="100%" src="https://user-images.githubusercontent.com/85838870/144557033-05baecbf-e40a-4990-a7d5-d6c23b6cd4bd.png" alt="meetball">
 ## 🛠 Package
 
-<img width="100%" alt="패키지" src="../front-hh99-baseball-Mate/src/shared/icon/image/카카오톡.png">
+<img width="100%" src="https://user-images.githubusercontent.com/85838870/144557121-ac63ce11-2001-4737-8b2b-8b32312e5fb2.png">
 
 <br/>
+
 
 ## 📌 유저 피드백 및 개선사항
 
