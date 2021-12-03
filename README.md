@@ -1,11 +1,13 @@
 <img width="30%" src="https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png" alt="meetball">
+ <h2>같이 야구보러 가지 않을래?</h2>
+
 
 <br/>
 
 
 <img width="100%" src="https://user-images.githubusercontent.com/85838870/144558574-d6a0b1fc-090e-4c3d-b582-55d07c1ec4f3.jpg" alt="meetball">
 
- <h2>같이 야구보러 가지 않을래?</h2>
+
 
 <br/>
 
