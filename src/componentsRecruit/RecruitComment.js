@@ -12,8 +12,7 @@ import send from "../shared/icon/send.svg";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 const GroupComment = memo((props) => {
-
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
 
   const ip = IMAGES_BASE_URL
 
@@ -29,16 +28,13 @@ const GroupComment = memo((props) => {
   const dispatch = useDispatch()
   const cookie = getCookie("is_login")
 
-
   const [message, setMessage] = useState("")
 
-
   const addComment = () => {
-
     if (!cookie) {
       window.alert("로그인 후 이용해주세요")
       return
-    } 
+    }
 
     if (message === "") {
       window.alert("내용을 입력하세요")
@@ -55,13 +51,15 @@ const GroupComment = memo((props) => {
     }
   }
 
-
   return (
     <Container>
       <Box padding="13px 30px" background="#fff">
         <Warp justify="space-between">
           <Text size="14px" color="#777777">
-            방명록 { props.screen ? props.screenCommentList.length : props.groupCommentList.length }
+            방명록{" "}
+            {props.screen
+              ? props.screenCommentList.length
+              : props.groupCommentList.length}
           </Text>
         </Warp>
       </Box>
@@ -88,7 +86,6 @@ const GroupComment = memo((props) => {
         align="center"
         justify="center"
         background="#fff"
-
       >
         <Warp align="center">
           <div>
@@ -98,7 +95,13 @@ const GroupComment = memo((props) => {
             />
           </div>
 
-          <div style={{width:"300px", position:"relative", marginRight:"10px"}}>
+          <div
+            style={{
+              width: "300px",
+              position: "relative",
+              marginRight: "10px",
+            }}
+          >
             <TextArea
               type="text"
               placeholder="댓글을 입력해 주세요..."
@@ -116,10 +119,7 @@ const GroupComment = memo((props) => {
               }}
             />
           </div>
-          
-
         </Warp>
-
       </Box>
 
       <Rectangle />
@@ -154,12 +154,9 @@ const GroupComment = memo((props) => {
             )
           })
       }
-
-
     </Container>
   )
 })
-
 
 // **댓글 컴포넌트
 const CommentList = memo((props) => {
@@ -174,7 +171,7 @@ const CommentList = memo((props) => {
 
   console.log(Me)
 
-  let likeList =""
+  let likeList = ""
   let commentId = ""
 
   if (props.screen) {
@@ -185,11 +182,8 @@ const CommentList = memo((props) => {
     commentId = props.groupCommentId
   }
 
-
-
-
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
@@ -204,7 +198,6 @@ const CommentList = memo((props) => {
   const [like, setLike] = useState(false)
 
   useEffect(() => {
-
     if (props.screen) {
       return dispatch(screenDetailCreators.loadScreenPageMW(props.id))
     } else {
@@ -224,10 +217,22 @@ const CommentList = memo((props) => {
   const likeBtn = () => {
     setLike(!like)
 
-    if(props.screen) {
-      return  dispatch(screenDetailCreators.likeCommentMW(props.id, props.screenCommentId, like))
+    if (props.screen) {
+      return dispatch(
+        screenDetailCreators.likeCommentMW(
+          props.id,
+          props.screenCommentId,
+          like
+        )
+      )
     } else {
-      dispatch(groupDetailCreators.likegroupCommentMW(props.id, props.groupCommentId, like))
+      dispatch(
+        groupDetailCreators.likegroupCommentMW(
+          props.id,
+          props.groupCommentId,
+          like
+        )
+      )
     }
   }
 
@@ -270,7 +275,6 @@ const CommentList = memo((props) => {
 
             {/* 좋아요 싫어요 */}
             <Warp marginT="11px">
-
               <p
                 onClick={() => {
                   likeBtn()
@@ -280,36 +284,29 @@ const CommentList = memo((props) => {
               </p>
 
               <Text size="14px" marginL="7px">
-                { 
-                  props.screen ? 
-                  props.screencommentlikeCount : props.groupcommentlikeCount
-                }
+                {props.screen
+                  ? props.screencommentlikeCount
+                  : props.groupcommentlikeCount}
               </Text>
-
             </Warp>
           </Box>
 
           {/* 더보기 버튼 */}
-          {
-            Me === props.commentUserId ? 
-              (
-                <MoreBtn
-                  src={more}
-                  alt="more"
-                  marginT="-34px"
-                  marginR="22px"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setModal(!modal)
-                  }}
-                >
-                  <img src={more} alt="more" />
-                </MoreBtn>
-              ) 
-            : 
-              null
-          }
+          {Me === props.commentUserId ? (
+            <MoreBtn
+              src={more}
+              alt="more"
+              marginT="-34px"
+              marginR="22px"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setModal(!modal)
+              }}
+            >
+              <img src={more} alt="more" />
+            </MoreBtn>
+          ) : null}
 
           {/* 수정 삭제 모달 */}
           {modal === true ? (

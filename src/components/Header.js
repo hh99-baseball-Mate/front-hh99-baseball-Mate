@@ -124,6 +124,9 @@ const Game = styled.li`
     font-weight: bold;
     color: #F25343;
   `}
+  @media screen and (max-width : 365px) {
+    font-size: 12px;
+  }
 `
 
 const Screen = styled.li`
@@ -141,6 +144,9 @@ const Screen = styled.li`
     font-weight: bold;
     color: #F25343;
   `}
+  @media screen and (max-width : 365px) {
+    font-size: 12px;
+  }
 `
 
 const Timeline = styled.li`
@@ -158,6 +164,9 @@ const Timeline = styled.li`
     font-weight: bold;
     color: #F25343;
   `}
+  @media screen and (max-width : 365px) {
+    font-size: 12px;
+  }
 `
 
 const Community = styled.li`
@@ -175,6 +184,9 @@ const Community = styled.li`
     font-weight: bold;
     color: #F25343;
   `}
+  @media screen and (max-width : 365px) {
+    font-size: 12px;
+  }
 `
 
 const Goods = styled.li`
@@ -192,6 +204,9 @@ const Goods = styled.li`
     font-weight: bold;
     color: #F25343;
   `}
+  @media screen and (max-width : 360px) {
+    font-size: 12px;
+  }
 `
 
 const Rectangle = styled.div`
@@ -236,4 +251,7 @@ const P = styled.p`
   font-weight: 700px;
   margin-right: 5px;
   cursor: pointer;
+  @media screen and (max-width: 360px) {
+    font-size: 10px;
+  }
 `

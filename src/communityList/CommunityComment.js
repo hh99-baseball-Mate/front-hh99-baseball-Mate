@@ -45,7 +45,7 @@ const CommunityComment = (props) => {
       return picture;
     }
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + picture;
+      return process.env.REACT_APP_S3_USER_PROFILE_URL + picture
     }
   };
 

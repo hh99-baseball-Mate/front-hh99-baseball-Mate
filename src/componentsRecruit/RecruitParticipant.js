@@ -14,7 +14,7 @@ const Participant = memo((props) => {
   const dispatch = useDispatch()
   const id = params.id
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
 
   const ip = IMAGES_BASE_URL
 
@@ -25,7 +25,7 @@ const Participant = memo((props) => {
   const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
   const kakaoImg = props.createdUserProfileImg
 
-  const cookie = getCookie("is_login");
+  const cookie = getCookie("is_login")
 
   const mylist = useSelector((state) => state.groupDetail.mylist)
   const my = {
@@ -35,48 +35,49 @@ const Participant = memo((props) => {
     Username: mylist.username,
   }
 
-
   // 참석버튼
   const apply = () => {
-
     if (!cookie) {
-      window.alert("로그인 후 이용해주세요");
-      return;
+      window.alert("로그인 후 이용해주세요")
+      return
     }
 
     props.setJoin(true)
 
-    if(props.screen) {
+    if (props.screen) {
       return dispatch(screenDetailCreators.screenApplyMW(id, my))
     } else {
       dispatch(groupDetailCreators.groupApplyMW(id, my))
     }
   }
 
-
   // 참석취소버튼
   const delapply = () => {
-    
-    if ( window.confirm("모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다.") === true) {
-
+    if (
+      window.confirm(
+        "모임을 나가시겠습니까? 나가신 모임은 다시 참여 불가능합니다."
+      ) === true
+    ) {
       props.setJoin(false)
 
-        if(props.screen) {
-          return dispatch(screenDetailCreators.delApplyMW(id, props.userid))
-        } else {
-          dispatch(groupDetailCreators.delApplyMW(id, props.userid))
-        }
+      if (props.screen) {
+        return dispatch(screenDetailCreators.delApplyMW(id, props.userid))
+      } else {
+        dispatch(groupDetailCreators.delApplyMW(id, props.userid))
+      }
     }
   }
 
   // 모임 확정/취소 버튼
   const confirm = () => {
-
     // 스야 컴포넌트일때
-    if(props.screen) {
-
+    if (props.screen) {
       if (props.allowtype) {
-        if (window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?")) {   
+        if (
+          window.confirm(
+            "모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?"
+          )
+        ) {
           dispatch(screenDetailCreators.confirmMW(id, !props.allowtype))
         }
       } else {
@@ -87,15 +88,17 @@ const Participant = memo((props) => {
 
     // 직관 컴포넌트일때
     if (props.allowtype) {
-      if (window.confirm("모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?")) {   
+      if (
+        window.confirm(
+          "모임 확정 시, 더이상 참여자를 모집할 수 없습니다.\n확정하시겠습니까?"
+        )
+      ) {
         dispatch(groupDetailCreators.confirmMW(id, !props.allowtype))
       }
     } else {
       dispatch(groupDetailCreators.confirmMW(id, !props.allowtype))
     }
-
   }
-
 
   // 내가 참여했는지 찾기
   const myJoin = props.appliedUserInfo?.findIndex(
@@ -116,8 +119,7 @@ const Participant = memo((props) => {
   return (
     <React.Fragment>
       <Box padding="28px 20px 40px 20px" background="#fff">
-
-        <div style={{width:"335px", margin:"auto" }}>
+        <div style={{ width: "335px", margin: "auto" }}>
           <Warp wrap="wrap" align="center">
             {/* 방장 프사 */}
 
@@ -136,10 +138,8 @@ const Participant = memo((props) => {
             {props.appliedUserInfo?.map((list) => {
               return <PartyList key={list.UserInx} {...list} />
             })}
-
           </Warp>
         </div>
-     
 
         <Warp flex="flex" direction="column" align="center" justify="center">
           {me ? (
@@ -154,67 +154,50 @@ const Participant = memo((props) => {
               </ConfirmBtn>
             )
           ) : null}
-          
 
-          {
-            props.screen ? 
-
-            // 스야컴포넌트 방장이 아닐 때
-            (!me && myJoin === -1 && props.myScreenWait === -1 && props.allowtype) && 
-              
-              <ConfirmBtn
-                onClick={() => {
-                  apply()
-                }}
-                background="#F25343"
-              >
-                모임 참여 신청하기
-              </ConfirmBtn>
-
-              :
-
-            // 직관컴포넌트 방장이 아닐 때
-            (!me && myJoin === -1 && props.myWait === -1 && props.allowtype) && 
-
-              <ConfirmBtn
-                onClick={() => {
-                  apply()
-                }}
-                background="#F25343"
-              >
-                모임 참여 신청하기
-              </ConfirmBtn>
-          }
-
-
-          { 
-            props.screen ? 
-
-              // 스야 승인 대기중 표시
-              (
-                (props.myScreenWait !== -1) && 
+          {props.screen
+            ? // 스야컴포넌트 방장이 아닐 때
+              !me &&
+              myJoin === -1 &&
+              props.myScreenWait === -1 &&
+              props.allowtype && (
                 <ConfirmBtn
-                  disabled
-                  background="#ff8787"
+                  onClick={() => {
+                    apply()
+                  }}
+                  background="#F25343"
                 >
+                  모임 참여 신청하기
+                </ConfirmBtn>
+              )
+            : // 직관컴포넌트 방장이 아닐 때
+              !me &&
+              myJoin === -1 &&
+              props.myWait === -1 &&
+              props.allowtype && (
+                <ConfirmBtn
+                  onClick={() => {
+                    apply()
+                  }}
+                  background="#F25343"
+                >
+                  모임 참여 신청하기
+                </ConfirmBtn>
+              )}
+
+          {props.screen
+            ? // 스야 승인 대기중 표시
+              props.myScreenWait !== -1 && (
+                <ConfirmBtn disabled background="#ff8787">
                   방장의 승인을 기다리는 중입니다.
                 </ConfirmBtn>
               )
-
-              :
-
-              // 직관 승인 대기중 표시
-              (
-                (props.myWait !== -1) && 
-                <ConfirmBtn
-                  disabled
-                  background="#ff8787"
-                >
+            : // 직관 승인 대기중 표시
+              props.myWait !== -1 && (
+                <ConfirmBtn disabled background="#ff8787">
                   방장의 승인을 기다리는 중입니다.
                 </ConfirmBtn>
-              )
-          }
-            
+              )}
 
           {!me && myJoin !== -1 && (
             // 방장이 아닐 때
@@ -244,7 +227,7 @@ const Participant = memo((props) => {
 function PartyList(props) {
   // console.log("참여인원 컴포넌트", props)
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
@@ -253,7 +236,6 @@ function PartyList(props) {
   // kakaocdn (카카오 프사인지 확인)
   const kakaoCheck = props.UserImage?.split(".")[1]
   const kakaoImg = props.UserImage
-
 
   return (
     <CircleBox>
