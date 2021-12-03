@@ -1,5 +1,5 @@
 
-<img width="100%" src="https://user-images.githubusercontent.com/85838870/144556810-a3f4341e-162a-4081-bc48-9647fe677989.png" alt="meetball">
+<img width="50%" src="https://user-images.githubusercontent.com/85838870/144556810-a3f4341e-162a-4081-bc48-9647fe677989.png" alt="meetball">
 
 <br/>
 
