@@ -13,7 +13,7 @@ import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 
 const GroupComment = memo((props) => {
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
 
   const ip = IMAGES_BASE_URL
 
@@ -163,7 +163,7 @@ const GroupComment = memo((props) => {
 
 // **댓글 컴포넌트
 const CommentList = memo((props) => {
-  console.log("댓글 컴포넌트", props)
+
   const dispatch = useDispatch()
 
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -172,7 +172,7 @@ const CommentList = memo((props) => {
   const user = useSelector((state) => state.user.user_info)
   const Me = user.userid
 
-  console.log(Me)
+
 
   let likeList =""
   let commentId = ""
@@ -325,7 +325,7 @@ const CommentList = memo((props) => {
 
 // **모달 컴포넌트
 const Modal = (props) => {
-  console.log("모달", props)
+
   const dispatch = useDispatch()
 
   const delComment = () => {

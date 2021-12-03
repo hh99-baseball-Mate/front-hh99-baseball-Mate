@@ -35,7 +35,7 @@ const Info = memo((props) => {
   // }
 
   // 사진 ip주소 + 사진이름 조합
-  const ip = process.env.REACT_APP_IMAGES_BASE_URL
+  const ip = process.env.REACT_APP_S3_USER_PROFILE_URL
   const img = props.filePath
 
   // 배경사진

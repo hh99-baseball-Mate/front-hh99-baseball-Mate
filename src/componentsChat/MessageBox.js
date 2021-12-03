@@ -8,7 +8,7 @@ const MessageBox = (props) => {
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
 
   // 사진 ip주소 + 사진이름 조합
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
   const img = props.filePath
   const imageUrl = ip + img
