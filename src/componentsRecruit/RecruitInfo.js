@@ -14,6 +14,7 @@ import calendar from "../shared/icon/calendar.svg";
 import location from "../shared/icon/location.svg";
 import colorUsers from "../shared/icon/colorUsers.svg";
 import users from "../shared/icon/users.svg";
+import { useProfile } from "../customHook/useProfile";
 
 
 const Info = memo((props) => {
@@ -22,34 +23,17 @@ const Info = memo((props) => {
   const params = useParams()
   const id = params.id
 
-  // const srcChange = () => {
-  //   if (preview) {
-  //     return URL.createObjectURL(preview)
-  //   } else if (usertype === "normal") {
-  //     return IMAGES_BASE_URL + picture
-  //   } else if (usertype === "kakao") {
-  //     return picture
-  //   } else {
-  //     return picture
-  //   }
-  // }
 
   // 사진 ip주소 + 사진이름 조합
-  const ip = process.env.REACT_APP_S3_USER_PROFILE_URL
   const img = props.filePath
 
   // 배경사진
   const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
   const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
-  // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.createdUserProfileImg
 
-  // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
-  const kakaoImg = props.createdUserProfileImg
-
-  const myGroupLikesList = props.myGroupLikesList
+  // 게시글 만든사람 프로필사진
+  const [userImg] = useProfile(props.usertype, props.createdUserProfileImg);
 
 
   const cookie = getCookie("is_login")
@@ -255,7 +239,7 @@ const Info = memo((props) => {
       >
         <Warp width="55px" height="55px">
           {/* 기본프사 & 카카오프사 */}
-          <Circle url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg} />
+          <Circle url={userImg} />
         </Warp>
         <Warp direction="column" marginLeft="12px">
           <Text size="14px" weight="bold" margin="1px">
@@ -287,10 +271,6 @@ const Info = memo((props) => {
   )
 })
 
-Info.defaultProps = {
-  myGroupLikesList: [],
-  UserImage: "sample.png",
-};
 
 export default Info;
 

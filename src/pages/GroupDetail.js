@@ -12,6 +12,7 @@ import { ArrowBack } from "../components"
 
 
 const GroupDetail = (props) => {
+
   const dispatch = useDispatch()
   const params = useParams()
   const id = params.id
@@ -29,7 +30,6 @@ const GroupDetail = (props) => {
 
   // 승인요청 신청자 찾기
   const awaitList = useSelector((state) => state.alarm?.awaitList)
-  // console.log("loadDetail", loadDetail)
   const myWait = awaitList.findIndex(list => list.postId == id)
 
 
