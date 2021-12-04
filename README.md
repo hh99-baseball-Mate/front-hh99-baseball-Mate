@@ -1,16 +1,11 @@
 <img width="30%" src="https://user-images.githubusercontent.com/85838870/144558296-c4608892-9081-401f-b774-d3c0a4c2573e.png" alt="meetball">
  <h2>같이 야구보러 가지 않을래?</h2>
 
-
 <br/>
-
 
 <img width="100%" src="https://user-images.githubusercontent.com/85838870/144558574-d6a0b1fc-090e-4c3d-b582-55d07c1ec4f3.jpg" alt="meetball">
 
-
-
 <br/>
-
 
 [사이트 링크 바로가기](https://meetball.shop/)
 
@@ -26,7 +21,6 @@
   - [🛠 Package](#-package)
   - [📌 유저 피드백 및 개선사항](#-유저-피드백-및-개선사항)
   - [**페이지 구성📖**](#페이지-구성)
-    - [**페이지 소개📖**](#페이지-소개)
   - [💪 역할 분담](#-역할-분담)
 
 ## 👩‍👦‍👦 meetball이란?
@@ -61,9 +55,7 @@
 
 ## 📚 프로젝트 아키텍처
 
-
 <img width="100%" alt="패키지" src="https://user-images.githubusercontent.com/85838870/144558214-511ba586-a01f-4284-893c-5b37406848dc.png">
-
 
 ## 🛠 Package
 
@@ -86,7 +78,6 @@
 
 <img width="50%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557767-8b4bd549-fb92-4dc1-833a-4f399534a7a2.png">
 
-
 <br/>
 
 **2. 페이지 전환시 초기화**
@@ -94,7 +85,6 @@
 - 수정 전에는 페이지이동을 하면 데이터정보들이 초기화되지만 SESSION Storage를 사용하여 페이지에 데이터정보들을 담아 남아있게 수정하였습니다.
 
 <img width="50%" alt="피드백" src="https://user-images.githubusercontent.com/85838870/144557723-042f65a7-7d2d-4228-af46-7a2d6986ec3b.png">
-
 
 <br/>
 
@@ -111,7 +101,6 @@
   우려해서 이미지 파일을 s3 버켓에 저장하고 불러오는 방식으로 수정하였습니다. 수정을 한 뒤에는 통신을 통해 이미지를 받아오지 않고 버켓에 저장 된 이미지 url 만을 사용해서
   불러오므로 확실히 수정전보다 로딩속도가 빨라진 것을 확인할 수 있습니다.
 
-
 <br/>
 
 ## **페이지 구성📖**
@@ -125,7 +114,6 @@
 - 채팅 리스트/채팅방
 - 알람 페이지
 - 내모임 페이지
-
 
 <br/>
 
