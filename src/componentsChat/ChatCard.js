@@ -11,7 +11,7 @@ const ChatCard = (props) => {
   const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
   const ip = IMAGES_BASE_URL
 
-  // console.log("ss",props)
+
   const roomId = props.roomId
 
   return (

@@ -15,7 +15,7 @@ const ChatRoomModal = (props) => {
   // console.log("다른사람", otherUsers)
 
   // 사진 ip주소 + 사진이름 조합
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
@@ -26,7 +26,6 @@ const ChatRoomModal = (props) => {
   const kakaoImg = me.picture
 
   const chatList = useSelector((state) => state.chat?.chatList)
-
 
   // 모달 오버레이에서 스크롤 방지
   React.useEffect(() => {
@@ -44,14 +43,14 @@ const ChatRoomModal = (props) => {
 
   // 채팅방 나가기
   const leaveChat = () => {
-    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+    if (window.confirm("정말 채팅방을 나가겠습니까?")) {
       dispatch(chatCreators.leaveChatAX(props.roomInfo.groupId))
     }
   }
 
   // 스크린야구 채팅방 나가기
   const leaveScreenChat = () => {
-    if(window.confirm("정말 채팅방을 나가겠습니까?")) {
+    if (window.confirm("정말 채팅방을 나가겠습니까?")) {
       dispatch(chatCreators.leaveScreenChatAX(props.roomInfo.groupId))
     }
   }
@@ -88,7 +87,8 @@ const ChatRoomModal = (props) => {
         })}
 
         {/* 하단고정 */}
-        <Footer position="fixed" 
+        <Footer
+          position="fixed"
           onClick={() => {
             props.roomInfo.chatRoomtype === "screen"
               ? leaveScreenChat()
@@ -105,7 +105,7 @@ const ChatRoomModal = (props) => {
 // 다른사람 프로필 컴포넌트
 const Profile = (props) => {
   // 사진 ip주소 + 사진이름 조합
-  const IMAGES_BASE_URL = process.env.REACT_APP_IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
 
   // 기본 로그인일 때 프로필 사진
@@ -141,7 +141,7 @@ const Background = styled.div`
 `
 
 const Container = styled.div`
-  width: 296px;
+  width: 70%;
   height: 100vh;
   background-color: white;
   padding: 26px 20px;

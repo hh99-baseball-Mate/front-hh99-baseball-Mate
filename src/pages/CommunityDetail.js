@@ -17,10 +17,9 @@ export const CommunityDetail = (props) => {
   const params = useParams();
   // 커뮤니티 ID
   const communityId = params.communityId;
-  console.log(communityId, "군고구마");
 
   //디테일페이지 data
-  const detail_list = useSelector((state) => state.communityDetail.detail_list);
+  const detail_list = useSelector((state) => state.communityDetail.detail_list)
 
   const {
     communityUserPicture,
@@ -30,7 +29,7 @@ export const CommunityDetail = (props) => {
     userName,
     communityCommentList,
     usertype,
-  } = detail_list;
+  } = detail_list
 
   //커뮤니티 사진
   const img = process.env.REACT_APP_S3_COMMU_URL + filePath;
@@ -41,7 +40,7 @@ export const CommunityDetail = (props) => {
   }, [detail_list.communityCommentList?.length]);
 
   // 모달 보여주기/숨기기
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   //모달내용
   const modalData = {
@@ -51,7 +50,7 @@ export const CommunityDetail = (props) => {
     btnClose: "취소",
     btnUpdate: "삭제",
     btnConfirm: "수정",
-  };
+  }
 
   //삭제 버튼
   const deleteBtn = () => {
@@ -65,21 +64,21 @@ export const CommunityDetail = (props) => {
   };
 
   // 유저정보= 게시글 쓴 사람 정보 확인용
-  const user_info = useSelector((state) => state.user.user_info);
-  const writer = useSelector((state) => state.communityDetail?.detail_list);
+  const user_info = useSelector((state) => state.user.user_info)
+  const writer = useSelector((state) => state.communityDetail?.detail_list)
 
-  const user_info_id = user_info.useridx;
-  const writer_id = writer.userId;
+  const user_info_id = user_info.useridx
+  const writer_id = writer.userId
 
   //댓글 사진
   const userImg = () => {
     if (usertype === "kakao") {
-      return communityUserPicture;
+      return communityUserPicture
     }
     if (usertype === "normal") {
-      return process.env.REACT_APP_IMAGES_BASE_URL + communityUserPicture;
+      return process.env.REACT_APP_S3_USER_PROFILE_URL + communityUserPicture
     }
-  };
+  }
 
   return (
     <>
@@ -133,57 +132,58 @@ export const CommunityDetail = (props) => {
         ></Modal>
       )}
     </>
-  );
-};
+  )
+}
 
 const Border = styled.div`
   width: 100%;
   border: 1px solid #e7e7e7;
   margin: ${(props) => props.margin};
-`;
+`
 
 const Card = styled.div`
   width: 100%;
   margin-top: 20px;
   position: relative;
-`;
+`
 
 const UserInfo = styled.div`
   display: flex;
-`;
+`
 
 const InfoBox = styled.div`
   flex-direction: column;
   display: "flex";
   margin-left: 12px;
-`;
+`
 
 const Time = styled.div`
   display: flex;
   margin-top: 5px;
-`;
+`
 
 const TextBox = styled.div`
   width: 100%;
   height: 60px;
   font-size: 14px;
   margin-top: 14px;
-`;
+`
 
 const Boundary = styled.div`
   background: #f8f8f8;
   width: 100%;
   height: 6px;
-`;
+`
 
 const Good = styled.div`
   display: flex;
   margin: 15px;
-`;
+`
 
 const FileImg = styled.img`
   max-width: 335px;
-`;
+  width: 100%;
+`
 
 const MoreIcons = styled(BsThreeDots)`
   align-items: center;

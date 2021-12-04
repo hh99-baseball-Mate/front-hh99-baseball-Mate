@@ -41,7 +41,7 @@ export const GroupCard = memo((props) => {
     <Container onClick={onClick}>
       <Card flex="flex">
         <ImgBox url={img()} />
-        <Warp flex="flex" direction="column" width="250px" marginLeft="10px">
+        <Warp flex="flex" direction="column" width="100%" marginLeft="10px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
               <Ellipse
@@ -103,7 +103,7 @@ export const GroupCard = memo((props) => {
           <Text
             size="15px"
             weight="bold"
-            width="250px"
+            width="100%"
             height="40px"
             lineHeight="20px"
             marginB="8px"

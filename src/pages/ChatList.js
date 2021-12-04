@@ -13,12 +13,13 @@ const ChatList = (props) => {
   const dispatch = useDispatch()
 
   const chatList = useSelector((state) => state.chat?.chatList)
+  // const messages = useSelector((state) => state.chat?.messages)
 
   useEffect(() => {
     dispatch(chatCreators.loadChatListMW())
   }, [])
 
-  console.log("chatList", chatList)
+  // console.log("chatList", chatList)
 
   return (
     <React.Fragment>

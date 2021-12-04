@@ -2,9 +2,10 @@ import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import moment from "moment";
 
 import { getCookie } from "../shared/Cookie";
-import logger from "../shared/Console"
+
 
 // 소켓통신
 import Stomp from "stompjs";
@@ -28,7 +29,6 @@ const ChatRoom = (props) => {
   const [modal, setModal] = useState(false)
 
   const token = getCookie("is_login")
-  // console.log("roomId", roomId)
 
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
@@ -40,14 +40,9 @@ const ChatRoom = (props) => {
   const roomInfo = chatList.find((list) => list.roomId == roomId)
 
 
-
   // 모달창 정보
-  // const chatList = useSelector((state) => state.chat?.chatList)
   const chatUser = useSelector((state) => state.chat?.chatUser)
 
-
-
-  // console.log("sender_id", messages)
 
   const modalInfo = () => {
     setModal(true)
@@ -56,50 +51,31 @@ const ChatRoom = (props) => {
   // 배포, 개발 환경 채팅 주소 관리
   const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting"
 
-  // const env = process.env.NODE_ENV;
-  // const devTarget =
-  //   env === "development" ? "http://115.85.182.57/chatting" : "https://gorokke.shop/chatting";
   // 소켓
   const sock = new SockJS(BASE_URL)
   const ws = Stomp.over(sock)
 
-  // console.log("sock", sock)
 
   // 새로고침될때 방 정보 날아가지 않도록 함
   useEffect(() => {
-    // logger("chat props", props);
-    // logger("chat sender info", sender_profile);
-    // logger("chat user_in_chat", user_in_chat);
-    // dispatch(userAction.loginCheck());
 
-    // 리덕스의 현재방 정보 변경
-    // if (token) {
-    // 	dispatch(
-    // 		chatActions.moveChatRoom(
-    // 			room_id,
-    // 			roomName,
-    // 			post_id,
-    // 			own_user_id,
-    // 			order_time
-    // 		)
-    // 	);
-    // 이전 대화 기록 불러오기
-    dispatch(chatCreators.getChatMessagesAX(room_id))
-    dispatch(chatCreators.loadChatListMW())
-    // 현재 채팅방 참여 사용자 정보 불러오기
-    dispatch(chatCreators.getChatUserAX(room_id))
-    return
-  }, [room_id])
+    if(token) {
+      // 이전 대화 기록 불러오기
+      dispatch(chatCreators.getChatMessagesAX(room_id))
+      // 챗 리스트 정보 불러오기
+      dispatch(chatCreators.loadChatListMW())
+      // 현재 채팅방 참여 사용자 정보 불러오기
+      dispatch(chatCreators.getChatUserAX(room_id))
+    }
+  }, [])
+
 
   // 방 정보가 바뀌면 소켓 연결 구독, 구독해제
   useEffect(() => {
     // 방 정보가 없는 경우 홈으로 돌려보내기
     if (!room_id) {
-      return window
-        .alert(
+      window.alert(
           "잘못된 접근입니다.",
-          "홈으로 돌아갑니다.",
-          "채팅 신청 후 채팅탭을 이용해주세요."
         )
         .then((res) => {
           return history.replace("/")
@@ -111,8 +87,9 @@ const ChatRoom = (props) => {
     }
   }, [room_id ? room_id : null])
 
+
   // 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
-  const wsConnectSubscribe = useCallback(() => {
+  const wsConnectSubscribe = () => {
     try {
       ws.debug = null
       ws.connect(
@@ -124,16 +101,15 @@ const ChatRoom = (props) => {
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
               const newMessage = JSON.parse(data.body)
-              // logger("구독후 새로운 메세지 data", newMessage);
               // console.log("구독후 새로운 메세지 data", newMessage)
-              // setMessages(newMessage)
-              dispatch(chatCreators.getChatMessagesAX(room_id))
 
               // 실시간 채팅 시간 넣어주는 부분
-              // const now_time = moment().format("YYYY-MM-DD HH:mm:ss");
-              // dispatch(
-              //   chatCreators.getMessages({ ...newMessage,  })
-              // );
+              const now_time = moment().format("YYYY-MM-DD h:mm A");
+              // console.log("now_time", now_time)
+              
+              dispatch(
+                chatCreators.getMessages({ ...newMessage, modifiedAt: now_time  })
+              );
             },
             {
               token: token,
@@ -143,10 +119,9 @@ const ChatRoom = (props) => {
       )
     } catch (err) {
       // console.log(err)
-      // logger("소켓 커넥트 에러", e);
-      // console.log(err)
     }
-  }, [ws, dispatch])
+  };
+
 
   // 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
   const wsDisConnectUnsubscribe = () => {
@@ -159,8 +134,8 @@ const ChatRoom = (props) => {
         },
         { token: token }
       )
-    } catch (e) {
-      logger("연결 구독 해체 에러", e)
+    } catch (err) {
+      // console.log(err)
     }
   }
 
@@ -178,9 +153,10 @@ const ChatRoom = (props) => {
   const sendMessage = (new_message) => {
     try {
       // 토큰없으면 다시 로그인 시키기
-      // if (!token) {
-      // 	customAlert.sweetNeedLogin();
-      // }
+      if (!token) {
+      	history.replace("/login")
+        return
+      }
 
       //   빈문자열이면 리턴
       if (new_message === "") {
@@ -200,20 +176,14 @@ const ChatRoom = (props) => {
         ws.debug = null
 
         ws.send("/pub/message", { token: token }, JSON.stringify(data))
-        // logger("메세지보내기 상태", ws.ws.readyState);
         // console.log(JSON.stringify(data))
         // console.log("ws", ws)
       })
-    } catch (e) {
-      // console.log(e)
-      logger("message 소켓 함수 에러", e)
-      logger("메세지보내기 상태", ws.ws.readyState)
+    } catch (err) {
+      // console.log(err)
     }
   }
 
-  // 메세지가 변할 때마다 스크롤 이동시켜주기
-  // const messages = useSelector((state) => state.chat.messages);
-  // const messages = useSelector((state) => state.chat.messages)
 
   // 스크롤 대상
   const messageEndRef = useRef()
