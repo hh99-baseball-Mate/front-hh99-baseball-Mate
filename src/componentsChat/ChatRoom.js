@@ -32,6 +32,7 @@ const ChatRoom = (props) => {
 
   const sender_nick = useSelector((state) => state.user.user_info?.username)
   const sender_id = useSelector((state) => state.user.user_info?.useridx)
+  const sender_profile = useSelector((state) => state.user.user_info?.picture)
   const messages = useSelector((state) => state.chat.messages)
   const chatList = useSelector((state) => state.chat?.chatList)
   const room_id = roomId
@@ -59,14 +60,14 @@ const ChatRoom = (props) => {
   // 새로고침될때 방 정보 날아가지 않도록 함
   useEffect(() => {
 
-    if(token) {
-      // 이전 대화 기록 불러오기
-      dispatch(chatCreators.getChatMessagesAX(room_id))
-      // 챗 리스트 정보 불러오기
-      dispatch(chatCreators.loadChatListMW())
-      // 현재 채팅방 참여 사용자 정보 불러오기
-      dispatch(chatCreators.getChatUserAX(room_id))
-    }
+  
+    // 이전 대화 기록 불러오기
+    dispatch(chatCreators.getChatMessagesAX(room_id))
+    // 챗 리스트 정보 불러오기
+    dispatch(chatCreators.loadChatListMW())
+    // 현재 채팅방 참여 사용자 정보 불러오기
+    dispatch(chatCreators.getChatUserAX(room_id))
+    
   }, [])
 
 
@@ -101,7 +102,7 @@ const ChatRoom = (props) => {
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
               const newMessage = JSON.parse(data.body)
-              // console.log("구독후 새로운 메세지 data", newMessage)
+              console.log("구독후 새로운 메세지 data", newMessage)
 
               // 실시간 채팅 시간 넣어주는 부분
               const now_time = moment().format("YYYY-MM-DD h:mm A");
@@ -168,7 +169,7 @@ const ChatRoom = (props) => {
         type: "TALK",
         roomId: room_id,
         sender: sender_nick,
-        // senderImg: sender_profile,
+        senderImg: sender_profile,
         senderId: sender_id,
         message: new_message,
       }
