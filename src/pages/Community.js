@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import CommunityCard from "../communityList/CommunityCard";
 import { Container, Header, MarginBottom, NaviBar, Text } from "../components";
+import { InfinityScroll } from "../components/InfinityScroll";
 import { history } from "../redux/configStore";
 import { actionCreators as actionCr } from "../redux/modules/community";
 import eventBanner from "../shared/icon/logo/timeLineBanner.png";
@@ -11,13 +12,17 @@ const Community = (props) => {
   //무한 스크롤
   const [infinity, setInfinity] = useState({
     start: 0,
-    next: 2,
+    next: 4,
   });
 
   //무한 스크롤
   //카드 조회
   const card_list = useSelector((state) => state.community.card_list);
-  const is_loading = useSelector((state) => state.use);
+  const is_loading = useSelector((state) => state.community.is_loading);
+  const card_list_length = useSelector(
+    (state) => state.community.card_list_length
+  );
+
   // 유저 정보
   const is_login = useSelector((state) => state.user.is_login);
   //로그인 조회구별
@@ -30,8 +35,8 @@ const Community = (props) => {
 
   //카드 조회
   useEffect(() => {
-    dispatch(actionCr.getCardAPI());
-  }, []);
+    dispatch(actionCr.getCardAPI(infinity));
+  }, [infinity]);
 
   return (
     <>
@@ -41,11 +46,22 @@ const Community = (props) => {
         <Text bold size="16px">
           우리 같이 이야기 해봐요!
         </Text>
-        {card_list.map((e) => {
-          return <CommunityCard key={e.communityId} {...e} />;
-        })}
+        {/* 무한스크롤 컴포넌트 */}
+        <InfinityScroll
+          callNext={() => {
+            setInfinity({
+              start: infinity.start,
+              next: (infinity.next += 2),
+            });
+          }}
+          is_next={card_list_length > infinity.next}
+          loading={is_loading}
+        >
+          {card_list.map((e) => {
+            return <CommunityCard key={e.communityId} {...e} />;
+          })}
+        </InfinityScroll>
       </Container>
-
       <MarginBottom />
       <NaviBar home writeBtn onClick={newPeople} />
     </>

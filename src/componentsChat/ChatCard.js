@@ -2,22 +2,21 @@ import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
-import users from "../shared/icon/users.svg" 
+import users from "../shared/icon/users.svg";
 
 const ChatCard = (props) => {
-  const history = useHistory()
+  const history = useHistory();
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
-  const ip = IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL;
+  const ip = IMAGES_BASE_URL;
 
-
-  const roomId = props.roomId
+  const roomId = props.roomId;
 
   return (
     <Container
       onClick={() => {
-        history.push("/chatlist/chatroom/" + roomId)
+        history.push("/chatlist/chatroom/" + roomId);
       }}
     >
       <Warp>
@@ -66,10 +65,10 @@ const ChatCard = (props) => {
         </Box>
       </Warp>
     </Container>
-  )
-}
+  );
+};
 
-export default ChatCard
+export default ChatCard;
 
 const Container = styled.div`
   max-width: 425px;
@@ -84,13 +83,13 @@ const Container = styled.div`
   :hover {
     background-color: rgba(255, 249, 233, 1);
   }
-`
+`;
 
 const ImgBox = styled.div`
   width: 60px;
   height: 60px;
-	margin-right: 15px;
-	border-radius: 4px;
+  margin-right: 15px;
+  border-radius: 4px;
   background-color: #c4c4c4;
   background-image: url(${(props) => props.url});
   background-repeat: no-repeat;
@@ -111,17 +110,17 @@ const Box = styled.div`
 `;
 
 const Warp = styled.div`
-	display: flex;
-	width: ${(props) => props.width};
-	flex-direction: ${(props) => props.direction};
-	flex-wrap: ${(props) => props.wrap};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	align-content: ${(props) => props.start};
-	margin-left: ${(props) => props.marginLeft};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  display: flex;
+  width: ${(props) => props.width};
+  flex-direction: ${(props) => props.direction};
+  flex-wrap: ${(props) => props.wrap};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  align-content: ${(props) => props.start};
+  margin-left: ${(props) => props.marginLeft};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Text = styled.div`
@@ -144,11 +143,11 @@ const Text = styled.div`
 `;
 
 const NumCircle = styled.div`
-	width: 18px;
-	height: 18px;
-	border-radius: 50px;
-	background: #F25343;
-	color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50px;
+  background: #f25343;
+  color: #fff;
 `;
 
 const Ellipse = styled.div`
