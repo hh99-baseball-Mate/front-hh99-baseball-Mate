@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './shared/App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import App from "./shared/common/App"
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
+import reportWebVitals from "./reportWebVitals"
 import { Provider } from "react-redux"
 import store from "./redux/configStore"
 import axios from "axios"
 
-import "./shared/font.css"
+import "./shared/CSS/font.css"
 
 axios.defaults.withCredentials = true
 // axios defulat 헤더

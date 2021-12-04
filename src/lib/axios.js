@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "../shared/Cookie";
+import { getCookie } from "../shared/common/Cookie";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
@@ -26,12 +26,3 @@ instance.interceptors.request.use((config) => {
 })
 
 // 멀티 폼 전송방식 프로필 이미지 넘길 시 사용
-
-export const img = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "multipart/form-data",
-    accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-})

@@ -1,27 +1,26 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
-import { img, instance } from "../../lib/axios";
-
+import { deleteCookie, getCookie, setCookie } from "../../shared/common/Cookie"
+import axios from "axios"
+import { instance } from "../../lib/axios"
 
 // 액션타입
 
-const LOGIN = "LOGIN";
-const LOGOUT = "LOGOUT";
-const LOGIN_CHECK = "LOGIN_CHECK";
-const PHONE_AUTH = "PHONE_AUTH";
-const IS_AUTH = "IS_AUTH";
-const CHOICE_CLUB = "CHOICE_CLUB";
+const LOGIN = "LOGIN"
+const LOGOUT = "LOGOUT"
+const LOGIN_CHECK = "LOGIN_CHECK"
+const PHONE_AUTH = "PHONE_AUTH"
+const IS_AUTH = "IS_AUTH"
+const CHOICE_CLUB = "CHOICE_CLUB"
 
 const IS_LOADED = "IS_LOADED"
 
 // 액션 함수
 
-const logIn = createAction(LOGIN, (user_info) => ({ user_info }));
-const logOut = createAction(LOGOUT, (user_info) => ({ user_info }));
-const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }));
-const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }));
+const logIn = createAction(LOGIN, (user_info) => ({ user_info }))
+const logOut = createAction(LOGOUT, (user_info) => ({ user_info }))
+const loginCheck = createAction(LOGIN_CHECK, (login_user) => ({ login_user }))
+const choiceClub = createAction(CHOICE_CLUB, (myteam) => ({ myteam }))
 const phone_auth = createAction(PHONE_AUTH, (phoneNumber, phoneAuth) => ({
   phoneNumber,
   phoneAuth,
@@ -176,7 +175,7 @@ const kakaoLogin = (key) => {
   return function (dispatch, getState, { history }) {
     axios
       //  {서버주소/콜백}?code={AUTHORIZE_CODE}
-      .get(`https://hoae.shop/user/kakao/callback?code=${key}`)
+      .get(`https://pobi.shop/user/kakao/callback?code=${key}`)
       .then((res) => {
         const access_token = res.data.token
 

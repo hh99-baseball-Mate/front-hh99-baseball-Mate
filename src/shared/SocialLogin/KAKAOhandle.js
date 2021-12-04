@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import Loader from "../../components/Loader"
+import { Loader } from "../../components/common/"
 import { actionCreators as userActions } from "../../redux/modules/user"
 
-const KAKAOhandle = (props) => {
+export const KAKAOhandle = (props) => {
   const dispatch = useDispatch()
 
   // 인가코드
@@ -22,4 +22,3 @@ const KAKAOhandle = (props) => {
   )
 }
 
-export default KAKAOhandle
