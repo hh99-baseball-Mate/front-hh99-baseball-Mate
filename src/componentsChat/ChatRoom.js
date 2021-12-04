@@ -1,11 +1,17 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import moment from "moment";
 
 import { getCookie } from "../shared/Cookie";
-
 
 // 소켓통신
 import Stomp from "stompjs";
@@ -17,82 +23,68 @@ import ChatWrite from "./ChatWrite";
 import MessageBox from "./MessageBox";
 import ChatRoomModal from "./ChatRoomModal";
 
-import more2 from "../shared/icon/more2.svg"
-
-
+import more2 from "../shared/icon/more2.svg";
 
 const ChatRoom = (props) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const params = useParams()
-  const roomId = params.id
-  const [modal, setModal] = useState(false)
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const params = useParams();
+  const roomId = params.id;
+  const [modal, setModal] = useState(false);
 
-  const token = getCookie("is_login")
+  const token = getCookie("is_login");
 
-  const sender_nick = useSelector((state) => state.user.user_info?.username)
-  const sender_id = useSelector((state) => state.user.user_info?.useridx)
-  const sender_profile = useSelector((state) => state.user.user_info?.picture)
-  const messages = useSelector((state) => state.chat.messages)
-  const chatList = useSelector((state) => state.chat?.chatList)
-  const room_id = roomId
+  const sender_nick = useSelector((state) => state.user.user_info?.username);
+  const sender_id = useSelector((state) => state.user.user_info?.useridx);
+  const sender_profile = useSelector((state) => state.user.user_info?.picture);
+  const messages = useSelector((state) => state.chat.messages);
+  const chatList = useSelector((state) => state.chat?.chatList);
+  const room_id = roomId;
 
-
-  const roomInfo = chatList.find((list) => list.roomId == roomId)
-
+  const roomInfo = chatList.find((list) => list.roomId == roomId);
 
   // 모달창 정보
-  const chatUser = useSelector((state) => state.chat?.chatUser)
-
+  const chatUser = useSelector((state) => state.chat?.chatUser);
 
   const modalInfo = () => {
-    setModal(true)
-  }
+    setModal(true);
+  };
 
   // 배포, 개발 환경 채팅 주소 관리
-  const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting"
+  const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting";
 
   // 소켓
-  const sock = new SockJS(BASE_URL)
-  const ws = Stomp.over(sock)
-
+  const sock = new SockJS(BASE_URL);
+  const ws = Stomp.over(sock);
 
   // 새로고침될때 방 정보 날아가지 않도록 함
   useEffect(() => {
-
-  
     // 이전 대화 기록 불러오기
-    dispatch(chatCreators.getChatMessagesAX(room_id))
+    dispatch(chatCreators.getChatMessagesAX(room_id));
     // 챗 리스트 정보 불러오기
-    dispatch(chatCreators.loadChatListMW())
+    dispatch(chatCreators.loadChatListMW());
     // 현재 채팅방 참여 사용자 정보 불러오기
-    dispatch(chatCreators.getChatUserAX(room_id))
-    
-  }, [])
-
+    dispatch(chatCreators.getChatUserAX(room_id));
+  }, []);
 
   // 방 정보가 바뀌면 소켓 연결 구독, 구독해제
   useEffect(() => {
     // 방 정보가 없는 경우 홈으로 돌려보내기
     if (!room_id) {
-      window.alert(
-          "잘못된 접근입니다.",
-        )
-        .then((res) => {
-          return history.replace("/")
-        })
+      window.alert("잘못된 접근입니다.").then((res) => {
+        return history.replace("/");
+      });
     }
-    wsConnectSubscribe()
+    wsConnectSubscribe();
     return () => {
-      wsDisConnectUnsubscribe()
-    }
-  }, [room_id ? room_id : null])
-
+      wsDisConnectUnsubscribe();
+    };
+  }, [room_id ? room_id : null]);
 
   // 채팅방시작하기, 채팅방 클릭 시 room_id에 해당하는 방을 구독
   const wsConnectSubscribe = () => {
     try {
-      ws.debug = null
+      ws.debug = null;
       ws.connect(
         {
           token: token,
@@ -101,67 +93,69 @@ const ChatRoom = (props) => {
           ws.subscribe(
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
-              const newMessage = JSON.parse(data.body)
-              console.log("구독후 새로운 메세지 data", newMessage)
+              const newMessage = JSON.parse(data.body);
+              console.log("구독후 새로운 메세지 data", newMessage);
 
               // 실시간 채팅 시간 넣어주는 부분
               const now_time = moment().format("YYYY-MM-DD h:mm A");
               // console.log("now_time", now_time)
-              
+
               dispatch(
-                chatCreators.getMessages({ ...newMessage, modifiedAt: now_time  })
+                chatCreators.getMessages({
+                  ...newMessage,
+                  modifiedAt: now_time,
+                })
               );
             },
             {
               token: token,
             }
-          )
+          );
         }
-      )
+      );
     } catch (err) {
       // console.log(err)
     }
   };
 
-
   // 다른 방을 클릭하거나 뒤로가기 버튼 클릭시 연결해제 및 구독해제
   const wsDisConnectUnsubscribe = () => {
     try {
-      ws.debug = null
+      ws.debug = null;
       ws.disconnect(
         () => {
-          ws.unsubscribe("sub-0")
-          clearTimeout(waitForConnection)
+          ws.unsubscribe("sub-0");
+          clearTimeout(waitForConnection);
         },
         { token: token }
-      )
+      );
     } catch (err) {
       // console.log(err)
     }
-  }
+  };
 
   // 웹소켓이 연결될 때 까지 실행하는 함수
   const waitForConnection = (ws, callback) => {
     setTimeout(() => {
       if (ws.ws.readyState === 1) {
-        callback()
+        callback();
       } else {
-        waitForConnection(ws, callback)
+        waitForConnection(ws, callback);
       }
-    }, 0.1)
-  }
+    }, 0.1);
+  };
 
   const sendMessage = (new_message) => {
     try {
       // 토큰없으면 다시 로그인 시키기
       if (!token) {
-      	history.replace("/login")
-        return
+        history.replace("/login");
+        return;
       }
 
       //   빈문자열이면 리턴
       if (new_message === "") {
-        return
+        return;
       }
 
       // send할 데이터
@@ -172,49 +166,45 @@ const ChatRoom = (props) => {
         senderImg: sender_profile,
         senderId: sender_id,
         message: new_message,
-      }
+      };
       waitForConnection(ws, () => {
-        ws.debug = null
+        ws.debug = null;
 
-        ws.send("/pub/message", { token: token }, JSON.stringify(data))
+        ws.send("/pub/message", { token: token }, JSON.stringify(data));
         // console.log(JSON.stringify(data))
         // console.log("ws", ws)
-      })
+      });
     } catch (err) {
       // console.log(err)
     }
-  }
-
+  };
 
   // 스크롤 대상
-  const messageEndRef = useRef()
+  const messageEndRef = useRef();
 
   const scrollTomBottom = () => {
     if (messageEndRef.current) {
-      messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight
+      messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
     }
-  }
+  };
   // 렌더링시 이동
   useEffect(() => {
-    scrollTomBottom()
+    scrollTomBottom();
     // console.log("tell me you are moving now", messageEndRef)
-  }, [messages.length])
-
+  }, [messages.length]);
 
   return (
     // <React.Fragment>
     <Container ref={messageEndRef}>
       {/* <Container > */}
       <ArrowBack background="background" fixed="fixed" margin="margin">
-        
-        
         <Warp flex="flex" align="center">
           <Text>{roomInfo?.title}</Text>
           <ModalBtn
             src={more2}
             alt=""
             onClick={() => {
-              modalInfo()
+              modalInfo();
             }}
           />
         </Warp>
@@ -235,17 +225,17 @@ const ChatRoom = (props) => {
 
       <Box padding="62px 8px 3px 8px">
         {messages.map((messages) => {
-          return <MessageBox key={messages.id} {...messages} />
+          return <MessageBox key={messages.id} {...messages} />;
         })}
       </Box>
       <MarginBottom chat />
       <ChatWrite sendMessage={sendMessage} />
     </Container>
     // </React.Fragment>
-  )
-}
+  );
+};
 
-export default React.memo(ChatRoom)
+export default React.memo(ChatRoom);
 
 const Container = styled.div`
   /* margin-bottom: 10px; */
@@ -258,7 +248,7 @@ const Container = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`
+`;
 
 const ModalBtn = styled.img`
   padding: 10px;
@@ -267,13 +257,13 @@ const ModalBtn = styled.img`
   right: 10px;
   /* top: 12.5%;
 	bottom: 12.5%; */
-`
+`;
 
 const Rectangle = styled.div`
   background: #e7e7e7;
   width: 100%;
   height: 1px;
-`
+`;
 
 const Box = styled.div`
   height: ${(props) => props.height};
@@ -284,29 +274,29 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`
+`;
 
 const Warp = styled.div`
   /* max-width: 425px; */
-	width: 90%;
-	display: ${(props) => props.flex};
-	flex-direction: ${(props) => props.direction};
-	justify-content: ${(props) => props.justify};
-	align-items: ${(props) => props.align};
-	margin-left: ${(props) => props.marginLeft};
-	margin-bottom: ${(props) => props.bottom};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	position: ${(props) => props.position};
+  width: 90%;
+  display: ${(props) => props.flex};
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.align};
+  margin-left: ${(props) => props.marginLeft};
+  margin-bottom: ${(props) => props.bottom};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  position: ${(props) => props.position};
 `;
 
 const Text = styled.div`
-	font-size: ${(props) => props.size};
-	font-weight: ${(props) => props.weight};
-	color: ${(props) => props.color};
-	letter-spacing: ${(props) => props.spacing};
-	margin: ${(props) => props.margin};
-	margin-bottom: ${(props) => props.bottom};
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => props.weight};
+  color: ${(props) => props.color};
+  letter-spacing: ${(props) => props.spacing};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.bottom};
   width: 90%;
   display: flex;
   justify-content: center;
@@ -314,35 +304,32 @@ const Text = styled.div`
 `;
 
 const Circle = styled.div`
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	background: #FFFFFF;
-	border: 1px solid #E7E7E7;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
   display: flex;
   justify-content: center;
   align-items: center;
-	margin-left: 8px;
+  margin-left: 8px;
 `;
 
 const Talk = styled.div`
-	max-width: 222px;
-	background: #FFFFFF;
-	border-radius: 0px 10px 10px 10px;
+  max-width: 222px;
+  background: #ffffff;
+  border-radius: 0px 10px 10px 10px;
 `;
-
-
-
 
 const Input = styled.input`
   width: 335px;
   height: 44px;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   border-radius: 5px;
   padding: 14px 40px 14px 14px;
   ::placeholder {
     font-size: 14px;
-    color: #C4C4C4;
+    color: #c4c4c4;
   }
 `;
 
