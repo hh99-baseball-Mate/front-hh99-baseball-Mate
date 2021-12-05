@@ -7,22 +7,15 @@ import { screenDetailCreators } from "../../redux/modules/screenDetail"
 import { getCookie } from "../../shared/common/Cookie"
 
 import host from "../../shared/icon/groupDetail/host.svg"
+import { useProfile } from "../customHook"
 
 const Participant = memo((props) => {
   const params = useParams()
   const dispatch = useDispatch()
   const id = params.id
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
-
-  const ip = IMAGES_BASE_URL
-
-  // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.createdUserProfileImg
-
-  // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.createdUserProfileImg?.split(".")[1]
-  const kakaoImg = props.createdUserProfileImg
+  // 유저 프로필사진
+  const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
 
   const cookie = getCookie("is_login")
 
@@ -124,10 +117,7 @@ const Participant = memo((props) => {
 
             <CircleBox>
               {/* 기본프사 & 카카오프사 */}
-              <HostCircle
-                name={props.createdUserName}
-                url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
-              />
+              <HostCircle name={props.createdUserName} url={userImg} />
               <Text>
                 <img src={host} alt="host" /> {props.createdUserName}
               </Text>

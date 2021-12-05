@@ -41,7 +41,7 @@ import { Goods } from "../../pages/Goods/Goods"
 import { GoodsAdd } from "../../pages/Goods/GoodsAdd"
 
 import ChatList from "../../pages/Chat/ChatList"
-import ChatRoom from "../../components/chat/ChatRoom"
+import { ChatRoom } from "../../components/chat/ChatRoom"
 
 import { NotFound } from "../../pages/Common/NotFound"
 

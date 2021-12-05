@@ -10,18 +10,11 @@ import { screenDetailCreators } from "../../redux/modules/screenDetail"
 import more from "../../shared/icon/more.svg"
 import send from "../../shared/icon/send.svg"
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
+import { useProfile } from "../customHook"
 
 const GroupComment = memo((props) => {
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
-
-  const ip = IMAGES_BASE_URL
-
-  // 기본 로그인일 때 프로필 사진
-  const profileImg = ip + props.picture
-
-  // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.picture?.split(".")[1]
-  const kakaoImg = props.picture
+  // 유저 프로필사진
+  const [userImg] = useProfile(props.usertype, props.picture)
 
   const params = useParams()
   const id = params.id
@@ -91,7 +84,7 @@ const GroupComment = memo((props) => {
           <div>
             <Circle
               // marginL="20px"
-              url={kakaoCheck === "kakaocdn" ? kakaoImg : profileImg}
+              url={userImg}
             />
           </div>
 
@@ -161,6 +154,7 @@ const GroupComment = memo((props) => {
 // **댓글 컴포넌트
 const CommentList = memo((props) => {
   console.log("댓글 컴포넌트", props)
+
   const dispatch = useDispatch()
 
   const mylist = useSelector((state) => state.groupDetail.mylist)
@@ -168,8 +162,6 @@ const CommentList = memo((props) => {
 
   const user = useSelector((state) => state.user.user_info)
   const Me = user.userid
-
-  console.log(Me)
 
   let likeList = ""
   let commentId = ""
@@ -321,7 +313,6 @@ const CommentList = memo((props) => {
 
 // **모달 컴포넌트
 const Modal = (props) => {
-  console.log("모달", props)
   const dispatch = useDispatch()
 
   const delComment = () => {

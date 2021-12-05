@@ -28,7 +28,7 @@ export const Goods = () => {
   const goods_list = useSelector((state) => state.goods.goods_list)
   const is_loading = useSelector((state) => state.goods.is_loading)
   const list_length = useSelector((state) => state.goods.list_length)
-
+  console.log(is_loading, "피곤")
   const AddBtn = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")

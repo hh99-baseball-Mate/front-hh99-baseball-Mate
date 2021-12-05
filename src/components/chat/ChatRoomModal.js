@@ -140,7 +140,7 @@ const Background = styled.div`
 `
 
 const Container = styled.div`
-  width: 296px;
+  width: 70%;
   height: 100vh;
   background-color: white;
   padding: 26px 20px;

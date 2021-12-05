@@ -30,7 +30,6 @@ export const GroupDetail = (props) => {
 
   // 승인요청 신청자 찾기
   const awaitList = useSelector((state) => state.alarm?.awaitList)
-  // console.log("loadDetail", loadDetail)
   const myWait = awaitList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
@@ -94,6 +93,7 @@ export const GroupDetail = (props) => {
     </React.Fragment>
   )
 }
+
 
 const Container = styled.div`
   max-width: 425px;

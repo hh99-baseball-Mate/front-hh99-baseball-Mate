@@ -1,23 +1,23 @@
-import React from "react"
-import { useHistory } from "react-router"
-import styled from "styled-components"
+import React from "react";
+import { useHistory } from "react-router";
+import styled from "styled-components";
+
 
 import users from "../../shared/icon/users.svg"
 
 const ChatCard = (props) => {
-  const history = useHistory()
+  const history = useHistory();
 
   // 사진 받아오기
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL
-  const ip = IMAGES_BASE_URL
+  const IMAGES_BASE_URL = process.env.REACT_APP_S3_GROUP_URL;
+  const ip = IMAGES_BASE_URL;
 
-  // console.log("ss",props)
-  const roomId = props.roomId
+  const roomId = props.roomId;
 
   return (
     <Container
       onClick={() => {
-        history.push("/chatlist/chatroom/" + roomId)
+        history.push("/chatlist/chatroom/" + roomId);
       }}
     >
       <Warp>
@@ -66,10 +66,10 @@ const ChatCard = (props) => {
         </Box>
       </Warp>
     </Container>
-  )
-}
+  );
+};
 
-export default ChatCard
+export default ChatCard;
 
 const Container = styled.div`
   max-width: 425px;
@@ -84,7 +84,7 @@ const Container = styled.div`
   :hover {
     background-color: rgba(255, 249, 233, 1);
   }
-`
+`;
 
 const ImgBox = styled.div`
   width: 60px;
@@ -96,7 +96,7 @@ const ImgBox = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-`
+`;
 
 const Box = styled.div`
   width: 80%;
@@ -108,7 +108,7 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-`
+`;
 
 const Warp = styled.div`
   display: flex;
@@ -122,7 +122,7 @@ const Warp = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
-`
+`;
 
 const Text = styled.div`
   width: ${(props) => props.width};
@@ -141,7 +141,7 @@ const Text = styled.div`
   /* white-space: nowrap; */
   text-overflow: ellipsis;
   overflow: hidden;
-`
+`;
 
 const NumCircle = styled.div`
   width: 18px;
@@ -149,7 +149,7 @@ const NumCircle = styled.div`
   border-radius: 50px;
   background: #f25343;
   color: #fff;
-`
+`;
 
 const Ellipse = styled.div`
   width: 55px;
@@ -165,4 +165,4 @@ const Ellipse = styled.div`
   font-weight: bold;
   font-size: 12px;
   color: ${(props) => props.color};
-`
+`;
