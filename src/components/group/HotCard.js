@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Progress } from "../../components/common"
-import { Text } from "../../components/element"
+import { Progress,  } from "../../components/common"
+import { Text, ImgKit } from "../../components/element"
 
 import colorUsers from "../../shared/icon/colorUsers.svg"
 
@@ -14,7 +14,7 @@ export const HotCard = (props) => {
   return (
     <CardBox onClick={onClick}>
       <CardContent>
-        <MainImg src={img} />
+        <ImgKit path="group" fileName={ filePath} width="240px" height="210px"/>
         <PostInfo>
           <Text size="12px" color="#777777">
             {groupDate}
@@ -58,11 +58,6 @@ const PostInfo = styled.div`
 
 const CardContent = styled.div``
 
-const MainImg = styled.img`
-  width: 240px;
-  height: 210px;
-  border-radius: 4px;
-`
 const Slice = styled.div`
   color: rgba(196, 196, 196, 0.3);
   font-size: 12px;

@@ -11,7 +11,7 @@ import { Post } from "../../components/goods/Post"
 import { history } from "../../redux/configStore"
 import { actionCreators as goodsActions } from "../../redux/modules/goods"
 
-export const Goods = () => {
+const Goods = () => {
   const dispatch = useDispatch()
 
   // 무한스크롤
@@ -79,3 +79,5 @@ export const Goods = () => {
     </>
   )
 }
+
+export default Goods

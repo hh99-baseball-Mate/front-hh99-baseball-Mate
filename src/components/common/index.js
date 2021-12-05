@@ -3,7 +3,6 @@ import { Banner } from "./Banner"
 import { GroupCard } from "./GroupCard"
 import { Header } from "./Header"
 import { InfinityScroll } from "./InfinityScroll"
-import { Loader } from "./Loader"
 import { MarginBottom } from "./MarginBottom"
 import { Modal } from "./Modal"
 import { NaviBar } from "./NaviBar"
@@ -16,6 +15,7 @@ import { TextLine } from "./TextLine"
 import { SelectIcon } from "./SelectIcon"
 import { SubTitle } from "./SubTitle"
 import { RegionList } from "./RegionList"
+import Loader from "./Loader"
 
 export {
   ArrowBack,

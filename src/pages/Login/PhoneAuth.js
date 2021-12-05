@@ -7,7 +7,7 @@ import { history } from "../../redux/configStore"
 import { actionCreators as userActions } from "../../redux/modules/user"
 import { regPhone } from "../../shared/common/reg"
 
-export const PhoneAuth = (props) => {
+const PhoneAuth = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [phoneAuth, setPhoneAuth] = useState("")
   const dispatch = useDispatch()
@@ -82,6 +82,8 @@ export const PhoneAuth = (props) => {
     </>
   )
 }
+
+export default PhoneAuth
 
 const AuthBox = styled.div`
   margin-top: 30px;

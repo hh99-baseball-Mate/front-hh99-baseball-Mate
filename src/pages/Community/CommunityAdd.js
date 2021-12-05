@@ -7,7 +7,8 @@ import { Picture } from "../../components/group/Picture"
 import { Preview } from "../../components/group/Preview"
 import { useS3Upload } from "../../components/customHook/useS3Upload"
 import { actionCreators as actionCr } from "../../redux/modules/community"
-export const CommunityAdd = (props) => {
+
+const CommunityAdd = (props) => {
   const dispatch = useDispatch()
 
   // 입력창
@@ -98,6 +99,9 @@ export const CommunityAdd = (props) => {
     </div>
   )
 }
+
+export default CommunityAdd
+
 CommunityAdd.defaultProps = {
   defaultImg:
     "https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image-620x600.jpg",

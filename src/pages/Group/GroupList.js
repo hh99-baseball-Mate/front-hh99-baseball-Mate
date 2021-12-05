@@ -18,10 +18,10 @@ import {
   SubTitle,
   SelectIcon,
 } from "../../components/common/"
-import { Text } from "../../components/element/"
+import { Text, ImgKit } from "../../components/element/"
 import { HotCard } from "../../components/group/"
 
-export const GroupList = (props) => {
+const GroupList = (props) => {
   const dispatch = useDispatch()
 
   // 선택 한 팀 값 저장
@@ -70,10 +70,6 @@ export const GroupList = (props) => {
     dispatch(groupCr.datePage(""))
     setTeam("전체")
   }
-
-  // 구단별 중 전체 이미지
-  const KBOIcon =
-    "https://blog.kakaocdn.net/dn/bvJWww/btqF1bBafWG/VwoCNfWLEUCmC2iPTrivj0/img.jpg"
 
   useEffect(() => {
     // 일정 선택이 되지 않았다면 모임전체 리스트 get 요청
@@ -127,18 +123,6 @@ export const GroupList = (props) => {
           </SubTitle>
           {/* overFlow 로 커스텀 한 Swipers */}
           <Swipers>
-            {/* 기본 전체 */}
-            <ClubBox>
-              <ClubIcon
-                onClick={allTeam}
-                roundedCircle
-                src={KBOIcon}
-              ></ClubIcon>
-              <Text size="11px" center>
-                전체
-              </Text>
-            </ClubBox>
-
             {clubImageSrc.map((e) => (
               //  구단 별 swipers
               <ClubBox
@@ -148,8 +132,13 @@ export const GroupList = (props) => {
                   setTeam(e.name)
                 }}
               >
-                <ClubIcon src={e.img} roundedCircle />
-                <Text size="11px" center>
+                <ImgKit
+                  path="clubImg"
+                  fileName={e.short_name}
+                  width="68px"
+                  height="68px"
+                />
+                <Text size="12px" center>
                   {e.name}
                 </Text>
               </ClubBox>
@@ -192,6 +181,8 @@ export const GroupList = (props) => {
   )
 }
 
+export default GroupList
+
 const Box = styled.div``
 
 const ClubBox = styled.li`
@@ -199,6 +190,3 @@ const ClubBox = styled.li`
   cursor: pointer;
 `
 
-const ClubIcon = styled(Image)`
-  width: 68px;
-`

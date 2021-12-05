@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Progress } from "."
 
 import colorUsers from "../../shared/icon/colorUsers.svg"
+import { ImgKit } from "../element"
 
 export const GroupCard = memo((props) => {
   const {
@@ -21,12 +22,7 @@ export const GroupCard = memo((props) => {
 
   const [close, setClose] = useState(false)
 
-  const img = () => {
-    if (path === "screen") {
-      return process.env.REACT_APP_S3_SCREEN_URL + filePath
-    }
-    return process.env.REACT_APP_S3_GROUP_URL + filePath
-  }
+  const img = process.env.REACT_APP_S3_GROUP_URL + filePath
 
   // 모집중, 마감중 표시
   useEffect(() => {
@@ -40,7 +36,7 @@ export const GroupCard = memo((props) => {
   return (
     <Container onClick={onClick}>
       <Card flex="flex">
-        <ImgBox url={img()} />
+        <ImgKit path="group" fileName={filePath} width="110px" height="110px" />
         <Warp flex="flex" direction="column" width="100%" marginLeft="10px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (
@@ -201,13 +197,12 @@ const Ellipse = styled.div`
   padding-bottom: 1px;
   margin-left: ${(props) => props.marginLeft};
   font-weight: bold;
-  font-size: 11px;
+  font-size: 12px;
   color: ${(props) => props.color};
 `
 
 const ImgBox = styled.div`
-  width: 110px;
-  height: 110px;
+  width: 35%;
   border-radius: 4px;
   background-image: url(${(props) => props.url});
   background-repeat: no-repeat;

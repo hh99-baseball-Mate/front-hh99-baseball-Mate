@@ -24,7 +24,7 @@ import {
   useS3Upload,
 } from "../../components/customHook/"
 
-export const ScreenAdd = (props) => {
+const ScreenAdd = (props) => {
   const dispatch = useDispatch()
 
   // 날짜 datePicker 라이브러리
@@ -239,6 +239,8 @@ export const ScreenAdd = (props) => {
     </Container>
   )
 }
+
+export default ScreenAdd
 
 ScreenAdd.defaultProps = {
   defaultImg:

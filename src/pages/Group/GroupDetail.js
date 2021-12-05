@@ -12,7 +12,7 @@ import {
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
 
-export const GroupDetail = (props) => {
+const GroupDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const id = params.id
@@ -94,6 +94,7 @@ export const GroupDetail = (props) => {
   )
 }
 
+export default GroupDetail
 
 const Container = styled.div`
   max-width: 425px;

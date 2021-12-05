@@ -23,12 +23,6 @@ const Alarm = (props) => {
   // 스크린야구 (참여자기준) 대기중인 신청 목록
   const awaitScreenList = useSelector((state) => state.alarm.awaitScreenList)
 
-  // console.log("alarm", alarm)
-  // console.log("requestList", requestList)
-  // console.log("ScreenAlarm", requestScreenList)
-  // console.log("awaitList", awaitList)
-  // console.log("awaitScreenList", awaitScreenList)
-
   useEffect(() => {
     dispatch(alarmCreators.load_alarmMW())
 

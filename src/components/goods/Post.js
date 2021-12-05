@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from "react"
 import styled from "styled-components"
 import { Container, Modal, UserProfile } from "../../components/common/"
-import { Text } from "../../components/element/"
+import { Text, ImgKit } from "../../components/element/"
 import { BsThreeDots } from "react-icons/bs"
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { Comments } from "./Comments"
@@ -34,10 +34,6 @@ export const Post = memo((props) => {
     userId,
     usertype,
   } = props
-
-  // S3에서 가져온 게시글 이미지
-
-  const postImage = process.env.REACT_APP_S3_GOODS_URL + filePath
 
   // 유저프로필사진 커스텀훅
   const [userImg] = useProfile(usertype, goodsUserPicture)
@@ -132,7 +128,7 @@ export const Post = memo((props) => {
         </PostHeader>
 
         {/* 게시물이미지 */}
-        <PostImg url={postImage ? postImage : ""} />
+        <ImgKit path="goods" fileName={filePath} width="375px" height="375px" />
 
         <Container>
           {/* 좋아요 */}

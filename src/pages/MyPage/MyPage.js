@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as userActions } from "../../redux/modules/user"
 import { useProfile } from "../../components/customHook/"
 
-export const MyPage = ({ is_login }) => {
+const MyPage = ({ is_login }) => {
   const dispatch = useDispatch()
 
   const user_info = useSelector((state) => state.user.user_info)
@@ -118,6 +118,8 @@ export const MyPage = ({ is_login }) => {
     </>
   )
 }
+
+export default MyPage
 
 const Container = styled.div`
   margin: 0 auto;

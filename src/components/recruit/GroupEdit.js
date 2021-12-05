@@ -19,7 +19,7 @@ import {
   useInputs,
 } from "../../components/customHook/"
 
-export const GroupEdit = (props) => {
+const GroupEdit = (props) => {
   const params = useParams()
   const groupId = params.id
 
@@ -249,6 +249,7 @@ export const GroupEdit = (props) => {
     </Container>
   )
 }
+export default GroupEdit
 
 GroupEdit.defaultProps = {
   defaultImg:

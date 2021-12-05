@@ -4,7 +4,7 @@ import { Text } from "../../components/element"
 import { ArrowBack, Container } from "../../components/common"
 import styled from "styled-components"
 
-export const ClubChoice = (props) => {
+const ClubChoice = (props) => {
   const historyPage = props.history.action
   return (
     <>
@@ -27,6 +27,8 @@ export const ClubChoice = (props) => {
     </>
   )
 }
+
+export default ClubChoice
 
 ClubChoice.defaultPorps = {
   userNmae: "이름없음",

@@ -4,7 +4,7 @@ import { ArrowBack } from "../../components/common"
 import event from "../../shared/icon/banner/event.png"
 import { history } from "../../redux/configStore"
 
-export const Event = () => {
+const Event = () => {
   return (
     <Container>
       <ArrowBack bg="true">이벤트</ArrowBack>
@@ -20,6 +20,8 @@ export const Event = () => {
     </Container>
   )
 }
+
+export default Event
 
 const Container = styled.div`
   max-width: 425px;

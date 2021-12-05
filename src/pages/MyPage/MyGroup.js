@@ -9,7 +9,7 @@ import {
 import { PartiGroup, WriteGroup, LikeGroup } from "../../components/mygroup"
 import { SubTitle } from "../../components/common/SubTitle"
 
-export const MyGroup = (props) => {
+const MyGroup = (props) => {
   //모달
   const [showModal, setShowModal] = useState(false)
 

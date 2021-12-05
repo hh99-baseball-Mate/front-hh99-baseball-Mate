@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { Text } from "../../components/element"
+import { Text, ImgKit } from "../../components/element"
 import { ArrowBack, Container } from "../../components/common"
 import Question from "../../shared/icon/Question.png"
 import { actionCreators as actionCr } from "../../redux/modules/communityDetail"
@@ -13,7 +13,7 @@ import { Modal } from "../../components/common/Modal"
 import { actionCreators as communityCr } from "../../redux/modules/community"
 import { UserProfile } from "../../components/common/UserProfile"
 
-export const CommunityDetail = (props) => {
+const CommunityDetail = (props) => {
   const dispatch = useDispatch()
   // params의 값 가져오기
   const params = useParams()
@@ -32,9 +32,6 @@ export const CommunityDetail = (props) => {
     communityCommentList,
     usertype,
   } = detail_list
-
-  //커뮤니티 사진
-  const img = process.env.REACT_APP_S3_COMMU_URL + filePath
 
   //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {
@@ -108,7 +105,13 @@ export const CommunityDetail = (props) => {
             </InfoBox>
           </UserInfo>
           <TextBox>{content}</TextBox>
-          <FileImg src={img} alt="커뮤니티 이미지" />
+          <ImgKit
+            path="commu"
+            fileName={filePath}
+            width="335px"
+            height="335px"
+          />
+          {/* <FileImg src={img} alt="커뮤니티 이미지" /> */}
           <Border />
           <Good>
             <CommentIcon src={Question} alt="말풍선" />
@@ -136,6 +139,8 @@ export const CommunityDetail = (props) => {
     </>
   )
 }
+
+export default CommunityDetail
 
 const Border = styled.div`
   width: 100%;

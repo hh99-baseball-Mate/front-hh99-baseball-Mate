@@ -8,7 +8,7 @@ import { Preview } from "../../components/group/Preview"
 import { useInputs, useS3Upload } from "../../components/customHook/"
 import { actionCreators as goodsActions } from "../../redux/modules/goods"
 
-export const GoodsAdd = (props) => {
+const GoodsAdd = (props) => {
   const { defaultImg } = props
 
   const dispatch = useDispatch()
@@ -117,6 +117,8 @@ export const GoodsAdd = (props) => {
     </>
   )
 }
+
+export default GoodsAdd
 
 GoodsAdd.defaultProps = {
   defaultImg:

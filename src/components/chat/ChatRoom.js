@@ -19,7 +19,7 @@ import ChatRoomModal from "./ChatRoomModal"
 
 import more2 from "../../shared/icon/more2.svg"
 
-export const ChatRoom = memo((props) => {
+const ChatRoom = memo((props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
@@ -229,6 +229,7 @@ export const ChatRoom = memo((props) => {
   )
 })
 
+export default ChatRoom
 
 const Container = styled.div`
   /* margin-bottom: 10px; */
