@@ -151,7 +151,7 @@ const GroupComment = memo((props) => {
   )
 })
 
-// **댓글 컴포넌트
+// **댓글 컴포넌트**
 const CommentList = memo((props) => {
   console.log("댓글 컴포넌트", props)
 
@@ -311,7 +311,7 @@ const CommentList = memo((props) => {
   )
 })
 
-// **모달 컴포넌트
+// **모달 컴포넌트**
 const Modal = (props) => {
   const dispatch = useDispatch()
 
@@ -353,7 +353,7 @@ const Modal = (props) => {
   )
 }
 
-// **수정 컴포넌트
+// **수정 컴포넌트**
 const EditComment = (props) => {
   const dispatch = useDispatch()
 
