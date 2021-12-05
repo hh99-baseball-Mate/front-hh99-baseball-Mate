@@ -63,7 +63,7 @@ export const ScreenAdd = (props) => {
   }
 
   // 이미지 S3 저장 커스텀 훅 이미지 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "screen")
+  const [uploadFile, fileName] = useS3Upload(preview, "group")
 
   const { content, title } = inputValue
 

@@ -86,6 +86,7 @@ Header.defaultProps = {
   goods: false,
 }
 
+
 const Container = styled.div`
   max-width: 425px;
   margin: auto;

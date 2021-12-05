@@ -45,8 +45,8 @@ export const HotCard = (props) => {
   )
 }
 
-const CardBox = styled.div`
-  margin: 10px 20px 10px 0;
+const CardBox = styled.li`
+  margin: 0px 10px 0 0;
   background: #ffffff;
   height: 300px;
   cursor: pointer;

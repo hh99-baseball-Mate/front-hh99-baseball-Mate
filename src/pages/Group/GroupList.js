@@ -93,10 +93,38 @@ export const GroupList = (props) => {
   return (
     <>
       <Box>
-        <Banner />
         <Header game />
+        <Banner />
 
         <Container>
+          <SubTitle>
+            {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한
+            모임 🔥
+          </SubTitle>
+
+          {/* 핫 한모임 */}
+          <Swipers height="330px">
+            {hotGroup && hotGroup.length > 0 ? (
+              hotGroup.map((e) => {
+                return (
+                  <HotCard
+                    onClick={() => history.push(`/groupdetail/${e.groupId}`)}
+                    key={e.groupId}
+                    {...e}
+                  />
+                )
+              })
+            ) : (
+              <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
+            )}
+          </Swipers>
+
+          {/* 구단별 검색 */}
+
+          <SubTitle>
+            {user_info.username}님께서 보고싶은 구단의 <br />
+            경기모임만 찾아볼수있어요!
+          </SubTitle>
           {/* overFlow 로 커스텀 한 Swipers */}
           <Swipers>
             {/* 기본 전체 */}
@@ -128,26 +156,6 @@ export const GroupList = (props) => {
             ))}
           </Swipers>
 
-          <SubTitle more>
-            {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한
-            모임 🔥
-          </SubTitle>
-          {/* 핫 한모임 */}
-          <Swipers height="350px">
-            {hotGroup && hotGroup.length > 0 ? (
-              hotGroup.map((e) => {
-                return (
-                  <HotCard
-                    onClick={() => history.push(`/groupdetail/${e.groupId}`)}
-                    key={e.groupId}
-                    {...e}
-                  />
-                )
-              })
-            ) : (
-              <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
-            )}
-          </Swipers>
           <SelectIcon enlargement moreBtn={datePageBtn}>
             {day ? day : "원하는 경기 일정을 선택해주세요"}
           </SelectIcon>
@@ -186,7 +194,7 @@ export const GroupList = (props) => {
 
 const Box = styled.div``
 
-const ClubBox = styled.div`
+const ClubBox = styled.li`
   margin-right: 16px;
   cursor: pointer;
 `

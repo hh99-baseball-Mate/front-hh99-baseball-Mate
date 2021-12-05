@@ -49,16 +49,18 @@ export const SubTitle = ({
   if (more) {
     return (
       <MoreContainer>
-        <Text size="16px" bold>
-          {children}
-        </Text>
+        <Text size="16px">{children}</Text>
       </MoreContainer>
     )
   }
 
   // more 추가 해야함
 
-  return null
+  return (
+    <OriginTitle>
+      <Text size="16px">{children}</Text>
+    </OriginTitle>
+  )
 }
 
 SubTitle.defaultProps = {
@@ -99,6 +101,14 @@ const MoreContainer = styled.div`
   margin: 20px 0 0;
 `
 
+const OriginTitle = styled.div`
+  margin: 0.8em;
+  padding: 1em;
+  background-color: #f3f3f3;
+  text-align: center;
+  color: white;
+`
+
 const BtnGroup = styled.div``
 
 const SortBtn = styled.button`
@@ -107,11 +117,4 @@ const SortBtn = styled.button`
   color: #498c9a;
   border: none;
   background-color: transparent;
-`
-const MoreBtn = styled.button`
-  font-size: 12px;
-  color: #c4c4c4;
-  background: transparent;
-  border: none;
-  cursor: pointer;
 `

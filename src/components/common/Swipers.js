@@ -20,7 +20,7 @@ Swipers.defaultProps = {
   // height: ${(props) => props.height};
 }
 
-const Sw = styled.div`
+const Sw = styled.ul`
   overflow: scroll hidden;
   display: flex;
   align-items: center;
