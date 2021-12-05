@@ -26,7 +26,7 @@ import {
   useInputs,
 } from "../../components/customHook"
 
-export const ScreenEdit = (props) => {
+const ScreenEdit = (props) => {
   const params = useParams()
   const screenId = params.id
 
@@ -274,6 +274,8 @@ export const ScreenEdit = (props) => {
     </Container>
   )
 }
+
+export default ScreenEdit
 
 ScreenEdit.defaultProps = {
   defaultImg:

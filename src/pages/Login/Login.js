@@ -16,7 +16,7 @@ import { IoEyeSharp } from "react-icons/io5"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 
-export const Login = (props) => {
+const Login = (props) => {
   const [showPwd, setShowPwd] = useState(false)
 
   const dispatch = useDispatch()
@@ -107,6 +107,8 @@ export const Login = (props) => {
     </Container>
   )
 }
+
+export default Login
 
 const Logo = styled.div`
   width: 203px;

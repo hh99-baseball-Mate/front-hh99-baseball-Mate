@@ -16,7 +16,7 @@ import { Region } from "../../components/screen/"
 import { history } from "../../redux/configStore"
 import { actionCreators as screenAction } from "../../redux/modules/screen"
 
-export const ScreenList = (props) => {
+const ScreenList = (props) => {
   const dispatch = useDispatch()
 
   const [infinity, setinfinity] = useState({
@@ -104,3 +104,5 @@ export const ScreenList = (props) => {
     </>
   )
 }
+
+export default ScreenList

@@ -4,7 +4,7 @@ import { FcLock } from "react-icons/fc"
 import { history } from "../../redux/configStore"
 import { Text } from "../../components/element"
 
-export const NotFound = () => {
+const NotFound = () => {
   return (
     <>
       <Container>
@@ -25,6 +25,8 @@ export const NotFound = () => {
     </>
   )
 }
+
+export default NotFound
 
 const Container = styled.div`
   height: 100vh;

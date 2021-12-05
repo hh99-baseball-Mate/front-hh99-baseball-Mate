@@ -15,6 +15,7 @@ import location from "../../shared/icon/location.svg"
 import colorUsers from "../../shared/icon/colorUsers.svg"
 import users from "../../shared/icon/users.svg"
 import { useProfile } from "../customHook"
+import { ImgKit } from "../element"
 
 const Info = memo((props) => {
   const dispatch = useDispatch()
@@ -25,9 +26,9 @@ const Info = memo((props) => {
   // 사진 ip주소 + 사진이름 조합
   const img = props.filePath
 
-  // 배경사진
-  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
-  const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
+  // // 배경사진
+  // const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
+  // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
   const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
@@ -83,7 +84,7 @@ const Info = memo((props) => {
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <Img url={props.screen ? imageScreenUrl : imageUrl} />
+        <ImgKit path="group" fileName={img} width="375px" height="375px" />
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>

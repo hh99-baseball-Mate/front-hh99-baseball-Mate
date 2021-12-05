@@ -12,7 +12,7 @@ import {
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
 
-export const ScreenDetail = (props) => {
+const ScreenDetail = (props) => {
   const dispatch = useDispatch()
   const params = useParams()
   const id = params.id
@@ -101,6 +101,7 @@ export const ScreenDetail = (props) => {
     </React.Fragment>
   )
 }
+export default ScreenDetail
 
 const Container = styled.div`
   max-width: 425px;

@@ -15,7 +15,7 @@ import * as Yup from "yup"
 import { TextField } from "../../components/login"
 import { history } from "../../redux/configStore"
 
-export const Signup = (props) => {
+const Signup = (props) => {
   const user_info = useSelector((state) => state.user.user_info)
   const is_auth = useSelector((state) => state.user.is_auth)
 
@@ -154,6 +154,8 @@ export const Signup = (props) => {
     </Container>
   )
 }
+
+export default Signup
 
 const InputPosition = styled.div`
   position: relative;

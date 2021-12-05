@@ -7,7 +7,7 @@ import { Picture, Preview } from "../../components/group/"
 import { useS3Upload } from "../../components/customHook/"
 import { actionCreators as communityDetailCr } from "../../redux/modules/communityDetail"
 
-export const EditCommunComment = (props) => {
+const EditCommunComment = (props) => {
   const dispatch = useDispatch()
   //사진
   const ip = process.env.REACT_APP_S3_COMMU_URL
@@ -119,6 +119,9 @@ export const EditCommunComment = (props) => {
     </div>
   )
 }
+
+export default EditCommunComment
+
 //사진 빈값 기본이미지
 EditCommunComment.defaultProps = {
   defaultImg:

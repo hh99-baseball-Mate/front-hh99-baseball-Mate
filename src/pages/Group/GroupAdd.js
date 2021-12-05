@@ -17,7 +17,7 @@ import {
   useS3Upload,
 } from "../../components/customHook"
 
-export const GroupAdd = (props) => {
+const GroupAdd = (props) => {
   const dispatch = useDispatch()
 
   // 선택한 구단에 대한 경기일정 리스트 state
@@ -218,6 +218,8 @@ export const GroupAdd = (props) => {
     </Container>
   )
 }
+
+export default GroupAdd
 
 GroupAdd.defaultProps = {
   defaultImg:

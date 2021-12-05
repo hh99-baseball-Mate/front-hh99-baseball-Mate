@@ -8,7 +8,7 @@ import { Region } from "../../components/screen/"
 import { actionCreators as userActions } from "../../redux/modules/user"
 import { useProfile, useS3Upload } from "../../components/customHook/"
 
-export const MyInfo = (props) => {
+const MyInfo = (props) => {
   const dispatch = useDispatch()
 
   const is_login = useSelector((state) => state.user.is_login)
@@ -146,6 +146,8 @@ export const MyInfo = (props) => {
     </>
   )
 }
+
+export default MyInfo
 
 const Container = styled.div`
   margin: 0 auto;

@@ -9,9 +9,8 @@ import { history } from "../../redux/configStore"
 import { Image } from "react-bootstrap"
 import dayjs from "dayjs"
 
-// 스와이퍼
 
-export const GroupDate = (props) => {
+const GroupDate = (props) => {
   const dispatch = useDispatch()
   const play_list = useSelector((state) => state.group.play_list)
 
@@ -128,6 +127,8 @@ export const GroupDate = (props) => {
     </Container>
   )
 }
+
+export default GroupDate
 
 const Box = styled.div`
   margin: 0 10px;
