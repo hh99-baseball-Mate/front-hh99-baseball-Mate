@@ -63,7 +63,7 @@ const GroupEdit = (props) => {
   }
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "group")
+  const [uploadFiles, fileName] = useS3Upload(preview, "group")
 
   // + - 버튼 커스텀 훅
   const [plusBtn, minusBtn, onChangeBtn, peopleLimit] = useVolumeBtn(1)
@@ -90,7 +90,7 @@ const GroupEdit = (props) => {
       return
     }
 
-    uploadFile(preview)
+    uploadFiles(preview)
 
     const groupEditData = {
       title,
