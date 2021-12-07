@@ -84,7 +84,13 @@ const Info = memo((props) => {
     <Container>
       <Box position="relative">
         {/* 배경사진 */}
-        <ImgKit path="group" fileName={img} width="375px" height="375px" />
+        <ImgKit
+          cmMode
+          path="group"
+          fileName={img}
+          width="375px"
+          height="375px"
+        />
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
