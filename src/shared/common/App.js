@@ -10,6 +10,8 @@ import { GlobalStyles } from "../CSS/GlobalStyles"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as userActions } from "../../redux/modules/user"
 
+import Loader from "../../components/common/Loader"
+
 const Login = lazy(() => import("../../pages/Login/Login"))
 const Signup = lazy(() => import("../../pages/Login/Signup"))
 const ClubChoice = lazy(() => import("../../pages/Login/ClubChoice"))
@@ -42,7 +44,7 @@ const ChatList = lazy(() => import("../../pages/Chat/ChatList"))
 const ChatRoom = lazy(() => import("../../components/chat/ChatRoom"))
 const NotFound = lazy(() => import("../../pages/Common/NotFound"))
 const Alarm = lazy(() => import("../../pages/Alarm/Alarm"))
-const Loader = lazy(() => import("../../components/common/Loader"))
+// const Loader = lazy(() => import("../../components/common/Loader"))
 
 function App() {
   const dispatch = useDispatch()
@@ -59,7 +61,7 @@ function App() {
   // 로그인이 아닐때 보여지는 페이지들 구분 // 나머지는 notFound
   return (
     <>
-      <Suspense fallback={<div>...로딩중</div>}>
+      <Suspense fallback={<Loader />}>
         <Container>
           <ConnectedRouter history={history}>
             <GlobalStyles />

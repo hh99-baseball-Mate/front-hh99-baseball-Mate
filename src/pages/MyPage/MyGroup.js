@@ -88,6 +88,10 @@ const MyGroup = (props) => {
         <SubTitle filter setShowModal={setShowModal}>
           나의 모임
         </SubTitle>
+
+        {!allParticipation && !allWrite && !allLike && (
+          <Info>궁금하신 모임을 상단에서 선택해주세요!</Info>
+        )}
       </Container>
 
       {/* 카드 */}
@@ -122,12 +126,6 @@ const GroupBtn = styled.button`
   margin-right: 0;
   padding-bottom: 10px;
   color: #777777;
-  /* :focus,
-  :active {
-    border-bottom: 2px solid;
-    font-weight: bold;
-    color: red;
-  } */
 `
 const Group = styled.div`
   display: flex;
@@ -138,6 +136,7 @@ const Group = styled.div`
   background-color: none;
   vertical-align: "middle";
 `
-const Span = styled.span`
-  color: blue;
+
+const Info = styled.div`
+  margin: 50% auto;
 `

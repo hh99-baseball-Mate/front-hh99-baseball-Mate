@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../../redux/modules/group"
 import styled from "styled-components"
@@ -118,8 +117,10 @@ const GroupList = (props) => {
           {/* 구단별 검색 */}
 
           <SubTitle>
-            {user_info.username}님께서 보고싶은 구단의 <br />
-            경기모임만 찾아볼수있어요!
+            {user_info.username
+              ? ` 
+              ${user_info.username} 님께서 보고싶은 구단의 경기모임만 찾아볼수있어요!`
+              : "보고싶은 구단을 선택해주세요!"}
           </SubTitle>
           {/* overFlow 로 커스텀 한 Swipers */}
           <Swipers>
@@ -189,4 +190,3 @@ const ClubBox = styled.li`
   margin-right: 16px;
   cursor: pointer;
 `
-

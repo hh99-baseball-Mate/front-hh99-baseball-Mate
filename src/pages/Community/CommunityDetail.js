@@ -106,10 +106,11 @@ const CommunityDetail = (props) => {
           </UserInfo>
           <TextBox>{content}</TextBox>
           <ImgKit
+            cmMode
             path="commu"
             fileName={filePath}
-            width="335px"
-            height="335px"
+            width="335"
+            height="auto"
           />
           {/* <FileImg src={img} alt="커뮤니티 이미지" /> */}
           <Border />
