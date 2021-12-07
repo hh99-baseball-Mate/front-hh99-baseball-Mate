@@ -128,7 +128,13 @@ export const Post = memo((props) => {
         </PostHeader>
 
         {/* 게시물이미지 */}
-        <ImgKit path="goods" fileName={filePath} width="375px" height="375px" />
+        <ImgKit
+          cmMode
+          path="goods"
+          fileName={filePath}
+          width="385"
+          height="auto"
+        />
 
         <Container>
           {/* 좋아요 */}
@@ -224,14 +230,6 @@ const MoreIcons = styled(BsThreeDots)`
   cursor: pointer;
 `
 
-const PostImg = styled.div`
-  width: 100%;
-  padding-bottom: 375px;
-  background-image: url(${(props) => props.url});
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-`
 
 const PostIcons = styled.div`
   padding: 8px 0;

@@ -3,11 +3,35 @@ import React from "react"
 import { IKImage, IKContext } from "imagekitio-react"
 import styled from "styled-components"
 
-export const ImgKit = ({ path, fileName, width, height }) => {
+export const ImgKit = ({ path, fileName, width, height, cmMode }) => {
   const urlEndpoint = `https://ik.imagekit.io/jaeil/images/${path}`
   const publicKey = process.env.APP_PUBLIC_KEY
   const serverUrl = process.env.REACT_APP_BASE_URL
 
+  if (cmMode) {
+    return (
+      <IKContext
+        publicKey={publicKey}
+        urlEndpoint={urlEndpoint}
+        transformationPosition="path"
+        authenticationEndpoint={serverUrl}
+      >
+        <CmKits
+          path={"/" + fileName}
+          transformation={[
+            {
+              height: height,
+              width: width,
+              cropMode: "pad_resize",
+            },
+          ]}
+          lqip={{ active: true, quality: 20 }}
+          loading="lazy"
+          alt="이미지없음"
+        />
+      </IKContext>
+    )
+  }
   return (
     <IKContext
       publicKey={publicKey}
@@ -15,7 +39,7 @@ export const ImgKit = ({ path, fileName, width, height }) => {
       transformationPosition="path"
       authenticationEndpoint={serverUrl}
     >
-      <ImgKits
+      <BasicKits
         path={"/" + fileName}
         transformation={[
           {
@@ -23,7 +47,8 @@ export const ImgKit = ({ path, fileName, width, height }) => {
             width: width,
           },
         ]}
-        // loading="lazy"
+        lqip={{ active: true, quality: 20 }}
+        loading="lazy"
         alt="이미지없음"
       />
     </IKContext>
@@ -31,10 +56,19 @@ export const ImgKit = ({ path, fileName, width, height }) => {
 }
 
 ImgKit.defaultProps = {
+  cmMode: false,
+}
+
+ImgKit.defaultProps = {
   path: "group",
   fileName: "basic0",
 }
 
-const ImgKits = styled(IKImage)`
+const CmKits = styled(IKImage)`
+  cursor: pointer;
+  width: 100%;
+`
+
+const BasicKits = styled(IKImage)`
   cursor: pointer;
 `
