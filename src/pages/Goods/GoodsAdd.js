@@ -38,7 +38,7 @@ const GoodsAdd = (props) => {
   }
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "goods")
+  const [uploadFiles, fileName] = useS3Upload(preview, "goods")
 
   // 입력체크
   const submitBtn = (e) => {
@@ -51,7 +51,7 @@ const GoodsAdd = (props) => {
       return
     }
 
-    uploadFile(preview)
+    uploadFiles(preview)
 
     const goodInfo = {
       goodsName,

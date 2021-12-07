@@ -24,7 +24,7 @@ export const ImgKit = ({ path, fileName, width, height }) => {
           },
         ]}
         // loading="lazy"
-        alt={fileName}
+        alt="이미지없음"
       />
     </IKContext>
   )

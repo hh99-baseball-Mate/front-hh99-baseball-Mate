@@ -1,6 +1,6 @@
 import produce from "immer";
 import { createAction, handleActions } from "redux-actions";
-import { img, instance } from "../../lib/axios";
+import { instance } from "../../lib/axios"
 import { is_loaded } from "./user";
 
 //액션

@@ -29,10 +29,10 @@ const MyInfo = (props) => {
   const [preview, setPreview] = useState("")
 
   // S3업로드 커스텀훅
-  const [uploadFile, fileName] = useS3Upload(preview, "userProfile")
+  const [uploadFiles, fileName] = useS3Upload(preview, "userProfile")
 
   const updateProfile = () => {
-    uploadFile(preview)
+    uploadFiles(preview)
 
     const updateProfileDate = {
       selfIntroduction: introduce,

@@ -42,7 +42,7 @@ const EditCommunComment = (props) => {
     setPreview("")
   }
   //3S 사진
-  const [uploadFile, fileName] = useS3Upload(preview, "commu")
+  const [uploadFiles, fileName] = useS3Upload(preview, "commu")
 
   //인풋 값 추적
   const onChange = (e) => {
@@ -55,7 +55,7 @@ const EditCommunComment = (props) => {
 
   //입력체크
   const submitBtn = (e) => {
-    uploadFile(preview)
+    uploadFiles(preview)
     //편집 내용
     const commuEditInfo = {
       content: inputValue.content,

@@ -76,7 +76,7 @@ const ScreenEdit = (props) => {
   }
 
   // 이미지 S3 저장 커스텀 훅 이미지 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "screen")
+  const [uploadFiles, fileName] = useS3Upload(preview, "screen")
 
   const { content, title } = inputValue
 
@@ -106,7 +106,7 @@ const ScreenEdit = (props) => {
 
       const placeInfomation = roadAddress.substring(0, 2)
 
-      uploadFile(preview)
+      uploadFiles(preview)
 
       const screenEditInfo = {
         title,

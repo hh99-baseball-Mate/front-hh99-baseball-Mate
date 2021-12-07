@@ -17,7 +17,7 @@ const CommunityAdd = (props) => {
   const [preview, setPreview] = useState("")
 
   // 이미지 S3 저장 커스텀 훅 -> 이미지 / 저장경로 경로
-  const [uploadFile, fileName] = useS3Upload(preview, "commu")
+  const [uploadFiles, fileName] = useS3Upload(preview, "commu")
 
   //이미지수정
   const imgPreview = (e) => {
@@ -48,7 +48,7 @@ const CommunityAdd = (props) => {
     }
 
     // S3 업로드
-    uploadFile(preview)
+    uploadFiles(preview)
 
     //커뮤니티 수정정보 불러오기
     dispatch(actionCr.postAddAPI(communityInfo))

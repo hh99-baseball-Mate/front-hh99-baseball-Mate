@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions"
 import { produce } from "immer"
-import { instance, img } from "../../lib/axios"
+import { instance } from "../../lib/axios"
 import { is_loaded } from "./user"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
