@@ -36,6 +36,11 @@ const CommunityDetail = (props) => {
   //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {
     dispatch(actionCr.getCommunDetailAPI(communityId))
+
+    return () => {
+      console.log("언마운트")
+      console.log(detail_list)
+    }
   }, [detail_list.communityCommentList?.length])
 
   // 모달 보여주기/숨기기
