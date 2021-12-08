@@ -7,8 +7,13 @@ export const useLoginCheck = (truePath, falsePath) => {
 
   const pathHandle = (truePath, falsePath) => {
     if (!is_login) {
-      window.alert("로그인 후 이용해주세요")
-      history.push(`/${truePath}`)
+      const confrim = window.confirm(
+        "로그인 이후 사용 할 수 있습니다. 로그인 화면으로 가시겠습니까?"
+      )
+      if (confrim) {
+        history.push(`/${truePath}`)
+        return
+      }
     } else {
       history.push(`/${falsePath}`)
     }
