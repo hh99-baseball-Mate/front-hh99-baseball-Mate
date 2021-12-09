@@ -1,5 +1,4 @@
 import React from "react"
-import Image from "react-bootstrap/Image"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { Text, ImgKit } from "../../components/element"
@@ -9,23 +8,20 @@ import { clubImageSrc } from "../../shared/CSS/clubImage"
 export const ClubImage = ({ historyPage }) => {
   const dispatch = useDispatch()
 
-  const choiceClub = (e) => {
-    dispatch(userActions.choiceClubMD(e.target.name, historyPage))
+  const choiceClub = (clubName) => {
+    dispatch(userActions.choiceClubMD(clubName, historyPage))
   }
 
   return (
     <>
       {clubImageSrc.map((src) => (
         <Choice key={src.id}>
-          <Bg>
+          <Bg onClick={() => choiceClub(src.name)}>
             <ImgKit
               path="clubImg"
               fileName={src.short_name}
               width="68px"
               height="68px"
-              style={{ width: "98px", padding: "10px" }}
-              name={src.name}
-              onClick={choiceClub}
             />
           </Bg>
           <Text>{src.name}</Text>
@@ -51,4 +47,3 @@ const Bg = styled.div`
   background-color: transparent;
   margin-bottom: 5px;
 `
-

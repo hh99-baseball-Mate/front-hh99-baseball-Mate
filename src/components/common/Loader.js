@@ -2,7 +2,7 @@ import React from "react"
 import ReactLoading from "react-loading"
 import styled from "styled-components"
 
-const Loader = ({ type, color }) => {
+export const Loader = ({ type, color }) => {
   return (
     <Container>
       <Box>
@@ -13,7 +13,6 @@ const Loader = ({ type, color }) => {
   )
 }
 
-export default Loader
 
 const Container = styled.div`
   width: 100%;

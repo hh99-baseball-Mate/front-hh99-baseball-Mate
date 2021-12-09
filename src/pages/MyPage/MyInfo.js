@@ -126,9 +126,11 @@ const MyInfo = (props) => {
             </div>
 
             {/* 탭 */}
-            <TextLine onClick={goBack}>구단변경</TextLine>
+            <TextLine onClick={goBack}>관심구단 변경</TextLine>
 
-            <TextLine onClick={() => setShowModal(true)}>주소변경</TextLine>
+            <TextLine onClick={() => setShowModal(true)}>
+              거주지역 변경
+            </TextLine>
 
             {/* 주소변경 선택 모달창 */}
             {showModal && (
