@@ -13,7 +13,7 @@ export const ArrowBack = (props) => {
   return (
     <React.Fragment>
       <Headers bg={bg} background={background} fixed={fixed}>
-        <Icon {...styles} onClick={() => history.goBack()} />
+        <Icon size="32" {...styles} onClick={() => history.goBack()} />
         {children}
       </Headers>
     </React.Fragment>
@@ -62,5 +62,7 @@ const Headers = styled.div`
 const Icon = styled(IoIosArrowBack)`
   position: absolute;
   left: 0px;
+  top: 13px;
   margin-left: 20px;
+  padding: 8px;
 `

@@ -53,7 +53,7 @@ const initialState = {
 
 const hotGroupMW = (team) => {
   return (dispatch) => {
-    if (!team) {
+    if (!team || team === "전체") {
       instance
         .get(`groups/hotgroup`)
         .then((res) => {

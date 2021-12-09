@@ -91,21 +91,14 @@ const GroupDate = (props) => {
                         {/* 경기 구단 정보 홈 vs 어웨이 */}
                         <Card>
                           <Col>
-                            <div>
-                              <TeamImg
-                                src={e.awayImage}
-                                roundedCircle
-                              ></TeamImg>
-                            </div>
+                            <TeamImg src={e.awayImage} roundedCircle></TeamImg>
 
-                            <div>{e.awayteam}</div>
+                            {e.awayteam}
                           </Col>
                           <Col>
-                            <div>
-                              <TeamImg src={e.homeImage} roundedCircle />
-                            </div>
+                            <TeamImg src={e.homeImage} roundedCircle />
 
-                            <div>{e.hometeam}</div>
+                            {e.hometeam}
                           </Col>
                         </Card>
                       </Box>

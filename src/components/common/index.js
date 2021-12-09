@@ -15,7 +15,7 @@ import { TextLine } from "./TextLine"
 import { SelectIcon } from "./SelectIcon"
 import { SubTitle } from "./SubTitle"
 import { RegionList } from "./RegionList"
-import Loader from "./Loader"
+import { Loader } from "./Loader"
 
 export {
   ArrowBack,

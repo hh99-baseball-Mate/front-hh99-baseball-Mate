@@ -1,16 +1,12 @@
-import React, { lazy, Suspense, useEffect } from "react"
+import React, { lazy, Suspense } from "react"
 import { Route, Redirect, Switch } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
 import { history } from "../../redux/configStore"
 import { KAKAOhandle } from "../SocialLogin/KAKAOhandle"
-import { getCookie } from "./Cookie"
 import styled from "styled-components"
 import { GlobalStyles } from "../CSS/GlobalStyles"
-
-import { useDispatch, useSelector } from "react-redux"
-import { actionCreators as userActions } from "../../redux/modules/user"
-
-import Loader from "../../components/common/Loader"
+import { Loader } from "../../components/common/"
+import { useIsLogin } from "../../components/customHook"
 
 const Login = lazy(() => import("../../pages/Login/Login"))
 const Signup = lazy(() => import("../../pages/Login/Signup"))
@@ -44,19 +40,9 @@ const ChatList = lazy(() => import("../../pages/Chat/ChatList"))
 const ChatRoom = lazy(() => import("../../components/chat/ChatRoom"))
 const NotFound = lazy(() => import("../../pages/Common/NotFound"))
 const Alarm = lazy(() => import("../../pages/Alarm/Alarm"))
-// const Loader = lazy(() => import("../../components/common/Loader"))
 
 function App() {
-  const dispatch = useDispatch()
-
-  const is_loaded = useSelector((state) => state.user.is_loaded)
-  const is_login = useSelector((state) => state.user.is_login)
-
-  useEffect(() => {
-    if (getCookie("is_login")) {
-      dispatch(userActions.logInCheckMD())
-    }
-  }, [])
+  const [is_login, is_loaded] = useIsLogin()
 
   // 로그인이 아닐때 보여지는 페이지들 구분 // 나머지는 notFound
   return (
