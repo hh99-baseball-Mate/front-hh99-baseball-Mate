@@ -104,6 +104,7 @@ const Participant = memo((props) => {
     } else {
       props.setJoin(false)
     }
+    return
   }, [props.appliedUserInfo])
 
   const me = props.createdUserId === props.userid
