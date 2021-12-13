@@ -72,7 +72,7 @@ export const Header = (props) => {
       </Box>
 
       {/* 구분선 */}
-      <Rectangle />
+      {/* <Rectangle /> */}
     </Container>
   )
 }
@@ -89,8 +89,6 @@ Header.defaultProps = {
 
 const Container = styled.div`
   max-width: 425px;
-  margin: auto;
-  padding: 0;
   position: relative;
 `
 
@@ -100,9 +98,9 @@ const Ul = styled.ul`
 
 const Box = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 90%;
-  margin: 0 auto;
+  justify-content: space-around;
+  /* width: 90%; */
+  /* margin: 0 auto; */
   height: 60px;
   align-items: center;
 `
@@ -208,11 +206,11 @@ const Goods = styled.li`
   }
 `
 
-const Rectangle = styled.div`
-  background: #e7e7e7;
-  width: 100%;
-  height: 1px;
-`
+// const Rectangle = styled.div`
+//   background: #e7e7e7;
+//   width: 100%;
+//   height: 1px;
+// `
 
 const LoginIcon = styled.div`
   display: flex;

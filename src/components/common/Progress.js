@@ -18,6 +18,10 @@ const ProgresBar = styled.div`
   background: #e7e7e7;
   width: 70%;
   height: 1.6px;
+
+  @media screen and (max-width: 360px) {
+    width: 60%;
+  }
 `
 
 const HighLight = styled.div`

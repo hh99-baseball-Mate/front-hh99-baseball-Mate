@@ -6,15 +6,26 @@ import { Text, ImgKit } from "../../components/element"
 import colorUsers from "../../shared/icon/colorUsers.svg"
 
 export const HotCard = (props) => {
-  const { canApplyNum, filePath, groupDate, peopleLimit, title, onClick } =
-    props
-
-  const img = process.env.REACT_APP_S3_GROUP_URL + filePath
+  const {
+    canApplyNum,
+    filePath,
+    groupDate,
+    peopleLimit,
+    title,
+    onClick,
+    hotPercent,
+  } = props
 
   return (
     <CardBox onClick={onClick}>
       <CardContent>
-        <ImgKit path="group" fileName={ filePath} width="240px" height="210px"/>
+        <ImgKit
+          cmMode
+          path="group"
+          fileName={filePath}
+          width="320px"
+          height="180px"
+        />
         <PostInfo>
           <Text size="12px" color="#777777">
             {groupDate}
@@ -29,7 +40,7 @@ export const HotCard = (props) => {
         <Title>{title}</Title>
 
         <People>
-          <Progress />
+          <Progress hotPercent={hotPercent} />
           <People>
             <img src={colorUsers} alt="users" />
             <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
@@ -48,7 +59,6 @@ export const HotCard = (props) => {
 const CardBox = styled.li`
   margin: 0px 10px 0 0;
   background: #ffffff;
-  height: 300px;
   cursor: pointer;
 `
 const PostInfo = styled.div`

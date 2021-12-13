@@ -3,22 +3,22 @@ import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as groupCr } from "../../redux/modules/group"
 import styled from "styled-components"
 import { history } from "../../redux/configStore"
-import { clubImageSrc } from "../../shared/CSS/clubImage"
 
 import {
   Container,
   Header,
   MarginBottom,
   NaviBar,
-  Swipers,
   GroupCard,
   NotGame,
   Banner,
-  SubTitle,
   SelectIcon,
+  OverFlow,
 } from "../../components/common/"
-import { Text, ImgKit } from "../../components/element/"
+
 import { HotCard } from "../../components/group/"
+import SubText from "../../components/group/SubText"
+import GroupLi from "../../components/group/GroupLi"
 
 const GroupList = (props) => {
   const dispatch = useDispatch()
@@ -52,6 +52,7 @@ const GroupList = (props) => {
     return timeCut === date
   })
 
+  // 글작성 페이지 이동 버튼
   const newPeople = (e) => {
     !is_login
       ? window.alert("로그인 후 이용해주세요")
@@ -64,10 +65,9 @@ const GroupList = (props) => {
     history.push("/groupdate")
   }
 
-  const allTeam = () => {
-    // 경기일정 날짜를 다시 빈 문자로 바꿔줌
-    dispatch(groupCr.datePage(""))
-    setTeam("전체")
+  const selectTeam = (team) => {
+    setTeam(team)
+    console.log(team)
   }
 
   useEffect(() => {
@@ -88,17 +88,23 @@ const GroupList = (props) => {
   return (
     <>
       <Box>
+        {/* 헤더 */}
         <Header game />
+
+        {/* 베너 */}
         <Banner />
 
+        {/* 전체영역 */}
         <Container>
-          <SubTitle>
-            {user_info && user_info.myteam ? user_info.myteam : "지금"} 핫한
-            모임 🔥
-          </SubTitle>
+          {/* 소제목 */}
+          <SubText
+            title="롯데자이언츠 핫한 모임 🔥"
+            desc="인원 모집 마감 임박! 어서 참여하세요!"
+          />
 
           {/* 핫 한모임 */}
-          <Swipers height="330px">
+
+          <OverFlow>
             {hotGroup && hotGroup.length > 0 ? (
               hotGroup.map((e) => {
                 return (
@@ -112,41 +118,24 @@ const GroupList = (props) => {
             ) : (
               <NotGame>해당 구단의 경기모임이 없습니다.</NotGame>
             )}
-          </Swipers>
-
+          </OverFlow>
           {/* 구단별 검색 */}
 
-          <SubTitle>
-            {user_info.username
-              ? ` 
-              ${user_info.username} 님께서 보고싶은 구단의 경기모임만 찾아볼수있어요!`
-              : "보고싶은 구단을 선택해주세요!"}
-          </SubTitle>
-          {/* overFlow 로 커스텀 한 Swipers */}
-          <Swipers>
-            {clubImageSrc.map((e) => (
-              //  구단 별 swipers
-              <ClubBox
-                key={e.id}
-                onClick={() => {
-                  dispatch(groupCr.datePage(""))
-                  setTeam(e.name)
-                }}
-              >
-                <ImgKit
-                  path="clubImg"
-                  fileName={e.short_name}
-                  width="68px"
-                  height="68px"
-                />
-                <Text size="12px" center>
-                  {e.name}
-                </Text>
-              </ClubBox>
-            ))}
-          </Swipers>
+          {/* 소제목 */}
+          <SubText
+            title="구단별 모임 조회 ⚾"
+            desc="관심 구단 외에도 내가 참여하고싶은 구단을 조회해보세요!"
+          />
 
-          <SelectIcon enlargement moreBtn={datePageBtn}>
+          {/* 구단별 선택 */}
+          <GroupLi selectTeam={selectTeam} />
+
+          {/* 일정별 선택 */}
+          <SubText
+            title="일정별 조회 ⚾"
+            desc="원하는 경기모임 일자를 선택해보세요!"
+          />
+          <SelectIcon margin="0 0 10px" enlargement moreBtn={datePageBtn}>
             {day ? day : "원하는 경기 일정을 선택해주세요"}
           </SelectIcon>
           {/* 선택 된 경기 날짜가 없다면 팀리스트를, 날짜가 있다면 날짜 기준으로 리스트를 렌더링 */}
@@ -186,7 +175,3 @@ export default GroupList
 
 const Box = styled.div``
 
-const ClubBox = styled.li`
-  margin-right: 16px;
-  cursor: pointer;
-`

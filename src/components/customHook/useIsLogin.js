@@ -9,11 +9,8 @@ export const useIsLogin = () => {
   const is_loaded = useSelector((state) => state.user.is_loaded)
   const is_login = useSelector((state) => state.user.is_login)
 
-  const [isLogin, setIsLogin] = useState(false)
-
   useEffect(() => {
     if (getCookie("is_login")) {
-      setIsLogin(true)
       dispatch(userActions.logInCheckMD())
     }
   }, [])

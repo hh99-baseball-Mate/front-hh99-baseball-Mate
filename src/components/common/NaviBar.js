@@ -37,7 +37,7 @@ export const NaviBar = memo((props) => {
         </Icon>
 
         {/* 내 모임 */}
-        <Icon onClick={() => pathHandle("login", "mygroup")}>
+        <Icon onClick={pathHandle}>
           {props.sch ? (
             <img src={sch_select} alt="sch_col" />
           ) : (
@@ -46,7 +46,7 @@ export const NaviBar = memo((props) => {
         </Icon>
 
         {/* 채팅 */}
-        <Icon onClick={() => pathHandle("login", "chatlist")}>
+        <Icon onClick={pathHandle}>
           {props.chat ? (
             <img src={chat_select} alt="rec_col" />
           ) : (

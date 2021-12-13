@@ -10,7 +10,7 @@ import { NotGame } from "./NotGame"
 import { Progress } from "./Progress"
 import { Container } from "./Container"
 import { UserProfile } from "./UserProfile"
-import { Swipers } from "./Swipers"
+import { OverFlow } from "./OverFlow"
 import { TextLine } from "./TextLine"
 import { SelectIcon } from "./SelectIcon"
 import { SubTitle } from "./SubTitle"
@@ -31,7 +31,7 @@ export {
   Progress,
   Container,
   UserProfile,
-  Swipers,
+  OverFlow,
   TextLine,
   SelectIcon,
   SubTitle,

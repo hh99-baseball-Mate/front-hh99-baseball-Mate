@@ -9,11 +9,12 @@ export const SelectIcon = ({
   setShowModal,
   enlargement,
   moreBtn,
+  margin,
 }) => {
   // 음영 필터창 ex) 원하는 지역을 선택해주세요
   if (enlargement) {
     return (
-      <Container onClick={moreBtn}>
+      <Container margin={margin} onClick={moreBtn}>
         <Text center margin="14px" color="#C4C4C4">
           {children}
         </Text>
@@ -24,7 +25,7 @@ export const SelectIcon = ({
     )
   }
   return (
-    <Container onClick={() => setShowModal(true)}>
+    <Container margin={margin} onClick={() => setShowModal(true)}>
       <Text center margin="14px" color="#C4C4C4">
         {children}
       </Text>
@@ -39,7 +40,7 @@ SelectIcon.defaultProps = {
 }
 
 const Container = styled.div`
-  margin: 20px 0px;
+  margin: ${(props) => props.margin};
   width: 100%;
   height: 45px;
   background: #f3f3f3;
