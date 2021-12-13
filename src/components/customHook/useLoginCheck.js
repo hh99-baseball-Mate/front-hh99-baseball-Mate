@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { history } from "../../redux/configStore"
 
-export const useLoginCheck = (truePath, falsePath) => {
+export const useLoginCheck = () => {
   const is_login = useSelector((state) => state.user.is_login)
 
   const pathHandle = (truePath, falsePath) => {
@@ -11,11 +11,9 @@ export const useLoginCheck = (truePath, falsePath) => {
         "로그인 이후 사용 할 수 있습니다. 로그인 화면으로 가시겠습니까?"
       )
       if (confrim) {
-        history.push(`/${truePath}`)
+        history.push(`/login`)
         return
       }
-    } else {
-      history.push(`/${falsePath}`)
     }
   }
 

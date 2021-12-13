@@ -32,12 +32,8 @@ export const Comments = memo((props) => {
 
   const [userImg] = useProfile(userType, userImage)
 
-  // const [commentMore, setCommentMore] = useState(false)
-
   // 업데이트 인풋창 보이기/숨기기
   const [updateCommentBtn, setUpdateCommentBtn] = useState(false)
-
-  //커뮤티니 업테이느
 
   // 업데이트 내용 담는 state
   const [updateComment, setUpdateComment] = useState("")
@@ -55,6 +51,8 @@ export const Comments = memo((props) => {
       return commentId
     }
   }
+
+  console.log(commentUserIndex, useridx)
 
   // 업데이트 인풋창 보이기 버튼
   const updateBtn = () => {
@@ -115,7 +113,10 @@ export const Comments = memo((props) => {
           </CommentBox>
 
           {/* 수정 버튼을 눌렀을 때는 삭제/수정 아이콘 숨김 */}
-          {!updateCommentBtn && useridx === commentUserIndex ? (
+          {!updateCommentBtn &&
+          useridx &&
+          commentUserIndex &&
+          useridx === commentUserIndex ? (
             <IconBox>
               {/* 댓글 수정 버튼 */}
               <IconsUpdate size="22px" onClick={updateBtn} />

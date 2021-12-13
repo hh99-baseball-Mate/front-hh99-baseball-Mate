@@ -23,15 +23,14 @@ export const GlobalStyles = createGlobalStyle`
 
 		/* 스크롤바 숨기기 */
 		
-		/* scrollbar-width: none;
+		scrollbar-width: none;
 		-ms-overflow-style:none;
 		::-webkit-scrollbar{
 			display: none;
-		} */
+		}
 
 		/* 스크롤바 디자인 */
-		::-webkit-scrollbar{
-			/* width: 50px; */
+		/* ::-webkit-scrollbar{
 			background-color: #727071;
 			width: 15px;
 			height: 10px;
@@ -42,6 +41,6 @@ export const GlobalStyles = createGlobalStyle`
 		}
 		::-webkit-scrollbar-track{
 			background-color: white;
-		}
+		} */
 	}
 `

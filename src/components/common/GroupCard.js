@@ -17,7 +17,6 @@ export const GroupCard = memo((props) => {
     title,
     hotPercent,
     allowtype,
-    path,
   } = props
 
   const [close, setClose] = useState(false)
@@ -97,7 +96,7 @@ export const GroupCard = memo((props) => {
           </Warp>
 
           <Text
-            size="15px"
+            size="13px"
             weight="bold"
             width="100%"
             height="40px"
@@ -137,9 +136,12 @@ export const GroupCard = memo((props) => {
 
 const Container = styled.div`
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
   display: ${(props) => props.flex};
+  /* box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.3); */
+  padding: 5px;
   cursor: pointer;
+  border-radius: 8px;
 `
 
 const Warp = styled.div`
@@ -199,15 +201,6 @@ const Ellipse = styled.div`
   font-weight: bold;
   font-size: 12px;
   color: ${(props) => props.color};
-`
-
-const ImgBox = styled.div`
-  width: 35%;
-  border-radius: 4px;
-  background-image: url(${(props) => props.url});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 `
 
 const Slice = styled.div`

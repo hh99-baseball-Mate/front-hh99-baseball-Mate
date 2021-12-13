@@ -65,11 +65,10 @@ const ScreenList = (props) => {
         <Container>
           {/* 서브 타이틀*/}
 
-          <SubTitle more>같이 스야 즐겨요!</SubTitle>
+          {/* <SubTitle more>같이 스야 즐겨요!</SubTitle> */}
+          <h4>같이 스크린 야구 즐겨요!</h4>
 
-          {/* 지역 선택 모달 Btn Icon */}
-
-          <SelectIcon setShowModal={setShowModal}>
+          <SelectIcon margin="10px 0" setShowModal={setShowModal}>
             원하는 지역을 선택해주세요!
           </SelectIcon>
           {/* 지역선택 모달 */}

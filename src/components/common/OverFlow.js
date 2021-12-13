@@ -1,10 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import "swiper/swiper-bundle.min.css"
-import "swiper/swiper.min.css"
-
-export const Swipers = (props) => {
+export const OverFlow = (props) => {
   // 커스텀 스와이퍼
   const { children, height } = props
   return (
@@ -14,9 +11,9 @@ export const Swipers = (props) => {
   )
 }
 
-Swipers.defaultProps = {
+OverFlow.defaultProps = {
   children: null,
-  height: "120px",
+  // height: "120px",
   // height: ${(props) => props.height};
 }
 

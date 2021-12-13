@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { Text, ImgKit } from "../../components/element"
@@ -12,8 +12,9 @@ import { history } from "../../redux/configStore"
 import { Modal } from "../../components/common/Modal"
 import { actionCreators as communityCr } from "../../redux/modules/community"
 import { UserProfile } from "../../components/common/UserProfile"
+import { useProfile } from "../../components/customHook"
 
-const CommunityDetail = (props) => {
+const CommunityDetail = memo((props) => {
   const dispatch = useDispatch()
   // params의 값 가져오기
   const params = useParams()
@@ -21,7 +22,7 @@ const CommunityDetail = (props) => {
   const communityId = params.communityId
 
   //디테일페이지 data
-  const detail_list = useSelector((state) => state.communityDetail.detail_list)
+  let detail_list = useSelector((state) => state.communityDetail.detail_list)
 
   const {
     communityUserPicture,
@@ -36,11 +37,6 @@ const CommunityDetail = (props) => {
   //디테일페이지 data를 댓글달때마다 재랜더링
   useEffect(() => {
     dispatch(actionCr.getCommunDetailAPI(communityId))
-
-    return () => {
-      console.log("언마운트")
-      console.log(detail_list)
-    }
   }, [detail_list.communityCommentList?.length])
 
   // 모달 보여주기/숨기기
@@ -74,15 +70,7 @@ const CommunityDetail = (props) => {
   const user_info_id = user_info.useridx
   const writer_id = writer.userId
 
-  //댓글 사진
-  const userImg = () => {
-    if (usertype === "kakao") {
-      return communityUserPicture
-    }
-    if (usertype === "normal") {
-      return process.env.REACT_APP_S3_USER_PROFILE_URL + communityUserPicture
-    }
-  }
+  const [userImg] = useProfile(usertype, communityUserPicture)
 
   return (
     <>
@@ -144,7 +132,7 @@ const CommunityDetail = (props) => {
       )}
     </>
   )
-}
+})
 
 export default CommunityDetail
 

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react"
+import React, { memo, useState } from "react"
 import styled from "styled-components"
 import { Container, Modal, UserProfile } from "../../components/common/"
 import { Text, ImgKit } from "../../components/element/"
@@ -92,6 +92,7 @@ export const Post = memo((props) => {
 
   // 댓글 삭제버튼
   const deleteCommentBtn = (commentId) => {
+    console.log(commentId)
     dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
   }
 
@@ -229,7 +230,6 @@ const MoreIcons = styled(BsThreeDots)`
   margin: 7.5px 0;
   cursor: pointer;
 `
-
 
 const PostIcons = styled.div`
   padding: 8px 0;

@@ -7,6 +7,7 @@ import {
   NotGame,
   InfinityScroll,
 } from "../../components/common/"
+import { useLoginCheck } from "../../components/customHook"
 import { Post } from "../../components/goods/Post"
 import { history } from "../../redux/configStore"
 import { actionCreators as goodsActions } from "../../redux/modules/goods"
@@ -28,13 +29,8 @@ const Goods = () => {
   const goods_list = useSelector((state) => state.goods.goods_list)
   const is_loading = useSelector((state) => state.goods.is_loading)
   const list_length = useSelector((state) => state.goods.list_length)
-  console.log(is_loading, "피곤")
-  const AddBtn = (e) => {
-    !is_login
-      ? window.alert("로그인 후 이용해주세요")
-      : history.push("/goods/goodsadd")
-    e.target.disabled = true
-  }
+
+  const [pathHandle] = useLoginCheck()
 
   useEffect(() => {
     dispatch(goodsActions.getGoodsMD(infinity))
@@ -75,7 +71,7 @@ const Goods = () => {
       </InfinityScroll>
 
       <MarginBottom />
-      <NaviBar writeBtn onClick={AddBtn} />
+      <NaviBar writeBtn onClick={pathHandle} />
     </>
   )
 }

@@ -11,10 +11,7 @@ export const Banner = (props) => {
 
   return (
     <BannerContainer>
-      <Headers>
-        <Logo src={logo} alt="로고이미지" />
-        {/* <Icon size="24" color="#FFFFFF" /> */}
-      </Headers>
+      <Logo src={logo} alt="로고이미지" />
 
       <TextBox>
         <HeaderText>OPEN EVENT</HeaderText>
@@ -39,33 +36,18 @@ const BannerContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  height: 437px;
+  height: 200px;
   background-color: #000;
 `
-
-const Headers = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
 const Logo = styled.img`
   margin: 20px;
-  width: 120px;
   color: #fff;
 `
-
-// const Icon = styled(VscBell)`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   margin: 24px;
-// `;
 
 const TextBox = styled.div`
   position: absolute;
   bottom: 0px;
-  margin: 30px;
+  margin: 20px;
 `
 
 const HeaderText = styled.p`

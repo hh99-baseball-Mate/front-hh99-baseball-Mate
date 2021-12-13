@@ -83,7 +83,9 @@ const MyPage = ({ is_login }) => {
                 height="60px"
                 disabled
                 placeholder={selfIntroduce}
-              ></Inputs>
+              >
+                내 소개글
+              </Inputs>
             </div>
           </>
         ) : (
