@@ -71,7 +71,7 @@ const Goods = () => {
       </InfinityScroll>
 
       <MarginBottom />
-      <NaviBar writeBtn onClick={pathHandle} />
+      <NaviBar writeBtn onClick={() => pathHandle("login", "goods/goodsadd")} />
     </>
   )
 }

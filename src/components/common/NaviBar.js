@@ -37,7 +37,7 @@ export const NaviBar = memo((props) => {
         </Icon>
 
         {/* 내 모임 */}
-        <Icon onClick={pathHandle}>
+        <Icon onClick={() => pathHandle("login", "mygroup")}>
           {props.sch ? (
             <img src={sch_select} alt="sch_col" />
           ) : (
@@ -46,7 +46,7 @@ export const NaviBar = memo((props) => {
         </Icon>
 
         {/* 채팅 */}
-        <Icon onClick={pathHandle}>
+        <Icon onClick={() => pathHandle("login", "chatlist")}>
           {props.chat ? (
             <img src={chat_select} alt="rec_col" />
           ) : (
@@ -114,18 +114,5 @@ const Icon = styled.button`
   align-items: center;
   background: none;
   border: none;
-`
-
-const Box = styled.div`
-  width: 335px;
-  /* height: 177px; */
-  margin: 20px auto;
-`
-
-const Text = styled.div`
-  font-size: 12px;
-  font-weight: normal;
-  color: #c4c4c4;
-  letter-spacing: -0.01em;
-  margin-top: 3.5px;
+  cursor: pointer;
 `

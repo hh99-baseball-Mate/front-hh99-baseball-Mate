@@ -57,8 +57,8 @@ function App() {
                 <Route exact path="/phoneAuth" component={PhoneAuth} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route path="/mygroup" exact component={MyGroup} />
                 <Route path="/user/kakao/callback" component={KAKAOhandle} />
+                <Route path="/mygroup" exact component={MyGroup} />
                 <Route exact path="/login/clubchoice" component={ClubChoice} />
                 <Route path="/" exact component={GroupList} />
                 <Route path="/groupdate" exact component={GroupDate} />
@@ -87,11 +87,6 @@ function App() {
                 />
                 <Route path="/notice" component={Notice} />
                 <Route path="/event" component={Event} />
-                <Route
-                  path="/community/communitydetail/:communityId"
-                  exact
-                  component={CommunityDetail}
-                />
                 {/* 임시 */}
                 <Route component={NotFound} />
                 <Redirect from="*" to="/" />
