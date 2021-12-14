@@ -72,27 +72,27 @@ const GroupComment = memo((props) => {
       </Box>
 
       {/* 댓글작성 */}
-      <Box
+      {/* <Box
         height="80px"
         position="relative"
         flex="flex"
         align="center"
         justify="center"
         background="#fff"
-      >
-        <Warp align="center">
-          <div>
+      > */}
+        <Warp align="center" background="#fff">
+          {/* <div>
             <Circle
               // marginL="20px"
               url={userImg}
             />
-          </div>
+          </div> */}
 
           <div
             style={{
-              width: "300px",
+              width: "425px",
               position: "relative",
-              marginRight: "10px",
+              // marginRight: "10px",
             }}
           >
             <TextArea
@@ -113,7 +113,7 @@ const GroupComment = memo((props) => {
             />
           </div>
         </Warp>
-      </Box>
+      {/* </Box> */}
 
       <Rectangle />
 
@@ -475,6 +475,7 @@ const Warp = styled.div`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   position: ${(props) => props.position};
+  background: ${(props) => props.background};;
 `
 
 const Text = styled.p`
@@ -493,14 +494,10 @@ const Text = styled.p`
 `
 
 const TextArea = styled.textarea`
-  /* max-width: 360px; */
   width: 100%;
-  display: block;
-  /* min-width: 280px; */
   height: 70px;
-  /* border: none; */
-  padding: 5px 25px 5px 5px;
-  margin-left: 12px;
+  border: none;
+  padding: 10px 30px 10px 10px;
   resize: none;
   :required ::placeholder {
     font-weight: 500;
@@ -515,9 +512,9 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: -10px;
-  bottom: 0%;
-  transform: translateY(-50%);
+  right: 8px;
+  bottom: 50%;
+  transform: translateY(50%);
   cursor: pointer;
 `
 
