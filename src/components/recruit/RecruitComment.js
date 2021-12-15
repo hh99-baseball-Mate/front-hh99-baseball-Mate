@@ -72,48 +72,33 @@ const GroupComment = memo((props) => {
       </Box>
 
       {/* 댓글작성 */}
-      {/* <Box
-        height="80px"
-        position="relative"
-        flex="flex"
-        align="center"
-        justify="center"
-        background="#fff"
-      > */}
-        <Warp align="center" background="#fff">
-          {/* <div>
-            <Circle
-              // marginL="20px"
-              url={userImg}
-            />
-          </div> */}
+      <Warp align="center" background="#fff" padding="0 15px">
 
-          <div
-            style={{
-              width: "425px",
-              position: "relative",
-              // marginRight: "10px",
+        <div
+          style={{
+            width: "425px",
+            position: "relative",
+            // marginRight: "10px",
+          }}
+        >
+          <TextArea
+            type="text"
+            placeholder="&#13;&#10;댓글을 입력해 주세요..."
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value)
             }}
-          >
-            <TextArea
-              type="text"
-              placeholder="댓글을 입력해 주세요..."
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value)
-              }}
-            />
+          />
 
-            <SendImg
-              src={send}
-              alt="send"
-              onClick={() => {
-                addComment()
-              }}
-            />
-          </div>
-        </Warp>
-      {/* </Box> */}
+          <SendImg
+            src={send}
+            alt="send"
+            onClick={() => {
+              addComment()
+            }}
+          />
+        </div>
+      </Warp>
 
       <Rectangle />
 
@@ -434,7 +419,7 @@ const Container = styled.div`
 `
 
 const EditText = styled.textarea`
-  width: 310px;
+  width: 100%;
   height: 70px;
   padding: 5px 5px 5px 5px;
   resize: none;
@@ -497,12 +482,16 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 70px;
   border: none;
-  padding: 10px 30px 10px 10px;
+  padding: 10px 25px 10px 10px;
   resize: none;
   :required ::placeholder {
     font-weight: 500;
     font-size: 14px;
     color: #c4c4c4;
+  }
+
+  &:focus {
+    outline: none;
   }
 
   &::-webkit-scrollbar {
@@ -512,7 +501,7 @@ const TextArea = styled.textarea`
 
 const SendImg = styled.img`
   position: absolute;
-  right: 8px;
+  right: 0;
   bottom: 50%;
   transform: translateY(50%);
   cursor: pointer;
@@ -565,7 +554,7 @@ const ModalButton = styled.button`
 `
 
 const MWarp = styled.div`
-  /* box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px; */
+  box-shadow: rgba(0, 0, 0, 0.06) 1px 1px 12px 1px;
   height: 50px;
   position: absolute;
   right: 10px;

@@ -215,6 +215,7 @@ const Goods = styled.li`
 const LoginIcon = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `
 
 const LoginBtn = styled.div`
@@ -238,7 +239,8 @@ const RedDot = styled.div`
   border-radius: 50px;
   background: #f25343;
   position: absolute;
-  right: 20px;
+  right: -3%;
+  top: 3%;
 `
 
 const P = styled.p`

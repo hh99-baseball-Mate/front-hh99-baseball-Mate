@@ -112,24 +112,21 @@ const Participant = memo((props) => {
     <React.Fragment>
       <Box padding="28px 15px 40px 15px" background="#fff">
         <div style={{ maxWidth: "335px", width:"100%",  margin: "auto", display: "flex", justifyContent: "center" }}>
-          {/* <Warp wrap="wrap" align="center"  style={{ display: "flex", justifyContent: "center" }}> */}
-            {/* 방장 프사 */}
 
-            <Grid>
-              <CircleBox>
-                {/* 기본프사 & 카카오프사 */}
-                <HostCircle name={props.createdUserName} url={userImg} />
-                <Text>
-                  <img src={host} alt="host" /> {props.createdUserName}
-                </Text>
-              </CircleBox>
+          <Grid>
+            <CircleBox>
+              {/* 방장 기본프사 & 카카오프사 */}
+              <HostCircle name={props.createdUserName} url={userImg} />
+              <Text>
+                <img src={host} alt="host" /> {props.createdUserName}
+              </Text>
+            </CircleBox>
 
-              {/* 참여자 프사 */}
-              {props.appliedUserInfo?.map((list) => {
-                return <PartyList key={list.UserInx} {...list} />
-              })}
-            {/* </Warp> */}
-            </Grid>
+            {/* 참여자 프사 */}
+            {props.appliedUserInfo?.map((list) => {
+              return <PartyList key={list.UserInx} {...list} />
+            })}
+          </Grid>
         </div>
 
         <Warp flex="flex" direction="column" align="center" justify="center">
@@ -252,7 +249,6 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-  /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `
 
 const Warp = styled.div`
@@ -284,23 +280,11 @@ const Text = styled.div`
 
 const CircleBox = styled.div`
   margin: 0 6px 20px 6px;
-  /* max-width: 95px;
-  max-height: 95px; */
-  /* width: 100%;
-  height: 100%; */
-  /* flex: 1 1;
-  align-self: stretch; */
 `
 
 const HostCircle = styled.div`
-  max-width: 95px;
-  max-height: 95px;
-  min-width: 80px;
-  min-height: 80px;
-  width: 100%;
-  height: 100%;
-  /* width: 95px;
-  height: 95px; */
+  width: 95px;
+  height: 95px;
   border: 2px solid #f25343;
   border-radius: 50%;
   background: #ffffff;
@@ -309,15 +293,16 @@ const HostCircle = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  @media screen and (max-width: 360px) {
+  width: 80px;
+  height: 80px;
+ }
 `
 
 const Circle = styled.div`
-  max-width: 95px;
-  max-height: 95px;
-  min-width: 80px;
-  min-height: 80px;
-  width: 100%;
-  height: 100%;
+  width: 95px;
+  height: 95px;
   border: 1px solid #e7e7e7;
   border-radius: 50%;
   background: #ffffff;
@@ -325,6 +310,11 @@ const Circle = styled.div`
   background-image: url(${(props) => props.url});
   /* background-size: contain; */
   background-size: cover;
+
+  @media screen and (max-width: 360px) {
+  width: 80px;
+  height: 80px;
+ }
 `
 
 const ConfirmBtn = styled.button`
@@ -349,9 +339,10 @@ const DisableBtn = styled.button`
 `
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, minmax(95px, 1fr));
   place-items: center;
   /* gap: 15px; */
   margin: 0 auto;
   width: 100%;
 `
+
