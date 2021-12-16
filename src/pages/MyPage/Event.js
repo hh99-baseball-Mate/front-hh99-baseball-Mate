@@ -38,23 +38,26 @@ const Button1 = styled.button`
   position: absolute;
   z-index: 1;
   left: 50%;
-  top: 1790px;
+  top: 61.75%;
   transform: translateX(-50%);
-  width: 380px;
-  height: 53px;
+  width: 89.5%;
+  height: 1.75%;
   /* margin: auto; */
   background: none;
   cursor: pointer;
+  @media screen and (max-width : 385px) {
+    top: 61.9%;
+  }
 `
 
 const Button2 = styled.button`
   position: absolute;
   z-index: 1;
   left: 50%;
-  top: 2525px;
+  top: 87.13%;
   transform: translateX(-50%);
-  width: 380px;
-  height: 53px;
+  width: 89.5%;
+  height: 1.77%;
   /* margin: auto; */
   background: none;
   cursor: pointer;
