@@ -28,7 +28,7 @@ const ChatWrite = (props) => {
   return (
     <Container>
       <Box>
-        <Warp position="relative">
+        <Warp position="relative" padding="0 20px">
           <Input
             type="text"
             placeholder="메시지를 입력하세요"
@@ -80,7 +80,7 @@ const Box = styled.div`
 `
 
 const Warp = styled.div`
-  /* width: 100%; */
+  width: 100%;
   display: ${(props) => props.flex};
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
@@ -102,7 +102,7 @@ const Text = styled.div`
 `
 
 const Input = styled.input`
-  width: 350px;
+  width: 100%;
   height: 44px;
   border: 1px solid #e7e7e7;
   border-radius: 50px;
@@ -119,7 +119,7 @@ const Input = styled.input`
 const SendImg = styled.img`
   position: absolute;
   /* left: 8.34%; */
-  right: 8px;
+  right: 25px;
   bottom: 50%;
   transform: translateY(50%);
   cursor: pointer;

@@ -47,7 +47,8 @@ function App() {
   // 로그인이 아닐때 보여지는 페이지들 구분 // 나머지는 notFound
   return (
     <>
-      <Suspense fallback={<Loader />}>
+      {/* <Suspense fallback={<Loader />}> */}
+      <Suspense fallback={<div style={{fontSize:"500px", color:"blue"}}>로딩중...</div>}>
         <Container>
           <ConnectedRouter history={history}>
             <GlobalStyles />
@@ -158,7 +159,7 @@ function App() {
             )}
           </ConnectedRouter>
           {/* </div> */}
-          {!is_loaded && <Loader type="bars" color="#F25343" />}
+          {/* {!is_loaded && <Loader type="bars" color="#F25343" />} */}
         </Container>
       </Suspense>
     </>

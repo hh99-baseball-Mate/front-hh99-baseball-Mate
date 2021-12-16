@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -54,6 +54,7 @@ const GroupDetail = (props) => {
   }, [id, join, likePost, myWait])
 
   return (
+    <Suspense fallback={<div style={{fontSize:"500px", color:"blue"}}>로딩중...</div>}>
     <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
@@ -100,6 +101,7 @@ const GroupDetail = (props) => {
         </Box>
       </Container>
     </React.Fragment>
+    </Suspense>
   )
 }
 

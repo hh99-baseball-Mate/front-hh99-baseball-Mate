@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { lazy, memo, Suspense, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router"

@@ -7,7 +7,7 @@ export const Loader = ({ type, color }) => {
     <Container>
       <Box>
         <ReactLoading type={type} color={color} />
-        <Text>로딩중</Text>
+        {/* <Text>로딩중</Text> */}
       </Box>
     </Container>
   )
