@@ -17,6 +17,8 @@ import users from "../../shared/icon/users.svg"
 import { useProfile } from "../customHook"
 import { ImgKit } from "../element"
 
+// const ImgKit = lazy(() => import("../element/ImgKit"))
+
 const Info = memo((props) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -27,8 +29,8 @@ const Info = memo((props) => {
   const img = props.filePath
 
   // // 배경사진
-  // const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
-  // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
+  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
+  const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
   const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
@@ -85,6 +87,7 @@ const Info = memo((props) => {
       <Box position="relative">
 
         {/* 배경사진 */}
+        {/* <Suspense fallback={<div style={{fontSize:"50px", color:"blue"}}>로딩중...</div>}> */}
         <ImgKit
           cmMode
           path="group"
@@ -92,6 +95,8 @@ const Info = memo((props) => {
           width="375px"
           height="375px"
         />
+        {/* <Img url={props.screen ? imageScreenUrl : imageUrl} /> */}
+        {/* </Suspense> */}
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
