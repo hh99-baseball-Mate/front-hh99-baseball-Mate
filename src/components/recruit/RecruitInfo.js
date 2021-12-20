@@ -29,8 +29,8 @@ const Info = memo((props) => {
   const img = props.filePath
 
   // // 배경사진
-  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
-  const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
+  // const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
+  // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
   const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
