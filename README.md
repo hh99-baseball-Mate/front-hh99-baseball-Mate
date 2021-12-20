@@ -41,7 +41,7 @@
 
 <br/>
 
-- 📝[노션 정보](https://www.notion.so/99-11-4c5e4442ffea452baaf6b130329cc42de)
+- 📝[노션 정보](https://www.notion.so/99-11-4c5e4442ffea452baaf6b130329cc42d)
 - 📁[백엔드 깃헙](https://github.com/slsnrnsep/Hanghae99-Finalproject-Backend-Baseballmate)
 - 🎨[디자인 작업물](https://www.figma.com/file/sBTrAhbE09znV5ewtHqlpx/baseball-service-project-2021?node-id=0%3A1)
 - ⛏[QA 리스트](https://docs.google.com/spreadsheets/d/13MDuHS-sXkQ6DfsqEc9zZM6r1PRwBrr0EIXGdHG6Cdg/edit#gid=0)
