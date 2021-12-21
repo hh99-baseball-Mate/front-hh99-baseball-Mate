@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import { Image } from "react-bootstrap"
-import { TiDelete } from "react-icons/ti"
+import { AiOutlineClose } from "react-icons/ai"
 import styled from "styled-components"
 
 export const Preview = memo((props) => {
@@ -12,7 +12,7 @@ export const Preview = memo((props) => {
           style={{ width: "82px", height: "82px", borderRadius: "8px" }}
           src={props.src}
         />
-        <TiDelete
+        <AiOutlineClose
           size="16"
           color="#333333"
           style={{
@@ -20,7 +20,7 @@ export const Preview = memo((props) => {
             margin: "-8px",
           }}
           onClick={props.onClick}
-        ></TiDelete>
+        ></AiOutlineClose>
       </PreviewBox>
     </>
   )

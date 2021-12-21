@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import styled from "styled-components"
 import { useProfile } from "../../components/customHook"
 import { UserProfile } from "../../components/common/"
-import { TiTimes, TiSpanner, TiTick } from "react-icons/ti"
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineCheck } from "react-icons/ai"
 
 export const Comments = memo((props) => {
   const {
@@ -100,7 +100,7 @@ export const Comments = memo((props) => {
                   onChange={(e) => setUpdateComment(e.target.value)}
                   placeholder={comment}
                 />
-                <TiTick size="20" onClick={updateSubmitBtn} />
+                <AiOutlineCheck size="20" onClick={updateSubmitBtn} />
               </UpdateInputBox>
             ) : (
               // 댓글 보이기
@@ -185,7 +185,7 @@ const IconBox = styled.div`
   align-items: center;
 `
 
-const IconsDelete = styled(TiTimes)`
+const IconsDelete = styled(AiOutlineDelete)`
   color: #000;
   cursor: pointer;
   :hover {
@@ -193,7 +193,7 @@ const IconsDelete = styled(TiTimes)`
   }
 `
 
-const IconsUpdate = styled(TiSpanner)`
+const IconsUpdate = styled(AiOutlineEdit)`
   color: #000;
   cursor: pointer;
   :hover {

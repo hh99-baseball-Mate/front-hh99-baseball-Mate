@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useState } from "react"
+import React, { memo, useState } from "react"
 import styled from "styled-components"
 import { Container, Text } from "../components"
-import { BsThreeDots } from "react-icons/bs"
+import { AiOutlineEllipsis } from "react-icons/ai"
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { Comments } from "./Comments"
 import { CommentWrite } from "./CommentWrite"
@@ -223,7 +223,7 @@ const UserInfo = styled.div`
   align-items: center;
 `
 
-const MoreIcons = styled(BsThreeDots)`
+const MoreIcons = styled(AiOutlineEllipsis)`
   align-items: center;
   margin: 7.5px 0;
   cursor: pointer;

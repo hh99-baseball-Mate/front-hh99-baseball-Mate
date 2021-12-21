@@ -12,7 +12,7 @@ import { actionCreators as userActions } from "../../redux/modules/user"
 import { history } from "../../redux/configStore"
 import LogoImg from "../../shared/icon/logo/logo.png"
 
-import { IoEyeSharp } from "react-icons/io5"
+import { AiFillEye } from "react-icons/ai"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
 
@@ -60,17 +60,10 @@ const Login = (props) => {
                 placeholder="비밀번호를 입력해주세요"
                 maxLength="16"
               />
-              <IoEyeSharp
+              <EyesIcons
                 size="24"
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "42px",
-                }}
-                onClick={() => {
-                  setShowPwd(!showPwd)
-                }}
-              ></IoEyeSharp>
+                onClick={() => setShowPwd(!showPwd)}
+              ></EyesIcons>
             </div>
 
             <Buttons
@@ -118,4 +111,9 @@ const Logo = styled.div`
   font-weight: 700px;
   text-align: center;
   background-image: url(${LogoImg});
+`
+const EyesIcons = styled(AiFillEye)`
+  position: absolute;
+  right: 10px;
+  top: 42px;
 `

@@ -1,5 +1,5 @@
 import React from "react"
-import { IoIosArrowBack } from "react-icons/io"
+import { AiOutlineLeft } from "react-icons/ai"
 import styled from "styled-components"
 import { history } from "../../redux/configStore"
 
@@ -59,7 +59,7 @@ const Headers = styled.div`
       : `position: relative;`}
 `
 
-const Icon = styled(IoIosArrowBack)`
+const Icon = styled(AiOutlineLeft)`
   position: absolute;
   left: 0px;
   top: 13px;
