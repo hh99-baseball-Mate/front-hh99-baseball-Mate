@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-import { GiBaseballGlove } from "react-icons/gi"
+// import { GiBaseballGlove } from "react-icons/gi"
 
 export const NotGame = (props) => {
   // 게시글 목록이 없을 경우 보여주는 빈 페이지 안내
   return (
     <NotGames width={props.width}>
-      <GiBaseballGlove size="32px" color="#3c1010" />
+      {/* <GiBaseballGlove size="32px" color="#3c1010" /> */}
       {props.children}
     </NotGames>
   )

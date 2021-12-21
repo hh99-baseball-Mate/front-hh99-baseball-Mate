@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Text } from "../element"
-import { BiMapAlt } from "react-icons/bi"
+import { AiOutlineRead } from "react-icons/ai"
 import enlargements from "../../shared/icon/enlargement.png"
 
 export const SelectIcon = ({
@@ -49,7 +49,7 @@ const Container = styled.div`
   justify-content: space-between;
   cursor: pointer;
 `
-const Icon = styled(BiMapAlt)`
+const Icon = styled(AiOutlineRead)`
   margin: 12px;
   cursor: pointer;
 `

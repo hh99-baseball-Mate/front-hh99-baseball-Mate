@@ -7,7 +7,7 @@ import Question from "../../shared/icon/Question.png"
 import { actionCreators as actionCr } from "../../redux/modules/communityDetail"
 import { useParams } from "react-router"
 import { CommunityComment } from "../../components/community/CommunityComment"
-import { BsThreeDots } from "react-icons/bs"
+import { AiOutlineEllipsis } from "react-icons/ai"
 import { history } from "../../redux/configStore"
 import { Modal } from "../../components/common/Modal"
 import { actionCreators as communityCr } from "../../redux/modules/community"
@@ -186,7 +186,7 @@ const FileImg = styled.img`
   width: 100%;
 `
 
-const MoreIcons = styled(BsThreeDots)`
+const MoreIcons = styled(AiOutlineEllipsis)`
   align-items: center;
   margin: 7.5px 0;
   cursor: pointer;

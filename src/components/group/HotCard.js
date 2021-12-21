@@ -19,13 +19,15 @@ export const HotCard = (props) => {
   return (
     <CardBox onClick={onClick}>
       <CardContent>
-        <ImgKit
-          cmMode
-          path="group"
-          fileName={filePath}
-          width="320px"
-          height="180px"
-        />
+        <div style={{ width: "320px", height: "180px" }}>
+          <ImgKit
+            cmMode
+            path="group"
+            fileName={filePath}
+            width="640px"
+            height="360px"
+          />
+        </div>
         <PostInfo>
           <Text size="12px" color="#777777">
             {groupDate}

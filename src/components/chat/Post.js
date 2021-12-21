@@ -1,14 +1,15 @@
 import React, { memo, useState } from "react"
 import styled from "styled-components"
-import { Container, Modal, UserProfile } from "../../components/common/"
-import { Text, ImgKit } from "../../components/element/"
+import { Container, Text } from "../components"
 import { AiOutlineEllipsis } from "react-icons/ai"
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { Comments } from "./Comments"
 import { CommentWrite } from "./CommentWrite"
-import { useProfile } from "../../components/customHook/useProfile"
+import { useProfile } from "../customHook/useProfile"
+import { Modal } from "../components/Modal"
 import { useDispatch } from "react-redux"
 import { actionCreators as goodsActions } from "../../redux/modules/goods"
+import { UserProfile } from "../components/UserProfile"
 
 export const Post = memo((props) => {
   const dispatch = useDispatch()
@@ -34,6 +35,10 @@ export const Post = memo((props) => {
     userId,
     usertype,
   } = props
+
+  // S3에서 가져온 게시글 이미지
+
+  const postImage = process.env.REACT_APP_S3_GOODS_URL + filePath
 
   // 유저프로필사진 커스텀훅
   const [userImg] = useProfile(usertype, goodsUserPicture)
@@ -92,7 +97,6 @@ export const Post = memo((props) => {
 
   // 댓글 삭제버튼
   const deleteCommentBtn = (commentId) => {
-    console.log(commentId)
     dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
   }
 
@@ -129,13 +133,7 @@ export const Post = memo((props) => {
         </PostHeader>
 
         {/* 게시물이미지 */}
-        <ImgKit
-          cmMode
-          path="goods"
-          fileName={filePath}
-          width="385"
-          height="auto"
-        />
+        <PostImg url={postImage ? postImage : ""} />
 
         <Container>
           {/* 좋아요 */}
@@ -229,6 +227,15 @@ const MoreIcons = styled(AiOutlineEllipsis)`
   align-items: center;
   margin: 7.5px 0;
   cursor: pointer;
+`
+
+const PostImg = styled.div`
+  width: 100%;
+  padding-bottom: 375px;
+  background-image: url(${(props) => props.url});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `
 
 const PostIcons = styled.div`

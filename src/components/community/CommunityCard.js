@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import Question from "../../shared/icon/Question.png"
 import { useDispatch } from "react-redux"
-import { BsThreeDots } from "react-icons/bs"
+import { AiOutlineEllipsis } from "react-icons/ai"
 import { Text } from "../../components/element"
 import { Modal } from "../../components/common"
 import { actionCreators as communityCr } from "../../redux/modules/community"
@@ -147,7 +147,7 @@ const Good = styled.div`
   margin: 10px;
 `
 
-const MoreIcons = styled(BsThreeDots)`
+const MoreIcons = styled(AiOutlineEllipsis)`
   align-items: center;
   margin: 7.5px 0;
   cursor: pointer;

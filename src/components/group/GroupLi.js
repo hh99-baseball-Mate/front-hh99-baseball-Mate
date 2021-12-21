@@ -19,12 +19,14 @@ const GroupLi = (props) => {
             props.selectTeam(e.name)
           }}
         >
-          <ImgKit
-            path="clubImg"
-            fileName={e.short_name}
-            width="54px"
-            height="54px"
-          />
+          <div style={{ width: "54px", height: "54px" }}>
+            <ImgKit
+              path="clubImg"
+              fileName={e.short_name}
+              width="54px"
+              height="54px"
+            />
+          </div>
           <Text size="8px" color="#717171" center>
             {e.name}
           </Text>
@@ -34,7 +36,7 @@ const GroupLi = (props) => {
   )
 }
 
-const Container = styled.div`
+const Container = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   place-items: center;
