@@ -8,6 +8,8 @@ import { GlobalStyles } from "../CSS/GlobalStyles"
 import { Loader } from "../../components/common/"
 import { useIsLogin } from "../../components/customHook"
 
+// import GroupDetail from "../../pages/Group/GroupDetail"
+
 const Login = lazy(() => import("../../pages/Login/Login"))
 const Signup = lazy(() => import("../../pages/Login/Signup"))
 const ClubChoice = lazy(() => import("../../pages/Login/ClubChoice"))

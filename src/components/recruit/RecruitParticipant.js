@@ -110,13 +110,12 @@ const Participant = memo((props) => {
 
   return (
     <React.Fragment>
-      <Box padding="28px 20px 40px 20px" background="#fff">
-        <div style={{ width: "335px", margin: "auto" }}>
-          <Warp wrap="wrap" align="center">
-            {/* 방장 프사 */}
+      <Box padding="28px 15px 40px 15px" background="#fff">
+        <div style={{ maxWidth: "335px", width:"100%",  margin: "auto", display: "flex", justifyContent: "center" }}>
 
+          <Grid>
             <CircleBox>
-              {/* 기본프사 & 카카오프사 */}
+              {/* 방장 기본프사 & 카카오프사 */}
               <HostCircle name={props.createdUserName} url={userImg} />
               <Text>
                 <img src={host} alt="host" /> {props.createdUserName}
@@ -127,7 +126,7 @@ const Participant = memo((props) => {
             {props.appliedUserInfo?.map((list) => {
               return <PartyList key={list.UserInx} {...list} />
             })}
-          </Warp>
+          </Grid>
         </div>
 
         <Warp flex="flex" direction="column" align="center" justify="center">
@@ -250,7 +249,6 @@ const Box = styled.div`
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
   position: ${(props) => props.position};
-  /* box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2); */
 `
 
 const Warp = styled.div`
@@ -269,7 +267,9 @@ const Warp = styled.div`
 `
 
 const Text = styled.div`
-  font-size: ${(props) => props.size};
+  max-width: 95px;
+  font-size: 0.8em;
+  /* font-size: ${(props) => props.size}; */
   font-weight: ${(props) => props.weight};
   color: ${(props) => props.color};
   letter-spacing: ${(props) => props.spacing};
@@ -293,6 +293,11 @@ const HostCircle = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  @media screen and (max-width: 360px) {
+  width: 80px;
+  height: 80px;
+ }
 `
 
 const Circle = styled.div`
@@ -305,10 +310,15 @@ const Circle = styled.div`
   background-image: url(${(props) => props.url});
   /* background-size: contain; */
   background-size: cover;
+
+  @media screen and (max-width: 360px) {
+  width: 80px;
+  height: 80px;
+ }
 `
 
 const ConfirmBtn = styled.button`
-  width: 335px;
+  width: 90%;
   height: 50px;
   margin: 10px 10px;
   /* margin-top: 10px; */
@@ -327,3 +337,12 @@ const DisableBtn = styled.button`
   border: none;
   color: #fff;
 `
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(95px, 1fr));
+  place-items: center;
+  /* gap: 15px; */
+  margin: 0 auto;
+  width: 100%;
+`
+

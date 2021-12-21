@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { lazy, memo, Suspense, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router"
@@ -16,6 +16,8 @@ import colorUsers from "../../shared/icon/colorUsers.svg"
 import users from "../../shared/icon/users.svg"
 import { useProfile } from "../customHook"
 import { ImgKit } from "../element"
+
+// const ImgKit = lazy(() => import("../element/ImgKit"))
 
 const Info = memo((props) => {
   const dispatch = useDispatch()
@@ -83,7 +85,9 @@ const Info = memo((props) => {
   return (
     <Container>
       <Box position="relative">
+
         {/* 배경사진 */}
+        {/* <Suspense fallback={<div style={{fontSize:"50px", color:"blue"}}>로딩중...</div>}> */}
         <ImgKit
           cmMode
           path="group"
@@ -91,6 +95,8 @@ const Info = memo((props) => {
           width="375px"
           height="375px"
         />
+        {/* <Img url={props.screen ? imageScreenUrl : imageUrl} /> */}
+        {/* </Suspense> */}
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
@@ -104,126 +110,133 @@ const Info = memo((props) => {
             />
           )}
         </JoinCircle>
-      </Box>
+      
 
-      {/* 타이틀 */}
-      <TitleBox>
-        <Warp margin="0 0 11px 0" justify="space-between">
-          <Warp>
-            {!props.allowtype || props.canApplyNum === 0 ? (
-              <Ellipse
-                borderColor="#C4C4C4"
-                background="#C4C4C4"
-                color="#FFFFFF"
-              >
-                마감
-              </Ellipse>
-            ) : (
-              <Ellipse
-                borderColor="#F25343"
-                background="#F25343"
-                color="#FFFFFF"
-              >
-                모집중
-              </Ellipse>
-            )}
+        {/* 타이틀 */}
+        <TitleBox>
+          <Warp margin="0 0 11px 0" justify="space-between">
+            <Warp>
+              {!props.allowtype || props.dday < 1 || props.canApplyNum === 0 ? (
+                <Ellipse
+                  borderColor="#C4C4C4"
+                  background="#C4C4C4"
+                  color="#FFFFFF"
+                >
+                  마감
+                </Ellipse>
+              ) : (
+                <Ellipse
+                  borderColor="#F25343"
+                  background="#F25343"
+                  color="#FFFFFF"
+                >
+                  모집중
+                </Ellipse>
+              )}
 
-            {/* 모임 중이고, 마감이 안됬을 때 디데이 숨기기 */}
-            {props.allowtype && !props.close && (
-              <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
-                D-{props.dday}
-              </Ellipse>
-            )}
+              {/* 모임 중이고, 마감이 안됬을 때 디데이 숨기기 */}
+              {props.allowtype && !props.close &&
+                props.dday > 0 &&
+                props.canApplyNum !== 0 &&
+              (
+                <Ellipse borderColor="#498C9A" color="#498C9A" marginLeft="6px">
+                  D-{props.dday}
+                </Ellipse>
+              )}
+            </Warp>
+
+            <Warp>
+              {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
+              {props.allowtype && props.createdUserId === props.userid ? (
+                <p onClick={editBtn} style={{ cursor: "pointer" }}>
+                  📝
+                </p>
+              ) : (
+                ""
+              )}
+
+              {/* 마감되더라도 삭제 가능 */}
+              {props.createdUserId === props.userid ? (
+                <p
+                  onClick={delBtn}
+                  style={{ marginLeft: "5px", cursor: "pointer" }}
+                >
+                  ❌
+                </p>
+              ) : (
+                ""
+              )}
+            </Warp>
           </Warp>
-
-          <Warp>
-            {/* 마감되면 수정불가능 그 외 가능 수정버튼  */}
-            {props.allowtype && props.createdUserId === props.userid ? (
-              <p onClick={editBtn} style={{ cursor: "pointer" }}>
-                📝
-              </p>
-            ) : (
-              ""
-            )}
-
-            {/* 마감되더라도 삭제 가능 */}
-            {props.createdUserId === props.userid ? (
-              <p
-                onClick={delBtn}
-                style={{ marginLeft: "5px", cursor: "pointer" }}
-              >
-                ❌
-              </p>
-            ) : (
-              ""
-            )}
-          </Warp>
-        </Warp>
-        {/* <div style={{width:"295px"}}> */}
-        <Text
-          size="16px"
-          weight="bold"
-          width="100%"
-          height="46px"
-          lineHeight="23px"
-        >
-          {props.title}
-        </Text>
-        {/* </div> */}
-
-        <Warp justify="space-between" align="center" marginT="11px">
-          {/* 인원 상태바 */}
-          <Progress {...props} />
-          <Warp flex="flex">
-            <img src={colorUsers} alt="users" />
-            <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
-              &nbsp;{props.canApplyNum}명&nbsp;
-            </Text>
-            <Text size="12px" color="#F25343" spacing="-0.03em;">
-              남음
-            </Text>
-          </Warp>
-        </Warp>
-      </TitleBox>
-
-      {/* 모임 정보 */}
-      <Box
-        height="163px"
-        background="rgba(247, 247, 247, 0.5)"
-        position="relative"
-        margin="20px"
-      >
-        <Warp
-          width="100%"
-          justify="space-around"
-          align="center"
-          position="absolute"
-          padding="0 40px 0 40px"
-          style={{ top: "78%" }}
-        >
-          <img src={calendar} alt="calendar" />
-          <Text color="#777777" size="12px">
-            {props.groupDate}
+          {/* <div style={{width:"295px"}}> */}
+          <Text
+            size="16px"
+            weight="bold"
+            width="100%"
+            height="46px"
+            lineHeight="23px"
+          >
+            {props.title}
           </Text>
+          {/* </div> */}
 
-          <Slice> &ensp;|&ensp; </Slice>
-
-          {props.screen && (
-            <>
-              <img src={location} alt="location" />
-              <Text color="#777777" size="12px">
-                {props.placeInfomation}
+          <Warp justify="space-between" align="center" marginT="11px">
+            {/* 인원 상태바 */}
+            <Progress {...props} />
+            <Warp flex="flex">
+              <img src={colorUsers} alt="users" />
+              <Text size="12px" color="#F25343" weight="bold" spacing="-0.03em;">
+                &nbsp;{props.canApplyNum}명&nbsp;
               </Text>
+              <Text size="12px" color="#F25343" spacing="-0.03em;">
+                남음
+              </Text>
+            </Warp>
+          </Warp>
+        </TitleBox>
+        
 
-              <Slice> &ensp;|&ensp; </Slice>
-            </>
-          )}
+        {/* 모임 정보 */}
+        <Box
+          height="163px"
+          background="rgba(247, 247, 247, 1)"
+          position="relative"
+          // margin="20px"
+        >
+          <Warp
+            width="100%"
+            // justify="space-around"
+            justify="center"
+            align="center"
+            position="absolute"
+            padding="130px 0 0 0"
+            // style={{ top: "78%" }}
+          >
+            <img src={calendar} alt="calendar" style={{paddingRight:"7px"}} />
+            <Text color="#777777" size="12px" paddingR="7px" size360="10px">
+              {props.groupDate}
+            </Text>
 
-          <img src={users} alt="users" />
-          <Text color="#777777" size="12px">
-            최대 {props.peopleLimit}명
-          </Text>
-        </Warp>
+            <Slice> &ensp;|&ensp; </Slice>
+
+            {props.screen && (
+              <>
+                <img src={location} alt="location" style={{paddingRight:"7px"}} />
+                <Text color="#777777" size="12px" paddingR="7px" size360="10px">
+                  {props.placeInfomation}
+                </Text>
+
+                <Slice> &ensp;|&ensp; </Slice>
+              </>
+            )}
+
+            <img src={users} alt="users" style={{paddingRight:"7px"}} />
+            <Text color="#777777" size="12px" size360="10px">
+              최대 {props.peopleLimit}명
+            </Text>
+          </Warp>
+        </Box>
+        
       </Box>
 
       {/* 유저정보 */}
@@ -310,7 +323,7 @@ const JoinCircle = styled.div`
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.5);
   right: 10%;
-  top: 298px;
+  bottom: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -319,7 +332,8 @@ const JoinCircle = styled.div`
 const TitleBox = styled.div`
   position: absolute;
   left: 50%;
-  top: 345px;
+  /* top: 345px; */
+  bottom: 8%;
   transform: translateX(-50%);
   max-width: 335px;
   width: 80%;
@@ -369,12 +383,11 @@ const Text = styled.div`
   letter-spacing: ${(props) => props.spacing};
   margin: ${(props) => props.margin};
   line-height: ${(props) => props.lineHeight};
-  /* display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; */
-  /* white-space: nowrap; */
-  /* text-overflow: ellipsis;
-  overflow: hidden; */
+  padding-right: ${(props) => props.paddingR};
+
+  @media screen and (max-width: 360px) {
+  font-size: ${(props) => props.size360};
+ }
 `
 
 const Circle = styled.div`
@@ -392,6 +405,7 @@ const Circle = styled.div`
 const Slice = styled.div`
   color: #d8d8d8;
   font-size: 12px;
+  padding-right: 7px;
 `
 
 const Rectangle = styled.div`

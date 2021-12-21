@@ -292,9 +292,17 @@ const Text = styled.div`
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.bottom};
   width: 90%;
-  display: flex;
-  justify-content: center;
   margin: 0 auto;
+  padding-left: 10px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  text-align: center
 `
 
 const Circle = styled.div`

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { lazy, Suspense, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -33,6 +33,7 @@ const GroupDetail = (props) => {
   const myWait = awaitList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
+    console.log("첫렌더링")
     dispatch(groupDetailCreators.loadGroupPageMW(id))
     dispatch(groupDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitChatListMW())
@@ -42,12 +43,21 @@ const GroupDetail = (props) => {
     } else {
       setHeart(false)
     }
+
+    return () => {
+      console.log("클린업")
+      dispatch(groupDetailCreators.loadGroupPageMW(id))
+      dispatch(groupDetailCreators.mylistMW())
+      dispatch(alarmCreators.awaitChatListMW())
+    }
+
   }, [id, join, likePost, myWait])
 
   return (
     <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
       <Container>
+      
         {/* 글 정보 */}
         <RecruitInfo
           {...loadDetail}
