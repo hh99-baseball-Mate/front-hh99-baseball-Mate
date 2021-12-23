@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Buttons, Text } from "../../components/element"
 import { Modal, Container } from "../../components/common"
-import { GrLocation } from "react-icons/gr"
+import { AiOutlineCar } from "react-icons/ai"
 
 export const GroupAddModal = ({
   setGroupDate,
@@ -53,7 +53,7 @@ export const GroupAddModal = ({
                   {/* 시간 박스(텍스트) */}
                   <TextBox>
                     {/* 위치 아이콘 */}
-                    <GrLocation size="12px" />
+                    <AiOutlineCar size="12px" />
 
                     {/* 구장 */}
                     <Text size="12px">{list.location}</Text>

@@ -35,7 +35,15 @@ export const GroupCard = memo((props) => {
   return (
     <Container onClick={onClick}>
       <Card flex="flex">
-        <ImgKit path="group" fileName={filePath} width="110px" height="110px" />
+        {/* <img src={img} /> */}
+        <div style={{ width: "110px", height: "110px" }}>
+          <ImgKit
+            path="group"
+            fileName={filePath}
+            width="110px"
+            height="110px"
+          />
+        </div>
         <Warp flex="flex" direction="column" width="100%" marginLeft="10px">
           <Warp flex="flex" margin="0 0 8px 0">
             {close ? (

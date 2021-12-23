@@ -9,7 +9,7 @@ import {
   TextLine,
   UserProfile,
 } from "../../components/common"
-import { BsGear } from "react-icons/bs"
+import { AiOutlineSetting } from "react-icons/ai"
 import { history } from "../../redux/configStore"
 import { useDispatch, useSelector } from "react-redux"
 import { actionCreators as userActions } from "../../redux/modules/user"
@@ -155,7 +155,7 @@ const NotLogin = styled.div`
   justify-content: center;
 `
 
-const GearIcons = styled(BsGear)`
+const GearIcons = styled(AiOutlineSetting)`
   position: absolute;
   right: 20px;
   cursor: pointer;

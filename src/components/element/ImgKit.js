@@ -25,7 +25,7 @@ export const ImgKit = ({ path, fileName, width, height, cmMode }) => {
               cropMode: "pad_resize",
             },
           ]}
-          lqip={{ active: true, quality: 50 }}
+          lqip={{ active: true }}
           loading="lazy"
           alt="이미지없음"
         />

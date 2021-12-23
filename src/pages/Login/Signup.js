@@ -8,7 +8,7 @@ import { regPassword } from "../../shared/common/reg"
 import { Buttons, Text } from "../../components/element"
 import { Container, ArrowBack } from "../../components/common"
 
-import { IoEyeSharp } from "react-icons/io5"
+import { AiFillEye } from "react-icons/ai"
 
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
@@ -98,17 +98,10 @@ const Signup = (props) => {
                 maxLength="16"
               ></TextField>
 
-              <IoEyeSharp
+              <EyesIcons
                 size="24"
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "42px",
-                }}
-                onClick={() => {
-                  setShowPwd(!showPwd)
-                }}
-              ></IoEyeSharp>
+                onClick={() => setShowPwd(!showPwd)}
+              ></EyesIcons>
             </InputPosition>
 
             <InputPosition>
@@ -119,17 +112,10 @@ const Signup = (props) => {
                 placeholder="비밀번호를 입력해주세요"
                 maxLength="16"
               ></TextField>
-              <IoEyeSharp
+              <EyesIcons
                 size="24"
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "42px",
-                }}
-                onClick={() => {
-                  setShowPwd2(!showPwd2)
-                }}
-              ></IoEyeSharp>
+                onClick={() => setShowPwd2(!showPwd2)}
+              ></EyesIcons>
             </InputPosition>
 
             <Buttons
@@ -160,4 +146,9 @@ export default Signup
 const InputPosition = styled.div`
   position: relative;
   margin: 20px 0;
+`
+const EyesIcons = styled(AiFillEye)`
+  position: absolute;
+  right: 10px;
+  top: 42px;
 `

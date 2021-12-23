@@ -1,6 +1,6 @@
 import React from "react"
 import { Text } from "../element"
-import { IoIosArrowForward } from "react-icons/io"
+import { AiOutlineDoubleRight } from "react-icons/ai"
 import styled from "styled-components"
 
 export const TextLine = (props) => {
@@ -15,7 +15,7 @@ export const TextLine = (props) => {
   )
 }
 
-const Icons = styled(IoIosArrowForward)`
+const Icons = styled(AiOutlineDoubleRight)`
   position: absolute;
   right: 20px;
   color: 777;

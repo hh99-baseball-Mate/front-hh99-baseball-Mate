@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getCookie } from "../../shared/common/Cookie"
 import { actionCreators as userActions } from "../../redux/modules/user"

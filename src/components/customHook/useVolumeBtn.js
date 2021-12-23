@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 export const useVolumeBtn = (people) => {
   //  인원수 + - 버튼 커스텀훅

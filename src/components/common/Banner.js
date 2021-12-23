@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import banner from "../../shared/icon/logo/Banners.png"
 import logo from "../../shared/icon/logo/whiteLogo.png"
-import { IoIosArrowForward } from "react-icons/io"
+import { AiOutlineDoubleRight } from "react-icons/ai"
 import { history } from "../../redux/configStore"
 // import { VscBell } from "react-icons/vsc";
 
@@ -20,7 +20,7 @@ export const Banner = (props) => {
           스타벅스+홈런볼 받자!
         </Title>
         <MoreBtn onClick={() => history.push("/event")}>
-          자세히보기 <IoIosArrowForward />
+          자세히보기 <AiOutlineDoubleRight />
         </MoreBtn>
       </TextBox>
     </BannerContainer>
