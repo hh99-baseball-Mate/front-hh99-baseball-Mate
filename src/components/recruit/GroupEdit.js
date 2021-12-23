@@ -34,7 +34,7 @@ const GroupEdit = (props) => {
   const img = ip + loadDetail.filePath
 
   // 구단선택
-  const team = loadDetail.groupDate?.split("vs")[1]
+  // const team = loadDetail.groupDate?.split("vs")[1]
 
   // 모달 보기 state
   const [preview, setPreview] = useState(img)
@@ -76,7 +76,7 @@ const GroupEdit = (props) => {
 
   const showModalBtn = () => {
     if (selectTeam) setShowModal(!showModal)
-    else window.alert("직관하고싶은 구단을 먼저 선택해주세요")
+    else window.alert("일정은 수정할 수 없습니다.")
   }
 
   // 입력체크
@@ -126,27 +126,6 @@ const GroupEdit = (props) => {
           {title && <InputCheck />}
         </Inputs>
 
-        {/* 구단선택 */}
-        <Grid>
-          <Text>
-            구단선택
-            {selectTeam && <InputCheck />}
-          </Text>
-          <Inputs
-            name="selectTeam"
-            value={selectTeam}
-            dropdown
-            onChange={onChange}
-            disabled
-          >
-            <Option value="">구단선택</Option>
-            {clubImageSrc.map((e) => (
-              <Option key={e.id} value={e.name}>
-                {e.name}
-              </Option>
-            ))}
-          </Inputs>
-        </Grid>
 
         {/* 일정 선택 */}
         <Grid>

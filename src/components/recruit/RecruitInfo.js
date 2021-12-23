@@ -87,7 +87,6 @@ const Info = memo((props) => {
       <Box position="relative">
 
         {/* 배경사진 */}
-        {/* <Suspense fallback={<div style={{fontSize:"50px", color:"blue"}}>로딩중...</div>}> */}
         <ImgKit
           cmMode
           path="group"
@@ -95,8 +94,6 @@ const Info = memo((props) => {
           width="375px"
           height="375px"
         />
-        {/* <Img url={props.screen ? imageScreenUrl : imageUrl} /> */}
-        {/* </Suspense> */}
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
@@ -248,7 +245,7 @@ const Info = memo((props) => {
         padding="10px 30px"
       >
         <Warp width="55px" height="55px">
-          {/* 기본프사 & 카카오프사 */}
+          {/* 유저프로필 사진 */}
           <Circle url={userImg} />
         </Warp>
         <Warp direction="column" marginLeft="12px">
