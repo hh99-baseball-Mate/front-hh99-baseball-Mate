@@ -14,7 +14,7 @@ import calendar from "../../shared/icon/calendar.svg"
 import location from "../../shared/icon/location.svg"
 import colorUsers from "../../shared/icon/colorUsers.svg"
 import users from "../../shared/icon/users.svg"
-import { useProfile } from "../customHook"
+import { useCheckProfile } from "../customHook"
 import { ImgKit } from "../element"
 
 // const ImgKit = lazy(() => import("../element/ImgKit"))
@@ -33,7 +33,7 @@ const Info = memo((props) => {
   // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
-  const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
+  const [checkProfile] = useCheckProfile(props.createdUserProfileImg)
 
   const cookie = getCookie("is_login")
 
@@ -246,7 +246,7 @@ const Info = memo((props) => {
       >
         <Warp width="55px" height="55px">
           {/* 유저프로필 사진 */}
-          <Circle url={userImg} />
+          <Circle url={checkProfile} />
         </Warp>
         <Warp direction="column" marginLeft="12px">
           <Text size="14px" weight="bold" margin="1px">

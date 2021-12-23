@@ -7,7 +7,7 @@ import { screenDetailCreators } from "../../redux/modules/screenDetail"
 import { getCookie } from "../../shared/common/Cookie"
 
 import host from "../../shared/icon/groupDetail/host.svg"
-import { useProfile } from "../customHook"
+import { useCheckProfile } from "../customHook"
 
 const Participant = memo((props) => {
   const params = useParams()
@@ -15,7 +15,7 @@ const Participant = memo((props) => {
   const id = params.id
 
   // 유저 프로필사진
-  const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
+  const [checkProfile] = useCheckProfile(props.createdUserProfileImg)
 
   const cookie = getCookie("is_login")
 
@@ -116,7 +116,7 @@ const Participant = memo((props) => {
           <Grid>
             <CircleBox>
               {/* 방장 기본프사 & 카카오프사 */}
-              <HostCircle name={props.createdUserName} url={userImg} />
+              <HostCircle name={props.createdUserName} url={checkProfile} />
               <Text>
                 <img src={host} alt="host" /> {props.createdUserName}
               </Text>
@@ -215,19 +215,12 @@ const Participant = memo((props) => {
 function PartyList(props) {
   // console.log("참여인원 컴포넌트", props)
 
-  const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
-  const ip = IMAGES_BASE_URL
-
-  // 기본 로그인일 때 프로필 사진
-  const image = ip + props.UserImage
-
-  // kakaocdn (카카오 프사인지 확인)
-  const kakaoCheck = props.UserImage?.split(".")[1]
-  const kakaoImg = props.UserImage
-
+  // 참여유저 프로필 사진
+  const [checkProfile] = useCheckProfile(props.UserImage)
+  
   return (
     <CircleBox>
-      <Circle url={kakaoCheck === "kakaocdn" ? kakaoImg : image} />
+      <Circle url={checkProfile} />
       <Text>{props.Username}</Text>
     </CircleBox>
   )
