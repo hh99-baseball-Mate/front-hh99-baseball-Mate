@@ -44,12 +44,6 @@ const GroupDetail = (props) => {
       setHeart(false)
     }
 
-    return () => {
-      // console.log("클린업")
-      dispatch(groupDetailCreators.loadGroupPageMW(id))
-      dispatch(groupDetailCreators.mylistMW())
-      dispatch(alarmCreators.awaitChatListMW())
-    }
   }, [id, join, likePost, myWait])
 
   return (

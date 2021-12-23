@@ -14,7 +14,7 @@ import calendar from "../../shared/icon/calendar.svg"
 import location from "../../shared/icon/location.svg"
 import colorUsers from "../../shared/icon/colorUsers.svg"
 import users from "../../shared/icon/users.svg"
-import { useProfile } from "../customHook"
+import { useCheckProfile } from "../customHook"
 import { ImgKit } from "../element"
 
 // const ImgKit = lazy(() => import("../element/ImgKit"))
@@ -33,7 +33,7 @@ const Info = memo((props) => {
   // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
-  const [userImg] = useProfile(props.usertype, props.createdUserProfileImg)
+  const [checkProfile] = useCheckProfile(props.createdUserProfileImg)
 
   const cookie = getCookie("is_login")
 
@@ -87,7 +87,6 @@ const Info = memo((props) => {
       <Box position="relative">
 
         {/* 배경사진 */}
-        {/* <Suspense fallback={<div style={{fontSize:"50px", color:"blue"}}>로딩중...</div>}> */}
         <ImgKit
           cmMode
           path="group"
@@ -95,8 +94,6 @@ const Info = memo((props) => {
           width="375px"
           height="375px"
         />
-        {/* <Img url={props.screen ? imageScreenUrl : imageUrl} /> */}
-        {/* </Suspense> */}
 
         {/* 찜버튼 */}
         <JoinCircle onClick={HeartBtn}>
@@ -248,8 +245,8 @@ const Info = memo((props) => {
         padding="10px 30px"
       >
         <Warp width="55px" height="55px">
-          {/* 기본프사 & 카카오프사 */}
-          <Circle url={userImg} />
+          {/* 유저프로필 사진 */}
+          <Circle url={checkProfile} />
         </Warp>
         <Warp direction="column" marginLeft="12px">
           <Text size="14px" weight="bold" margin="1px">
