@@ -33,7 +33,7 @@ const GroupDetail = (props) => {
   const myWait = awaitList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
-    console.log("첫렌더링")
+    // console.log("첫렌더링")
     dispatch(groupDetailCreators.loadGroupPageMW(id))
     dispatch(groupDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitChatListMW())
@@ -45,12 +45,11 @@ const GroupDetail = (props) => {
     }
 
     return () => {
-      console.log("클린업")
+      // console.log("클린업")
       dispatch(groupDetailCreators.loadGroupPageMW(id))
       dispatch(groupDetailCreators.mylistMW())
       dispatch(alarmCreators.awaitChatListMW())
     }
-
   }, [id, join, likePost, myWait])
 
   return (

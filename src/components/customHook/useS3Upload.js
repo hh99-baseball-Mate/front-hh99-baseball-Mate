@@ -26,6 +26,7 @@ export const useS3Upload = (preview, path) => {
   }
 
   const uploadFiles = async (file) => {
+    console.log(file, "file")
     uploadFile(file, config)
       .then((data) => console.log(data))
       .catch((err) => console.error(err))

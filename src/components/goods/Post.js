@@ -92,7 +92,7 @@ export const Post = memo((props) => {
 
   // 댓글 삭제버튼
   const deleteCommentBtn = (commentId) => {
-    console.log(commentId)
+    // console.log(commentId)
     dispatch(goodsActions.deleteGoodsCommentMD(goodsId, commentId))
   }
 
