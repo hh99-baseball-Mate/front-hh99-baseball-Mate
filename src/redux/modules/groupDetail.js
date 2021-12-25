@@ -3,6 +3,7 @@ import { produce } from "immer"
 import { instance } from "../../lib/axios"
 import { is_loaded } from "./user"
 
+
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
 // const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
 // const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE";
@@ -23,6 +24,8 @@ const DELETE_COMMENT = "DELETE_COMMENT"
 const LIKE_GROUP_COMMENT = "LIKE_GROUP_COMMENT"
 
 const LOAD_MYLIST = "LOAD_MYLIS"
+
+const GROUP_CLEANUP = "GROUP_CLEANUP"
 
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({
   groupPage,
@@ -60,6 +63,8 @@ const like_group_comment = createAction(
 )
 
 const load_mylist = createAction(LOAD_MYLIST, (mylist) => ({ mylist }))
+
+const groupCleanUp = createAction(GROUP_CLEANUP)
 
 const initialState = {
   groupPage: [],
@@ -347,6 +352,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.mylist = action.payload.mylist
       }),
+    [GROUP_CLEANUP]: (state, action) =>
+    produce(state, (draft) => {
+      draft.groupPage = 
+      {
+        allowtype: null,
+        appliedUserInfo: [],
+        canApplyNum: "",
+        content: "",
+        createdUserId: "",
+        createdUserName: "",
+        createdUserProfileImg: "",
+        dday: "",
+        // filePath: "",
+        groupCommentList: [],
+        groupDate: "",
+        groupId: "",
+        hotPercent: "",
+        nowAppliedNum: "",
+        peopleLimit: "",
+        stadium: null,
+        title: ""
+      }
+    }),
   },
   initialState
 )
@@ -365,6 +393,7 @@ const groupDetailCreators = {
 	likegroupCommentMW,
 	mylistMW,
   confirmMW,
+  groupCleanUp
 }
 
 export {groupDetailCreators};
