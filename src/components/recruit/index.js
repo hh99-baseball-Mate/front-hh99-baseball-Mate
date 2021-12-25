@@ -3,6 +3,7 @@ import RecruitComment from "./RecruitComment"
 import RecruitInfo from "./RecruitInfo"
 import RecruitParticipant from "./RecruitParticipant"
 import ScreenEdit from "./ScreenEdit"
+import RecruitSkeleton from "./RecruitSkeleton"
 
 export {
   GroupEdit,
@@ -10,4 +11,5 @@ export {
   RecruitInfo,
   RecruitParticipant,
   ScreenEdit,
+  RecruitSkeleton
 }

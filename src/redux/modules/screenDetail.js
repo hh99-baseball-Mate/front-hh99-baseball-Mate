@@ -24,6 +24,8 @@ const SCREEN_LIKE_COMMENT = "SCREEN_LIKE_COMMENT"
 
 const LOAD_SCREEN_MYLIST = "LOAD_SCREEN_MYLIST"
 
+const SCREEN_CLEANUP = "SCREEN_CLEANUP"
+
 const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({
   screenPage,
 }))
@@ -60,6 +62,8 @@ const like_comment = createAction(
 )
 
 const load_mylist = createAction(LOAD_SCREEN_MYLIST, (mylist) => ({ mylist }))
+
+const screenCleanUp = createAction(SCREEN_CLEANUP)
 
 const initialState = {
   screenPage: [],
@@ -357,6 +361,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screenMylist = action.payload.mylist
       }),
+    [SCREEN_CLEANUP]: (state, action) =>
+      produce(state, (draft) => {
+        draft.screenPage = 
+        {
+          allowtype: null,
+          appliedUserInfo: [],
+          canApplyNum: "",
+          content: "",
+          createdUserId: "",
+          createdUserName: "",
+          createdUserProfileImg: "",
+          dday: "",
+          // filePath: "",
+          groupDate: "",
+          hotPercent: "",
+          id: "",
+          nowAppliedNum: "",
+          peopleLimit: "",
+          placeInfomation: "",
+          screenCommentList: [],
+          title: ""
+        }
+      }),
   },
   initialState
 )
@@ -374,6 +401,7 @@ const screenDetailCreators = {
 	likeCommentMW,
 	mylistMW,
   confirmMW,
+  screenCleanUp
 }
 
 export {screenDetailCreators};

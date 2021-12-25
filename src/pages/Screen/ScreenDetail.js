@@ -9,8 +9,11 @@ import {
   RecruitComment,
   RecruitParticipant,
   RecruitInfo,
+  RecruitSkeleton
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
+
+import { useIsLogin } from "../../components/customHook"
 
 const ScreenDetail = (props) => {
   const dispatch = useDispatch()
@@ -34,6 +37,7 @@ const ScreenDetail = (props) => {
   const myScreenWait = awaitScreenList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
+    console.log("마운트")
     dispatch(screenDetailCreators.loadScreenPageMW(id))
     dispatch(screenDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitScreenChatListMW())
@@ -43,7 +47,24 @@ const ScreenDetail = (props) => {
     } else {
       setHeart(false)
     }
+
+    return () => {
+      console.log("클린")
+      dispatch(screenDetailCreators.screenCleanUp())
+    }
+
   }, [dispatch, id, join, likePost, myScreenWait])
+
+  const [is_login, is_loaded] = useIsLogin()
+
+  // 스켈레톤 페이지
+  if (!is_loaded) {
+    return(
+      <React.Fragment>
+        <RecruitSkeleton/>
+      </React.Fragment>
+    )
+  }
 
   return (
     <React.Fragment>

@@ -28,9 +28,9 @@ const Info = memo((props) => {
   // 사진 ip주소 + 사진이름 조합
   const img = props.filePath
 
-  // // 배경사진
-  // const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
-  // const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
+  // 배경사진
+  const imageUrl = process.env.REACT_APP_S3_GROUP_URL + img
+  const imageScreenUrl = process.env.REACT_APP_S3_SCREEN_URL + img
 
   // 게시글 만든사람 프로필사진
   const [checkProfile] = useCheckProfile(props.createdUserProfileImg)
@@ -84,6 +84,7 @@ const Info = memo((props) => {
 
   return (
     <Container>
+
       <Box position="relative">
 
         {/* 배경사진 */}
