@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -9,8 +9,12 @@ import {
   RecruitInfo,
   RecruitParticipant,
   RecruitComment,
+  RecruitSkeleton
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
+
+import { useIsLogin } from "../../components/customHook"
+
 
 const GroupDetail = (props) => {
   const dispatch = useDispatch()
@@ -44,7 +48,23 @@ const GroupDetail = (props) => {
       setHeart(false)
     }
 
+    return () => {
+      // console.log("클린")
+      dispatch(groupDetailCreators.groupCleanUp())
+    }
+
   }, [id, join, likePost, myWait])
+
+  const [is_login, is_loaded] = useIsLogin()
+
+  // 스켈레톤 페이지
+  if (!is_loaded) {
+    return(
+      <React.Fragment>
+        <RecruitSkeleton/>
+      </React.Fragment>
+    )
+  }
 
   return (
     <React.Fragment>
@@ -92,6 +112,7 @@ const GroupDetail = (props) => {
             <RecruitComment {...loadDetail} {...mylist} />
           )}
         </Box>
+
       </Container>
     </React.Fragment>
   )
