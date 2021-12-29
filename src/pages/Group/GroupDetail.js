@@ -35,6 +35,7 @@ const GroupDetail = (props) => {
   const myWait = awaitList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
+    // console.log("첫렌더링")
     dispatch(groupDetailCreators.loadGroupPageMW(id))
     dispatch(groupDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitChatListMW())

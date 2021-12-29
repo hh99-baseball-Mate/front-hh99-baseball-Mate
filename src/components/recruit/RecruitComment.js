@@ -136,7 +136,7 @@ const GroupComment = memo((props) => {
 
 // **댓글 컴포넌트**
 const CommentList = memo((props) => {
-  console.log("댓글 컴포넌트", props)
+  // console.log("댓글 컴포넌트", props)
 
   const dispatch = useDispatch()
 
