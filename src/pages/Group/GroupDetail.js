@@ -13,8 +13,6 @@ import {
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
 
-import { useIsLogin } from "../../components/customHook"
-
 
 const GroupDetail = (props) => {
   const dispatch = useDispatch()
@@ -49,23 +47,22 @@ const GroupDetail = (props) => {
     }
 
     return () => {
-      // console.log("클린")
       dispatch(groupDetailCreators.groupCleanUp())
     }
 
   }, [id, join, likePost, myWait])
 
-  const [is_login, is_loaded] = useIsLogin()
+  const is_loaded = useSelector((state) => state.user.is_loaded)
 
   // 스켈레톤 페이지
-  if (!is_loaded) {
+  if (!is_loaded && selectPage) {
     return(
       <React.Fragment>
         <RecruitSkeleton/>
       </React.Fragment>
     )
   }
-
+ 
   return (
     <React.Fragment>
       <ArrowBack>상세 페이지</ArrowBack>
