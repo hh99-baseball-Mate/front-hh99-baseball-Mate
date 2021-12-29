@@ -13,7 +13,6 @@ import {
 } from "../../components/recruit/"
 import { ArrowBack } from "../../components/common"
 
-import { useIsLogin } from "../../components/customHook"
 
 const ScreenDetail = (props) => {
   const dispatch = useDispatch()
@@ -37,7 +36,6 @@ const ScreenDetail = (props) => {
   const myScreenWait = awaitScreenList.findIndex((list) => list.postId == id)
 
   useEffect(() => {
-    console.log("마운트")
     dispatch(screenDetailCreators.loadScreenPageMW(id))
     dispatch(screenDetailCreators.mylistMW())
     dispatch(alarmCreators.awaitScreenChatListMW())
@@ -49,16 +47,15 @@ const ScreenDetail = (props) => {
     }
 
     return () => {
-      console.log("클린")
       dispatch(screenDetailCreators.screenCleanUp())
     }
 
   }, [dispatch, id, join, likePost, myScreenWait])
 
-  const [is_login, is_loaded] = useIsLogin()
+  const is_loaded = useSelector((state) => state.user.is_loaded)
 
   // 스켈레톤 페이지
-  if (!is_loaded) {
+  if (!is_loaded && selectPage) {
     return(
       <React.Fragment>
         <RecruitSkeleton/>
