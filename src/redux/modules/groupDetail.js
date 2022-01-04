@@ -5,13 +5,10 @@ import { is_loaded } from "./user"
 
 
 const LOAD_GROUP_PAGE = "LOAD_GROUP_PAGE"
-// const EDIT_GROUP_PAGE = "EDIT_GROUP_PAGE"
-// const DELETE_GROUP_PAGE = "DELETE_GROUP_PAGE";
 
 // 모임 좋아(찜) 하기/취소하기
 const LIKE_POST = "LIKE_POST"
-// 모임참여, 취소
-const GROUP_APPLY = "GROUP_APPLY"
+// 모임 취소
 const DELETE_APPLY = "DELETE_APPLY"
 
 // 방장이 모임확정/취소
@@ -30,13 +27,12 @@ const GROUP_CLEANUP = "GROUP_CLEANUP"
 const load_groupPage = createAction(LOAD_GROUP_PAGE, (groupPage) => ({
   groupPage,
 }))
-// const edit_groupPage = createAction(EDIT_GROUP_PAGE, (groupId, title, content) => ({ groupId, title, content }));
-// const del_groupPage = createAction(DELETE_GROUP_PAGE, (groupId) => ({ groupId }));
+
 const like_post = createAction(LIKE_POST, (groupId, like) => ({
   groupId,
   like,
 }))
-const group_apply = createAction(GROUP_APPLY, (my) => ({ my }))
+
 const del_apply = createAction(DELETE_APPLY, (groupId, userid) => ({
   groupId,
   userid,
@@ -149,7 +145,6 @@ const groupApplyMW = (groupId, my) => {
     instance
       .get(`/groups/join/request/${groupId}`)
       .then((res) => {
-        // dispatch(group_apply(my))
         window.alert(res.data)
       })
       .catch((err) => {
@@ -272,12 +267,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.groupPage = action.payload.groupPage
       }),
-    // [DELETE_GROUP_PAGE]: (state, action) => produce(state, (draft) => {
-    // 	const idx = draft.group_list.findIndex((p) => p.groupId === action.payload.groupId);
-    // 	if (idx !== -1) {
-    // 		draft.group_list.splice(idx, 1);
-    // 	}
-    // }),
+
     [LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
         // // console.log("찜받기",action.payload.groupId,action.payload.like.isLiked)
@@ -292,29 +282,29 @@ export default handleActions(
           }
         }
       }),
-    // [GROUP_APPLY]: (state, action) => produce(state, (draft) => {
-    // 	// console.log("페이로드", action.payload.my)
-    // 	draft.groupPage.appliedUserInfo.push(action.payload.my)
-    // }),
+
     [DELETE_APPLY]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.groupPage.appliedUserInfo.findIndex(
           (p) => p.UserId === action.payload.userid
         )
-        // console.log("리덕스모임삭제", idx, action.payload.useridx)
+
         if (idx !== -1) {
           draft.groupPage.appliedUserInfo.splice(idx, 1)
         }
       }),
+
     // 모임 확정/취소
     [GROUP_CONFIRM]: (state, action) =>
       produce(state, (draft) => {
         draft.groupPage.allowtype = action.payload.allowtype
       }),
+
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.groupPage.groupCommentList.push(action.payload.comment)
       }),
+
     [EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.groupPage.groupCommentList.findIndex(
@@ -325,6 +315,7 @@ export default handleActions(
           ...action.payload.comment,
         }
       }),
+
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.groupPage.groupCommentList.findIndex(
@@ -334,13 +325,13 @@ export default handleActions(
           draft.groupPage.groupCommentList.splice(idx, 1)
         }
       }),
+
     [LIKE_GROUP_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.groupPage.groupCommentList.findIndex(
           (p) => p.groupCommentId === action.payload.commentId
         )
-        // // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-        // // console.log("액션좋아요",action.payload.like, idx)
+
         if (action.payload.like) {
           draft.groupPage.groupCommentList[idx].groupcommentlikeCount -= 1
           return
@@ -348,10 +339,12 @@ export default handleActions(
           draft.groupPage.groupCommentList[idx].groupcommentlikeCount += 1
         }
       }),
+      
     [LOAD_MYLIST]: (state, action) =>
       produce(state, (draft) => {
         draft.mylist = action.payload.mylist
       }),
+
     [GROUP_CLEANUP]: (state, action) =>
     produce(state, (draft) => {
       draft.groupPage = 
