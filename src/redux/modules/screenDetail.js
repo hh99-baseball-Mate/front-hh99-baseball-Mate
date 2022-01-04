@@ -4,7 +4,6 @@ import { instance } from "../../lib/axios"
 import { is_loaded } from "./user"
 
 const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
-// const DELETE_SCREEN_PAGE = "DELETE_SCREEN_PAGE";
 
 // 모임 좋아(찜) 하기/취소하기
 const SCREEN_LIKE_POST = "SCREEN_LIKE_POST"
@@ -115,8 +114,7 @@ const delScreenPageMW = (screenId) => {
     instance
       .delete(`/screen/${screenId}`)
       .then((res) => {
-        // // console.log(res)
-        // dispatch(del_groupPage(groupId));
+        // console.log(res)
         history.replace("/screen")
       })
       .catch((err) => {
@@ -165,7 +163,7 @@ const delApplyMW = (screenId, userid) => {
     instance
       .delete(`/screen/join/request/${screenId}`)
       .then((res) => {
-        // // console.log("참석취소", res)
+        // console.log("참석취소", res)
         dispatch(del_apply(screenId, userid))
         window.alert("모임참여가 취소되었습니다.")
       })
@@ -354,7 +352,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screenMylist = action.payload.mylist
       }),
-      
+
     [SCREEN_CLEANUP]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage = 
