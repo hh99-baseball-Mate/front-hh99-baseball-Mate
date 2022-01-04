@@ -52,7 +52,7 @@ export const Comments = memo((props) => {
     }
   }
 
-  console.log(commentUserIndex, useridx)
+  // console.log(commentUserIndex, useridx)
 
   // 업데이트 인풋창 보이기 버튼
   const updateBtn = () => {

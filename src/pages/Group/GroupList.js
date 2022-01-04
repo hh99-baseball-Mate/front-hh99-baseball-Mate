@@ -67,7 +67,6 @@ const GroupList = (props) => {
 
   const selectTeam = (team) => {
     setTeam(team)
-    console.log(team)
   }
 
   useEffect(() => {
@@ -98,7 +97,11 @@ const GroupList = (props) => {
         <Container>
           {/* 소제목 */}
           <SubText
-            title="롯데자이언츠 핫한 모임 🔥"
+            title={
+              user_info.myteam
+                ? user_info.myteam + "핫한 모임🔥"
+                : "핫한 모임🔥"
+            }
             desc="인원 모집 마감 임박! 어서 참여하세요!"
           />
 
