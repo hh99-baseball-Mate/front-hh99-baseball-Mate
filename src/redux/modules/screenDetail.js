@@ -9,8 +9,7 @@ const LOAD_SCREEN_PAGE = "LOAD_SCREEN_PAGE"
 // 모임 좋아(찜) 하기/취소하기
 const SCREEN_LIKE_POST = "SCREEN_LIKE_POST"
 
-// 모임참여/취소
-const SCREEN_APPLY = "SCREEN_APPLY"
+// 모임취소
 const SCREEN_DELETE_APPLY = "SCREEN_DELETE_APPLY"
 
 // 방장이 모임확정/취소
@@ -29,13 +28,12 @@ const SCREEN_CLEANUP = "SCREEN_CLEANUP"
 const load_screenPage = createAction(LOAD_SCREEN_PAGE, (screenPage) => ({
   screenPage,
 }))
-// const del_screenPage = createAction(DELETE_SCREEN_PAGE, (groupId) => ({ groupId }));
 
 const like_post = createAction(SCREEN_LIKE_POST, (screenId, like) => ({
   screenId,
   like,
 }))
-const screen_apply = createAction(SCREEN_APPLY, (my) => ({ my }))
+
 const del_apply = createAction(SCREEN_DELETE_APPLY, (screenId, userid) => ({
   screenId,
   userid,
@@ -152,7 +150,6 @@ const screenApplyMW = (screenId, my) => {
       .get(`/screen/join/request/${screenId}`)
       .then((res) => {
         // console.log(res)
-        // dispatch(screen_apply(my))
         window.alert(res.data)
       })
       .catch((err) => {
@@ -185,7 +182,7 @@ const addCommentMW = (screenId, message) => {
     instance
       .post(`/screen/${screenId}/comment`, comment)
       .then((res) => {
-        // // console.log("댓글추가", res)
+        // console.log("댓글추가", res)
         dispatch(add_comment(screenId, comment))
       })
       .catch((err) => {
@@ -201,7 +198,7 @@ const editCommentMW = (screenId, commentId, message) => {
     instance
       .put(`/screen/${screenId}/comment/${commentId}`, comment)
       .then((res) => {
-        // // console.log("댓글수정", res)
+        // console.log("댓글수정", res)
         dispatch(edit_comment(screenId, commentId, comment))
       })
       .catch((err) => {
@@ -216,7 +213,7 @@ const delCommentMW = (screenId, commentId) => {
     instance
       .delete(`/screen/${screenId}/comment/${commentId}`)
       .then((res) => {
-        // // console.log("댓글삭제", res)
+        // console.log("댓글삭제", res)
         dispatch(del_comment(screenId, commentId))
       })
       .catch((err) => {
@@ -229,11 +226,10 @@ const delCommentMW = (screenId, commentId) => {
 const likeCommentMW = (screenId, commentId, like) => {
   return (dispatch, getState, { history }) => {
     const isLiked = { isLiked: like }
-    // // console.log(screenId, commentId, isLiked)
     instance
       .post(`/screen/${screenId}/comment/${commentId}/like`, isLiked)
       .then((res) => {
-        // // console.log(res)
+        // console.log(res)
         dispatch(like_comment(screenId, commentId, like))
       })
       .catch((err) => {
@@ -248,9 +244,8 @@ const mylistMW = () => {
     instance
       .post("/user/logincheck")
       .then((res) => {
-        // // console.log("좋아요리스트", res.data)
         const mylist = res.data
-        // // console.log("likelist체크", likelist)
+        // console.log("likelist체크", likelist)
         dispatch(load_mylist(mylist))
       })
       .catch((err) => {
@@ -262,7 +257,6 @@ const mylistMW = () => {
 // 모임확정/취소하기
 const confirmMW = (screenId, allowtype) => {
   return function (dispatch, getState, { history }) {
-    // const isLiked = { isLiked: like }
     instance
       .patch(`/screen/${screenId}/applications`)
       .then((res) => {
@@ -285,9 +279,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.screenPage = action.payload.screenPage
       }),
+
     [SCREEN_LIKE_POST]: (state, action) =>
       produce(state, (draft) => {
-        // // console.log("찜받기",action.payload.like.isLiked)
         if (action.payload.like.isLiked) {
           draft.screenMylist.myScreenLikesList.push(action.payload.screenId)
           return
@@ -300,30 +294,28 @@ export default handleActions(
           }
         }
       }),
-    // [SCREEN_APPLY]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     // // console.log("페이로드", action.payload.my)
-    //     draft.screenPage.appliedUserInfo.push(action.payload.my)
-    //   }),
+
     [SCREEN_DELETE_APPLY]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.appliedUserInfo.findIndex(
           (p) => p.UserId === action.payload.userid
         )
-        // // console.log("리덕스모임삭제", idx)
         if (idx !== -1) {
           draft.screenPage.appliedUserInfo.splice(idx, 1)
         }
       }),
+
     // 모임 확정/취소
     [SCREEN_CONFIRM]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage.allowtype = action.payload.allowtype
       }),
+
     [SCREEN_ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage.screenCommentList.push(action.payload.comment)
       }),
+
     [SCREEN_EDIT_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
@@ -334,6 +326,7 @@ export default handleActions(
           ...action.payload.comment,
         }
       }),
+
     [SCREEN_DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
@@ -343,13 +336,12 @@ export default handleActions(
           draft.screenPage.screenCommentList.splice(idx, 1)
         }
       }),
+
     [SCREEN_LIKE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const idx = draft.screenPage.screenCommentList.findIndex(
           (p) => p.screenCommentId === action.payload.commentId
         )
-        // // console.log("like", typeof(action.payload.like.isLiked), action.payload.like.isLiked)
-        // console.log("액션좋아요", action.payload.like)
         if (action.payload.like) {
           draft.screenPage.screenCommentList[idx].screencommentlikeCount -= 1
           return
@@ -357,10 +349,12 @@ export default handleActions(
           draft.screenPage.screenCommentList[idx].screencommentlikeCount += 1
         }
       }),
+
     [LOAD_SCREEN_MYLIST]: (state, action) =>
       produce(state, (draft) => {
         draft.screenMylist = action.payload.mylist
       }),
+      
     [SCREEN_CLEANUP]: (state, action) =>
       produce(state, (draft) => {
         draft.screenPage = 
