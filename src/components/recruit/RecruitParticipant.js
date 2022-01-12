@@ -118,8 +118,6 @@ const Participant = memo((props) => {
 
   const me = props.createdUserId === props.userid
 
-  console.log(props)
-
   return (
     <React.Fragment>
       <Box padding="28px 15px 40px 15px" background="#fff">
