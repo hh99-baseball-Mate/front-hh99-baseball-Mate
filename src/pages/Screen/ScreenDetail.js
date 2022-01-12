@@ -50,7 +50,7 @@ const ScreenDetail = (props) => {
       dispatch(screenDetailCreators.screenCleanUp())
     }
 
-  }, [dispatch, id, join, likePost, myScreenWait])
+  }, [id, join, likePost, myScreenWait])
 
   const is_loaded = useSelector((state) => state.user.is_loaded)
 

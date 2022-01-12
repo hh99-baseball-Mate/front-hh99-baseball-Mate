@@ -88,7 +88,7 @@ const ChatRoom = memo((props) => {
             `/sub/api/chat/rooms/${room_id}`,
             (data) => {
               const newMessage = JSON.parse(data.body)
-              console.log("구독후 새로운 메세지 data", newMessage)
+              // console.log("구독후 새로운 메세지 data", newMessage)
 
               // 실시간 채팅 시간 넣어주는 부분
               const now_time = moment().format("YYYY-MM-DD h:mm A")

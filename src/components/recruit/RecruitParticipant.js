@@ -2,6 +2,7 @@ import React, { memo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import styled from "styled-components"
+import { alarmCreators } from "../../redux/modules/alarm"
 import { groupDetailCreators } from "../../redux/modules/groupDetail"
 import { screenDetailCreators } from "../../redux/modules/screenDetail"
 import { getCookie } from "../../shared/common/Cookie"
@@ -13,6 +14,12 @@ const Participant = memo((props) => {
   const params = useParams()
   const dispatch = useDispatch()
   const id = params.id
+  const awaitList = {
+    postId: id,
+    postTitle: props.title,
+    userId: props.userid,
+    userName: props.username,
+  }
 
   // 유저 프로필사진
   const [checkProfile] = useCheckProfile(props.createdUserProfileImg)
@@ -37,9 +44,12 @@ const Participant = memo((props) => {
     props.setJoin(true)
 
     if (props.screen) {
-      return dispatch(screenDetailCreators.screenApplyMW(id, my))
+      dispatch(screenDetailCreators.screenApplyMW(id, my))
+      dispatch(alarmCreators.joinScreenAwaitList(awaitList))
+      return 
     } else {
       dispatch(groupDetailCreators.groupApplyMW(id, my))
+      dispatch(alarmCreators.joinWaitList(awaitList))
     }
   }
 
@@ -107,6 +117,8 @@ const Participant = memo((props) => {
   }, [props.appliedUserInfo])
 
   const me = props.createdUserId === props.userid
+
+  console.log(props)
 
   return (
     <React.Fragment>
