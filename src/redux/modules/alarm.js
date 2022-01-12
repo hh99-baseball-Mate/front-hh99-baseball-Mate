@@ -9,11 +9,15 @@ const DELETE_ALARM = "DELETE_ALARM"
 const SET_REQ_LIST = "SET_REQ_LIST"
 // 경기모임 입장 대기 리스트(신청자용)
 const AWAIT_LIST = "AWAIT_LIST";
+// 경기모임 입장 신청
+const JOIN_AWAIT_LIST = "JOIN_AWAIT_LIST";
 
 // 스크린야구모임 입장 요청 리스트(방장용)
 const SET_SCREEN_REQ_LIST = "SET_SCREEN_REQ_LIST"
 // 스크린야구모임 입장 대기 리스트(신청자용)
 const AWAIT_SCREEN_LIST = "AWAIT_SCREEN_LIST";
+// 스크린야구모임 입장 신청
+const JOIN_AWAIT_SCREEN_LIST = "JOIN_AWAIT_SCREEN_LIST";
 
 const load_alarm = createAction(LOAD_ALARM, (alarm) => ({ alarm }))
 const delete_alarm = createAction(DELETE_ALARM, (alarmId) => ({ alarmId }))
@@ -21,11 +25,15 @@ const delete_alarm = createAction(DELETE_ALARM, (alarmId) => ({ alarmId }))
 const setRequestList = createAction(SET_REQ_LIST, (request_list) => ({ request_list }));
 // 경기모임 보낸 요청 승인 대기 목록
 const setAwaitList = createAction(AWAIT_LIST, (await_list) => ({ await_list }));
+// 경기모임 신청 요청
+const joinWaitList = createAction(JOIN_AWAIT_LIST, (join_await_list) => ({ join_await_list }));
 
 // 스크린야구모임 들어온 요청 대기 목록
 const setScreenRequestList = createAction(SET_SCREEN_REQ_LIST, (request_list) => ({ request_list }));
 // 스크린야구모임 보낸 요청 승인 대기 목록
 const setScreenAwaitList = createAction(AWAIT_SCREEN_LIST, (await_list) => ({ await_list }));
+// 스크린야구모임 신청 요청
+const joinScreenAwaitList = createAction(JOIN_AWAIT_SCREEN_LIST, (join_await_list) => ({ join_await_list }));
 
 const initialState = {
   alarmList: [], // 전체 알람 리스트
@@ -78,18 +86,6 @@ const requestChatListMW = () => {
       .then((res) => {
         // // console.log(res.data)
         const request_list = res.data
-        // let request_list = [];
-        // res.data.forEach((req) => {
-        // 	let one_req = {
-        // 		join_id: req.joinRequestId,
-        // 		user_id: req.userId,
-        // 		username: req.username,
-        // 		user_img: req.profileImg,
-        // 		title: req.postTitle,
-        // 	};
-        // 	request_list.push(one_req);
-        // });
-
         dispatch(setRequestList(request_list))
       })
       .catch((err) => {
@@ -119,15 +115,6 @@ const awaitChatListMW = () => {
       .get("/groups/join/request/await")
       .then((res) => {
         const await_list = res.data
-
-        // res.data.forEach((l) => {
-        //   let one_list = {
-        //     title: l.postTitle,
-        //     join_id: l.joinRequestId,
-        //   };
-        //   await_list.push(one_list);
-        // });
-
         dispatch(setAwaitList(await_list))
       })
       .catch((err) => {
@@ -144,19 +131,6 @@ const requestScreenChatListMW = () => {
       .then((res) => {
         // // console.log(res.data)
         const request_list = res.data
-
-        // let request_list = [];
-        // res.data.forEach((req) => {
-        // 	let one_req = {
-        // 		join_id: req.joinRequestId,
-        // 		user_id: req.userId,
-        // 		username: req.username,
-        // 		user_img: req.profileImg,
-        // 		title: req.postTitle,
-        // 	};
-        // 	request_list.push(one_req);
-        // });
-
         dispatch(setScreenRequestList(request_list))
       })
       .catch((err) => {
@@ -186,17 +160,6 @@ const awaitScreenChatListMW = () => {
       .get("/screen/join/request/await")
       .then((res) => {
         const await_ScreenList = res.data
-        // console.log("스크린이야",await_ScreenList)
-        // logger("대기 목록", res);
-        // let await_list = [];
-        // res.data.forEach((l) => {
-        //   let one_list = {
-        //     title: l.postTitle,
-        //     join_id: l.joinRequestId,
-        //   };
-        //   await_list.push(one_list);
-        // });
-
         dispatch(setScreenAwaitList(await_ScreenList))
       })
       .catch((err) => {
@@ -227,6 +190,12 @@ export default handleActions({
 	[AWAIT_SCREEN_LIST]: (state, action) => produce(state, (draft) => {
 		draft.awaitScreenList = action.payload.await_list;
 	}),
+  [JOIN_AWAIT_LIST]: (state, action) => produce(state, (draft) => {
+    draft.awaitList.push(action.payload.join_await_list)
+  }),
+  [JOIN_AWAIT_SCREEN_LIST]: (state, action) => produce(state, (draft) => {
+    draft.awaitScreenList.push(action.payload.join_await_list)
+  }),
 }, initialState)
 
 const alarmCreators = {
@@ -237,7 +206,9 @@ const alarmCreators = {
 	awaitChatListMW,
 	requestScreenChatListMW,
 	alarmScreenComfirmMW,
-	awaitScreenChatListMW
+	awaitScreenChatListMW,
+  joinWaitList,
+  joinScreenAwaitList
 }
 
 export {alarmCreators};
