@@ -45,7 +45,7 @@ const ChatRoom = memo((props) => {
   }
 
   // 배포, 개발 환경 채팅 주소 관리
-  const BASE_URL = process.env.REACT_APP_BASE_URL + "/chatting"
+  const BASE_URL = process.env.REACT_APP_BASE_URL + "chatting"
 
   // 소켓
   const sock = new SockJS(BASE_URL)

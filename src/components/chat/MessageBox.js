@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -10,8 +10,6 @@ const MessageBox = (props) => {
   // 사진 ip주소 + 사진이름 조합
   const IMAGES_BASE_URL = process.env.REACT_APP_S3_USER_PROFILE_URL
   const ip = IMAGES_BASE_URL
-  const img = props.filePath
-  const imageUrl = ip + img
 
   // 기본 로그인일 때 프로필 사진
   const profileImg = ip + props.senderImage
@@ -81,20 +79,7 @@ const Container = styled.div`
   position: relative;
 `
 
-const Box = styled.div`
-  width: 385px;
-  height: ${(props) => props.height};
-  background: ${(props) => props.background};
-  padding: ${(props) => props.padding};
-  display: ${(props) => props.flex};
-  flex-direction: ${(props) => props.direction};
-  justify-content: ${(props) => props.justify};
-  align-items: ${(props) => props.align};
-  position: ${(props) => props.position};
-`;
-
 const Warp = styled.div`
-	/* width: 100%; */
 	display: flex;
 	flex-direction: ${(props) => props.direction};
 	justify-content: ${(props) => props.justify};
@@ -106,7 +91,6 @@ const Warp = styled.div`
 	margin-right: ${(props) => props.marginR};
 	padding: ${(props) => props.padding};
 	position: ${(props) => props.position};
-	/* right: -160px; */
 `;
 
 const Text = styled.div`
@@ -126,9 +110,6 @@ const Time = styled.div`
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
 	width: 70px;
-	/* right: 10px;
-	top: 30px; */
-	/* padding: 12px 10px; */
 `;
 
 const ImgCircle = styled.div`
@@ -154,33 +135,10 @@ const Talk = styled.div`
 	background: #FFFFFF;
 	border-radius: 0px 10px 10px 10px;
 	padding: 10px 10px;
-	/* position: absolute;
-	left: 60px;
-	top: 30px; */
-	
 	word-break: break-all;
 `;
 
-const Input = styled.input`
-  width: 335px;
-  height: 44px;
-  border: 1px solid #E7E7E7;
-  border-radius: 5px;
-  padding: 14px 40px 14px 14px;
-  ::placeholder {
-    font-size: 14px;
-    color: #C4C4C4;
-  }
-`;
 
-const SendImg = styled.img`
-  position: absolute;
-  /* left: 8.34%; */
-  right: 8px;
-  bottom: 50%;
-  transform: translateY(50%);
-  cursor: pointer;
-`;
 
 /* 내가 보낸 메세지 */
 const MyTalk = styled.div`
@@ -190,10 +148,6 @@ const MyTalk = styled.div`
 	color: #FFFFFF;
 	border-radius: 10px 0px 10px 10px;
 	padding: 12px 10px;
-	/* transform: matrix(-1, 0, 0, 1, 0, 0); */
-	/* position: absolute;
-	right: 0px;
-	top: 30px; */
 	word-break: break-all;
 `;
 
@@ -204,8 +158,4 @@ const MyTime = styled.div`
 	letter-spacing: ${(props) => props.spacing};
 	margin: ${(props) => props.margin};
 	margin-bottom: ${(props) => props.bottom};
-	/* position: absolute; */
-	/* right: 10px;
-	top: 30px; */
-	/* padding: 12px 10px; */
 `;
