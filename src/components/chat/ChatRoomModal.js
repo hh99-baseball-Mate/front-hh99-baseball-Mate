@@ -55,7 +55,6 @@ const ChatRoomModal = (props) => {
     }
   }
 
-  // console.log("B")
 
   return (
     <React.Fragment>

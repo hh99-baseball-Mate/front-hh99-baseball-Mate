@@ -20,7 +20,7 @@ const ChatWrite = (props) => {
 
   // 메세지 보내기 버튼 클릭 시 실행 될 함수
   const sendMessageBtn = () => {
-    logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue)
+    // logger("보낼 메세지 내용", typeof msg.defaultValue, msg.defaultValue)
     sendMessage(msg.defaultValue) //메세지 실제로 보내기
     setMessage("") // input 비우기
   }
